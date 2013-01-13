@@ -1,21 +1,26 @@
 {
-   "name": "node-eclipse-clp",
-   "version": "0.1.0",
-   "description": "A node.js interface to the ECLiPSe library",
-   "keywords": [
-       "c++",
-       "eclipse",
-       "prolog"
-   ],
-   "author": {
-       "name": "Daniel Connor",
-       "email": "danielconnr@gmail.com"
-   },
-   "repository": {
-       "type": "git",
-       "url": "git@github.com"
-   },
-   "engines": {
-       "node": ">=0.6.0"
-   }
+  "name": "node-eclipse-clp",
+  "version": "0.1.0",
+  "description": "A node.js interface to the ECLiPSe library",
+  "keywords": [
+    "c++",
+    "eclipse",
+    "prolog"
+  ],
+  "author": {
+    "name": "Daniel Connor",
+    "email": "danielconnr@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danielconnor/node-eclipse-clp.git"
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "dependencies": {
+  },
+  "scripts": {
+    "install": "node-gyp clean configure build"
+  }
 }
