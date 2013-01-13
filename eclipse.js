@@ -18,24 +18,24 @@ var ec_status = {
   EC_flushio: 6
 };
 
-console.log(ec_status[eclipse.init()]);
+// console.log(ec_status[eclipse.init()]);
 
-var lib = new eclipse.Functor("lib", 1);
-var submit_string = new eclipse.Functor("ptc_solver__submit_string", 1);
-var writeln = new eclipse.Functor("writeln",1);
+// var lib = new eclipse.Functor("lib", 1);
+// var submit_string = new eclipse.Functor("ptc_solver__submit_string", 1);
+// var writeln = new eclipse.Functor("writeln",1);
 
-var pred = new eclipse.Ref();
-var fail = new eclipse.Atom("fail");
+// var pred = new eclipse.Ref();
+// var fail = new eclipse.Atom("fail");
 
-eclipse.post_goal(new eclipse.Functor("current_built_in", 1), pred);
-while (ec_status.EC_succeed == eclipse.resume())
-{
-    eclipse.post_goal(writeln, pred);
-    eclipse.post_goal(fail);
-}
+// eclipse.post_goal(new eclipse.Functor("current_built_in", 1), pred);
+// while (ec_status.EC_succeed == eclipse.resume())
+// {
+//     eclipse.post_goal(writeln, pred);
+//     eclipse.post_goal(fail);
+// }
 
+// console.log(ec_status[eclipse.cleanup()]);
 
-console.log(ec_status[eclipse.cleanup()]);
-
+eclipse.status = ec_status;
 
 module.exports = eclipse;

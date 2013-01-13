@@ -13,9 +13,7 @@ void Atom::Init(Handle<Object> target) {
   template_ = Persistent<FunctionTemplate>::New(tpl);
   template_->SetClassName(String::NewSymbol("Atom"));
   template_->InstanceTemplate()->SetInternalFieldCount(1);
-  // Prototype
-  template_->PrototypeTemplate()->Set(String::NewSymbol("getName"),
-      FunctionTemplate::New(getName)->GetFunction());
+  template_->InstanceTemplate()->SetAccessor(String::NewSymbol("name"), getName);
 
   Persistent<Function> constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Atom"), constructor);
@@ -30,10 +28,10 @@ Handle<Value> Atom::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> Atom::getName(const Arguments& args) {
+Handle<Value> Atom::getName(Local<String> property, const AccessorInfo &info) {
   HandleScope scope;
 
-  Atom* atom = ObjectWrap::Unwrap<Atom>(args.This());
+  Atom* atom = ObjectWrap::Unwrap<Atom>(info.Holder());
 
   return scope.Close(String::New(atom->name()));
 }

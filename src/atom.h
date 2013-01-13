@@ -13,7 +13,7 @@ class Atom : public EC_atom, public node::ObjectWrap {
   Atom(char *s) : EC_atom(s) {};
 
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
-  static v8::Handle<v8::Value> getName(const v8::Arguments& args);
+  static v8::Handle<v8::Value> getName(v8::Local<v8::String> property, const v8::AccessorInfo &info);
 };
 
 #endif

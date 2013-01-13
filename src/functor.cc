@@ -13,10 +13,9 @@ void Functor::Init(Handle<Object> target) {
 
   template_ = Persistent<FunctionTemplate>::New(tpl);
   template_->SetClassName(String::NewSymbol("Functor"));
-  template_->InstanceTemplate()->SetInternalFieldCount(1);
-  // Prototype
-  template_->PrototypeTemplate()->Set(String::NewSymbol("getName"),
-      FunctionTemplate::New(getName)->GetFunction());
+  template_->InstanceTemplate()->SetInternalFieldCount(2);
+  template_->InstanceTemplate()->SetAccessor(String::NewSymbol("name"), getName);
+  template_->InstanceTemplate()->SetAccessor(String::NewSymbol("arity"), getArity);
 
   Persistent<Function> constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Functor"), constructor);
@@ -37,10 +36,18 @@ Handle<Value> Functor::New(const Arguments& args) {
 }
 
 
-Handle<Value> Functor::getName(const Arguments& args) {
+Handle<Value> Functor::getName(Local<String> property, const AccessorInfo &info) {
   HandleScope scope;
 
-  Functor* obj = ObjectWrap::Unwrap<Functor>(args.This());
+  Functor* obj = ObjectWrap::Unwrap<Functor>(info.Holder());
 
-  return String::New(obj->name());
+  return scope.Close(String::New(obj->name()));
+}
+
+Handle<Value> Functor::getArity(Local<String> property, const AccessorInfo &info) {
+  HandleScope scope;
+
+  Functor* obj = ObjectWrap::Unwrap<Functor>(info.Holder());
+
+  return scope.Close(Number::New(obj->arity()));
 }

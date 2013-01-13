@@ -20,7 +20,11 @@
   },
   "dependencies": {
   },
+  "devDependencies": {
+    "mocha": "*"
+  },
   "scripts": {
-    "install": "node-gyp clean configure build"
+    "install": "node-gyp clean configure build",
+    "test": "node_modules\\.bin\\mocha.cmd"
   }
 }
