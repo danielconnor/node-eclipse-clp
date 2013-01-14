@@ -10,10 +10,9 @@
 #include "atom.h"
 #include "ref.h"
 
-
-
 using namespace v8;
 using namespace node;
+
 
 
 Handle<Value> init(const Arguments& args) {
@@ -47,26 +46,41 @@ Handle<Value> resume(const Arguments& args) {
   return scope.Close(Number::New(result));
 }
 
+#define GET_ARG(INDEX)                                             \
+  if(args[INDEX]->IsString()) {                                    \
+    ec_args[INDEX - 1] = EC_word(*String::Utf8Value(args[INDEX])); \
+  }                                                                \
+  else if(args[INDEX]->IsObject()) {                               \
+    if(Atom::template_->HasInstance(args[INDEX])) {                \
+      ec_args[INDEX - 1] = EC_word(*ObjectWrap::Unwrap<Atom>(      \
+        args[INDEX]->ToObject()));                                 \
+    }                                                              \
+    else if(Ref::template_->HasInstance(args[INDEX])) {            \
+      ec_args[INDEX - 1] = EC_word(*ObjectWrap::Unwrap<Ref>(       \
+        args[INDEX]->ToObject()));                                 \
+    }                                                              \
+  }
+
+
 Handle<Value> post_goal(const Arguments& args) {
   HandleScope scope;
 
   if(args[0]->IsObject()) {
+
+    EC_word *ec_args = new EC_word[args.Length() - 1];
 
     if(Functor::template_->HasInstance(args[0])) {
 
       Functor *functor = ObjectWrap::Unwrap<Functor>(
             args[0]->ToObject());
 
-      if(args[1]->IsString()) {
-        post_goal(term(*functor, EC_word(*String::Utf8Value(args[1]))));
-      }
-      else if(args[1]->IsObject()) {
-        Ref *ref = ObjectWrap::Unwrap<Ref>(
-          args[1]->ToObject());
-
-        post_goal(term(*functor, *ref));
+      for(int i = 1; i < args.Length(); i++) {
+        GET_ARG(i);
       }
 
+      post_goal(term(*functor, *ec_args));
+
+      delete[] ec_args;
     }
     else if(Atom::template_->HasInstance(args[0])) {
       Atom *atom = ObjectWrap::Unwrap<Atom>(
@@ -74,7 +88,9 @@ Handle<Value> post_goal(const Arguments& args) {
 
       post_goal(*atom);
     }
-
+  }
+  else if(args[0]->IsString()) {
+    post_goal(*String::Utf8Value(args[0]));
   }
 
 

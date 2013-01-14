@@ -1,4 +1,3 @@
- 
 
 
 
@@ -21,8 +20,6 @@
 
 
 
- 
- 
 
 
 
@@ -31,327 +28,147 @@
 
 
 
- 
 
 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
 
- 
 
- 
- 
 
- 
- 
 
- 
 
 
 
 
 
- 
- 
 
- 
- 
 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
 
- 
 
 
- 
- 
 
- 
 
 
- 
 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
 
 
 
 
- 
- 
- 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
- 
- 
 
- 
 
 
- 
 
 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
 
 
- 
 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
- 
 
- 
 
 
- 
- 
 
- 
 
 
- 
 
 
- 
- 
 
- 
- 
- 
 
- 
- 
- 
 
- 
- 
- 
 
 
- 
- 
 
 
 
@@ -361,22 +178,14 @@
 
 
 
- 
- 
- 
- 
 
- 
 
 
- 
- 
 
 
 
 
 
- 
 
 
 
@@ -385,7 +194,6 @@
 
 
 
- 
 
 
 
@@ -394,19 +202,14 @@
 
 
 
- 
- 
- 
 
 
 
- 
 
 
 
 
 
- 
 
 
 
@@ -418,7 +221,6 @@
 
 
 
- 
 
 
 
@@ -429,7 +231,6 @@
 
 
 
- 
 
 
 
@@ -440,7 +241,6 @@
 
 
 
- 
 
 
 
@@ -458,7 +258,6 @@
 
 
 
- 
 
 
 
@@ -467,7 +266,6 @@
 
 
 
- 
 
 
 
@@ -485,7 +283,6 @@
 
 
 
- 
 
 
 
@@ -514,7 +311,210 @@
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -542,31 +542,31 @@
 typedef void *generic_ptr;
 
 
- 
-
-
-
-
-typedef long long long_long;	
 
 
 
 
 
-typedef char		int8;			 
+typedef long long long_long;
+
+
+
+
+
+typedef char		int8;
 
 typedef unsigned char	uint8;
 
-typedef short		int16;			 
+typedef short		int16;
 typedef unsigned short	uint16;
 
 
-typedef int		int32;			 
+typedef int		int32;
 typedef unsigned int	uint32;
 
 
 
-typedef int		word;			 
+typedef int		word;
 typedef unsigned int	uword;
 
 
@@ -582,21 +582,21 @@ typedef int		a_mutex_t;
 
 
 
- 
+
 
 
 
 struct dict_item
 {
-    long		arity;		 
-    struct s_pword	*string;	 
+    long		arity;
+    struct s_pword	*string;
 
 };
 
 typedef struct dict_item	*dident;
 
 
- 
+
 
 
 
@@ -623,36 +623,36 @@ typedef union
 
 typedef struct s_pword
 {
-	value val;			 
-	type tag;			 
+	value val;
+	type tag;
 } pword;
 
 
- 
+
 
 
 
 typedef uword vmcode;
 
 
- 
 
 
 
 
 
-typedef uint32		aport_handle_t;		 
 
-typedef aport_handle_t	site_handle_t;		 
+typedef uint32		aport_handle_t;
+
+typedef aport_handle_t	site_handle_t;
 
 typedef struct st_handle_ds {
 	site_handle_t	site;
 	void_ptr	edge;
 	void_ptr	knot;
-} st_handle_t;					 
+} st_handle_t;
 
 
- 
+
 
 
 
@@ -664,20 +664,20 @@ typedef struct st_handle_ds {
 
 
 typedef struct stack_struct {
-	char	*name;		 
-	uword	*start,		 
-		*end,		 
-		*peak;		 
+	char	*name;
+	uword	*start,
+		*end,
+		*peak;
 } stack_pair[2];
 
- 
+
 
 
 
 enum ec_ref_state { EC_REF_FREE=0,EC_REF_C=1,EC_REF_P=2,EC_REF_C_P=3 };
 typedef struct eclipse_ref_
 {
-	pword var;  
+	pword var;
 	struct eclipse_ref_ * prev;
 	struct eclipse_ref_ * next;
 	enum ec_ref_state refstate;
@@ -686,7 +686,7 @@ typedef struct eclipse_ref_
 
 typedef ec_ref ec_refs;
 
- 
+
 
 
 
@@ -694,28 +694,28 @@ typedef ec_ref ec_refs;
 typedef void_ptr	stream_id;
 
 
- 
 
 
 
 
 
-typedef struct			 
+
+typedef struct
 {
     pword	debug_top;
       void_ptr   fail_trace;
     word	next_invoc;
 
-				 
+
       void_ptr   call_proc;
     word	call_port;
     word	call_invoc;
 
-    word	redo_level;	 
-    word	fail_drop;	 
-    word	fail_culprit;	 
+    word	redo_level;
+    word	fail_drop;
+    word	fail_culprit;
 
-    word	port_filter;	 
+    word	port_filter;
     word	min_invoc;
     word	max_invoc;
     word	min_level;
@@ -724,20 +724,20 @@ typedef struct
 } trace_t;
 
 
- 
 
 
 
 
 
 
- 
+
+
 
 
 
 typedef struct _dyn_event_q_slot_t {
     pword event_data;
-    struct _dyn_event_q_slot_t *next;      
+    struct _dyn_event_q_slot_t *next;
 } dyn_event_q_slot_t;
 
 typedef struct {
@@ -748,97 +748,97 @@ typedef struct {
 } dyn_event_q_t;
 
 
- 
+
 
 
 
 struct machine
 {
-    pword *	sp;		 
-    pword **	tt;		 
-    pword *	tg;		 
-    pword *	e;		 
-    pword *	eb;		 
-    pword *	gb;		 
-      pword *  
-		b;		 
-    pword *	lca;		 
-    int		vm_flags;	 
-    volatile int event_flags;	 
-    vmcode	*pp;		 
+    pword *	sp;
+    pword **	tt;
+    pword *	tg;
+    pword *	e;
+    pword *	eb;
+    pword *	gb;
+      pword *
+		b;
+    pword *	lca;
+    int		vm_flags;
+    volatile int event_flags;
+    vmcode	*pp;
 
-    pword *	de;		 
-    pword *	ld;		 
-    pword *	mu;		 
-    pword *	sv;		 
-    pword 	wl;		 
+    pword *	de;
+    pword *	ld;
+    pword *	mu;
+    pword *	sv;
+    pword 	wl;
 
 
-    int		wp;		 
-    pword	wp_stamp;	 
-    pword	postponed_list;	 
+    int		wp;
+    pword	wp_stamp;
+    pword	postponed_list;
 
-    pword *	pb;		 
-    pword *	ppb;		 
-    st_handle_t	*leaf;		 
-    int		load;		 
+    pword *	pb;
+    pword *	ppb;
+    st_handle_t	*leaf;
+    int		load;
 
-    pword *	occur_check_boundary;		 
+    pword *	occur_check_boundary;
     pword *	top_constructed_structure;
 
-    pword *	oracle;		 
-    char *	followed_oracle;  
-    char *	pending_oracle;	 
+    pword *	oracle;
+    char *	followed_oracle;
+    char *	pending_oracle;
     int		ntry;
 
     int		global_bip_error;
 
     trace_t	trace_data;
 
-    pword *	gctg;		 
+    pword *	gctg;
 
-    pword * volatile tg_soft_lim;	 
-    pword *	tg_soft_lim_shadow;	 
-    volatile int irq_faked_overflow;	 
+    pword * volatile tg_soft_lim;
+    pword *	tg_soft_lim_shadow;
+    volatile int irq_faked_overflow;
 
-    pword *	tg_limit;	 
+    pword *	tg_limit;
     pword **	tt_limit;
-    pword *	b_limit;	
-    pword *	sp_limit;	
+    pword *	b_limit;
+    pword *	sp_limit;
 
-    stack_pair	global_trail;	 
+    stack_pair	global_trail;
     stack_pair	control_local;
 
-    long	segment_size;	 
-    int		nesting_level;	 
+    long	segment_size;
+    int		nesting_level;
 
-    void_ptr	parser_env;	 
-      void_ptr  
-		it_buf;		 
+    void_ptr	parser_env;
+      void_ptr
+		it_buf;
 
-    pword	posted;		 
-    pword	posted_last;	 
+    pword	posted;
+    pword	posted_last;
 
     struct eclipse_ref_ allrefs;
 
     pword	*global_variable;
     pword	emu_args[256  + 1];
 
-    dyn_event_q_t dyn_event_q;  
+    dyn_event_q_t dyn_event_q;
 };
 
 
- 
+
 
 
 
 struct tag_descriptor {
-	type			tag;		 
-	long			super;		 
-	dident			tag_name;	 
-	dident			type_name;	 
-	int			numeric;	 
-	int			order;		 
+	type			tag;
+	long			super;
+	dident			tag_name;
+	dident			type_name;
+	int			numeric;
+	int			order;
 	int	(* write) (int,stream_id,value,type)  ;
 	int	(* string_size) (value,type,int)  ;
 	int	(* to_string) (value,type,char*,int)  ;
@@ -855,7 +855,7 @@ struct tag_descriptor {
 
 
 
- 
+
 
 
 
@@ -864,7 +864,7 @@ typedef void *t_ext_ptr;
 
 
 
- 
+
 typedef struct {
     void	(*free) (t_ext_ptr)  ;
     t_ext_ptr 	(*copy) (t_ext_ptr)  ;
@@ -877,33 +877,33 @@ typedef struct {
     int 	(*set) (t_ext_ptr, int, pword)  ;
 } t_ext_type;
 
- 
+
 
 
 
 typedef struct {
-    pword               goal;  
+    pword               goal;
     pword               module;
     word                ref_ctr;
     short               enabled;
-    short               defers;	 
+    short               defers;
 } t_heap_event;
 
 
- 
+
 
 
 
 struct shared_data_t {
 	a_mutex_t
-		general_lock,			 
-		mod_desc_lock,			 
-		prop_desc_lock,			 
-		    prop_list_lock,		 
-		proc_desc_lock,			 
-		    proc_list_lock,		 
-		    proc_chain_lock,		 
-		    assert_retract_lock;	 
+		general_lock,
+		mod_desc_lock,
+		prop_desc_lock,
+		    prop_list_lock,
+		proc_desc_lock,
+		    proc_list_lock,
+		    proc_chain_lock,
+		    assert_retract_lock;
 
 	int	global_flags,
 		print_depth,
@@ -917,19 +917,19 @@ struct shared_data_t {
 		user_error,
 		max_errors,
 		symbol_table_version,
-		dyn_global_clock,		 
-		dyn_killed_code_size,		 
-		dyn_num_of_kills;		 
+		dyn_global_clock,
+		dyn_killed_code_size,
+		dyn_num_of_kills;
 
 	void_ptr
-		dictionary,			 
+		dictionary,
 
-		abolished_dynamic_procedures,	 
-		abolished_procedures,		 
+		abolished_dynamic_procedures,
+		abolished_procedures,
 		compiled_structures,
-		dynamic_procedures,		 
-		global_procedures,		 
-		erased_db_refs,			 
+		dynamic_procedures,
+		global_procedures,
+		erased_db_refs,
 		constant_table,
 
 		stream_descriptors,
@@ -954,11 +954,11 @@ struct shared_data_t {
 		extension_ptr7;
 };
 
- 
 
 
 
- 
+
+
 
 
 
@@ -968,54 +968,54 @@ enum t_io_option { SHARED_IO,OWN_IO,MEMORY_IO } ;
 
 typedef struct
 {
-     
+
     int		option_p;
 
-     
+
     char	*mapfile;
 
-     
+
     int		parallel_worker;
 
-     
+
     int		io_option;
 
-     
+
     char	**Argv;
     int		Argc;
 
-     
+
     int		rl;
 
-     
+
     uword	localsize;
     uword	globalsize;
-     
+
     uword	privatesize;
     uword	sharedsize;
 
-     
+
     void	(*user_panic) (const char*,const char *)  ;
 
-    int		allocation; 
+    int		allocation;
 
-     
+
     char	*default_module;
 
-     
+
 
     char	*eclipse_home;
 
-     
+
     int		init_flags;
 
-     
+
     int		debug_level;
 
 } t_eclipse_options;
 
 
- 
+
 
 
 
@@ -1102,7 +1102,7 @@ typedef struct
 	equal,
 	erase_macro1,
 	err,
-	eerrno,			 
+	eerrno,
 	error,
 	error_handler,
 	exit_postponed,
@@ -1292,11 +1292,11 @@ typedef struct
 } standard_dids;
 
 
- 
 
 
 
-typedef struct 
+
+typedef struct
 {
     struct machine		m;
     struct shared_data_t	*shared;
@@ -1305,7 +1305,6 @@ typedef struct
 } t_eclipse_data;
 
 
- 
 
 
 
@@ -1324,7 +1323,8 @@ typedef struct
 
 
 
- 
+
+
 
 
 
@@ -1346,7 +1346,7 @@ enum {
 	EC_OPTION_DEBUG_LEVEL		=14
 };
 
- 
+
 
 
 
@@ -1367,19 +1367,19 @@ extern "C"  t_ext_type		*_imp__ec_xt_char_arr;
 
 
 
- 
+
 
 
 extern "C"  int	Winapi	ec_set_option_int  (int, int)  ;
 extern "C"  int	Winapi	ec_set_option_ptr  (int, void *)  ;
 
- 
+
 
 
 extern "C"  int	Winapi	ec_init  (void)  ;
 extern "C"  int	Winapi	ec_cleanup  (void)  ;
 
- 
+
 
 
 extern "C"  void	Winapi	ec_post_goal  (const pword)  ;
@@ -1395,7 +1395,7 @@ extern "C"  int	Winapi	ec_resume_status  (void)  ;
 extern "C"  int	Winapi	ec_resume_status_long  (long *)  ;
 extern "C"  int	Winapi	ec_wait_resume_status_long  (long *, int)  ;
 
- 
+
 
 
 
@@ -1404,12 +1404,12 @@ extern "C"  int	Winapi	ec_post_event_string  (const char *)  ;
 extern "C"  int	Winapi	ec_post_event_int  (int)  ;
 extern "C"  int	Winapi	ec_handle_events  (long *)  ;
 
- 
+
 
 
 extern "C"  void	Winapi	ec_cut_to_chp  (ec_ref)  ;
 
- 
+
 
 
 extern "C"  pword	Winapi	ec_string  (const char*)  ;
@@ -1419,7 +1419,7 @@ extern "C"  pword	Winapi	ec_long  (const long)  ;
 extern "C"  pword	Winapi	ec_double  (const double)  ;
 
 extern "C"  pword		ec_term  (dident, ...  )  ;
-			 
+
 
 extern "C"  pword	Winapi	ec_term_array  (const dident,const pword[])  ;
 extern "C"  pword	Winapi	ec_list  (const pword,const pword)  ;
@@ -1434,7 +1434,7 @@ extern "C"  pword	Winapi	ec_newvar  (void)  ;
 extern "C"  pword	Winapi	ec_nil  (void)  ;
 extern "C"  dident	Winapi	ec_did  (const char *,const int)  ;
 
- 
+
 
 
 extern "C"  int	Winapi	ec_get_string  (const pword,char**)  ;
@@ -1453,7 +1453,7 @@ extern "C"  int	Winapi	ec_is_var  (const pword)  ;
 
 
 
- 
+
 
 
 
@@ -1471,14 +1471,14 @@ extern "C"  void	Winapi	ec_ref_set  (ec_ref,const pword)  ;
 extern "C"  pword	Winapi	ec_ref_get  (const ec_ref)  ;
 
 
- 
+
 
 
 
 extern "C"  int	Winapi	ec_exec_string  (char*,ec_ref)  ;
 extern "C"  int	Winapi	ec_var_lookup  (ec_ref,char*,pword*)  ;
 
- 
+
 
 
 
@@ -1491,7 +1491,7 @@ extern "C"  int	Winapi	ec_make_suspension  (pword,int,void*,pword*)  ;
 extern "C"  int	Winapi	ec_schedule_suspensions  (pword,int)  ;
 extern "C"  int	Winapi	ec_free_handle  (const pword, const t_ext_type*)  ;
 
- 
+
 
 
 
@@ -1504,16 +1504,16 @@ extern "C"  void	Winapi	ec_int32_xdr  (int32 * l, char * dest)  ;
 extern "C"  void	Winapi	ec_xdr_int32  (char * buf , int32 * l)  ;
 extern "C"  void	Winapi	ec_xdr_double  (char * buf , double * d)  ;
 
- 
+
 
 
 
 extern "C"  char *	Winapi	ec_error_string  (int)  ;
-extern "C"  void		ec_panic  (const char* what, const char* where)  ;  
+extern "C"  void		ec_panic  (const char* what, const char* where)  ;
 
 
 
- 
+
 
 
 
@@ -1529,10 +1529,10 @@ enum EC_status
 	EC_yield = 4 ,
 	EC_running = 5 ,
 	EC_waitio = 6 ,
-	EC_flushio = 7 
+	EC_flushio = 7
 };
 
- 
+
 
 
 
@@ -1655,7 +1655,7 @@ class EC_word
 	    return t;
 	}
 
-	 
+
 
 
 
@@ -1736,41 +1736,41 @@ class EC_word
 	    EC_word t(ec_newvar());
 	    return t;
 	}
-	
+
 	friend EC_word
     	nil()
 	{
 	    EC_word t(ec_nil());
 	    return t;
 	}
-	
 
-     
+
+
 
 	int
 	is_atom(EC_atom* did)
 	{
 		return ec_get_atom(w,(dident*) did);
 	}
-	
+
 	int
 	is_string(char **s)
 	{
 		return ec_get_string(w,s);
 	}
-	
+
 	int
 	is_string(char **s, long *len)
 	{
 		return ec_get_string_length(w,s,len);
 	}
-	
+
 	int
 	is_long(long * l)
 	{
 		return ec_get_long(w,l);
 	}
-	
+
 	int
 	is_double(double * d)
 	{
@@ -1782,13 +1782,13 @@ class EC_word
 	{
 		return ec_get_handle(w,cl,data);
 	}
-	
+
 	int
 	free_handle(const t_ext_type *cl)
 	{
 		return ec_free_handle(w,cl);
 	}
-	
+
 	int
 	is_list(EC_word& hd, EC_word& tl)
 	{
@@ -1872,7 +1872,7 @@ class EC_word
 	{
 	    return ec_resume2(term.w,0);
 	}
-	
+
 	friend
 	int
 	post_event(EC_word term)
@@ -2005,7 +2005,7 @@ EC_ref::operator=(const EC_word word)
 	ec_refs_set(r,0,word.w);
 	return *this;
 }
-	
+
 __inline  EC_word
 term(const EC_functor functor,	const EC_word arg1,
 				const EC_word arg2 = 0,
@@ -2037,31 +2037,31 @@ term(const EC_functor functor,	const EC_word arg1,
 
 
 
-__inline  EC_word  operator+ (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.plus )),a,b);	} 
-__inline  EC_word  operator+ (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.plus1 )),a);	} 
-__inline  EC_word  operator- (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.minus )),a,b);	} 
-__inline  EC_word  operator- (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.minus1 )),a);	} 
-__inline  EC_word  operator* (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.times )),a,b);	} 
-__inline  EC_word  operator/ (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.quotient )),a,b);	} 
-__inline  EC_word  operator% (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.modulo )),a,b);	} 
-__inline  EC_word  operator>> (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.rshift )),a,b);	} 
-__inline  EC_word  operator<< (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.lshift )),a,b);	} 
-__inline  EC_word  operator& (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.and2 )),a,b);	} 
-__inline  EC_word  operator| (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.or2 )),a,b);	} 
-__inline  EC_word  pow (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.power )),a,b);	} 
-__inline  EC_word  operator~ (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.bitnot )),a);	} 
-__inline  EC_word  abs (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.abs )),a);	} 
-__inline  EC_word  sin (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.sin )),a);	} 
-__inline  EC_word  cos (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.cos )),a);	} 
-__inline  EC_word  tan (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.tan )),a);	} 
-__inline  EC_word  asin (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.asin )),a);	} 
-__inline  EC_word  acos (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.acos )),a);	} 
-__inline  EC_word  atan (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.atan )),a);	} 
-__inline  EC_word  sqrt (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.sqrt )),a);	} 
-__inline  EC_word  ln (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.ln )),a);	} 
-__inline  EC_word  fix (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.fix )),a);	} 
-__inline  EC_word  round (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.round )),a);	} 
- 
+__inline  EC_word  operator+ (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.plus )),a,b);	}
+__inline  EC_word  operator+ (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.plus1 )),a);	}
+__inline  EC_word  operator- (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.minus )),a,b);	}
+__inline  EC_word  operator- (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.minus1 )),a);	}
+__inline  EC_word  operator* (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.times )),a,b);	}
+__inline  EC_word  operator/ (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.quotient )),a,b);	}
+__inline  EC_word  operator% (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.modulo )),a,b);	}
+__inline  EC_word  operator>> (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.rshift )),a,b);	}
+__inline  EC_word  operator<< (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.lshift )),a,b);	}
+__inline  EC_word  operator& (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.and2 )),a,b);	}
+__inline  EC_word  operator| (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.or2 )),a,b);	}
+__inline  EC_word  pow (const EC_word a,const EC_word b)	{	return term(EC_functor((  (*_imp__ec_) .d.power )),a,b);	}
+__inline  EC_word  operator~ (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.bitnot )),a);	}
+__inline  EC_word  abs (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.abs )),a);	}
+__inline  EC_word  sin (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.sin )),a);	}
+__inline  EC_word  cos (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.cos )),a);	}
+__inline  EC_word  tan (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.tan )),a);	}
+__inline  EC_word  asin (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.asin )),a);	}
+__inline  EC_word  acos (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.acos )),a);	}
+__inline  EC_word  atan (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.atan )),a);	}
+__inline  EC_word  sqrt (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.sqrt )),a);	}
+__inline  EC_word  ln (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.ln )),a);	}
+__inline  EC_word  fix (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.fix )),a);	}
+__inline  EC_word  round (const EC_word a)	{	return term(EC_functor((  (*_imp__ec_) .d.round )),a);	}
+
 
 
 

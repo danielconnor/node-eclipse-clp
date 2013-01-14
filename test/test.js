@@ -34,9 +34,6 @@ describe("eclipse", function() {
         assert.equal(arity, functor.arity);
       });
     });
-
-
   });
-
 });
 
