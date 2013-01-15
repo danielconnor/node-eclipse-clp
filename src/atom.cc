@@ -5,6 +5,7 @@ using namespace v8;
 
 
 Persistent<FunctionTemplate> Atom::template_;
+Persistent<Function> Atom::constructor;
 
 void Atom::Init(Handle<Object> target) {
   // Prepare constructor template
@@ -15,7 +16,7 @@ void Atom::Init(Handle<Object> target) {
   template_->InstanceTemplate()->SetInternalFieldCount(1);
   template_->InstanceTemplate()->SetAccessor(String::NewSymbol("name"), getName);
 
-  Persistent<Function> constructor = Persistent<Function>::New(template_->GetFunction());
+  constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Atom"), constructor);
 }
 
@@ -27,6 +28,18 @@ Handle<Value> Atom::New(const Arguments& args) {
 
   return args.This();
 }
+
+
+Handle<Value> Atom::NewInstance(Handle<Value> name) {
+  HandleScope scope;
+
+  const unsigned argc = 1;
+  Handle<Value> argv[argc] = { name };
+  Local<Object> instance = constructor->NewInstance(argc, argv);
+
+  return scope.Close(instance);
+}
+
 
 Handle<Value> Atom::getName(Local<String> property, const AccessorInfo &info) {
   HandleScope scope;

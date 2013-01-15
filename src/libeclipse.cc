@@ -6,13 +6,15 @@
 #include <iostream>
 
 #include "eclipse_h.h"
+
 #include "functor.h"
 #include "atom.h"
+
+
 #include "ref.h"
 
 using namespace v8;
 using namespace node;
-
 
 
 Handle<Value> init(const Arguments& args) {
@@ -92,7 +94,6 @@ Handle<Value> post_goal(const Arguments& args) {
   else if(args[0]->IsString()) {
     post_goal(*String::Utf8Value(args[0]));
   }
-
 
   return scope.Close(Undefined());
 }

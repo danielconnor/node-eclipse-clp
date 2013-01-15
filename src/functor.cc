@@ -4,6 +4,7 @@
 using namespace v8;
 
 Persistent<FunctionTemplate> Functor::template_;
+Persistent<Function> Functor::constructor;
 
 
 void Functor::Init(Handle<Object> target) {
@@ -17,7 +18,7 @@ void Functor::Init(Handle<Object> target) {
   template_->InstanceTemplate()->SetAccessor(String::NewSymbol("name"), getName);
   template_->InstanceTemplate()->SetAccessor(String::NewSymbol("arity"), getArity);
 
-  Persistent<Function> constructor = Persistent<Function>::New(template_->GetFunction());
+  constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Functor"), constructor);
 }
 
@@ -33,6 +34,16 @@ Handle<Value> Functor::New(const Arguments& args) {
   functor->Wrap(args.This());
 
   return args.This();
+}
+
+Handle<Value> Functor::NewInstance(Handle<Value> name, Handle<Value> arity) {
+  HandleScope scope;
+
+  const unsigned argc = 2;
+  Handle<Value> argv[argc] = { name, arity };
+  Local<Object> instance = constructor->NewInstance(argc, argv);
+
+  return scope.Close(instance);
 }
 
 

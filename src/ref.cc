@@ -1,5 +1,5 @@
-#include <node.h>
 #include "ref.h"
+#include "util.h"
 
 using namespace v8;
 
@@ -10,10 +10,12 @@ void Ref::Init(Handle<Object> target) {
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
 
   template_ = Persistent<FunctionTemplate>::New(tpl);
-  template_->InstanceTemplate()->SetInternalFieldCount(1);
+  template_->InstanceTemplate()->SetInternalFieldCount(2);
   // Prototype
   template_->PrototypeTemplate()->Set(String::NewSymbol("cutTo"),
       FunctionTemplate::New(cutTo)->GetFunction());
+  template_->PrototypeTemplate()->Set(String::NewSymbol("getValues"),
+      FunctionTemplate::New(getValues)->GetFunction());
 
   Persistent<Function> constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Ref"), constructor);
@@ -28,6 +30,14 @@ Handle<Value> Ref::New(const Arguments& args) {
   return args.This();
 }
 
+
+Handle<Value> Ref::getValues(const Arguments& args) {
+  HandleScope scope;
+
+  Ref* ref = ObjectWrap::Unwrap<Ref>(args.This());
+
+  return scope.Close(prologToJS(*ref));
+}
 
 Handle<Value> Ref::cutTo(const Arguments& args) {
   HandleScope scope;

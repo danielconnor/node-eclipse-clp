@@ -27,12 +27,17 @@ var writeln = new eclipse.Functor("writeln",1);
 var pred = new eclipse.Ref();
 var fail = new eclipse.Atom("fail");
 
-eclipse.post_goal(new eclipse.Functor("current_built_in", 1), pred);
-while (ec_status.EC_succeed == eclipse.resume())
-{
-    eclipse.post_goal(writeln, pred);
-    eclipse.post_goal(fail);
-}
+eclipse.post_goal(lib, "ptc_solver");
+
+eclipse.post_goal(submit_string, "ptc_solver__clean_up, ptc_solver__default_declarations");
+eclipse.post_goal(submit_string, "ptc_solver__variable([A, B], integer)");
+eclipse.post_goal(submit_string, "ptc_solver__sdl(A>45 and B-5=A*A)");
+eclipse.post_goal(submit_string, "ptc_solver__label_integers([A,B])");
+eclipse.post_goal(new eclipse.Functor("ptc_solver__get_all_variables", 1), pred);
+
+eclipse.resume();
+
+console.log(pred.getValues());
 
 console.log(ec_status[eclipse.cleanup()]);
 
