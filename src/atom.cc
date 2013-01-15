@@ -29,15 +29,16 @@ Handle<Value> Atom::New(const Arguments& args) {
   return args.This();
 }
 
-
-Handle<Value> Atom::NewInstance(Handle<Value> name) {
+Handle<Value> Atom::NewInstance(char *name) {
   HandleScope scope;
 
-  const unsigned argc = 1;
-  Handle<Value> argv[argc] = { name };
-  Local<Object> instance = constructor->NewInstance(argc, argv);
+  Local<Object> instance = constructor->NewInstance(1, String::New(name));
 
   return scope.Close(instance);
+}
+
+Handle<Value> Atom::NewInstance(EC_atom &atom) {
+  return scope.Close(NewInstance(atom->name()));
 }
 
 

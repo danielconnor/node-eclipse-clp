@@ -36,15 +36,24 @@ Handle<Value> Functor::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> Functor::NewInstance(Handle<Value> name, Handle<Value> arity) {
+Handle<Value> Functor::NewInstance(char *name, unsigned int arity) {
   HandleScope scope;
 
   const unsigned argc = 2;
-  Handle<Value> argv[argc] = { name, arity };
+  Handle<Value> argv[argc] = {
+    String::New(name),
+    Number::New(arity)
+  };
   Local<Object> instance = constructor->NewInstance(argc, argv);
 
   return scope.Close(instance);
 }
+
+
+Handle<Value> Functor::NewInstance(EC_word &functor) {
+  return scope.Close(NewInstance(functor->name(), functor->arity()));
+}
+
 
 
 Handle<Value> Functor::getName(Local<String> property, const AccessorInfo &info) {
