@@ -38,7 +38,6 @@ Handle<Value> Functor::New(const Arguments& args) {
 
 Handle<Value> Functor::NewInstance(char *name, unsigned int arity) {
   HandleScope scope;
-
   const unsigned argc = 2;
   Handle<Value> argv[argc] = {
     String::New(name),
@@ -50,10 +49,9 @@ Handle<Value> Functor::NewInstance(char *name, unsigned int arity) {
 }
 
 
-Handle<Value> Functor::NewInstance(EC_word &functor) {
-  return scope.Close(NewInstance(functor->name(), functor->arity()));
+Handle<Value> Functor::NewInstance(EC_functor *functor) {
+  return NewInstance(functor->name(), functor->arity());
 }
-
 
 
 Handle<Value> Functor::getName(Local<String> property, const AccessorInfo &info) {

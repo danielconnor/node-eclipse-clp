@@ -17,7 +17,9 @@
         "src/libeclipse.cc",
         "src/atom.cc",
         "src/functor.cc",
-        "src/ref.cc"
+        "src/ref.cc",
+        "src/compound.cc",
+        "src/util.cc"
       ]
     }
   ]

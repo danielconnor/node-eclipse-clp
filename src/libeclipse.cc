@@ -1,5 +1,4 @@
 
-#include <v8.h>
 #include <node.h>
 #include <string.h>
 #include <stdlib.h>
@@ -9,6 +8,7 @@
 
 #include "functor.h"
 #include "atom.h"
+#include "compound.h"
 
 
 #include "ref.h"
@@ -114,6 +114,7 @@ void Init(Handle<Object> target) {
   Functor::Init(target);
   Ref::Init(target);
   Atom::Init(target);
+  Compound::Init(target);
 }
 
 

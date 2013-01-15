@@ -10,13 +10,13 @@ class Atom : public EC_atom, public node::ObjectWrap {
   static v8::Persistent<v8::Function> constructor;
   static void Init(v8::Handle<v8::Object>);
   static v8::Handle<v8::Value> NewInstance(char *);
-  static v8::Handle<v8::Value> NewInstance(EC_word&) {
+  static v8::Handle<v8::Value> NewInstance(EC_atom&);
 
  private:
-  Atom(char *s) : EC_atom(s), ObjectWrap() {};
+  Atom(char *s) : EC_atom(s) {};
 
   static v8::Handle<v8::Value> New(const v8::Arguments&);
-  static v8::Handle<v8::Value> getName(v8::Local<v8::String>, const v8::AccessorInfo&);
+  static v8::Handle<v8::Value> getName(v8::Local<v8::String> , const v8::AccessorInfo&);
 };
 
 #endif
