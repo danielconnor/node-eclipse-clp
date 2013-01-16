@@ -19,9 +19,6 @@ using namespace node;
 
 Handle<Value> init(const Arguments& args) {
   HandleScope scope;
-
-  ec_set_option_ptr(EC_OPTION_DEFAULT_MODULE, "ptc_solver");
-
   return scope.Close(Number::New(ec_init()));
 }
 

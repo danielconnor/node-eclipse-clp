@@ -18,28 +18,28 @@ var ec_status = {
   EC_flushio: 6
 };
 
-// console.log(ec_status[eclipse.init()]);
+console.log(ec_status[eclipse.init()]);
 
-// var lib = new eclipse.Functor("lib", 1);
-// var submit_string = new eclipse.Functor("ptc_solver__submit_string", 1);
-// var writeln = new eclipse.Functor("writeln",1);
+var lib = new eclipse.Functor("lib", 1);
+var submit_string = new eclipse.Functor("ptc_solver__submit_string", 1);
+var writeln = new eclipse.Functor("writeln",1);
 
-// var pred = new eclipse.Ref();
-// var fail = new eclipse.Atom("fail");
+var pred = new eclipse.Ref();
+var fail = new eclipse.Atom("fail");
 
-// eclipse.post_goal(eclipse.term(lib, "ptc_solver"));
+eclipse.post_goal(eclipse.term(lib, "ptc_solver"));
 
-// eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__clean_up, ptc_solver__default_declarations"));
-// eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__variable([A, B], integer)"));
-// eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__sdl(A>45 and B-5=A*A)"));
-// eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__label_integers([A,B])"));
-// eclipse.post_goal(eclipse.term(new eclipse.Functor("ptc_solver__get_all_variables", 1), pred));
+eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__clean_up, ptc_solver__default_declarations"));
+eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__variable([A, B], integer)"));
+eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__sdl(A>45 and B-5=A*A)"));
+eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__label_integers([A,B])"));
+eclipse.post_goal(eclipse.term(new eclipse.Functor("ptc_solver__get_all_variables", 1), pred));
 
-// eclipse.resume();
+eclipse.resume();
 
-// console.log(pred.getValues());
+console.log(pred.getValues());
 
-// console.log(ec_status[eclipse.cleanup()]);
+console.log(ec_status[eclipse.cleanup()]);
 
 eclipse.status = ec_status;
 

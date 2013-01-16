@@ -18,7 +18,8 @@ class Compound : public EC_word, public node::ObjectWrap {
  private:
 
   static v8::Handle<v8::Value> New(const v8::Arguments&);
-  static v8::Handle<v8::Value> getArg(const v8::Arguments&);
+  static v8::Handle<v8::Array> getArgs(const v8::AccessorInfo&);
+  static v8::Handle<v8::Value> getArg(uint32_t, const v8::AccessorInfo&);
   static v8::Handle<v8::Value> getFunctor(v8::Local<v8::String>, const v8::AccessorInfo&);
   static v8::Handle<v8::Value> getArity(v8::Local<v8::String>, const v8::AccessorInfo&);
 };

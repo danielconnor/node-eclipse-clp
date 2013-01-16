@@ -17,9 +17,7 @@ void Compound::Init(Handle<Object> target) {
   template_->InstanceTemplate()->SetAccessor(String::NewSymbol("functor"), getFunctor);
   template_->InstanceTemplate()->SetAccessor(String::NewSymbol("arity"), getArity);
 
-
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("getArg"),
-      FunctionTemplate::New(getArg)->GetFunction());
+  template_->InstanceTemplate()->SetIndexedPropertyHandler(getArg, 0, 0, 0, getArgs);
 
   constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Compound"), constructor);
@@ -68,20 +66,37 @@ Handle<Value> Compound::getArity(Local<String> property, const AccessorInfo &inf
   return scope.Close(Number::New(compound->arity()));
 }
 
-Handle<Value> Compound::getArg(const v8::Arguments& args) {
+Handle<Array> Compound::getArgs(const AccessorInfo &info) {
   HandleScope scope;
 
-  Compound* compound = ObjectWrap::Unwrap<Compound>(args.This());
+  Compound* compound = ObjectWrap::Unwrap<Compound>(info.Holder());
+  int arity = compound->arity();
+  Handle<Array> items = Array::New(arity);
 
-  if(!args[0]->IsInt32())
-  {
-    return scope.Close(Undefined());
+  for(int i = 1; i <= arity; i++) {
+    items->Set(i - 1, Number::New(i));
   }
 
-  EC_word arg;
+  return scope.Close(items);
+}
 
-  if(EC_succeed == compound->arg(args[0]->Int32Value(), arg)) {
-    return scope.Close(prologToJS(arg));
+
+Handle<Value> Compound::getArg(unsigned int index, const AccessorInfo &info) {
+  HandleScope scope;
+
+  if(index == 0) {
+    return scope.Close(getFunctor(String::New("functor"), info));
+  }
+
+  Compound* compound = ObjectWrap::Unwrap<Compound>(info.Holder());
+
+  if(index <= compound->arity())
+  {
+    EC_word arg;
+
+    if(EC_succeed == compound->arg(index, arg)) {
+      return scope.Close(prologToJS(arg));
+    }
   }
 
   return scope.Close(Undefined());

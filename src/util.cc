@@ -115,4 +115,5 @@ EC_word jsToProlog(Handle<Value> value) {
 
   }
 
+  return EC_word();
 }
