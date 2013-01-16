@@ -35,5 +35,43 @@ describe("eclipse", function() {
       });
     });
   });
+
+  describe("term", function() {
+    var writeln = new eclipse.Functor("writeln", 1),
+      args = ["1"],
+      term = eclipse.term(writeln, args[0]);
+
+    it("should return an instance of Compound", function() {
+
+      assert(term instanceof eclipse.Compound);
+
+    });
+
+    describe("#functor", function() {
+
+      it("should be the same as the one it was created with", function() {
+
+        assert.strictEqual(term.functor.name, writeln.name);
+        assert.strictEqual(term.functor.arity, writeln.arity);
+
+      });
+
+    });
+
+    describe("#getArg", function() {
+
+      it("the arguments should contain the same ones as it was created with", function() {
+
+        args.forEach(function(v, i) {
+          assert.strictEqual(term.getArg(i + 1), v);
+        });
+
+      });
+
+    });
+
+
+
+  });
 });
 
