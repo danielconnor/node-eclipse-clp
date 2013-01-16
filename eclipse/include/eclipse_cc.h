@@ -1533,7 +1533,6 @@ enum EC_status
 };
 
 
-#include <iostream>
 
 
 class EC_atom;
@@ -1612,7 +1611,6 @@ class EC_word
     	EC_word&
 	operator=(const EC_word& ew)
 	{
-    std::cout << "assign\n";
 	    w = ew.w;
 	    return *this;
 	}
@@ -1835,7 +1833,6 @@ class EC_word
 	friend int
 	operator==(const EC_word& term1, const EC_word& term2)
 	{
-    std::cout << "compare\n";
 	    return ec_compare(term1.w, term2.w) == 0;
 	}
 

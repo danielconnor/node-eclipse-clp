@@ -1,5 +1,6 @@
 #include "util.h"
 
+using namespace node;
 using namespace v8;
 using namespace std;
 
@@ -31,26 +32,22 @@ Handle<Value> prologToJS(EC_word did)
 
   if(EC_succeed == did.is_long(&long_val))
   {
-    cout << "long :" << long_val << "\n";
     return scope.Close(Number::New(long_val));
   }
 
   if(EC_succeed == did.is_double(&double_val))
   {
-    cout << "double :" << double_val << "\n";
     return scope.Close(Number::New(double_val));
   }
 
   if(EC_succeed == did.is_string(&string_val))
   {
-    cout << "string :" << string_val << "\n";
     return scope.Close(String::New(string_val));
   }
 
   if(EC_succeed == did.is_list(head, tail))
   {
-    cout << "list\n";
-    Local<Array> list = v8::Array::New(1);
+    Local<Array> list = Array::New(1);
 
     list->Set(v8::Number::New(0), prologToJS(head));
 
@@ -63,9 +60,59 @@ Handle<Value> prologToJS(EC_word did)
 
   if(EC_succeed == did.functor(&functor_val))
   {
-    cout << "compound\n";
     return scope.Close(Compound::NewInstance(did));
   }
 
   return scope.Close(Undefined());
+}
+
+
+EC_word jsToProlog(Handle<Value> value) {
+
+  if(value->IsString()) {
+    return EC_word(*String::Utf8Value(value));
+  }
+
+  if(value->IsArray()) {
+    Handle<Array> array = Handle<Array>::Cast(value);;
+
+    EC_word word_list(ec_nil());
+
+    for(int i = 0; i < array->Length(); i++) {
+      word_list = list(jsToProlog(array->Get(i)), word_list);
+    }
+
+    return word_list;
+  }
+
+  if(value->IsNumber()) {
+
+    if(value->IsInt32()) {
+      return EC_word(value->Int32Value());
+    }
+    else {
+      return EC_word(value->NumberValue());
+    }
+  }
+
+  if(value->IsObject()) {
+
+    if(Atom::template_->HasInstance(value)) {
+      return EC_word(*ObjectWrap::Unwrap<Atom>(value->ToObject()));
+    }
+
+    if(Ref::template_->HasInstance(value)) {
+      return EC_word(*ObjectWrap::Unwrap<Ref>(value->ToObject()));
+    }
+
+    if(Functor::template_->HasInstance(value)) {
+      // return EC_word(*ObjectWrap::Unwrap<Functor>(value->ToObject()));
+    }
+
+    if(Compound::template_->HasInstance(value)) {
+      return EC_word(*ObjectWrap::Unwrap<Compound>(value->ToObject()));
+    }
+
+  }
+
 }
