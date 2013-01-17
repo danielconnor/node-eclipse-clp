@@ -1,6 +1,5 @@
 #include "compound.h"
 
-
 using namespace v8;
 using namespace std;
 
@@ -23,6 +22,7 @@ void Compound::Init(Handle<Object> target) {
   target->Set(String::NewSymbol("Compound"), constructor);
 }
 
+
 Handle<Value> Compound::New(const Arguments& args) {
   HandleScope scope;
 
@@ -32,16 +32,20 @@ Handle<Value> Compound::New(const Arguments& args) {
   return args.This();
 }
 
+
 Handle<Value> Compound::NewInstance(EC_word &word) {
   HandleScope scope;
 
   Local<Object> instance = constructor->NewInstance(0, NULL);
   Compound* compound = ObjectWrap::Unwrap<Compound>(instance);
 
+  // Set the reference to the prolog object here because we have no way of
+  // passing it to the constructor without being messy.
   compound->w = word.w;
 
   return scope.Close(instance);
 }
+
 
 Handle<Value> Compound::getFunctor(Local<String> property, const AccessorInfo &info) {
   HandleScope scope;
@@ -52,11 +56,10 @@ Handle<Value> Compound::getFunctor(Local<String> property, const AccessorInfo &i
   if(EC_succeed == compound->functor(&f)) {
     return scope.Close(Functor::NewInstance(&f));
   }
-  else {
-    return scope.Close(Undefined());
-  }
 
+  return scope.Close(Undefined());
 }
+
 
 Handle<Value> Compound::getArity(Local<String> property, const AccessorInfo &info) {
   HandleScope scope;
@@ -65,6 +68,7 @@ Handle<Value> Compound::getArity(Local<String> property, const AccessorInfo &inf
 
   return scope.Close(Number::New(compound->arity()));
 }
+
 
 Handle<Array> Compound::getArgs(const AccessorInfo &info) {
   HandleScope scope;
@@ -81,7 +85,7 @@ Handle<Array> Compound::getArgs(const AccessorInfo &info) {
 }
 
 
-Handle<Value> Compound::getArg(unsigned int index, const AccessorInfo &info) {
+Handle<Value> Compound::getArg(unsigned index, const AccessorInfo &info) {
   HandleScope scope;
 
   if(index == 0) {
@@ -90,7 +94,7 @@ Handle<Value> Compound::getArg(unsigned int index, const AccessorInfo &info) {
 
   Compound* compound = ObjectWrap::Unwrap<Compound>(info.Holder());
 
-  if(index <= compound->arity())
+  if(index <= (unsigned)compound->arity())
   {
     EC_word arg;
 

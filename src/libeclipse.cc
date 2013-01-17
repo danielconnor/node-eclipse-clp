@@ -1,17 +1,14 @@
-
 #include <node.h>
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
 
 #include "eclipse_h.h"
-
 #include "functor.h"
 #include "atom.h"
 #include "compound.h"
-
-
 #include "ref.h"
+#include "util.h"
 
 using namespace v8;
 using namespace node;
@@ -22,11 +19,12 @@ Handle<Value> init(const Arguments& args) {
   return scope.Close(Number::New(ec_init()));
 }
 
+
 Handle<Value> cleanup(const Arguments& args) {
   HandleScope scope;
-
   return scope.Close(Number::New(ec_cleanup()));
 }
+
 
 Handle<Value> resume(const Arguments& args) {
   HandleScope scope;
@@ -49,13 +47,14 @@ Handle<Value> resume(const Arguments& args) {
 Handle<Value> term(const Arguments& args) {
   HandleScope scope;
 
-  EC_word *ec_args = new EC_word[args.Length() - 1];
-
   if(Functor::template_->HasInstance(args[0])) {
+    EC_word *ec_args = new EC_word[args.Length() - 1];
 
     Functor *functor = ObjectWrap::Unwrap<Functor>(
           args[0]->ToObject());
 
+    // convert all javascript values to prolog ones so they
+    // can be passed to term.
     for(int i = 1; i < args.Length(); i++) {
       ec_args[i - 1] = jsToProlog(args[i]);
     }
@@ -70,6 +69,7 @@ Handle<Value> term(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
+
 Handle<Value> post_goal(const Arguments& args) {
   HandleScope scope;
 
@@ -83,22 +83,14 @@ Handle<Value> post_goal(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
+
 void Init(Handle<Object> target) {
-  target->Set(String::NewSymbol("init"),
-      FunctionTemplate::New(init)->GetFunction());
 
-  target->Set(String::NewSymbol("cleanup"),
-      FunctionTemplate::New(cleanup)->GetFunction());
-
-  target->Set(String::NewSymbol("resume"),
-      FunctionTemplate::New(resume)->GetFunction());
-
-  target->Set(String::NewSymbol("post_goal"),
-    FunctionTemplate::New(post_goal)->GetFunction());
-
-  target->Set(String::NewSymbol("term"),
-    FunctionTemplate::New(term)->GetFunction());
-
+  NODE_SET_METHOD(target, "init", init);
+  NODE_SET_METHOD(target, "cleanup", cleanup);
+  NODE_SET_METHOD(target, "resume", resume);
+  NODE_SET_METHOD(target, "post_goal", post_goal);
+  NODE_SET_METHOD(target, "term", term);
 
   Functor::Init(target);
   Ref::Init(target);

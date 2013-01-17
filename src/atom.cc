@@ -1,8 +1,6 @@
-#include <node.h>
 #include "atom.h"
 
 using namespace v8;
-
 
 Persistent<FunctionTemplate> Atom::template_;
 Persistent<Function> Atom::constructor;
@@ -20,6 +18,7 @@ void Atom::Init(Handle<Object> target) {
   target->Set(String::NewSymbol("Atom"), constructor);
 }
 
+
 Handle<Value> Atom::New(const Arguments& args) {
   HandleScope scope;
 
@@ -28,6 +27,7 @@ Handle<Value> Atom::New(const Arguments& args) {
 
   return args.This();
 }
+
 
 Handle<Value> Atom::NewInstance(char *name) {
   HandleScope scope;
@@ -38,6 +38,7 @@ Handle<Value> Atom::NewInstance(char *name) {
 
   return scope.Close(instance);
 }
+
 
 Handle<Value> Atom::NewInstance(EC_atom& atom) {
   return NewInstance(atom.name());

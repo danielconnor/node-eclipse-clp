@@ -3,6 +3,7 @@
 
 #include <node.h>
 #include "eclipse_h.h"
+#include "util.h"
 
 
 class Ref : public EC_ref, public node::ObjectWrap {
@@ -12,7 +13,7 @@ class Ref : public EC_ref, public node::ObjectWrap {
 
  private:
 
-  Ref() : EC_ref() {}
+  Ref() : EC_ref(), ObjectWrap() {}
 
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
   static v8::Handle<v8::Value> cutTo(const v8::Arguments& args);

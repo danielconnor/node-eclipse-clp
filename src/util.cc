@@ -26,7 +26,7 @@ Handle<Value> prologToJS(EC_word did)
       return scope.Close(Atom::NewInstance(atom_val));
     }
     else {
-      cout << "functor \n";
+      // cout << "functor \n";
     }
   }
 
@@ -78,7 +78,7 @@ EC_word jsToProlog(Handle<Value> value) {
 
     EC_word word_list(ec_nil());
 
-    for(int i = 0; i < array->Length(); i++) {
+    for(unsigned i = 0; i < array->Length(); i++) {
       word_list = list(jsToProlog(array->Get(i)), word_list);
     }
 

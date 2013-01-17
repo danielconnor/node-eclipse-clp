@@ -1,4 +1,3 @@
-#include <node.h>
 #include "functor.h"
 
 using namespace v8;
@@ -9,7 +8,6 @@ Persistent<Function> Functor::constructor;
 
 void Functor::Init(Handle<Object> target) {
   // Prepare constructor template
-
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
 
   template_ = Persistent<FunctionTemplate>::New(tpl);
@@ -21,6 +19,7 @@ void Functor::Init(Handle<Object> target) {
   constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Functor"), constructor);
 }
+
 
 Handle<Value> Functor::New(const Arguments& args) {
   HandleScope scope;
@@ -35,6 +34,7 @@ Handle<Value> Functor::New(const Arguments& args) {
 
   return args.This();
 }
+
 
 Handle<Value> Functor::NewInstance(char *name, unsigned int arity) {
   HandleScope scope;
@@ -61,6 +61,7 @@ Handle<Value> Functor::getName(Local<String> property, const AccessorInfo &info)
 
   return scope.Close(String::New(obj->name()));
 }
+
 
 Handle<Value> Functor::getArity(Local<String> property, const AccessorInfo &info) {
   HandleScope scope;

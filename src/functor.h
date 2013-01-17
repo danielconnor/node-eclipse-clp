@@ -15,7 +15,7 @@ class Functor : public EC_functor, public node::ObjectWrap {
 
  private:
 
-  Functor(char *name, int arity) : EC_functor(name, arity) {}
+  Functor(char *name, int arity) : EC_functor(name, arity), ObjectWrap() {}
 
   static v8::Handle<v8::Value> New(const v8::Arguments&);
   static v8::Handle<v8::Value> getName(v8::Local<v8::String>, const v8::AccessorInfo&);

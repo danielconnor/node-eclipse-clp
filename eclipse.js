@@ -44,3 +44,4 @@ console.log(ec_status[eclipse.cleanup()]);
 eclipse.status = ec_status;
 
 module.exports = eclipse;
+

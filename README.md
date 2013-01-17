@@ -1,7 +1,11 @@
 node-eclipse-clp
 ================
 
-## Requirements
-- node.js installed - [http://nodejs.org/](http://nodejs.org/)
-- ECLiPSe Constraint programming system installed - [http://eclipseclp.org/](http://eclipseclp.org/)
-- The path to eclipse.dll must be in the `PATH`. This is normally at: `installation_path/lib/i386_nt`
+## Setting up
+- Install node.js - [http://nodejs.org/](http://nodejs.org/)
+- Install ECLiPSe Constraint programming system - [http://eclipseclp.org/](http://eclipseclp.org/)
+- The path to eclipse.dll must be available on your path. This is located at `eclipse_installation_path/lib/i386_nt`
+- Get the source code `git clone git://github.com/danielconnor/node-eclipse-clp.git`
+- Set up and build the module `npm install`
+
+

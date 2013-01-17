@@ -58,18 +58,24 @@ describe("eclipse", function() {
 
     });
 
-    describe("#getArg", function() {
+    describe("#[]", function() {
 
       it("the arguments should contain the same ones as it was created with", function() {
 
         args.forEach(function(v, i) {
-          assert.strictEqual(term.getArg(i + 1), v);
+          assert.strictEqual(term[i + 1], v);
         });
 
       });
 
-    });
+      it("[0] should contain .functor", function() {
 
+        assert.strictEqual(term.functor.name, term[0].name);
+        assert.strictEqual(term.functor.arity, term[0].arity);
+
+      });
+
+    });
 
 
   });
