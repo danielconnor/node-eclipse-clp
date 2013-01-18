@@ -109,11 +109,7 @@ EC_word jsToProlog(Handle<Value> value) {
     }
 
     if(Functor::template_->HasInstance(value)) {
-      EC_word w;
-
-      w.w = ec_atom((*ObjectWrap::Unwrap<Functor>(value->ToObject())).d);
-
-      return w;
+      return EC_word(*ObjectWrap::Unwrap<Functor>(value->ToObject()));
     }
 
     if(Compound::template_->HasInstance(value)) {

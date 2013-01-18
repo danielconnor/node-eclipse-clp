@@ -1625,10 +1625,14 @@ class EC_word
 	    w = ec_length_string(l, s);
 	}
 
-    	EC_word(const EC_atom did)
-	{
-	    w = ec_atom(did.d);
-	}
+      EC_word(const EC_atom did)
+  {
+      w = ec_atom(did.d);
+  }
+      EC_word(const EC_functor did)
+  {
+      w = ec_atom(did.d);
+  }
 
     	EC_word(const long l)
 	{

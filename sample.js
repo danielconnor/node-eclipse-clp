@@ -20,6 +20,40 @@ var ec_status = {
 
 console.log(ec_status[eclipse.init()]);
 
+eclipse.ops = (function(ops) {
+  var map = {};
+
+  function addOp(name, arity) {
+    map[name] = arity ?
+      new eclipse.Functor(name, arity) :
+      new eclipse.Atom(name);
+  }
+
+  ops.forEach(function(args) {
+    addOp.apply(null, args);
+  })
+
+  return map;
+})([
+  ["not", 1],
+  ["<",   2],
+  [">",   2],
+  ["-",   2],
+  ["+",   2],
+  ["*",   2],
+  ["*",   2],
+  [";",   2],
+  ["and", 2],
+  [".",   2],
+  [":-",  0],
+  [":-",  1],
+  [":-",  2],
+  ["?-",  1],
+  ["!",   0],
+  ["&",   2],
+  [",",   2]
+]);
+
 var lib = new eclipse.Functor("lib", 1);
 var submit_string = new eclipse.Functor("ptc_solver__submit_string", 1);
 var writeln = new eclipse.Functor("writeln",1);
@@ -44,8 +78,6 @@ var and = new eclipse.Functor("and", 2);
 
 var l = [A, B];
 
-eclipse.post_goal(eclipse.term(writeln, A));
-
 eclipse.post_goal(eclipse.term(lib, "ptc_solver"));
 
 eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__clean_up, ptc_solver__default_declarations"));
@@ -57,14 +89,15 @@ var condition = eclipse.term(and,
     eclipse.term(mul, A, A))
   );
 
-console.log(condition);
+// console.log(condition);
 
 eclipse.post_goal(eclipse.term(variable, l, integer));
 eclipse.post_goal(eclipse.term(sdl, condition));
 eclipse.post_goal(eclipse.term(label_integers, l));
 
 
-while(0 == eclipse.resume()) {
+var values = 0;
+while(0 == eclipse.resume() && values++ < 10) {
   console.log("A:", A.value);
   console.log("B:", B.value);
   eclipse.post_goal(fail);
