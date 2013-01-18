@@ -3,6 +3,7 @@
 using namespace v8;
 
 Persistent<FunctionTemplate> Ref::template_;
+Persistent<Function> Ref::constructor;
 
 void Ref::Init(Handle<Object> target) {
   // Prepare constructor template
@@ -10,13 +11,12 @@ void Ref::Init(Handle<Object> target) {
 
   template_ = Persistent<FunctionTemplate>::New(tpl);
   template_->InstanceTemplate()->SetInternalFieldCount(2);
+  template_->InstanceTemplate()->SetAccessor(String::NewSymbol("value"), getValue);
   // Prototype
   template_->PrototypeTemplate()->Set(String::NewSymbol("cutTo"),
       FunctionTemplate::New(cutTo)->GetFunction());
-  template_->PrototypeTemplate()->Set(String::NewSymbol("getValues"),
-      FunctionTemplate::New(getValues)->GetFunction());
 
-  Persistent<Function> constructor = Persistent<Function>::New(template_->GetFunction());
+  constructor = Persistent<Function>::New(template_->GetFunction());
   target->Set(String::NewSymbol("Ref"), constructor);
 }
 
@@ -26,16 +26,26 @@ Handle<Value> Ref::New(const Arguments& args) {
   Ref* ref = new Ref();
   ref->Wrap(args.This());
 
-  return args.This();
+  return scope.Close(args.This());
 }
 
-
-Handle<Value> Ref::getValues(const Arguments& args) {
+Handle<Value> Ref::NewInstance(EC_word &word) {
   HandleScope scope;
 
-  Ref* ref = ObjectWrap::Unwrap<Ref>(args.This());
+  Local<Object> instance = constructor->NewInstance(0, NULL);
+  Ref* ref = ObjectWrap::Unwrap<Ref>(instance);
 
-  return scope.Close(prologToJS(*ref));
+  ec_refs_set(ref->r, 0, word.w);
+
+  return scope.Close(instance);
+}
+
+Handle<Value> Ref::getValue(Local<String> property, const AccessorInfo &info) {
+  HandleScope scope;
+
+  Ref* ref = ObjectWrap::Unwrap<Ref>(info.Holder());
+
+  return scope.Close(prologToJS(EC_word(*ref)));
 }
 
 Handle<Value> Ref::cutTo(const Arguments& args) {

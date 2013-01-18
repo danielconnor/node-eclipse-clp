@@ -12,7 +12,7 @@
 
 using namespace v8;
 using namespace node;
-
+using namespace std;
 
 Handle<Value> init(const Arguments& args) {
   HandleScope scope;
@@ -59,7 +59,7 @@ Handle<Value> term(const Arguments& args) {
       ec_args[i - 1] = jsToProlog(args[i]);
     }
 
-    EC_word compound = term(*functor, *ec_args);
+    EC_word compound = term(*functor, ec_args);
 
     delete[] ec_args;
 

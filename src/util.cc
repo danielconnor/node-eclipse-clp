@@ -4,7 +4,7 @@ using namespace node;
 using namespace v8;
 using namespace std;
 
-Handle<Value> prologToJS(EC_word did)
+Handle<Value> prologToJS(EC_word &did)
 {
   HandleScope scope;
 
@@ -26,7 +26,6 @@ Handle<Value> prologToJS(EC_word did)
       return scope.Close(Atom::NewInstance(atom_val));
     }
     else {
-      // cout << "functor \n";
     }
   }
 
@@ -43,6 +42,11 @@ Handle<Value> prologToJS(EC_word did)
   if(EC_succeed == did.is_string(&string_val))
   {
     return scope.Close(String::New(string_val));
+  }
+
+  if(EC_succeed == did.is_var())
+  {
+    return scope.Close(Ref::NewInstance(did));
   }
 
   if(EC_succeed == did.is_list(head, tail))
@@ -86,12 +90,11 @@ EC_word jsToProlog(Handle<Value> value) {
   }
 
   if(value->IsNumber()) {
-
     if(value->IsInt32()) {
-      return EC_word(value->Int32Value());
+      return EC_word((long)value->Int32Value());
     }
     else {
-      return EC_word(value->NumberValue());
+      return EC_word((double)value->NumberValue());
     }
   }
 
@@ -106,7 +109,11 @@ EC_word jsToProlog(Handle<Value> value) {
     }
 
     if(Functor::template_->HasInstance(value)) {
-      // return EC_word(*ObjectWrap::Unwrap<Functor>(value->ToObject()));
+      EC_word w;
+
+      w.w = ec_atom((*ObjectWrap::Unwrap<Functor>(value->ToObject())).d);
+
+      return w;
     }
 
     if(Compound::template_->HasInstance(value)) {
@@ -114,6 +121,9 @@ EC_word jsToProlog(Handle<Value> value) {
     }
 
   }
+
+
+  cout << "error\n";
 
   return EC_word();
 }
