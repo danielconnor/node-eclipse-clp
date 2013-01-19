@@ -52,7 +52,7 @@ var condition = eclipse.term(and,
   eclipse.term(gt, A, 45),
   eclipse.term(eq,
     eclipse.term(minus, B, 5),
-    eclipse.term(mul, 2, A))
+    eclipse.term(mul, A, A))
   );
 
 

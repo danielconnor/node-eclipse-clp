@@ -45,7 +45,16 @@ Handle<Value> Ref::getValue(Local<String> property, const AccessorInfo &info) {
 
   Ref* ref = ObjectWrap::Unwrap<Ref>(info.Holder());
 
-  return scope.Close(prologToJS(EC_word(*ref)));
+  EC_word word(*ref);
+
+  // If the reference has not been assigned to anything
+  // it will return itself recursively. To prevent this
+  // we check here if it's a reference to itself.
+  if(!word.is_var()) {
+    return scope.Close(Undefined());
+  }
+
+  return scope.Close(prologToJS(word));
 }
 
 void Ref::setValue(Local<String> property, Local<Value> value, const AccessorInfo& info) {

@@ -7,6 +7,28 @@ describe("eclipse", function() {
 
   describe('Ref', function() {
 
+
+    describe("#value", function() {
+
+      it("should return undefined when it has not been assigned a value", function() {
+
+        assert.strictEqual(new eclipse.Ref().value, undefined);
+
+      });
+
+      it("should be able to be assigned a value", function() {
+        var r = new eclipse.Ref(),
+          val = 10;
+
+        r.value = val;
+
+        assert.strictEqual(val, r.value);
+
+      });
+
+    });
+
+
   });
 
   describe('Atom', function() {
