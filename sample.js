@@ -20,40 +20,6 @@ var ec_status = {
 
 console.log(ec_status[eclipse.init()]);
 
-eclipse.ops = (function(ops) {
-  var map = {};
-
-  function addOp(name, arity) {
-    map[name] = arity ?
-      new eclipse.Functor(name, arity) :
-      new eclipse.Atom(name);
-  }
-
-  ops.forEach(function(args) {
-    addOp.apply(null, args);
-  })
-
-  return map;
-})([
-  ["not", 1],
-  ["<",   2],
-  [">",   2],
-  ["-",   2],
-  ["+",   2],
-  ["*",   2],
-  ["*",   2],
-  [";",   2],
-  ["and", 2],
-  [".",   2],
-  [":-",  0],
-  [":-",  1],
-  [":-",  2],
-  ["?-",  1],
-  ["!",   0],
-  ["&",   2],
-  [",",   2]
-]);
-
 var lib = new eclipse.Functor("lib", 1);
 var submit_string = new eclipse.Functor("ptc_solver__submit_string", 1);
 var writeln = new eclipse.Functor("writeln",1);
@@ -86,10 +52,9 @@ var condition = eclipse.term(and,
   eclipse.term(gt, A, 45),
   eclipse.term(eq,
     eclipse.term(minus, B, 5),
-    eclipse.term(mul, A, A))
+    eclipse.term(mul, 2, A))
   );
 
-// console.log(condition);
 
 eclipse.post_goal(eclipse.term(variable, l, integer));
 eclipse.post_goal(eclipse.term(sdl, condition));
@@ -102,7 +67,6 @@ while(0 == eclipse.resume() && values++ < 10) {
   console.log("B:", B.value);
   eclipse.post_goal(fail);
 }
-
 
 console.log(ec_status[eclipse.cleanup()]);
 

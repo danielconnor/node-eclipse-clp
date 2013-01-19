@@ -21,6 +21,7 @@ class Ref : public EC_ref, public node::ObjectWrap {
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
   static v8::Handle<v8::Value> cutTo(const v8::Arguments& args);
   static v8::Handle<v8::Value> getValue(v8::Local<v8::String>, const v8::AccessorInfo&);
+  static void setValue(v8::Local<v8::String>, v8::Local<v8::Value>, const v8::AccessorInfo&);
 };
 
 #endif
