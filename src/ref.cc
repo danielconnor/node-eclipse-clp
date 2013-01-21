@@ -58,10 +58,16 @@ Handle<Value> Ref::getValue(Local<String> property, const AccessorInfo &info) {
 }
 
 void Ref::setValue(Local<String> property, Local<Value> value, const AccessorInfo& info) {
-
   Ref* ref = ObjectWrap::Unwrap<Ref>(info.Holder());
 
-  ec_refs_set(ref->r, 0, jsToProlog(value).w);
+  EC_word word = jsToProlog(value);
+
+  if(word == NULL) {
+    return;
+  }
+
+  ec_refs_set(ref->r, 0, word.w);
+
 }
 
 Handle<Value> Ref::cutTo(const Arguments& args) {

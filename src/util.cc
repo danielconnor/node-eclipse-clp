@@ -118,8 +118,12 @@ EC_word jsToProlog(Handle<Value> value) {
 
   }
 
+  ThrowException(Exception::TypeError(
+    String::Concat(
+      String::New("No prolog type available for "),
+      value->ToString()
+    )
+  ));
 
-  cout << "error\n";
-
-  return EC_word();
+  return NULL;
 }

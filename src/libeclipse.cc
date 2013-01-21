@@ -56,7 +56,14 @@ Handle<Value> term(const Arguments& args) {
     // convert all javascript values to prolog ones so they
     // can be passed to term.
     for(int i = 1; i < args.Length(); i++) {
-      ec_args[i - 1] = jsToProlog(args[i]);
+      EC_word word = jsToProlog(args[i]);
+
+      if(word == NULL) {
+        delete[] ec_args;
+        return scope.Close(Undefined());
+      }
+
+      ec_args[i - 1] = word;
     }
 
     EC_word compound = term(*functor, ec_args);
@@ -74,7 +81,13 @@ Handle<Value> post_goal(const Arguments& args) {
   HandleScope scope;
 
   if(args[0]->IsObject()) {
-    post_goal(jsToProlog(args[0]));
+    EC_word word = jsToProlog(args[0]);
+
+    if(word == NULL) {
+      return scope.Close(Undefined());
+    }
+
+    post_goal(word);
   }
   else if(args[0]->IsString()) {
     post_goal(*String::Utf8Value(args[0]));

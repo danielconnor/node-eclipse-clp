@@ -5,6 +5,7 @@ var
 describe("eclipse", function() {
   assert.equal(eclipse.init(), eclipse.status.EC_succeed);
 
+
   describe('Ref', function() {
 
 
@@ -23,6 +24,16 @@ describe("eclipse", function() {
         r.value = val;
 
         assert.strictEqual(val, r.value);
+
+      });
+
+      it("should throw an error if it is assigned a value of an unsupported type", function() {
+        var r = new eclipse.Ref();
+
+        assert.throws(function() {
+          r.value = undefined;
+        },
+        TypeError);
 
       });
 
@@ -67,6 +78,14 @@ describe("eclipse", function() {
 
       assert(term instanceof eclipse.Compound);
 
+    });
+
+
+    it("should throw an error if an unsupported type is used as an argument", function() {
+      assert.throws(function() {
+        eclipse.term(writeln, undefined);
+      },
+      TypeError);
     });
 
     describe("#functor", function() {
