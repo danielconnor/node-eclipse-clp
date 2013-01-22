@@ -31,14 +31,28 @@ describe("eclipse", function() {
         var r = new eclipse.Ref();
 
         assert.throws(function() {
-          r.value = undefined;
+          r.value = {};
         },
         TypeError);
 
       });
 
-    });
 
+      it("should be able to be reset by assigning null or undefined", function() {
+        var r = new eclipse.Ref();
+
+        assert.equal(r.value, undefined);
+
+        r.value = 10;
+
+        assert.equal(r.value, 10);
+
+        r.value = undefined;
+
+        assert.equal(r.value, undefined);
+      });
+
+    });
 
   });
 
@@ -118,7 +132,7 @@ describe("eclipse", function() {
 
     });
 
-
   });
+
 });
 

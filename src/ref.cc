@@ -60,6 +60,14 @@ Handle<Value> Ref::getValue(Local<String> property, const AccessorInfo &info) {
 void Ref::setValue(Local<String> property, Local<Value> value, const AccessorInfo& info) {
   Ref* ref = ObjectWrap::Unwrap<Ref>(info.Holder());
 
+  if(value->IsUndefined() || value->IsNull()) {
+    ec_ref_destroy(ref->r);
+
+    ref->r = ec_refs_create_newvars(1);
+
+    return;
+  }
+
   EC_word word = jsToProlog(value);
 
   if(word == NULL) {
