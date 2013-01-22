@@ -18,6 +18,11 @@ Handle<Value> prologToJS(EC_word &did)
   EC_word head;
   EC_word tail;
 
+  if(EC_succeed == did.is_var())
+  {
+    return scope.Close(Ref::NewInstance(did));
+  }
+
   if(EC_succeed == did.is_atom(&atom_val))
   {
     int arity = did.arity();
@@ -44,10 +49,6 @@ Handle<Value> prologToJS(EC_word &did)
     return scope.Close(String::New(string_val));
   }
 
-  if(EC_succeed == did.is_var())
-  {
-    return scope.Close(Ref::NewInstance(did));
-  }
 
   if(EC_succeed == did.is_list(head, tail))
   {

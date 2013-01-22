@@ -3,11 +3,8 @@ var
   assert = require('assert');
 
 describe("eclipse", function() {
-  assert.equal(eclipse.init(), eclipse.status.EC_succeed);
-
 
   describe('Ref', function() {
-
 
     describe("#value", function() {
 
@@ -32,24 +29,21 @@ describe("eclipse", function() {
 
         assert.throws(function() {
           r.value = {};
-        },
-        TypeError);
+        }, TypeError);
 
       });
 
 
       it("should be able to be reset by assigning null or undefined", function() {
         var r = new eclipse.Ref();
-
-        assert.equal(r.value, undefined);
-
         r.value = 10;
-
         assert.equal(r.value, 10);
 
         r.value = undefined;
-
         assert.equal(r.value, undefined);
+
+        r.value = 10;
+        assert.equal(r.value, 10);
       });
 
     });

@@ -18,6 +18,8 @@ var ec_status = {
   EC_flushio: 6
 };
 
+eclipse.init();
+
 eclipse.status = ec_status;
 module.exports = eclipse;
 
