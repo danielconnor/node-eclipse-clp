@@ -71,6 +71,9 @@ void Ref::setValue(Local<String> property, Local<Value> value, const AccessorInf
   EC_word word = jsToProlog(value);
 
   if(word == NULL) {
+
+    ThrowInvalidArgException(0, value);
+
     return;
   }
 

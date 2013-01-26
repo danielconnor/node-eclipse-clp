@@ -119,12 +119,23 @@ EC_word jsToProlog(Handle<Value> value) {
 
   }
 
+  return NULL;
+}
+
+
+void ThrowInvalidArgException(int index, Handle<Value> value) {
+
   ThrowException(Exception::TypeError(
     String::Concat(
-      String::New("No prolog type available for "),
-      value->ToString()
+      String::New("arg:"),
+      String::Concat(
+        Number::New(index)->ToString(),
+        String::Concat(
+          String::New(": No prolog type available for: "),
+          value->ToString()
+        )
+      )
     )
   ));
 
-  return NULL;
 }

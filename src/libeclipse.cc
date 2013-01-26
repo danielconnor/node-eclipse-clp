@@ -59,6 +59,7 @@ Handle<Value> term(const Arguments& args) {
       EC_word word = jsToProlog(args[i]);
 
       if(word == NULL) {
+        ThrowInvalidArgException(i, args[i]);
         delete[] ec_args;
         return scope.Close(Undefined());
       }
@@ -84,6 +85,9 @@ Handle<Value> post_goal(const Arguments& args) {
     EC_word word = jsToProlog(args[0]);
 
     if(word == NULL) {
+
+      ThrowInvalidArgException(0, args[0]);
+
       return scope.Close(Undefined());
     }
 

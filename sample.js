@@ -36,11 +36,14 @@ var default_declarations = new eclipse.Atom("ptc_solver__default_declarations");
 var variable = new eclipse.Functor("ptc_solver__variable", 2);
 var sdl = new eclipse.Functor("ptc_solver__sdl", 1);
 var label_integers = new eclipse.Functor("ptc_solver__label_integers", 1);
+var lt = new eclipse.Functor("<", 2);
 var gt = new eclipse.Functor(">", 2);
 var minus = new eclipse.Functor("-", 2);
 var eq = new eclipse.Functor("=", 2);
 var mul = new eclipse.Functor("*", 2);
+var add = new eclipse.Functor("+", 2);
 var and = new eclipse.Functor("and", 2);
+var not = new eclipse.Functor("not", 1);
 
 var l = [A, B];
 
@@ -49,24 +52,37 @@ eclipse.post_goal(eclipse.term(lib, "ptc_solver"));
 eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__clean_up, ptc_solver__default_declarations"));
 
 var condition = eclipse.term(and,
-  eclipse.term(gt, A, 45),
-  eclipse.term(eq,
-    eclipse.term(minus, B, 5),
-    eclipse.term(mul, A, A))
+  eclipse.term(and,
+    eclipse.term(gt, A, 45),
+    eclipse.term(eq,
+      eclipse.term(minus, B, 5),
+      eclipse.term(mul, A, A))
+    ),
+  eclipse.term(not,
+    eclipse.term(lt,
+        eclipse.term(add, A, 2),
+        100
+      )
+    )
   );
+
 
 
 eclipse.post_goal(eclipse.term(variable, l, integer));
 eclipse.post_goal(eclipse.term(sdl, condition));
 eclipse.post_goal(eclipse.term(label_integers, l));
 
-
+var output = [];
 var values = 0;
-while(0 == eclipse.resume() && values++ < 10) {
-  console.log("A:", A.value);
-  console.log("B:", B.value);
+while(0 === eclipse.resume() && values++ < 1000) {
+  output.push({
+    a: A.value,
+    b: B.value
+  });
   eclipse.post_goal(fail);
 }
+
+console.log(output);
 
 console.log(ec_status[eclipse.cleanup()]);
 

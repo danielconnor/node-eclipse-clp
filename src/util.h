@@ -12,6 +12,7 @@
 
 v8::Handle<v8::Value> prologToJS(EC_word&);
 EC_word jsToProlog(v8::Handle<v8::Value>);
+void ThrowInvalidArgException(int, v8::Handle<v8::Value>);
 
 #endif
 
