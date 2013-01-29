@@ -9,9 +9,8 @@
 #include "compound.h"
 #include <iostream>
 
-
 v8::Handle<v8::Value> prologToJS(EC_word&);
-EC_word jsToProlog(v8::Handle<v8::Value>);
+bool jsToProlog(v8::Handle<v8::Value>, EC_word&);
 void ThrowInvalidArgException(int, v8::Handle<v8::Value>);
 
 #endif

@@ -79,7 +79,7 @@ describe("eclipse", function() {
 
   describe("term", function() {
     var writeln = new eclipse.Functor("writeln", 1),
-      args = ["1"],
+      args = [-1],
       term = eclipse.term(writeln, args[0]);
 
     it("should return an instance of Compound", function() {

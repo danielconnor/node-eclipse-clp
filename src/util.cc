@@ -72,10 +72,11 @@ Handle<Value> prologToJS(EC_word &did)
 }
 
 
-EC_word jsToProlog(Handle<Value> value) {
+bool jsToProlog(Handle<Value> value, EC_word& result) {
 
   if(value->IsString()) {
-    return EC_word(*String::Utf8Value(value));
+    result = EC_word(*String::Utf8Value(value));
+    return true;
   }
 
   if(value->IsArray()) {
@@ -84,42 +85,54 @@ EC_word jsToProlog(Handle<Value> value) {
     EC_word word_list(ec_nil());
 
     for(unsigned i = 0; i < array->Length(); i++) {
-      word_list = list(jsToProlog(array->Get(i)), word_list);
+      EC_word head;
+
+      if(jsToProlog(array->Get(i), head)) {
+        word_list = list(head, word_list);
+      }
+      else return false;
     }
 
-    return word_list;
+    result = word_list;
+    return true;
   }
 
   if(value->IsNumber()) {
     if(value->IsInt32()) {
-      return EC_word((long)value->Int32Value());
+      result = EC_word((long)value->Int32Value());
+      return true;
     }
     else {
-      return EC_word((double)value->NumberValue());
+      result = EC_word((double)value->NumberValue());
+      return true;
     }
   }
 
   if(value->IsObject()) {
-
     if(Atom::template_->HasInstance(value)) {
-      return EC_word(*ObjectWrap::Unwrap<Atom>(value->ToObject()));
+      result = EC_word(*ObjectWrap::Unwrap<Atom>(value->ToObject()));
+      return true;
     }
 
     if(Ref::template_->HasInstance(value)) {
-      return EC_word(*ObjectWrap::Unwrap<Ref>(value->ToObject()));
+      result = EC_word(*ObjectWrap::Unwrap<Ref>(value->ToObject()));
+      return true;
     }
 
     if(Functor::template_->HasInstance(value)) {
-      return EC_word(*ObjectWrap::Unwrap<Functor>(value->ToObject()));
+      result = EC_word(*ObjectWrap::Unwrap<Functor>(value->ToObject()));
+      return true;
     }
 
     if(Compound::template_->HasInstance(value)) {
-      return EC_word(*ObjectWrap::Unwrap<Compound>(value->ToObject()));
+      result = EC_word(*ObjectWrap::Unwrap<Compound>(value->ToObject()));
+      return true;
     }
 
+    return false;
   }
 
-  return NULL;
+  return false;
 }
 
 

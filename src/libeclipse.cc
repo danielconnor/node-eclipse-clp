@@ -56,9 +56,9 @@ Handle<Value> term(const Arguments& args) {
     // convert all javascript values to prolog ones so they
     // can be passed to term.
     for(int i = 1; i < args.Length(); i++) {
-      EC_word word = jsToProlog(args[i]);
+      EC_word word;
 
-      if(word == NULL) {
+      if(!jsToProlog(args[i], word)) {
         ThrowInvalidArgException(i, args[i]);
         delete[] ec_args;
         return scope.Close(Undefined());
@@ -82,9 +82,9 @@ Handle<Value> post_goal(const Arguments& args) {
   HandleScope scope;
 
   if(args[0]->IsObject()) {
-    EC_word word = jsToProlog(args[0]);
+    EC_word word;
 
-    if(word == NULL) {
+    if(!jsToProlog(args[0], word)) {
 
       ThrowInvalidArgException(0, args[0]);
 

@@ -68,9 +68,9 @@ void Ref::setValue(Local<String> property, Local<Value> value, const AccessorInf
     return;
   }
 
-  EC_word word = jsToProlog(value);
+  EC_word word;
 
-  if(word == NULL) {
+  if(!jsToProlog(value, word)) {
 
     ThrowInvalidArgException(0, value);
 
@@ -86,7 +86,7 @@ Handle<Value> Ref::cutTo(const Arguments& args) {
 
   Ref* ref = ObjectWrap::Unwrap<Ref>(args.This());
 
-  ref->cut_to();
+  ec_cut_to_chp(ref->r);
 
   return scope.Close(Undefined());
 }
