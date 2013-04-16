@@ -24,7 +24,7 @@
     "mocha": "*"
   },
   "scripts": {
-    "install": "node-gyp clean configure build",
+    "install": "install\\setup.cmd",
     "test": "node_modules\\.bin\\mocha.cmd --reporter spec"
   },
   "main": "eclipse.js"

@@ -1,5 +1,5 @@
+process.env["PATH"] += __dirname + "\\deps\\ECLiPSe 5.8\\lib\\i386_nt";
 var eclipse = require("./build/Release/libeclipse");
-
 
 var ec_status = {
   0: "EC_succeed",
@@ -40,53 +40,64 @@ var lt = new eclipse.Functor("<", 2);
 var gt = new eclipse.Functor(">", 2);
 var minus = new eclipse.Functor("-", 2);
 var eq = new eclipse.Functor("=", 2);
+var neq = new eclipse.Functor("\\=", 2);
 var mul = new eclipse.Functor("*", 2);
 var add = new eclipse.Functor("+", 2);
 var and = new eclipse.Functor("and", 2);
 var not = new eclipse.Functor("not", 1);
+var comma = new eclipse.Functor(",", 2);
+var exc = new eclipse.Atom("!");
 
 var l = [A, B];
+var solution = new eclipse.Ref();
 
 eclipse.post_goal(eclipse.term(lib, "ptc_solver"));
 
 eclipse.post_goal(eclipse.term(submit_string, "ptc_solver__clean_up, ptc_solver__default_declarations"));
 
-var condition = eclipse.term(and,
-  eclipse.term(and,
-    eclipse.term(gt, A, 45),
-    eclipse.term(eq,
-      eclipse.term(minus, B, 5),
-      eclipse.term(mul, A, A))
-    ),
-  eclipse.term(not,
-    eclipse.term(lt,
-        eclipse.term(add, A, 2),
-        100
-      )
-    )
-  );
-
-
-
 eclipse.post_goal(eclipse.term(variable, l, integer));
-eclipse.post_goal(eclipse.term(sdl, condition));
-eclipse.post_goal(eclipse.term(label_integers, l));
+eclipse.post_goal(eclipse.term(eq, A, B));
+console.log(eclipse.resume());
+eclipse.post_goal(eclipse.term(sdl, eclipse.term(not, eclipse.term(eq, A, B))));
+console.log(eclipse.resume());
+
+
+eclipse.post_goal(eclipse.term(comma,
+    eclipse.term(label_integers, l),
+    exc
+  )
+);
 
 var output = [];
 var values = 0;
-while(0 === eclipse.resume() && values++ < 1000) {
-  output.push({
-    a: A.value,
-    b: B.value
-  });
-  eclipse.post_goal(fail);
+if(0 === eclipse.resume()) {
+  console.log(l);
 }
 
-console.log(output);
+A.value = undefined;
+B.value = undefined;
+
+eclipse.post_goal(eclipse.term(variable, l, integer));
+eclipse.post_goal(eclipse.term(sdl, eclipse.term(not, eclipse.term(eq, A, B))));
+console.log(eclipse.resume());
+eclipse.post_goal(eclipse.term(eq, A, B));
+console.log(eclipse.resume());
+
+eclipse.post_goal(eclipse.term(comma,
+    eclipse.term(label_integers, l),
+    exc
+  )
+);
+
+if(0 === eclipse.resume()) {
+  eclipse.resume();
+  console.log(l);
+}
 
 console.log(ec_status[eclipse.cleanup()]);
 
 eclipse.status = ec_status;
+
 
 module.exports = eclipse;
 

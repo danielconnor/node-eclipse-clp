@@ -1,3 +1,5 @@
+process.env["PATH"] += __dirname + "deps/ECLiPSe 5.8/lib/i386_nt";
+
 var eclipse = require("./build/Release/libeclipse");
 
 

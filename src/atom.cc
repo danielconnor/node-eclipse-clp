@@ -32,7 +32,6 @@ Handle<Value> Atom::New(const Arguments& args) {
 Handle<Value> Atom::NewInstance(char *name) {
   HandleScope scope;
 
-
   Handle<Value> argv[] = { String::New(name) };
   Local<Object> instance = constructor->NewInstance(1, argv);
 
