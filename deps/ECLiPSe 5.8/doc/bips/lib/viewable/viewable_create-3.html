@@ -1,0 +1,187 @@
+<HTML><HEAD><TITLE>viewable_create(?ViewableName, +Elements, ++Type)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(viewable)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>viewable_create(?ViewableName, +Elements, ++Type)</H1>
+Create a viewable, specifying type.
+<DL>
+<DT><EM>ViewableName</EM></DT>
+<DD>A string or atom; the name of the new viewable.
+</DD>
+<DT><EM>Elements</EM></DT>
+<DD>A list nested to at least a depth equal to the number of dimensions, an array with sufficient dimensions (as created for example by dim/2) or graph structure.
+</DD>
+<DT><EM>Type</EM></DT>
+<DD>A ground term which is a valid viewable type. 
+</DD>
+</DL>
+<H2>Description</H2>
+
+
+        <p><B>NOTE:</B>When there are no registered visualisation clients,
+        this predicate succeeds with any arguments, and has no effect.</P>
+
+	This predicate creates a new viewable by specifying its name,
+	elements and type.  At present the type must be of the form
+	array(FixityList, ElementType) or graph(fixed) where <ul>
+	<li>FixityList is a list with an atom <code>fixed</code> or
+	<code>flexible</code> specifying the fixity for each
+	dimension. The fixity denotes whether the dimension's size is
+	fixed or may vary during the time when the viewable is
+	existent.</li> <li>ElementType is a term which specifies the
+	type of the constituent viewable elements.  Currently there
+	are two supported element types: <ul> <li><code>any</code>
+	which includes any ECLiPSe term</li> <li>
+	<code>numeric_bounds</code> which includes any ground number,
+	integer <code>fd</code> variables, <code>ic</code> variables
+	and <code>range</code> variables (including <code>eplex</code>
+	and <code>ria</code> variables). </li> <li>
+	<code>changeable(Module,Type)</code> which indicates that the
+	value should be accessed through the <em>changeable</em>
+	interface of the given Module
+	(eg. changeable(eplex_instance,any) indicates that the value
+	is ths solution assigned to the variable by the given
+	eplex_instance).  The <code>Type</code> parameter can be any
+	of the <em>other</em> ElementTypes in this list.</li> </ul>
+	</li> </ul>
+
+	Visualisation clients, if there are any, are notified of the new
+	viewable when it is created. On backtracking over a call to
+	<code>viewable_create/3</code>, the viewable is destroyed, and
+	visualisation clients are also notified of this. </P><P>
+
+	<EM>ViewableName</EM> is a global handle which can be used to
+	access the viewable while it is existent. If <EM>ViewableName</EM>
+	is a variable, it is instantiated to an atom. The atom is unique in
+	the sense that no two existent viewables will share the same name
+	at any point during the lifetime of the ECLiPSe engine.</P><P>
+
+        For array types, the number of dimensions is specified by the
+        length of <em>FixityList</em> in <em>Type</em>. <EM>Elements</EM>
+        is a nested list or array. The depth of nesting is usually at
+        least the number of dimensions specified in <em>FixityList</em>.
+        However, dimensions with an initial size of 0 are also
+        allowed, and these can implicitly contain an arbitrary number
+        of further dimensions, also assumed to be of initial size
+        0. So for example an <em>Elements</em> argument of
+        <code>[[],[],[]]</code> or <code>[]([],[],[])</code> can be
+        used with a <em>FixityList</em> of <code>[fixed,
+        flexible]</code>, giving an initial size of 3 x 0, or used
+        with a <em>FixityList</em> of <code>[fixed, flexible,
+        flexible, flexible]</code>, giving an initial size of 3 x 0 x
+        0 x 0. Be sure to make any initially empty dimensions
+        flexible!  <em>Elements</em> must also be regular: each inner
+        list / array at the same level of nesting must be the same
+        length, down to the level equal to the number of dimensions.
+
+        <p><code>viewable_create/3</code> sets location names (e.g. row/column
+        names) to "1", "2", etc. For more control over location names use 
+        <code>viewable_create/4</code>.</P>
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>ViewableName is not an atom, string or free variable.
+<DT><EM>(1) general error </EM>
+<DD>ViewableName is the name of an existent viewable.
+<DT><EM>(1) general error </EM>
+<DD>Elements is not a regular nested list or array with enough dimensions.
+<DT><EM>(1) general error </EM>
+<DD>Type is not a ground valid type.
+<DT><EM>(5) type error </EM>
+<DD>One of the viewable elements violates the element type.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+[Assuming that at least one visualisation client is registered] 
+
+       Success:
+
+       viewable_create(viewable1, [X, Y, Z], array([fixed], any)).
+
+       lib(fd), fd:([X, Y, Z]::1..10), 
+       viewable_create(viewable1, [X, Y, Z], array([fixed], numeric_bounds)).
+
+       viewable_create(viewable1, [3.2, 5.00__5.01, 7], 
+                       array([fixed], numeric_bounds)).
+
+       viewable_create("viewable1", [](X, Y, Z), array([flexible], any)).
+
+       viewable_create(m, [], array([flexible], any)).
+
+       viewable_create(var23, [[],[],[]], array([fixed, flexible], any)).
+
+       viewable_create(var315, []([]([](R, T, [E, X, Y]), 
+                                     [](W, T, grok(D))), 
+				  []([](A, B, C),
+				     [](R, E, W))), 
+		       array([fixed, flexible, flexible], any)).
+
+       viewable_create(m,[[],[],[]],array([fixed, flexible, flexible],any)).
+       [Note: the initial size of this viewable would be 3 x 0 x 0]
+
+       lib(graph_algorithms),
+       make_graph(3,[e(1,2,e1), e(2,3,e2), e(1,3,e3)], Graph),
+       viewable_create(m, Graph, graph(fixed)).
+       [Note: the node will be labelled with the numbers '1', '2' and '3',
+       the edges labelled 'e1', 'e2' and 'e3']
+       
+       lib(graph_algorithms),
+       make_graph_symbolic([](n1,n2,n3),[edge(n1,n2,e1), edge(n2,n3,e2), edge(n1,n3,e3)], Graph),
+       viewable_create(m, Graph, graph(fixed)).
+       [Note: the node will be labelled with the strings 'n1', 'n2' and 'n3',
+       the edges labelled 'e1', 'e2' and 'e3']
+
+       lib(eplex_with_ic),
+       eplex_instance(my_instance),
+       my_instance: eplex_solver_setup(min(X)),
+       viewable_create(eplex,[X,Y],array([fixed],changeable(my_instance,numeric_bounds))),
+       viewable_create(ic,[X,Y],array([fixed],numeric_bounds)),
+       my_instance: (X+Y &gt;= 3),
+       my_instance: (X-2*Y =:= 0),
+       my_instance: eplex_solve(Cost).       
+       [Note: this creates two viewables, one showing the solution as
+        assigned by eplex, the other showing the ic bounds]
+
+       lib(s_eplex),
+       eplex_instance(my_instance),
+       my_instance: eplex_solver_setup(min(X)),
+       viewable_create(eplex,[X,Y],array([fixed],changeable(my_instance,numeric_bounds))),
+       my_instance: (X+Y &gt;= 3),
+       my_instance: (X-2*Y =:= 0),
+       my_instance: eplex_solve(Cost).       
+       [Note: this creates a single viewable using the standalone eplex
+        library and shows how to visualise the bounds stored in the external
+        solver]
+
+
+       Exceptions raised:
+
+       viewable_create(2, [x,y,z], array([fixed], any)).
+       [gives error 4] 
+
+       viewable_create(v1, [x,y,z], array([fixed], any)), 
+       viewable_create(v1, [x,y,z], array([fixed], any)).
+       [gives error 1] 
+
+       viewable_create(v1, _, array([fixed], any)).
+       [gives error 1] 
+
+       viewable_create(v1, [x,y,g], array([fixed, fixed], any)).
+       [gives error 1] 
+
+       viewable_create(v1, [x,y,x], array([], any)).
+       [gives error 1] 
+
+       viewable_create(v1, [x,y,x], slorg([fixed], any)).
+       [gives error 1] 
+
+       viewable_create(v1, [x,y,x], nurg).
+       [gives error 1] 
+
+       viewable_create(v1, [x,y,x], numeric_bounds).
+       [gives error 5] 
+				    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/viewable/viewable_create-2.html">viewable_create / 2</A>, <A HREF="../../lib/viewable/viewable_create-4.html">viewable_create / 4</A>, <A HREF="../../lib/viewable/viewable_expand-3.html">viewable_expand / 3</A>, <A HREF="../../lib/graph_algorithms/make_graph-3.html">graph_algorithms : make_graph / 3</A>
+</BODY></HTML>

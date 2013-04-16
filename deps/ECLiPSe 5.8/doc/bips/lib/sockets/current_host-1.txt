@@ -1,0 +1,10 @@
+
+current_host(?HostName)
+
+   Get the host machine name
+
+Type
+   library(sockets)
+
+See Also
+   get_flag / 2

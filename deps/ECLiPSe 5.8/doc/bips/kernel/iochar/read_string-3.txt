@@ -1,0 +1,68 @@
+
+read_string(+Delimiters, ?Length, ?String)
+
+   Reads a string from the input stream up to a delimiter or up to a specified
+length.
+
+
+
+Arguments
+   +Delimiters         String or atom.
+   ?Length             Integer or variable.
+   ?String             String or variable.
+
+Type
+   Character I/O
+
+Description
+   A string of characters is read from the input up to one character which
+   occurs in the delimiter string Delimiters.  This character is also
+   consumed, but does not appear in the string which is unified with
+   String.
+   
+   Two symbolic Delimiters can be specified:
+
+
+
+    end_of_line   a newline or carriage-return/newline sequence
+    end_of_file   the end of the file/input
+
+   End of file always acts like a delimiter.
+
+
+   If Length is a variable, it is unified with the length of the string
+   String.  If Length is an integer, the number of characters read from
+   the input is limited by the Length.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if String does not unify with the next string of characters read
+   from input satisfying the described conditions.  The default handler for
+   the error 190 also lets the predicate fail.
+
+
+
+Exceptions
+     4 --- Delimiters is not instantiated.
+     5 --- Delimiters is not a string or atom.
+     5 --- Length is not an atom or an integer.
+     5 --- String is not an atom or a string.
+     6 --- Delimiters is an atom but not a valid symbolic delimiter.
+   190 --- End of file was encountered before reading any character.
+   198 --- Trying to read even after the error 190 was raised.
+
+Examples
+      Equivalent to read_string(input, Delimiters, Length, String).  (see
+   read_string/4 for details).
+
+
+
+
+
+See Also
+   read_string / 4, read_token / 2, read_token / 3, open / 3

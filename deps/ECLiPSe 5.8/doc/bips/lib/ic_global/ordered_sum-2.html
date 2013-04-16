@@ -1,0 +1,26 @@
+<HTML><HEAD><TITLE>ordered_sum(+List, ?Sum)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_global)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>ordered_sum(+List, ?Sum)</H1>
+The list elements are ordered and their sum is Sum
+<DL>
+<DT><EM>List</EM></DT>
+<DD>List of integers or domain variables
+</DD>
+<DT><EM>Sum</EM></DT>
+<DD>Variable or integer
+</DD>
+</DL>
+<H2>Description</H2>
+    This constraint is declaratively equivalent to:
+<PRE>
+	ordered_sum(List, Sum) :-
+	    ordered(=<, List),
+	    sum(List) #= Sum.
+</PRE>
+    However, additional propagation is performed.
+    </P><P>
+    Any input variables which do not already have finite bounds will
+    be given default bounds of -10000000 to 10000000.</P>
+<H2>See Also</H2>
+<A HREF="../../lib/ic_global/ordered-2.html">ordered / 2</A>, <A HREF="../../lib/ic_global/sumlist-2.html">sumlist / 2</A>
+</BODY></HTML>

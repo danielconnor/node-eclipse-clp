@@ -1,0 +1,24 @@
+
+lp_write(+Handle, ++Format, +File)
+
+   Write a solver problem to a file.
+
+Arguments
+   Handle              Handle to an existing solver state
+   Format              lp or mps
+   File                File name
+
+Type
+   library(eplex)
+
+Description
+
+   Write the problem which corresponds to Handle to a file. The set of
+   supported formats depends on the actual external solver which is used.
+   All solvers support the mps format. Some solvers on some operating
+   system platforms may change or append a suffix to the filename.
+   Note that the mps format does not specify the sense (min or max) of the
+   objective function.
+
+See Also
+   lp_read / 3, lp_setup / 4

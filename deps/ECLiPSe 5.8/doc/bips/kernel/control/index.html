@@ -1,0 +1,115 @@
+<HTML><HEAD><TITLE>Control</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Control</H1>
+Built-ins and language constructs to control execution
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="I-0.html"><STRONG>!</STRONG></A></DT>
+<DD>Cut - succeeds and removes all choice points between cut and parent goal.
+
+</DD>
+<DT><A HREF="C-2.html"><STRONG>+Goal1 , +Goal2</STRONG></A></DT>
+<DD>Comma (AND) operator - succeeds if the goals Goal1 and Goal2 both succeed
+
+</DD>
+<DT><A HREF="-G-2.html"><STRONG>+Condition -> +Then ; +Else</STRONG></A></DT>
+<DD>Conditional construct - succeeds if either Condition succeeds, and then Goal2
+succeeds; or else if Condition fails, and then Else succeeds.</DD>
+<DT><A HREF="-Q-G-1.html"><STRONG>-?-> ?Body</STRONG></A></DT>
+<DD>The matching operator.  The head of the clause which contains it will not
+be unified with the caller, one-way matching will be used instead.
+
+</DD>
+<DT><A HREF="N-2.html"><STRONG>+LookupModule : +Goal</STRONG></A></DT>
+<DD>Call the procedure visible in LookupModule rather than the caller module</DD>
+<DT><A HREF="O-2.html"><STRONG>+Goal1 ; +Goal2</STRONG></A></DT>
+<DD>Semicolon (OR) operator - Succeeds if the goal Goal1 succeeds or if the
+goal Goal2 succeeds.
+
+</DD>
+<DT><A HREF="A-2.html"><STRONG>Goal @ ContextModule</STRONG></A></DT>
+<DD>Goal is executed in the calling context of ContextModule.
+
+</DD>
+<DT><A HREF="RP-1.html"><STRONG>\+ +Goal</STRONG></A></DT>
+<DD>Succeeds if Goal cannot be satisfied.  Uses negation as failure (synonym of not/1).
+
+</DD>
+<DT><A HREF="U-2.html"><STRONG>+Vars ^ +Goal</STRONG></A></DT>
+<DD>Succeeds if Goal succeeds.
+
+</DD>
+<DT><A HREF="abort-0.html"><STRONG>abort</STRONG></A></DT>
+<DD>The current computation is aborted and control is returned to the top
+level.
+
+</DD>
+<DT><A HREF="block-3.html"><STRONG>block(+Goal, ?Tag, +Recovery)</STRONG></A></DT>
+<DD>Similar to call(Goal) if Goal succeeds or fails.  If an exit_block/1 is
+executed inside Goal, whose argument unifies with Tag, then Recovery is
+executed.
+
+</DD>
+<DT><A HREF="call-1.html"><STRONG>call(+Goal)</STRONG></A></DT>
+<DD>Succeeds if Goal succeeds.
+
+</DD>
+<DT><A HREF="do-2.html"><STRONG>+IterationSpecs do +Goals</STRONG></A></DT>
+<DD>Execute Goals iteratively according to IterationSpecs.
+
+</DD>
+<DT><A HREF="exit_block-1.html"><STRONG>exit_block(++TagExit)</STRONG></A></DT>
+<DD>Continues the program at the recovery procedure of the block/3 predicate
+whose Tag argument unifies with TagExit.
+
+</DD>
+<DT><A HREF="fail-0.html"><STRONG>fail</STRONG></A></DT>
+<DD>Does not succeed.  A synonym of false/0.
+
+</DD>
+<DT><A HREF="false-0.html"><STRONG>false</STRONG></A></DT>
+<DD>Does not succeed (synonym of fail/0).
+
+</DD>
+<DT><A HREF="fork-2.html"><STRONG>fork(+Max, ?I)</STRONG></A></DT>
+<DD>Succeeds for all integers I between 1 and Max.  The solutions are generated
+in parallel.
+
+</DD>
+<DT><A HREF="mutex-2.html"><STRONG>mutex(+MutexId, +Goal)</STRONG></A></DT>
+<DD>Equivalent to once(Goal) but with mutual exclusion among parallel workers.
+
+</DD>
+<DT><A HREF="mutex_init-1.html"><STRONG>mutex_init(+MutexId)</STRONG></A></DT>
+<DD>Initialise the mutual exclusion lock MutexId</DD>
+<DT><A HREF="not-1.html"><STRONG>not +Goal</STRONG></A></DT>
+<DD>Succeeds if Goal cannot be satisfied (uses negation as failure).
+
+</DD>
+<DT><A HREF="once-1.html"><STRONG>once +Goal</STRONG></A></DT>
+<DD>Succeeds if Goal succeeds, and removes all its alternatives --- equivalent
+to call((Goal, !))
+
+</DD>
+<DT><A HREF="phrase-3.html"><STRONG>phrase(+Grammar, ?Tokens, ?Remainder)</STRONG></A></DT>
+<DD>Succeeds if Tokens can be parsed as part of the grammar defined in Grammar
+and Remainder contains any remaining terms in Tokens.
+
+</DD>
+<DT><A HREF="repeat-0.html"><STRONG>repeat</STRONG></A></DT>
+<DD>Succeeds as often as tried.
+
+</DD>
+<DT><A HREF="true-0.html"><STRONG>true</STRONG></A></DT>
+<DD>Succeeds always.
+
+</DD>
+<DT><A HREF="T-1.html"><STRONG>~?Goal</STRONG></A></DT>
+<DD>The sound negation operator.  If Goal is not ground, the predicate delays.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<HR>Generated from control.eci on Tue Jan 25 01:58:21 2005
+
+</BODY></HTML>

@@ -1,0 +1,25 @@
+<HTML><HEAD><TITLE>collect_typed_pool_constraints(+Pool, +Type, -Constraints)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(constraint_pools)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>collect_typed_pool_constraints(+Pool, +Type, -Constraints)</H1>
+Collect all currently stored constraints of type Type in Pool
+<DL>
+<DT><EM>Pool</EM></DT>
+<DD>Atom
+</DD>
+<DT><EM>Type</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>Constraints</EM></DT>
+<DD>Variable, returns list of callable terms
+</DD>
+</DL>
+<H2>Description</H2>
+
+    Constraints is unified with a list of all currently stored
+    constraints of type Type in Pool.  An empty list is returned if
+    the pool was already empty for this type.  The pool store for type
+    Type is emptied.  This modification is backtrackable.
+    
+<H2>See Also</H2>
+<A HREF="../../lib/constraint_pools/pool_is_empty-1.html">pool_is_empty / 1</A>, <A HREF="../../lib/constraint_pools/get_typed_pool_constraints-3.html">get_typed_pool_constraints / 3</A>, <A HREF="../../lib/constraint_pools/collect_all_pool_constraints-2.html">collect_all_pool_constraints / 2</A>
+</BODY></HTML>

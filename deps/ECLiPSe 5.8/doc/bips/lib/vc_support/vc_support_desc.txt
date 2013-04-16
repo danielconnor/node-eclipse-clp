@@ -1,0 +1,14 @@
+lib(vc_support)
+
+
+
+            This library should be used if you intend to implement a 
+           new visualisation client. It should not be used for anything 
+           else. 
+
+            Viewables are made up of viewable elements. A
+           particular viewable element can accessed using
+           viewable_element/3.
+
+
+

@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>close(+Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>close(+Stream)</H1>
+Closes the stream specified by Stream.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer or atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to close a stream.  Stream can be a symbolic stream name or a
+   physical stream number.
+
+<P>
+   When Stream is a physical stream, it is closed, but all symbolic streams
+   associated to it still refer to it until they are either closed as well
+   or redirected to other physical streams.  As long as there are some
+   symbolic stream names associated to a physical stream, the physical
+   stream cannot be reused for other communication channels.
+
+<P>
+   When Stream is a symbolic stream name, it gets detached from the
+   corresponding physical stream, and the physical stream is closed
+   (unless it was already closed).
+
+<P>
+   When an attempt is made to close a system stream, event 196 is raised.
+   To close a physical stream connected with a system stream it is
+   therefore advisable to redirect the system stream to another physical
+   stream.  Note however, that the default handler for the event 196
+   first resets all system streams connected to the physical stream to
+   their defaults and then closes the physical stream.  Attempts to close
+   the default physical stream of a system stream are ignored.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an integer or an atom.
+<DT><EM>(172) File is not open : </EM>
+<DD>File specified by stream number Stream is not open.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+<DT><EM>(196) trying to modify a system stream </EM>
+<DD>Trying to close a system stream.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      open(file1,write,s),write(s, a(b,c)),close(s).
+
+      [eclipse]: open(junk, write, a), set_stream(b, a),
+                get_stream(a, S).
+
+      S = 5
+      yes.
+      [eclipse]: close(a), open(junk1, write, X).
+
+      X = 6       % 5 is not reused because b still points to it
+      yes.
+      [eclipse]: close(b), open(junk2, write, Y).
+
+      Y = 5       % now 5 can be reused
+      yes.
+
+
+Error:
+      close(Stream).         (Error 4).
+      close("4").            (Error 5).
+      close(10).             (Error 172).
+      close(nostream).       (Error 193).
+      close(null).           (Error 196).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/open-3.html">open / 3</A>, <A HREF="../../kernel/iostream/open-4.html">open / 4</A>, <A HREF="../../kernel/iostream/set_stream-2.html">set_stream / 2</A>
+</BODY></HTML>

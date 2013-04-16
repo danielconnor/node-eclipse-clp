@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>?Expr1 => ?Expr2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(suspend)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Expr1 => ?Expr2</H1>
+If Expr1 arithmetically evaluates to 1, so does Expr2 (implication)
+<DL>
+<DT><EM>Expr1</EM></DT>
+<DD>A boolean expression
+</DD>
+<DT><EM>Expr2</EM></DT>
+<DD>A boolean expression
+</DD>
+</DL>
+<H2>Description</H2>
+    Suspends until both Expr1 and Expr2 are ground, and then both arguments
+    are evaluated. Succeeds if the truth of Expr1 implies Expr2, i.e. if Expr1
+    evaluates to 1, Expr2 must evaluate to 1, otherwise Expr2 can evaluate to
+    1 or 0. Logically equivalent to
+    <PRE>
+    	neg(Expr1) or Expr2.
+    </PRE>
+    Typically, the expressions contains reifiable constraints, in which case
+    a corresponding reified constraint is set up, and the expression is
+    replaced by the resulting boolean variable.
+
+<H3>Fail Conditions</H3>
+Expr1 evaluates to 1 and Expr2 evaluates to 0
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(24) number expected </EM>
+<DD>Expr1 or Expr2 is not an arithmetic expression.
+</DL>
+<H2>Examples</H2>
+<PRE>
+	?- 0 =&gt; B, B = 0.
+	B = 0
+	Yes (0.00s cpu)
+
+	?- 0 =&gt; B, B = 1.
+	B = 1
+	Yes (0.00s cpu)
+
+	?- 1 =&gt; B, B = 0.
+	No (0.00s cpu)
+
+	?- 1 =&gt; B, B = 1.
+	B = 1
+	Yes (0.00s cpu)
+
+	% arguments are typically reifiable expressions:
+	?- X &gt; Y =&gt; X &gt; Y+10, X = 5, Y = 3.
+	No (0.00s cpu)
+
+	% the previous example is equivalent to:
+	?- &gt;(X,Y,B1), &gt;(X,Y+10,B2), B1 =&gt; B2, X = 5, Y = 3.
+	No (0.00s cpu)
+
+	% and/or/=&gt;/neg are themselves reifiable:
+	?- neg(A =&gt; B) or (C =&gt; D), A=1, B=0, C=0, D=1.
+	A = 1
+	B = 0
+	C = 0
+	D = 1
+	Yes (0.00s cpu)
+	</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/EG-3.html">=> / 3</A>, <A HREF="../../lib/suspend/and-2.html">and / 2</A>, <A HREF="../../lib/suspend/or-2.html">or / 2</A>, <A HREF="../../lib/suspend/neg-1.html">neg / 1</A>, <A HREF="../../lib/ic/EG-2.html">ic : => / 2</A>
+</BODY></HTML>

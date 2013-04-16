@@ -1,0 +1,42 @@
+<HTML><HEAD><TITLE>false</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>false</H1>
+Does not succeed (synonym of fail/0).
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   Does not succeed.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Always fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: [user].
+       not1(Goal) :- call(Goal), !, false.
+       not1(_).
+       user compiled 208 bytes in 0.02 seconds
+      [eclipse]: not1(true).
+      no.
+      [eclipse]: not1(fail).
+      yes.
+      [eclipse]: not1(false).
+      yes.
+
+Fail:
+      false.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/fail-0.html">fail / 0</A>
+</BODY></HTML>

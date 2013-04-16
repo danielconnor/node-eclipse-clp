@@ -1,0 +1,38 @@
+
+linrenorm(+LinOld, -LinNew)
+
+   Renormalize a linear form
+
+Arguments
+   LinOld              Possibly denormal lists of monomials
+   LinNew              Normalized lists of monomials
+
+Type
+   library(linearize)
+
+Description
+	The normal form of linear expressions is
+
+		[C0*1, C1*X1, C2*X2, ...]
+
+	where Ci are numbers and Xi are distinct variables.
+	The first (constant) term is always present, Ci (i>=1) are nonzero.
+
+	Such a form can become denormalized due to unifications
+	(instantiation or variable-variable aliasing). This predicate
+	renormalizes it. Note that variables may only become instantiated
+	to numbers!
+    
+
+Examples
+   
+    ?- linearize(3*X-7*Y+2*(X+Y), L1, R), writeln(L1),
+	Y = 3,
+	linrenorm(L1,L2), writeln(L2).
+
+    [0 * 1, 5 * X, -5 * Y]
+    [-15 * 1, 5 * X]
+    
+
+See Also
+   linearize / 3, delinearize / 2

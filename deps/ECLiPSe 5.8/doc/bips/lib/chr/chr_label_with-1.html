@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>chr_label_with(+Constraint)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(chr)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>chr_label_with(+Constraint)</H1>
+Checks the label_with declarations of Constraint.
+
+
+<DL>
+<DT><EM>+Constraint</EM></DT>
+<DD>A chr constraint.
+</DD>
+</DL>
+<H2>Description</H2>
+   Checks the label_with declarations of Constraint.  Used by advanced
+   constraint handling rules users to write their own labeling procedure
+   for the constraints defined by constraint handling rules.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Constraint is a variable or if Constraint does not have a
+   label_with declaration or if the guard of all unifying label_with
+   declarations fail.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>   Given the following  label_with declaration (from the example
+   constraint handler in file  time-pc.chr:
+label_with path(N, X, Y, L, T, I) if N&gt;1.
+
+[eclipse]: chr_label_with(path(N,X,Y,L,T,I)).
+no (more) solution.
+
+[eclipse]: chr_label_with(path(1,X,Y,L,T,I)).
+no (more) solution.
+
+[eclipse]: chr_label_with(path(2,X,Y,L,T,I)).
+X = X
+Y = Y
+L = L
+T = T
+I = I     More? (;)
+no (more) solution.
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/chr/chr_labeling-0.html">chr_labeling / 0</A>, <A HREF="../../lib/chr/chr_resolve-1.html">chr_resolve / 1</A>, <A HREF="../../lib/chr/chr_get_constraint-1.html">chr_get_constraint / 1</A>, <A HREF="../../lib/chr/chr_get_constraint-2.html">chr_get_constraint / 2</A>
+</BODY></HTML>

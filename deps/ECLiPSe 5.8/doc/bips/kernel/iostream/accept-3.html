@@ -1,0 +1,80 @@
+<HTML><HEAD><TITLE>accept(+Stream, ?From, ?NewStream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>accept(+Stream, ?From, ?NewStream)</H1>
+Accepts a connection for a stream socket and creates a new socket which can
+be used for I/O.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Atom or integer.
+</DD>
+<DT><EM>?From</EM></DT>
+<DD>A term unifiable with a structure atom/integer.
+</DD>
+<DT><EM>?NewStream</EM></DT>
+<DD>Atom, structure or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   accept/3 is a direct link to the accept(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3
+   of the type stream, listening for connections.  accept/3 blocks until
+   there is a connection request from another process, and then it creates
+   a new socket stream NewStream with the same properties as Stream, which
+   can be then used for communication with the connecting process.  The
+   Stream socket remains open and listening for further connections.
+
+<P>
+   In the internet domain, From is unified with the address of the
+   connecting process in the form HostName/Port.  In the unix domain, From
+   is unified with an empty atom ''.
+
+<P>
+   When instantiated, NewStream must be a symbolic stream name, i.e.  an
+   atom.  The stream can also be specified as sigio(NewStream).  In this
+   case the socket is created and in addition it is instructed to send the
+   signal io each time new data appears in it.
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   From does not unify with the address of the connecting socket.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an atom or a sigio/1    structure.
+<DT><EM>(5) type error </EM>
+<DD>From is instantiated but not to an atom or a structure.
+<DT><EM>(170) system interface error </EM>
+<DD>It was not possible to execute the system call.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      socket(internet, stream, s), bind(s, Addr), listen(s, 1),
+      accept(s, From, news).
+
+Error:
+      accept(s, From, 6)            (Error 5).
+      socket(internet, datagram, s), bind(s, Addr), listen(s, 2),
+      accept(s, From, news)         (Error 170).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/socket-3.html">socket / 3</A>, <A HREF="../../kernel/iostream/bind-2.html">bind / 2</A>, <A HREF="../../kernel/iostream/listen-2.html">listen / 2</A>, <A HREF="../../kernel/iostream/connect-2.html">connect / 2</A>
+</BODY></HTML>

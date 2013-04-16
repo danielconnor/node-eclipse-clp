@@ -1,0 +1,16 @@
+
+jd_to_mjd(++JD, ?MJD)
+
+   Convert Julian Dates (JD) to Modified Julian Dates (MJD)
+
+Arguments
+   JD                  Integer or float
+   MJD                 Variable or float
+
+Type
+   library(calendar)
+
+Description
+Convert Julian Dates (JD) to Modified Julian Dates (MJD). The relationship is simply MJD = JD-2400000.5
+
+

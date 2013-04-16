@@ -1,0 +1,8 @@
+:- module(logarr).
+:- export array_to_list / 2.
+:- export aset / 4.
+:- export arefl / 3.
+:- export arefa / 3.
+:- export aref / 3.
+:- export is_array / 1.
+:- export new_array / 1.

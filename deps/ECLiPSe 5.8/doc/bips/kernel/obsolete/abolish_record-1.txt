@@ -1,0 +1,84 @@
+
+abolish_record(+Key)
+
+   Remove the local record Key and all its recorded values.
+
+
+
+Arguments
+   +Key                Key specification of the form Name/Arity or just Name.
+
+Type
+   Obsolete
+
+Description
+   Remove the local record Key visible from the caller module and all its
+   recorded values.  If global records are recorded under the key Key, they
+   become visible to that module.
+
+
+   Key is equal to Key/0.
+
+
+   If there is no local key declared in the caller module (with
+   local record/1), error 45 is raised.
+
+
+   Note that abolish_record/1 is used to remove a records completely (even
+   its local declaration) so that a global record (if any) becomes visible
+   whereas erase_all/1 does not remove the local declaration.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Key is not instantiated.
+     5 --- Key is not of the form Atom or Atom/Integer.
+    45 --- No local key Key is declared in the caller module.
+
+Examples
+   
+Success:
+      [eclipse]: record(type, integer). % global by default
+      yes.
+      [eclipse]: module(beer).
+      [beer]: record(type, string).   % added global
+      yes.
+      [beer]: local record(type).     % define a local
+      yes.
+      [beer]: record(type, lager),
+              record(type, stout).
+      yes.
+      [beer]: recorded(type, X).
+      X = lager     More? (;)
+      X = stout     More? (;)
+      no (more) solution.
+      [beer]: abolish_record(type/0).
+      yes. % the visible is now the global one again
+      [beer]: recorded(type, X).
+      X = integer     More? (;)
+      X = string     More? (;)
+      no (more) solution.
+
+Error:
+      abolish_record(X).               (Error 4).
+      abolish_record(123).             (Error 5).
+      local(record(key/3)),
+          abolish_record(key/3),
+          abolish_record(key/3).       (Error 45).
+
+
+
+
+
+
+See Also
+   erase / 2, erase_all / 1, record / 1, record / 2, recorded / 2, recorded / 3

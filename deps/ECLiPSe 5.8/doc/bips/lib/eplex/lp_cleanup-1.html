@@ -1,0 +1,19 @@
+<HTML><HEAD><TITLE>lp_cleanup(+Handle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lp_cleanup(+Handle)</H1>
+Destroy the specified solver Handle and clean up.
+<DL>
+<DT><EM>Handle</EM></DT>
+<DD>Handle to a solver state
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Destroy the specified solver, free all memory, etc.  Note that ECLiPSe
+    will normally do the cleanup automatically, for instance when execution
+    fails across the solver setup, or when a solver handle gets garbage
+    collected.  However, calling lp_cleanup/1 explicitly does not hurt and
+    may cause resources (memory and licence) to be freed earlier.
+</P>
+
+</BODY></HTML>

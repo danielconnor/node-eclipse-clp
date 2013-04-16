@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>set_error_handler(+Number, +PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_error_handler(+Number, +PredSpec)</H1>
+Set an error handler PredSpec for the error with number Number.
+
+
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>Integer.
+</DD>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Term of the form Atom/Integer.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Assigns the procedure specified by PredSpec (specified as name/arity) as
+   the error handler for the error whose number is given by Number.
+
+<P>
+   An error handler such as PredSpec can have 3 optional arguments:  the
+   1st argument is the number of the error; the 2nd argument is the culprit
+   (a structure corresponding to the call which caused it); the 3rd is the
+   caller module or a free variable (if the module is unknown).  The error
+   handler is free to use less than 3 arguments.
+
+<P>
+   The errors which exist are implementation defined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either Number or PredSpec is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Number is not an integer.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not of the form Atom/Integer.
+<DT><EM>(6) out of range </EM>
+<DD>Number is not a valid error number.
+<DT><EM>(6) out of range </EM>
+<DD>PredSpec is of the form Atom/Integer, but the integer is    greater than 3.
+<DT><EM>(60) referring to an undefined procedure </EM>
+<DD>PredSpec is of the form Atom/Integer, but no such predicate    has been defined.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: string_list(S,L).
+      instantiation fault in string_list(_g50, _g52)
+      [eclipse]: get_error_handler(4,M,N).
+      M = error_handler/2
+      N = sepia_kernel
+      yes.
+      [eclipse]: set_error_handler(4,true/0), string_list(S,L).
+      S = _g56
+      L = _g58
+      yes.
+
+      [eclipse]: [user].
+       a :- write(warning_output, "typo"), fail.
+       user compiled 100 bytes in 0.03 seconds
+      [eclipse]: set_error_handler(5,a/0).
+      yes.
+      [eclipse]: atom_length("atom",L).
+      typo
+      no.
+
+Error:
+      set_error_handler(N,true/0).   (Error 4).
+      set_error_handler(5,P).        (Error 4).
+      set_error_handler(5.0,true/0). (Error 5).
+      set_error_handler(1000,X).     (Error 6).
+      set_error_handler(-1,X).       (Error 6).
+      set_error_handler(6,a/4).      (Error 6).  % arity &gt; 3.
+      set_error_handler(6,t/2).      (Error 60). % no t/2.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/obsolete/get_error_handler-3.html">get_error_handler / 3</A>
+</BODY></HTML>

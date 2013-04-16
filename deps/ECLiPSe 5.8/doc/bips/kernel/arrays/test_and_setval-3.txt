@@ -1,0 +1,53 @@
+
+test_and_setval(+VarName, +Old, +New)
+
+   Test whether a non-logical variable has value Old and if so, set it to New.
+
+Arguments
+   +VarName            An atom
+   +Old                A term
+   +New                A term
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   VarName must be the name of a non-logical variable (not an array
+   element and not a reference).  If the current value of this
+   variable is not identical to Old, the predicate fails.  If it is
+   identical, the variable's value gets changed to the value New. 
+   Test and set is done as an atomic operation.
+
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails it the current value of the variable is not identical to Old.
+
+
+
+Exceptions
+     4 --- VarName is not ground
+     5 --- VarName not an atom
+     5 --- VarName is the name of a reference
+    41 --- VarName is not the name of a non-logical variable.
+
+Examples
+   
+Success:
+     ?- setval(k, 3), test_and_setval(k, 3, 5).
+
+     wait_for_lock :-
+	    ( test_and_setval(lock, 0, 1) ->
+		true
+	    ;
+	        wait_for_lock
+	    ).
+
+Fail:
+      setval(k, 1), test_and_setval(k, 3, 5).
+
+
+See Also
+   decval / 1, incval / 1, variable / 1, setval / 2, getval / 2

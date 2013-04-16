@@ -1,0 +1,95 @@
+
+get_chtab(+Char, ?Class)
+
+   Succeeds if the lexical class of character Char is Class.
+
+
+
+Arguments
+   +Char               Integer in the range 0 to 255.
+   ?Class              Atom giving class name or variable.
+
+Type
+   Syntax Settings
+
+Description
+   Retrieves or checks the lexical class of a given character.
+
+
+   Class is unified with the current lexical character class of Char.
+
+
+   Char must be an integer in the range 0 to 255 (an escaped ASCII code is
+   also acceptable, eg 0'a = 98).
+
+
+   The following table lists the character classes and the corresponding
+   default characters:
+
+
+
+ Class          Default member characters
+---------------------------------------------------------
+ upper_case     all upper case letters
+ underline      _
+ lower_case     all lower case letters
+ digit          digits
+ blank_space    space, tab, carriage return (CR) etc
+ end_of_line    newline (NL)
+ atom_quote     '
+ string_quote   "
+ list_quote
+ radix
+ ascii
+ solo           ( ) ] }
+ special        ! , ; [ { |
+ line_comment   %
+ escape         \
+ first_comment  /
+ second_comment *
+ symbol         # + - . : < = > ? @ ^ ` ~ & $
+ unused         ASCII codes 8, 17, 21, 24
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if class of Char does not unify with Class.
+
+
+
+Exceptions
+     4 --- Char in not instantiated.
+     5 --- Char is not an ASCII code.
+     6 --- Char is not in the range 0 to 255.
+
+Examples
+   
+Success:
+   [eclipse]: get_chtab(0'a,X).
+
+   X = lower_case
+   yes.
+   [eclipse]: get_chtab(60,X).
+
+   X = symbol
+   yes.
+   [eclipse]:
+
+Fail:
+   get_chtab(98,symbol).
+   get_chtab(98,blah).
+
+Error
+   get_chtab(X,lower_case).     (Error 4).
+   get_chtab("a",X).            (Error 5).
+   get_chtab(-1,X).             (Error 6).
+
+
+
+
+
+See Also
+   set_chtab / 2, read_token / 2, read_token / 3

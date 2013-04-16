@@ -1,0 +1,57 @@
+
+fail_if(+Goal)
+
+   Succeeds if Goal cannot be satisfied.  Uses negation as failure (synonym of
+not/1 and \+/1).
+
+
+
+Arguments
+   +Goal               Atom or compound term.
+
+Type
+   Obsolete
+
+Description
+   Used to fail if Goal succeeds.  Uses the standard Prolog form of
+   negation as failure.
+
+
+   To check whether a call Goal succeeds without binding variables, the
+   call fail_if( fail_if( Goal)) can be used.
+
+
+   Not that !/0 does not cut through fail_if/1.  Unlike not/1 and \+/1,
+   fail_if/1 is a protected predicate and cannot be redefined.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Goal succeeds.
+
+
+
+Examples
+   
+Success:
+      fail_if(fail).
+      fail_if(1 == 2).
+      fail_if(X == 1).
+      fail_if(fail_if(X = 1)).
+          % does not bind X
+
+Fail:
+      fail_if(X = 1).
+      fail_if(true).
+      fail_if(3 == 3).
+
+
+
+
+
+See Also
+   \+ / 1, not / 1, ~ / 1

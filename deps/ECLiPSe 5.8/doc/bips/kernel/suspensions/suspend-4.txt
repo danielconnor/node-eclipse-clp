@@ -1,0 +1,99 @@
+
+suspend(+Goal, +Prio, +CondList, -Susp)
+
+   Delay the Goal as suspension Susp and wake it with priority Prio
+as soon as one of the specifications in CondList occurs.
+
+
+
+Arguments
+   +Goal               A callable term.
+   +Prio               An integer.
+   +CondList           A term of the form Vars->Cond or trigger(Atom) or a list of such terms.
+   -Susp               A free variable used to return the created suspension.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   The specified goal Goal is suspended (a suspension is created and
+   returned as Susp) and it is woken with the priority Prio as soon as
+   one trigger conditions specified in CondList arises.
+
+   The Prio argument determines the priority with which the Goal will be
+   scheduled when woken. It can be a positive number between 1 and 12,
+   or zero, in which case the priority defaults to the priority setting
+   of the predicate which is called in Goal.
+
+   CondList is one term or a list of terms of the form Vars->Cond.
+   The condition Cond is either the name of a predefined suspension
+   list or the specification of a suspension list in one of the
+   variable's attributes.  The predefined suspension lists are inst
+   (for instantiation), bound (bound to another variable) and constrained
+   (any constraining attribute modification).
+   The general specification has the form
+
+
+
+    Vars->moduleName:(suspListName of attrStruct)
+
+    which can be abbreviated (if moduleName and attrStruct are identical) to
+
+
+
+    Vars->moduleName:suspListName
+
+    The following are examples for valid conditions:
+
+
+
+    Vars->inst
+    Vars->constrained
+    Vars->fd:min
+    Vars->fd:(min of fd)
+
+   A specification of the form trigger(Atom) states that the goal should
+   be woken by a symbolic trigger, ie.  by a matching invocation of the
+   built-in schedule_suspensions/1.  The name of the trigger can be an
+   arbitrary atom.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     6 --- CondList is ill-formed.
+
+Examples
+   
+[eclipse]: suspend(writeln(hello), 2, X->inst, Susp),
+        get_suspension_data(Susp, goal, Goal),
+        get_suspension_data(Susp, module, Module).
+
+X = X
+Goal = writeln(hello)
+Susp = 'SUSP-_321-susp'
+Module = eclipse
+
+Delayed goals:
+        writeln(hello)
+yes.
+
+[eclipse]: suspend(writeln(hello), 2, X->inst, Susp),
+        kill_suspension(Susp),     % killed before woken
+	X=1.
+
+Susp = 'SUSP-_308-dead'
+X = 1
+yes.
+
+
+See Also
+   demon / 1, make_suspension / 3, insert_suspension / 3, suspend / 3, attach_suspensions / 2

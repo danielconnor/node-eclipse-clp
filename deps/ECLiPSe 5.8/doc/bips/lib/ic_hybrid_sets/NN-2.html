@@ -1,0 +1,29 @@
+<HTML><HEAD><TITLE>?Set :: ++Lwb..++Upb</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_hybrid_sets)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Set :: ++Lwb..++Upb</H1>
+Set is an integer set within the given bounds
+<DL>
+<DT><EM>Set</EM></DT>
+<DD>A free variable, set variable or an integer list
+</DD>
+<DT><EM>Lwb..Upb</EM></DT>
+<DD>Structure holding two lists of integers
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Lwb and Upb are two lists of integers. Lwb must be a sublist of
+    Upb. Set is unified with a set variable whose lower bound is the
+    set of list elements of Lwb, and whose upper bound is the set of
+    list elements of Upb.
+</P>
+<H3>Fail Conditions</H3>
+Lwb is not a sublist of Upb
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Set is not a variable or list, or Lwb..Upb is not a ../2 structure
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/ic_hybrid_sets/intset-3.html">intset / 3</A>, <A HREF="../../lib/ic_hybrid_sets/intsets-4.html">intsets / 4</A>
+</BODY></HTML>

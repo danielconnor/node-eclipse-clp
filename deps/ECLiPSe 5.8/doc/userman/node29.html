@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Procedure Types</TITLE>
+<META NAME="description" CONTENT="Procedure Types">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node30.html">
+<LINK REL="previous" HREF="node28.html">
+<LINK REL="up" HREF="node27.html">
+<LINK REL="next" HREF="node30.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2680"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2676"
+ HREF="node27.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2670"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2678"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2681"
+ HREF="node30.html">Compiler Modes</A>
+<B> Up:</B> <A NAME="tex2html2677"
+ HREF="node27.html">The Compiler</A>
+<B> Previous:</B> <A NAME="tex2html2671"
+ HREF="node28.html">Program Source</A>
+ &nbsp <B>  <A NAME="tex2html2679"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00620000000000000000">
+Procedure Types</A>
+</H1>
+Procedures can be <B>static</B> and <B>dynamic</B>
+and this feature can be queried with the <TT>stability</TT> flag
+of <A NAME="tex2html225"
+ HREF="../bips/kernel/database/get_flag-3.html">get_flag/3</A><A NAME="3118"></A>.
+
+<P>
+Static procedures are compiled as one unit, they are thus executed
+more efficiently, and they can be modified only by replacing
+them by another procedure.
+By contrast, dynamic procedures are compiled clause-wise,
+they are executed slightly less efficiently, but their source
+form can also be retrieved, and they can be modified
+by adding or removing single clauses or clause sequences.
+
+<P>
+By default all procedures are static, dynamic procedures
+must be declared by the <A NAME="tex2html227"
+ HREF="../bips/kernel/dynamic/dynamic-1.html">dynamic/1</A><A NAME="3121"></A> declaration,
+except that undefined procedures for which <A NAME="tex2html229"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert/1,2</A><A NAME="3124"></A>
+is called are silently declared as dynamic by the event handler,
+and so no declaration is needed.
+
+<P>
+When compiling static procedures, the compiler remembers
+their position in the file, which can be then queried
+by <A NAME="tex2html231"
+ HREF="../bips/kernel/database/get_flag-3.html">get_flag/3</A><A NAME="3127"></A>.
+The library <B>scattered</B> actually uses this feature
+to retrieve predicates whose clauses are not consecutive.
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

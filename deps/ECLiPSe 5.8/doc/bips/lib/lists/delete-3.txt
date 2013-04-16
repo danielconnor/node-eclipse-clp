@@ -1,0 +1,69 @@
+
+delete(?Element, ?List1, ?List2)
+
+   Succeeds if List2 is List1 less an occurence of Element in List1.
+
+
+
+Arguments
+   ?Element            Prolog term.
+   ?List1              List or variable.
+   ?List2              List or variable.
+
+Type
+   library(lists)
+
+Description
+   Unifies the list List2 with the list List1 less an occurence of Element.
+   Any alternative solutions are provided on backtracking.
+
+   This predicate can be used to select an element from a list, delete an
+   element or insert it.
+
+   The definition of this Prolog library predicate is:
+
+    delete(A, [A|B], B).
+    delete(A, [B, C|D], [B|E]) :-
+	    delete(A, [C|D], E).
+
+   This predicate does not perform any type testing functions.
+   
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if List2 does not unify with List1 less an occurence of Element.
+
+
+
+Examples
+   
+Success:
+   [eclipse]: delete(X,[1,M,X],L), writeln((M,X,L)), fail.
+   _g66 , 1 , [_g66, 1]
+   _g66 , _g66 , [1, _g66]
+   _g66 , _g72 , [1, _g66]
+   no (more) solution.
+
+   [eclipse]: delete(3,[1,3,5,3],L).
+   L = [1, 5, 3]    More? (;)
+   L = [1, 3, 5]
+   yes.
+
+   [eclipse]: delete(X,L,[a,b]), writeln((X,L)), fail.
+   _g66 , [_g66, a, b]
+   _g66 , [a, _g66, b]
+   _g66 , [a, b, _g66]
+   no (more) solution.
+
+   delete(X,[1,2],L).   (gives X=1 L=[2]; X=2 L=[1]).
+Fail:
+   delete(1,[1,2,1,3],[2,3]).
+
+
+
+
+
+See Also
+   subtract / 3, member / 2

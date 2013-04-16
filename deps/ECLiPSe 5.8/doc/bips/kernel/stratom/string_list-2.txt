@@ -1,0 +1,70 @@
+
+string_list(?String, ?List)
+
+   Succeeds if List is a list whose elements are the ascii codes of the
+characters of String.
+
+
+
+Arguments
+   ?String             String or variable.
+   ?List               List of integers (in the range 0 to 255) and/or variables,                or else a variable.
+
+Type
+   Strings and Atoms
+
+Description
+   This predicate performs conversion between a string and a list of the
+   ASCII codes of the characters of the string.
+
+
+   If String is instantiated, unifies List with the list whose elements are
+   the ASCII codes for the elements of the string.
+
+
+   If List is instantiated, unifies String with the string corresponding to
+   this list of ASCII codes.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List does not unify with a list of ascii codes which correspond
+   to the string String.
+
+
+
+Exceptions
+     5 --- String is neither a string nor a variable.
+     5 --- List is neither a list nor a variable.
+     6 --- One (or more) elements of List are not integers in the range    0 to 255.
+     4 --- Neither String or List are ground (non-coroutine mode only).
+
+Examples
+   
+   Success:
+   string_list(S,[65,98,99]).          (gives S="Abc").
+   string_list("abc",L).               (gives L=[97,98,99]).
+   string_list("abc",[97,A,99]).       (gives A=98).
+   string_list(S,[127]).               (gives S="").
+   string_list("abc",[97|A]).          (gives A=[98,99]).
+   Fail:
+   string_list("abc",[98,99,100]).
+   Error:
+   string_list(S,[A|[128]]).           (Error 4).
+   string_list(S,[1|A]).               (Error 4).
+   string_list('string',L).            (Error 5).
+   string_list(S,"list").              (Error 5).
+   string_list('string',[128]).        (Error 5).
+   string_list(S,["B"]).               (Error 5).
+   string_list(S,[256]).               (Error 6).
+
+
+
+
+
+See Also
+   string_code / 3, string_list / 3, atom_string / 2, char_code / 2, term_string / 2, split_string / 4

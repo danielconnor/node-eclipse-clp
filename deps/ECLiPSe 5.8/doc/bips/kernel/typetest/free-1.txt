@@ -1,0 +1,47 @@
+
+free(?Var)
+
+   Succeeds if Var is a free variable, not an attributed one.
+
+
+
+Arguments
+   ?Var                Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Var is a free variable.  free/1 is like var/1 but
+   does not succeed for attributed variables.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Var is instantiated or an attributed variable.
+
+
+
+Examples
+   
+Success:
+      free(X).
+      free(_abc).
+      free(_).
+
+Fail:
+      free(X{a}).
+      suspend:(X>0), free(X).
+      var(atom).
+      var('Abc').
+
+
+
+
+
+See Also
+   nonground / 1, nonvar / 1, meta / 1, type_of / 2, var / 1

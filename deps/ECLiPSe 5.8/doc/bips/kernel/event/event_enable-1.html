@@ -1,0 +1,45 @@
+<HTML><HEAD><TITLE>event_enable(+EventHandle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>event_enable(+EventHandle)</H1>
+Enable the given event
+<DL>
+<DT><EM>EventHandle</EM></DT>
+<DD>An event handle
+</DD>
+</DL>
+<H2>Description</H2>
+<P>	The given event is (re-)enabled.  Since events are enabled by default,
+	this only makes sense if the event had been previously disabled.
+    </P><P>
+	A disabled events behaves as if its handler was the goal 'true':
+	<UL>
+	<LI>Retrieving the goal using event_retrieve/3 returns 'true'</LI>
+	<LI>When the event is raised (e.g. posted via event/1), nothing happens</LI>
+	<LI>If the event gets disabled after it was raised, but before its handler
+	    execution has started, handler execution will be suppressed.</LI>
+	</UL>
+    </P><P>
+	Note that disabling and enabling events are nonlogical operations
+	which are not undone on backtracking.
+    </P>
+    
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>EventHandle is un-instantiated
+<DT><EM>(5) type error </EM>
+<DD>EventHandle is not a handle
+</DL>
+<H2>Examples</H2>
+<PRE>    ?- event_create(writeln(hello), [], E),
+       event_disable(E), writeln(disabled),
+       event(E),	% does nothing
+       event_enable(E), writeln(enabled),
+       event(E).
+    disabled
+    enabled
+    hello
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/event_disable-1.html">event_disable / 1</A>, <A HREF="../../kernel/event/event_retrieve-3.html">event_retrieve / 3</A>
+</BODY></HTML>

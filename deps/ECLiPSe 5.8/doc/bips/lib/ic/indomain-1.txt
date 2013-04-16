@@ -1,0 +1,27 @@
+
+indomain(?Var)
+
+   Instantiates an integer IC variable to an element of its domain.
+
+Arguments
+   Var                 An integer IC variable or an integer
+
+Type
+   library(ic)
+
+Description
+
+   Simple predicate for instantiating an integer IC variable to an element
+   of its domain.  It starts with the smallest element, and upon
+   backtracking tries successive elements until the entire domain has been
+   explored, at which point the predicate fails.
+
+   If Var is already a ground integer, then this predicate simply succeeds
+   exactly once without leaving a choicepoint.
+
+
+Resatisfiable
+   Yes.
+
+See Also
+   labeling / 1, :: / 2, fd : indomain / 1, ic_symbolic : indomain / 1

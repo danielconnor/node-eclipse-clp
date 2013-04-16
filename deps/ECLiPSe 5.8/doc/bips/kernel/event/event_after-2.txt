@@ -1,0 +1,95 @@
+
+event_after(+Event, +Time)
+
+      Set up an event Event which is triggered after Time seconds have
+   elapsed.
+
+
+
+Arguments
+   +Event              Atom or Handle
+   +Time               Positive number
+
+Type
+   Event Handling
+
+Description
+   The event Event is raised after Time seconds of elapsed time from when
+   the predicate is executed. Every call to event_after/2 will cause exactly
+   one corresponding event, if the same event is requested several times, it
+   will be raised several times. The event mechanism is safe with respect to
+   backtracking: once an after-event has been requested, it will be raised,
+   even when execution fails across the point where it was requested.
+
+   Time can be a real number, but the actual granularity of how fine
+   the elapsed time is measured is operating system dependent, and the
+   triggering condition is actually that at least Time seconds have
+   elapsed.
+
+   In addition, the processing of an event may not happen immediately
+   upon the raising the event, as events are processed synchronously:
+   An event can only be handled at a point where an ECLiPSe goal can
+   be executed. This can delay the handling of an event when ECLiPSe is
+   performing some uninterruptible task, e.g. waiting for I/O, or executing
+   external code.
+
+   The use of after-events requires some thought because after-events can
+   be raised at unpredictable (even though well-defined) points during
+   program execution. As long as the handlers succeed, this poses no
+   particular problem, because execution is allowed to continue after the
+   handler succeeds. By design, the possibilities of an event handler to
+   interact with the interrupted execution are limited (the handler can
+   access global data structures, use a symbolic trigger, etc).
+
+   More problematic are applications where the handler is allowed to
+   abort using exit_block/1.  Due to the timed execution, the exact
+   program point where the abort happens is unpredictable.  It must be
+   made sure that the abort is safely caught in all cases, and that
+   nonlogical data is not left in an inconsistent state.  In such cases,
+   it is possible to use events_defer/0 and events_nodefer/0 to protect
+   critical code sequences from being interrupted by event handling.
+   Note that it never makes sense to let after-event handlers fail.
+
+   Another problem that may occur with timed events is that a new
+   event may be raised while another one is still being handled.  To
+   stop event handlers from being interrupted by others, it is possible
+   to give events the defer-property.  This means that event handling
+   is automatically deferred on entering the event's handler, thus
+   preventing other events from interrupting the handler.  Such handlers
+   must always explicitly invoke events_nodefer/0 before exiting in order
+   to reenable event handling.
+
+   The timer used by measuring elapsed time is specified by the environment
+   flag after_event_timer: virtual means that elapsed user cpu time is
+   used, real means elapsed real time. The default is real. On
+   systems that cannot support CPU time measurement, such as Microsoft
+   Windows, one may not set the timer to virtual: an error is raised
+   if this is attempted.  The time relevant for event handling can be
+   obtained by calling statistics(event_time, Now).
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Event is neither an atom nor a handle or Time is not a positive number.
+
+Examples
+   
+   ?- event_create(writeln(hi), [], E),
+      event_after(E, 3.2),
+      event_create(abort, [], E1),
+      event_after(E1, 5),
+      repeat, fail.
+   hi				% after 3.2 seconds
+   Aborting execution ...	% after 5 seconds
+   Abort
+
+
+See Also
+   event_after / 3, event_after_every / 2, cancel_after_event / 2, events_after / 1, event / 1, set_event_handler / 2, current_after_events / 1, event_create / 3, event_retrieve / 3, get_flag / 2, statistics / 2

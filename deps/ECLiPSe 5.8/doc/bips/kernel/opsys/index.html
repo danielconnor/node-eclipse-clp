@@ -1,0 +1,141 @@
+<HTML><HEAD><TITLE>Operating System</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Operating System</H1>
+Built-ins to access operating-system services
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="alarm-1.html"><STRONG>alarm(+Clock)</STRONG></A></DT>
+<DD>The operating system will send the signal 14 to the ECLiPSe system Clock
+seconds after the command was entered.
+
+</DD>
+<DT><A HREF="argc-1.html"><STRONG>argc(?Number)</STRONG></A></DT>
+<DD>Succeeds if Number is the number of arguments given on the command line to
+invoke ECLiPSe .
+
+</DD>
+<DT><A HREF="argv-2.html"><STRONG>argv(+N, ?Argument)</STRONG></A></DT>
+<DD>Succeeds if the Nth argument given on the command line when invoking
+ECLiPSe is the string Argument.
+
+</DD>
+<DT><A HREF="canonical_path_name-2.html"><STRONG>canonical_path_name(++Path, ?CanonicalPath)</STRONG></A></DT>
+<DD>Expand a path name into the full `canonical' form.</DD>
+<DT><A HREF="cd-1.html"><STRONG>cd(+Directory)</STRONG></A></DT>
+<DD>Directory is made the current working directory.  Equivalent to
+set_flag(cwd, Directory).
+
+</DD>
+<DT><A HREF="cputime-1.html"><STRONG>cputime(?Time)</STRONG></A></DT>
+<DD>Succeeds if Time is the elapsed user cpu time in seconds.
+
+</DD>
+<DT><A HREF="date-1.html"><STRONG>date(?Date)</STRONG></A></DT>
+<DD>Date is bound to the string giving the date and time.
+
+</DD>
+<DT><A HREF="delete-1.html"><STRONG>delete(+File)</STRONG></A></DT>
+<DD>The file File (with absolute or relative pathname) is deleted.
+
+</DD>
+<DT><A HREF="errno_id-1.html"><STRONG>errno_id(-Message)</STRONG></A></DT>
+<DD>Message is bound to the message string that corresponds to most recent
+operating system error that occurred during the execution.
+
+</DD>
+<DT><A HREF="exec-2.html"><STRONG>exec(++Command, +Streams)</STRONG></A></DT>
+<DD>A child process Command is forked, its standard streams are connected to
+Streams and the ECLiPSe process waits until it terminates.
+
+</DD>
+<DT><A HREF="exec-3.html"><STRONG>exec(++Command, +Streams, ?Pid)</STRONG></A></DT>
+<DD>A child process Command is forked, its standard streams are connected to
+Streams and its process ID is Pid.
+
+</DD>
+<DT><A HREF="exec_group-3.html"><STRONG>exec_group(++Command, +Streams, ?Pid)</STRONG></A></DT>
+<DD>A child process Command is forked in a new process group, its standard
+streams are connected to Streams and its process ID is Pid.
+
+</DD>
+<DT><A HREF="existing_file-4.html"><STRONG>existing_file(++Base, ++Completions, ++Permissions, ?MatchedFile)</STRONG></A></DT>
+<DD>Finds any existing file subject to the specified conditions.</DD>
+<DT><A HREF="exists-1.html"><STRONG>exists(+File)</STRONG></A></DT>
+<DD>Succeeds if the file File (with absolute or relative pathname) exists.
+File can be a directory.
+
+</DD>
+<DT><A HREF="exit-1.html"><STRONG>exit(+Status)</STRONG></A></DT>
+<DD>The Prolog session is ended and the specified status returned to the
+operating system.
+
+</DD>
+<DT><A HREF="get_file_info-3.html"><STRONG>get_file_info(+File, ?Attr, ?Value)</STRONG></A></DT>
+<DD>Succeeds if the file File (with absolute or relative pathname) exists and
+the value of its attribute Attr unfies with Value.
+
+</DD>
+<DT><A HREF="getcwd-1.html"><STRONG>getcwd(?Cwd)</STRONG></A></DT>
+<DD>Unifies the current working directory with Cwd.
+
+</DD>
+<DT><A HREF="getenv-2.html"><STRONG>getenv(+Name, ?Value)</STRONG></A></DT>
+<DD>Succeeds if Name is the name of an environment variable or registry entry, and returns the corresponding value.</DD>
+<DT><A HREF="halt-0.html"><STRONG>halt</STRONG></A></DT>
+<DD>The Prolog session is ended (the same as Control-D at the top-level loop).
+
+</DD>
+<DT><A HREF="kill-2.html"><STRONG>kill(+Pid, +Signal)</STRONG></A></DT>
+<DD>Send the signal Signal to the process number Pid
+
+</DD>
+<DT><A HREF="local_time-8.html"><STRONG>local_time(?Year, ?Month, ?Day, ?Hour, ?Minute, ?Second, ?DST, ?UnixTime)</STRONG></A></DT>
+<DD>Conversion between local time and universal time</DD>
+<DT><A HREF="local_time_string-3.html"><STRONG>local_time_string(+UnixTime, +Format, -TimeString)</STRONG></A></DT>
+<DD>Create a string representation of the local time</DD>
+<DT><A HREF="mkdir-1.html"><STRONG>mkdir(+Path)</STRONG></A></DT>
+<DD>Create a directory/folder with the given name.
+
+</DD>
+<DT><A HREF="os_file_name-2.html"><STRONG>os_file_name(?InternalName, ?ExternalName)</STRONG></A></DT>
+<DD>Conversion between internal ECLiPSe file name and Operating
+System file name syntax.
+
+</DD>
+<DT><A HREF="pathname-4.html"><STRONG>pathname(+FilePath, ?Path, ?BaseName, ?Suffix)</STRONG></A></DT>
+<DD>Decomposes a filename into its directory path, base name and suffix</DD>
+<DT><A HREF="pause-0.html"><STRONG>pause</STRONG></A></DT>
+<DD>The ECLiPSe session is suspended (the same as Control-Z at the top-level
+loop).
+
+</DD>
+<DT><A HREF="read_directory-4.html"><STRONG>read_directory(+Directory, +Pattern, ?SubdirList, ?FileList)</STRONG></A></DT>
+<DD>Unifies SubdirList with a list of subdirectories and FileList with a list
+of matching files in the specified directory.
+
+</DD>
+<DT><A HREF="rename-2.html"><STRONG>rename(+OldName, +NewName)</STRONG></A></DT>
+<DD>Renames the file OldName to NewName.
+
+</DD>
+<DT><A HREF="sh-1.html"><STRONG>sh(+ShellCommand)</STRONG></A></DT>
+<DD>The string or atom ShellCommand is passed as a command to the operating
+system, and the command is executed there (it is a synonym for system/1).
+
+</DD>
+<DT><A HREF="sleep-1.html"><STRONG>sleep(+Seconds)</STRONG></A></DT>
+<DD>The execution of ECLiPSe is suspended for Seconds number of seconds.
+
+</DD>
+<DT><A HREF="system-1.html"><STRONG>system(+ShellCommand)</STRONG></A></DT>
+<DD>The string or atom ShellCommand is passed as a command to the operating
+system, and the command is executed there (it is a synonym for sh/1).
+
+</DD>
+<DT><A HREF="wait-2.html"><STRONG>wait(?Pid, ?Status)</STRONG></A></DT>
+<DD>Wait for a child process to terminate and report its process ID and status.</DD>
+</DL>
+</BLOCKQUOTE>
+<HR>Generated from opsys.eci on Tue Jan 25 01:58:28 2005
+
+</BODY></HTML>

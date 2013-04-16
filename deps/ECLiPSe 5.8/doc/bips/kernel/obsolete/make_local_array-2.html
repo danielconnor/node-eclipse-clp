@@ -1,0 +1,92 @@
+<HTML><HEAD><TITLE>make_local_array(+Array, +Type)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>make_local_array(+Array, +Type)</H1>
+Creates an array or global variable Array of type Type visible only in the
+caller module.
+
+
+<DL>
+<DT><EM>+Array</EM></DT>
+<DD>Atom or ground compound term with integer arguments.
+</DD>
+<DT><EM>+Type</EM></DT>
+<DD>Atom, one of float, integer, byte, prolog, global_reference.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   If Array is an atom, a global variable only visible from the caller
+   module is created.  The only type allowed for a global variable is
+   prolog or global_reference.  However a typed gobal variable can be
+   create with make_local_array(a(1), Type) (accessed a a(0)).
+
+<P>
+   If Array is a compound term, a local array of type Type is created, its
+   dimension is the arity of the term Array and the size of each dimension
+   is specified by the corresponding argument of the term Array.  The sizes
+   must be greater than 0, Type must not be global_reference.
+
+<P>
+   The elements of Prolog arrays are initialised depending on the type:
+   float, integer, byte and global_reference arrays are initialised with 0
+   values, prolog arrays are initialised with free variables.
+
+<P>
+   The array indexes in the array range from 0 to the dimension minus one.
+   For example myarray create with make_local_array(myarray(3,4,5),
+   integer) contains 60 integers that may be accessed from myarray(0,0,0)
+   to myarray(2,3,4).
+
+<P>
+   Global references access the original term with is variables, other
+   array types store a copy of the term.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either or both of the arguments are not ground.
+<DT><EM>(5) type error </EM>
+<DD>Array is not an atom or a compound term with integer    arguments.
+<DT><EM>(5) type error </EM>
+<DD>Type is not an atom.
+<DT><EM>(6) out of range </EM>
+<DD>The ground compound term Array has arguments that are    integers not greater than 0.
+<DT><EM>(6) out of range </EM>
+<DD>Type is not an atom in the above set.
+<DT><EM>(42) redefining an existing array </EM>
+<DD>An array with the same name and dimension as Array already    exists.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      make_local_array(a, prolog).
+      make_local_array(a(1), integer).
+      make_local_array(a(4), prolog).
+      make_local_array(b(2,3), float).
+      make_local_array(a(2), float),
+          make_local_array(a(3,2), byte).
+      make_array(a(2,3), integer),
+          make_local_array(a(2,3), integer).
+
+Error:
+      make_local_array(a(7), X).                     (Error 4).
+      make_local_array(a(6.0), float).               (Error 5).
+      make_local_array(a(0), float).                 (Error 6).
+      make_local_array(a(2), atom).                  (Error 6).
+      make_local_array(a(4), float),
+          make_local_array(a(5), byte).              (Error 42).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/array-2.html">array / 2</A>, <A HREF="../../kernel/arrays/current_array-2.html">current_array / 2</A>, <A HREF="../../kernel/arrays/getval-2.html">getval / 2</A>, <A HREF="../../kernel/obsolete/make_array-1.html">make_array / 1</A>, <A HREF="../../kernel/obsolete/make_array-2.html">make_array / 2</A>, <A HREF="../../kernel/obsolete/make_local_array-1.html">make_local_array / 1</A>, <A HREF="../../kernel/arrays/setval-2.html">setval / 2</A>
+</BODY></HTML>

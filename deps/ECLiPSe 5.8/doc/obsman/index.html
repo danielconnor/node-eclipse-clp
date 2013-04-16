@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>ECLiPSe Obsolete Libraries Manual Release 5.8 </TITLE>
+<META NAME="description" CONTENT="ECLiPSe Obsolete Libraries Manual Release 5.8 ">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html289"
+ HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif_gr.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif_gr.gif">  
+<A NAME="tex2html287"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html290"
+ HREF="node1.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html288"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<P>
+
+<P>
+<H1 ALIGN="CENTER"><FONT SIZE="+4">ECLiPSe Obsolete Libraries Manual</FONT>
+<BR>
+	<BR>
+<BR>
+<BR>
+Release 5.8
+    </H1>
+<P ALIGN="CENTER"><STRONG>Pascal Brisset
+ - Hani El Sakkout
+ - Thom Fr&#252;hwirth
+ - Carmen Gervet
+ - Warwick Harvey
+ - Micha Meier
+ - Stefano Novello
+ - Thierry Le Provost
+ - Joachim Schimpf
+ - Kish Shen
+ - Mark Wallace</STRONG></P>
+
+<P>
+
+<P>
+
+<P>
+&#169; International Computers Limited and ECRC GmbH 1990-1995
+
+<BR>
+&#169; International Computers Limited and Imperial College London 1996-2000
+
+<P>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P>
+
+<P>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html291"
+ HREF="node1.html">Introduction</A>
+<LI><A NAME="tex2html292"
+ HREF="node2.html">The Finite Domains Library</A>
+<UL>
+<LI><A NAME="tex2html293"
+ HREF="node3.html">Terminology</A>
+<LI><A NAME="tex2html294"
+ HREF="node4.html">Constraint Predicates</A>
+<LI><A NAME="tex2html295"
+ HREF="node5.html">Arithmetic Constraint Predicates</A>
+<LI><A NAME="tex2html296"
+ HREF="node6.html">Logical Constraint Predicates</A>
+<LI><A NAME="tex2html297"
+ HREF="node7.html">Evaluation Constraint Predicates</A>
+<LI><A NAME="tex2html298"
+ HREF="node8.html">CHIP Compatibility Constraints Predicates</A>
+<LI><A NAME="tex2html299"
+ HREF="node9.html">Utility Constraints Predicates</A>
+<LI><A NAME="tex2html300"
+ HREF="node10.html">Search Methods</A>
+<LI><A NAME="tex2html301"
+ HREF="node11.html">Domain Output</A>
+<LI><A NAME="tex2html302"
+ HREF="node12.html">Debugging Constraint Programs</A>
+<LI><A NAME="tex2html303"
+ HREF="node13.html">Debugger Support</A>
+<LI><A NAME="tex2html304"
+ HREF="node14.html">Examples</A>
+<LI><A NAME="tex2html305"
+ HREF="node15.html">General Guidelines to the Use of Domains</A>
+<LI><A NAME="tex2html306"
+ HREF="node16.html">User-Defined Constraints</A>
+<UL>
+<LI><A NAME="tex2html307"
+ HREF="node16.html#SECTION002141000000000000000">The <I>fd</I> Attribute</A>
+<LI><A NAME="tex2html308"
+ HREF="node16.html#SECTION002142000000000000000">Domain Access</A>
+<LI><A NAME="tex2html309"
+ HREF="node16.html#SECTION002143000000000000000">Domain Operations</A>
+<LI><A NAME="tex2html310"
+ HREF="node16.html#SECTION002144000000000000000">Accessing Domain Variables</A>
+<LI><A NAME="tex2html311"
+ HREF="node16.html#SECTION002145000000000000000">Modifying Domain Variables</A>
+</UL>
+<LI><A NAME="tex2html312"
+ HREF="node17.html">Extensions</A>
+<LI><A NAME="tex2html313"
+ HREF="node18.html">Example of Defining a New Constraint</A>
+<LI><A NAME="tex2html314"
+ HREF="node19.html">Program Examples</A>
+<UL>
+<LI><A NAME="tex2html315"
+ HREF="node19.html#SECTION002171000000000000000">Constraining Variable Pairs</A>
+<UL>
+<LI><A NAME="tex2html316"
+ HREF="node19.html#SECTION002171100000000000000">User-Defined Constraints</A>
+<LI><A NAME="tex2html317"
+ HREF="node19.html#SECTION002171200000000000000">Using the <I>element</I> Constraint</A>
+<LI><A NAME="tex2html318"
+ HREF="node19.html#SECTION002171300000000000000">Using Evaluation Constraints</A>
+<LI><A NAME="tex2html319"
+ HREF="node19.html#SECTION002171400000000000000">Using Generalised Propagation</A>
+<LI><A NAME="tex2html320"
+ HREF="node19.html#SECTION002171500000000000000">Using Constraint Handling Rules</A>
+</UL>
+<LI><A NAME="tex2html321"
+ HREF="node19.html#SECTION002172000000000000000">Puzzles</A>
+<LI><A NAME="tex2html322"
+ HREF="node19.html#SECTION002173000000000000000">Bin Packing</A>
+<UL>
+<LI><A NAME="tex2html323"
+ HREF="node19.html#SECTION002173100000000000000">Capacity Constraints</A>
+<LI><A NAME="tex2html324"
+ HREF="node19.html#SECTION002173200000000000000">Containment Constraints</A>
+<LI><A NAME="tex2html325"
+ HREF="node19.html#SECTION002173300000000000000">Requirement Constraints</A>
+<LI><A NAME="tex2html326"
+ HREF="node19.html#SECTION002173400000000000000">Exclusive Constraints</A>
+<LI><A NAME="tex2html327"
+ HREF="node19.html#SECTION002173500000000000000">Atmost Constraints</A>
+<LI><A NAME="tex2html328"
+ HREF="node19.html#SECTION002173600000000000000">Ordering Constraints</A>
+<LI><A NAME="tex2html329"
+ HREF="node19.html#SECTION002173700000000000000">Labeling</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html330"
+ HREF="node20.html">Current Known Restrictions and Bugs</A>
+</UL>
+<LI><A NAME="tex2html331"
+ HREF="node21.html">The Set Domain Library</A>
+<UL>
+<LI><A NAME="tex2html332"
+ HREF="node22.html">Terminology</A>
+<LI><A NAME="tex2html333"
+ HREF="node23.html">Syntax</A>
+<LI><A NAME="tex2html334"
+ HREF="node24.html">The solver</A>
+<LI><A NAME="tex2html335"
+ HREF="node25.html">Constraint predicates</A>
+<LI><A NAME="tex2html336"
+ HREF="node26.html">Examples</A>
+<UL>
+<LI><A NAME="tex2html337"
+ HREF="node26.html#SECTION00351000000000000000">Set domains and interval reasoning</A>
+<LI><A NAME="tex2html338"
+ HREF="node26.html#SECTION00352000000000000000">Subset-sum computation with convergent weight</A>
+<LI><A NAME="tex2html339"
+ HREF="node26.html#SECTION00353000000000000000">The ternary Steiner system of order n</A>
+</UL>
+<LI><A NAME="tex2html340"
+ HREF="node27.html">When to use Set Variables and Constraints...</A>
+<LI><A NAME="tex2html341"
+ HREF="node28.html">User-defined constraints</A>
+<UL>
+<LI><A NAME="tex2html342"
+ HREF="node28.html#SECTION00371000000000000000">The abstract set data structure</A>
+<LI><A NAME="tex2html343"
+ HREF="node28.html#SECTION00372000000000000000">Set Domain access</A>
+<LI><A NAME="tex2html344"
+ HREF="node28.html#SECTION00373000000000000000">Set variable modification</A>
+</UL>
+<LI><A NAME="tex2html345"
+ HREF="node29.html">Example of defining a new constraint</A>
+<LI><A NAME="tex2html346"
+ HREF="node30.html">Set Domain output</A>
+<LI><A NAME="tex2html347"
+ HREF="node31.html">Debugger</A>
+</UL>
+<LI><A NAME="tex2html348"
+ HREF="node32.html">Porting to Standalone Eplex</A>
+<UL>
+<LI><A NAME="tex2html349"
+ HREF="node33.html">Differences between Standalone Eplex and Older Non-Standalone Eplex</A>
+</UL>
+<LI><A NAME="tex2html350"
+ HREF="node34.html">Index</A>
+<LI><A NAME="tex2html351"
+ HREF="node35.html">Bibliography</A>
+<LI><A NAME="tex2html352"
+ HREF="node36.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

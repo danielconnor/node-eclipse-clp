@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>all_union(+SetVars, ?Union)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>all_union(+SetVars, ?Union)</H1>
+Union constraint of a list of sets
+<DL>
+<DT><EM>SetVars</EM></DT>
+<DD>A list of variables.
+</DD>
+<DT><EM>Union</EM></DT>
+<DD>A variable or a ground set.
+</DD>
+</DL>
+<H2>Description</H2>
+Constraint: Union is the set union of SetVars.<P>
+		Any variable in SetVars that is not yet a set domain variable, is declared
+		as such using Union's lub.
+<H3>Fail Conditions</H3>
+Fails if Union can not be the union of SetVars.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- all_union([[8,a,9],[i,8,o],[],[a,8,5]], U).
+U = [5,8,9,a,i,o].
+
+?- all_union([X,Z,S,Y,T], [8,9]), glb_poss(X,GX,PX), glb_poss(Y,GY,PY).
+GX = [], PX = [8,9], GY = [], PY = [8,9]
+
+?- X `:: [a]+[b,c], all_union([X,[b,n],X], U), glb_poss(X,GX,PX), glb_poss(U,GU,PU).
+GX = [a], PX = [b,c], GU = [a,b,n], PU = [c]
+
+?- sets([X,Y,Z],[a,b],[d,g,h,j],[cardinality:4]), all_union([X,Y,Z],U), #(U,C), fd:dom(C,DomC).
+DomC = [4,5,6]
+
+?- sets([X,Y,Z],[a,b],[d,g,h,j],[]), all_union([X,Y,Z],U), #(U,4), #(Y,C), fd:dom(C,DomC).
+DomC = [2,3,4]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/BE-2.html">`= / 2</A>, <A HREF="../../lib_public/cardinal/all_disjoint-1.html">all_disjoint / 1</A>
+</BODY></HTML>

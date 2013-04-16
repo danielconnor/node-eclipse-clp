@@ -1,0 +1,4 @@
+lib(arithmetic)
+
+See also the User Manual chapter on Arithmetic
+

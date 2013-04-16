@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>ccompile(+File, +OptionList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(coverage)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>ccompile(+File, +OptionList)</H1>
+Compile a file, inserting code coverage counters
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Atom or string
+</DD>
+<DT><EM>OptionList</EM></DT>
+<DD>List of Name:Value pairs
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    This is a variant of the ECLiPSe compiler that inserts code coverage
+    counters into the compiled code. This code can then be run, and the
+    results analysed by printing them using coverage:result/1.
+</P><P>
+    Options to modify the behaviour of the code coverage library are:
+<DL>
+    <DT>exit_counters (default:on)<DD>
+    	Setting this to 'off' will suppress coverage counters at the end of
+	conjunctions (comma-sequences of subgoals).
+    <DT>blocks_only (default:off)<DD>
+    	Setting this to 'on' will leave only coverage counters at the
+	beginning and at the end of conjunctions (comma-sequences of
+	subgoals) and suppress all others.
+    <DT>macro_expansion (default:off)<DD>
+	This options affects only the printing of the result (html) file.
+	By default, read-macros are not expanded in this output.  In rare
+	cases, where macro expansion would affect the placement of coverage
+	counter positions, it may be necessary to set this option to 'on'
+	in order to display the counter values at the correct positions
+	in the code.
+    <DT>goal_expansion (default:on)<DD>
+    	Setting this to 'off' will suppress goal expansion (inlining)
+	during compilation. This may be necessary when the processed
+	code contains predicates that get executed at compile time.
+    <DT>verbose (default:off)<DD>
+    	If set to 'on', the coverage preprocessor will print predicate
+	names as they are processed (to log_output).
+</DL>
+</P>
+    
+<H2>See Also</H2>
+<A HREF="../../lib/coverage/ccompile-1.html">ccompile / 1</A>, <A HREF="../../lib/coverage/index.html">library(coverage)</A>, <A HREF="../../lib/coverage/result-1.html">result / 1</A>, <A HREF="../../lib/coverage/result-2.html">result / 2</A>
+</BODY></HTML>

@@ -1,0 +1,24 @@
+
+refine(?Set)
+
+   Instantiate Set to a possible value
+
+Type
+   library(conjunto_fd_sets)
+
+Description
+
+    Instantiate Set to a possible value. The predicate backtracks over
+    all possible set instantiations. refine/1 is a special instance of
+    the more general insetdomain/4 predicate, and is defined as
+
+    refine(Set) :-
+    	insetdomain(Set, any, small_first, in_notin).
+
+
+
+Resatisfiable
+   yes
+
+See Also
+   fd_sets : insetdomain / 4, ic_sets : insetdomain / 4, ic_hybrid_sets : insetdomain / 4

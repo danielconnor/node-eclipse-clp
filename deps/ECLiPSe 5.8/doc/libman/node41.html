@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Invoking and Using Propia</TITLE>
+<META NAME="description" CONTENT="Invoking and Using Propia">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node42.html">
+<LINK REL="previous" HREF="node40.html">
+<LINK REL="up" HREF="node39.html">
+<LINK REL="next" HREF="node42.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1438"
+ HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1434"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1428"
+ HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1436"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1439"
+ HREF="node42.html">Approximate Generalised Propagation</A>
+<B> Up:</B> <A NAME="tex2html1435"
+ HREF="node39.html">Propia - A Library</A>
+<B> Previous:</B> <A NAME="tex2html1429"
+ HREF="node40.html">Overview</A>
+ &nbsp <B>  <A NAME="tex2html1437"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00720000000000000000">
+Invoking and Using Propia</A>
+</H1>
+
+<P>
+Propia is an ECLiPSelibrary, loaded by calling<PRE>
+?- lib(propia).
+</PRE>
+A goal, such as <code>member(X,[1,2,3])</code>, is turned into a constraint
+by annotating it using the <code>infers</code> operator.
+The second argument of <code>infers</code> defines how much propagation
+should be attempted on the constraint and will be described in
+section <A HREF="node42.html#approx">7.3</A> below. 
+In this section we shall use <code>Goal infers most</code>, which infers as
+much information as possible, given the loaded constraint solvers.  If
+the <code>IC</code> solver is loaded, then <code>IC</code> information is
+extracted, and Propia reduces the domains to achieve arc-consistency.
+
+<P>
+We first show the behaviour of the original goal:<PRE>
+?- member(X, [1, 2, 3]).
+X = 1
+Yes (0.00s cpu, solution 1, maybe more)
+X = 2
+Yes (0.02s cpu, solution 2, maybe more)
+X = 3
+Yes (0.02s cpu, solution 3)
+</PRE>
+<A NAME="2699"></A>
+Constraint propagation is invoked by <code>infers most</code>:<PRE>
+?- lib(ic).
+...
+?- member(X, [1, 2, 3]) infers most.
+X = X{1 .. 3}
+Yes (0.00s cpu)
+</PRE>
+Note that the information produced by the constraint solves the
+corresponding goal as well.
+The constraint can thus be dropped.
+
+<P>
+In case there remains information not yet extracted, the constraint
+must delay so that completeness is preserved:<PRE>
+?- member(X,Y) infers most.
+
+X = X
+Y = [H3|T3]
+Delayed goals:
+    member(X, [H3|T3]) infers most
+yes.
+</PRE>
+Propia copes correctly with built-in predicates, such as #&gt;and
+#&lt;, so after compiling this simple program:<PRE>
+notin3to6(X) :- X#&lt;3.
+notin3to6(X) :- X#&gt;6.
+</PRE>
+the predicate can be used as a constraint:<PRE>
+?- X :: 1 .. 10, notin3to6(X) infers most.
+X = X{[1, 2, 7 .. 10]}
+Yes (0.00s cpu)
+</PRE>
+In this example there are no ``delayed'' constraints since all valuations for
+<EM>X</EM> satisfying the above conditions are solutions.  Propia
+detects this and therefore avoids delaying the constraint
+again.
+
+<P>
+<A NAME="2717"></A>
+<A NAME="2718"></A>
+<A NAME="2719"></A>
+In scheduling
+applications it is necessary to constrain two tasks that require the
+same machine not to be performed at the same time.
+Specifically one must end before the other begins, or vice versa.
+If one task starting at time <EM>ST1</EM> has duration <EM>D1</EM> and another
+task starting at time <EM>ST2</EM> has duration <EM>D2</EM>, the above
+``disjunctive'' constraint is
+expressed as follows:<PRE>
+noclash(ST1,D1,ST2,D2) :- ST1 #&gt;= ST2+D2.
+noclash(ST1,D1,ST2,D2) :- ST2 #&gt;= ST1+D1.
+</PRE>
+Generalised Propagation on this constraint allows useful information
+to be extracted even before it is decided in which order the tasks
+should be run:<PRE>
+?- lib(ic).
+...
+
+?- [ST1, ST2] :: 1 .. 10, noclash(ST1, 5, ST2, 7) infers most.
+ST1 = ST1{[1 .. 5, 8 .. 10]}
+ST2 = ST2{[1 .. 3, 6 .. 10]}
+There is 1 delayed goal.
+Yes (0.00s cpu)
+</PRE>
+The values <EM>6</EM> and <EM>7</EM> are removed from the domain of <EM>ST1</EM> because
+the goal <code>noclash(ST1,5,ST2,7)</code> cannot be satisfied if <EM>ST1</EM> is
+either <EM>6</EM> or <EM>7</EM>.  For example if <EM>ST1</EM> is <EM>6</EM>, then either 
+6&gt;<I>ST</I>2+7 (to satisfy the first clause defining <code>noclash</code>)
+or else <I>ST</I>2&gt;6+5 (to satisfy the second clause).  There is no value for
+<!-- MATH: $ST2 in \{1...10\}$ -->
+<I>ST</I>2 <I>in</I> {1...10} that makes either inequality true, and so <EM>6</EM> is
+removed from the domain of <EM>ST1</EM>.  By a similar reasoning
+<EM>4</EM> and <EM>5</EM> are removed from the domain of <EM>ST2</EM>.
+
+<P>
+<A NAME="2745"></A>
+We next take a simple example from propositional logic.
+In this example the result of constraint propagation is reflected not
+only in the variable domains, but also in the unification of problem
+variables.
+We first define logical conjunction by its truth table:<PRE>
+land(true,true,true).
+land(true,false,false).
+land(false,true,false).
+land(false,false,false).
+</PRE>
+Now we ask for an <I>X</I>,<I>Y</I>,<I>Z</I> satisfying
+land(X,Y,Z) <code>/\</code> X = Y.
+Both solutions have <I>X</I>=<I>Y</I>=<I>Z</I>, and this information is produced solely
+by propagating on the <code>land</code> constraint:<PRE>
+?- land(X, Y, Z) infers most, X = Y.
+Z = X
+X = X
+Y = X
+There is 1 delayed goal.
+Yes (0.00s cpu)
+</PRE>
+
+<P>
+<A NAME="2755"></A>
+We now illustrate the potential efficiency benefits of Generalised
+Propagation with a simple resource allocation 
+problem.  A company makes 9 products, each of which require two kinds
+of components in their manufacture, and yields a certain profit.
+This information is held in the following table.<PRE>
+/*** product(Name,#Component1,#Component2,Profit). **/
+product(1,1,19,1).
+product(2,2,17,2).
+product(3,3,15,3).
+product(4,4,13,4).
+product(5,10,8,5).
+product(6,16,4,4).
+product(7,17,3,3).
+product(8,18,2,2).
+product(9,19,1,1).
+</PRE>
+We wish to find which products to manufacture in order to make a
+certain profit without 
+using more than a certain number of either kind of
+component.<A NAME="tex2html368"
+ HREF="footnode.html#foot2760"><SUP>7.1</SUP></A>
+<P>
+We first define a predicate <code>sum(Products,Comp1,Comp2,Profit)</code>
+which relates a list of products (eg <code>Products</code>=<code>[1,5,1]</code>), 
+to the number of each component required to build all the products in the list
+and the profit
+(for <code>[1,5,1]</code>, <code>Comp1=12</code> and <code>Comp2=46</code> and
+<code>Profit=7</code>).<PRE>
+sum([],0,0,0).
+sum([Name|Products],Count1,Count2,Profit) :- 
+    [Count1,Count2,Profit]::0..100,
+    product(Name,Ct1a,Ct2a,Profita),
+    Count1 #= Ct1a+Ct1b,
+    Count2 #= Ct2a+Ct2b,
+    Profit #= Profita+Profitb,
+    sum(Products,Ct1b,Ct2b,Profitb).
+</PRE>
+If <code>sum</code> is invoked with a list of variables as its first argument,
+eg <code>[V1,V2,V3]</code>, then the only choice made during execution is at
+the call to <code>product</code>.  In short, for each variable in the input
+list there are <EM>9</EM> alternative products that could be chosen.
+For a list of three variables there are consequently
+9<SUP>3</SUP>= 729
+alternatives.
+
+<P>
+If we assume a production batch of <EM>9</EM> units, then the number of
+alternative ways of solving <code>sum</code> is
+9<SUP>9</SUP>
+, or nearly 400
+million.  To avoid exploring so many possibilities, we simply annotate
+the call to <code>product(Name,Ct1a,Ct2a,Profita)</code> as a Generalised
+Propagation constraint.
+Thus the new definition of <code>sum</code> is:<PRE>
+sum([],0,0,0).
+sum([Name|Products],Count1,Count2,Profit) :- 
+    [Count1,Count2,Profit]::0..100,
+    product(Name,Ct1a,Ct2a,Profita) infers most,
+    Count1 #= Ct1a+Ct1b,
+    Count2 #= Ct2a+Ct2b,
+    Profit #= Profita+Profitb,
+    sum(Products,Ct1b,Ct2b,Profitb).
+</PRE>
+Now <code>sum</code> refuses to make any choices:<PRE>
+?- sum([V1, V2, V3], Comp1, Comp2, Profit).
+V1 = V1{1 .. 9}
+V2 = V2{1 .. 9}
+V3 = V3{1 .. 9}
+Comp1 = Comp1{3 .. 57}
+Comp2 = Comp2{3 .. 57}
+Profit = Profit{3 .. 15}
+There are 9 delayed goals.
+Yes (0.01s cpu)
+</PRE> 
+
+<P>
+Using the second version of <code>sum</code>,
+it is simple to write a program which produces lists of products
+which use less than a given number <code>Max1</code> and <code>Max2</code> of each
+component, and yields more than a given profit <code>MinProfit</code>: <PRE>
+ 
+solve(Products,Batch,Max1,Max2,MinProfit) :-
+    length(Products,Batch),
+    Comp1 #=&lt; Max1,
+    Comp2 #=&lt; Max2,
+    Profit #&gt;= MinProfit,
+    sum(Products,Comp1,Comp2,Profit),
+    labeling(Products).
+</PRE>
+The following query finds which products to manufacture in order to make a
+profit of 40 without 
+using more than 95 of either kind of component.<PRE>
+?- solve(P, 9, 95, 95, 40).
+P = [1, 4, 5, 5, 5, 5, 5, 5, 5]
+Yes (0.03s cpu, solution 1, maybe more)
+</PRE>
+
+<P>
+Constraints can be dropped as soon
+as they became redundant (i.e. as soon as they were entailed by the
+current partial solution).
+The check for entailment can be expensive, so Propia only drops
+constraints if a simple syntactic check allows it.
+For <EM>infers most</EM>, this check succeeds if the <code>IC</code>
+library is loaded, and the constraint has only one remaining variable.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1438"
+ HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1434"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1428"
+ HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1436"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1439"
+ HREF="node42.html">Approximate Generalised Propagation</A>
+<B> Up:</B> <A NAME="tex2html1435"
+ HREF="node39.html">Propia - A Library</A>
+<B> Previous:</B> <A NAME="tex2html1429"
+ HREF="node40.html">Overview</A>
+ &nbsp <B>  <A NAME="tex2html1437"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

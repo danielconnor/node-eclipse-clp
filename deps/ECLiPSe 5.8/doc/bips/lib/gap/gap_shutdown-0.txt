@@ -1,0 +1,20 @@
+
+gap_shutdown
+
+   Shut down a GAP session
+
+Type
+   library(gap)
+
+Description
+   Shuts down the currently active GAP session if there is one.  With recent
+   versions of ECLiPSe it is not normally necessary to call this explicitly;
+   GAP will be shut down automatically before the ECLiPSe session ends.
+   However, there may be circumstances where one wishes to force GAP to shut
+   down before the session ends, and on older versions of ECLiPSe a manual
+   shutdown is required in order to terminate the GAP process and clean up
+   the named pipes used for communication.
+
+
+See Also
+   gap_ensure_started / 0, gap_restart / 0, gap_running / 0

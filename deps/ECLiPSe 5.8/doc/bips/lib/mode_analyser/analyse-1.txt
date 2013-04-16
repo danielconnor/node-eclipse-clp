@@ -1,0 +1,58 @@
+
+analyse(+File)
+
+   Compile a file, inserting invocation mode analysis 
+   instrumentation for each predicate definition.
+
+Arguments
+   File                Atom or string
+
+Type
+   library(mode_analyser)
+
+Description
+    
+   The mode analyser is a variant of the ECLiPSe that inserts 
+   instrumentation into the clause definitions of predicates
+   (defined in the named file) during compilation in order to record mode 
+   usage of each predicate argument. The code is then run as many times 
+   as is necessary to capture the most common invocations of each 
+   predicate undergoing analysis. Finally, the results are analysed, 
+   using mode_analyser:result/0, to produce suggested mode/1 
+   directives for each predicate.
+   
+   The mode/1 directive informs the compiler that the arguments of the 
+   specified predicate will always have the corresponding form when the 
+   predicate is called.  The compiler utilises this information during 
+   compilation of the predicate in order to generate more compact and/or 
+   faster code. Specifying the mode of a predicate that has already been 
+   compiled has no effect, unless it is recompiled. If the specified 
+   procedure does not exist, a local undefined procedure is created.
+   
+   NOTE: It is imperative to understand that the results of mode analysis 
+   are merely suggestions for the invocation modes of a predicate based on 
+   runtime information. If there are potential predicate invocation modes 
+   that were not exercised during runtime, the tool is unable to account 
+   for them in its analysis. For the mode specifier '-' the mode analyser
+   does not determine whether the variable occurs in any other argument
+   (i.e. is aliased), this must be manually verified. 
+   In summary, the programmer must verify that the suggested modes are correct 
+   before using the directive in the code.  If the instantiation of the 
+   predicate call violates its mode declaration, no exception is raised and 
+   its behaviour is undefined.
+
+Resatisfiable
+   no
+
+Exceptions
+     5 --- File is not an atom or string
+
+Examples
+   
+   [eclipse 1]: mode_analyser:analyse('queens_gfc.pl').
+   queens_gfc.pl compiled traceable 13920 bytes in 0.10 seconds
+
+   Yes (0.10s cpu)
+
+See Also
+   result / 0, result / 1, reset / 0

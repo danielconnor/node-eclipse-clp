@@ -1,0 +1,64 @@
+<HTML><HEAD><TITLE>between(+From, +To, +Step, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>between(+From, +To, +Step, ?Result)</H1>
+Generate integer values between From and To with Step increment.
+
+
+<DL>
+<DT><EM>+From</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>+To</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>+Step</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or an integer
+</DD>
+</DL>
+<H2>Description</H2>
+   When first called, this predicate checks that From is less than or equal
+   to To (or greater than or equal if Step is negative) and if so, it binds
+   Result to From.  On backtracking it increments Result by Step until it
+   is greater than To (less than To is Step is negative) and then it fails.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if To is less than From or if Result is greater than To.
+
+
+<H3>Resatisfiable</H3>
+   Yes
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Input arguments are not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>An argument is not an integer.
+<DT><EM>(6) out of range </EM>
+<DD>Step is zero.
+<DT><EM>(24) number expected </EM>
+<DD>An argument is not a number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      between(1, 4, 1, X).
+      between(5, 0, -2, X).
+      between(2, 10, 3, 8).
+Fail:
+      between(2, 0, 1, X).
+Error:
+      between(1, 4, S, X).         (Error 4)
+      between(1, 4, 0.1, X).       (Error 5)
+      between(1, 4, 1, a).         (Error 24)
+
+
+
+</PRE>
+<H2>See Also</H2>
+
+</BODY></HTML>

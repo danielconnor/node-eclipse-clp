@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Executing an ECLiPSe goal from Java and processing the result</TITLE>
+<META NAME="description" CONTENT="Executing an ECLiPSe goal from Java and processing the result">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node44.html">
+<LINK REL="previous" HREF="node42.html">
+<LINK REL="up" HREF="node39.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1359"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1355"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1349"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1357"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1360"
+ HREF="node44.html">Communicating between Java and</A>
+<B> Up:</B> <A NAME="tex2html1356"
+ HREF="node39.html">Using the Java-ECLiPSe Interface</A>
+<B> Previous:</B> <A NAME="tex2html1350"
+ HREF="node42.html">Java representation of ECLiPSe</A>
+ &nbsp <B>  <A NAME="tex2html1358"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1361"
+ HREF="node43.html#SECTION00841000000000000000">Passing the goal parameter to <TT>rpc</TT></A>
+<LI><A NAME="tex2html1362"
+ HREF="node43.html#SECTION00842000000000000000">Note: yield/2, remote_yield/1 and <TT>rpc</TT></A>
+<LI><A NAME="tex2html1363"
+ HREF="node43.html#SECTION00843000000000000000">Retrieving the results of an <TT>rpc</TT> goal execution</A>
+<UL>
+<LI><A NAME="tex2html1364"
+ HREF="node43.html#SECTION00843100000000000000">Other ways an <TT>rpc</TT> invocation can terminate</A>
+</UL>
+<LI><A NAME="tex2html1365"
+ HREF="node43.html#SECTION00844000000000000000">More details about <TT>rpc</TT> goal execution</A>
+<UL>
+<LI><A NAME="tex2html1366"
+ HREF="node43.html#SECTION00844100000000000000">Variables</A>
+<LI><A NAME="tex2html1367"
+ HREF="node43.html#SECTION00844200000000000000">Nondeterminism</A>
+<LI><A NAME="tex2html1368"
+ HREF="node43.html#SECTION00844300000000000000">Concurrent invocations of <TT>rpc</TT></A>
+<LI><A NAME="tex2html1369"
+ HREF="node43.html#SECTION00844400000000000000">Nested invocations of <TT>rpc</TT></A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00840000000000000000"></A>
+<A NAME="sec:ji-calling-goals"></A>
+<BR>
+Executing an ECLiPSe goal from Java and processing the result
+</H1>
+The <I>EclipseConnection</I> <A NAME="3881"></A> interface
+provides a single method <TT>rpc</TT><A NAME="3883"></A> (Remote Predicate Call) for executing
+goals in the ECLiPSe. This method takes as a parameter the goal to be
+executed. How to construct this parameter is dealt with in Section
+<A HREF="node43.html#sec:ji-rpc-parameter">8.4.1</A>. Section <A HREF="node43.html#sec:ji-rpc-return">8.4.2</A> explains
+how to deal with the results returned by <TT>rpc</TT><A NAME="3888"></A>. Finally, some more
+details about the execution of the goal are given in Section
+<A HREF="node43.html#sec:ji-goal-execution">8.4.3</A>. 
+
+<P>
+
+<H2><A NAME="SECTION00841000000000000000"></A><A NAME="3891"></A>
+<A NAME="sec:ji-rpc-parameter"></A>
+<BR>
+Passing the goal parameter to <TT>rpc</TT>
+</H2>
+There are main two variants of <TT>rpc</TT><A NAME="3894"></A> which differ in the class of the
+goal parameter.
+
+<P>
+The simplest way to use <TT>rpc</TT><A NAME="3896"></A> is to pass it an instance of <I>java.lang.String</I> which should be the goal as it would be typed into
+the ECLiPSe command line. Just like with the ECLiPSe command line,
+the goal can be a conjunction of several subgoals. An example of this
+is the use of <TT>rpc</TT><A NAME="3901"></A> in the example program <TT>QuickTest.java</TT>. Also please note a full stop is not necessary.
+
+<P>
+The string-parameter <TT>rpc</TT><A NAME="3904"></A> variant is somewhat inefficient and it
+is also inflexible because creating goals dynamically, or goals
+involving strings is tricky. It should really only be used for short
+simple goals. A more flexible and efficient alternative is to invoke
+<TT>rpc</TT><A NAME="3906"></A>, passing it a parameter object which implements the <I>CompoundTerm</I> interface (discussed in Section
+<A HREF="node42.html#sec:ji-atoms-and-terms">8.3.2</A>). In this case the term becomes the
+goal. Here is an example of using this version of <TT>rpc</TT><A NAME="3910"></A>, taken
+from
+<A NAME="tex2html239"
+ HREF="../examples/JavaInterface/DataExample1.java"><TT>DataExample1.java</TT></A>.
+
+<P>
+<PRE>
+    CompoundTerm a_term = construct_term();
+
+    // Get Eclipse to write the term to stdout and flush 
+    eclipse.rpc(
+                new CompoundTermImpl(",",
+                              new CompoundTermImpl("write", 
+                                            new Atom("output"), a_term),
+                              new CompoundTermImpl("flush", new Atom("output"))
+                              )
+                );
+</PRE>
+Using this variant is a bit more cumbersome (e.g. the creation of a
+new <I>CompoundTermImpl</I> for the conjunction of goals in the above
+example) but it would be useful for large goals constructed
+dynamically. There are also a number of ``convenience'' <TT>rpc</TT><A NAME="3917"></A>
+methods, where instead of providing a <I>CompoundTerm</I>, you provide
+the objects from which the term is made. See the API documentation for
+more details of these variants.
+
+<P>
+
+<H2><A NAME="SECTION00842000000000000000"></A><A NAME="4847"></A><A NAME="4850"></A><A NAME="3924"></A>
+<BR>
+Note: <A NAME="tex2html241"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A>, <A NAME="tex2html243"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A> and <TT>rpc</TT>
+</H2>
+
+<P>
+The builtins <A NAME="tex2html246"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="4853"></A> and <A NAME="tex2html248"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="4856"></A> should not be
+executed anywhere within an <TT>rpc</TT><A NAME="3930"></A> goal, as they will cause the
+goal to return prematurely.
+
+<P>
+
+<H2><A NAME="SECTION00843000000000000000"></A><A NAME="3932"></A>
+<A NAME="sec:ji-rpc-return"></A>
+<BR>
+Retrieving the results of an <TT>rpc</TT> goal execution
+</H2>
+
+<P>
+The <TT>rpc</TT><A NAME="3935"></A> method returns an object which implements <I>CompoundTerm</I>. This object is the Java representation of the goal term, with
+the solution substitution applied to its variables. 
+
+<P>
+The solution substitution can be deconstructed using the returned <I>CompoundTerm</I>'s <TT>arg</TT> method. This method takes an integer (the argument
+position) and returns an Object which is the Java representation of
+the ECLiPSe argument at that position.
+
+<P>
+In the returned <I>CompoundTerm</I> instantiated variables are replaced
+with their instantiations. Hence even if the variable was named in the
+initial goal, its instantiation is identified in the returned goal by
+its <I>position</I> rather than its name. Uninstantiated variables in
+the returned <I>CompoundTerm</I> are represented using the Java <I>null</I>
+token.
+
+<P>
+If a variable in the <TT>rpc</TT> goal becomes instantiated to an ECLiPSe
+data type which does not have an equivalent EXDR type (such as breal), then
+in the returned <I>CompoundTerm</I> it will appear as the Java <I>null</I>
+token.
+
+<P>
+The following Java code is an example of how the returned <I>CompoundTerm</I>
+can be deconstructed to extract the variable substitutions.
+<PRE>
+...
+    CompoundTerm result = eclipse.rpc("X = Q, Y is 2.1 + 7");
+
+    // The top-level functor of the goal term is ",". 
+    // The first and second arguments of the goal term are the two subgoals
+    // and we can safely cast these as CompoundTerms.
+    CompoundTerm firstGoal = (CompoundTerm) result.arg(1);
+    CompoundTerm secondGoal = (CompoundTerm) result.arg(2);
+    // X is the first argument of the first goal.
+    Object firstGoalFirstArg = firstGoal.arg(1);
+    // Y is the first argument of the second goal.
+    Object secondGoalFirstArg = secondGoal.arg(1);
+
+    System.out.println("X = "+firstGoalFirstArg);
+    System.out.println("Y = "+secondGoalFirstArg);
+...
+</PRE>
+The output will be:
+<PRE>
+X = null
+Y = 9.1
+</PRE>
+<H3><A NAME="SECTION00843100000000000000"></A><A NAME="3954"></A>
+<BR>
+Other ways an <TT>rpc</TT> invocation can terminate
+</H3>
+Apart from succeeding and returning a <I>CompoundTerm</I>, <TT>rpc</TT><A NAME="3957"></A> can throw
+exceptions. If the goal fails, an instance of <I>Fail</I> is
+thrown. So to test for failure you must catch this exception.  An
+instance of <I>Throw</I> is thrown if ECLiPSe itself throws an
+error.
+
+<P>
+
+<H2><A NAME="SECTION00844000000000000000"></A><A NAME="3962"></A>
+<A NAME="sec:ji-goal-execution"></A>
+<BR>
+More details about <TT>rpc</TT> goal execution
+</H2>
+
+<H3><A NAME="SECTION00844100000000000000">
+Variables</A>
+</H3>
+As explained in Section <A HREF="node42.html#sec:ji-variables-null">8.3.6</A>, ECLiPSe
+variables are always represented by the <I>null</I> token, when <TT>rpc</TT><A NAME="3969"></A> is invoked with a <I>CompoundTerm</I> parameter. When used in an
+<TT>rpc</TT><A NAME="3972"></A> goal, each <I>null</I> token represents a different
+variable. Using <I>CompoundTerm</I> you cannot represent a goal with
+multiple occurrences of a single variable. So, for example the
+following Java code will output <TT>q(b, b)</TT> for the first <TT>rpc</TT><A NAME="3977"></A>
+invocation and <TT>q(a, b)</TT> for the second.
+
+<P>
+<PRE>
+...
+
+  eclipse.rpc("assert(q(a, b))");
+  eclipse.rpc("assert(q(b, b))");
+
+  System.out.println(eclipse.rpc("q(X, X)"));
+  System.out.println(eclipse.rpc(new CompoundTermImpl("q", null, null)));
+
+...
+</PRE>
+
+<P>
+
+<H3><A NAME="SECTION00844200000000000000">
+Nondeterminism</A>
+</H3>
+
+<P>
+The <TT>rpc</TT><A NAME="3983"></A> feature does not support the handling of nondeterminism
+in the execution of the ECLiPSe goal. If the goal succeeds, control
+is returned to Java immediately after the first solution to the goal
+is found in ECLiPSe. All choice-points thereafter are ignored. So,
+for example, although the first ECLiPSe goal below would leave
+choice-points, it would be equal in effect to the second.
+<PRE>
+...
+result = eclipse.rpc("member(X, [1, 2, 3, 4, 5])");
+...
+result = eclipse.rpc("member(X, [1])");
+</PRE>
+This is not a practical problem. It merely implies that if you are
+using nondeterminism to generate multiple solutions, you should
+collect these on the ECLiPSe side using a meta-level built-in
+predicate such as <TT>findall/3</TT> and then return the result to Java.
+
+<P>
+
+<H3><A NAME="SECTION00844300000000000000"></A><A NAME="3992"></A>
+<BR>
+Concurrent invocations of <TT>rpc</TT>
+</H3>
+
+<P>
+Note that the <TT>rpc</TT><A NAME="3994"></A> method is <TT>synchronized</TT>. Therefore if,
+while one Java thread is currently executing an <TT>rpc</TT><A NAME="3997"></A> invocation,
+a second Java thread tries to invoke the <TT>rpc</TT><A NAME="3999"></A> method of the same
+<I>EclipseConnection</I>, the second thread will block until the first
+thread's <TT>rpc</TT><A NAME="4002"></A> invocation returns.
+
+<P>
+
+<H3><A NAME="SECTION00844400000000000000"></A><A NAME="4004"></A>
+<BR>
+Nested invocations of <TT>rpc</TT>
+</H3>
+
+<P>
+During the execution of the <TT>rpc</TT><A NAME="4006"></A> method, control
+ is transferred to ECLiPSe. Due to the <I>QueueListener</I> feature
+ <A NAME="4009"></A> which is discussed in Section
+ <A HREF="node44.html#sec:ji-using-queue-streams">8.5</A>, control is sometimes temporarily
+ returned to Java before the ECLiPSe execution has finished. It is
+ possible for this Java code itself to invoke <TT>rpc</TT><A NAME="4013"></A>, thus leading to nested <TT>rpc</TT><A NAME="4015"></A>
+ invocations. Nested <TT>rpc</TT><A NAME="4017"></A> invocations should not
+ cause any problems.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1359"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1355"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1349"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1357"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1360"
+ HREF="node44.html">Communicating between Java and</A>
+<B> Up:</B> <A NAME="tex2html1356"
+ HREF="node39.html">Using the Java-ECLiPSe Interface</A>
+<B> Previous:</B> <A NAME="tex2html1350"
+ HREF="node42.html">Java representation of ECLiPSe</A>
+ &nbsp <B>  <A NAME="tex2html1358"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,51 @@
+<HTML><HEAD><TITLE>domain(?SetVariable, ?Cardinality, ?Domain)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>domain(?SetVariable, ?Cardinality, ?Domain)</H1>
+Accessing the domain of a set
+<DL>
+<DT><EM>SetVariable</EM></DT>
+<DD>A set variable.
+</DD>
+<DT><EM>Cardinality</EM></DT>
+<DD>An FD variable
+</DD>
+<DT><EM>Domain</EM></DT>
+<DD>A list (pair) with glb and poss.
+</DD>
+</DL>
+<H2>Description</H2>
+Domain is unified with the domain of SetVariable (which has cardinality
+		Cardinality) in the form [Glb:NIn,Poss:NMax],
+		where Glb is the (greatest) lower bound of SetVariable, and NIn its length,
+		Poss is the set of still possible elements of SetVariable (i.e. its lub\glb),
+		and NMax is the lub's cardinality (i.e. NIn + #(Poss)).
+		<P>
+		If SetVariable is a set of sets and a union function attribute has been set,
+		then each element of Poss comes annotated with its respective length.
+		<P>
+		Use domain/3 instead of domain/2 whenever Cardinality variable is available,
+		for efficiency reasons, since in the case of SetVariable being already
+		ground, it is not neccessary to recalculate its length (to retrieve
+		[Setvariable:Cardinality,[]:Cardinality]. This is due to the loss of
+		attributes of variables when these become instantiated.
+		<P>
+		Cardinality should be input to domain/3. Do not use this predicate to
+		retrieve the cardinality of a set, for it will only work when set is ground.
+<H3>Fail Conditions</H3>
+Fails if Domain can not be unified with the current domain of SetVariable.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S `::[c]+[a,b]:C, domain(S,C,D).
+D = [[c]:1, [a,b]:3]
+
+?- S `::[c]+[a,b]:C, S=[a,c], domain(S,C,D).
+D = [[a,c]:2, []:2]
+
+?- set(S, [],[[a,b],[b,c],[a,c],[b]],[union:[a,b,c],cardinality:C]), domain(S,C,D).
+D = [[]:0, [[a,b]:2, [a,c]:2, [b]:1, [b,c]:2]:4]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/domain-2.html">domain / 2</A>, <A HREF="../../lib_public/cardinal/glb-2.html">glb / 2</A>, <A HREF="../../lib_public/cardinal/poss-2.html">poss / 2</A>, <A HREF="../../lib_public/cardinal/glb_poss-3.html">glb_poss / 3</A>, <A HREF="../../lib_public/cardinal/lub-2.html">lub / 2</A>, <A HREF="../../lib_public/cardinal/lub-4.html">lub / 4</A>, <A HREF="../../lib_public/cardinal/cardinality-2.html">cardinality / 2</A>, <A HREF="../../lib_public/cardinal/H-2.html"># / 2</A>
+</BODY></HTML>

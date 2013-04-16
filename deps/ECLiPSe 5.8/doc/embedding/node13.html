@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Compiling and loading</TITLE>
+<META NAME="description" CONTENT="Compiling and loading">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html852"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html848"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html842"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html850"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html853"
+ HREF="node14.html">Restrictions and Recommendations</A>
+<B> Up:</B> <A NAME="tex2html849"
+ HREF="node11.html">External Predicates in C</A>
+<B> Previous:</B> <A NAME="tex2html843"
+ HREF="node12.html">Coding External Predicates</A>
+ &nbsp <B>  <A NAME="tex2html851"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00420000000000000000">
+Compiling and loading</A>
+</H1>
+It is strongly recommended to copy the makefile "Makefile.external"
+provided in your  installation directory under lib/$ARCH and adapt it
+for your purposes.
+<A NAME="863"></A>
+If the makefile is not used, the command to compile a C source
+with ECLiPSe library calls looks something like this:
+<PRE>
+ % cc -G -I/usr/local/eclipse/include/sparc_sunos5
+-o eg_externals.so eg_externals.c
+</PRE>
+or
+<PRE>
+ % cc -shared -I/usr/local/eclipse/include/i386_linux
+-o eg_externals.so eg_externals.c
+</PRE>
+If the external is to be used in a standalone ECLiPSe,
+it is possible to dynamically load it
+using the <A NAME="tex2html86"
+ HREF="../bips/kernel/externals/load-1.html">load/1</A><A NAME="892"></A>
+predicate:
+<PRE>
+    load("eg_externals.so")
+</PRE>
+On older UNIX platforms without dynamic loading, the following method
+may work. Compile the source using
+<PRE>
+ % cc -c -I/usr/local/eclipse/include/sparc_sunos5 eg_externals.c
+</PRE>
+and load it with a command like
+<PRE>
+    load("eg_externals.o -lg -lm")
+</PRE>
+The details may vary depending on what compiler and operating system
+you use.  Refer to the Makefile.external for details.
+
+<P>
+Once the object file containing the C function has been loaded into
+ECLiPSe, the link between the function and a predicate name
+is made with
+<A NAME="tex2html88"
+ HREF="../bips/kernel/externals/external-2.html">external/2</A><A NAME="895"></A>
+<PRE>
+    external(sumlist/2, p_sumlist)
+</PRE>
+The new predicate can now be called like other predicates.
+Note that the 
+<A NAME="tex2html90"
+ HREF="../bips/kernel/externals/external-2.html">external/2</A><A NAME="898"></A>
+declaration must precede any call to the declared predicate,
+otherwise the ECLiPSe compiler will issue an <EM>inconsistent
+redefinition</EM> error. Alternatively, the
+<A NAME="tex2html92"
+ HREF="../bips/kernel/externals/external-1.html">external/1</A><A NAME="901"></A>
+forward declaration can be used to prevent this.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html852"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html848"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html842"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html850"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html853"
+ HREF="node14.html">Restrictions and Recommendations</A>
+<B> Up:</B> <A NAME="tex2html849"
+ HREF="node11.html">External Predicates in C</A>
+<B> Previous:</B> <A NAME="tex2html843"
+ HREF="node12.html">Coding External Predicates</A>
+ &nbsp <B>  <A NAME="tex2html851"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

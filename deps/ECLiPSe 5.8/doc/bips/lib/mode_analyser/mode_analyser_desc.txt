@@ -1,0 +1,60 @@
+lib(mode_analyser)
+
+
+    The mode_analyser library is a tool that assists in the determination of
+    the mode/1 directive for predicate definitions. This directive informs
+    the compiler that the arguments of the specified predicate will always 
+    have the corresponding form when the predicate is called. The compiler 
+    utilises this information during compilation of the predicate in order
+    to generate more compact and/or faster code. Specifying the mode of a 
+    predicate that has already been compiled has no effect, unless it is 
+    recompiled. If the specified procedure does not exist, a local
+    undefined procedure is created.
+
+    The mode analyser inserts instrumentation into the clause definitions of
+    predicates during compilation in order to record mode usage of each 
+    predicate argument. The code should then be run (as many times as is
+    necessary to capture the most common invocations of each predicate 
+    undergoing analysis). Finally, the results of the analysis are requested
+    and the suggested mode annotations for each predicate are displayed.
+
+    NOTE: It is imperative to understand that the results of mode analysis 
+    are merely suggestions for the invocation modes of a predicate based on 
+    runtime information. If there are potential predicate invocation modes 
+    that were not exercised during runtime, the tool is unable to account 
+    for them in its analysis. For the mode specifier '-' the mode analyser
+    does not determine whether the variable occurs in any other argument
+    (i.e. is aliased), this must be manually verified. 
+    In summary, the programmer must verify that the suggested modes are correct 
+    before using the directive in the code.  If the instantiation of the 
+    predicate call violates its mode declaration, no exception is raised and 
+    its behaviour is undefined.
+
+	The usage is as follows:
+	
+	Load the mode_analyser library
+	
+	?- lib(mode_analyser).
+	
+	Compile your program with the mode analyser compiler
+    
+	?- mode_analyser:analyse(my_program).
+	
+	Run the query for which you wish to generate mode analysis data
+	
+	?- my_query(X,Y,Z).
+	
+	Generate the results for the module into which the program
+        was compiled.
+	
+	?- mode_analyser:result(my_program_module).
+	
+
+	Limitations to be resolved shortly: 
+	
+    A future enhancement will enable the insertion of the suggested 
+    (or programmer ammended) mode/1 directives for each predicate
+    definition into the source code.
+    
+
+

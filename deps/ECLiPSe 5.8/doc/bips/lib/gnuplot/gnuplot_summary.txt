@@ -1,0 +1,4 @@
+lib(gnuplot)
+
+   Interface to the function and data plotting program - gnuplot
+

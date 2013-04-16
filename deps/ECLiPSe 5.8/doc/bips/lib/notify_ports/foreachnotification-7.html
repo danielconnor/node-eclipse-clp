@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>foreachnotification(+BaseName, -Message, +Params, +ReceivePos, +ReceiveStruct, -Status, +Goals)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(notify_ports)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>foreachnotification(+BaseName, -Message, +Params, +ReceivePos, +ReceiveStruct, -Status, +Goals)</H1>
+A control construct to iterate over received notifications
+<DL>
+<DT><EM>BaseName</EM></DT>
+<DD>an atom used as the basename for the generated auxiliary predicate
+</DD>
+<DT><EM>Message</EM></DT>
+<DD>a variable
+</DD>
+<DT><EM>Params</EM></DT>
+<DD>a list of global variables in the iteration body (as in do/2)
+</DD>
+<DT><EM>ReceivePos</EM></DT>
+<DD>positive integer, the send port's field number in ReceiveStruct
+</DD>
+<DT><EM>ReceiveStruct</EM></DT>
+<DD>a structure
+</DD>
+<DT><EM>Status</EM></DT>
+<DD>a variable, will be bound to 'open' or 'closed'
+</DD>
+<DT><EM>Goals</EM></DT>
+<DD>the goals that will be called for each iteration
+</DD>
+</DL>
+<H2>Description</H2>
+
+    This is a control construct iterating over the currently available
+    messages on the given receive port. The purpose is to process the
+    received messages one by one without the need to create an auxiliary
+    list of received messages. The iteration terminates when there are
+    (currently) no more message on the receive port.
+    <P>
+    When the iteration terminates, the Status argument indicates whether
+    the associated sender is still open ('open') or has been closed
+    ('closed'). If closed, no more messages will arrive on this receive
+    port in the future.
+    <P>
+
+    
+<H2>Examples</H2>
+<PRE>see general example for the library</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/notify_ports/receive_notifications-4.html">receive_notifications / 4</A>
+</BODY></HTML>

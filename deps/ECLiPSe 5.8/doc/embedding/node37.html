@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Overview</TITLE>
+<META NAME="description" CONTENT="Overview">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1214"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1210"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1204"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1212"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1215"
+ HREF="node38.html">Example</A>
+<B> Up:</B> <A NAME="tex2html1211"
+ HREF="node34.html">Tcl Peer Multitasking Interface</A>
+<B> Previous:</B> <A NAME="tex2html1205"
+ HREF="node36.html">Loading the interface</A>
+ &nbsp <B>  <A NAME="tex2html1213"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1216"
+ HREF="node37.html#SECTION00731000000000000000">Summary of Tcl Commands</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00730000000000000000">
+Overview</A>
+</H1>
+A peer must already exist before it can participate in peer multitasking:
+(i.e. it has already been set up using ec_init (embedded) or ec_remote_init (remote)).
+
+<P>
+Peer multitasking occur in a <I>multitasking phase</I>, which is a special
+way for an ECLiPSe side to hand over control to the external
+side. Effectively, instead of handing over control to a single peer,
+control is handed over repeatedly to all the peers that are participating
+in peer multitasking. The control is shared between these peers in a
+round-robin fashion, giving rise to a form of co-operative
+multitasking. The multitasking is co-operative in that each peer has to
+give up control, so that the control can be passed to the next multitasking
+peer. A peer multitasking phase is started by calling the predicate
+<B>peer_do_multitask/1</B><A NAME="3435"></A> in ECLiPSe. 
+
+<P>
+To participate in peer multitasking, a peer must be ``registered''
+(initialised) for peer multitasking. This is done by executing the 
+procedure <B>ec_multi:peer_register</B><A NAME="3346"></A>
+from Tcl. Once registered, the peer will take part in subsequent
+multitasking phases. 
+
+<P>
+The registration can set up three user-defined handlers: the <B>start</B> handler, the <B>interact</B> handler, and the <B>end</B> handler.
+During a multitasking phase, control is handed over to a multitasking peer,
+which invokes
+one of these handlers, and when the handler returns, control is handed
+to the next multitasking peer. The interact handler is normally invoked,
+except at the start (first) and end (last) of a multitasking phase. In
+these cases, the start and end handlers are invoked respectively.
+
+<P>
+A `type' (specified in the call to <B>peer_do_multitask/1</B><A NAME="3437"></A>) is associated
+with every multitasking phase to allow multitasking phases for different
+purposes (distinguished by different `type's). This type is passed to the
+handlers as an argument. At the start of a multitasking phase, a peer
+should indicate if it is interested in this particular multitasking phase
+or not. If no peer is interested in the multitasking
+phase, then the multitasking phase enters the end phase after the initial
+round of passing control to all the multitasking peers, i.e. control is
+passed one more time to the multitasking peers, this time invoking the end
+handler. If at least one peer indicates that it is interested in the
+multitasking phase, then after the initial start phase, the control will be
+repeatedly handed over to each multitasking peer by invoking the interact
+handler. This phase is ended when one (or more) peer indicates that the
+multitasking phase should end (at which point the end phase will be entered
+in which the end handler will be invoked for each multitasking peer). 
+
+<P>
+
+<H2><A NAME="SECTION00731000000000000000">
+Summary of Tcl Commands</A>
+</H2>
+Here is a more detailed description of the Tcl procedures:
+<DL>
+<DT><STRONG><A NAME="3353"></A><B>    ec_multi:peer_register <I>?Multitask handlers</I></B></STRONG>
+<DD> 
+<BR>
+Registers for peer multitasking, and setup the (optional) multitask handlers.
+       There handlers can be specified: a) start, invoked at the start of a
+       multitasking phase; b) end, invoked at the end of a multitasking
+       phase, and c) interact, invoked at other times when the peer is
+       given control during a multitasking phase. <B>Multitask handlers</B>
+       is a list specifying the handlers, where each handler is specified
+       as two list elements of the form: <TT>type name</TT>,
+       where type is either <B>start</B>, <B>end</B> or <B>interact</B>, and
+       name is the name of the user defined handler. For example:
+<PRE>
+      ec_multi:peer_register [list interact tkecl:multi_interact_handler 
+            start tkecl:multi_start_handler end tkecl:multi_end_handler]
+</PRE>
+       When control is handed over to the peer during a peer multitasking
+       phase, the appropriate handler (if defined) is invoked. When the
+       handler returns, control is handed back to ECLiPSe (and passed
+       to the next multitasking peer). Note 
+       that events are not processed while the peer does not have control.
+       The Tcl command <B>update</B> is therefore called each time the peer
+       is given control, to allow any accumulated events to be processed.
+       As long as the peer
+       is given control frequently enough, then any interactions with the
+       peer would appear to be continuous.
+
+<P>
+The handlers are invoked with the `type' of the multitasking phase
+       supplied as the first  argument. This will for example allow the
+       start handler to determine if it is interested in this multitasking
+       phase. They can also set one of the following return codes:
+<DL>
+<DT><STRONG>continue</STRONG>
+<DD>indicates that the peer wants to continue the multitasking
+phase. In  particular, this should be returned by the start handler if it is
+  interested in the multitasking phase. Note that the multitasking phase is
+  not guaranteed to continue, as it can be terminated by another
+  multitasking peer.
+<DT><STRONG>terminate</STRONG>
+<DD>indicates the termination of a multitasking phase. The
+  multitasking phase will enter the end phase, where the end handlers
+  will be invoked once per peer before the multitasking phase finishes.
+</DL>
+       For example, here is the start handler used in the Tk development
+       tools:
+<PRE>
+proc tkecl:multi_start_handler {type} {
+
+    switch $type {
+        tracer {
+            # multitasking phase is `tracer'
+            # only do handling of port if the tracer window exists
+            if [winfo exists .ec_tools.ec_tracer] {
+                tkecl:handle_tracer_port_start
+                set of_interest  continue
+            }
+        }
+        default {
+            set of_interest no
+            # do nothing
+        }
+    }
+
+    return $of_interest
+}
+</PRE>
+
+<P>
+An error is raised if this procedure is called while the peer is already
+registered for multitasking.
+
+<P>
+<DT><STRONG><A NAME="3368"></A><B>    ec_multi:peer_deregister</B></STRONG>
+<DD> 
+<BR>
+Deregisters peer from multitasking. After calling this procedure, the
+      peer will not participate in any further multitasking. If this
+      procedure is called during a multitasking phase, the peer will not
+      participate further in that multitasking phase once control is
+      returned. The multitasking phase will continue, unless there are no
+      multitasking peers left, in which case an error will be raised on the 
+      ECLiPSe side. The peer multitask control queue will be
+      automatically closed.
+
+<P>
+An error is raised if this procedure is called while the peer is
+      not registered for multitasking.
+
+<P>
+<DT><STRONG><A NAME="3371"></A><B>    ec_multi:get_multi_status</B></STRONG>
+<DD> 
+<BR>
+Returns the current peer multitasking status for the peer. The values
+    can be:
+
+<UL><LI>not_registered: the peer is not registered for peer multitasking.
+
+<LI>off: the peer is registered for peer multitasking, but is not
+  currently in a multitasking phase.
+
+<LI>on: the peer is registered for peer multitasking, and is currently in
+  a multitasking phase.
+
+</UL>
+
+<P>
+Note that the peer multitasking code is implemented using peer queue
+handlers. Thus, the peer multitask status is set to `on'  
+before the multitask start handler is called, but <I>after</I> the
+`ECLiPSe end' handler.
+Conversely, the peer multitask status is set to
+`off' after the multitask end handler, but <I>before</I> the ECLiPSe
+start handler.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1214"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1210"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1204"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1212"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1215"
+ HREF="node38.html">Example</A>
+<B> Up:</B> <A NAME="tex2html1211"
+ HREF="node34.html">Tcl Peer Multitasking Interface</A>
+<B> Previous:</B> <A NAME="tex2html1205"
+ HREF="node36.html">Loading the interface</A>
+ &nbsp <B>  <A NAME="tex2html1213"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

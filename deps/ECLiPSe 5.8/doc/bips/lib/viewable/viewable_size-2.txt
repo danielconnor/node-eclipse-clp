@@ -1,0 +1,83 @@
+
+viewable_size(++ViewableName, ?SizeList)
+
+   Query the sizes of the dimensions of an existent viewable.
+
+Arguments
+   ViewableName        A string or atom: the name of an existent viewable
+   SizeList            A list of integers: each is the current size of a dimension
+
+Type
+   library(viewable)
+
+Description
+ NOTE:When there are no registered visualisation clients, this
+        predicate fails with all arguments, and has no effect.
+
+            If ViewableName is the name of an existent viewable,
+	    SizeList is unified with a list of integers, each
+	    integer being the number of elements in one of the viewable's
+	    dimensions.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if ViewableName is not
+	    instantiated to the name of an existent viewable, or if
+	    SizeList fails to unify with the list of dimension sizes.
+
+
+
+Exceptions
+     4 --- ViewableName is not a string or an atom
+     5 --- SizeList is not a free variable or list or contains one or more elements which is not a free variable or an integer
+
+Examples
+   
+
+[Assuming that at least one visualisation client is registered]
+
+	Success:
+
+	viewable_create(v1, [], 
+			array([flexible, flexible, flexible], any)), 
+	viewable_size(v1, X).
+        [gives X = [0,0,0]]
+
+	viewable_create(v1, []([](R,S), [](Q,W)), 
+			array([fixed, fixed], any)), 
+	viewable_size(v1, X).
+        [gives X = [2,2]]
+
+
+	Failure:
+
+	viewable_size(no, X).
+
+	viewable_create(v1, []([](R,S), [](Q,W)), 
+			array([fixed, fixed], any)), 
+	viewable_size(v1, [1,2]).
+
+
+
+        Exceptions raised:
+
+	viewable_size(_, X).
+        [gives error 4]
+
+	viewable_size(123, X).
+        [gives error 4]
+
+	viewable_create(v1, [X, Y, Z]), 
+	viewable_size(v1, q).
+        [gives error 5]
+
+	viewable_create(v1, [X, Y, Z]), 
+	viewable_size(v1, [a]).
+        [gives error 5]
+
+
+
+See Also
+   viewable_create / 3, viewable_expand / 3, viewable_type / 2

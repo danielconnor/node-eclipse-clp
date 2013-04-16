@@ -1,0 +1,13 @@
+
+hash_create(-Table)
+
+   Creates a new hash table
+
+Arguments
+   Table               A variable
+
+Type
+   library(hash)
+
+See Also
+   hash_set / 3, hash_get / 3, hash_erase / 1

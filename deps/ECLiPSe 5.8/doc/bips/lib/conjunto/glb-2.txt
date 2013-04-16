@@ -1,0 +1,46 @@
+
+glb(?S, ?Glb)
+
+   S is a set domain variable and Glb is the lower bound of its domain.
+
+
+
+Arguments
+   ?S                  A set domain variable.
+   ?Glb                A free variable or a ground set.
+
+Type
+   library(conjunto)
+
+Description
+   Glb is the ground set corresponding to the lower bound of the domain of
+   S. If Glb is a free variable, it is instanciated to the lower bound of
+   the domain of S. If it is a ground set, it should be equal to the lower
+   bound of the domain of S, otherwise it fails.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if S is not a set domain variable or if Glb is a ground set not
+   equal to the lower bound of S domain.
+
+
+
+Examples
+   
+[eclipse 9]: S `:: {}.. {1,2,3,5}, glb(S,Glb).
+
+S = S{{} .. {1, 2, 3}}
+Glb = {}
+yes.
+
+
+
+
+
+See Also
+   `:: / 2, lub / 2, set_range / 3

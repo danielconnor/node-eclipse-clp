@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Fill matrix</TITLE>
+<META NAME="description" CONTENT="Fill matrix">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node40.html">
+<LINK REL="previous" HREF="node38.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node40.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1075"
+ HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1069"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1063"
+ HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1071"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1073"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1076"
+ HREF="node40.html">Cartesian</A>
+<B> Up:</B> <A NAME="tex2html1070"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1064"
+ HREF="node38.html">Lookup</A>
+ &nbsp <B>  <A NAME="tex2html1072"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1074"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1077"
+ HREF="node39.html#SECTION006150010000000000000">Description</A>
+<LI><A NAME="tex2html1078"
+ HREF="node39.html#SECTION006150020000000000000">Parameters</A>
+<LI><A NAME="tex2html1079"
+ HREF="node39.html#SECTION006150030000000000000">Schema</A>
+<LI><A NAME="tex2html1080"
+ HREF="node39.html#SECTION006150040000000000000">Comments</A>
+<LI><A NAME="tex2html1081"
+ HREF="node39.html#SECTION006150050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION006150000000000000000">
+Fill matrix</A>
+</H1>
+
+<H4><A NAME="SECTION006150010000000000000"></A>
+<A NAME="764"></A>
+<A NAME="765"></A>
+<BR>
+Description
+</H4>
+This concept takes a list of entries with indices <I>I</I> and <I>J</I> and a value <I>V</I>, and put the value in a matrix <I>M</I> at position <I>M</I><SUB><I>i</I>,<I>j</I></SUB>.
+
+<H4><A NAME="SECTION006150020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>L</STRONG>
+<DD>a list of entries
+<DT><STRONG>Matrix</STRONG>
+<DD>a matrix
+</DL>
+<H4><A NAME="SECTION006150030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode fill_matrix(+,+).
+fill_matrix(L,Matrix):-
+        (foreach(entry with [i:I,j:J,value:V],L),
+         param(Matrix) do
+            subscript(Matrix,[I,J],V)
+        ).
+</PRE>
+<H4><A NAME="SECTION006150040000000000000">
+Comments</A>
+</H4>
+The program may fail if two entries in the list refer to the same index pair <I>I</I> and <I>J</I>, as the program would then try to insert two values at the same position.
+
+<P>
+It is not required that the input list contains all index combinations, we can use the <I>iteration on array</I> concept to fill any un-set elements with a default value.
+
+<H4><A NAME="SECTION006150050000000000000">
+Example</A>
+</H4>
+The example fills an array <I>PMatrix</I> with values from a list of <I>hop/3</I> terms. We also convert the node names in the <I>hop</I> term into node indices for lookup in the <I>PMatrix</I> matrix.
+<A NAME="778"></A>
+<PRE>
+:-mode fill_with_hops(+,+,+).
+fill_with_hops([],_,_).
+fill_with_hops([hop(Source,Dest,List)|R],Nodes,PMatrix):-
+        find_node_index(Source,Nodes,S),
+        find_node_index(Dest,Nodes,D),
+        find_node_indices(List,Nodes,L),
+        length(L,N), 
+        subscript(PMatrix,[S,D],pi_entry with [list:L,
+                                               length:N]),
+        fill_with_hops(R,Nodes,PMatrix).
+</PRE>
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

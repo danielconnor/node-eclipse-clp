@@ -1,0 +1,20 @@
+<HTML><HEAD><TITLE>in_chrstore(+CHRConst)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ech)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>in_chrstore(+CHRConst)</H1>
+Test if CHRConst is in the CHR constraint store or not
+<DL>
+<DT><EM>CHRConst</EM></DT>
+<DD>A CHR constraint
+</DD>
+</DL>
+<H2>Description</H2>
+  This predicate is used to test if a particular CHR constraint is in the
+  CHR constraint store or not. It can be used to prevent the addition of
+  redundant constraints. This only useful if the 'already_in_store' 
+  option is off. 
+
+<H2>Examples</H2>
+<PRE>    X leq Y, Y leq Z ==&gt; \+in_chrstore(X leq Z)| X leq Z.
+</PRE>
+
+</BODY></HTML>

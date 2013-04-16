@@ -1,0 +1,14 @@
+lib(m_tree234)
+
+	
+	This module implements 2-3-4 trees.  They can be used to manage and
+	index a collection of key/value pairs.  You probably want to use the
+	interface provided by `map.pl' instead of using this module
+	directly.
+	
+	
+	Note that keys must be ground, but values are allowed to be
+	variables.
+	
+	
+

@@ -1,0 +1,80 @@
+<HTML><HEAD><TITLE>module_interface(+Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>module_interface(+Module)</H1>
+Create the module Module and start defining its interface.
+
+
+<DL>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   This is a directive that can occur only in a compiled file.  If Module
+   is an existing module, it is first erased.  Then a new module is created
+   and all following code up to the next begin_module/1 or
+   module_interface/1 directive or the file end defines the interface part
+   of this module.  The module interface can contain both queries and
+   predicate definitions, however usually only those predicates need to be
+   defined in the interface that must be always compiled in order to read
+   the module body.  For instance, macro transformation predicates for
+   macros used in the file must be compiled, otherwise the parser cannot
+   parse the file.  If another module uses this module by means of the
+   use_module/1 predicate, all queries in the module interface except
+   export/1 and global/1 will be executed in that module, and exported
+   predicates will be imported into it.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>When called from Prolog.
+<DT><EM>(82) trying to access a locked module </EM>
+<DD>Module is locked.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse 2]: [user].
+     :- module_interface(m).
+     :- op(700, xf, there).
+     :- export p/1.
+     :- begin_module(m).
+      p(X) :- writeln(X).
+      user compiled 56 bytes in 0.03 seconds
+     yes.
+     [eclipse 3]: p(hello there).
+     syntax error: postfix/infix operator expected
+     | p(hello there).
+     |             ^ here
+     [eclipse 3]: use_module(m).
+
+     yes.
+     [eclipse 4]: p(hello there).
+     hello there
+
+     yes.
+
+Error:
+    module_interface(M).                 (Error 4).
+    module_interface(1).                 (Error 5).
+    module_interface(a_locked_module).   (Error 82).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/module-1.html">module / 1</A>, <A HREF="../../kernel/obsolete/begin_module-1.html">begin_module / 1</A>, <A HREF="../../kernel/modules/create_module-1.html">create_module / 1</A>, <A HREF="../../kernel/modules/erase_module-1.html">erase_module / 1</A>, <A HREF="../../kernel/modules/current_module-1.html">current_module / 1</A>
+</BODY></HTML>

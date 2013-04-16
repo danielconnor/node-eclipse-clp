@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Cumulative Constraint and Resource Profiles</TITLE>
+<META NAME="description" CONTENT="Cumulative Constraint and Resource Profiles">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node23.html">
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1184"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1180"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1174"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1182"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1185"
+ HREF="node23.html">Edge-finder</A>
+<B> Up:</B> <A NAME="tex2html1181"
+ HREF="node20.html">Additional Finite Domain Constraints</A>
+<B> Previous:</B> <A NAME="tex2html1175"
+ HREF="node21.html">Various Constraints on Lists</A>
+ &nbsp <B>  <A NAME="tex2html1183"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00420000000000000000">
+Cumulative Constraint and Resource Profiles</A>
+</H1>
+
+<P>
+The library <B>cumulative</B> implements the cumulative scheduling constraint.
+It is based on the IC library and is loaded using one of <PRE>
+:- use_module(library(ic_cumulative)).
+:- lib(ic_cumulative).
+</PRE>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html271"
+ HREF="../bips/lib/ic_cumulative/cumulative-4.html">cumulative(+StartTimes, +Durations, +Resources, ++ResourceLimit)</A><A NAME="2175"></A></STRONG>
+<DD> 
+<BR>
+<A NAME="2118"></A>
+A cumulative scheduling constraint. StartTimes, Durations and Resources
+are lists of equal length N of integer variables or integers.
+ResourceLimit is an integer. The declarative meaning is:
+If there are N tasks, each starting at a certain start time, having
+a certain duration and consuming a certain (constant) amount of
+resource, then the sum of resource usage of all the tasks does not
+exceed ResourceLimit at any time.
+
+<P>
+<DT><STRONG><A NAME="tex2html273"
+ HREF="../bips/lib/ic_cumulative/profile-4.html">profile(+StartTimes, +Durations, +Resources, -Profile)</A><A NAME="2178"></A></STRONG>
+<DD> 
+<BR>
+<A NAME="2122"></A>
+StartTimes, Durations, Resources and Profile
+are lists of equal length N of integer variables or integers
+with the same meaning as in cumulative/4.
+The list Profile indicates the level of resource usage at the
+starting point of each task.
+</DL>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

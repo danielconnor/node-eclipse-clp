@@ -1,0 +1,73 @@
+
+local array(+Array, +Type)
+
+   Creates a non-logical array Array with given Type.
+
+Arguments
+   +Array              Ground compound term with integer arguments.
+   +Type               One of the atoms: float, integer, byte, prolog
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   If Array is a compound term, a non-logical array (visible only in
+   the caller module) of type prolog is created.  Its dimension is the
+   arity of the term Array and the size of each dimension is specified
+   by the corresponding argument of the term Array.
+   The elements of the array are initialised depending on the type:
+   float, integer and byte arrays are initialised with 0 values, prolog
+   arrays are initialised with free variables.
+
+   The array indexes in the array range from 0 to the dimension minus one.
+   For example myarray create with local array(myarray(3,4,5), integer)
+   contains 60 integers that may be accessed from myarray(0,0,0) to
+   myarray(2,3,4).
+
+   The contents of the array persists across failures.
+   The value of the array elements can be changed with
+   setval/2 and retrieved with getval/2.  Setting and retrieving terms
+   from a non-logical arrays involves copying the term each time. 
+   In particular, if the term contains variables, they lose their
+   identity and are replaced with fresh ones.
+
+   Notes:
+
+   Re-declaring an existing array with the same dimension but different
+   sizes or type raises a warning.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Array or Type is not ground.
+     5 --- Array is not a structure with integer arguments.
+     5 --- Type is not an atom.
+     6 --- Type is not a valid type name.
+     6 --- The ground structure Array has arguments that are integers not greater than 0.
+    24 --- The ground structure Array has arguments that are non-numbers.
+    42 --- An array with the same name and dimension as Array already exists.
+
+Examples
+   
+Success:
+      local array(a(4), prolog).
+      local array(b(2,3), integer).
+      local array(a(4), float), array(a(4,1), byte).
+
+Error:
+      local array(X, prolog).                         (Error 4).
+      local array(a(6.0), integer).                   (Error 5).
+      local array(a(0), integer).                     (Error 6).
+      local array(a(-2), integer).                    (Error 6).
+      local array(a(4), integer), array(a(5), float).  (Warning 42).
+
+
+See Also
+   current_array / 2, array / 2, decval / 1, incval / 1, bag_create / 1, shelf_create / 2, shelf_create / 3, getval / 2, setval / 2

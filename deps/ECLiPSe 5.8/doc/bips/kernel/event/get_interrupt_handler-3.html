@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>get_interrupt_handler(+IntId, ?PredSpec, ?Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_interrupt_handler(+IntId, ?PredSpec, ?Module)</H1>
+Succeeds if PredSpec unifies with the specification of the current handler
+for interrupt IntId and Module unifies with its home module.
+
+
+<DL>
+<DT><EM>+IntId</EM></DT>
+<DD>Integer or atom.
+</DD>
+<DT><EM>?PredSpec</EM></DT>
+<DD>Term which unifies with atom/integer.
+</DD>
+<DT><EM>?Module</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Provided IntId is a valid interrupt identifier, unifies PredSpec with
+   the specification (i.e.  a term of the form name/arity) of the current
+   handler for interrupt IntId, and Module with the module in which it is
+   defined.
+<P>
+   The interrupts which exist are machine dependent.  The interrupts which
+   can be caught or trapped are implementation defined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+Fails if no handler has been set for the interrupt IntId
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>IntId is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>IntId is not an atom or integer.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec does not unify with atom/integer.
+<DT><EM>(6) out of range </EM>
+<DD>IntId is not a valid interrupt name or number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      ?- get_interrupt_handler(18,M,N).
+      M = pause/0
+      N = sepia_kernel
+      yes.
+
+      ?- set_interrupt_handler(18,true/0), kill(0, 18),
+      &gt; get_interrupt_handler(18,true/0,sepia_kernel).
+      yes.
+Fail:
+      get_interrupt_handler(16, true/0, sepia_kernel).
+Error:
+      get_interrupt_handler(N,true/0,sepia_kernel).   (Error 4).
+      get_interrupt_handler(5.0,true/0,sepia_kernel). (Error 5).
+      get_interrupt_handler(-1,X,sepia_kernel).       (Error 6).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/current_interrupt-2.html">current_interrupt / 2</A>, <A HREF="../../kernel/event/set_interrupt_handler-2.html">set_interrupt_handler / 2</A>, <A HREF="../../kernel/opsys/kill-2.html">kill / 2</A>
+</BODY></HTML>

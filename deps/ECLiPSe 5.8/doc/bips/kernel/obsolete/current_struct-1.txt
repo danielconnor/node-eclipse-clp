@@ -1,0 +1,60 @@
+
+current_struct(?Struct)
+
+   Succeeds if Struct is a currently visible structure specification.
+
+
+
+Arguments
+   ?Struct             Variable or structure.
+
+Type
+   Obsolete
+
+Description
+   Used to retrieve the definition of a defined structure, or to
+   enumerate all visible structure definitions.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Struct is neither variable nor structure.
+
+Examples
+   
+    [eclipse 1]: local struct(employee(name,age,salary)).
+    yes.
+
+    [eclipse 2]: current_struct(employee(A,B,C)).
+    A = name
+    B = age
+    C = salary
+    yes.
+
+    [eclipse 3]: Emp = employee{}, current_struct(Emp).
+    Emp = employee(name, age, salary)
+    yes.
+
+    [eclipse 4]: current_struct(S).
+    S = employee(name, age, salary)     More? (;) 
+    S = suspend(inst, constrained, bound)
+    yes.
+
+Error:
+   current_struct(a).             (Error 5).
+
+
+
+
+
+See Also
+   current_struct / 2, local / 1, struct / 1

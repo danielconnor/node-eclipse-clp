@@ -1,0 +1,20 @@
+
+lp_release_license
+
+   Release a runtime license token for the external solver.
+
+Type
+   library(eplex)
+
+Description
+    	The eplex-library interfaces to an external simplex/MIP solver
+	which might require a license to run (e.g. CPLEX, XPRESS-MP).
+	When the eplex-library is loaded, it tries to obtain a license
+	immediately, or a license can be obtained by calling
+	lp_get_license/0.  A held license can then be released using
+	lp_release_license/0.  The predicate always succeeds, even
+	if no license was held.
+    
+
+See Also
+   lp_get_license / 0, lp_get_license / 2

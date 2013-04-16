@@ -1,0 +1,53 @@
+
+halt
+
+   The Prolog session is ended (the same as Control-D at the top-level loop).
+
+
+
+Arguments
+
+Type
+   Operating System
+
+Description
+   Used to exit from the Prolog session.  If user_end/0 is defined and
+   global, it is called.  All buffers are flushed, streams are closed and
+   ECLiPSe exits.  Zero as status code is returned to the operating system.
+   halt is identical with exit(0).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: halt.
+      cygnus% echo $status
+      0
+      cygnus%
+
+      [eclipse]: [user].
+       problem_exit :-
+          writeln(debug_output, 'PROBLEM IN RECOVERY PROCEDURE'),
+          halt.
+       user compiled 132 bytes in 0.02 seconds
+      yes.
+      [eclipse]: problem_exit.
+      PROBLEM IN RECOVERY PROCEDURE
+      %
+
+
+
+
+
+See Also
+   exit / 1, toplevel : break / 0, pause / 0

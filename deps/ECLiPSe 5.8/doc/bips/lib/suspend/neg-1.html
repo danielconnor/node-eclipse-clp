@@ -1,0 +1,49 @@
+<HTML><HEAD><TITLE>neg ?Expr</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(suspend)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>neg ?Expr</H1>
+Expr arithmetically evaluates to 0
+<DL>
+<DT><EM>Expr</EM></DT>
+<DD>A boolean expression
+</DD>
+</DL>
+<H2>Description</H2>
+    Suspends until Expr is ground, and then evaluates it. Succeeds if it
+    evaluates to 0.
+<P>
+    Typically, the expression contains reifiable constraints, in which case
+    a corresponding reified constraint is set up, and the expression is
+    replaced by the resulting boolean variable.
+
+<H3>Fail Conditions</H3>
+Expr does not evaluate to 0
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(24) number expected </EM>
+<DD>Expr is not an arithmetic expression.
+</DL>
+<H2>Examples</H2>
+<PRE>
+	?- neg B, B = 1.
+	No (0.00s cpu)
+
+	?- neg B, B = 0.
+	B = 0
+	Yes (0.00s cpu)
+
+	% arguments are typically reifiable expressions:
+	?- neg X &gt; 7, X = 8.
+	No (0.00s cpu)
+
+	% the previous example is equivalent to:
+	?- &gt;(X,7,B), neg B, X=8.
+	No (0.00s cpu)
+
+	% and/or/=&gt;/neg are themselves reifiable:
+	?- neg(X &gt; 7 or X &lt; 5), X = 7.
+	X = 7
+	Yes (0.00s cpu)
+	</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/neg-2.html">neg / 2</A>, <A HREF="../../lib/suspend/and-2.html">and / 2</A>, <A HREF="../../lib/suspend/or-2.html">or / 2</A>, <A HREF="../../lib/suspend/EG-2.html">=> / 2</A>, <A HREF="../../lib/ic/neg-1.html">ic : neg / 1</A>
+</BODY></HTML>

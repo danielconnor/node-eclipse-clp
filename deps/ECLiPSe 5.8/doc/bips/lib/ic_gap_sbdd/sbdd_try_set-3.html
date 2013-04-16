@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE>sbdd_try_set(+Var, ++Value, ++Bool)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_gap_sbdd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>sbdd_try_set(+Var, ++Value, ++Bool)</H1>
+Try adding/excluding a value to/from an SBDD set search variable
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>The set variable to use
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value to try
+</DD>
+<DT><EM>Bool</EM></DT>
+<DD>Whether to add or exclude the value first
+</DD>
+</DL>
+<H2>Description</H2>
+   Make an SBDD (set) search choice.  Specifically, if Bool is 1, try adding
+   the (integer) value Value to the (set) variable Var; on backtracking
+   exclude it.  If Bool is 0, try excluding Value first and try adding it on
+   backtracking.<P>
+
+   Var should be an element of an array previously initialised using
+   sbdd_initialise_set/5.<P>
+
+   Use sbdd_try_set/4 if you wish to know which is the currently successful
+   branch (Value in Var or Value notin Var).
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic_gap_sbdd/sbdd_initialise_set-5.html">sbdd_initialise_set / 5</A>, <A HREF="../../lib/ic_gap_sbdd/sbdd_try_set-4.html">sbdd_try_set / 4</A>, <A HREF="../../lib/ic_gap_sbdd/sbdd_try-2.html">sbdd_try / 2</A>
+</BODY></HTML>

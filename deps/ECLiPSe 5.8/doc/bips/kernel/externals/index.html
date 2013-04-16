@@ -1,0 +1,73 @@
+<HTML><HEAD><TITLE>External Interface</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>External Interface</H1>
+Built-ins to access functions and data from foreign languages
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="call_c-2.html"><STRONG>call_c(+Function, ?Code)</STRONG></A></DT>
+<DD>Invoke the C function Function and unify its return code with Code.
+
+</DD>
+<DT><A HREF="external-1.html"><STRONG>external(+PredSpec)</STRONG></A></DT>
+<DD>Declares PredSpec to be a deterministic external predicate.
+
+</DD>
+<DT><A HREF="external-2.html"><STRONG>external(+PredSpec, +CName)</STRONG></A></DT>
+<DD>Defines PredSpec to be a deterministic external predicate linked to the C
+function whose system name is CName.
+
+</DD>
+<DT><A HREF="load-1.html"><STRONG>load(+File)</STRONG></A></DT>
+<DD>The object code or loadable library File is loaded into the running system.
+
+</DD>
+<DT><A HREF="peer-1.html"><STRONG>peer(?Peer)</STRONG></A></DT>
+<DD>Checks or enumerates peer names</DD>
+<DT><A HREF="peer_deregister_multitask-1.html"><STRONG>peer_deregister_multitask(++Peer)</STRONG></A></DT>
+<DD>Deregisters and removes the peer Peer from peer multitasking.</DD>
+<DT><A HREF="peer_do_multitask-1.html"><STRONG>peer_do_multitask(+Type)</STRONG></A></DT>
+<DD>Perform a multitasking phase.</DD>
+<DT><A HREF="peer_get_property-3.html"><STRONG>peer_get_property(++Peer, ?Property, ?Value)</STRONG></A></DT>
+<DD>Returns the properties of the peer Peer.</DD>
+<DT><A HREF="peer_multitask_confirm-0.html"><STRONG>peer_multitask_confirm</STRONG></A></DT>
+<DD>Confirm a peer multitasking phase.</DD>
+<DT><A HREF="peer_multitask_terminate-0.html"><STRONG>peer_multitask_terminate</STRONG></A></DT>
+<DD>Terminate a peer multitasking phase.</DD>
+<DT><A HREF="peer_queue_close-1.html"><STRONG>peer_queue_close(++Queue)</STRONG></A></DT>
+<DD>Closes the peer queue Queue from ECLiPSe side.</DD>
+<DT><A HREF="peer_queue_create-5.html"><STRONG>peer_queue_create(++Queue, ++Peer, ++QueueType, ?Direction, ++Event)</STRONG></A></DT>
+<DD>Create a new peer queue Queue for Peer from ECLiPSe side.</DD>
+<DT><A HREF="peer_queue_get_property-3.html"><STRONG>peer_queue_get_property(++Queue, ?Property, ?Value)</STRONG></A></DT>
+<DD>Get or enumerate properties of a peer queue Queue.</DD>
+<DT><A HREF="peer_register_multitask-2.html"><STRONG>peer_register_multitask(++Peer, -MsgQ)</STRONG></A></DT>
+<DD>Registers the peer Peer for peer multitasking.</DD>
+<DT><A HREF="remote_connect-3.html"><STRONG>remote_connect(?Address, ?Peer, ?InitGoal)</STRONG></A></DT>
+<DD>Initiate a remote interface connection</DD>
+<DT><A HREF="remote_connect_accept-6.html"><STRONG>remote_connect_accept(++Peer, ++Socket, ++TimeOut, ?InitGoal, +PassTerm, -InitRes)</STRONG></A></DT>
+<DD>Second half of initiating a remote interface connection.</DD>
+<DT><A HREF="remote_connect_setup-3.html"><STRONG>remote_connect_setup(?Address, ?Peer, -Socket)</STRONG></A></DT>
+<DD>First half of initiating a remote interface connection.</DD>
+<DT><A HREF="remote_disconnect-1.html"><STRONG>remote_disconnect(++Peer)</STRONG></A></DT>
+<DD>Disconnect the remote peer Peer</DD>
+<DT><A HREF="remote_yield-1.html"><STRONG>remote_yield(++Peer)</STRONG></A></DT>
+<DD>Explicitly yield to the remote peer Peer</DD>
+<DT><A HREF="xget-3.html"><STRONG>xget(+Handle, +Index, -Value)</STRONG></A></DT>
+<DD>Get the Index-th field of an external data structure (referenced by Handle).
+
+</DD>
+<DT><A HREF="xset-3.html"><STRONG>xset(+Handle, +Index, +Value)</STRONG></A></DT>
+<DD>Set the Index-th field of an external data structure (referenced by Handle) to Value.
+
+</DD>
+<DT><A HREF="yield-2.html"><STRONG>yield(+ToC, -FromC)</STRONG></A></DT>
+<DD>Yield control to the C/C++ main program that has invoked ECLiPSe.
+The arguments are used for passing data in and out.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+For more information, see the Embedding and Interfacing Manual
+<HR>Generated from externals.eci on Tue Jan 25 01:58:24 2005
+
+</BODY></HTML>

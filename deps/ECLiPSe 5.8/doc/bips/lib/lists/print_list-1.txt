@@ -1,0 +1,9 @@
+
+print_list(+List)
+
+   Print the elements of a list, one per line
+
+Type
+   library(lists)
+
+

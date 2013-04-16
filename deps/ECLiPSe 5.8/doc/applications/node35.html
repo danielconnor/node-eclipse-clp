@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Sum</TITLE>
+<META NAME="description" CONTENT="Sum">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node36.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node36.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html999"
+ HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html993"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html987"
+ HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html995"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html997"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1000"
+ HREF="node36.html">Merge</A>
+<B> Up:</B> <A NAME="tex2html994"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html988"
+ HREF="node34.html">Best and rest</A>
+ &nbsp <B>  <A NAME="tex2html996"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html998"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1001"
+ HREF="node35.html#SECTION006110010000000000000">Description</A>
+<LI><A NAME="tex2html1002"
+ HREF="node35.html#SECTION006110020000000000000">Parameters</A>
+<LI><A NAME="tex2html1003"
+ HREF="node35.html#SECTION006110030000000000000">Schema</A>
+<LI><A NAME="tex2html1004"
+ HREF="node35.html#SECTION006110040000000000000">Comments</A>
+<LI><A NAME="tex2html1005"
+ HREF="node35.html#SECTION006110050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION006110000000000000000">
+Sum</A>
+</H1>
+
+<H4><A NAME="SECTION006110010000000000000">
+Description</A>
+</H4>
+The sum <A NAME="679"></A>concept returns the sum of values which have been extracted from a list of data structures. It uses a <I>foreach</I> to scan each elements of the list and a <I>fromto</I> to accumulate the total sum.
+
+<H4><A NAME="SECTION006110020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>L</STRONG>
+<DD>a list
+<DT><STRONG>Sum</STRONG>
+<DD>a free variable, will be bound to a value
+</DL>
+<H4><A NAME="SECTION006110030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode sum(+,-).
+sum(L,Sum):-
+        (foreach(X,L),
+         fromto(0,In,Out,Sum) do
+            q(X,V),
+            Out is In+V
+        ).
+</PRE>
+<H4><A NAME="SECTION006110040000000000000">
+Comments</A>
+</H4>
+The initial value<A NAME="689"></A> for the sum accumulator here is 0. We could use another initial value, this can be useful if we want to obtain the total over several summations. 
+
+<H4><A NAME="SECTION006110050000000000000">
+Example</A>
+</H4>
+The program counts how many entries in the <I>interface_mib_data</I> list refer to active interfaces (octet count non-zero).
+<A NAME="692"></A>
+<PRE>
+:-mode non_zero_measurements(+,-).
+non_zero_measurements(L,N):-
+        (foreach(X,L),
+         fromto(0,In,Out,N) do
+            non_zero_measurement(X,In,Out)
+        ).
+
+non_zero_measurement(interface_mib_data with [octet_in:A,
+                                              octet_out:B],
+                     In,Out):-
+        A+B &gt; 0,
+        !,
+        Out is In+1.
+non_zero_measurement(_X,In,In).
+</PRE>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

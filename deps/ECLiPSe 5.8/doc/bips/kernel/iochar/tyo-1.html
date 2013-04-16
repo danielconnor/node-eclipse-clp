@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>tyo(+Ascii)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>tyo(+Ascii)</H1>
+The character represented by the ascii integer Ascii is put onto the
+current output in raw mode.
+
+
+<DL>
+<DT><EM>+Ascii</EM></DT>
+<DD>Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the current output in raw mode.
+
+<P>
+   If the output device is a terminal, the tyo/1 output goes directly to
+   the screen, whereas the output from put/1 is buffered first, and is only
+   output to the screen when the current output is flushed (e.g.
+   explicitly using flush(1).).
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Ascii is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Ascii is instantiated, but not to an integer.
+</DL>
+<H2>Examples</H2>
+<PRE>   Equivalent to tyo(output, Ascii).  (see tyo/2 for details).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/tyi-1.html">tyi / 1</A>, <A HREF="../../kernel/iochar/tyi-2.html">tyi / 2</A>, <A HREF="../../kernel/iochar/tyo-2.html">tyo / 2</A>
+</BODY></HTML>

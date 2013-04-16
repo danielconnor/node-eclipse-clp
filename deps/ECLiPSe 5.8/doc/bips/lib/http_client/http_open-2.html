@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>http_open(+Url, -Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(http_client)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>http_open(+Url, -Stream)</H1>
+Download a web document given its URL and open a Stream to read it
+<DL>
+<DT><EM>Url</EM></DT>
+<DD>A string
+</DD>
+<DT><EM>Stream</EM></DT>
+<DD>A variable or atom
+</DD>
+</DL>
+<H2>Description</H2>
+This utility downloads a web document (given its URL) into a
+    string stream and returns that string stream's identifier for reading.
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: lib(http_client).
+    yes.
+    [eclipse 2]: http_open("http://icparc.ic.ac.uk/index.html",S),
+                 read_string(S, end_of_line, _, L).
+    S = 19
+    L = "&lt;!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\"&gt;"
+    yes.
+    </PRE>
+
+</BODY></HTML>

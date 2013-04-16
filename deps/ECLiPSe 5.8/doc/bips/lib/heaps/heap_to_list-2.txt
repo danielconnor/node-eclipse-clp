@@ -1,0 +1,21 @@
+
+heap_to_list(+Heap, -List)
+
+   returns the current set of Key-Datum pairs in the Heap as a List.
+
+Type
+   library(heaps)
+
+Description
+
+    returns the current set of Key-Datum pairs in the Heap as a
+    List, sorted into ascending order of Keys.  This is included
+    simply because I think every data structure foo ought to have
+    a foo_to_list and list_to_foo relation (where, of course, it
+    makes sense!) so that conversion between arbitrary data
+    structures is as easy as possible.  This predicate is basically
+    just a merge sort, where we can exploit the fact that the tops
+    of the subtrees are smaller than their descendants.
+    
+
+

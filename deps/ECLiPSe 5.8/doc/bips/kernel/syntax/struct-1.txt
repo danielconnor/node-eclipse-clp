@@ -1,0 +1,148 @@
+
+local struct(++Prototype)
+export struct(++Prototype)
+
+   Declare a structure according to Prototype.
+
+Arguments
+   ++Prototype         A structure with ground arguments.
+
+Type
+   Syntax Settings
+
+Description
+   ECLiPSe structure notation provides a way to use structures with
+   field names rather than positional arguments.  Note that this is
+   not a new data type, just a new syntax for normal compound terms. 
+   It is intended to make programs more readable and easier to modify,
+   without compromising efficiency (it is implemented by macro
+   expansion). 
+
+   E.g. if a structure is declared by specifying the prototype
+
+	book(author, title, year, publisher)
+
+    then subsequently book/4-terms can be written as follows:
+
+	book{}
+	book{title:'tom sawyer'}
+	book{year:1886, title:'tom sawyer'}
+
+    which will be completely equivalent to the usual
+
+	book(_, _, _, _)
+	book(_, 'tom sawyer', _, _)
+	book(_, 'tom sawyer', 1886, _)
+
+    The advantage is that the order and position of the fields or the
+    arity of the whole structure do not have to be known and can be
+    changed by just changing the initial declaration.
+
+    The argument index of a field in a structure can be obtained using
+    a term of the form
+
+	FieldName of StructName
+
+    so instead of arg(3,B,Y) one can write
+
+	arg(year of book, B, Y)
+
+
+    The arity of the structure can be obtained using a term of the
+    following form
+
+        property(arity) of StructName
+
+    instead of having to explicitly give the arity of the structure.  So, 
+
+        property(arity) of book
+
+    would be equivalent to the integer 4.  Similarly, a Name/Arity
+    specification can be obtained by writing
+
+        property(functor) of StructName
+
+    so book/4 can alternatively be written as
+
+        property(functor) of book
+
+
+
+    Structures can also be declared to contain other structures, e.g.
+
+	:- local struct(film(based_on:book,director,year)).
+
+    This allows the fields of book to be accessed as if they were
+    fields of film. Note that the declaration of the year-field in
+    the film-structure hides the year-field in the book structure.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Struct is not ground.
+     5 --- Struct is neither variable nor structure.
+
+Examples
+   
+% A simple structure:
+
+    [eclipse 1]: local struct(person(name,address,age)).
+
+    yes.
+    [eclipse 2]: John = person{age:30, name:john},
+            John = person{age:A},
+            arg(name of person, John, N).
+
+    John = person(john, _146, 30)
+    A = 30
+    N = john
+    yes.
+
+    [eclipse 3]: N is (property(arity) of person) + 1.
+    N = 4
+    yes.
+
+    [eclipse 4]: PersonStructure = (property(functor) of person).
+    PersonStructure = person / 3
+    yes.
+
+% Example for structure inheritance:
+
+    [eclipse 4]: local struct(employee(p:person,salary)).
+
+    yes.
+    [eclipse 5]: Emp = employee{name:john,salary:2000}.
+
+    Emp = employee(person(john, _105, _106), 2000)
+    yes.
+    
+    [eclipse 6]: Emp = employee{name:john, salary:2000},
+            Emp = employee{p:Person, salary:S},
+            arg(name of employee, Emp, N).
+
+    Person = person(john, _169, _170)
+    S = 2000
+    Emp = employee(person(john, _169, _170), 2000)
+    N = john
+    yes.
+
+
+% Subscript syntax can be used with structures:
+
+    [eclipse 7]: Emp = employee{name:john, salary:2000},
+             Cost is 5 * Emp[salary of employee].
+
+     Cost = 10000
+     Emp = employee(person(john, _137, _138), 2000)
+     yes.
+
+
+See Also
+   local / 1, export / 1, current_struct / 2, arg / 3, subscript / 3, update_struct / 4

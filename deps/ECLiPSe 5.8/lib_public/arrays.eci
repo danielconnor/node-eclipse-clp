@@ -1,0 +1,6 @@
+:- module(arrays).
+:- export store / 4.
+:- export list_to_array / 2.
+:- export fetch / 3.
+:- export array_to_list / 2.
+:- export array_length / 2.

@@ -1,0 +1,21 @@
+lib(sockets)
+
+
+    Note that ECLiPSe provides its own built-in socket manipulation
+    predicates which provides similar functionality to this library.
+    
+    This library is only provided for compatibility with the socket
+    manipulation predicates of SICStus Prolog. To use these predicates,
+    the sockets library has to be loaded: 
+    
+    :- use_module(library(sockets)).
+    
+    For SICStus 3.0, the sockets predicates are also in a sockets library,
+    so no changes are needed to load the library.  However, for older
+    versions of SICStus, the predicates are available as built-ins, and no
+    library has to be loaded.  So if the code is written for older
+    versions of SICStus, then the above line has to be added. 
+    
+    The sockets library can be used independently of the sicstus library. 
+    
+

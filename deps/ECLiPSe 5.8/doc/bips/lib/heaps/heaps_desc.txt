@@ -1,0 +1,40 @@
+lib(heaps)
+
+
+    A heap is a labelled binary tree where the key of each node is less
+    than or equal to the keys of its sons.  The point of a heap is that
+    we can keep on adding new elements to the heap and we can keep on
+    taking out the minimum element.  If there are N elements total, the
+    total time is O(NlgN).  If you know all the elements in advance, you
+    are better off doing a merge-sort, but this file is for when you
+    want to do say a best-first search, and have no idea when you start
+    how many elements there will be, let alone what they are.
+
+    A heap is represented as a triple t(N, Free, Tree) where N is the
+    number of elements in the tree, Free is a list of integers which
+    specifies unused positions in the tree, and Tree is a tree made of
+
+	t			terms for empty subtrees and
+	t(Key,Datum,Lson,Rson)	terms for the rest
+
+    The nodes of the tree are notionally numbered like this:
+
+				    1
+		     2				    3
+             4               6               5               7
+         8      12      10     14       9       13      11     15
+      ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..
+
+    The idea is that if the maximum number of elements that have been in
+    the heap so far is M, and the tree currently has K elements, the tree
+    is some subtreee of the tree of this form having exactly M elements,
+    and the Free list is a list of K-M integers saying which of the 
+    positions in the M-element tree are currently unoccupied.  This free
+    list is needed to ensure that the cost of passing N elements through
+    the heap is O(NlgM) instead of O(NlgN).  For M say 100 and N say 10^4
+    this means a factor of two.  The cost of the free list is slight.
+    The storage cost of a heap in a copying Prolog (which Dec-10 Prolog is
+    not) is 2K+3M words.
+
+
+

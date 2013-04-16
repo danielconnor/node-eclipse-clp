@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>module_callsites(?StartId, ?EndId)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(instrument)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>module_callsites(?StartId, ?EndId)</H1>
+Retrieve module start and end callsite identifiers.
+<DL>
+<DT><EM>StartId</EM></DT>
+<DD>Intger
+</DD>
+<DT><EM>EndId</EM></DT>
+<DD>Integer
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Each code instrumentation point within a module is 
+   uniquely identified by its callsite identifier.
+   The callsite identifier is a monotonically increasing 
+   integer incrementing from the initial value of 0.
+   The predicate retrieves the start and end callsite 
+   identifiers.
+   <P>
+   The predicate is a tool and the callsite identifiers 
+   of a module other than the current calling module 
+   context can be retrieved by invoking 
+   <TT>module_callsites(StartId, EndId)@Module</TT>.
+<H3>Fail Conditions</H3>
+StartId or EndId are not the module's starting and 
+   ending callsite identifiers.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib/instrument/get_callsite_data-2.html">get_callsite_data / 2</A>, <A HREF="../../lib/instrument/file_callsites-3.html">file_callsites / 3</A>, <A HREF="../../lib/instrument/instrument-2.html">instrument / 2</A>, <A HREF="../../lib/instrument/instrument-3.html">instrument / 3</A>, <A HREF="../../lib/instrument/index.html">library(instrument)</A>, <A HREF="../../lib/instrument/set_callsite_data-2.html">set_callsite_data / 2</A>, <A HREF="../../lib/instrument/itemplate-s.html">struct(itemplate)</A>, <A HREF="../../lib/instrument/defined_modules-2.html">defined_modules / 2</A>
+</BODY></HTML>

@@ -1,0 +1,4 @@
+lib(numbervars)
+
+   C-Prolog style numbervars predicate
+

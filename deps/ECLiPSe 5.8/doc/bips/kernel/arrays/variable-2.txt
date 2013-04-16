@@ -1,0 +1,53 @@
+
+local variable(+Name, +Init)
+
+   Creates the untyped non-logical variable Name.
+
+Arguments
+   +Name               An atom.
+   +Init               Any term
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   A non-logical variable with name Name (visible only in the
+   caller module) is created.  Its value is initialised to Init.
+   The contents of the variable persists across failures.
+   The value of a non-logical variable can be changed with
+   setval/2 and retrieved with getval/2.  Setting and retrieving terms
+   from a non-logical variable involves copying the term each time. 
+   In particular, if the term contains variables, they lose their
+   identity and are replaced with fresh ones.
+
+   Notes:
+
+   Declaring a variable twice is silently accepted, and the second
+   declaration is ignored.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Name is not instantiated.
+     5 --- Name is not an atom.
+
+Examples
+   
+Success:
+      :- local variable(a,[]).
+      :- local variable(count,0), variable(value,colour(red)).
+
+Error:
+      :- local variable(X, []).                      (Error 4).
+      :- local variable(6, 0).                       (Error 5).
+
+
+See Also
+   current_array / 2, array / 1, array / 2, decval / 1, incval / 1, bag_create / 1, getval / 2, setval / 2, reference / 1, reference / 2, variable / 1

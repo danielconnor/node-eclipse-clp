@@ -1,0 +1,60 @@
+<HTML><HEAD><TITLE>cancel_after_event(?Event)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>cancel_after_event(?Event)</H1>
+   Cancel all pending instances of after event Event.
+
+
+<DL>
+<DT><EM>+Event</EM></DT>
+<DD>Atom
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   All instances of the pending after event Event is 
+   cancelled so that the event will not be triggered. A pending after event 
+   is an event which is setup by either event_after/2, event_after/3 or 
+   event_after_every/2, and which is waiting to be raised 
+   (event_after_every/2 will always be pending as it is raised repeatedly).
+
+<P>
+   Note that the processing of an already raised, but as yet unprocessed
+   event will not be cancelled by this predicate. 
+
+<P>
+   This is equivalent to
+<PRE>
+	cancel_after_event(Event) :-
+	    cancel_after_event(Event, [_|_]).
+</PRE>
+
+<H3>Fail Conditions</H3>
+   Fails if Event is not a pending after event.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Event is not an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   setup :-
+      set_event_handler(hi, hi/0),
+      event_after_every(hi, 3.2).
+
+   hi :-
+      writeln(hi).
+
+   kill :-
+      ( cancel_after_event(hi) -&gt;
+          writeln('event cancelled')
+      ;
+          writeln('no event to cancel')
+      ).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/cancel_after_event-2.html">cancel_after_event / 2</A>, <A HREF="../../kernel/event/event_after-2.html">event_after / 2</A>, <A HREF="../../kernel/event/event_after-3.html">event_after / 3</A>, <A HREF="../../kernel/event/event_after_every-2.html">event_after_every / 2</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/current_after_events-1.html">current_after_events / 1</A>
+</BODY></HTML>

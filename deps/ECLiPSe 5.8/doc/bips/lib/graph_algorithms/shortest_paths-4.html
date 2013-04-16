@@ -1,0 +1,56 @@
+<HTML><HEAD><TITLE>shortest_paths(+Graph, +DistanceArg, +SourceNode, -Paths)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>shortest_paths(+Graph, +DistanceArg, +SourceNode, -Paths)</H1>
+Computes one shortest path from a single source to every reachable node
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>DistanceArg</EM></DT>
+<DD>which argument of EdgeData to use as distance: integer
+</DD>
+<DT><EM>SourceNode</EM></DT>
+<DD>source node number (integer)
+</DD>
+<DT><EM>Paths</EM></DT>
+<DD>array of Length-EdgeList structures
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Computes one shortest path from the single source node SourceNode
+    to every node which is reachable from it. In case of multiple
+    shortest paths with the same length, an arbitrary one is returned.
+</P><P>
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. Important: the distance
+    information in EdgeData must be a non-negative number, and the
+    numeric type (integer, float, etc) must be the same in all edges.
+</P><P>
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+</P><P>
+    SourceNode is the common starting point for the computed paths.
+</P><P>
+    The results are returned as an array ranging over all node numbers.
+    For unreachable nodes the array element is uninstantiated.
+    For reachable nodes, the element contains a Length-EdgeList structure
+    where Length is the length of the shortest path and EdgeList is that
+    path (or one of them) in reverse order, i.e. starting with the edge
+    reaching the target and ending with the edge starting from SourceNode.
+    </P>
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE>
+    ?- sample_graph(G), shortest_paths(G, 0, 1, P).
+    P = [](2 - [e(2, 1, 1), e(1, 2, 1)], 1 - [e(1, 2, 1)], ...)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/single_pair_shortest_path-5.html">single_pair_shortest_path / 5</A>, <A HREF="../../lib/graph_algorithms/all_short_paths_as_edges-6.html">all_short_paths_as_edges / 6</A>, <A HREF="../../lib/graph_algorithms/all_short_paths_as_graph-6.html">all_short_paths_as_graph / 6</A>, <A HREF="../../lib/graph_algorithms/single_pair_short_path-6.html">single_pair_short_path / 6</A>, <A HREF="../../lib/graph_algorithms/single_pair_all_short_paths_as_graph-7.html">single_pair_all_short_paths_as_graph / 7</A>, <A HREF="../../lib/graph_algorithms/possible_path-7.html">possible_path / 7</A>
+</BODY></HTML>

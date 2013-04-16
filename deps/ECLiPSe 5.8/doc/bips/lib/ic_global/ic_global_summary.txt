@@ -1,0 +1,4 @@
+lib(ic_global)
+
+   Various global constraints over lists of IC variables
+

@@ -1,0 +1,77 @@
+
+spy +SpecList
+
+   Sets a spypoint for the procedure(s) in SpecList.
+
+
+
+Arguments
+   SpecList            Sequence of expressions of the form Atom/Integer, or of the                form atom.
+
+Type
+   Debugging
+
+Description
+   This predicate sets spypoints on all the procedures given by SpecList in
+   a similar fashion to breakpoints in procedural languages.  The
+   procedure(s) are all of the form name/arity or else of the form name, in
+   which case all procedures with name name have spy points set.
+
+
+   If not already debugging, the trace mode is switched on and set to leap.
+
+
+   When tracing, a leap command to the debugger will cause execution to
+   continue until it reaches a spied predicate.  Setting a spy-point on a
+   non-existing procedure results in an error.
+
+
+   Note that spypoints can also be set using set_flag(Proc, spy, on).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- SpecList is not instantiated.
+     5 --- SpecList is not of the form Atom/Integer.
+    60 --- SpecList contains an undefined procedure.
+
+Examples
+   
+Success:
+      [eclipse]: [user].
+       lower:-writeln(hi).
+       higher:-lower.
+       user        compiled 84 bytes in 0.00 seconds
+      yes.
+      [eclipse]: spy higher,writeln.
+      spypoint added to higher / 0.
+      spypoint added to writeln / 1.
+      spypoint added to writeln / 2.
+      yes.
+      [eclipse]: higher.
+       +(1) 0  CALL   higher (dbg)?- leap
+       B+(3) 2  CALL   writeln(hi) (dbg)?- leap
+       hi
+       B+(3) 2  EXIT   writeln(hi) (dbg)?- leap
+        +(1) 0  EXIT   higher (dbg)?- leap
+       yes.
+Error:
+      spy(I).         (Error 4).
+      spy("l").       (Error 5).
+      spy(foo).       (Error 60).
+
+
+
+
+
+See Also
+   nospy / 1, get_flag / 3, set_flag / 3

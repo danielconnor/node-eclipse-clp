@@ -1,0 +1,74 @@
+<HTML><HEAD><TITLE>insert_suspension(?Term, +Susp, +Index)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>insert_suspension(?Term, +Susp, +Index)</H1>
+Insert the suspension Susp into the Index'th suspension list of the current
+module's attribute for all attributed variables that occur in Term.
+
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Any Prolog term.
+</DD>
+<DT><EM>+Susp</EM></DT>
+<DD>A suspension.
+</DD>
+<DT><EM>+Index</EM></DT>
+<DD>An integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used to insert a suspension into a suspension list in
+   an attribute of one or more attributed variables.  Since Prolog does not allow to
+   insert new elements into a list in constant time, ECLiPSe provides this
+   predicate.  It finds all attributed variables occurring in the term Term and for
+   each of them, it locates the attribute which corresponds to the current
+   module.  This attribute must be a structure, otherwise an error is
+   raised, which means that the attribute has to be initialised before
+   calling insert_suspension/3.  The Index'th argument of the attribute
+   structure is interpreted as a suspension list and the suspension Susp is
+   inserted at the beginning of this list.  
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Susp or Index is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Susp is not a suspension.
+<DT><EM>(5) type error </EM>
+<DD>Index is not an integer.
+<DT><EM>(6) out of range </EM>
+<DD>The attribute of a variable in Term is a structure whose arity is less than Index.
+<DT><EM>(270) undefined variable attribute </EM>
+<DD>The current module has no declared variable attribute.
+<DT><EM>(271) bad format of the variable attribute </EM>
+<DD>The attribute of a variable in Term is uninstantiated or it is not a structure.
+<DT><EM>(271) bad format of the variable attribute </EM>
+<DD>The suspension list in the attribute of a variable in Term is neither a list nor a free variable, or it contains an element which is not a suspension.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: meta_attribute(eclipse,[]).
+Yes (0.01s cpu)
+
+[eclipse 2]: Att = att(_, hello), init_suspension_list(1, Att),
+        add_attribute(X, Att), make_suspension(true, 1, S),
+	insert_suspension(X, S, 1).
+
+Att = att(['SUSP-_306-susp'], hello)
+X = X
+S = 'SUSP-_306-susp'
+
+Delayed goals:
+        true
+Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/termmanip/meta_attribute-2.html">meta_attribute / 2</A>, <A HREF="../../kernel/suspensions/enter_suspension_list-3.html">enter_suspension_list / 3</A>
+</BODY></HTML>

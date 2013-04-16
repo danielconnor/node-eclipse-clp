@@ -1,0 +1,28 @@
+
+EplexInstance:reals(?Vars)
+
+   Constraints Vars to the real domain for EplexInstance.
+
+Arguments
+   Vars                Variable or number, or a list or submatrix of variables/numbers
+
+Type
+   library(eplex)
+
+Description
+	Constrains Vars to the real domain in the eplex instance
+        EplexInstance. Any variables that are not problem variables
+        for EplexInstance are added to the problem, with unconstrained
+        bounds (except by the external solver's idea of infinity).
+
+        Note that the notion of real is used here in the pure mathematical
+        sense, where real numbers subsume the integers. If the variables
+        are already instantiated, this call checks that the variable is
+        instantiated to a number.
+        
+
+Fail Conditions
+   Vars contain elements which are neither variable or number.
+
+See Also
+   suspend : reals / 1, ic : reals / 1, ic_kernel : reals / 1, integers / 1, :: / 2

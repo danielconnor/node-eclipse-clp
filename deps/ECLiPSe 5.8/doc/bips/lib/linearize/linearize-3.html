@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>linearize(?Expression, -Linear, -Residue)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(linearize)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>linearize(?Expression, -Linear, -Residue)</H1>
+Split and arithmetic expression into linear and nonlinear parts
+<DL>
+<DT><EM>Expression</EM></DT>
+<DD>Arithmetic expression with constants and variables
+</DD>
+<DT><EM>Linear</EM></DT>
+<DD>Normalized lists of monomials
+</DD>
+<DT><EM>Residue</EM></DT>
+<DD>Residual nonlinear components in the form AuxVar=Expr
+</DD>
+</DL>
+<H2>Description</H2>
+	The linear component of expression is normalised into a list
+	(sum) of monomials of the form
+<PRE>
+		[C0*1, C1*X1, C2*X2, ...]
+</PRE>
+	where Ci are numbers and Xi are distinct variables.
+	The first (constant) term is always present, Ci (i>=1) are nonzero.
+<P>
+	linearize/3 converts a general arithmetic expression into a
+	normalised linear form. The nonlinear parts are extracted using
+	auxiliary variables, and returned as Residue, which is a list of
+	Aux=NonLinExpr constraints.
+<P>
+	linearize/3 understands all arithmetic expressions plus
+<PRE>
+	    lin(Lin)
+</PRE>
+	where Lin is an already normalised linear expression. All variables
+	within Expression (which are free at linearization time) are taken
+	to be numerical variables. If you intend to have variables which can
+	be bound to symbolic expressions rather than numbers, they must be
+	wrapped into an eval/1 functor.
+    
+<H2>Examples</H2>
+<PRE>
+    ?- linearize(3*X-7*Y+2*(X+Y), L, R).
+    X = X
+    Y = Y
+    L = [0 * 1, 5 * X, -5 * Y]
+    R = []
+    yes.
+
+    ?- linearize(12*3, L, R).
+    L = [36 * 1]
+    R = []
+    yes.
+
+    ?- linearize(X*(3+7*Y)-X, L, R).
+    Y = Y
+    X = X
+    L = [0 * 1, 1 * _308, 2 * X]
+    R = [_308 = X * (7 * Y)]
+    yes.
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/linearize/polynorm-3.html">polynorm / 3</A>, <A HREF="../../lib/linearize/linrenorm-2.html">linrenorm / 2</A>, <A HREF="../../lib/linearize/delinearize-2.html">delinearize / 2</A>
+</BODY></HTML>

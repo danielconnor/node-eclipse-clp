@@ -1,0 +1,20 @@
+<HTML><HEAD><TITLE>sumnodes(+Pred, +Term, ?AccIn, ?AccOut)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(apply_macros)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>sumnodes(+Pred, +Term, ?AccIn, ?AccOut)</H1>
+Call Pred on all Subterms of Term and collect a result in Accumulator
+<H2>Description</H2>
+The traversal is depth-first and left-to-right
+<H2>Examples</H2>
+<PRE>
+	sumnodes(vars, s(1,t(X,2),[Y]), [], [X,Y]).
+	where
+	    vars(X, Vars, [X|Vars]) :- var(X), !.
+	    vars(_, Vars, Vars).
+
+	or even more elegant using grammar rules:
+
+	sumnodes(vars, s(1,t(X,2),[Y]), [X,Y], []).
+	where
+	    vars(X) --&gt; {var(X)} -&gt; [X];[].</PRE>
+
+</BODY></HTML>

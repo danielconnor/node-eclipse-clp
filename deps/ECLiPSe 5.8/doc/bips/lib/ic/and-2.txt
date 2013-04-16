@@ -1,0 +1,23 @@
+
++ConX and +ConY
+
+   Constraints ConX and ConY must both be true.
+
+Arguments
+   ConX                Constraint
+   ConY                Constraint
+
+Type
+   library(ic)
+
+Description
+
+   Equivalent to BX $= (ConX), BY $= (ConY), BX + BY #= 2
+   
+   The two constraints are reified in such a way that both must be true.
+   ConX and ConY must be a constraints that have a corresponding reified
+   form.
+
+
+See Also
+   and / 3, neg / 1, neg / 2, or / 2, or / 3, => / 2, => / 3, =:= / 3, =< / 3, =\= / 3, >= / 3, > / 3, < / 3

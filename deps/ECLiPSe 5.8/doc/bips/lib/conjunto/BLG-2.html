@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>?Sterm `<> ?Sterm1</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Sterm `<> ?Sterm1</H1>
+Sterm and Sterm1 are disjoint.
+
+
+<DL>
+<DT><EM>?Sterm</EM></DT>
+<DD>A set term.
+</DD>
+<DT><EM>?Sterm1</EM></DT>
+<DD>A set term.
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint states that the set terms Sterm and Sterm1 have to be
+   disjoint.  If both terms are known sets, it checks the empty
+   intersection between them.  If either Sterm or Sterm1 is a known set,
+   this constraint checks the empty intersection or disjointness and the
+   unconsistent bounds of the set variables involved are modified.  If both
+   terms contain set variables, the consistency of the domain bounds is
+   checked and the constraint is delayed.  It is activated as soos as the
+   lower bound of one set variable involved is modified.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Sterm can not be a subset of Sterm1.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 3]: S `:: {}.. {1,2,3},S1 `:: {1} .. {1,2,3,4},
+             S `&lt;&gt; S1.
+
+S = S{{} .. {2, 3}}
+S1 = S1{{1} .. {1, 2, 3, 4}}
+
+Delayed goals:
+        S{{} .. {2, 3}} dis_s S1{{1} .. {1, 2, 3, 4}}
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/BNN-2.html">`:: / 2</A>
+</BODY></HTML>

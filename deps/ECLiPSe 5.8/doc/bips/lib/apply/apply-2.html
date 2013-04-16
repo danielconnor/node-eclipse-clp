@@ -1,0 +1,39 @@
+<HTML><HEAD><TITLE>apply(?Term, ?Args)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(apply)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>apply(?Term, ?Args)</H1>
+The apply/2 higher-order predicate
+<DL>
+<DT><EM>Term</EM></DT>
+<DD>An atom or compound term
+</DD>
+<DT><EM>Args</EM></DT>
+<DD>A list of arbitrary terms
+</DD>
+</DL>
+<H2>Description</H2>
+
+    Invokes a goal that is formed by appending the elements of the
+    list Args as additional arguments to Term.
+    
+<H2>Examples</H2>
+<PRE>
+    % The following three examples all invoke the goal plus(1,2,X):
+
+    ?- apply(plus, [1,2,X]).
+    X = 3
+
+    ?- apply(plus(1), [2,X]).
+    X = 3
+
+    ?- apply(plus(1,2), [X]).
+    X = 3
+
+
+    % Error:
+
+    ?- apply(plus(1),[2]).
+    calling an undefined procedure plus(1, 2) in module eclipse
+    Abort
+    </PRE>
+
+</BODY></HTML>

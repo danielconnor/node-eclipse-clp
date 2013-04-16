@@ -1,0 +1,170 @@
+<HTML><HEAD><TITLE>viewable_expand(++ViewableName, ++DimensionNumber, +ExtraElements)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(viewable)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>viewable_expand(++ViewableName, ++DimensionNumber, +ExtraElements)</H1>
+Expand a dimension of a viewable by adding new elements.
+<DL>
+<DT><EM>ViewableName</EM></DT>
+<DD>A string or atom; the name of an existent viewable
+</DD>
+<DT><EM>DimensionNumber</EM></DT>
+<DD>An integer: the number of the dimension to be enlarged.
+</DD>
+<DT><EM>ExtraElements</EM></DT>
+<DD>A nested list or an array of the right size/dimensions, containing the new viewable elements.
+</DD>
+</DL>
+<H2>Description</H2>
+
+
+        <p><B>NOTE:</B>When there are no registered visualisation clients,
+        this predicate succeeds with any arguments, and has no effect.</P>
+
+
+
+      <p>A viewable which has a flexible dimension (see
+      <code>viewable_create/3</code>) may be expanded along that dimension
+      by adding new elements. The dimension must have been declared
+      flexible when the viewable was first created. The
+      <em>ExtraElements</em> argument is of the same format as the
+      <em>Elements</em> argument of <code>viewable_create/3</code>.</p>
+
+      <p>The number and size of the dimensions of <em>ExtraElements</em>
+      depends on the number and size of dimensions of the viewable being
+      expanded. <em>ExtraElements</em> should have one less dimension than
+      the viewable -- dimension <em>DimensionNumber</em> should be
+      missing. The remaining dimensions should have the same sizes as the
+      corresponding dimensions in the viewable.</p>
+
+      <p>For example, a viewable of size 3 x 0 x 0 with all dimensions
+      flexible, can be expanded along dimenson 3 using an
+      <em>ExtraElements</em> argument of []([], [], []) which has size 3 x
+      0. The viewable would then have size 3 x 0 x 1. It could then be
+      expanded along dimension 1 using <code>[]</code> as
+      <em>ExtraElements</em> since <code>[]</code> can implicitly have the
+      size 0 x 1. The viewable would then have the size 4 x 0 x 1. Then
+      dimension 2 could be expanded using <code>[[W],[X],[Y],[Z]]</code>
+      for <em>ExtraElements</em> as this has size 4 x 1. The final size of
+      the viewable would then be 4 x 1 x 1.</p>
+
+      <p>The extra viewable elements must each also conform to the element
+      type specified when the viewable was created.</p>
+
+      <p> Note that when the viewable has one dimension, the
+      <em>ExtraElements</em> argument will simply become the new element
+      itself.</p>
+
+      <p><code>viewable_expand/3</code> sets the name of the new location 
+      (e.g. the column or row name) to its number as a string. For example, 
+      adding a third row using <code>viewable_expand/3</code> will result
+      in the row being named "3". For more control over the name of the new
+      location use <code>viewable_expand/4</code>.<p>
+
+
+<H3>Fail Conditions</H3>
+Fails if ViewableName is not the name of an existent viewable, or if the requested dimension of the viewable is not flexible.
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>ViewableName is not a string or atom
+<DT><EM>(5) type error </EM>
+<DD>DimensionNumber is not a ground integer
+<DT><EM>(6) out of range </EM>
+<DD>DimensionNumber is not positive, or exceeds the viewable's number of dimensions
+<DT><EM>(1) general error </EM>
+<DD>ExtraElements is not a regular nested list or array of the correct size/dimensions
+<DT><EM>(5) type error </EM>
+<DD>ExtraElements contains elements which do not conform to the element type of the viewable
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+[Assuming that at least one visualisation client is registered]
+
+       Success:
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+       	               array([flexible, fixed], any)), 
+       viewable_expand(v1, 1, [R, S, T]).
+
+       lib(fd), fd:([X, Y, Z, R] :: 1..10), 
+       viewable_create(v1, [X, Y, Z], array([flexible], numeric_bounds)),
+       viewable_expand(v1, 1, R).
+       
+       viewable_create(v1, []([](X, Y, Z), [](A, B, C)), 
+       	               array([fixed, flexible], any)), 
+       viewable_expand(v1, 2, [R, S]).
+
+
+       viewable_create(v1, [[], [], []], 
+		       array([flexible, flexible, flexible], any)),
+       viewable_expand(v1, 3, []([], [], [])), 
+       viewable_expand(v1, 1, []), 
+       viewable_expand(v1, 2, [[W], [X], [Y], [Z]]),  
+       viewable_size(v1, Size).
+       [gives Size = [4,1,1]]
+
+       viewable_create(v1, [], array([flexible], any)), 
+       viewable_expand(v1, 1, F), 
+       viewable_expand(v1, 1, G),
+       viewable_size(v1, Size).
+       [gives Size = [2]]
+       
+       
+
+
+       Failure:
+
+       viewable_expand(no, 2, [R, S]).
+
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+	               array([fixed, flexible], any)), 
+       viewable_expand(v1, 1, [R, S, T]).
+
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+	               array([flexible, fixed], any)), 
+       viewable_expand(v1, 2, [R, S]).
+
+
+
+       Exceptions raised:
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+	               array([flexible, fixed], any)), 
+       viewable_expand(_, 1, [R, S, T]).
+       [gives error 4]
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+	               array([flexible, fixed], any)), 
+       viewable_expand(v1, _, [R, S, T]).
+       [gives error 5]
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+                       array([flexible, fixed], any)), 
+       viewable_expand(v1, 3, [R, S, T]).
+       [gives error 6]
+
+       viewable_create(v1, []([](X, Y, Z), [](A, B, C)), 
+	               array([fixed, flexible], any)), 
+       viewable_expand(v1, 2, _).
+       [gives error 1]
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+	               array([flexible, fixed], any)), 
+       viewable_expand(v1, 1, [R, S, T, Q]).
+       [gives error 1]
+
+       lib(fd), fd:([X, Y, Z] :: 1..10), 
+       viewable_create(v1, [X, Y, Z], array([flexible], numeric_bounds)),
+       viewable_expand(v1, 1, an_atom)
+       [gives error 5]
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/viewable/viewable_expand-4.html">viewable_expand / 4</A>, <A HREF="../../lib/viewable/viewable_create-3.html">viewable_create / 3</A>, <A HREF="../../lib/viewable/viewable_size-2.html">viewable_size / 2</A>, <A HREF="../../lib/viewable/viewable_type-2.html">viewable_type / 2</A>
+</BODY></HTML>

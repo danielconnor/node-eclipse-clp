@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>library(vc_support)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(vc_support)</H1>
+Library to support implementation of visualisation clients
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><STRONG>contract_destroy_event_handler</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable(?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="viewable_changeable_execute-4.html"><STRONG>viewable_changeable_execute(++ViewableName, ++ElementSpec, ?Goal, ++Solver)</STRONG></A></DT>
+<DD>Works as viewable_element_execute/3, but replaces the element spec with the changeable value as returned from the given Solver instead.</DD>
+<DT><STRONG>viewable_create(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_create(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_create(?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="viewable_element-3.html"><STRONG>viewable_element(++ViewableName, ++IndexList, ?ViewableElement)</STRONG></A></DT>
+<DD>Index a viewable element inside a viewable.</DD>
+<DT><A HREF="viewable_element_execute-3.html"><STRONG>viewable_element_execute(++ViewableName, ++ElementSpec, ?Goal)</STRONG></A></DT>
+<DD>Execute a goal for a viewable element inside a viewable.</DD>
+<DT><A HREF="viewable_element_to_string-2.html"><STRONG>viewable_element_to_string(?ViewableElement, -String)</STRONG></A></DT>
+<DD>Convert a variable or term to a nice string.</DD>
+<DT><STRONG>viewable_expand(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_expand(?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_get_location_name(?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_get_location_names(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_size(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>viewable_type(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>vis_client_breakpoint</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>vis_client_cleanup(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>vis_client_interest_modify(?, ?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>vis_client_register(?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>vis_client_request_termination(?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>vis_client_unregister(?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+
+           <P> This library should be used if you intend to implement a 
+           new visualisation client. It should not be used for anything 
+           else. 
+
+           <P> Viewables are made up of <EM>viewable elements</EM>. A
+           particular viewable element can accessed using
+           <CODE>viewable_element/3</CODE>.
+
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Josh Singer
+<LI><STRONG>Copyright &copy; </STRONG>Parc Technologies Ltd. and IC-Parc 2001
+</UL>
+<HR>Generated from vc_support.eci on Tue Jan 25 01:58:52 2005
+
+</BODY></HTML>

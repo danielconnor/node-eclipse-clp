@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>conflict_constraints(+ConflictSet, -Constraints)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(repair)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>conflict_constraints(+ConflictSet, -Constraints)</H1>
+Retreive the set of conflicting constraints monitored in ConflictSet.
+<DL>
+<DT><EM>ConflictSet</EM></DT>
+<DD>name or handle of a conflict set
+</DD>
+<DT><EM>Constraints</EM></DT>
+<DD>List of conflicting constraints in ConflictSet (variable)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+When a repair constraint goes into conflict (i.e. when it does not satisfy
+the tentative assignment of its variables), it appears in a conflict set,
+once it satisfies the tentative assignment, it disappears.
+This primitive returns the list of all current conflict constraints
+in the given conflict set.
+
+</P><P>
+ConflictSet is the conflict set name (or handle) which has
+been used in the corresponding constraint annotation.  For example
+
+<TT>
+conflict_constraints(cap_cstr, Conflicts)
+</TT>
+
+would retrieve all constraints that were annotated with <TT>cap_cstr</TT>
+and are currently in conflict.
+</P>
+<H3>Resatisfiable</H3>
+no
+
+</BODY></HTML>

@@ -1,0 +1,92 @@
+<HTML><HEAD><TITLE>port_profile(+Goal, ++Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(port_profiler)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>port_profile(+Goal, ++Options)</H1>
+Create a (box model) port profile for the given Goal execution
+<DL>
+<DT><EM>Goal</EM></DT>
+<DD>A callable goal (atom or compound term)
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>A list of OptionName:OptionValue structures
+</DD>
+</DL>
+<H2>Description</H2>
+    	Executes Goal and creates a (box model) port profile for this execution.
+	The ports are the ports as defined for the debugger's box model and
+	include:
+	<DL>
+	<DT>call</DT> <DD>predicate invocation</DD>
+	<TR>
+	<DT>exit</DT> <DD>deterministic predicate success</DD>
+	</TR>
+	<TR>
+	<DT>fail</DT> <DD>predicate failure</DD>
+	</TR>
+	<TR>
+	<DT>*exit</DT> <DD>nondeterministic predicate success</DD>
+	</TR>
+	<TR>
+	<DT>redo</DT> <DD>reentering a predicate on backtracking</DD>
+	</TR>
+	<TR>
+	<DT>next</DT> <DD>going to the next clause of a predicate</DD>
+	</TR>
+	<TR>
+	<DT>else</DT> <DD>going to an alternative within a predicate</DD>
+	</TR>
+	<TR>
+	<DT>leave</DT> <DD>leaving a predicate with exit_block/1</DD>
+	</TR>
+	<TR>
+	<DT>delay</DT> <DD>delaying a predicate</DD>
+	</TR>
+	<TR>
+	<DT>resume</DT> <DD>reentering a predicate on waking</DD>
+	</TR>
+	</DL>
+	<P>
+    	The available options are:
+	<DL>
+	<DT>format (default:txt)</DT> <DD>output format, txt or html</DD>
+	    <DL>
+	    <DT>txt</DT> <DD>prints an ascii table, taking width-option into account</DD>
+	    <DT>html</DT> <DD>prints an html table, taking border-option into account</DD>
+	    <DT>raw</DT> <DD>prints the raw results as lines of the form
+		<PRE>
+		[M:F/A from PM:PF/PA, Port, Count].
+		</PRE>
+		if the show_caller-option is on, and
+		<PRE>
+		[M:F/A, Port, Count].
+		</PRE>
+		if the show_caller-option is off. These are valid Prolog
+		terms which can be read back using read/2.
+	    </DD>
+	    </DL>
+	<DT>border (default:0)</DT> <DD>table border width for html output</DD>
+	<DT>output (default:default)</DT><DD>
+	    where to put the result: possible values are
+	    <DL>
+	    <DT>file(File)</DT> <DD>where File is a file name</DD>
+	    <DT>stream(Stream)</DT> <DD>where Stream is an Eclipse stream identifier</DD>
+	    <DT>dir(Dir)</DT> <DD>where Dir is a directory in which files with generated names will be placed</DD>
+	    <DT>default</DT> <DD>either dir(profiler) for html format, or stream(output) otherwise</DD>
+	    </DL>
+	    </DD>
+	<DT>ports (default:all)</DT> <DD>the atom 'all' or a list of port names</DD>
+	<DT>predicates (default:all)</DT> <DD>the atom 'all' or 'spied_only'.
+	    The latter means that only predicates with a spy point have their
+	    ports counted.</DD>
+	<DT>show_caller (default:on)</DT> <DD>whether to show and distinguish
+	    predicates by their calling predicate (on or off). This is the
+	    only option that affects data collection as well as presentation.</DD>
+	<DT>show_module (default:off)</DT> <DD>whether to show the predicate's
+	    definition modules in the output table (on or off)</DD>
+	<DT>width (default:80)</DT> <DD>page width for txt output</DD>
+	</DL>
+	Note: Any choicepoints that are left behind by Goal will be cut, i.e.
+	port_profile/2 behaves like once/1.
+    
+<H2>See Also</H2>
+<A HREF="../../lib/port_profiler/index.html">library(port_profiler)</A>, <A HREF="../../lib/coverage/index.html">library(coverage)</A>, <A HREF="../../kernel/env/profile-1.html">profile / 1</A>, <A HREF="../../lib/port_profiler/last_port_profile-1.html">last_port_profile / 1</A>
+</BODY></HTML>

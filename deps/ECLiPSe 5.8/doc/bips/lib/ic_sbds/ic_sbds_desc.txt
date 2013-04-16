@@ -1,0 +1,4 @@
+lib(ic_sbds)
+
+   Symmetry Breaking During Search (SBDS) library, provides predicates to initalise symmetry breaking during search search and to perform the search, as well as utility functions for prining and unification.
+

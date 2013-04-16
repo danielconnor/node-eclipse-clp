@@ -1,0 +1,39 @@
+
+viewable_element(++ViewableName, ++IndexList, ?ViewableElement)
+
+   Index a viewable element inside a viewable.
+
+Arguments
+   ViewableName        Atom: name of an existent viewable.
+   IndexList           List of integers: the coordinates of the viewable element within the viewable.
+   ViewableElement     Term to be unified with the viewable element.
+
+Type
+   library(vc_support)
+
+Description
+Note that this predicate throws an error if there are no current visualisation clients. Retrieves a single viewable element from a named viewable, given the element's array coordinates, and unifies it with ViewableElement. IndexList must be a ground list which has one positive integer for each dimension of the viewable.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   ViewableName is not instantiated to the name of an existent viewable. ViewableElement will not unify with the specified element.
+
+Exceptions
+     1 --- There are no current visualisation clients
+     4 --- ViewableName is not an atom or string
+     5 --- IndexList is not a ground list of integers
+     6 --- A co-ordinate in Index is out of range
+     8 --- IndexList has the wrong number of elements
+
+Examples
+          Success:
+
+       Failure:
+
+       Exceptions raised:
+
+
+See Also
+   viewable : viewable_create / 3, viewable : viewable_size / 2, viewable_element_to_string / 2, viewable_element_execute / 3

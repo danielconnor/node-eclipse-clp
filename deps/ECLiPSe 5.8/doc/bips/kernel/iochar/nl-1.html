@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>nl(+Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>nl(+Stream)</H1>
+A newline is printed on the output stream Stream.
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+</DL>
+<H2>Description</H2>
+	Used to print a newline sequence on the output stream Stream.
+	The exact character sequence emitted depends on the setting of
+	the stream's <CODE>end_of_line</CODE> flag (lf or crlf).
+	In addition, if the stream's <CODE>flush</CODE> flag is set to
+	<CODE>end_of_line</CODE>, the stream is also flushed.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is neither an atom nor a number.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an output stream.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+      open(file1,update,s), nl(s), close(s).
+      nl(output).
+Error:
+      nl(Stream).               (Error 4).
+      nl(7.0).                  (Error 5).
+      open(file1,read,s),nl(s). (Error 192). % read mode
+      nl(29).                   (Error 192). % stream not open
+      nl(-1).                   (Error 193). % out of range
+      nl(30).                   (Error 193). % out of range
+      nl(atom).                 (Error 193). % no such stream
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/nl-0.html">nl / 0</A>, <A HREF="../../kernel/iostream/flush-1.html">flush / 1</A>, <A HREF="../../kernel/iostream/open-4.html">open / 4</A>, <A HREF="../../kernel/iostream/set_stream_property-3.html">set_stream_property / 3</A>, <A HREF="../../kernel/iostream/get_stream_info-3.html">get_stream_info / 3</A>
+</BODY></HTML>

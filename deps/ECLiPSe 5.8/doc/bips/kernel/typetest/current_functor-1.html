@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>current_functor(?PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_functor(?PredSpec)</H1>
+Succeeds if PredSpec is a functor known to the system.
+
+
+<DL>
+<DT><EM>?PredSpec</EM></DT>
+<DD>Functor in the form Name/Arity or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether PredSpec is a functor known to the system or to
+   return all functors defined.
+
+<P>
+   Note that PredSpec is specified in the format Name/Arity and may be
+   specified with Name as an atom or variable and/or Arity as an integer or
+   variable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if PredSpec is not a currently known functor.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is instantiated but not in the format Atom /    Integer
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   current_functor(findall/N).
+   current_functor(N/4).
+   current_functor((',')/2).
+
+   [eclipse]: current_functor(X).
+
+   X = '' / 0     More? (;)
+
+   X = findall / 0     More? (;)
+
+   X = findall / 3     More? (;)
+
+   X = at_eof_handler / 0     More? (;)    % RETURN pressed
+   yes.
+   [eclipse]:
+
+Fail:
+   current_functor(myfunctor/100).
+
+Error:
+   current_functor(abc)           Error 5.
+   current_functor(man(1)).       Error 5.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/atom-1.html">atom / 1</A>, <A HREF="../../kernel/typetest/current_atom-1.html">current_atom / 1</A>, <A HREF="../../kernel/syntax/current_op-3.html">current_op / 3</A>
+</BODY></HTML>

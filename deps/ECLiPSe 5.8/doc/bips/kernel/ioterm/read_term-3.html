@@ -1,0 +1,85 @@
+<HTML><HEAD><TITLE>read_term(+Stream, ?Term, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>read_term(+Stream, ?Term, +Options)</H1>
+Read a whole term in ECLiPSe syntax from the input stream Stream, according to Options
+<DL>
+<DT><EM>Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined symbolic stream name)
+</DD>
+<DT><EM>Term</EM></DT>
+<DD>An term, usually a variable
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of option terms
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>read_term(+, -, +)
+<LI>read_term(+, +, +)
+</UL>
+<H2>Description</H2>
+<P>
+    This is a generalisation of the predicates read/2 and readvar/3.
+    Options is a (possibly empty) list of the following options:
+</P>
+<DL>
+    <DT><STRONG>variables(Vars)</STRONG></DT><DD><P>
+	returns a duplicate-free list of all the variables in the term
+	that has been read (including anonymous variables).
+	</P></DD>
+
+    <DT><STRONG>variable_names(VarsNames)</STRONG></DT><DD><P>
+	returns a duplicate-free list of structures of the form
+	Name=Var, where Var is a named (non-anonymous) variable which
+	occurs in the term that has been read, and Name is an atom,
+	representing the source name.  </P></DD>
+
+    <DT><STRONG>singletons(VarsNames)</STRONG></DT><DD><P>
+	returns a list of structures of the form Name=Var, where Var
+	is a named (non-anonymous) variable which occurs only once in
+	the term that has been read, and Name is an atom, representing
+	the source name.  </P></DD>
+
+</DL>
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is not an atom or an integer.
+<DT><EM>(5) type error </EM>
+<DD>Options is not a list of compound terms.
+<DT><EM>(6) out of range </EM>
+<DD>Options list contains a unrecognised option.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an input stream.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+	?- read_term(T, []).
+	 foo(X,_,bar(X,Y,_Z)).
+
+	T = foo(X, _255, bar(X, Y, _Z))
+
+
+	?- read_term(T, [variable_names(VN)]).
+	 foo(X,_,bar(X,Y,_Z)).
+
+	T = foo(X, _260, bar(X, Y, _Z))
+	VN = ['X' = X, 'Y' = Y, '_Z' = _Z]
+
+
+	?- read_term(T, [variables(V),variable_names(VN),singletons(S)]).
+	 foo(X,_,bar(X,Y,_Z)).
+
+	 T = foo(X, _278, bar(X, Y, _Z))
+	 V = [X, _278, Y, _Z]
+	 VN = ['X' = X, 'Y' = Y, '_Z' = _Z]
+	 S = ['_Z' = _Z, 'Y' = Y]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/read_term-2.html">read_term / 2</A>, <A HREF="../../kernel/ioterm/readvar-3.html">readvar / 3</A>, <A HREF="../../kernel/ioterm/read-1.html">read / 1</A>, <A HREF="../../kernel/ioterm/read-2.html">read / 2</A>, <A HREF="../../kernel/iostream/set_stream_property-3.html">set_stream_property / 3</A>
+</BODY></HTML>

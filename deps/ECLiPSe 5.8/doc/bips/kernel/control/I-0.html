@@ -1,0 +1,60 @@
+<HTML><HEAD><TITLE>!</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>!</H1>
+Cut - succeeds and removes all choice points between cut and parent goal.
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   The cut operation succeeds immediately when first encountered as a goal.
+   The cut commits all the choices made since the parent goal was invoked,
+   and causes any other alternatives to be discarded.
+
+<P>
+   Note that:
+
+<P>
+   !/0 cuts through ,/2, ;/2 and -&gt;/2, but it does not cut through call/1,
+   not/1 or once/1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: [user].
+       or(A -&gt; B, C) :- call(A), !, call(B).
+       or(_ -&gt; _, C) :- call(C).
+       user compiled 412 bytes in 0.02 seconds
+      [eclipse]: or(write(a)-&gt;fail, write(k)).
+      a
+      no.
+      [eclipse]: or(fail-&gt;fail,write(k)).
+      k
+      yes.
+
+      [eclipse]: [user].
+       echo :- repeat, read(X), echo(X), !.
+       echo(end_of_file).
+       echo(X) :- writeln(X), fail.
+       user compiled 404 bytes in 0.02 seconds
+      yes.    % if the cut is left out, backtracking occurs.
+      [eclipse]: echo.
+       f(1,2).
+      f(1,2)
+       end_of_file.
+      yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/fail-0.html">fail / 0</A>, <A HREF="../../kernel/control/once-1.html">once / 1</A>, <A HREF="../../kernel/control/repeat-0.html">repeat / 0</A>, <A HREF="../../kernel/control/O-2.html">; / 2</A>
+</BODY></HTML>

@@ -1,0 +1,30 @@
+
+keys(+Tree, -KeyList)
+
+   Return all the keys from a tree.
+
+Arguments
+   Tree                A 2-3-4 tree
+   KeyList             A list of all the keys from Tree
+
+Type
+   library(m_tree234)
+
+Description
+	
+	KeyList is a list of all the keys appearing in the tree Tree.
+	
+	
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   values / 2

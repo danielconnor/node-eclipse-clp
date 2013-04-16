@@ -1,0 +1,100 @@
+lib(instprofile)
+
+
+   The instprofile library provides two complimentary mechanisms for
+   the profiling of ECLiPSe code with the metrics provided by the
+   statistics/2 predicate:
+   
+   Instrumentation based, where metric measuring code is
+   inserted directly into the user program in order to accurately
+   determine how its constituent pieces of code perform. The
+   mechanism for the insertion of instrumentation code is based upon 
+   the facilities of the instrument library. As such, the statistic 
+   measurements may be inserted at the beginning and end of clause or block 
+   definitions, and around subgoals and/or predicate calls.  
+   Sample driven, where metric measuring code is executed at a user
+   defined interval as the user program runs. The sample based profiler is 
+   implemented using after events and is therefore less intrusive in its
+   effect on the performance of the executing code. 
+   
+   
+   While the performance overhead of the sampling profiler is lower, it 
+   cannot be used to determine the exact cost of a piece of code for a 
+   particular statistic. It merely provides snapshots with respect to time 
+   not code location. The instrumentation based profiler does however
+   provide the means for the measurement of both the aggregated cost for 
+   all executions of a piece of code and also the cost for each individual 
+   execution.
+   
+   The usage of the instrumentation based profiler is as follows:
+   
+   Load the instprofile library
+   
+   ?- lib(instprofile).
+   
+   Compile your program with instrumentation profiling:
+   
+   ?- instprofile:statprofile(my_program, [global_stack_used,
+                              trail_stack_used]).
+   
+   Run the query for which you wish to generate mode analysis data
+   
+   ?- my_query(X,Y,Z).
+   
+   Generate the results for the module into which the program
+       was compiled.
+   
+   ?- instprofile:result@my_program_module.
+   
+   
+   The usage of the sampling profiler is as follows:
+   
+   Load the instprofile library
+   
+   ?- lib(instprofile).
+   
+   Define a sampling profile
+   
+   ?- instprofile:statsample(memory, 5, [global_stack_used,
+                             trail_stack_used], 'memory_sample.dat').
+   
+   Prior to running the queries for which you wish to gather 
+   sampling data, enable the sampling profiler for the named profile
+   
+   ?- instprofile:statsample_control(memory, on)
+   
+   Run the query for which you wish to generate sampling data
+   
+   ?- my_query(X,Y,Z).
+   
+   Disable the sampling profiler for the named profile. The results
+   file specified in statsample/4 contains the sampling data.    
+   
+   ?- instprofile:statsample_control(memory, off)
+   
+   
+   
+   Limitations to be resolved shortly: 
+   
+   
+   Results are currently produced per module, not for individual files
+   within a module (i.e. results must be retrieved for all files within 
+   a module).
+   
+   When multiple statistics are specified, the order in which the
+   statistics will appear in the results (pretty-printed source and results
+   file) is displayed during the invocation of the statsample predicate,
+   not the result predicate.
+   
+   Results are produced to a file or annotated on pretty-printed
+   source and these results to be viewed offline. Additional facilities 
+   are to be provided that allow for the real time visualisation of results.
+   
+   The model that accounts for the cost of inserted instrumentation is 
+   fairly rudimentary (especially for the 'global_stack_used' statistic.
+   
+   A future enhancement will enable the insertion of user defined metrics
+   not just those available via statistics/2.
+   
+   
+

@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node124.html">
+<LINK REL="previous" HREF="node122.html">
+<LINK REL="up" HREF="node122.html">
+<LINK REL="next" HREF="node124.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4082"
+ HREF="node124.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4078"
+ HREF="node122.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4072"
+ HREF="node122.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4080"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4083"
+ HREF="node124.html">Garbage collection</A>
+<B> Up:</B> <A NAME="tex2html4079"
+ HREF="node122.html">Memory Organisation And Garbage</A>
+<B> Previous:</B> <A NAME="tex2html4073"
+ HREF="node122.html">Memory Organisation And Garbage</A>
+ &nbsp <B>  <A NAME="tex2html4081"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html4084"
+ HREF="node123.html#SECTION001911000000000000000">The Shared/Private Heap</A>
+<LI><A NAME="tex2html4085"
+ HREF="node123.html#SECTION001912000000000000000">The Local Stack</A>
+<LI><A NAME="tex2html4086"
+ HREF="node123.html#SECTION001913000000000000000">The Control Stack</A>
+<LI><A NAME="tex2html4087"
+ HREF="node123.html#SECTION001914000000000000000">The Global Stack</A>
+<LI><A NAME="tex2html4088"
+ HREF="node123.html#SECTION001915000000000000000">The Trail Stack</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001910000000000000000">
+Introduction</A>
+</H1>
+This chapter may be skipped on a first reading.
+Its purpose is to give the advanced user a better understanding
+of how the system uses memory resources.
+In a high level language like Prolog it is often not obvious for the programmer
+to see where the system allocates or frees memory.
+
+<P>
+The sizes of the different memory areas can be queried by means of the predicate
+<A NAME="tex2html1565"
+ HREF="../bips/kernel/env/statistics-2.html">statistics/2</A><A NAME="11961"></A> and <A NAME="tex2html1567"
+ HREF="../bips/kernel/env/statistics-0.html">statistics/0</A><A NAME="11964"></A> prints a summary of all these data.
+Here is a sample output:
+<PRE>
+[eclipse 1]: statistics.
+
+times:                  [1.12, 0.09, 2.74] seconds
+session_time:           2.74 seconds
+event_time:             2.74 seconds
+global_stack_used:      1936 bytes
+global_stack_allocated: 4456448 bytes
+global_stack_peak:      4456448 bytes
+trail_stack_used:       64 bytes
+trail_stack_allocated:  262144 bytes
+trail_stack_peak:       4456448 bytes
+control_stack_used:     564 bytes
+control_stack_allocated:262144 bytes
+control_stack_peak:     262144 bytes
+local_stack_used:       492 bytes
+local_stack_allocated:  262144 bytes
+local_stack_peak:       262144 bytes
+shared_heap_allocated:  1613824 bytes
+shared_heap_used:       1411000 bytes
+private_heap_allocated: 73728 bytes
+private_heap_used:      36992 bytes
+gc_number:              1 
+gc_collected:           23472.0 bytes
+gc_area:                23560 bytes
+gc_ratio:               99.6264855687606 %
+gc_time:                0.0 seconds
+dictionary_entries:     3252 
+dict_hash_usage:        2117 / 8192 
+dict_hash_collisions:   314 / 2117 
+dict_gc_number:         2 
+dict_gc_time:           0.01 seconds
+</PRE>
+The <B>used</B>-figures indicate the actual usage at the moment the
+statistics built-in was called. The <B>allocated</B> value is the
+amount of memory that is reserved for this area and actually occupied
+by the ECLiPSe process. The <B>peak</B> value indicates what was the
+maximum allocated amount during the session.
+In the following we will discuss the six memory areas mentioned.
+The <TT>gc</TT>-figures are described in section <A HREF="node124.html#gc">19.2</A>.
+
+<P>
+
+<H2><A NAME="SECTION001911000000000000000"></A>
+<A NAME="11854"></A>
+<A NAME="11855"></A>
+<A NAME="11856"></A>
+<BR>
+The Shared/Private Heap
+</H2>
+The heap is used to store a variety of data:
+
+<UL><LI><B>compiled code:</B>
+The heap is used to store compiled Prolog code.
+Consequently its size is increased by the various <A NAME="tex2html1572"
+ HREF="../bips/kernel/database/compile-1.html">compile</A><A NAME="11967"></A>-predicates,
+the <A NAME="tex2html1574"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert</A><A NAME="11970"></A>-family and by <A NAME="tex2html1576"
+ HREF="../bips/kernel/externals/load-1.html">load/1</A><A NAME="11973"></A>.
+Space is freed when single clauses (<A NAME="tex2html1578"
+ HREF="../bips/kernel/dynamic/retract-1.html">retract</A><A NAME="11976"></A>) or
+whole predicates (<A NAME="tex2html1580"
+ HREF="../bips/kernel/database/abolish-1.html">abolish</A><A NAME="11979"></A>) are removed from the system.
+Note that space reclaiming is usually delayed in these cases
+(see <A NAME="tex2html1582"
+ HREF="../bips/kernel/env/trimcore-0.html">trimcore/0</A><A NAME="11982"></A>),
+since the removed code may still be under execution. 
+Erasing a module also reclaims all the memory occupied by the module's
+predicates.
+
+<LI><B>nonlogical storage:</B>
+All facilities for storing information across backtracking use the
+heap to do so. This includes the handle-based facilities
+(bags, shelves) as well as the name-based facilities (records, nonlogical
+variables and arrays).
+<A NAME="11876"></A>
+<A NAME="11877"></A>
+<A NAME="11878"></A>
+<A NAME="11879"></A>
+As a general rule, when a stored term is overwritten, the space for
+the old value is reclaimed. All memory related to a nonlogical store is
+reclaimed when the store is destroyed (e.g. using
+<A NAME="tex2html1588"
+ HREF="../bips/kernel/arrays/erase_array-1.html">erase_array/1</A><A NAME="11985"></A>,
+<A NAME="tex2html1590"
+ HREF="../bips/kernel/record/erase_all-1.html">erase_all/1</A><A NAME="11988"></A>,
+<A NAME="tex2html1592"
+ HREF="../bips/kernel/arrays/bag_abolish-1.html">bag_abolish/1</A><A NAME="11991"></A>,
+<A NAME="tex2html1594"
+ HREF="../bips/kernel/arrays/shelf_abolish-1.html">shelf_abolish/1</A><A NAME="11994"></A>).
+
+<LI><B>dictionary:</B>
+<A NAME="11889"></A>
+The <I>dictionary</I> is the system's table of atoms and functors.
+The dictionary grows whenever the system encounters an atom or functor that
+has not been mentioned so far.
+The dictionary shrinks on dictionary garbage collections, which are triggered
+automatically after a certain number of new entries has been made
+(see <A NAME="tex2html1597"
+ HREF="../bips/kernel/env/set_flag-2.html">set_flag/2</A><A NAME="11997"></A>).
+The dictionary is designed to hold several thousand entries,
+the current number of entries can be queried with <A NAME="tex2html1599"
+ HREF="../bips/kernel/env/statistics-0.html">statistics/0,2</A><A NAME="12000"></A>.
+
+<LI><B>various descriptors:</B>
+The system manages a number of other internal tables (for modules, predicates,
+streams, operators, etc.) that are also allocated on the heap.
+This space is reclaimed when the related Prolog objects cease to exist.
+
+<LI><B>I/O-buffers:</B>
+When streams are opened, the system allocates buffers from the
+heap. They are freed when the stream is closed.
+
+<LI><B>allocation in C-externals:</B>
+If third party libraries or external predicates written in C/C++ call
+malloc() or related C library functions, this space is also allocated
+from the heap.  It is the allocating code's responsibility to free
+this space if it becomes unused.
+
+</UL>
+Note that the distinction between shared and private heap is only relevant for
+parallel ECLiPSe systems, where multiple workers share the shared
+heap, but have their own private heap and stacks.
+
+<P>
+
+<H2><A NAME="SECTION001912000000000000000"></A>
+<A NAME="11901"></A>
+<A NAME="11902"></A>
+<BR>
+The Local Stack
+</H2>
+The Local Stack is very similar to the call/return stack in procedural
+languages.
+It holds Prolog variables and return addresses.
+Space on this stack is allocated during execution of a clause and deallocated
+before the last subgoal is called (due to tail recursion / last call
+optimisation).
+This deallocation can not be done when the clause exits nondeterministically
+(this can be checked with the debugger or the profiling facility).
+However, if a deallocation has been delayed due to nondeterminism, it is
+finally done when a cut is executed or when execution fails beyond
+the allocation point.
+Hence the ways to limit growth of the local stack are
+
+<UL><LI>use tail recursion where possible
+
+<LI>avoid unnecessary nondeterminism (cf. <A HREF="node123.html#controlstack">19.1.3</A>)
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION001913000000000000000"></A>
+<A NAME="11907"></A>
+<A NAME="11908"></A>
+<A NAME="controlstack"></A>
+<BR>
+The Control Stack
+</H2>
+The main use of the Control Stack is to store so-called <I>choicepoints</I>.
+A choicepoint is a description of the system's state at a certain point
+in execution.
+It is created when more than one clause of a predicate apply to a given goal.
+Should the first clause fail, the system will backtrack
+to the place where the choice was made, the old state will be restored
+from the choicepoint and the next clause will be tried.
+Disjunctions (<A NAME="tex2html1605"
+ HREF="../bips/kernel/control/O-2.html">;/2</A><A NAME="12003"></A>) also create choicepoints.
+
+<P>
+The only way to reduce Control Stack usage is to avoid unnecessary
+nondeterminism.
+This is done by writing deterministic predicates in such a way that they
+can be recognised by the system.
+The debugger can help to identify nondeterministic predicates:
+When it displays an <TT>*EXIT</TT> port instead of <TT>EXIT</TT> then the predicate
+has left a choicepoint behind.
+In this case it should be checked whether the nondeterminism was intended.
+If not, the predicate can often be made deterministic by
+
+<UL><LI>writing the clause heads such that a matching clause can be more
+easily selected by <I>indexing</I>
+
+<LI>using the if-then-else construct (<TT>.. -&gt; .. ; ..</TT>)
+
+<LI>deliberate insertion of (green) cuts
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION001914000000000000000"></A>
+<A NAME="11920"></A>
+<BR>
+The Global Stack
+</H2>
+The Global Stack holds Prolog structures, lists, strings and long numbers.
+So the user's selection of data structures is largely responsible
+for the growth of this stack (cf. <A HREF="node24.html#chapstring">5.4</A>).
+In coroutining mode, delayed goals also consume space on the Global Stack.
+It also stores source variable names for terms which
+were read in with the flag <B>variable_names</B> being <TT>on</TT>.
+When this feature is not needed, it should be turned off
+so that space on the global stack is saved.
+
+<P>
+The global stack grows while a program creates data structures.
+It is popped only on failure. ECLiPSe therefore provides a garbage collector
+for the Global Stack which is called when a certain amount
+of new space has been consumed. See section <A HREF="node124.html#gc">19.2</A> for how this process
+can be controlled.
+Note again that unnecessary nondeterminism reduces the amount of garbage
+that can be reclaimed and should therefore be avoided.
+
+<P>
+
+<H2><A NAME="SECTION001915000000000000000"></A>
+<A NAME="11927"></A>
+<BR>
+The Trail Stack
+</H2>
+The Trail Stack is used to record information that is needed on backtracking.
+It is therefore closely related to the Control Stack.
+Ways to reduce Trail Stack consumption are
+
+<UL><LI>avoid unnecessary nondeterminism
+
+<LI>supply <B>mode</B> declarations
+
+</UL>
+The Trail Stack is popped on failure and
+is garbage collected together with the Global Stack.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4082"
+ HREF="node124.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4078"
+ HREF="node122.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4072"
+ HREF="node122.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4080"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4083"
+ HREF="node124.html">Garbage collection</A>
+<B> Up:</B> <A NAME="tex2html4079"
+ HREF="node122.html">Memory Organisation And Garbage</A>
+<B> Previous:</B> <A NAME="tex2html4073"
+ HREF="node122.html">Memory Organisation And Garbage</A>
+ &nbsp <B>  <A NAME="tex2html4081"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

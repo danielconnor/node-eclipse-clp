@@ -1,0 +1,21 @@
+
+occurrences(++Value, +List, ?N)
+
+   The value Value occurs in List N times
+
+Arguments
+   Value               Atomic term
+   List                List of atomic terms or domain variables
+   N                   Variable or integer
+
+Type
+   library(ic_global)
+
+Description
+    	  The value Value occurs in List N times.  Operationally:  N
+	  gets updated to reflect the number of possible occurrences
+	  in the List.  List elements may get instantiated to Value,
+	  or Value may be removed from their domain if required by N.
+
+See Also
+   element / 3

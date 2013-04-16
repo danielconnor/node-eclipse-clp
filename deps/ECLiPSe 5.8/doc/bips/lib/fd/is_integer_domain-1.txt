@@ -1,0 +1,30 @@
+
+is_integer_domain(?Term)
+
+   Succeeds if Term is a domain variable with an integer domain.
+
+
+
+Arguments
+   ?Term               A Prolog term.
+
+Type
+   library(fd)
+
+Description
+   This predicate is used to test if a term is a domain variable with an
+   integer domain.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Term is not an integer domain variable.
+
+
+
+See Also
+   is_domain / 1, :: / 2, #:: / 2

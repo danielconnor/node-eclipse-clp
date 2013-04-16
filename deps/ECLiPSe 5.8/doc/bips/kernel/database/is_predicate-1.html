@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>is_predicate(+PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>is_predicate(+PredSpec)</H1>
+Succeeds if PredSpec is a defined predicate.
+
+
+<DL>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Predicate of the form Atom/Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether PredSpec is defined as a user or a built-in
+   predicate.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if PredSpec is not a valid predicate.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredSpec is not fully instantiated.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not in the format Atom/Integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+[eclipse]: [user].
+    a(1).
+    a(1,2).
+    a(1,2,3).
+    user compiled 144 bytes in 0.00 seconds
+   yes.
+   [eclipse]: is_predicate(a/1).
+   yes.
+   [eclipse]: is_predicate(a/2).
+   yes.
+   [eclipse]: is_predicate(nl/0).
+   yes.
+   [eclipse]: is_predicate(a/2).
+   yes.
+Fail:
+   is_predicate(a/0).         % Fails if a/0 is not a predicate
+Error:
+   is_predicate(X).          (Error 4).
+   is_predicate(a/X).        (Error 4).
+   is_predicate(a).          (Error 5).
+   is_predicate(1).          (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/env/pred-1.html">pred / 1</A>, <A HREF="../../kernel/database/current_predicate-1.html">current_predicate / 1</A>, <A HREF="../../kernel/database/current_built_in-1.html">current_built_in / 1</A>
+</BODY></HTML>

@@ -1,0 +1,64 @@
+
+acos(+Number, ?Result)
+
+   Evaluates the trigonometric function acos(Number) and unifies the resulting
+value with Result.
+
+
+
+Arguments
+   +Number             A number.
+   ?Result             A variable, float or breal.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to acos(Number, Result) is
+   equivalent to
+
+    Result is acos(Number)
+
+   which should be preferred for portability.
+
+   In coroutining mode, if Number is a free variable, the call to acos/2 is
+   delayed until this variable is instantiated.
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated (non-coroutining mode only).
+     5 --- Result is a number but not a float or breal
+    24 --- Number is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+    20 --- Illegal arithmetic operation:  Number is greater than 1 or    less than -1.
+
+Examples
+   
+Success:
+      acos(1.0, 0.0).
+      acos(-0.5, Result).       (gives Result = 2.0944)
+      acos(0, Result).          (gives Result = 1.5708)
+Fail:
+      acos(1, 1.0).
+Error:
+      acos(A, 6.0).             (Error 4).
+      acos(1, r).               (Error 5).
+      acos(1, 0).               (Error 5).
+      acos(2, Result).          (Error 20).
+      acos(4 - 3, 0.0).         (Error 24).
+
+
+
+
+
+See Also
+   is / 2

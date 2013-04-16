@@ -1,0 +1,118 @@
+<HTML><HEAD><TITLE>local_time(?Year, ?Month, ?Day, ?Hour, ?Minute, ?Second, ?DST, ?UnixTime)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>local_time(?Year, ?Month, ?Day, ?Hour, ?Minute, ?Second, ?DST, ?UnixTime)</H1>
+Conversion between local time and universal time
+<DL>
+<DT><EM>Year</EM></DT>
+<DD>Integer or variable
+</DD>
+<DT><EM>Month</EM></DT>
+<DD>Integer or variable
+</DD>
+<DT><EM>Day</EM></DT>
+<DD>Integer or variable
+</DD>
+<DT><EM>Hour</EM></DT>
+<DD>Integer or variable
+</DD>
+<DT><EM>Minute</EM></DT>
+<DD>Integer or variable
+</DD>
+<DT><EM>Second</EM></DT>
+<DD>Integer or variable
+</DD>
+<DT><EM>DST</EM></DT>
+<DD>0, 1 or variable (daylight savings time flag)
+</DD>
+<DT><EM>UnixTime</EM></DT>
+<DD>Variable or integer (seconds since 1/1/1970)
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>local_time(+, +, +, +, +, +, ?, -)
+<LI>local_time(-, -, -, -, -, -, -, +)
+</UL>
+<H2>Description</H2>
+	This predicate is used to convert between local time (taking
+	into account time zone and daylight savings time settings) and
+	UTC (Universal Coordinated Time, represented as 'Unix time', i.e.
+	in seconds since 1970-01-01, 00:00).
+	<P>
+	The conversion works in both directions. If the UnixTime argument
+	is instantiated, it gets converted to the local date and time, and
+	the first 6 arguments get unified accordingly.
+	<P>
+	If the first 6 (or 7) arguments are instantiated, they will be
+	interpreted under the current time zone and daylight savings time
+	rules, and converted into 'Unix time', which is unified with the
+	last argument.
+	<P>
+	In both directions, the DST argument can usually remain uninstantiated,
+	and will be unified with 1 if the date specified is while daylight
+	savings time is in effect, and 0 otherwise. Note however, that during
+	the switch from summer to winter time, there is usually a one hour
+	overlap, where the same time of day exists twice, once in summer and
+	once in winter time.  In this case, when converting from local time
+	to UTC, the caller should instantiate DST in order to disambiguate.
+	<P>
+	The predicate can also be used to test for valid local date and time:
+	If the first 6 (or 7) arguments do not represent a valid date, the
+	predicate fails.
+	<P>
+	This predicate is based on the POSIX localtime() and mktime() functions.
+
+<H3>Fail Conditions</H3>
+The first 7 arguments do not represent a valid date
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>The arguments are insufficiently instantiated
+<DT><EM>(5) type error </EM>
+<DD>Any of the arguments is not of the expected numerical type
+<DT><EM>(6) out of range </EM>
+<DD>UnixTime is out of range
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- get_flag(unix_time,T), local_time(Yr,Mo,Dy,Hr,Mi,Sc,Ds,T).
+    Yr = 2003
+    Mo = 4
+    Dy = 4
+    Hr = 16
+    Mi = 38
+    Sc = 30
+    Ds = 1
+    T = 1049470710
+    Yes (0.00s cpu)
+
+    ?- local_time(2003,4,4,16,38,30,1,T).
+    T = 1049470710
+    Yes (0.00s cpu)
+
+    ?- local_time(2003,4,4,16,38,30,_,T).
+    T = 1049470710
+    Yes (0.00s cpu)
+
+    ?- local_time(2003,1,1,25,0,0,_,_).   % invalid hour
+    No (0.00s cpu)
+
+    ?- local_time(2003,2,29,12,0,0,_,_).  % invalid date (no leap year)
+    No (0.00s cpu)
+
+    % The following examples assume DST rules for Britain
+    ?- local_time(2003,3,30,1,30,0,_,_).  % invalid time (skipped hour)
+    No (0.00s cpu)
+
+    ?- local_time(2003,10,26,1,0,0,1,T).  % 1h before end of summer time
+    T = 1067126400
+    Yes (0.01s cpu)
+
+    ?- local_time(2003,10,26,1,0,0,0,T).  % 1 hour later
+    T = 1067130000
+    Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/date-1.html">date / 1</A>, <A HREF="../../kernel/opsys/local_time_string-3.html">local_time_string / 3</A>, <A HREF="../../lib/calendar/index.html">library(calendar)</A>
+</BODY></HTML>

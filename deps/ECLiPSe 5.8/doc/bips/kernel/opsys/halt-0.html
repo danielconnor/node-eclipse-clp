@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>halt</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>halt</H1>
+The Prolog session is ended (the same as Control-D at the top-level loop).
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   Used to exit from the Prolog session.  If user_end/0 is defined and
+   global, it is called.  All buffers are flushed, streams are closed and
+   ECLiPSe exits.  Zero as status code is returned to the operating system.
+   halt is identical with exit(0).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: halt.
+      cygnus% echo $status
+      0
+      cygnus%
+
+      [eclipse]: [user].
+       problem_exit :-
+          writeln(debug_output, 'PROBLEM IN RECOVERY PROCEDURE'),
+          halt.
+       user compiled 132 bytes in 0.02 seconds
+      yes.
+      [eclipse]: problem_exit.
+      PROBLEM IN RECOVERY PROCEDURE
+      %
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/exit-1.html">exit / 1</A>, <A HREF="../../lib/toplevel/break-0.html">toplevel : break / 0</A>, <A HREF="../../kernel/opsys/pause-0.html">pause / 0</A>
+</BODY></HTML>

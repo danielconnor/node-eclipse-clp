@@ -1,0 +1,30 @@
+
+dom_size(+Dom, ?Size)
+
+   Size is the number of elements in the domain Dom.
+
+
+
+Arguments
+   +Dom                A finite domain.
+   ?Size               An integer or a variable.
+
+Type
+   library(fd)
+
+Description
+   Size is the number of elements in the domain Dom.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dom_check_in / 2, dom_range / 3, dvar_domain / 2

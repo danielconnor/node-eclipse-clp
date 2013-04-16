@@ -1,0 +1,26 @@
+
+is_in_domain(++Val, ?Var)
+
+   Succeeds iff Val is in the domain of Var
+
+Arguments
+   Val                 A number
+   Var                 An IC variable or a number
+
+Type
+   library(ic)
+
+Description
+
+   Low level predicate which succeeds when Val is in the domain of Var.  If
+   Var is a number, this predicate will succeed iff Var $= Val would succeed
+   WITHOUT leaving a delayed goal.
+
+
+Exceptions
+     4 --- Val is not ground
+     5 --- either Val or Var is not a numeric type
+   undecidable comparison of bounded reals --- Val was a bounded real which overlapped a bound of Var
+
+See Also
+   is_in_domain / 3

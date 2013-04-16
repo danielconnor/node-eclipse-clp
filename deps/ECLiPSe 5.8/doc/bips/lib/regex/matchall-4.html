@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>matchall(+Pattern, +String, +Options, -AllMatches)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(regex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>matchall(+Pattern, +String, +Options, -AllMatches)</H1>
+AllMatches is a list of substrings of String which match the regular expression Pattern
+<DL>
+<DT><EM>Pattern</EM></DT>
+<DD>A string (or a compiled pattern handle)
+</DD>
+<DT><EM>String</EM></DT>
+<DD>A string
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of atoms
+</DD>
+<DT><EM>AllMatches</EM></DT>
+<DD>Output: List of strings
+</DD>
+</DL>
+<H2>Description</H2>
+
+	This predicates always succeeds.
+	<P>
+    	Options is a (possibly empty) list of atomic option names,
+	as described in the library(regex) page.
+	<P>
+	AllMatches is bound to a list of strings. If the input string String
+	does not match the pattern, the list is empty. Otherwise the list
+	contains substrings of String which match the entire pattern,
+	ordered according to their occurrence within String. No overlapping
+	matches are returned, i.e. the next match is found by examining the
+	remainder of String after the previous match.
+	<P>
+	Note that this predicate does not return any information about
+	matching (parenthesised) sub-expressions!
+    
+<H3>Fail Conditions</H3>
+None
+<H2>Examples</H2>
+<PRE>
+    ?- matchall("[0-9]+", " blue 27 red123 green99", [], L).
+    L = ["27", "123", "99"]
+    Yes
+
+    ?- matchall("([0-9]+|[^0-9]+)", " blue 27 red123 green99", [], L).
+    L = [" blue ", "27", " red", "123", " green", "99"]
+    Yes
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/regex/index.html">library(regex)</A>, <A HREF="../../lib/regex/match-2.html">match / 2</A>, <A HREF="../../lib/regex/match-3.html">match / 3</A>, <A HREF="../../lib/regex/match-4.html">match / 4</A>, <A HREF="../../lib/regex/split-4.html">split / 4</A>, <A HREF="../../lib/regex/compile_pattern-3.html">compile_pattern / 3</A>
+</BODY></HTML>

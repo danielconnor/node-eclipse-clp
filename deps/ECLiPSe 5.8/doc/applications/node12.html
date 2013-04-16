@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Naming schemes</TITLE>
+<META NAME="description" CONTENT="Naming schemes">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html517"
+ HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html511"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html505"
+ HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html513"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html515"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html518"
+ HREF="node13.html">Documentation</A>
+<B> Up:</B> <A NAME="tex2html512"
+ HREF="node6.html">High Level Design</A>
+<B> Previous:</B> <A NAME="tex2html506"
+ HREF="node11.html">Modules</A>
+ &nbsp <B>  <A NAME="tex2html514"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html516"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html519"
+ HREF="node12.html#SECTION00361000000000000000">Modules and files</A>
+<LI><A NAME="tex2html520"
+ HREF="node12.html#SECTION00362000000000000000">Predicates</A>
+<LI><A NAME="tex2html521"
+ HREF="node12.html#SECTION00363000000000000000">Variables</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00360000000000000000">
+Naming schemes</A>
+</H1>
+We now introduce a naming scheme<A NAME="289"></A> that should be used to define identifiers for the various entities in an ECLiPSe program. A consistent naming scheme makes it easier to maintain and modify the program, and also makes sure that contributions from different programmers can be merged without extra work. The scheme presented here is used for RiskWise.
+
+<P>
+
+<H2><A NAME="SECTION00361000000000000000">
+Modules and files</A>
+</H2>
+Each module<A NAME="291"></A><A NAME="292"></A> must have a unique name of the form [a-z][a-z_]+ . There is a one-to-one correspondence of modules and program files.
+
+<P>
+All program files in an application should be placed in a single directory, with each file named after the module it contains. The extension for ECLiPSe programs is <I>.ecl</I>.
+
+<P>
+
+<H2><A NAME="SECTION00362000000000000000">
+Predicates</A>
+</H2>
+Predicate names<A NAME="295"></A><A NAME="296"></A> are of form [a-z][a-z_]*[0-9]* . Underscores are used to separate words. Digits should only be used at the end of the name. Words should be English. The top-level query of an application should be named <I>top</I><A NAME="298"></A>, and should execute a default query with some valid data set. Although predicates in different modules can use the same name, this can be confusing and should be avoided. You should also avoid using the same predicate name with different arity. Although legal, this can create problems when modifying code.
+
+<P>
+
+<H2><A NAME="SECTION00363000000000000000">
+Variables</A>
+</H2>
+Variable names <A NAME="300"></A><A NAME="301"></A>are of form [A-Z_][a-zA-Z]*[0-9]* . Separate words start with capital letters. Digits should only be used at the end. Words should be English. If a variable occurs only once in a clause, then its name should start with an underscore<A NAME="302"></A>. This marks it as a <I>singleton variable</I><A NAME="304"></A>, and stops compiler warnings about the single occurrence of a variable. If a variable occurs more than once in a clause, then its name should not start with an underscore.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html517"
+ HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html511"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html505"
+ HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html513"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html515"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html518"
+ HREF="node13.html">Documentation</A>
+<B> Up:</B> <A NAME="tex2html512"
+ HREF="node6.html">High Level Design</A>
+<B> Previous:</B> <A NAME="tex2html506"
+ HREF="node11.html">Modules</A>
+ &nbsp <B>  <A NAME="tex2html514"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html516"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

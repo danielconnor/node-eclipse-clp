@@ -1,0 +1,68 @@
+
+source_read(+SourcePos, -NextPos, -Kind, -SourceTerm)
+
+   Read the next term from an open ECLiPSe source file
+
+Arguments
+   SourcePos           Source position handle
+   NextPos             Source position handle
+   Kind                kind of source term (atom)
+   SourceTerm          a source_term structure
+
+Type
+   library(source_processor)
+
+Description
+This reads the next source term from a source file previously
+    opened with source_open/3. The term at the current source position
+    SourcePos is read, and the next source position is returned for use
+    in subsequent source_read/4 invocations (it is not possible to read
+    twice from the same source position!).
+    
+    The term that has been read is classified into one of the following
+    categories (Kind):
+    
+    handled_directive
+    	A directive (a term with functor :-/1) which has already
+	been handled (interpreted by source_read/3). Such directives are:
+	module/1,3, local/1, export/1, reexport/1, use_module/1, op/3,
+	include/1, ./2
+    directive
+    	A directive (a term with functor :-/1) which has not
+	been handled (ignored by source_read/3)
+    query
+    	A query (a term with functor ?-/1)
+    var
+    	A term consisting of only a variable (very likely an error)
+    clause
+    	Any other term (a syntactically valid clause)
+    comment
+    	Spacing, layout and comments between source terms
+    	(only when keep_comments option is in effect)
+    end
+    	The end of the (top-level) source file
+    
+    The information about the source term itself is returned as a structure
+    
+    :- export struct(source_term(
+	term,		% the read term itself
+	vars,		% list of [VarName|Var] pairs (as in readvar/3)
+	...
+    )).
+    
+    For category 'comment', the term is a string containing the comment.
+    For category 'end', the term is the atom end_of_file. In both these
+    cases, vars is the empty list.
+    
+    Notes on module handling:  When source_read/3 encounters a
+    module-directive (which is a handled_directive), the corresponding
+    module is implicitly created (unless it exists already, in which
+    case it is either reused or erased and re-created, depending on
+    the setting of the recreate_modules option), and that
+    module becomes the context module for any subsequently read
+    clauses or directives.  By default, source_close/2 removes these
+    modules again in order to restore the original state.
+    
+
+See Also
+   source_open / 3, source_close / 2, readvar / 3

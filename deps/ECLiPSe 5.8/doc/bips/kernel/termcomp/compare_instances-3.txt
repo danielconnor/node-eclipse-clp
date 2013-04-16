@@ -1,0 +1,62 @@
+
+compare_instances( ?Relationship, ?Term1, ?Term2)
+
+   Succeeds if Relationship is an atom describing the instance relationship
+between Term1 and Term2.
+
+
+
+Arguments
+   ?Relationship       Variable or one of the atoms '<', '>', '='
+   ?Term1              An arbitrary term.
+   ?Term2              An arbitrary term.
+
+Type
+   Comparing and Sorting
+
+Description
+   Succeeds if Relationship is unified with one of the three term
+   relationship symbols indicated by '<', '>', '=' where:
+
+
+   '<':  Term1 is an instance of Term2.
+
+
+   '>':  Term2 is an instance of Term1.
+
+
+   '=':  Term1 is variant of Term2.
+
+
+   For the definition of instance and variant refer to instance/2 and
+   variant/2, respectively.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+   Fails if none of the terms is an instance of the other
+
+Examples
+   
+   Success:
+   compare_instances(Rel,X,Y), Rel == '='.
+   compare_instances(=, [a,X], [a,Y]).
+   compare_instances(<, [a,b], [X,Y]).
+   compare_instances(<, [X], [X|Y]).
+   compare_instances(>, X, f(1,1)).
+   compare_instances(<, f(1,1), X).
+   Fail:
+   compare_instances(Rel, f(X), 1).
+   compare_instances(Rel, 1, f(X)).
+   compare_instances(<, X, a).
+
+
+
+
+
+See Also
+   instance / 2, variant / 2

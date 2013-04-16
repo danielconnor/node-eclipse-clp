@@ -1,0 +1,67 @@
+
+denominator(+Number, ?Result)
+
+   Extracts the denominator of the rational Number and unifies the resulting
+integer with Result.
+
+
+
+Arguments
+   +Number             An integer or rational number.
+   ?Result             A variable or integer.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to denominator(Number, Result) is
+   equivalent to
+
+    Result is denominator(Number)
+
+    which should be preferred.
+
+   In coroutining mode, if Number is a free variable, the call to
+   denominator/2 is delayed until this variable is instantiated.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated (non-coroutining mode only).
+     5 --- Number is a float or breal.
+     5 --- Result is a number but not an integer.
+    24 --- Number is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+
+Examples
+   
+Success:
+      denominator(3_4, 4).
+      denominator(9_12, 4).
+      denominator(-3_4, 4).
+      denominator(25, 1).
+Fail:
+      denominator(3_4, 3).
+Error:
+      denominator(A, 3).                     (Error 4).
+      denominator(3.1, 3).                   (Error 5).
+      denominator(3_4, 3_1).                 (Error 5).
+      denominator(3_4, r).                   (Error 24).
+      denominator(1_3 + 3_4, 12).            (Error 24).
+
+
+
+
+
+See Also
+   is / 2, numerator / 2, rational / 2

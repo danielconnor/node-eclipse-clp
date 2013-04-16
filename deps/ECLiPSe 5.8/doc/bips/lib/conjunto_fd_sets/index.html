@@ -1,0 +1,62 @@
+<HTML><HEAD><TITLE>library(conjunto_fd_sets)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(conjunto_fd_sets)</H1>
+lib(conjunto) compatibility wrapper for lib(fd_sets)
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><STRONG>`::(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>`<(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>`<>(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>`=(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>list2set(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="refine-1.html"><STRONG>refine(?Set)</STRONG></A></DT>
+<DD>Instantiate Set to a possible value</DD>
+<DT><STRONG>set2list(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>tr_slists(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Reexports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>reexport <A HREF="../../lib/fd_sets/index.html">fd_sets</A></STRONG></DT><DD>except :: / 2</DD>
+</DL></BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export macro({} / 1, conjunto_fd_sets : tr_slists / 2, [])</STRONG></DT><DD></DD>
+<DT><STRONG>export macro({} / 0, conjunto_fd_sets : tr_slists / 2, [])</STRONG></DT><DD></DD>
+<DT><STRONG>export op(700, xfx, `<>)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(700, xfx, `=)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(700, xfx, `::)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(700, xfx, `<)</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+    This is a wrapper for library(fd_sets) to make it more backward
+    compatible with its predecessor, the set solver library(conjunto).
+    Supported are:
+    <UL>
+    <LI>the curly-bracket syntax for sets (input only)
+    <LI>the backquote-syntax for several constraints (`&lt;&gt;,`&lt;,`::,`=)
+    <LI>refine/1
+    </UL>
+    Not supported are:
+    <UL>
+    <LI>non-integer set elements
+    <LI>el_weight/2, sum_weight/2 (but see fd_sets:weight/2)
+    <LI>max_weight/2 (but see fd_sets:insetdomain/4)
+    </UL>
+</P>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date: 2002/04/06 20:09:21 $
+</UL>
+<HR>Generated from conjunto_fd_sets.eci on Tue Jan 25 01:58:43 2005
+
+</BODY></HTML>

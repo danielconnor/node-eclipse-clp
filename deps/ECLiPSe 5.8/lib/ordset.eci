@@ -1,0 +1,26 @@
+:- module(ordset).
+:- export ord_union / 3.
+:- export ord_symdiff / 3.
+:- export ord_subtract / 3.
+:- export ord_subset / 2.
+:- export ord_seteq / 2.
+:- export ord_intersect / 3.
+:- export ord_intersect / 2.
+:- export ord_insert / 3.
+:- export ord_disjoint / 2.
+:- export list_to_ord_set / 2.
+:- comment(summary, "Ordered set manipulation utilities").
+:- comment(author, "R.A.O'Keefe and Joachim Schimpf").
+:- comment(copyright, "Imperial College London and ICL").
+:- comment(date, "$Date: 2000/06/05 13:02:45 $").
+:- comment(desc, html("\tThis library implements sets as ordered lists.  The benefit of the\n\tordered representation is that the elementary set operations can\n\tbe done in time proportional to the Sum of the argument sizes\n\trather than their Product.  Some of the unordered set routines,\n\tsuch as member/2, length/2,, select/3 can be used unchanged.\n    ")).
+:- comment(list_to_ord_set / 2, [amode : list_to_ord_set(+, ?), args : ["List" : "A list of terms", "Set" : "A set or variable"], summary : "Converts a list to a set", desc : html("\tSucceeds when Set is the ordered representation of the set\n\trepresented by the unordered representation List.  The only\n\treason for giving it a name at all is that you may not have\n\trealised that sort/2 could be used this way.")]).
+:- comment(ord_disjoint / 2, [amode : ord_disjoint(+, +), args : ["Set1" : "A set", "Set2" : "A set"], summary : "Checks whether two sets are disjoint", desc : html("\tSucceeds when the two ordered sets have no element in common.\n    ")]).
+:- comment(ord_insert / 3, [amode : ord_insert(+, +, ?), args : ["Set1" : "A set", "Element" : "A term", "Set2" : "A set or variable"], summary : "Adds an element to a set", desc : html("\tSet2 is the set resulting from adding Element to Set1. It should\n\tgive exactly the same result as merge(Set1, [Element], Set2).\n    ")]).
+:- comment(ord_intersect / 2, [amode : ord_intersect(+, +), args : ["Set1" : "A set", "Set2" : "A set"], summary : "Checks whether two sets have a non-empty intersection", desc : html("\tSucceeds when the two ordered sets have at least one element\n\tin common.  Note that the test is == rather than = .\n    ")]).
+:- comment(ord_intersect / 3, [amode : ord_intersect(+, +, ?), args : ["Set1" : "A set", "Set2" : "A set", "Intersection" : "A set"], summary : "Computes the intersection of two sets", desc : html("\tSucceeds when Intersection is the intersection of Set1 \n\tand Set2, provided that Set1 and Set2 are ordered sets.\n    ")]).
+:- comment(ord_seteq / 2, [amode : ord_seteq(+, +), args : ["Set1" : "A set", "Set2" : "A set"], summary : "Compares two sets", desc : html("\tSucceeds when the two arguments represent the same set.  Since they\n\tare assumed to be ordered representations, they must be identical.\n    ")]).
+:- comment(ord_subset / 2, [amode : ord_subset(+, +), args : ["Set1" : "A set", "Set2" : "A set"], summary : "Checks whether Set1 is a subset of Set2", desc : html("\tSucceeds when every element of the ordered set Set1 appears\n\tin the ordered set Set2.\n    ")]).
+:- comment(ord_subtract / 3, [amode : ord_subtract(+, +, ?), args : ["Set1" : "A set", "Set2" : "A set", "Difference" : "A set or variable"], summary : "Subtracts Set2 from Set1", desc : html("\tSucceeds when Difference contains all and only the elements\n\tof Set1 which are not also in Set2.\n    ")]).
+:- comment(ord_symdiff / 3, [amode : ord_symdiff(+, +, ?), args : ["Set1" : "A set", "Set2" : "A set", "Difference" : "A set or variable"], summary : "Computes the symmetric difference of Set1 and Set2", desc : html("\tSucceeds when Difference is the symmetric difference of Set1 and Set2.\n    ")]).
+:- comment(ord_union / 3, [amode : ord_union(+, +, ?), args : ["Set1" : "A set", "Set2" : "A set", "Union" : "A set or variable"], summary : "Computes the union of Set1 and Set2", desc : html("\tSucceeds when Union is the union of Set1 and Set2.  Note that when\n\tsomething occurs in both sets, we want to retain only one copy.\n    ")]).

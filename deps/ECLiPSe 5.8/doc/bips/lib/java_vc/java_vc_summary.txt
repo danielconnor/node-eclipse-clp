@@ -1,0 +1,4 @@
+lib(java_vc)
+
+   Module for the Java Visualisation Client
+

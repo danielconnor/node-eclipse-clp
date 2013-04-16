@@ -1,0 +1,6 @@
+:- module(between).
+:- export gen_nat / 2.
+:- export gen_nat / 1.
+:- export gen_int / 1.
+:- export gen_arg / 3.
+:- export between / 3.

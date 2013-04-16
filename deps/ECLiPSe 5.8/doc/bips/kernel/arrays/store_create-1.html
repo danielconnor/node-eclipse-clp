@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>store_create(-StoreHandle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>store_create(-StoreHandle)</H1>
+Create an anonymous store object which can store indexed data across failures
+<DL>
+<DT><EM>StoreHandle</EM></DT>
+<DD>A free variable
+</DD>
+</DL>
+<H2>Description</H2>
+    	This creates a 'store' object which provides indexed access to
+	key-value pairs, and whose contents are unaffected by backtracking.
+<P>
+	A store is a persistent (w.r.t. backtracking) hash table. It can
+	store arbitrary ECLiPSe terms under arbitrary ground keys.
+<P>
+	Stores can be referred to either by handle or by name. Whenever
+	possible, handles should be used, because this naturally leads to
+	robust, reentrant code, and avoids the danger of memory leaks.
+	A store disappears when the system backtracks over its creation,
+	when the store handle gets garbage collected, or when it is
+	explicitly destroyed.
+<P>
+	When named stores are used, the visibility of the store name is
+	local to the module where it was created. A named store never
+	disappears, therefore, in order to free the associated memory,
+	its contents should be erased when no longer needed.
+    
+<H3>Fail Conditions</H3>
+None
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>StoreHandle is not a variable
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+% Creating and using an 'anonymous store'
+
+    main2 :-
+	store_create(Handle),
+	store_set(Handle, name(peter,panther), data(1234,mobile)),
+	store_set(Handle, name(tom,tiger), data(4567,home)),
+	stored_keys_and_values(Handle, Contents),
+	writeln(Contents).
+
+
+% Creating and using a 'named store'
+
+    :- local store(phone_numbers).
+
+    main1 :-
+	store_set(phone_numbers, name(peter,panther), data(1234,mobile)),
+	store_set(phone_numbers, name(tom,tiger), data(4567,home)),
+	stored_keys_and_values(phone_numbers, Contents),
+	writeln(Contents).
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/store-1.html">store / 1</A>, <A HREF="../../kernel/modules/local-1.html">local / 1</A>, <A HREF="../../kernel/arrays/store_set-3.html">store_set / 3</A>, <A HREF="../../kernel/arrays/store_get-3.html">store_get / 3</A>, <A HREF="../../kernel/arrays/store_delete-2.html">store_delete / 2</A>, <A HREF="../../kernel/arrays/store_contains-2.html">store_contains / 2</A>, <A HREF="../../kernel/arrays/stored_keys-2.html">stored_keys / 2</A>, <A HREF="../../kernel/arrays/stored_keys_and_values-2.html">stored_keys_and_values / 2</A>, <A HREF="../../kernel/arrays/store_erase-1.html">store_erase / 1</A>, <A HREF="../../kernel/arrays/store_count-2.html">store_count / 2</A>
+</BODY></HTML>

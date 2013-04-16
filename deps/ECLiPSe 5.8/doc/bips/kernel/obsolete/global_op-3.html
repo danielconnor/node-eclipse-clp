@@ -1,0 +1,131 @@
+<HTML><HEAD><TITLE>global_op(+Precedence, +Associativity, +Name)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>global_op(+Precedence, +Associativity, +Name)</H1>
+Defines the global operator(s) in Name to have precedence Precedence and
+associativity Associativity.  If Precedence is 0 then the operator
+definition is removed.
+
+
+<DL>
+<DT><EM>+Precedence</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>+Associativity</EM></DT>
+<DD>Atom
+</DD>
+<DT><EM>+Name</EM></DT>
+<DD>Atom or List of atoms
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Defines Name as an operator of precedence Precedence and associativity
+   Associativity.  Name may be a single operator or a list of operators, in
+   which each is given the specified precedence and associativity.
+
+<P>
+   The operator is defined to be globally available, ie. visible in every
+   module, unless hidden by a local operator.
+
+<P>
+   Precedence is an integer in the range 0 to 1200.  If the precedence is 0
+   the definition of the operator is removed.
+
+<P>
+   Associativity must be one of the following atoms:
+
+<P>
+<PRE>
+ xfx           infix
+ xfy           infix
+ yfx           infix
+ fx            prefix
+ fy            prefix
+ xf            postfix
+ yf            postfix
+</PRE>
+   x represents an argument whose precedence must be lower than that of the
+   operator.  y represents an argument whose precedence must be lower or
+   equal to that of the operator.
+
+<P>
+   Prefix, infix and postfix operators are independent of each other and
+   may coexist.  See the manual chapter on syntax about how ambiguities are
+   resolved in this case.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Any of the input arguments is uninstantiated.
+<DT><EM>(5) type error </EM>
+<DD>Precedence is not an integer.
+<DT><EM>(5) type error </EM>
+<DD>Name is not an atom or list of atoms.
+<DT><EM>(6) out of range </EM>
+<DD>Precedence is not in range 0 to 1200.
+<DT><EM>(6) out of range </EM>
+<DD>Associativity is not xf, xfx, fy etc.
+<DT><EM>(43) multiple definition postfix/infix </EM>
+<DD>Multiple definition of postfix and infix for Name.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   [eclipse]: global_op(100,fx,hello).  % define prefix operator
+
+   yes.
+   [eclipse]: read(X).
+   &gt; hello david.                       % read using operator
+
+   X = hello david
+   yes.
+   [eclipse]: global_op(200, xfy, -+-),
+            global_op(300, fx, -+-).    % multiple infix/prefix
+
+   yes.
+   [eclipse]: global_op(100,xfx,[a,b,c,d]).  % define list of op's
+
+   yes.
+   [eclipse]: current_op(100,xfx,Y).    % return defined op's
+
+   Y = d     More? (;)
+
+   Y = a     More? (;)
+
+   Y = c     More? (;)
+
+   Y = b     More? (;)                  % RETURN pressed
+
+   yes.
+   [eclipse]: global_op(300,xfy,?), global_op(300,yfx,:).
+
+   yes.
+   [eclipse]: display(a ? b ? c), display(a : b : c).
+   ?(a, ?(b, c))                   % xfy operator
+
+   :(:(a, b), c)                   % yfx operator
+   yes.
+   [eclipse]:
+
+Error:
+   global_op(X,fx,aaa).             (Error 4)
+   global_op(a,fx,aaa).             (Error 5)
+   global_op(100,xfx,1).            (Error 5)
+   global_op(100,abc,fred).         (Error 6)
+
+   global_op(100,xfx,aaa),global_op(100,xf,aaa).     (Error 43)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/current_op-3.html">current_op / 3</A>, <A HREF="../../kernel/syntax/op-3.html">op / 3</A>
+</BODY></HTML>

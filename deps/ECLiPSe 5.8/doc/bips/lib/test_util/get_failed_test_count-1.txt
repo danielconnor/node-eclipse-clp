@@ -1,0 +1,16 @@
+
+get_failed_test_count(-N)
+
+   Returns the number of tests that failed.
+
+Type
+   library(test_util)
+
+Description
+
+
+    The test framework counts the number of tests which fail; use this
+    predicate to retrieve this number.
+    
+
+

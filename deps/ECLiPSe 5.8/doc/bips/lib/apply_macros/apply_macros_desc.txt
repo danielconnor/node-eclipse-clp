@@ -1,0 +1,12 @@
+lib(apply_macros)
+
+
+    Note that this library is largely superseded by the do-loop construct!
+    
+    A collection of utilities to apply a predicate to
+    all elements of a list resp. all subterm of a term.
+    To avoid performance degradation due to apply/2,
+    they are implemented as macros, i.e. they are specialized
+    into auxiliary predicates without metacalls, and the
+    calls are translated into calls of the auxiliary predicates.
+

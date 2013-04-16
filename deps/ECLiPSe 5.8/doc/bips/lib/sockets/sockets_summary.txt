@@ -1,0 +1,4 @@
+lib(sockets)
+
+   Sicstus compatible sockets interface
+

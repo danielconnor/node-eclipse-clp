@@ -1,0 +1,266 @@
+
+EplexInstance:eplex_get(++ParamName, -Value)
+
+   Retrieve information about solver state and results for eplex instance EplexInstance.
+
+Arguments
+   ParamName           Name of parameter (atom)
+   Value               Returned value for ParamName
+
+Type
+   library(eplex)
+
+Description
+
+   Retrieve information about solver state and results for the eplex instance
+   EplexInstance. ParamName is the same as that
+   for lp_get/3, which retrieves the same information via the solver state.
+
+
+
+  
+     vars
+     Returns a term ''(X1,...,Xn) whose arity is the number of
+         variables involved in the solver's constraint set, and whose
+         arguments are these variables.
+
+
+     ints
+     Returns a list [Xi1,...,Xik] which is the subset of the problem
+         variables that the solver considers to be integers.
+
+
+     constraints_norm
+     Returns a list of the problem constraints in normalised form.
+         They may be simplified with respect to the original set that 
+         was passed to lp_setup/4.
+
+
+     constraints
+     Returns a list of the problem constraints in denormalised (readable)
+         form.  They may be simplified with respect to the original set
+         that was passed to lp_setup/4.
+
+
+     objective
+     Returns a term min(E) or max(E), representing objective function
+         and optimisation direction. E is a linear expression: any
+         quadratic components will not be retrieved.
+
+
+     num_cols
+     Returns the number of columns (i.e. variables) in the matrix of the
+     solver state.
+
+
+     num_rows
+     Returns the number of rows (i.e. constraints) in the matrix of the
+     solver state.
+
+
+     num_nonzeros
+     Returns the number of non-zero coefficients in the matrix of the
+     solver state.
+
+
+     num_ints
+     Returns the number of columns (i.e. variables) constrained to be
+     integers in the matrix of the solver state.
+
+
+     num_quads
+     Returns the number of non-zero coefficients in the quadratic
+     coefficient matrix (Q-matrix) of the solver state.
+
+
+     method
+     Returns the method that is specified to solve the problem. If an
+     auxiliary  method can be given for the method, and this auxiliary
+     method is not default, the method will be returned as 
+     Method(Aux), e.g. barrier(none). The method will be 
+     default unless otherwise specified by the the user (at setup or 
+     via eplex_setup/2 or lp_setup/3).
+     In case of MIP solving, this is the start algorithm (the one that 
+     is used to solve the initial relaxation).
+
+
+     node_method
+     Applicable to MIP problems only. Returns the method that is
+     specified to solve the problem at the nodes of the branch-and-bound
+     tree. If an auxiliary method can be given for the method, and this
+     auxiliary method is not default, the method will be returned
+     as Method(Aux), e.g. barrier(none). The method will be
+     default unless otherwise specified by the the user (at setup
+     or via eplex_setup/2 or lp_setup/3).
+     Note that the method for solving the root (initial relaxation) node
+     is specified by method.
+
+
+     status
+     Status that was returned by the most recent invocation of the 
+         external solver.
+
+
+     cost
+     Objective value (i.e. cost/profit) of the current solution.
+         Fails if no solution has been computed yet.
+
+
+     typed_solution
+     Returns a term ''(X1,...,Xn) whose arguments are the properly
+         typed (integer or float) solution values for the corresponding
+         problem variables (vars).  The floating point solutions
+         are the same as returned by solution, the integers are
+         obtained by rounding the corresponding floating-point solution to
+         the nearest integer.  To instantiate the problem variables to
+         their solutions, unify this term with the corresponding term
+         containing the variables:
+         Fails if no solution has been computed yet.
+
+
+    instantiate_solution(Handle) :-
+        lp_get(Handle, vars, Vars),
+        lp_get(Handle, typed_solution, Values),
+        Vars = Values.
+
+
+
+    slack
+    Returns a list of floating-point values representing the constraint
+        slacks. The order corresponds to the list order in
+        constraints. Fails if no solution has been computed yet,
+        or if the slack option was not set to yes.
+
+
+    slack(Indexes)
+    Returns a list of floating-point values representing the slack
+        values for the constraints represented by Indexes. Indexes are 
+        a list of constraint indecies (as returned by lp_add_constraints/4),
+        and the order of the returned list corresponds to the order in
+        Indexes.  Fails if no solution has been computed yet,
+        or if the slack option was not set to yes.
+
+
+    dual_solution
+    Returns a list of floating-point values representing the dual
+        solutions.  The order corresponds to the list order in
+        constraints.  Fails if no solution has been computed yet,
+        or if the dual_solution option was not set to yes.
+
+
+    dual_solution(Indexes)
+    Returns a list of floating-point values representing the dual
+        solutions for the constraints represented by Indexes. Indexes are
+        a list of constraint indecies (as returned by lp_add_constraints/4),
+        and the order of the returned list  corresponds to the order in
+        Indexes.  Fails if no solution has been computed yet,
+        or if the dual_solution option was not set to yes.
+
+
+    demon_tolerance
+    Returns a comma-separated pair (RealTol,IntTol) of
+        floating-point values which specify how far outside a variable's
+        range an lp-solution can fall before lp_demon_setup/5
+        re-triggers. The tolerances differ for real (default 0.00001) and
+        integer (default 0.5) variables.
+
+
+    simplex_iterations
+    Returns the external solver's count of simplex iterations.
+
+
+    node_count
+    Returns the external MIP solver's node count. Note that this may 
+        or may not include the initial root node.
+
+    statistics
+    Returns a list of counter values [Successes, Failures,
+        Aborts], indicating how often lp_solve/2 was invoked on the
+        Handle, and how many invocations succeeded, failed and aborted
+        respectively.
+
+
+    timeout
+    Returns the time-out value for the solver state. This is the amount
+        of CPU time in seconds that the external solver will be allow to
+        spend solving the problem before timing out. The value is 0 if 
+        no time-out has been set.
+
+     optimizer_param(Param)
+     Returns the value of the external solver's parameter Param
+         for the problem represented by Handle. The external solver 
+         has a number of parameters that affect the way they work, and 
+         this queries their values. If Param is not a valid parameter for
+         the solver, an out of range exception is raised. See below for 
+         more details on the parameters.
+
+    post_equality_when_unified
+    Returns the value (yes or no) if an equality constraint will be
+        posted to a solver if two variables in the solver's problem are 
+        unified. 
+
+    pool
+    Returns the name of the eplex instance (if any) associated with 
+        the solver state. Fails otherwise. Only useful if called with 
+        lp_get/3.
+
+    handle
+    Returns the solver state handle (if any) associated with the eplex 
+        instance. Fails otherwise. Only useful if called with eplex_get/2.
+
+
+Note that reduced_cost, slack, dual_solution can only be retrieved
+when previously requested in the option list of lp_setup/4 or with lp_set/3.
+
+
+For the external solver's control parameter specified by
+optimizer_param(Param), Param must be an atom. The Value returned is
+either an integer, float or atom, depending on the parameter. The parameter
+is generally specific to a solver and version, and also, they may be
+problem specific, or global, again depending on the solver version. In all
+cases, the value returned by lp_get/3 is the current value for the parameter
+for the problem Handle. Refer to the solver documentation for details on the 
+parameters. The names of the parameters are derived from the names of the 
+parameters in the external solver. For CPLEX, take the parameter name from the CPLEX manual (or cplex.h), remove the CPX_PARAM_ prefix and convert the 
+rest to lower case, e.g.
+
+
+        CPX_PARAM_NODELIM becomes nodelim. 
+
+For XPRESS-MP (version 13 and newer), take the parameter name from the 
+manual (or xpresso.h), remove the XPRS_ prefix (if present) and convert 
+the rest to lower case, e.g.
+
+	MAXNODE or XPRS_MAXNODE becomes maxnode. 
+
+    (pre version 13, the parameter names are prefixed by N_ instead of XPRS_).
+
+
+    The following parameter names are additional aliases that work for
+    either solver:
+
+    crash
+	CPX_PARAM_CRAIND (CPLEX) or XPRS_CRASH (XPRESS-MP) -integer
+    feasibility_tol
+	CPX_PARAM_EPRHS (CPLEX) or XPRS_FEASTOL (XPRESS-MP) - float
+    integrality
+	CPX_PARAM_EPINT (CPLEX) or XPRS_MIPTOL (XPRESS-MP) - float
+    iteration_limit
+	CPX_PARAM_ITLIM (CPLEX) or XPRS_LPITERLIMIT (XPRESS-MP) -integer
+    node_limit
+	CPX_PARAM_NODELIM (CPLEX) or XPRS_MAXNODE (XPRESS-MP) -integer
+    objdifference
+	CPX_PARAM_OBJDIF (CPLEX) or XPRS_MIPADDCUTOFF (XPRESS-MP) - float
+    refactor
+	CPX_PARAM_REINV (CPLEX) or XPRS_INVERTFREQ (XPRESS-MP) -integer
+    scrind
+	CPX_PARAM_SCRIND (CPLEX) or XPRS_OUTPUTLOG (XPRESS-MP) -integer
+
+
+            
+
+Exceptions
+     5 --- EplexInstance does not a solver setup for it.
+
+See Also
+   eplex_solver_setup / 4, eplex_set / 2, lp_set / 3, lp_get / 3, lp_add_constraints / 4

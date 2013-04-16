@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>errno_id(-Message)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>errno_id(-Message)</H1>
+Message is bound to the message string that corresponds to most recent
+operating system error that occurred during the execution.
+
+
+<DL>
+<DT><EM>-Message</EM></DT>
+<DD>Variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate unifies Message with the string that corresponds to the
+   most recent operating system error that occurred during the execution.
+   These messages differ between different operating systems.
+   Operating system interface errors which occur within built-in predicates
+   are normally indicated by the predicate raising event 170
+   "system interface error". The event handler then retrieves the
+   error message using errno_id/1. The system remembers the last error
+   message until a new error occurs.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Message is neither variable nor string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 3]: delete(nofile).
+system interface error: No such file or directory in delete(nofile)
+
+[eclipse 4]: errno_id(Msg).
+Msg = "No such file or directory"
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>
+</BODY></HTML>

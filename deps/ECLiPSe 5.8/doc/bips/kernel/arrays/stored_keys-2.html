@@ -1,0 +1,55 @@
+<HTML><HEAD><TITLE>stored_keys(+StoreHandle, ?Keys)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>stored_keys(+StoreHandle, ?Keys)</H1>
+Retrieve all keys stored in a store object
+<DL>
+<DT><EM>StoreHandle</EM></DT>
+<DD>A store handle or store name
+</DD>
+<DT><EM>Keys</EM></DT>
+<DD>A variable or list
+</DD>
+</DL>
+<H2>Description</H2>
+	This retrieves a list of all keys under which entries are stored
+	in the given store object. If the store is empty, the empty list
+	is returned.
+<P>
+	The order of the keys in the returned list is undefined.
+<P>
+	The complexity of this operation is linear in the size of all keys,
+	since they need to be copied.
+<P>
+	Note: If StoreHandle is not a handle, then it must be an atom or a
+	compound term, and the store is identified by this term's toplevel
+	functor together with the context module.
+    
+<H3>Fail Conditions</H3>
+None
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>StoreHandle is uninstantiated
+<DT><EM>(5) type error </EM>
+<DD>StoreHandle is neither atom nor compound term nor store handle
+<DT><EM>(45) record does not exist </EM>
+<DD>StoreHandle is not the name of a store
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+    ?- store_create(Handle),
+       store_set(Handle, tom, 12345),
+       store_set(Handle, name(dick,tracy), phone(42376,home)),
+       store_set(Handle, numbers:prime, [2,3,5,7|_More]),
+       stored_keys(Handle, Keys).
+
+    Handle = 'STORE'(16'003130e8)
+    Keys = [numbers:prime, tom, name(dick, tracy)]
+    Yes (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/store-1.html">store / 1</A>, <A HREF="../../kernel/modules/local-1.html">local / 1</A>, <A HREF="../../kernel/arrays/store_erase-1.html">store_erase / 1</A>, <A HREF="../../kernel/arrays/store_set-3.html">store_set / 3</A>, <A HREF="../../kernel/arrays/store_contains-2.html">store_contains / 2</A>, <A HREF="../../kernel/arrays/store_get-3.html">store_get / 3</A>, <A HREF="../../kernel/arrays/store_delete-2.html">store_delete / 2</A>, <A HREF="../../kernel/arrays/stored_keys_and_values-2.html">stored_keys_and_values / 2</A>, <A HREF="../../kernel/arrays/store_create-1.html">store_create / 1</A>, <A HREF="../../kernel/arrays/store_count-2.html">store_count / 2</A>
+</BODY></HTML>

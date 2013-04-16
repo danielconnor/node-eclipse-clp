@@ -1,0 +1,249 @@
+<HTML><HEAD><TITLE>Obsolete</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Obsolete</H1>
+Obsolete built-ins which should not be used in new code
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="abolish_op-2.html"><STRONG>abolish_op(+Name, +Associativity)</STRONG></A></DT>
+<DD>Remove the declaration of the visible operator +Name of associativity
+Associativity.
+
+</DD>
+<DT><A HREF="abolish_record-1.html"><STRONG>abolish_record(+Key)</STRONG></A></DT>
+<DD>Remove the local record Key and all its recorded values.
+
+</DD>
+<DT><A HREF="autoload-2.html"><STRONG>autoload(+Library, +ListOfPredSpec)</STRONG></A></DT>
+<DD>Declares the predicates in ListOfPredSpec to be autoloading from the module
+Library, which is in the file Library.pl in one of the library directories.
+
+</DD>
+<DT><A HREF="autoload_tool-2.html"><STRONG>autoload_tool(+Library, +ListOfPredSpec )</STRONG></A></DT>
+<DD>Declares the predicates in ListOfPredSpec to be autoloading tools from the
+module (file) Library.pl.
+
+</DD>
+<DT><A HREF="b_external-1.html"><STRONG>b_external(+PredSpec)</STRONG></A></DT>
+<DD>Declares PredSpec to be a non-deterministic external predicate.
+
+</DD>
+<DT><A HREF="b_external-2.html"><STRONG>b_external(+PredSpec, +CName)</STRONG></A></DT>
+<DD>Defines PredSpec to be a nondeterministic external predicate linked to the
+C function whose system name is CName.
+
+</DD>
+<DT><A HREF="begin_module-1.html"><STRONG>begin_module(+Module)</STRONG></A></DT>
+<DD>Start the definition of the body of the Module.
+
+</DD>
+<DT><A HREF="call-2.html"><STRONG>call(+Goal, +Module)</STRONG></A></DT>
+<DD>Succeeds if Goal (which is visible in module Module) succeeds.
+
+</DD>
+<DT><A HREF="call_explicit-2.html"><STRONG>call_explicit(+Goal, +Module)</STRONG></A></DT>
+<DD>Succeeds if Goal which is defined in module Module succeeds.
+
+</DD>
+<DT><A HREF="cancel_after_event-1.html"><STRONG>cancel_after_event(?Event)</STRONG></A></DT>
+<DD>   Cancel all pending instances of after event Event.
+
+</DD>
+<DT><A HREF="char_int-2.html"><STRONG>char_int(?Char, ?Integer)</STRONG></A></DT>
+<DD>Succeeds if Integer is the ASCII code of the one-character string Char.
+
+</DD>
+<DT><A HREF="coroutine-0.html"><STRONG>coroutine</STRONG></A></DT>
+<DD>Switches on the coroutine flag, equivalent to set_flag(coroutine, on).
+
+</DD>
+<DT><A HREF="current_after_event-1.html"><STRONG>current_after_event(?Event)</STRONG></A></DT>
+<DD>   Check or find currently pending after events (inside handler).
+
+</DD>
+<DT><A HREF="current_stream-3.html"><STRONG>current_stream(?Name, ?Mode, ?Stream)</STRONG></A></DT>
+<DD>Succeeds if there is currently an open stream Stream open to the file Name
+in the mode Mode. This predicate is obsolete, use current_stream/1 and
+get_stream_info/3 instead.
+
+</DD>
+<DT><A HREF="current_struct-1.html"><STRONG>current_struct(?Struct)</STRONG></A></DT>
+<DD>Succeeds if Struct is a currently visible structure specification.
+
+</DD>
+<DT><A HREF="dbgcomp-0.html"><STRONG>dbgcomp</STRONG></A></DT>
+<DD>Tells the compiler to generate code with debug instructions.  Equivalent to
+the call to set_flag(debug_compile, on).
+
+</DD>
+<DT><A HREF="define_error-2.html"><STRONG>define_error(+Message, -N)</STRONG></A></DT>
+<DD>Error number N is newly defined to give the message Message.
+
+</DD>
+<DT><A HREF="define_macro-3.html"><STRONG>define_macro(+TermClass, +TransPred, +Options)</STRONG></A></DT>
+<DD>Defines a macro transformation for the functor or type specified by
+TermClass.  The transformation predicate is TransPred and Options is a list
+of options.
+
+</DD>
+<DT><A HREF="delay-2.html"><STRONG>delay(?Variables, +Goal)</STRONG></A></DT>
+<DD>Delay the Goal on all variables in the term Variables.
+
+</DD>
+<DT><A HREF="erase_macro-1.html"><STRONG>erase_macro(+TransTerm)</STRONG></A></DT>
+<DD>Erases the macro definition for TransTerm done in the current module
+
+</DD>
+<DT><A HREF="errno_id-2.html"><STRONG>errno_id(+N, -Message)</STRONG></A></DT>
+<DD>Message is bound to the message string that corresponds to the UNIX message
+for a system call error when the UNIX errno has the value N.
+
+</DD>
+<DT><A HREF="event_create-2.html"><STRONG>event_create(+Goal, -EventHandle)</STRONG></A></DT>
+<DD>Create an ECLiPSe event from an arbitrary goal.</DD>
+<DT><A HREF="event_retrieve-2.html"><STRONG>event_retrieve(+EventHandle, ?Goal)</STRONG></A></DT>
+<DD>Given the handle with which an event is associated, retrieve the event goal.</DD>
+<DT><A HREF="fail_if-1.html"><STRONG>fail_if(+Goal)</STRONG></A></DT>
+<DD>Succeeds if Goal cannot be satisfied.  Uses negation as failure (synonym of
+not/1 and \+/1).
+
+</DD>
+<DT><A HREF="get_error_handler-3.html"><STRONG>get_error_handler(+Number, ?PredSpec, ?Module)</STRONG></A></DT>
+<DD>Returns the error_handler for error number Number and its home module
+Module.
+
+</DD>
+<DT><A HREF="get_prompt-3.html"><STRONG>get_prompt(+InStream, ?Prompt, ?OutStream)</STRONG></A></DT>
+<DD>Succeeds if the prompt for the stream InStream is Prompt and is written to
+the stream OutStream.
+
+</DD>
+<DT><A HREF="get_timer-2.html"><STRONG>get_timer(+Timer, ?Interval)</STRONG></A></DT>
+<DD>Succeed if the specified Timer is running and sends signals in intervals of
+Interval seconds.
+
+</DD>
+<DT><A HREF="global-1.html"><STRONG>global +SpecList</STRONG></A></DT>
+<DD>Declares the procedure(s) and other modular items specified by SpecList
+to be global.
+</DD>
+<DT><A HREF="global_op-3.html"><STRONG>global_op(+Precedence, +Associativity, +Name)</STRONG></A></DT>
+<DD>Defines the global operator(s) in Name to have precedence Precedence and
+associativity Associativity.  If Precedence is 0 then the operator
+definition is removed.
+
+</DD>
+<DT><A HREF="is_built_in-1.html"><STRONG>is_built_in(+PredSpec)</STRONG></A></DT>
+<DD>Succeeds if PredSpec is a system built-in predicate.
+
+</DD>
+<DT><A HREF="is_locked-1.html"><STRONG>is_locked(+Module)</STRONG></A></DT>
+<DD>Succeeds if the module Module is locked.
+
+</DD>
+<DT><A HREF="lib-2.html"><STRONG>lib(+LibraryName,+ModuleName)</STRONG></A></DT>
+<DD>The library LibraryName is loaded into the module ModuleName if not loaded
+already.
+
+</DD>
+<DT><A HREF="local_record-1.html"><STRONG>local_record(+Key)</STRONG></A></DT>
+<DD>Declare the record with key Key to be local to the caller module
+
+</DD>
+<DT><A HREF="make_array-1.html"><STRONG>make_array(+Array)</STRONG></A></DT>
+<DD>Creates the untyped array or global variable Array.
+
+</DD>
+<DT><A HREF="make_array-2.html"><STRONG>make_array(+Array, +Type)</STRONG></A></DT>
+<DD>Creates the global array or global variable Array of type Type.
+
+</DD>
+<DT><A HREF="make_local_array-1.html"><STRONG>make_local_array(+Array)</STRONG></A></DT>
+<DD>Creates an array or global variable Array visible only in the caller
+module.
+
+</DD>
+<DT><A HREF="make_local_array-2.html"><STRONG>make_local_array(+Array, +Type)</STRONG></A></DT>
+<DD>Creates an array or global variable Array of type Type visible only in the
+caller module.
+
+</DD>
+<DT><A HREF="module_interface-1.html"><STRONG>module_interface(+Module)</STRONG></A></DT>
+<DD>Create the module Module and start defining its interface.
+
+</DD>
+<DT><A HREF="name-2.html"><STRONG>name(?Atomnumber, ?List)</STRONG></A></DT>
+<DD>Succeeds if List is the corresponding list of ASCII codes for the atom or
+number Atomnumber.
+
+</DD>
+<DT><A HREF="nodbgcomp-0.html"><STRONG>nodbgcomp</STRONG></A></DT>
+<DD>Tells the compiler to generate code without debug instructions and not to
+retain the source variable names.
+
+</DD>
+<DT><A HREF="pathname-2.html"><STRONG>pathname(+FilePath, ?Path)</STRONG></A></DT>
+<DD>Succeeds if the pathname FilePath, if stripped of its file name, gives
+Path, the path up to the parent directory of the file.
+
+</DD>
+<DT><A HREF="pathname-3.html"><STRONG>pathname(+FilePath, ?Path, ?Name)</STRONG></A></DT>
+<DD>If FilePath is a pathname of a file, succeed if Path is the pathname of its
+parent directory and Name is the local file name.
+
+</DD>
+<DT><A HREF="phrase-2.html"><STRONG>phrase(+Grammar, ?List)</STRONG></A></DT>
+<DD>Succeeds if List unifies with a list from the specified grammar Grammar.
+
+</DD>
+<DT><A HREF="portray_goal-2.html"><STRONG>portray_goal(+Term, ?TransTerm)</STRONG></A></DT>
+<DD>Apply the goal portray (write macro) transformation to Term</DD>
+<DT><A HREF="reset_error_handler-1.html"><STRONG>reset_error_handler(+Number)</STRONG></A></DT>
+<DD>Resets the handler for error number Number to its default value.
+
+</DD>
+<DT><A HREF="schedule_woken-1.html"><STRONG>schedule_woken(+SuspList)</STRONG></A></DT>
+<DD>Pass the suspension list SuspList to the waking scheduler.
+
+</DD>
+<DT><A HREF="schedule_woken-2.html"><STRONG>schedule_woken(+SuspList, +Priority)</STRONG></A></DT>
+<DD>Schedule all suspensions in the suspension list SuspList with the priority
+Priority.
+
+</DD>
+<DT><A HREF="set_error_handler-2.html"><STRONG>set_error_handler(+Number, +PredSpec)</STRONG></A></DT>
+<DD>Set an error handler PredSpec for the error with number Number.
+
+</DD>
+<DT><A HREF="set_prompt-3.html"><STRONG>set_prompt(+InStream, +Prompt, +OutStream)</STRONG></A></DT>
+<DD>The prompt Prompt is output on the stream OutStream for input to the input
+stream InStream.
+
+</DD>
+<DT><A HREF="set_suspension_priority-2.html"><STRONG>set_suspension_priority(+Susp, +Priority)</STRONG></A></DT>
+<DD>Change the priority of the suspended goal Susp to Priority.
+
+</DD>
+<DT><A HREF="set_timer-2.html"><STRONG>set_timer(+Timer, +Interval)</STRONG></A></DT>
+<DD>Start (or stop) the specified Timer to send signals in intervals of
+Interval seconds.
+
+</DD>
+<DT><A HREF="suffix-2.html"><STRONG>suffix(+FileName, ?Suffix)</STRONG></A></DT>
+<DD>Succeeds if the string Suffix is the extension part of the input string
+FileName.
+
+</DD>
+<DT><A HREF="suspension_to_goal-3.html"><STRONG>suspension_to_goal(+Susp, ?Goal, ?Module)</STRONG></A></DT>
+<DD>Succeeds for an unwoken suspension and returns the corresponding Goal
+structure and caller module.
+
+</DD>
+<DT><A HREF="tool-1.html"><STRONG>tool(+PredSpec)</STRONG></A></DT>
+<DD>Declares PredSpec as a tool interface procedure.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<HR>Generated from obsolete.eci on Tue Jan 25 01:58:27 2005
+
+</BODY></HTML>

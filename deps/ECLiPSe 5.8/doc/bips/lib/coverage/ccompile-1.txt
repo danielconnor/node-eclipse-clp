@@ -1,0 +1,20 @@
+
+ccompile(+File)
+
+   Compile a file, inserting code coverage counters
+
+Arguments
+   File                Atom or string
+
+Type
+   library(coverage)
+
+Description
+
+    This is a variant of the ECLiPSe compiler that inserts code coverage
+    counters into the compiled code. This code can then be run, and the
+    results analysed by printing them using coverage:result/1.
+    
+
+See Also
+   ccompile / 2, library(coverage), result / 1, result / 2

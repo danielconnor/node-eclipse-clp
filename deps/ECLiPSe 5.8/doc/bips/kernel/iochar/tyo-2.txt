@@ -1,0 +1,83 @@
+
+tyo(+Stream, +Ascii)
+
+   The character represented by the ascii integer Ascii is put onto the output
+stream Stream in raw mode.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   +Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the output stream Stream in raw mode.
+
+
+   If the stream is a terminal, the tyo/2 output goes directly to the
+   stream, whereas the output from put/2 is buffered first, and is only
+   output to the stream when the output is flushed (e.g.  explicitly using
+   flush/1).
+
+
+   If the stream is not a terminal, tyo/2 behaves like put/2.
+
+
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     4 --- Ascii is not instantiated.
+     5 --- Stream is neither an integer nor an atom.
+     5 --- Ascii is instantiated, but not to an integer.
+   192 --- Stream is not an output stream.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+   Success:
+      [eclipse]: set_stream(screen,output),
+      > tyo(screen,91),tyo(screen,97),
+      > tyo(screen,93).
+      [a]
+      yes.
+
+      [eclipse]: put(screen, 0'a), tyo(screen, 0'b),
+      > put(screen, 0'c), tyo(screen, 0'd).
+      bdac
+      yes.
+
+      [eclipse]: write(screen,i), tyo(screen, 0'h).
+      hi
+      yes.
+
+Error:
+      tyo(Stream,A).                (Error 4).
+      tyo(output,a).                (Error 5).
+      tyo(98.0,output).             (Error 5).
+      tyo("string", A).             (Error 5).
+      tyo(11,97).                   (Error 192).
+      tyo(atom,97).                 (Error 193).
+
+
+
+
+
+See Also
+   tyi / 1, tyi / 2, tyo / 1

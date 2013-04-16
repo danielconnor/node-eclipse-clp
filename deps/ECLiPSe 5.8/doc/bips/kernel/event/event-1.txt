@@ -1,0 +1,67 @@
+
+event(+EventId)
+
+   The event EventId is raised and the corresponding error handler is
+executed.
+
+
+
+Arguments
+   +EventId            Atom or event Handle, or a list of atoms and/or event handles.
+
+Type
+   Event Handling
+
+Description
+   The event EventId is raised and the corresponding error handler is
+   executed.
+
+
+   Other ways to raise events are by
+
+   - one of the builtins error/2 or error/3.
+   - posting an event from external code using ec_post_event().
+   - an interrupt whose handler has been specified as event/1.
+
+   The latter two have the effect of dynamically inserting an event/1
+   goal into the current execution at the next synchronous point,
+   which is usually just before the next predicate call.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the handler fails.
+
+
+
+Exceptions
+     4 --- EventId is not ground
+     5 --- EventId is instantiated, but neither an atom nor an event handle, or a list of them
+    32 --- No handler is associated to an atomic EventId
+
+Examples
+   
+    ?- event(hello).
+    warning: no handler for event in hello
+    yes.
+
+    ?- set_event_handler(hello, writeln/1).    
+    yes.
+
+    ?- event(hello).
+    hello
+    yes.
+
+    ?- event([hello,hello]).
+    hello
+    hello
+    Yes (0.00s cpu)
+
+
+
+See Also
+   event_create / 3, is_event / 1, error / 2, error / 3, reset_event_handler / 1, set_event_handler / 2, set_interrupt_handler / 2

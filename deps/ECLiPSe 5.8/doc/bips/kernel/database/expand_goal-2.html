@@ -1,0 +1,39 @@
+<HTML><HEAD><TITLE>expand_goal(+Term, ?TransTerm)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>expand_goal(+Term, ?TransTerm)</H1>
+Apply goal inline expansion to Term
+<DL>
+<DT><EM>+Term</EM></DT>
+<DD>A callable term.
+</DD>
+<DT><EM>?TransTerm</EM></DT>
+<DD>A variable or callable term.
+</DD>
+</DL>
+<H2>Description</H2>
+    Applies a goal inline expansion to Term, if any is visible in the
+    caller module. If no inline declaration is visible, TransTerm is
+    identical to Term.
+    <P>
+    Normally, goal inline expansion is performed implicitly by the compiler.
+    For certain meta-programming applications (e.g. for writing other
+    compilers) it can be performed explicitly using expand_goal/2.
+
+<H3>Fail Conditions</H3>
+None.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: lib(fd).
+    yes.
+
+    [eclipse 5]: expand_goal(X#&gt;Y, G).
+    X = X
+    Y = Y
+    G = fd_arith : fd_gec(X, -1, Y, -1, 0)
+    yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/inline-2.html">inline / 2</A>, <A HREF="../../kernel/syntax/portray-3.html">portray / 3</A>
+</BODY></HTML>

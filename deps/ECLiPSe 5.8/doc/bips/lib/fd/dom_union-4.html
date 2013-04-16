@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>dom_union(+Dom1, +Dom2, -DomUnion, -Size)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dom_union(+Dom1, +Dom2, -DomUnion, -Size)</H1>
+The domain DomUnion is the union of domains Dom1 and Dom2 and Size is the
+number of its elements.
+
+
+<DL>
+<DT><EM>+Dom1</EM></DT>
+<DD>A finite domain.
+</DD>
+<DT><EM>+Dom2</EM></DT>
+<DD>A finite domain.
+</DD>
+<DT><EM>-DomUnion</EM></DT>
+<DD>A variable.
+</DD>
+<DT><EM>-Size</EM></DT>
+<DD>A variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   The domain DomUnion is the union of domains Dom1 and Dom2 and Size is
+   the number of its elements.
+
+<P>
+   Note that the main use of the predicate is to yield the most specific
+   generalisation of two domains, in the usual cases the domains become
+   smaller, not bigger.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the union is empty.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/dom_compare-3.html">dom_compare / 3</A>, <A HREF="../../lib/fd/dom_member-2.html">dom_member / 2</A>, <A HREF="../../lib/fd/dom_range-3.html">dom_range / 3</A>, <A HREF="../../lib/fd/dom_size-2.html">dom_size / 2</A>, <A HREF="../../lib/fd/dvar_domain-2.html">dvar_domain / 2</A>
+</BODY></HTML>

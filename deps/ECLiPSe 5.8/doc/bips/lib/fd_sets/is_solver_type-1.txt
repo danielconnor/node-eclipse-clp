@@ -1,0 +1,23 @@
+
+is_solver_type(?Term)
+
+   Succeeds if Term is a ground set or a set variable
+
+Arguments
+   Term                A term
+
+Type
+   library(fd_sets)
+
+Description
+
+    Succeeds if Term is either a set (represented as a list) or a set
+    variable. For efficiency reasons, lists are not checked for being
+    valid set representations (i.e. strictly sorted lists of integers),
+    the predicate succeeds for any list.
+
+
+Fail Conditions
+   Set is neither a set nor a set variable
+
+

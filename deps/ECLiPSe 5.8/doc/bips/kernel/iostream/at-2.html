@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>at(+Stream, ?Pointer)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>at(+Stream, ?Pointer)</H1>
+Succeeds if Pointer is the pointer position of the stream Stream.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined symbolic stream name).
+</DD>
+<DT><EM>?Pointer</EM></DT>
+<DD>Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies Pointer with the file position of the file specified by Stream.
+
+<P>
+   Stream can be a symbolic stream name or a physical stream number.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Pointer is not the pointer position of the stream Stream.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Pointer is instantiated to a non-integer.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated to neither an integer nor an atom.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is an illegal stream mode.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: open(file1,write,s), at(s, P1),
+      &gt; write(s, 1234567890), at(s, P2), close(s).
+      P1 = 0
+      P2 = 10
+      yes.
+      [eclipse]: open(file1,update,s), at(s, P1), read(s, T),
+      &gt; at(s, P2), close(s).
+      P1 = 0
+      T = 1234567890
+      P2 = 10
+      yes.
+
+Error:
+      at(Stream, 4).      (Error 4).
+      at("3", Pointer).   (Error 5).
+      at(7, 4.3).         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/at_eof-1.html">at_eof / 1</A>, <A HREF="../../kernel/iostream/seek-2.html">seek / 2</A>
+</BODY></HTML>

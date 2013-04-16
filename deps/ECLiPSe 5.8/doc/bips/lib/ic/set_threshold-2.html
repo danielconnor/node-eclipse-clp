@@ -1,0 +1,34 @@
+<HTML><HEAD><TITLE>set_threshold(++Threshold, +WakeVars)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_threshold(++Threshold, +WakeVars)</H1>
+Sets the propagation threshold with recomputation.
+<DL>
+<DT><EM>Threshold</EM></DT>
+<DD>New threshold (float)
+</DD>
+<DT><EM>WakeVars</EM></DT>
+<DD>List of IC variables to "wake"
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Set the threshold to Threshold, which is a small floating-point number,
+   and then if the threshold has been reduced, wake all constraints
+   suspended on the bounds of the variables in the list WakeVars.
+   Subsequent to the setting of the new threshold, bounds updates to
+   non-integer variables are only performed if the change in the bounds
+   exceeds this threshold (in both absolute and relative terms).  The waking
+   of the constraints when the threshold is reduced allows part or all of
+   the system to be re-propagated in order to ensure the higher level of
+   precision is achieved before the rest of the computation proceeds.</P><P>
+
+   The default threshold is 1e-8.</P><P>
+
+   Limiting the amount of propagation is important for efficiency.  A higher
+   threshold speeds up computations, but reduces precision and may in the
+   extreme case prevent the system from being able to locate individual
+   solutions.</P>
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic/get_threshold-1.html">get_threshold / 1</A>, <A HREF="../../lib/ic/set_threshold-1.html">set_threshold / 1</A>
+</BODY></HTML>

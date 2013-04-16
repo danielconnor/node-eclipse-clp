@@ -1,0 +1,24 @@
+<HTML><HEAD><TITLE>daVinci_end</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(daVinci)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>daVinci_end</H1>
+This commands ends the information about a graph and calls daVinci to draw it.
+<DL>
+</DL>
+<H2>Description</H2>
+
+This commands is called once when all information about a graph have
+been transmitted.  It sends the graph description to the daVinci tool
+and causes it to bbe drawn.  After this command, the next daVinci
+command should be daVinci_begin/0 to begin the information about the
+next graph.  <p> 
+<H3>Fail Conditions</H3>
+fails if the stream daVinciEdge does not exist
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE>
+see daVinci_begin/0
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/daVinci/daVinci_begin-0.html">daVinci_begin / 0</A>
+</BODY></HTML>

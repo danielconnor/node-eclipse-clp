@@ -1,0 +1,84 @@
+
+all_short_paths_as_graph(+Graph, +DistanceArg, +SourceNode, +Tolerance, -Lengths, -SubGraph)
+
+   Computes all shortest paths from a single source in form of a subgraph
+
+Arguments
+   Graph               a graph structure
+   DistanceArg         which argument of EdgeData to use as distance (integer)
+   SourceNode          source node number (integer)
+   Tolerance           tolerable deviation from minimal length (non-negative number)
+   Lengths             array of numbers (minimum path lengths)
+   SubGraph            a graph structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes all shortest paths from the single source node SourceNode
+    to every sink node which is reachable from it. The result is returned
+    in the form of a sub-graph of the input graph, which contains all
+    relevant edges.
+
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. Important: the distance
+    information in EdgeData must be a non-negative number.
+
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+
+    SourceNode is the common starting point for the computed paths.
+
+    Tolerance should be zero in order to find only the shortest paths. 
+    If Tolerance is greater than zero, then all paths that are within
+    this tolerance of the shortest path length will be found.
+
+    The result is returned in the form of SubGraph, which is a
+    sub-graph of the input Graph, containing the same nodes, but only
+    those edges that are needed to construct the shortest paths for
+    the given parameters.  SubGraph does not inherit the nodename
+    information from Graph, this can be set explicitly if required.
+
+    In addition, a Lengths array is returned, whose entries indicate
+    the length of a shortest path from SourceNode to the corresponding
+    sink node.  If there is no path from SourceNode to a sink node J,
+    then Lengths[J] is uninstantiated.
+
+Properties of the resulting SubGraph
+
+    To generate an actual path from the resulting SubGraph, start from the
+    sink node J, select one of its incoming edges (graph_get_incoming_edges/3)
+    to find a predecessor node, and continue this process until the SourceNode
+    is reached. Depending on the parameters, the following 3 cases can occur:
+    
+    Tolerance is zero, and Graph did not contain zero-length edges: in this
+    case, SubGraph is cycle-free and shortest paths can be found by simply
+    selecting arbitrary incoming edges until SourceNode is reached.
+    Tolerance is zero, and Graph did contain zero-length edges: in this case,
+    SubGraph may contain (zero-length) cycles which one may want to exclude
+    when constructing paths.
+    Tolerance is nonzero:  in this case, SubGraph may contain
+    cycles (of maximum length Tolerance).  Moreover, it may be
+    possible to use the edges in SubGraph to construct cycle-free paths
+    whose total length is greater than the shortest path length plus
+    the tolerance.  These may need to be excluded explicitly.
+    
+    
+
+Examples
+   
+    ?- sample_graph(G), all_short_paths_as_graph(G, 0, 1, 0, L, E).
+    G = graph(13, []([e(1, 6, 1), e(1, 2, 1), e(1, 7, 1)], [], ...)
+    L = [](0, 1, 2, 3, 2, 1, 1, _326, _327, 2, 3, 3, 3)
+    SG = graph(13, []([e(1, 7, 1), e(1, 6, 1), e(1, 2, 1)], [], ...)
+    Yes (0.00s cpu)
+    
+
+See Also
+   possible_path / 7, shortest_paths / 4, single_pair_shortest_path / 5, all_short_paths_as_edges / 6, single_pair_short_path / 6, single_pair_all_short_paths_as_graph / 7, graph_get_incoming_edges / 3, graph_set_nodenames / 2

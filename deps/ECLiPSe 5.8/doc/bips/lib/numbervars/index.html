@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>library(numbervars)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(numbervars)</H1>
+C-Prolog style numbervars predicate
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><STRONG>numbervars(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export syntax_option($VAR)</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+
+    Implements the numbervars(Term, From, To) predicate of C-Prolog.  Term
+    is any term, From and To are integer numbers.  All variables in Term
+    are instantiated to terms of the form
+    <PRE>
+	$VAR(N) 
+    </PRE>
+    where N is an integer number.  The first encountered variable will be
+    coded by the number From, on exit To is instantiated to the next
+    unused number. 
+    <P>
+    This predicate can thus be used to encode nonground term using a
+    ground representation.  Note that metaterms can be used for the same
+    purpose, but their use is both more efficient and more general,
+    because the variables are not actually instantiated and so they can be
+    used again as variables when needed. 
+    
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, ECRC Munich
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2001/09/13 17:48:57 $
+</UL>
+<HR>Generated from numbervars.eci on Tue Jan 25 01:58:33 2005
+
+</BODY></HTML>

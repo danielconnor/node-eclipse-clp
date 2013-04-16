@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Multiple Solver States</TITLE>
+<META NAME="description" CONTENT="Multiple Solver States">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node59.html">
+<LINK REL="previous" HREF="node57.html">
+<LINK REL="up" HREF="node53.html">
+<LINK REL="next" HREF="node59.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1796"
+ HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1792"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1786"
+ HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1794"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1797"
+ HREF="node59.html">External Solver Output and</A>
+<B> Up:</B> <A NAME="tex2html1793"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1787"
+ HREF="node57.html">Low-Level Solver Interface</A>
+ &nbsp <B>  <A NAME="tex2html1795"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00950000000000000000">
+Multiple Solver States</A>
+</H1>
+
+<P>
+This library allows multiple solver states to be maintained in the same
+program. Each solver state represents an eplex problem. For the external
+solver, each solver state is completely independent. For ECLiPSe, the
+solver states may share variables in the constraints or objective
+functions. The eplex library maintains separate solution values for each
+solver state, and it is up to the user to reconcile these solution values
+if they are different.
+
+<P>
+<A NAME="4340"></A>
+When two eplex variables are unified, then the library ensures that the
+now single variable maintains the eplex values from both variables. The one
+exception is when two variables from the same solver state is unified. In
+this case, an equality constraint between the two variables is sent to the
+solver state, but the user can only obtain one eplex value from the unified
+variable, even though in the external solver, the variable is still
+represented as two variables (columns in the matrix). 
+
+<P>
+It is possible to turn off this automatic sending of the equality
+constraints by specifying `no' for the option <TT>post_equality_when_unified</TT> (in solver setup, or via <code>eplex_set/2</code>). 
+The reason is that some solvers automatically perform unification
+when they know that two variables are the same. For example, for
+the constraint <TT>X $= Y + Z</TT>, if <TT>Y</TT> becomes 0, then <TT>X</TT> and
+<TT>Z</TT> may be unified by the solver maintaining the constraint. If the
+same constraint was also posted to the eplex solver state, then there is no
+need to send the redundant constraint. However, if the external solver
+state did not have the constraint, then it can become inconsistent with
+that of ECLiPSe if the equality constraint is not sent. Therefore, only
+turn off sending of equality constraints if you are certain you know what
+you are doing.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1796"
+ HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1792"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1786"
+ HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1794"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1797"
+ HREF="node59.html">External Solver Output and</A>
+<B> Up:</B> <A NAME="tex2html1793"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1787"
+ HREF="node57.html">Low-Level Solver Interface</A>
+ &nbsp <B>  <A NAME="tex2html1795"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

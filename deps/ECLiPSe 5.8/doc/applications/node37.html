@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Group</TITLE>
+<META NAME="description" CONTENT="Group">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1037"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1031"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1025"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1033"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1035"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1038"
+ HREF="node38.html">Lookup</A>
+<B> Up:</B> <A NAME="tex2html1032"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1026"
+ HREF="node36.html">Merge</A>
+ &nbsp <B>  <A NAME="tex2html1034"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1036"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1039"
+ HREF="node37.html#SECTION006130010000000000000">Description</A>
+<LI><A NAME="tex2html1040"
+ HREF="node37.html#SECTION006130020000000000000">Parameters</A>
+<LI><A NAME="tex2html1041"
+ HREF="node37.html#SECTION006130030000000000000">Schema</A>
+<LI><A NAME="tex2html1042"
+ HREF="node37.html#SECTION006130040000000000000">Comments</A>
+<LI><A NAME="tex2html1043"
+ HREF="node37.html#SECTION006130050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION006130000000000000000">
+Group</A>
+</H1>
+
+<H4><A NAME="SECTION006130010000000000000"></A>
+<A NAME="721"></A>
+<BR>
+Description
+</H4>This concept takes a sorted list of items and creates a list of lists, where items with the same key are put in the same sub-list. This works even for the empty input list.
+
+<P>
+The second argument of <I>group_lp</I> serves as an accumulator<A NAME="723"></A> to collect items with the same key. As long as the next item uses the same key, it is put into this accumulator (2nd clause). If the remaining list is empty (1st clause) or it starts with an element of a different key (3rd clause), the accumulated list is put into the output list.
+
+<H4><A NAME="SECTION006130020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>L</STRONG>
+<DD>a list
+<DT><STRONG>K</STRONG>
+<DD>a free variable, will be bound to a list
+</DL>
+<H4><A NAME="SECTION006130030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode group(+,-).
+group([],[]).
+group([H|T],K):-
+        group_lp(T,[H],K).
+
+group_lp([],L,[L]).
+group_lp([H|T],[A|A1],K):-
+        same_group(H,A),
+        !,
+        group_lp(T,[H,A|A1],K).
+group_lp([H|T],L,[L|K]):-
+        group_lp(T,[H],K).
+</PRE>
+<H4><A NAME="SECTION006130040000000000000">
+Comments</A>
+</H4>
+The order of items in the resulting sub lists is the reverse of their order in the initial list.
+
+<P>
+The order of the sub lists in the result is the same as the order of the keys in the original list.
+
+<P>
+If the initial list is not sorted by the same key that is used in <I>same_group</I>, then this program does not work at all.
+
+<H4><A NAME="SECTION006130050000000000000">
+Example</A>
+</H4>
+The following program takes a list of terms and groups them according to some argument number <I>N</I>. It returns a list of <I>group/2</I> terms, where the first argument is the common key in the group, and the second argument is a list of all terms which share that key.
+<A NAME="734"></A>
+<PRE>
+:-mode group(+,+,-).
+group([],_,[]):-
+        !.
+group(Terms,N,Grouped):-
+        sort(N,=&lt;,Terms,[H|T]),
+        arg(N,H,Group),
+        group1(T,Group,[H],N,Grouped).
+
+group1([],Group,L,_,[group(Group,L)]).
+group1([H|T],Group,L,N,Grouped):-
+        arg(N,H,Group),
+        !,
+        group1(T,Group,[H|L],N,Grouped).
+group1([H|T],Old,L,N,[group(Old,L)|Grouped]):-
+        arg(N,H,Group),
+        group1(T,Group,[H],N,Grouped).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1037"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1031"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1025"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1033"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1035"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1038"
+ HREF="node38.html">Lookup</A>
+<B> Up:</B> <A NAME="tex2html1032"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1026"
+ HREF="node36.html">Merge</A>
+ &nbsp <B>  <A NAME="tex2html1034"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1036"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

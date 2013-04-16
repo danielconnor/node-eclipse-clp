@@ -1,0 +1,14 @@
+
+hash_count(+Table, ?Count)
+
+   Returns the number of entries in the table
+
+Arguments
+   Table               A hash table
+   Count               A variable or number
+
+Type
+   library(hash)
+
+See Also
+   hash_create / 1, hash_list / 3

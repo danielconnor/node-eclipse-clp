@@ -1,0 +1,24 @@
+<HTML><HEAD><TITLE>indomain(?Var)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>indomain(?Var)</H1>
+Instantiates an integer IC variable to an element of its domain.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>An integer IC variable or an integer
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Simple predicate for instantiating an integer IC variable to an element
+   of its domain.  It starts with the smallest element, and upon
+   backtracking tries successive elements until the entire domain has been
+   explored, at which point the predicate fails.</P><P>
+
+   If Var is already a ground integer, then this predicate simply succeeds
+   exactly once without leaving a choicepoint.</P>
+
+<H3>Resatisfiable</H3>
+Yes.
+<H2>See Also</H2>
+<A HREF="../../lib/ic/labeling-1.html">labeling / 1</A>, <A HREF="../../lib/ic/NN-2.html">:: / 2</A>, <A HREF="../../lib/fd/indomain-1.html">fd : indomain / 1</A>, <A HREF="../../lib/ic_symbolic/indomain-1.html">ic_symbolic : indomain / 1</A>
+</BODY></HTML>

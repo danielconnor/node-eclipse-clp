@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Passing Control and Data to ECLiPSe from C</TITLE>
+<META NAME="description" CONTENT="Passing Control and Data to ECLiPSe from C">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node73.html">
+<LINK REL="previous" HREF="node71.html">
+<LINK REL="up" HREF="node65.html">
+<LINK REL="next" HREF="node73.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1777"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1773"
+ HREF="node65.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1767"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1775"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1778"
+ HREF="node73.html">Communication via ECLiPSe Streams</A>
+<B> Up:</B> <A NAME="tex2html1774"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Previous:</B> <A NAME="tex2html1768"
+ HREF="node71.html">Initialising and Shutting Down</A>
+ &nbsp <B>  <A NAME="tex2html1776"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001370000000000000000">
+Passing Control and Data to ECLiPSe from C</A>
+</H1>
+These are the functions needed to embed ECLiPSe into C code.
+<DL>
+<DT><STRONG>void		ec_post_goal(const pword)</STRONG>
+<DD> 
+<BR>
+post a goal (constraint) that will be executed when ECLiPSe
+	is resumed.
+
+<P>
+<DT><STRONG>void		ec_post_string(const char *)</STRONG>
+<DD> 
+<BR>
+same as ec_post_goal(), but the goal is given in ECLiPSe syntax
+	in a string. This should only be used if speed is not critical
+	and if the goal does not contain variables whose values may be
+	needed later.
+	This function is part of the simplified interface.
+
+<P>
+<DT><STRONG>void		ec_post_exdr(int len, const char *exdr)</STRONG>
+<DD> 
+<BR>
+same as ec_post_goal(), but the goal is given in EXDR format
+	(see chapter <A HREF="node46.html#chapexdr">9</A>).
+	This function is part of the simplified interface.
+
+<P>
+<DT><STRONG>int		ec_resume()</STRONG>
+<DD> 
+<BR>
+resume execution of the ECLiPSe engine: All posted goals will
+	be executed and all posted events will be handled.
+	The return value will be PSUCCEED if the goals succeed
+	PFAIL is returned if the goals fail, and PYIELD if control was
+	yielded because of a
+	<A NAME="tex2html450"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="8493"></A>
+
+predicate call in the ECLiPSe code.
+	If a writable queue stream with yield-option
+	(see <A NAME="tex2html452"
+ HREF="../bips/kernel/iostream/open-4.html">open/4</A><A NAME="8496"></A>)
+
+was flushed, the return value is PFLUSHIO.
+	If there was an attempt to read from an empty queue stream with
+	yield-option, the return value is PWAITIO.
+	If an asynchronous ECLiPSe thread is already running,
+	PRUNNING is returned.
+	No parameters can be passed.
+	This function is part of the simplified interface.
+
+<P>
+<DT><STRONG>int		ec_resume1(ec_ref ToC)</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume(), but if the return value is PSUCCED,
+	the ToC argument returns a cut value that can be used to discard
+	alternative solutions by passing it to ec_cut_to_chp().
+	If the return value is PYIELD, control was yielded because of a
+	<A NAME="tex2html454"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="8499"></A>
+
+predicate call in the ECLiPSe code, and ToC contains the data
+	passed by the first argument of
+	<A NAME="tex2html456"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="8502"></A>.
+
+If the return value is PFLUSHIO or PWAITIO, ToC contains
+	the associated stream number.
+
+<P>
+<DT><STRONG>int		ec_resume2(const pword FromC,ec_ref ToC)</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume1(), but it allows to pass an argument
+	to the resumed execution. This is only useful if the execution
+	had yielded due to a
+	<A NAME="tex2html458"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="8505"></A>
+
+predicate call. The term FromC is passed as input into the
+	second argument of
+	<A NAME="tex2html460"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="8508"></A>.
+
+<P>
+<DT><STRONG>int		ec_resume_long(long *ToC)</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume1(), but allows only integer values to be passed
+	from ECLiPSe to C (otherwise TYPE_ERROR is returned).
+	This function is part of the simplified interface.
+
+<P>
+<DT><STRONG>int		ec_resume_async()</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume(), but ECLiPSe is resumed in a separate
+	thread in case this is supported by the operating system.
+	The return value is PSUCCED if the thread started successfully,
+	SYS_ERROR if there was a problem creating the thread, and
+	PRUNNING if there was already an ECLiPSe thread running
+	(only one ECLiPSe thread is allowed to run at any time).
+	If threads are not supported, the call does nothing and return
+	PSUCCED. Use ec_resume_status() to wait for termination and
+	to retrieve the results of the execution.
+
+<P>
+<DT><STRONG>int		ec_resume_status()</STRONG>
+<DD> 
+<BR>
+This function is supposed to be called after a call to
+	ec_resume_async(). It returns PRUNNING as long as the ECLiPSe
+	thread is still running. If the thread has stopped, the return
+	values are the same as for ec_resume().
+	If threads are not supported, the pair of ec_resume_async()
+	and ec_resume_status() is equivalent to an ec_resume().
+
+<P>
+<DT><STRONG>int		ec_resume_status_long(long *ToC)</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume_status(), but allows an integer to be
+	returned to the caller, as done by ec_resume_long().
+
+<P>
+<DT><STRONG>int		ec_wait_resume_status_long(long *ToC, int timeout)</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume_status_long(), but waits for the ECLiPSe thread
+	to finish execution. The function returns as soon as the ECLiPSe thread
+	is finished, or after timeout milliseconds, whatever is earlier.
+	In case of timeout, the return value will be PRUNNING. If timeout is
+	zero, the function is equivalent to ec_resume_status_long().
+	If timeout is negative, there will be no timeout and the function
+	will only return when the ECLiPSe thread is finished.
+
+<P>
+<DT><STRONG>int		ec_handle_events(long *ToC)</STRONG>
+<DD> 
+<BR>
+Similar to ec_resume_long(), but posted goals are not executed,
+	only events are handled.
+
+<P>
+<DT><STRONG>void		ec_cut_to_chp(ec_ref)</STRONG>
+<DD> 
+<BR>
+Cut all choicepoints created by the batch of goals whose execution
+	succeeded. The argument should have been obtained by a call to
+	ec_resume2().
+
+<P>
+<DT><STRONG>int		ec_post_event(pword Name)</STRONG>
+<DD> 
+<BR>
+Post an event to the ECLiPSe engine. This will lead to the
+	execution of the corresponding event handler once the ECLiPSe
+	execution is resumed. See also <A NAME="tex2html462"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="8511"></A> and the User Manual
+
+chapter on event handling for more information.
+	Name should be an ECLiPSe atom.
+
+<P>
+<DT><STRONG>int		ec_post_event_string(const char *)</STRONG>
+<DD> 
+<BR>
+Post an event to the ECLiPSe engine. This will lead to the
+	execution of the corresponding event handler once the ECLiPSe
+	execution is resumed. See also <A NAME="tex2html464"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="8514"></A> and the User Manual
+
+chapter on event handling for more information. The event name
+	is given as a string.
+	This function is part of the simplified interface.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1777"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1773"
+ HREF="node65.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1767"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1775"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1778"
+ HREF="node73.html">Communication via ECLiPSe Streams</A>
+<B> Up:</B> <A NAME="tex2html1774"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Previous:</B> <A NAME="tex2html1768"
+ HREF="node71.html">Initialising and Shutting Down</A>
+ &nbsp <B>  <A NAME="tex2html1776"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

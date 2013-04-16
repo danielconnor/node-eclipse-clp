@@ -1,0 +1,1179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Communication via Queues</TITLE>
+<META NAME="description" CONTENT="Communication via Queues">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1105"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1101"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1095"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1103"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1106"
+ HREF="node31.html">Additional Control and Support</A>
+<B> Up:</B> <A NAME="tex2html1102"
+ HREF="node24.html">Remote Tcl Interface</A>
+<B> Previous:</B> <A NAME="tex2html1096"
+ HREF="node29.html">Executing an ECLiPSe Goal</A>
+ &nbsp <B>  <A NAME="tex2html1104"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1107"
+ HREF="node30.html#SECTION00661000000000000000">Queue Data Handlers</A>
+<LI><A NAME="tex2html1108"
+ HREF="node30.html#SECTION00662000000000000000">Synchronous Queues</A>
+<UL>
+<LI><A NAME="tex2html1109"
+ HREF="node30.html#SECTION00662100000000000000">Handlers for a Synchronous From-ECLiPSe Queue</A>
+<UL>
+<LI><A NAME="tex2html1110"
+ HREF="node30.html#SECTION00662110000000000000">Tcl Handler for From-ECLiPSe Queue</A>
+<LI><A NAME="tex2html1111"
+ HREF="node30.html#SECTION00662120000000000000">An example from-ECLiPSe queue with Tcl handler</A>
+<LI><A NAME="tex2html1112"
+ HREF="node30.html#SECTION00662130000000000000">ECLiPSe Handler for From-ECLiPSe Queue</A>
+</UL>
+<LI><A NAME="tex2html1113"
+ HREF="node30.html#SECTION00662200000000000000">Handlers for a Synchronous To-ECLiPSe Queue</A>
+<UL>
+<LI><A NAME="tex2html1114"
+ HREF="node30.html#SECTION00662210000000000000">Tcl Handler for a To-ECLiPSe Queue</A>
+<LI><A NAME="tex2html1115"
+ HREF="node30.html#SECTION00662220000000000000">An example to-ECLiPSe queue with Tcl handler</A>
+<LI><A NAME="tex2html1116"
+ HREF="node30.html#SECTION00662230000000000000">ECLiPSe Handler for a To-ECLiPSe Queue</A>
+<LI><A NAME="tex2html1117"
+ HREF="node30.html#SECTION00662240000000000000">An example to-ECLiPSe queue with ECLiPSe handler</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1118"
+ HREF="node30.html#SECTION00663000000000000000">Asynchronous Queues</A>
+<UL>
+<LI><A NAME="tex2html1119"
+ HREF="node30.html#SECTION00663100000000000000">Examples for asynchronous queue</A>
+<UL>
+<LI><A NAME="tex2html1120"
+ HREF="node30.html#SECTION00663110000000000000">Using the queue asynchronously: to-ECLiPSe</A>
+<LI><A NAME="tex2html1121"
+ HREF="node30.html#SECTION00663120000000000000">Using the queue synchronously: to-ECLiPSe</A>
+<LI><A NAME="tex2html1122"
+ HREF="node30.html#SECTION00663130000000000000">Using the queue asynchronously: from-ECLiPSe</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1123"
+ HREF="node30.html#SECTION00664000000000000000">Reusable Queue Names</A>
+<LI><A NAME="tex2html1124"
+ HREF="node30.html#SECTION00665000000000000000">Translating the Queue Names</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00660000000000000000">
+Communication via Queues</A>
+</H1>
+
+<P>
+Queues should be used to set up long-term I/O links between ECLiPSe and
+Tcl. An example would be the main output from an application that is to be
+displayed by a Tcl window.  Streams of bytes can be sent along the queue
+from one side to the other: on one side, data is written to the queue; and
+when the queue is flushed, the data is sent to the other side, which can
+now read the data. The data can either be sent as normal strings (where
+each byte represents a character) using the normal I/O calls, or they can
+be in EXDR format, in which case both sides need to read and write using
+EXDR.
+
+<P>
+On the Tcl side, the queue is seen as a Tcl I/O
+channel. On the ECLiPSe side, a queue is
+seen as an ECLiPSe I/O stream, which has a unique (numeric) ID, the
+stream number, and has a user supplied symbolic
+name. These all refer to the same queue. Queues are created using the symbolic names, and the Tcl side
+maintains tables of the correspondence between Tcl channel names, symbolic
+names and stream numbers. The built-in Tcl I/O commands accepts the Tcl
+channel name for operating on the queue, and for 
+compatibility with the embedding interface, many of the Tcl remote
+interface commands refer to the queue using the stream number. The
+interface provides commands to inter-convert the various names so that the
+right name can be used for a particular command.
+
+<P>
+There are two types of queues: 
+
+<P>
+<DL>
+<DT><STRONG>synchronous</STRONG>
+<DD>These queues are unidirectional,
+i.e. either for sending data from ECLiPSe to Tcl (from-ECLiPSe), or
+from Tcl to ECLiPSe (to-ECLiPSe). 
+These streams are synchronous because the interface ensures that the
+sending and receiving of data across the queue are synchronised. This is
+achieved by transferring control between
+ECLiPSe and Tcl in a coroutine-like manner to ensure that data that is
+sent from one side is processed on the other. 
+
+<P>
+These queues are  designed to be compatible with the queues
+created via ec_queue_create of the embedded interface 
+(see section&nbsp;<A HREF="node19.html#ecqueueconnect">5.4</A>). Their actual implementations are
+different, in that the queues in the embedded case are memory queues and
+the synchronous queue use socket connections. The interface tries to
+minimise the difference by buffering where
+possible at either ends of the  socket connection. However, there is an overhead for doing
+this, and not all differences can be hidden. This is discussed in more detail in section&nbsp;<A HREF="node33.html#remotediff">6.9</A>.
+
+
+<P>
+<DT><STRONG>asynchronous</STRONG>
+<DD>These are bi-directional -
+data can be sent both ways. Sending or receiving data on these queues does
+not necessarily transfer control between ECLiPSe and
+Tcl. In particular, it is not possible to request data from the other side
+if the queue is empty: such an operation would simply block. 
+This is because such queues map
+directly to the socket connections with no buffering, and there is no concept of a socket
+being empty. Generally, it is up to the programmer to co-ordinate the
+transfer and processing of the data. 
+
+<P>
+They have no direct
+equivalent in the embedding Tcl interface, but some uses of the embedding
+Tcl interface queues, such as writing data from one side without a
+corresponding reader on the other side, are better approximated by the
+asynchronous queues than the synchronous queues.  They can also be more
+efficient in that there is no buffering of the data is performed by the
+interface. 
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00661000000000000000"></A>
+<A NAME="remotehandles"></A>
+<BR>
+Queue Data Handlers
+</H2>
+
+<P>
+The processing of data on queues (synchronous and to some extent
+asynchronous) can be performed via <I>handlers</I>. A handler is a piece of
+code (a procedure in Tcl, a goal in ECLiPSe) whose execution is
+data-driven: it is invoked to deal
+with the transfer of data on a queue on their respective sides. 
+
+<P>
+In ECLiPSe, the handler goal is invoked using the events mechanism. That
+ is, an event is raised, and the event handler goal associated with the event
+ (see <A NAME="tex2html170"
+ HREF="../bips/kernel/event/set_event_handler-2.html">set_event_handler/2</A><A NAME="2515"></A>) is then executed when ECLiPSe has control. 
+
+<P>
+A handler can be called under two situations:
+
+<P>
+<DL>
+<DT><STRONG>Data consumer</STRONG>
+<DD>To consume data that has been sent over from the other
+side. Here, the other side has sent data over the queue, invoking the handler.
+The handler is expected to read the data off the queue and process it.
+An example of a data consumer handler is a Tcl handler which is invoked
+when the ECLiPSe side sends data that is intended to be displayed on a Tcl
+window. The handler would be
+invoked to read the data off the queue and display it on the window. 
+
+<P>
+<DT><STRONG>Data provider</STRONG>
+<DD>To provide data that has been requested by the other side. In this
+ case, the handler is expected to generate the data and write the data onto
+ the queue, and send it to the other side.  For example, on the Tcl side, a
+ Tcl handler might be invoked to ask for inputs from the user via the GUI.
+ Note that these data providers can only exist for the synchronous
+ queues.
+
+<P>
+</DL>
+
+<P>
+For each queue and for a particular direction of data flow, a
+handler can be defined on either the Tcl or the ECLiPSe side, but not
+both. The handler either consumes or provides data as described above. The
+reason that handlers cannot be defined on both sides 
+is that this avoids possible infinite loop of alternately
+triggering the data provider and the data consumer.
+
+<P>
+
+<H2><A NAME="SECTION00662000000000000000">
+Synchronous Queues</A>
+</H2>
+
+<P>
+These queues can be created on the Tcl side. This is done with
+the <B>ec_queue_create</B> command from within Tcl code:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="1948"></A>ec_queue_create <I>eclipse_stream_name mode ?command? ?event?</I></STRONG>
+<DD> 
+<BR>
+Creates a synchronous queue between Tcl and ECLiPSe sides. On
+        the Tcl side, a Tcl channel is created. On the ECLiPSe side, the 
+        queue would be given the symbolic name <I>eclipse_stream_name</I>. 
+        The <I>mode</I> argument indicates the direction of the queue, and
+        can either be fromec or toec<A NAME="tex2html173"
+ HREF="footnode.html#foot2468"><SUP>6.4</SUP></A>.
+        The procedure returns a channel identifier for use in commands
+        like <B>puts</B>, <B>read</B>, <B>ec_read_exdr</B>,
+        <B>ec_write_exdr</B> or <B>close</B>. The optional arguments <I>        command</I> and <I>event</I> specifies the data handler for the
+        queue: <I>command</I> is the name
+        of the Tcl
+        procedure for handling the data, with its user defined arguments. 
+        <I>event</I> is the name of the event that will be
+        raised on the ECLiPSe side (see the section&nbsp;<A HREF="node30.html#remotehandles">6.6.1</A>
+        for more details). As a handler can only be defined for one side,
+        either <I>event</I> or <I>command</I> should be undefined
+        (<code>{}</code>). 
+<DT><STRONG><A NAME="1968"></A>ec_queue_close <I>eclipse_stream_name</I></STRONG>
+<DD> 
+<BR>
+Closes the (synchronous or asynchronous) queue with the ECLiPSe name of <I>	ec_stream_name</I>. The queue is closed on both the Tcl and ECLiPSe
+	sides, and bookkeeping information for the queue is removed. 
+
+<P>
+</DL>
+
+<P>
+It is strongly recommended that the queues should be used for long-term I/O
+connections between the two sides, and so the queues should not be created
+and closed on a short-term basis. For quick interchange of data, it is
+recommended that the user use the <B>ec_rpc</B> mechanism.
+
+<P>
+
+<H3><A NAME="SECTION00662100000000000000">
+Handlers for a Synchronous From-ECLiPSe Queue</A>
+</H3>
+
+<P>
+
+<H4><A NAME="SECTION00662110000000000000">
+Tcl Handler for From-ECLiPSe Queue</A>
+</H4>
+
+<P>
+For a from-ECLiPSe queue, the Tcl handler <I>command</I> would be a
+data consumer. This handler is initiated when
+ECLiPSe side initially has control and flushes
+the queue (by calling <A NAME="tex2html177"
+ HREF="../bips/kernel/iostream/flush-1.html">flush/1</A><A NAME="2518"></A>). With a Tcl handler defined,
+control is transferred to the Tcl
+side, where <I>command</I> is invoked to consume the data. When the
+handler finishes, control is returned to the ECLiPSe side. The general
+sequence of actions are:
+
+<P>
+<BR>
+<BR>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">ECLiPSe side</TD>
+<TD ALIGN="LEFT">Tcl side</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Writes to the from-ECLiPSe queue</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Flush the from-ECLiPSe queue</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Handler invoked to handle data on the from-ECLiPSe queue</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe returns from flush, and continue executing the following code</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+<BR>
+
+<P>
+The Tcl handler is specified by <I>command</I> in <B>ec_queue_create</B>. <I>command</I> includes the name of the Tcl procedure to
+invoke, and any user defined arguments. When the handler is invoked, two
+additional arguments are appended:
+the ECLiPSe stream number for the queue, and the number
+of bytes that has been sent on the queue. This command should read the data
+off the queue and process it. The following predefined Tcl
+data consumer handlers are provided:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="2005"></A>ec_stream_to_window_sync <I>tag text_widget stream_nr length</I></STRONG>
+<DD> 
+<BR>
+Read <I>length</I> bytes from the specified queue and insert the data
+        at the end of the existing <I>text_widget</I>, using <I>tag</I> as the tag
+        for the text. If this is invoked as a handler for a from-ECLiPSe
+        queue, <I>length</I> and <I>stream_nr</I> would be supplied when
+        the  handler is invoked.
+
+<P>
+<DT><STRONG><A NAME="2013"></A>ec_stream_output_popup <I>label_text stream_nr length</I></STRONG>
+<DD> 
+<BR>
+Pops up a window displaying the <I>label_text</I>,
+        a text field displaying the contents of the specified queue stream,
+        and an ok-button for closing. The data is read as normal
+        strings. This is the default Tcl fromec handler that will be called
+        if <B>ec_create_queue</B> did not define one.
+
+<P>
+</DL> 
+
+<P>
+
+<H4><A NAME="SECTION00662120000000000000">
+An example from-ECLiPSe queue with Tcl handler</A>
+</H4>
+
+<P>
+To create the queue on the Tcl side with a Tcl handler:
+
+<P>
+<PRE>
+Tcl code :  ec_queue_create myqueue fromec {ec_stream_to_window_sync red textwin} {}
+</PRE>
+
+<P>
+Note that the last <code>{}</code> specifies that there is no ECLiPSe
+handler. This is the actual default for this argument, so it could be
+missed out. After creating the queue, it can be used on the ECLiPSe
+side. The programmer can write to the queue, and to send the data to the
+Tcl side, the queue should be flushed:
+
+<P>
+<PRE>
+ECLiPSe code :
+   ...
+   write(myqueue, hello),
+   flush(myqueue),
+   ...
+</PRE>
+
+<P>
+When the queue is flushed as shown above, then control is handed over to
+Tcl, and the Tcl handler, in this case <B>ec_stream_to_window_sync</B>,
+would be invoked. This reads the data on the queue (hello, and anything
+else that has been written since the last flush), and puts it into the text
+widget textwin, with the tag red. The procedure is also called with the
+ECLiPSe stream number for the queue and the number of bytes sent as extra
+arguments. The textwin widget and the tag red must
+be defined already in the Tcl program (presumably  `red' means printing the
+text in red colour); if no tag is desired, <code>{}</code> can be used. 
+
+<P>
+The procedure <B>ec_stream_to_window_sync</B> is predefined in the
+interface, but here is a slightly
+simplified version of it:
+
+<P>
+<PRE>
+proc ec_stream_to_window_sync {Tag Window Stream Length} {
+
+    set channel [ec_streamnum_to_channel $Stream]
+    set data [read $channel $Length]
+
+    $Window insert end $data $Tag
+    $Window see end
+}
+</PRE>
+
+<P>
+
+<H4><A NAME="SECTION00662130000000000000">
+ECLiPSe Handler for From-ECLiPSe Queue</A>
+</H4>
+
+<P>
+Currently, the Tcl remote interface does not support ECLiPSe handlers
+(which will be a data provider) for from-ECLiPSe queues. Thus, the <I>event</I> argument for <B>ec_queue_create</B> is currently a dummy argument
+that is ignored. The available alternative is to use <B>ec_rpc</B> to obtain
+the required information: instead of reading from a from-ECLiPSequeue, an
+ec_rpc should be called with argument(s) left to be filled in by the
+ECLiPSe side with the required data. 
+
+<P>
+
+<H3><A NAME="SECTION00662200000000000000">
+Handlers for a Synchronous To-ECLiPSe Queue</A>
+</H3>
+
+<P>
+
+<H4><A NAME="SECTION00662210000000000000">
+Tcl Handler for a To-ECLiPSe Queue</A>
+</H4>
+
+<P>
+<A NAME="toeclipse-tclhandler"></A>
+<P>
+For a to-ECLiPSe queue, the Tcl handler <I>command</I> defined in <B>ec_queue_create</B> would be a data
+producer. This handler is initiated when ECLiPSe side has control, and
+reads from the to-ECLiPSe queue, which is initially empty. With a Tcl
+handler defined, control is transferred to the Tcl side, where <I>command</I> is invoked to provide the data. The handler should write the
+data to the queue, and call the Tcl remote interface command <B>ec_flush</B>
+to send the data to ECLiPSe side. When the handler finishes,
+control is returned to the ECLiPSe side, and the read operation is
+performed to read the now available data. The general sequence of actions are:
+
+<P>
+<BR>
+<BR>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">ECLiPSe side</TD>
+<TD ALIGN="LEFT">Tcl side</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Reads an empty to-ECLiPSe queue</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Handler invoked to supply data to the
+         to-ECLiPSe queue. The data is written to the queue and flushed
+         with <B> ec_flush</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe returns from the initial read operation, reading
+         the data supplied by the Tcl handler, and continue execution the following code</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+<BR>
+
+<P>
+The Tcl remote interface command <B>ec_flush</B>, instead of the standard
+Tcl <B>flush</B> command,  should be used to flush a
+queue so that the data would be transferred and processed on the ECLiPSe
+side. <B>ec_flush</B> should be used both inside the Tcl data provider
+handler, and also to invoke an ECLiPSe data consumer handler (see the
+next section).
+
+<P>
+<DL>
+<DT><STRONG><A NAME="2071"></A><B>ec_flush</B> <I>eclipse_streamnum ?nbytes?</I></STRONG>
+<DD> 
+<BR>
+If the Tcl side has control, flushes the (synchronous or asynchronous) queue
+   with the ECLiPSe stream number <I>eclipse_streamnum</I> and hands over
+   control briefly to ECLiPSe to read the data. Control is
+   then returned to Tcl. <I>nbyte</I> is an optional argument that specifies the
+   number of bytes being sent. If this argument is missing, the data sent
+   must be a single EXDR term in the case of the synchronous queue. There
+   is no restriction for the asynchronous queues, but it is the
+   programmer's responsibility that the read operation does not block.
+</DL>
+
+<P>
+Normally, data is written to the queue using standard Tcl output commands,
+and the amount of data written is not known. However, the programmer may
+have kept track of the number of bytes written inside the handler, and thus
+know how many bytes will be sent. In this case, <B>ec_flush</B> can be
+called with the number of bytes supplied as a parameter. It is the
+programmer's responsibility to ensure that this information is accurate.
+Without nbytes, the output is restricted to EXDR terms for synchronous
+queues. The reason for this is because the data is sent through a socket
+connection, and without knowing the amount of data, it is not possible in
+general to know when the data ends, unless the data sent has implicit
+boundaries, like an EXDR term.
+
+<P>
+For the use of <B>ec_flush</B> inside a Tcl data provider handler, the
+sequence of events that appears to the user is that the <B>ec_flush</B>
+flushes the data, and the Tcl side then continues executing Tcl code
+until the handler's execution is finished. Control is then returned to
+ECLiPSe, where the original read operation can now read the available
+data. The actual sequence of event is slightly more complex for synchronous
+queues: when <B>ec_flush</B> is invoked, control is actually transferred to ECLiPSe, and
+the data flushed is then read into a buffer by ECLiPSe, which then
+returns control to Tcl to continue the execution of the handler. When the
+handler finally finishes, control returns to ECLiPSe, and the original
+read operation reads the data from the buffer and continues. This extra
+complexity should be transparent to the programmer except when the
+intermediate ECLiPSe read to buffer does not complete (e.g. because
+<I>nbytes</I> is greater than the actual amount of data sent). 
+
+<P>
+The Tcl handler is specified by <I>command</I> in <B>ec_queue_create</B>. <I>command</I> includes the name of the Tcl procedure to
+invoke, and any user defined arguments. When the handler is invoked, an
+additional argument is appended:
+the ECLiPSe stream number for the queue. This command should get the
+data required, output it onto the queue, and call <B>ec_flush</B> to flush
+the data to ECLiPSe side. If the command does not flush data to
+ECLiPSe, ECLiPSe will print a warning and return control to Tcl side.
+
+<P>
+The following predefined Tcl data producer
+handler is provided:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="2098"></A><B>ec_stream_input_popup</B> <I>label_text stream_nr</I></STRONG>
+<DD> 
+<BR>
+Pops up a window displaying the label_text, an input field
+        and an ok-button. The text typed into the input field will
+        be written into the specified queue stream <I>stream_nr</I>, which
+        is the ECLiPSe stream number for the queue. If this command is
+        invoked as a handler for a to-ECLiPSe queue, <I>stream_nr</I>
+        will be automatically appended by the interface. There should be no
+        unflushed data already on the queue when this command is invoked.
+</DL>
+
+<P>
+
+<H4><A NAME="SECTION00662220000000000000">
+An example to-ECLiPSe queue with Tcl handler</A>
+</H4>
+
+<P>
+To create the queue on the Tcl side with a Tcl-handler:
+
+<P>
+<PRE>
+Tcl code :  
+ec_queue_create myqueue toec \
+    {ec_stream_input_popup "Input for myqueue:"} {}
+</PRE>
+
+<P>
+This associates the pre-defined Tcl data producer handler <B>ec_input_popup</B> with myqueue. The last <code>{}</code> specifies that there is no
+ECLiPSe handler and can be omitted as that is the default. This queue
+can now be used on the ECLiPSe side in a demand driven way, i.e. ECLiPSe side can read from the queue:
+
+<P>
+<PRE>
+ECLiPSe code :
+
+    ...
+    read(myqueue, Data),
+    ...
+</PRE>
+
+<P>
+When the ECLiPSe side reads from myqueue, and the queue contains no data
+on the ECLiPSe side, then
+control will be handed over to Tcl, and <B>ec_input_popup</B> 
+invoked. This pops up a Tcl window, with the label ``Input for myqueue:''
+with a text entry widget, asking the user to supply the requested data. The
+data is then sent back to the ECLiPSe side.
+
+<P>
+Here is a slightly simplified version (there are no buttons)
+of <B>ec_stream_input_popup</B>:
+
+<P>
+<PRE>
+set ec_stream_input_string {}
+
+proc ec_stream_input_popup {Msg Stream} {
+    global ec_stream_input_string
+
+    toplevel .ec_stream_input_box
+    label .ec_stream_input_box.prompt  -width 40 -text $Msg
+    entry .ec_stream_input_box.input -bg white -width 40 \
+        -textvariable ec_stream_input_string
+    bind .ec_stream_input_box.input &lt;Return&gt; {destroy .ec_stream_input_box}
+
+    ;# pack the popup window
+    pack .ec_stream_input_box.prompt -side top -fill x
+    pack .ec_stream_input_box.input -side top -fill x
+
+    tkwait window .ec_stream_input_box
+    puts -nonewline [ec_streamnum_to_channel $Stream] $ec_stream_input_string
+    ;# flush the output to ECLiPSe with the length of the input
+    ec_flush $Stream [string length $ec_stream_input_string]
+}
+</PRE>
+
+<P>
+Data is flushed to the ECLiPSe side using <B>ec_flush</B>. The <B>puts</B>
+needs the Tcl channel name of the queue to write to, and this is provided
+via the Tcl remote interface command <B>ec_streamnum_to_channel</B> (see
+section&nbsp;<A HREF="node30.html#translate-remote-qnames">6.6.5</A>). <B>ec_flush</B> is called with two
+arguments in this case, both the queue number (<I>Stream</I>), and the
+length of the data that is sent. Note that this makes the assumption that
+no other unflushed data has been written to the queue. 
+
+<P>
+
+<H4><A NAME="SECTION00662230000000000000">
+ECLiPSe Handler for a To-ECLiPSe Queue</A>
+</H4>
+
+<P>
+For a to-ECLiPSe queue, the ECLiPSe handler would be a data
+consumer. This handler is initiated when Tcl initially has control, and
+flushes data on a queue using <B>ec_flush</B>. Control is transferred to
+ECLiPSe, and if the ECLiPSe handler is defined, this is invoked to
+consume the data. When the handler returns, control is returned to Tcl,
+which continues executing the code after the flush. The general sequence of
+actions are:
+
+<P>
+<BR>
+<BR>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">ECLiPSe side</TD>
+<TD ALIGN="LEFT">Tcl side</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Outputs data onto the to-ECLiPSe queue</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Calls <B> ec_flush</B> to send data to ECLiPSe side</TD>
+</TR>
+<TR><TD ALIGN="LEFT">The ECLiPSe handler associated with the queue is called to consume and
+process the data</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Execution continues after the <B> ec_flush</B></TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+<BR>
+
+<P>
+The ECLiPSe handler is specified by the <I>event</I> argument of <B>ec_queue_create</B>. This specifies an event that will be raised on the
+ECLiPSe side when data is written to a previously empty queue. The
+ECLiPSe side does not see this data, and the event not raised, until the
+data is flushed by <B>ec_flush</B> and copied by ECLiPSe to its
+buffer and, if the buffer was initially empty, the event would then be raised.
+
+<P>
+The programmer should define the event handler associated with <I>event</I>.
+
+<P>
+
+<H4><A NAME="SECTION00662240000000000000">
+An example to-ECLiPSe queue with ECLiPSe handler</A>
+</H4>
+
+<P>
+To create the queue on the Tcl side with an ECLiPSe-handler:
+
+<P>
+<PRE>
+Tcl code: 
+    ec_queue_create myqueue toec {} remoteflush_myqueue
+</PRE>
+
+<P>
+Note that the <code>{}</code> is needed to specify that there is no Tcl handler. 
+It defines <code>remoteflush_myqueue</code> as the event that will be raised when
+the queue is flushed by <B>ec_flush</B> on the Tcl side. 
+
+<P>
+The event handler needs to be defined on the ECLiPSe side:
+
+<P>
+<PRE>
+ECLiPSe code:
+
+:- set_event_handler(remoteflush_myqueue, read_myqueue/0).
+
+...
+read_myqueue :-
+      read_exdr(myqueue, Data),
+      process(Data).
+</PRE>
+
+<P>
+This read handler assumes that the data is written using EXDR format. So on
+the Tcl side, the data should be written using EXDR format:
+
+<P>
+<PRE>
+Tcl code:
+
+     ...
+     ec_write_exdr [ec_streamname_to_channel myqueue] $data
+     ec_flush [ec_streamname_to_streamnum myqueue]
+     ...
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00663000000000000000">
+Asynchronous Queues</A>
+</H2>
+
+<P>
+Asynchronous queues are created on the Tcl side using the Tcl command <B>ec_async_queue_create</B>:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="2175"></A>ec_aysnc_queue_create <I>eclipse_stream_name ?mode?
+?fromec_command? ?toec_event?</I></STRONG>
+<DD> 
+<BR>
+Creates a socket stream between ECLiPSe and Tcl with the name
+	<I>eclipse_stream_name</I> on the ECLiPSe side. The created
+	stream is bidirectional, and can be written to or read from at both
+	ends. The <I>mode</I> argument is for compatibility with the <I>	ec_aysnc_queue_create</I> command of the embedded interface only,
+	and has no effect on the nature of the queue.  The procedure
+	returns a channel identifier for use in commands like <B>puts</B>,
+	<B>read</B>, <B>ec_read_exdr</B>, <B>ec_write_exdr</B> or <B>	close</B>. Unlike the synchronous queues, only data consumer handlers
+	can be defined: if a <I>fromec_command</I> argument is provided,
+	this command is set as the Tcl data consumer handler to be called
+	when data arrives on the Tcl end of the socket. If <I>toec_event</I>
+	is given, it specifies the event that will be raised on the
+	ECLiPSe side when data is flushed by <I>ec_flush</I> on the Tcl
+	side. 
+<DT><STRONG><A NAME="2191"></A>ec_queue_close <I>eclipse_stream_name</I></STRONG>
+<DD> 
+<BR>
+Closes the (synchronous or asynchronous) queue with the ECLiPSe
+	name of <I>ec_stream_name</I>. The queue is closed on both the Tcl and ECLiPSe
+	sides, and bookkeeping information for the queue is removed. 
+
+<P>
+</DL>
+
+<P>
+Asynchronous queues are bi-directional queues which allows data transfer
+between ECLiPSe and Tcl sides without transfer of control. 
+In the case where a Tcl data consumer
+handler is defined in <I>fromec_command</I>, which is invoked on the Tcl
+side when the queue is flushed on the ECLiPSe side, the ECLiPSe side
+will carry on execution while the handler is invoked on the Tcl side. 
+
+<P>
+These queues are designed to allow for more efficient transfer of data
+between ECLiPSe and Tcl than the synchronous queues. 
+
+<P>
+For data transfer from
+ECLiPSe to Tcl, the intended use is that a Tcl data consumer handler
+ would be invoked as the data becomes available on
+the Tcl side, after being flushed from the ECLiPSe side. 
+Note that control is not handed over to Tcl side in this case:
+the Tcl handler is
+invoked and executed on the Tcl side while ECLiPSe side still has control, with the
+restriction that the Tcl handler is unable to issue <B>ec_rpc</B>
+goals because ECLiPSe side still retains control. Another difference
+with the synchronous  from-ECLiPSe queue is that the handler would read
+from the queue in non-blocking mode, i.e. it will read whatever data is
+available on the queue at the Tcl side and never wait for more data. 
+If more data become
+available, the handler would be invoked again. The following Tcl handler is
+pre-defined for the asynchronous queue for handling from-ECLiPSe data:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="2210"></A>ec_stream_to_window <I>tag text_widget stream_nr length</I></STRONG>
+<DD> 
+<BR>
+Inserts all the current contents of the specified queue 
+        at the end of the existing <I>text_widget</I>, using <I>tag</I> as
+        the tag for the text. 
+
+<P>
+</DL>
+
+<P>
+For data transfer from Tcl to ECLiPSe, 
+the queue can be used either asynchronously or synchronously. 
+If the
+queue is used asynchronously, then the standard Tcl command <B>flush</B>
+should be used to flush the queue. There would not be any transfer of
+control, and so there would not be an
+immediate corresponding read on the ECLiPSe side. In fact, no handler
+would be invoked automatically on the ECLiPSe side, even when control is
+transferred. 
+Output and flush
+operations do not block on the Tcl side, as the Tcl side of the queue is
+put into non-blocking mode, so that the data is buffered and the operations
+carried out when they will not block. It is the programmer's responsibility
+to write and call the code to read the data from the queue on the ECLiPSe side when
+the ECLiPSe side is given control.
+
+<P>
+This asynchronous use to send data to ECLiPSe should be useful when
+the queue is used as an auxiliary data
+channel, where the main data is sent either via <B>ec_rpc</B> or another
+queue. The desired effect is that data can be sent on the auxiliary channel
+without triggering processing on the ECLiPSe side until it is told to do
+so on the main data channel, which would be handled synchronously. 
+
+<P>
+To use the queue synchronously for
+to-ECLiPSe data, <B>ec_flush</B> should be used to flush the queue on the
+Tcl side. 
+With <B>ec_flush</B>, control will be handed over to the
+ECLiPSe side to process the data: the goal associated with the event <I>toec_event</I> is
+executed, and this goal should read the data from the queue. 
+Unlike the synchronous to-ECLiPSe
+queues, the data is not buffered, and the handler goal is called every time
+<B>ec_flush</B> is invoked, rather than only when the queue is empty. This
+should normally not make any difference, as the handler should empty all
+the contents of a queue each time it is invoked.
+
+<P>
+The goal is called with two optional arguments: the first argument is the
+event name, the second argument is the `culprit' of the form
+<code>rem_flushio(Queue,Len)</code>, indicating that this event is caused by a
+remote flush, where Queue is the ECLiPSe stream number,
+and Len is the number of bytes sent (this is supplied by <B>ec_flush</B>, if
+<B>ec_flush</B> does not supply a length, then Len is the atom
+<code>unknown</code>.
+
+<P>
+
+<H3><A NAME="SECTION00663100000000000000">
+Examples for asynchronous queue</A>
+</H3>
+
+<P>
+
+<H4><A NAME="SECTION00663110000000000000">
+Using the queue asynchronously: to-ECLiPSe</A>
+</H4>
+
+<P>
+An example of using an asynchronous queue asynchronously to send data to
+ECLiPSe is in the tracer for TkECLiPSe development tools. Here the trace line is
+printed on a synchronous from-ECLiPSe queue, and handled by a Tcl data
+consumer handler which prints the trace line and waits for the user to type
+in a debugger command. This debugger command is sent to the ECLiPSe-side
+using an asynchronous queue, which is read by the ECLiPSe side when it
+returns. Here is a much simplified version of the code:
+
+<P>
+<PRE>
+Tcl code:
+    ...
+    ec_queue_create debug_traceline fromec handle_trace_line
+    ec_async_queue_create debug_input toec ;# no handlers
+    ...
+</PRE>
+
+<P>
+During the initialisation of the development tools, the Tcl code creates
+the from-ECLiPSe queue where the trace-line information is sent
+(<code>debug_traceline</code>), and the asynchronous queue (used only in a
+to-ECLiPSe direction) for sending the debugger commands to ECLiPSe
+(creep, leap, skip etc.). Note that as this queue is used asynchronously,
+there are no handlers associated with it.
+
+<P>
+On the ECLiPSe side, when a goal with a spy-point is executed, this
+raises an event that calls the predicate <code>trace_line_handler/2</code> which 
+should output the trace-line, and wait for a debug command, process the
+command, and carry on:
+
+<P>
+<PRE>
+trace_line_handler(_, Current) :-
+ % Current contains information on the current execution state
+% from this a trace line Traceline (a string) can be created
+        make_current_traceline(Current, Traceline),
+ % send the traceline to Tcl side
+write_exdr(debug_traceline, Traceline),
+        flush(debug_traceline),	
+ % flush will return when the Tcl handler has finished
+read_exdr(debug_input, Cmd),
+ % read the command from debug_input and process it
+interpret_command(Cmd, Current).
+</PRE>
+
+<P>
+The trace-line handler is called with the second argument set to a
+structure that contain information on the current execution state
+(<code>Current</code>), from this, a trace-line (the debug port name, depth, goal
+being traced etc.) can be constructed: <code>Traceline</code> is the string that
+should be printed, e.g.
+
+<P>
+<PRE>
+  (1) 1 CALL  append([1, 2, 3], [], L)
+</PRE>
+This is sent as an EXDR term to the Tcl side using the synchronous
+queue <code>debug_traceline</code>. When <code>flush/1</code> is
+called, control is handed over to the Tcl to handle the data, and the
+Tcl data consumer handler <B>handle_trace_line</B> is invoked:
+
+<P>
+<PRE>
+proc handle_trace_line {stream length} {
+	global tkecl
+
+        $ec_tracer.trace.text insert end \
+             [ec_read_exdr [ec_streamnum_to_channel $stream]]
+        configure_tracer_buttons active
+
+        ;# wait for a tracer command button to be pressed...
+        tkwait variable tkecl(tracercommand)
+	configure_tracer_buttons disabled
+        ec_write_exdr [ec_streamname_to_channel debug_input] \
+             $tkecl(tracercommand)
+        flush [ec_streamname_to_channel debug_input]
+}
+</PRE>
+
+<P>
+As this is invoked as a handler, the ECLiPSe stream number (<I>stream</I>) and number of bytes sent (<I>length</I>) are appended as
+arguments. Note that as the trace-line is written as an EXDR term, the <I>length</I> information is actually not needed. What the handler does is
+simply read the trace-line as an EXDR term, and placing the resulting
+string onto the tracer text window <code>$ec_tracer_trace.text</code>. Next, <B>configure_tracer_buttons active</B> is called. This code is not shown, but
+what it does is to enable the buttons for the debugger commands so that the
+user can press them. There are buttons for the debugger commands such as
+`leap', `creep' etc. When one of this button is pressed, the global
+variable <code>tkecl(tracercommand)</code> is set to the corresponding command,
+and the handler continues its execution beyond the <B>tkwait</B>. The
+buttons are disabled, the command sent to ECLiPSe side on the
+<code>debug_input</code> queue using <B>flush</B>. This is the asynchronous
+sending of data on the asynchronous queue:
+control is <I>not</I> handed
+over to ECLiPSe to process this command. Instead, the execution on the
+Tcl side carries on (and happens to finish immediately after the <B>flush</B>. Control is then returned to the ECLiPSe side as the Tcl handler
+has finished, and the ECLiPSe side continues execution after the
+<code>flush(debug_traceline)</code> goal. Next, <code>debug_input</code> is read for
+the tracer command, and this command is acted on.
+
+<P>
+
+<H4><A NAME="SECTION00663120000000000000">
+Using the queue synchronously: to-ECLiPSe</A>
+</H4>
+
+<P>
+If the Tcl remote interface command <B>ec_stream_input_popup</B> (see section&nbsp;<A HREF="node30.html#toeclipse-tclhandler">6.6.2</A>) is used to
+send data to the ECLiPSe-side (in section&nbsp;<A HREF="node30.html#toeclipse-tclhandler">6.6.2</A>,
+the command was initiated by a read operation on the ECLiPSe side; here
+the command is invoked directly when Tcl side has control), then the
+following is a possible ECLiPSe handler:
+
+<P>
+<PRE>
+Tcl code:
+
+;# create the asynchronous queue, with
+;#  from-ECLiPSe Tcl consumer handler: data_to_window 
+;#  to-ECLiPSe ECLiPSe handler event:  flush_myqueue
+ec_async_queue_create myqueue {data_to_window textwin} flush_myqueue
+
+...
+;# get input for the queue and send to ECLiPSe side
+ec_stream_input_popup "Data:" [ec_channel_to_streamnum myqueue]
+...
+
+ECLiPSe code:
+
+:- set_event_handler(flush_myqueue, read_remote_data/2).
+
+% Len is known when ec_stream_input_popup is used to send data
+read_remote_data(_Event, rem_flushio(Queue,Len)) :-
+	read_string(Queue, "", Len, Data), 
+	process(Data).
+</PRE>
+
+<P>
+The ECLiPSe code defines <code>read_remote_data/2</code> as the handler for
+to-ECLiPSe data sent with <B>ec_flush</B> on the Tcl side. This handler
+is called when control is handed over to ECLiPSe side to read the
+data. Both the two optional arguments are used in this handler. The second
+argument supplies the ECLiPSe stream number for the queue and the length
+of data written. As the data is
+sent by explicitly calling <B>ec_stream_input_popup</B>, the length of the
+data sent is known, so <code>read_string/4</code> can be used to read the exact amount of
+data. In the asynchronous queue, it is generally the programmer's
+responsibility to ensure that the read will not block.
+
+<P>
+
+<H4><A NAME="SECTION00663130000000000000">
+Using the queue asynchronously: from-ECLiPSe</A>
+</H4>
+
+<P>
+The example <code>ec_async_queue_create</code> also defines a Tcl data consumer
+handler to handle data sent on the from-ECLiPSe direction, with a user
+defined argument of the text window that the data will be sent to. Here is
+a simple procedure which reads the data on the queue and places it on the
+text window specified:
+
+<P>
+<PRE>
+Tcl code:
+
+proc data_to_window {Window Stream} {
+    set channel [ec_streamnum_to_channel $Stream]
+
+    $Window insert end [read $channel]
+}
+</PRE>
+
+<P>
+The <I>Stream</I> argument is appended by the interface when the handler is
+invoked, and is the ECLiPSe stream number of the queue. The procedure
+simply reads the data from the corresponding Tcl channel and display the
+data on <I>Window</I>, the text window specified by the programmer.
+
+<P>
+
+<H2><A NAME="SECTION00664000000000000000">
+Reusable Queue Names</A>
+</H2>
+
+<P>
+ECLiPSe stream names are global in scope, so using fixed queues names
+like `myqueue' might cause name conflicts with other modules, if the
+programmer intend the remote Tcl code to be usable with other ECLiPSe code.
+One way to avoid name clashes is to dynamically composing queue names using
+the name of the control connection:
+
+<P>
+<PRE>
+Tcl code:
+        append queue_name [ec_control_name] myqueue
+        ec_queue_create $queue_name fromec {ec_stream_output_popup red textwin}
+</PRE>
+
+<P>
+The user specified name `myqueue' is appended to the control name of the
+remote connection to give a unique queue name. On the ECLiPSe side, 
+the code will also need to use the dynamic name:
+
+<P>
+<PRE>
+        :- local variable(remote_control). 
+
+        ...
+ % code fragment to remember the control name
+remote_connect(Addr, Control, _),
+        setval(remote_control, Control), 
+        ...
+
+        ...
+ % code fragment to use the queue
+getval(remote_control, Control),
+        concat_atom([Control, myqueue], QName),
+        ...
+        write(QName, hello), flush(QName),
+        ...
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00665000000000000000"></A>
+<A NAME="translate-remote-qnames"></A>
+<BR>
+Translating the Queue Names
+</H2>
+
+<P>
+The remote queues connecting ECLiPSe and Tcl are given different names
+on the two sides. The remote Tcl interface
+keeps track of the ECLiPSe names for the queues on the Tcl side. On the
+ECLiPSe side, the queue has a stream number, as well as possibly several
+symbolic aliases. The interface only keeps track of one symbolic name -
+the one that is supplied in <I>ec_queue_connect</I> and <I>ec_async_queue_create</I>. If the ECLiPSe stream number was supplied in
+these commands, then the stream number is also considered the symbolic name
+for the queue as well. The Tcl interface provides several commands to convert the names
+from one form to another:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="2306"></A>ec_streamname_to_channel <I>eclipse_name</I></STRONG>
+<DD> 
+<BR>
+Returns the Tcl channel name for the remote queue with the
+	symbolic name <I>eclipse_name</I>. 
+<DT><STRONG><A NAME="2309"></A>ec_streamnum_to_channel <I>eclipse_stream_number</I></STRONG>
+<DD> 
+<BR>
+Returns the Tcl channel name for the remote queue with the
+	ECLiPSe stream number <I>eclipse_stream_number</I>.
+<DT><STRONG><A NAME="2313"></A>
+	ec_channel_to_streamnum <I>channel</I></STRONG>
+<DD> 
+<BR>
+Returns the ECLiPSe stream number for the remote queue with the
+	Tcl channel name <I>channel</I>.
+<DT><STRONG><A NAME="2317"></A>ec_streamname_to_streamnum <I>eclipse_name</I></STRONG>
+<DD> 
+<BR>
+Returns the ECLiPSe stream number for the remote queue with the
+	symbolic name <I>eclipse_name</I>.
+<DT><STRONG><A NAME="2321"></A>ec_stream_nr <I>eclipse_name</I></STRONG>
+<DD> 
+<BR>
+This is an alias for <B>ec_streamname_to_streamnum</B> for
+	compatibility with embedded interface.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1105"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1101"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1095"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1103"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1106"
+ HREF="node31.html">Additional Control and Support</A>
+<B> Up:</B> <A NAME="tex2html1102"
+ HREF="node24.html">Remote Tcl Interface</A>
+<B> Previous:</B> <A NAME="tex2html1096"
+ HREF="node29.html">Executing an ECLiPSe Goal</A>
+ &nbsp <B>  <A NAME="tex2html1104"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

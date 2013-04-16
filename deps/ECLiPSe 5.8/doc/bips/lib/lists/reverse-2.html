@@ -1,0 +1,48 @@
+<HTML><HEAD><TITLE>reverse(+List, ?Reversed)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>reverse(+List, ?Reversed)</H1>
+Succeeds if Reversed is the reversed list List.
+
+
+<DL>
+<DT><EM>+List</EM></DT>
+<DD>Ground List.
+</DD>
+<DT><EM>?Reversed</EM></DT>
+<DD>List or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   The List is reversed and the resulting list is unified with Reverse.
+<P>
+   The definition of this Prolog library predicate is:
+<PRE>
+reverse(List, Rev) :-
+        reverse(List, Rev, []).
+
+reverse([], L, L).
+reverse([H|T], L, SoFar) :-
+        reverse(T, L, [H|SoFar]).
+</PRE>
+   This predicate does not perform any type testing functions.
+	
+<H3>Fail Conditions</H3>
+   Fails if Reverse does not unify with the reversed version of List.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: reverse([1,2,3,4,5], X).
+    X = [5, 4, 3, 2, 1]
+    yes.
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/lists/append-3.html">append / 3</A>, <A HREF="../../lib/lists/member-2.html">member / 2</A>
+</BODY></HTML>

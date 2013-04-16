@@ -1,0 +1,39 @@
+<HTML><HEAD><TITLE>glb_poss(?SetVariable, -Glb, -Poss)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>glb_poss(?SetVariable, -Glb, -Poss)</H1>
+Obtaining both the glb and the still possible elements of a set
+<DL>
+<DT><EM>SetVariable</EM></DT>
+<DD>A set variable.
+</DD>
+<DT><EM>Glb</EM></DT>
+<DD>A set.
+</DD>
+<DT><EM>Poss</EM></DT>
+<DD>A set.
+</DD>
+</DL>
+<H2>Description</H2>
+Glb is unified with the (greatest) lower bound of SetVariable.<P>
+		Poss is unified with the set of still possible elements of SetVariable
+		(i.e. its lub\glb).<P>
+		If SetVariable is a set of sets and a union function attribute has been set,
+		then each element of Poss comes annotated with its respective length.
+<H3>Fail Conditions</H3>
+Fails if Glb can not be unified with the current glb of SetVariable or
+		if Poss can not be unified with the current poss (lub\glb) of SetVariable.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S `::[c]+[a,b], glb_poss(S,G,P).
+G = [c]
+P = [a,b]
+
+?- set(S, [],[[a,b],[b,c],[a,c],[b]],[union:[a,b,c]]), glb_poss(S,G,P).
+G = []
+P = [[a, b] : 2, [a, c] : 2, [b] : 1, [b, c] : 2]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/glb-2.html">glb / 2</A>, <A HREF="../../lib_public/cardinal/poss-2.html">poss / 2</A>, <A HREF="../../lib_public/cardinal/domain-2.html">domain / 2</A>, <A HREF="../../lib_public/cardinal/domain-3.html">domain / 3</A>, <A HREF="../../lib_public/cardinal/lub-2.html">lub / 2</A>, <A HREF="../../lib_public/cardinal/lub-4.html">lub / 4</A>
+</BODY></HTML>

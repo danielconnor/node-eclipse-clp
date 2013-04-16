@@ -1,0 +1,24 @@
+<HTML><HEAD><TITLE>articulation_points(+Graph, -Articulations)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>articulation_points(+Graph, -Articulations)</H1>
+Finds the articulation points of the graph
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>Articulations</EM></DT>
+<DD>a list of integer node numbers
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Finds the articulation points of a graph, i.e. those nodes that,
+    when deleted, would break the graph into two or more disconnected
+    components. If there are no articulation points, the graph is
+    called biconnected.
+<P></P>
+    This operation is only defined for bidirected graphs.
+    </P>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/graph_is_bidirected-1.html">graph_is_bidirected / 1</A>, <A HREF="../../lib/graph_algorithms/critical_links-2.html">critical_links / 2</A>, <A HREF="../../lib/graph_algorithms/biconnected_components-3.html">biconnected_components / 3</A>
+</BODY></HTML>

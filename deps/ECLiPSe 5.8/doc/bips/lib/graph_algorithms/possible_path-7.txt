@@ -1,0 +1,49 @@
+
+possible_path(+DistanceArg, +SourceNode, +SinkNode, +Tolerance, +Lengths, +Predecessors, -Path)
+
+   Computes an actual path from a predecessors array
+
+Arguments
+   DistanceArg         which argument of EdgeData to use as distance (integer)
+   SourceNode          source node number
+   SinkNode            sink node number
+   Tolerance           tolerable deviation from minimal length (non-negative number)
+   Lengths             array of numbers
+   Predecessors        array of edge lists
+   Path                Length-EdgeList structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    This predicate complements the all_short_paths_as_edges/6 predicate.
+    The intended usage is that all_short_paths_as_edges/6 is used to
+    precompute shortest path information from a single source node
+    to all possible sink nodes, and possible_path/7 uses this
+    information to enumerate actual paths to a specific sink node.
+    If paths from one source to several sinks are needed, it is more
+    efficient to use one call to all_short_paths_as_edges/6 and several
+    calls to possible_path/7, than to use several calls to
+    single_pair_all_short_paths/7.
+    
+    Note that the Lengths and Predecessors arrays must have been computed
+    with the same settings for DistanceArg, SourceNode and Tolerance that are
+    given to possible_path/7, otherwise errors or missing paths will occur.
+    
+
+Resatisfiable
+   yes
+
+Fail Conditions
+   There is no path to SinkNode
+
+Examples
+   
+    single_pair_shortest_path(Graph, Source, Sink, Path) :-
+    	all_short_paths_as_edges(Graph, 0, Source, 0, Lengths, Preds),
+    	possible_path(0, Source, Sink, 0, Lengths, Preds, Path).
+    
+
+See Also
+   all_short_paths_as_edges / 6

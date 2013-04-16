@@ -1,0 +1,72 @@
+lib(fd_sets)
+
+
+    This is a solver for constraints over the domain of finite integer sets.
+    
+    (Ground) integer sets are represented simply as sorted, duplicate-free
+    lists of integers e.g.
+    
+    	SetOfThree = [1,3,7]
+    	EmptySet = []
+    
+
+Set Variables
+    Set variables are variables which can eventually take a ground integer
+    set as their value. They are characterized by a lower bound (the set 
+    of elements that are definitely in the set) and an upper bound (the
+    set of elements that may be in the set). A set variable can be declared
+    as follows:
+    
+    	SetVar :: []..[1,2,3,4,5,6,7],
+    
+    Since the lower bound is the empty set, this can be written as
+    
+    	SetVar subset [1,2,3,4,5,6,7],
+    
+    If the lower bound is the empty set and the upper bound is a set
+    of consecutive integers, you can also write
+    
+    	intset(SetVar, 1, 7)
+    
+
+Set Constraints
+    Most of the usual set operations/relations are provided as constraints:
+    
+    membership
+    non-membership
+    inclusion (subset)
+    equality
+    intersection
+    union
+    difference
+    symmetric difference
+    disjointness
+    cardinality
+    
+    as well as a constraint on set weight.  Note that there is no
+    complement-constraint because the library has no concept of a set
+    universe and cannot represent infinite sets.
+    
+    On most argument positions where sets are expected, set expressions
+    are allowed, e.g.
+    
+    Set1 /\ Set2       % intersection
+    Set1 \/ Set2       % union
+    Set1 \ Set2        % difference
+    
+    
+
+Search
+    The insetdomain/4 predicate can be used to enumerate all ground
+    instantiations of a set variable, much like indomain/1 in the
+    finite-domain case.
+
+Cooperation with a finite domain solver
+    This library comes in two flavours: lib(fd_sets) which cooperates with
+    lib(fd), and lib(ic_sets) which cooperates with lib(ic). This is relevant
+    only for those constraints which involve integer variables, e.g. the
+    cardinality argument in #/2, the weight argument in weight/3 and the
+    booleans in membership_booleans/2. These will be represented as fd-
+    or ic-variables respectively.
+
+

@@ -1,0 +1,71 @@
+<HTML><HEAD><TITLE>library(ic_gap_sbds)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(ic_gap_sbds)</H1>
+GAP-based Symmetry Breaking During Search (SBDS)
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="all_solutions-1.html"><STRONG>all_solutions(+Goal)</STRONG></A></DT>
+<DD>Find all solutions to the given goal</DD>
+<DT><A HREF="all_solutions-2.html"><STRONG>all_solutions(+Goal, ?NSols)</STRONG></A></DT>
+<DD>Find all solutions to the given goal</DD>
+<DT><A HREF="first_solution-1.html"><STRONG>first_solution(+Goal)</STRONG></A></DT>
+<DD>Find the first solution to the given goal</DD>
+<DT><A HREF="is_sbds_var-1.html"><STRONG>is_sbds_var(?Var)</STRONG></A></DT>
+<DD>Checks whether a variable is an SBDS variable</DD>
+<DT><STRONG>print_sbds(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="sbds_indomain-1.html"><STRONG>sbds_indomain(?Var)</STRONG></A></DT>
+<DD>Instantiate an integer SBDS variable to an element of its domain</DD>
+<DT><A HREF="sbds_initialise-5.html"><STRONG>sbds_initialise(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)</STRONG></A></DT>
+<DD>Initialises the data structures required by the SBDS algorithm</DD>
+<DT><A HREF="sbds_initialise_set-5.html"><STRONG>sbds_initialise_set(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)</STRONG></A></DT>
+<DD>Initialises the data structures required by the SBDS algorithm (set version)</DD>
+<DT><A HREF="sbds_labeling-1.html"><STRONG>sbds_labeling(?List)</STRONG></A></DT>
+<DD>Instantiate all integer SBDS variables in a list to elements of their domains</DD>
+<DT><STRONG>sbds_record(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="sbds_try-2.html"><STRONG>sbds_try(+Var, ++Value)</STRONG></A></DT>
+<DD>Try assigning a value to an SBDS search variable</DD>
+<DT><A HREF="sbds_try-3.html"><STRONG>sbds_try(+Var, ++Value, ?Success)</STRONG></A></DT>
+<DD>Try assigning a value to an SBDS search variable</DD>
+<DT><A HREF="sbds_try_set-3.html"><STRONG>sbds_try_set(+Var, ++Value, ++Bool)</STRONG></A></DT>
+<DD>Try adding/excluding a value to/from an SBDS set search variable</DD>
+<DT><A HREF="sbds_try_set-4.html"><STRONG>sbds_try_set(+Var, ++Value, ++Bool, ?Success)</STRONG></A></DT>
+<DD>Try adding/excluding a value to/from an SBDS set search variable</DD>
+<DT><STRONG>unify_sbds(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+   This library provides a GAP-based Symmetry Breaking During Search (SBDS)
+   library, as described in:<P>
+
+   Ian P. Gent, Warwick Harvey and Tom Kelsey.  "Groups and Constraints:
+   Symmetry Breaking during Search.".  In P. Van Hentenryck, editor,
+   <EM>Proceedings of the Eighth International Conference on Principles and
+   Practice of Constraint Programming - CP 2002</EM>, LNCS 2470, pages
+   415-430.  Springer-Verlag, 2002.<P>
+
+   It has been enhanced by (amongst other things) being integrated with the
+   symmetry expression library described in:<P>
+
+   Warwick Harvey, Tom Kelsey and Karen Petrie.  "Symmetry Group Expression
+   for CSPs."  In Barbara Smith et al., editors, <EM>Proceedings of
+   SymCon'03: Third International Workshop on Symmetry in Constraint
+   Satisfaction Problems, a workshop of CP 2003</EM>, pages 86-96.
+   September, 2003.<P>
+
+   This library is still being developed and is expected to evolve.
+   Feedback, suggestions, problem reports, etc. welcome.<P>
+
+   Please note that this library currently does not work on Windows machines
+   due to its dependence on the GAP interface library.<P>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>evolving
+<LI><STRONG>Author: </STRONG>Warwick Harvey, Ian Gent (and probably others...)
+</UL>
+<H2>See Also</H2>
+<A HREF="../../lib/sym_expr/index.html">library(sym_expr)</A>, <A HREF="../../lib/gap/index.html">library(gap)</A><HR>Generated from ic_gap_sbds.eci on Tue Jan 25 01:58:50 2005
+
+</BODY></HTML>

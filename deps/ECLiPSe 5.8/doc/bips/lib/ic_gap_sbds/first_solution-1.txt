@@ -1,0 +1,18 @@
+
+first_solution(+Goal)
+
+   Find the first solution to the given goal
+
+Arguments
+   Goal                The goal to execute
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Finds the first solution for the goal Goal, and prints various statistics
+   about the computation (CPU time taken, number of backtracks, etc.).
+
+
+See Also
+   all_solutions / 1, all_solutions / 2

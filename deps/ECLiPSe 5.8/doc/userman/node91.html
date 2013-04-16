@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Port Profiler</TITLE>
+<META NAME="description" CONTENT="Port Profiler">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node92.html">
+<LINK REL="previous" HREF="node90.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node92.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3624"
+ HREF="node92.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3620"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3614"
+ HREF="node90.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3622"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3625"
+ HREF="node92.html">Line coverage</A>
+<B> Up:</B> <A NAME="tex2html3621"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3615"
+ HREF="node90.html">Timing Profiler</A>
+ &nbsp <B>  <A NAME="tex2html3623"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001570000000000000000"></A>
+<A NAME="9319"></A>
+<BR>
+Port Profiler
+</H1>
+The port profiler is a performance analysis tool based on the idea of
+counting of events during program execution.  The events that are
+counted are defined in terms of the 'box model' of execution (the same
+model that the debugger uses, see chapter <A HREF="node76.html#boxmodel">14.1</A>).  In this
+box model, predicates are entered though <EM>call</EM>, <EM>redo</EM> or <EM>resume</EM> ports,
+and exited through <EM>exit</EM>, <EM>*exit</EM>, <EM>fail</EM> or <EM>leave</EM> ports.  In addition, other
+interesting events are indicated by ports as well (<EM>next</EM>, <EM>else</EM>, <EM>delay</EM>). 
+
+The usage is as follows: 
+<DL COMPACT>
+<DT>1.
+<DD>Compile your program in debug mode, as you would normally do during program development.
+<DT>2.
+<DD>Load the port_profiler library 
+<DT>3.
+<DD>Run the query which you want to examine, using port_profile/2: <PRE>
+
+?- port_profile(queen([1,2,3,4],Out), []).
+</PRE></DL>
+This will print the results in a table like the following:
+<PRE>
+
+PREDICATE       CALLER               call     exit     fail    *exit     redo
+-           /3  nodiag      /3         46       46        .        .        .
+=\=         /2  nodiag      /3         46       45        1        .        .
+qperm       /2  qperm       /2         30       28        .       16       14
+qdelete     /4  qperm       /2         20       18        .       12       10
+nodiag      /3  nodiag      /3         17       14        3        .        .
+nodiag      /3  safe        /1         17        7       10        .        .
++           /3  nodiag      /3         17       17        .        .        .
+qdelete     /4  qdelete     /4         10        9        .        3        2
+qperm       /2  queen       /2          1        .        .       11       10
+safe        /1  queen       /2         11        1       10        .        .
+safe        /1  safe        /1          7        4        3        .        .
+queen       /2  trace_body  /2          1        .        .        1        .
+</PRE>
+Each row of the table shows the information for a particular predicate
+(by default split according to different caller predicates).
+The table is sorted according to entry port count (<!-- MATH: $call+redo+resume$ -->
+<I>call</I>+<I>redo</I>+<I>resume</I>).
+The port counts give information about
+
+<UL><LI>what are the most frequently called predicates (call ports)
+
+<LI>whether predicates failed unexpectedly (fail ports)
+
+<LI>whether predicates exited nondeterministically (*exit ports), i.e.
+    whether they left behind any choice-points for backtracking.
+
+<LI>whether nondeterministically exited predicates were ever re-entered
+    to find alternative solutions (redo ports).
+
+<LI>whether predicates did internal backtracking (next ports) in order
+    to find the right clause. This may indicate suboptimal indexing.
+
+<LI>how often predicates were delayed and resumed.
+
+</UL>
+For more details about different options and output formats, see
+the <A NAME="tex2html1276"
+ HREF="../bips/lib/port_profiler/index.html">Reference Manual</A><A NAME="9433"></A>.
+
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3624"
+ HREF="node92.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3620"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3614"
+ HREF="node90.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3622"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3625"
+ HREF="node92.html">Line coverage</A>
+<B> Up:</B> <A NAME="tex2html3621"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3615"
+ HREF="node90.html">Timing Profiler</A>
+ &nbsp <B>  <A NAME="tex2html3623"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

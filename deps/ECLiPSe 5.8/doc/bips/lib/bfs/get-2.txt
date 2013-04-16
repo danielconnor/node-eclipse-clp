@@ -1,0 +1,33 @@
+
+BfsInstance:get(++What, -Value)
+
+   Obtain information for the problem associated with BfsInstance.
+
+Arguments
+   What                Specification for information wanted (atom)
+   Value               Returned value of What
+
+Type
+   library(bfs)
+
+Description
+
+   Retrieve information about the problem associated with the bfs
+   instance BfsInstance. What can take one of the following values:
+
+
+    frac_vars
+    Returns the list of variables declared as integer for
+    BfsInstance which have fractional solution values in the current node
+    of the search tree.
+
+
+    branches
+    Returns the branching decisions taken from the root to the
+    current node of the search tree.
+
+
+Exceptions
+     6 --- What is not a valid value.
+
+

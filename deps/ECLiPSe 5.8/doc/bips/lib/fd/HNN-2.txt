@@ -1,0 +1,24 @@
+
+?Vars #::  ?Domain
+
+   Terms in Vars have the domain Domain. The predicate is an alias for ::/2.
+
+
+
+Arguments
+   ?Vars               A variable or a list of variables.
+   +Domain             Variable, integer, integer interval or a list of integers                and integer intervals.
+
+Type
+   library(fd)
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Vars cannot have the domain Domain.
+
+
+
+See Also
+   :: / 2, dom_to_list / 2, is_domain / 1

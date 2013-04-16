@@ -1,0 +1,4 @@
+lib(iochar)
+
+   Built-ins to input and output characters or byte strings
+

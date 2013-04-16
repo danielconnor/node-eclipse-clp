@@ -1,0 +1,25 @@
+<HTML><HEAD><TITLE>is_sub_graph(+SubGraph, +SuperGraph)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>is_sub_graph(+SubGraph, +SuperGraph)</H1>
+Succeeds iff SubGraph is a subgraph of SuperGraph
+<DL>
+<DT><EM>SubGraph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>SuperGraph</EM></DT>
+<DD>a graph structure
+</DD>
+</DL>
+<H2>Description</H2>
+
+    Tests whether SubGraph is a (non-strict) subgraph of SuperGraph.
+    This is the case when the nodes and edges in SubGraph are a subset
+    of the nodes and edges of SuperGraph. Note that nodes are considered
+    identical when they have the same node numbers (rather than the same
+    node names - node name information is ignored by this predicate.).
+    
+<H3>Fail Conditions</H3>
+SubGraph is not a subgraph of SuperGraph
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/make_sub_graph-3.html">make_sub_graph / 3</A>
+</BODY></HTML>

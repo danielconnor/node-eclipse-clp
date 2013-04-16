@@ -1,0 +1,29 @@
+
+lp_get_license
+
+   Get a runtime license token for the external solver.
+
+Type
+   library(eplex)
+
+Description
+    	The eplex-library interfaces to an external simplex/MIP solver
+	which might require a license to run (e.g. CPLEX, XPRESS-MP).
+	When the eplex-library is loaded, it tries to obtain a license
+	immediately.  If this is not possible, for example because the
+	license pool is temporarily empty, a warning is printed. The
+	application program should then call lp_get_license/0 later
+	to obtain a license before any eplex functionality is used.
+	If a license is successfully obtained or already held,
+	lp_get_license succeeds, otherwise it fails.
+    
+    	This predicate uses information from the file eplex_lic_info.ecl
+	in the ECLiPSe library directory, or solver specific environment
+	variable settings to locate the licensing information.
+    
+
+Fail Conditions
+   Fails if no license can (currently) be obtained
+
+See Also
+   lp_get_license / 2, lp_release_license / 0

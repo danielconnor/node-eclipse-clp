@@ -1,0 +1,21 @@
+:- module(ic_probe_support).
+:- export tent_call_priority / 5.
+:- export demon_suspend / 5.
+:- export task_structure / 4.
+:- export demon_suspend / 4.
+:- export tent_call_priority / 4.
+:- export set_to_min / 1.
+:- export set_to_tent / 1.
+:- export replace_list / 4.
+:- export remove1 / 3.
+:- export idmemb / 2.
+:- export iddiff / 3.
+:- export struct(task(start, duration, resource)).
+:- export struct(options(granularity, priority)).
+:- comment(summary, "Probe Support Library").
+:- comment(author, "Mark Wallace, Hani El Sakkout").
+:- comment(date, "$Date: 2003/01/31 12:16:45 $").
+:- comment(copyright, "Imperial College London and Parc Technologies").
+:- comment(desc, html("\n    A library exporting structures and predicates used in probing for scheduling.\n<P>\nThe following two structures are exported:\n<PRE>\ntask(start,duration,resource)\noptions(granularity,priority)\n</PRE>\n<P>\n    ")).
+:- comment(tent_call_priority / 5, hidden).
+:- comment(demon_suspend / 5, hidden).

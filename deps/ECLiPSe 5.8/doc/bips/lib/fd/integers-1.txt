@@ -1,0 +1,25 @@
+
+integers(+Vars)
+
+   Constrains Vars to be integers.
+
+Arguments
+   Vars                List of variables or integers.
+
+Type
+   library(fd)
+
+Description
+  Constrains the list Vars to be integers. If Vars contains non-domain 
+  variable, such variables will be given the default domain.
+
+Resatisfiable
+     No.
+
+Fail Conditions
+      Fails if Vars contains non-integers, or variables with non-integer domains.
+
+Exceptions
+     5 --- Vars is a variable.
+
+

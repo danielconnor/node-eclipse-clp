@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Iteration on array</TITLE>
+<META NAME="description" CONTENT="Iteration on array">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node30.html">
+<LINK REL="previous" HREF="node28.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node30.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html887"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html881"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html875"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html883"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html885"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html888"
+ HREF="node30.html">Transformation</A>
+<B> Up:</B> <A NAME="tex2html882"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html876"
+ HREF="node28.html">Iteration on terms</A>
+ &nbsp <B>  <A NAME="tex2html884"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html886"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html889"
+ HREF="node29.html#SECTION00650010000000000000">Description</A>
+<LI><A NAME="tex2html890"
+ HREF="node29.html#SECTION00650020000000000000">Parameters</A>
+<LI><A NAME="tex2html891"
+ HREF="node29.html#SECTION00650030000000000000">Schema</A>
+<LI><A NAME="tex2html892"
+ HREF="node29.html#SECTION00650040000000000000">Comments</A>
+<LI><A NAME="tex2html893"
+ HREF="node29.html#SECTION00650050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00650000000000000000"></A>
+<A NAME="iterationonarray"></A>
+<BR>
+Iteration on array
+</H1>
+
+<H4><A NAME="SECTION00650010000000000000"></A>
+<A NAME="555"></A>
+<BR>
+Description
+</H4>The next concept is iteration on an array <A NAME="556"></A>structure. We often want to perform some action on each element of a two-dimensional array. 
+
+<P>
+Again, we present two implementations. The first uses nested <I>foreacharg</I><A NAME="558"></A> <I>do</I> loops to perform some operation <I>q</I> on each element of an array. The second uses nested <I>for</I><A NAME="561"></A><A NAME="562"></A> loops to iterate over all index combinations <I>I</I> and <I>J</I>. This second variant is more complex, and should be used only if we require the index values <I>I</I> and <I>J</I> as well as the matrix element <I>X</I>. 
+
+<H4><A NAME="SECTION00650020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>Matrix</STRONG>
+<DD>a matrix
+</DL>
+<H4><A NAME="SECTION00650030000000000000">
+Schema</A>
+</H4>
+<PRE>
+/* version 1 */
+
+:-mode iteration(+).
+iteration(Matrix):-
+        (foreacharg(Line,Matrix) do
+            (foreacharg(X,Line) do
+                q(X)
+            )
+        ).
+
+/* version 2 */
+
+:-mode iteration(+).
+iteration(Matrix):-
+        dim(Matrix,[N,M]),
+        (for(I,1,N),
+         param(M,Matrix) do
+            (for(J,1,M),
+             param(I,Matrix) do
+                subscript(Matrix,[I,J],X),
+                q(X,I,J)
+            )
+        ).
+</PRE>
+<H4><A NAME="SECTION00650040000000000000">
+Comments</A>
+</H4>
+The <I>dim</I><A NAME="571"></A> predicate can not only be used to create arrays, but also to find the size of an existing array. 
+
+<P>
+Note the strange way in which parameters <I>M</I>, <I>I</I> and <I>Matrix</I> are passed through the nested <I>for</I> loops with <I>param</I> arguments. But if we do not do this, then the variable <I>Matrix</I> outside and inside the <I>do</I> loop are unrelated.
+
+<H4><A NAME="SECTION00650050000000000000">
+Example</A>
+</H4>
+The example calls the predicate <I>fill_empty/3</I> for each index combination of entries in a matrix <I>PMatrix</I>.
+<A NAME="577"></A>
+<PRE>
+:-mode fill_rest_with_empty(+,+).
+fill_rest_with_empty(N,PMatrix):-
+        (for(I,1,N),
+         param(PMatrix,N) do
+            (for(J,1,N),
+             param(PMatrix,I) do
+                fill_empty(PMatrix,I,J)
+            )
+        ).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html887"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html881"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html875"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html883"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html885"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html888"
+ HREF="node30.html">Transformation</A>
+<B> Up:</B> <A NAME="tex2html882"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html876"
+ HREF="node28.html">Iteration on terms</A>
+ &nbsp <B>  <A NAME="tex2html884"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html886"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

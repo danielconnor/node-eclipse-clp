@@ -1,0 +1,55 @@
+<HTML><HEAD><TITLE>current_compiled_file(?File, ?Time, ?Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_compiled_file(?File, ?Time, ?Module)</H1>
+Succeeds if File is a file that has been compiled into the system.
+
+
+<DL>
+<DT><EM>?File</EM></DT>
+<DD>Atom or variable.
+</DD>
+<DT><EM>?Time</EM></DT>
+<DD>Integer or variable.
+</DD>
+<DT><EM>?Module</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate enumerates all files that have been compiled during this
+   ECLiPSe session.  Time is the modification time of the file at the time
+   it was compiled, and Module is the module from where it was compiled
+   (the latter is irrelevant if the file contains a module itself).  The
+   information can be used to determine if a file needs to be recompiled.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>File instantiated, but not to an atom.
+<DT><EM>(5) type error </EM>
+<DD>Time instantiated, but not to an integer.
+<DT><EM>(5) type error </EM>
+<DD>Module instantiated, but not to an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+make :- current_compiled_file(File, Time, Module),
+        get_file_info(File, mtime) =\= Time,
+        compile(File, Module),
+        fail.
+make.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/compile-2.html">compile / 2</A>, <A HREF="../../kernel/database/ensure_loaded-1.html">ensure_loaded / 1</A>, <A HREF="../../kernel/env/make-0.html">make / 0</A>
+</BODY></HTML>

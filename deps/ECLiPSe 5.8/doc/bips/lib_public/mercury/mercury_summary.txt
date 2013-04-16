@@ -1,0 +1,4 @@
+lib(mercury)
+
+   Mercury compatibility predicates.
+

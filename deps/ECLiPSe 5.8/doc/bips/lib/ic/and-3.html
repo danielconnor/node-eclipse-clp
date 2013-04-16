@@ -1,0 +1,26 @@
+<HTML><HEAD><TITLE>and(+ConX,+ConY,Bool)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>and(+ConX,+ConY,Bool)</H1>
+Bool is the reified truth of both constraints ConX and ConY being true.
+<DL>
+<DT><EM>ConX</EM></DT>
+<DD>Constraint
+</DD>
+<DT><EM>ConY</EM></DT>
+<DD>Constraint
+</DD>
+<DT><EM>Bool</EM></DT>
+<DD>Reified truth value of the constraint
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Equivalent to BX $= (ConX), BY $= (ConY), Bool #= (BX + BY #= 2)</P>
+   <P>
+   The two constraints are reified in such a way that Bool reflects the
+   truth of both being true.  ConX and ConY must be constraints that have a
+   corresponding reified form.
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic/and-2.html">and / 2</A>, <A HREF="../../lib/ic/neg-1.html">neg / 1</A>, <A HREF="../../lib/ic/neg-2.html">neg / 2</A>, <A HREF="../../lib/ic/or-2.html">or / 2</A>, <A HREF="../../lib/ic/or-3.html">or / 3</A>, <A HREF="../../lib/ic/EG-2.html">=> / 2</A>, <A HREF="../../lib/ic/EG-3.html">=> / 3</A>, <A HREF="../../lib/ic/ENE-3.html">=:= / 3</A>, <A HREF="../../lib/ic/EL-3.html">=< / 3</A>, <A HREF="../../lib/ic/ERE-3.html">=\= / 3</A>, <A HREF="../../lib/ic/GE-3.html">>= / 3</A>, <A HREF="../../lib/ic/G-3.html">> / 3</A>, <A HREF="../../lib/ic/L-3.html">< / 3</A>
+</BODY></HTML>

@@ -1,0 +1,4 @@
+lib(ic)
+
+   Hybrid integer/real interval arithmetic constraint solver
+

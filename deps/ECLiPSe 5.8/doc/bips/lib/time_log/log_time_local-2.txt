@@ -1,0 +1,18 @@
+
+log_time_local(++Name, ++Time)
+
+   Log a time in the local directory
+
+Arguments
+   Name                Name of test
+   Time                Time taken to run test
+
+Type
+   library(time_log)
+
+Description
+	Logs to a temporary administrative file in the local directory that
+	the test with the given name took the specified time to execute.
+
+
+

@@ -1,0 +1,9 @@
+
+lips
+
+   Run the benchmark a reasonable number of times and print the average speed
+
+Type
+   library(lips)
+
+

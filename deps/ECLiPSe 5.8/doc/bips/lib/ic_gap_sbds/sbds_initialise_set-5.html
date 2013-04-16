@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>sbds_initialise_set(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_gap_sbds)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>sbds_initialise_set(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)</H1>
+Initialises the data structures required by the SBDS algorithm (set version)
+<DL>
+<DT><EM>Array</EM></DT>
+<DD>Array of integer set decision variables
+</DD>
+<DT><EM>VarDimNames</EM></DT>
+<DD>Names for the dimensions of Array
+</DD>
+<DT><EM>ValueDimSpec</EM></DT>
+<DD>Name of the value dimension and its range
+</DD>
+<DT><EM>SymSpecs</EM></DT>
+<DD>List of symmetry specifiers
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of extra options
+</DD>
+</DL>
+<H2>Description</H2>
+   Like sbds_initialise/5, but for set models (i.e. Array should be an array
+   of integer set variables).  The "value" dimension is the values that can 
+   appear in the set, so that, for example, a range of 1..5 indicates that
+   the upper bound of the set variables is [1,2,3,4,5].<P>
+
+   See the documentation for sbds_initialise/5 for more details.
+
+   During search, use sbds_try_set/3 or sbds_try_set/4 on variables from
+   Array when making search decisions.
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic_gap_sbds/sbds_initialise-5.html">sbds_initialise / 5</A>, <A HREF="../../lib/ic_gap_sbds/sbds_try_set-3.html">sbds_try_set / 3</A>, <A HREF="../../lib/ic_gap_sbds/sbds_try_set-4.html">sbds_try_set / 4</A>
+</BODY></HTML>

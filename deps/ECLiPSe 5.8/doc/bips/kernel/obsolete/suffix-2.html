@@ -1,0 +1,64 @@
+<HTML><HEAD><TITLE>suffix(+FileName, ?Suffix)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>suffix(+FileName, ?Suffix)</H1>
+Succeeds if the string Suffix is the extension part of the input string
+FileName.
+
+
+<DL>
+<DT><EM>+FileName</EM></DT>
+<DD>String or atom.
+</DD>
+<DT><EM>?Suffix</EM></DT>
+<DD>String or variable.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Used to find the extension (i.e.  suffix) Suffix of the input string
+   file name FileName.  FileName is a string of a (relative or absolute)
+   file pathname.  Suffix includes the leading ``.''.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the string Suffix is not the extension part of the input string
+   FileName.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>FileName is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>FileName is not a string or atom.
+<DT><EM>(5) type error </EM>
+<DD>Suffix is neither a string nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      suffix("a.b",".b").
+      suffix("dead.letter",".letter").
+      suffix("top.pl",S).                (gives S=".pl").
+      suffix("bugs",S).                  (gives S="").
+      suffix("../my.pl",S).              (gives S=".pl").
+      suffix("../user/my.c",S).          (gives S=".c").
+      suffix("/home/user/pl/.trace",S).  (gives S=".trace").
+
+Fail:
+      suffix("file.pl",".c").
+
+Error:
+      suffix(F,S).                      (Error 4).
+      suffix('file1.pl',S).             (Error 5).
+      suffix("file1.pl",'.pl').         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/pathname-4.html">pathname / 4</A>, <A HREF="../../kernel/obsolete/pathname-2.html">pathname / 2</A>
+</BODY></HTML>

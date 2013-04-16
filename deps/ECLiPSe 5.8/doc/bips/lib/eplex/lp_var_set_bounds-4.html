@@ -1,0 +1,43 @@
+<HTML><HEAD><TITLE>lp_var_set_bounds(+Handle, ?Var, +Lo, +Hi)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lp_var_set_bounds(+Handle, ?Var, +Lo, +Hi)</H1>
+Imposes new bounds for Var on the solver state of Handle.
+<DL>
+<DT><EM>Handle</EM></DT>
+<DD>Handle to a solver state
+</DD>
+<DT><EM>Var</EM></DT>
+<DD>A solver problem variable for Handle
+</DD>
+<DT><EM>Lo</EM></DT>
+<DD>New lower bound for Var (number)
+</DD>
+<DT><EM>Hi</EM></DT>
+<DD>New upper bound for Var (number)
+</DD>
+</DL>
+<H2>Description</H2>
+
+    <P>
+    Imposes numeric bounds on the solver state of Handle for the variable
+    Var. Each bound is only updated if it is more narrow than the current
+    bound for the variable. The bounds are converted to floats before they
+    are imposed, and no typing is implied by the type of the numbers. It is
+    possible to impose incompatible bounds for the same variable on
+    different solver states. Var must be an existing problem variable for
+    Handle, i.e. it must occur in the constraints posted to the solver
+    state. 
+<H3>Fail Conditions</H3>
+Lo is greater than Hi.
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Handle is not in the form of a solver handle.
+<DT><EM>(6) out of range </EM>
+<DD>Var is not a problem variable for Handle.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/lp_var_get_bounds-4.html">lp_var_get_bounds / 4</A>
+</BODY></HTML>

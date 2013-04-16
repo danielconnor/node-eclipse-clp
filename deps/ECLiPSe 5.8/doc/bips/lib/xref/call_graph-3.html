@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>call_graph(+File, -Graph, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(xref)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>call_graph(+File, -Graph, +Options)</H1>
+Compute a call graph for a source module file
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Name of the source file (atom or string)
+</DD>
+<DT><EM>Graph</EM></DT>
+<DD>Variable, returns a graph structure
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>A list of Option:Value structures
+</DD>
+</DL>
+<H2>Description</H2>
+
+    Computes a call graph for the given source file. The graph is in the
+    format defined by lib(graph_algorithms).  The relevant options are:
+<DL>
+    <DT>builtins ('off' or 'on')</DT>
+	<DD>selects whether to include built-in predicates or not. Default: off.</DD>
+</DL>
+    
+<H2>See Also</H2>
+<A HREF="../../lib/xref/xref-2.html">xref / 2</A>, <A HREF="../../lib/graph_algorithms/index.html">library(graph_algorithms)</A>
+</BODY></HTML>

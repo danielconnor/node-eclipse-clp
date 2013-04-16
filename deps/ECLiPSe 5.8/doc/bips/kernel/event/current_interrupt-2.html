@@ -1,0 +1,56 @@
+<HTML><HEAD><TITLE>current_interrupt(?N, ?IntID)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_interrupt(?N, ?IntID)</H1>
+Succeeds if N unifies with the number and IntID unifies with the mnemonic
+name of a valid interrupt.
+
+
+<DL>
+<DT><EM>?N</EM></DT>
+<DD>Positive integer or variable.
+</DD>
+<DT><EM>?IntID</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate unifies N with the signal number and IntID with the
+   mnemonic name of an existing interrupt type.  This predicate can be used
+   to find the signal number related to a mnemonic interrupt name and vice
+   versa, or to return all valid interrupts on backtracking.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   N and IntID do not unify with the interrupt number resp.  the mnemonic
+   name of a valid interrupt.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>N is instantiated, but not to an integer.
+<DT><EM>(5) type error </EM>
+<DD>IntID is instantiated, but not to an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      current_interrupt(2, X)         (gives X = int)
+      current_interrupt(X, kill)      (gives X = 9)
+      current_interrupt(N, Int)
+Fail:
+      current_interrupt(43, Int)
+      current_interrupt(N, noint)
+Error:
+      current_interrupt(1.0, Int).    (Error 5).
+      current_interrupt(N, "int").    (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/current_error-1.html">current_error / 1</A>, <A HREF="../../kernel/opsys/kill-2.html">kill / 2</A>
+</BODY></HTML>

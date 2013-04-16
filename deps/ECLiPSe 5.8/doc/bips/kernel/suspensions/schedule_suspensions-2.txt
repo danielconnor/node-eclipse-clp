@@ -1,0 +1,89 @@
+
+schedule_suspensions(+Position, +Attribute)
+
+   Take the suspension list on argument position Position within Attribute,
+and schedule them for execution.
+
+
+
+Arguments
+   +Position           Integer indicating the position of the suspension list.
+   +Attribute          Compound term, typically a variable's attribute                 with a suspension list in Position'th argument.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   Suspensions in ECLiPSe go through several stages: They are created,
+   attached to variables or symbolic triggers, later scheduled for execution,
+   and finally executed.
+
+
+   The task of schedule_suspensions/2 is to take suspensions
+   from a suspension list and schedule them for execution.
+   The suspensions are put into a global priority list, according
+   to their individual priority. A subsequent wake/0 will then
+   actually execute them.
+
+
+   As a side effect, the suspension list within Attribute is updated,
+   ie. suspensions which are no longer useful are removed destructively.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Position or Attribute is not instatiated.
+     5 --- Position is not an integer.
+     5 --- Attribute is not a structure or it Position'th argument                is not a list of suspensions.
+     6 --- Attribute does not have a Position'th argument.
+
+Examples
+   
+[eclipse 1]: make_suspension(writeln(hello), 4, S),
+             make_suspension(writeln('hi there'), 2, T),
+	     Attr = attr([S,T]),
+             schedule_suspensions(1, Attr),
+             wake.
+hi there
+hello
+
+S = 'SUSP-_306-dead'
+T = 'SUSP-_311-dead'
+Attr = attr([])
+yes.
+
+[eclipse 2]: [user].
+ :- demon(d/0).
+ d :- writeln(demon).
+
+user       compiled traceable 68 bytes in 0.12 seconds
+
+yes.
+[eclipse 3]: make_suspension(d, 4, S), 
+             make_suspension(writeln('hi there'), 2, T),
+	     Attr = attr([S,T]),
+	     schedule_suspensions(1,Attr),
+	     wake.
+hi there
+demon
+
+S = 'SUSP-_304-susp'
+T = 'SUSP-_309-dead'
+Attr = attr(['SUSP-_304-susp'])
+
+Delayed goals:
+        d
+yes.
+
+
+See Also
+   demon / 1, insert_suspension / 3, insert_suspension / 4, make_suspension / 3, get_suspension_data / 3, wake / 0

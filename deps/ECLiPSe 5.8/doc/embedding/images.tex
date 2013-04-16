@@ -1,0 +1,872 @@
+\batchmode
+
+\documentclass[11pt,a4paper]{book}
+\makeatletter
+\usepackage{alltt}
+\usepackage{graphics}
+\usepackage{html}
+\usepackage{ae}
+\usepackage{aecompl}
+\topmargin -1cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\textwidth 16cm
+\textheight 22.5cm
+
+
+
+\parindent 0pt
+\itemsep 0pt
+
+\providecommand{\eclipseversion}{5.8}
+\providecommand{\enableunderscores}{\catcode`\_=8}\providecommand{\disableunderscores}{\catcode`\_=\active}\providecommand{\newitem}[1]{\item[#1]}\providecommand{\bipnoidx}[1]{{\bf #1}}\providecommand{\bip}[1]{bipnoidx{#1}\index{#1}}\providecommand{\biprefnoidx}[2]{\htmladdnormallink{#1}{#2}}\providecommand{\bipref}[2]{biprefnoidx{#1}{#2}\index{#1}}\providecommand{\biptxt}[2]{{\bf #1}\index{#2}}\providecommand{\txtbip}[2]{{\bf #1}\index{#1}}\providecommand{\biptxtref}[3]{\htmladdnormallink{#1}{#3}\index{#2}}\providecommand{\txtbipref}[3]{\htmladdnormallink{#1}{#3}\index{#1}}
+\typeout{We are in html mode}
+
+\providecommand{\vbar}{$\mid$}\providecommand{\uparr}{\verb*.^.}\providecommand{\bsl}{\verb*.\.}\providecommand{\andsy}{\verb*./\.}\providecommand{\orsy}{\verb*.\/.}\providecommand{\tld}{\verb*.~.}\providecommand{\lbr}{[}\providecommand{\rbr}{]}\providecommand{\nil}{[]}\providecommand{\lt}{<}\providecommand{\gt}{>}\providecommand{\chr}{CHR}\providecommand{\chrs}{CHRs}\providecommand{\eclipse}{ECLiPSe}\providecommand{\tkeclipse}{TkECLiPSe}\providecommand{\sepia}{SEPIA}
+\catcode`_=\active
+
+\tolerance=10000
+
+\makeindex
+
+
+\usepackage[dvips]{color}
+\pagecolor[gray]{.7}
+
+
+
+\makeatletter
+
+\makeatletter
+\count@=\the\catcode`\_ \catcode`\_=8 
+\newenvironment{tex2html_wrap}{}{} \catcode`\_=\count@
+\makeatother
+\let\mathon=$
+\let\mathoff=$
+\ifx\AtBeginDocument\undefined \newcommand{\AtBeginDocument}[1]{}\fi
+\newbox\sizebox
+\setlength{\hoffset}{0pt}\setlength{\voffset}{0pt}
+\addtolength{\textheight}{\footskip}\setlength{\footskip}{0pt}
+\addtolength{\textheight}{\topmargin}\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{\headheight}\setlength{\headheight}{0pt}
+\addtolength{\textheight}{\headsep}\setlength{\headsep}{0pt}
+\setlength{\textwidth}{349pt}
+\newwrite\lthtmlwrite
+\makeatletter
+\let\realnormalsize=\normalsize
+\global\topskip=2sp
+\def\preveqno{}\let\real@float=\@float \let\realend@float=\end@float
+\def\@float{\let\@savefreelist\@freelist\real@float}
+\def\end@float{\realend@float\global\let\@freelist\@savefreelist}
+\let\real@dbflt=\@dbflt \let\end@dblfloat=\end@float
+\let\@largefloatcheck=\relax
+\def\@dbflt{\let\@savefreelist\@freelist\real@dbflt}
+\def\adjustnormalsize{\def\normalsize{\mathsurround=0pt \realnormalsize
+ \parindent=0pt\abovedisplayskip=0pt\belowdisplayskip=0pt}\normalsize}%
+\def\lthtmltypeout#1{{\let\protect\string\immediate\write\lthtmlwrite{#1}}}%
+\newcommand\lthtmlhboxmathA{\adjustnormalsize\setbox\sizebox=\hbox\bgroup\kern.05em }%
+\newcommand\lthtmlvboxmathA{\adjustnormalsize\setbox\sizebox=\vbox\bgroup %
+ \let\ifinner=\iffalse }%
+\newcommand\lthtmlboxmathZ{\@next\next\@currlist{}{\def\next{\voidb@x}}%
+ \expandafter\box\next\egroup}%
+\newcommand\lthtmlmathtype[1]{\def\lthtmlmathenv{#1}}%
+\newcommand\lthtmllogmath{\lthtmltypeout{l2hSize %
+:\lthtmlmathenv:\the\ht\sizebox::\the\dp\sizebox::\the\wd\sizebox.\preveqno}}%
+\newcommand\lthtmlfigureA[1]{\let\@savefreelist\@freelist
+       \lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmlfigureZ{\lthtmlboxmathZ\lthtmllogmath\copy\sizebox
+       \global\let\@freelist\@savefreelist}%
+\newcommand\lthtmldisplayA[1]{\lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmldisplayB[1]{\edef\preveqno{(\theequation)}%
+  \lthtmldisplayA{#1}\let\@eqnnum\relax}%
+\newcommand\lthtmldisplayZ{\lthtmlboxmathZ\lthtmllogmath\lthtmlsetmath}%
+\newcommand\lthtmlinlinemathA[1]{\lthtmlmathtype{#1}\lthtmlhboxmathA
+  \vrule height1.5ex width0pt }%
+\newcommand\lthtmlinlineA[1]{\lthtmlmathtype{#1}\lthtmlhboxmathA}%
+\newcommand\lthtmlinlineZ{\egroup\expandafter\ifdim\dp\sizebox>0pt %
+  \expandafter\centerinlinemath\fi\lthtmllogmath\lthtmlsetinline}
+\newcommand\lthtmlinlinemathZ{\egroup\expandafter\ifdim\dp\sizebox>0pt %
+  \expandafter\centerinlinemath\fi\lthtmllogmath\lthtmlsetmath}
+\newcommand\lthtmlindisplaymathZ{\egroup %
+  \centerinlinemath\lthtmllogmath\lthtmlsetmath}
+\def\lthtmlsetinline{\hbox{\vrule width.1em\kern-.05em\vtop{\vbox{%
+  \kern.1em\copy\sizebox}\ifdim\dp\sizebox>0pt\kern.1em\else\kern.3pt\fi
+  \ifdim\hsize>\wd\sizebox \hrule depth1pt\fi}}}
+\def\lthtmlsetmath{\hbox{\vrule width.1em\kern-.05em\vtop{\vbox{%
+  \kern.1em\kern1.25 pt\hbox{\hglue.17em\copy\sizebox\hglue1.25 pt}}\kern.3pt%
+  \ifdim\dp\sizebox>0pt\kern.1em\fi \kern1.25 pt%
+  \ifdim\hsize>\wd\sizebox \hrule depth1pt\fi}}}
+\def\centerinlinemath{%
+  \dimen1=\ifdim\ht\sizebox<\dp\sizebox \dp\sizebox\else\ht\sizebox\fi
+  \advance\dimen1by.5pt \vrule width0pt height\dimen1 depth\dimen1 
+ \dp\sizebox=\dimen1\ht\sizebox=\dimen1\relax}
+
+\def\lthtmlcheckvsize{\ifdim\ht\sizebox<\vsize 
+  \ifdim\wd\sizebox<\hsize\expandafter\hfill\fi \expandafter\vfill
+  \else\expandafter\vss\fi}%
+\makeatletter \tracingstats = 1 
+
+
+\begin{document}
+\pagestyle{empty}\thispagestyle{empty}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength hsize=\the\hsize}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength vsize=\the\vsize}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength hoffset=\the\hoffset}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength voffset=\the\voffset}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength topmargin=\the\topmargin}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength topskip=\the\topskip}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength headheight=\the\headheight}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength headsep=\the\headsep}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength parskip=\the\parskip}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength oddsidemargin=\the\oddsidemargin}\lthtmltypeout{}%
+\makeatletter
+\if@twoside\lthtmltypeout{latex2htmlLength evensidemargin=\the\evensidemargin}%
+\else\lthtmltypeout{latex2htmlLength evensidemargin=\the\oddsidemargin}\fi%
+\lthtmltypeout{}%
+\makeatother
+\setcounter{page}{1}
+\onecolumn
+
+% !!! IMAGES START HERE !!!
+
+\setcounter{page}{2}
+\stepcounter{chapter}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{section}
+{\newpage\clearpage
+\lthtmlfigureA{figure2413}%
+\begin{figure}
+\begin{verbatim}% Tcl side will create the from-ECLiPSe queue gui_output, which will also
+% automatically flush at the end of every line (and so transfer the data
+% to the Tcl side)
+
+disconnect_handler :- % just terminate ECLiPSe execution
+writeln("Terminating...."),
+        halt.
+
+:-      remote_connect(localhost/5000, control, 
+        set_event_handler(control, disconnect_handler/0)),
+ % for simplicity, the host and port are fixed.
+% Name for control connection is also fixed.
+ % when remote_connect returns, the gui_output queue will be
+% connected to Tcl side already.
+ % eclipse side initialisation follows is just to set up the 
+% handler for disconnection....
+        writeln(gui_output, "Connected...").
+
+% this is for yielding control to Tcl. No need to specify Control explicitly
+tclyield :-
+        remote_yield(control).\end{verbatim}\end{figure}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{figure2419}%
+\begin{figure}
+{\small\begin{verbatim}# ECLIPSEDIR has to be set to where your ECLiPSe is at
+lappend auto_path [file join $ECLIPSEDIR) lib_tcl]
+
+package require remote_eclipse 
+
+proc terminate {} {
+    destroy .
+}
+
+# disable the terminate button when control is transferred to ECLiPSe
+proc disable_button {} {
+    .b configure -state disabled
+}
+
+# enable the terminate button when control is transferred back to Tcl
+proc enable_button {} {
+    .b configure -state normal
+}
+
+# the initialisation procedure, called when the remote side is attached. 
+# this creates the gui_output from-ECLiPSe queue, and then uses an
+# ec_rpc to cause the queue to flush at every newline
+proc initialise {} {
+	ec_queue_create gui_output fromec
+	ec_rpc "set_stream_property(gui_output, flush, end_of_line)"
+}
+
+# this button initiates disconnection and terminates the Tcl program
+pack [button .b -text "Terminate" -command "ec_disconnect; terminate"] 
+# only start and end commands given; the others default to no commands
+ec_running_set_commands disable_button enable_button
+
+# disable button initially as ECLiPSe side has initial control
+disable_button  
+
+# the attachment to ECLiPSe includes the initialisation ec_init, which
+# creates the gui_output queue. The connection is at the fixed port address
+ec_remote_init localhost 5000 initialise
+# Tcl side initially has control, hand it over to ECLiPSe...
+ec_resume resume\end{verbatim}}
+\end{figure}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{section}
+
+\providecommand{\jarlocation}{{\tt /lib/eclipse.jar}}%
+
+
+\providecommand{\docslocation}{{\tt /doc/javadoc/JavaEclipseInterface/index.html}}%
+
+
+\providecommand{\exampleslocation}{{\tt /doc/examples/JavaInterface}}%
+
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+{\newpage\clearpage
+\lthtmlfigureA{tex2html_wrap7456}%
+\includegraphics{remoteconnect.ps}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlfigureA{tex2html_wrap7550}%
+\includegraphics{syncpeer.ps}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{paragraph}
+{\newpage\clearpage
+\lthtmlfigureA{picture6528}%
+\begin{picture}
+(200,70)
+\thicklines\put(70,52){\bf yield}
+\put(20,50){\vector(1,0){150}}
+\put(0,65){ECLiPSe}
+\put(150,65){Remote}
+\put(70,25){\shortstack{.\\.\\.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(170,0){\line(0,1){65}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6537}%
+\begin{picture}
+(200,70)
+\put(40,52){rpc {\footnotesize\it (goal via rpc)}}
+\put(170,50){\vector(-1,0){150}}
+\put(20,46){\dashbox{5}(150,0){}}
+\put(20,46){\vector(-1,0){0}}
+\put(20,10){\dashbox{5}(150,0){}}
+\put(170,10){\vector(1,0){0}}
+\thicklines\put(40,16){{\bf yield} {\footnotesize\it (answer via rpc)}}
+\put(20,14){\vector(1,0){150}}
+\put(0,65){ECLiPSe}
+\put(150,65){Remote}
+\put(40,25){\shortstack{.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(170,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6556}%
+\begin{picture}
+(210,80)
+\thicklines\put(40,12){{\bf yield}}
+\put(20,10){\vector(1,0){170}}
+\thinlines\put(20,46){\dashbox{5}(170,0){}}
+\put(20,46){\vector(-1,0){0}}
+\put(40,52){{\bf rem_flushio(Q)} {\footnotesize\it (data via Q)}}
+\put(190,50){\vector(-1,0){170}}
+\put(0,65){ECLiPSe}
+\put(170,65){Remote}
+\put(40,25){\shortstack{.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6588}%
+\begin{picture}
+(210,60)
+\put(40,32){queue_close(Q)}
+\put(170,30){\vector(-1,0){150}}
+\thicklines\put(40,12){\bf yield}
+\put(20,10){\vector(1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,0){\line(0,1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6599}%
+\begin{picture}
+(200,120)
+\put(40,92){queue_create(N,T,D,E)}
+\put(170,90){\vector(-1,0){150}}
+\put(40,77){socket_client(P,N,T,D)}
+\put(20,75){\vector(1,0){150}}
+\put(40,62){socket_connect(N,S)}
+\put(170,60){\vector(-1,0){150}}
+\put(40,47){socket_accept(N,Q)}
+\put(20,45){\vector(1,0){150}}
+\put(40,32){resume}
+\put(170,30){\vector(-1,0){150}}
+\put(40,20){\shortstack{.\\.\\.}}
+\thicklines\put(40,12){{\bf yield}}
+\put(20,10){\vector(1,0){150}}
+\put(0,108){ECLiPSe}
+\put(150,108){Remote}
+\put(20,0){\line(0,1){105}}
+\put(170,0){\line(0,1){105}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6622}%
+\begin{picture}
+(200,70)
+\put(40,12){resume}
+\put(190,10){\vector(-1,0){170}}
+\put(20,46){\dashbox{5}(170,0){}}
+\put(190,46){\vector(1,0){0}}
+\thicklines\put(40,52){{\bf ec_flushio(Q,L)} {\footnotesize\it (L bytes via Q)}}
+\put(20,50){\vector(1,0){170}}
+\put(0,65){ECLiPSe}
+\put(170,65){Remote}
+\put(40,25){\shortstack{.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6644}%
+\begin{picture}
+(210,100)
+\put(30,12){resume}
+\put(190,10){\vector(-1,0){170}}
+\put(30,32){yield}
+\put(20,30){\vector(1,0){170}}
+\put(20,56){\dashbox{5}(170,0){}}
+\put(20,56){\vector(-1,0){0}}
+\put(30,62){rem_flushio(Q,L) {\footnotesize\it (L bytes via Q)}}
+\put(190,60){\vector(-1,0){170}}
+\thicklines\put(30,82){{\bf ec_waitio(Q)}}
+\put(20,80){\vector(1,0){170}}
+\put(0,95){ECLiPSe}
+\put(170,95){Remote}
+\put(20,0){\line(0,1){95}}
+\put(190,0){\line(0,1){95}}
+\put(30,70){\shortstack{.\\.}}
+\put(30,40){\shortstack{.\\.\\.}}
+\put(30,20){\shortstack{.\\.}}
+\put(30,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6701}%
+\begin{picture}
+(200,100)
+\put(40,52){socket_connect(N,S)}
+\put(170,50){\vector(-1,0){150}}
+\put(40,37){socket_accept(N,Q)}
+\put(20,35){\vector(1,0){150}}
+\put(40,12){resume}
+\put(170,10){\vector(-1,0){150}}
+\put(40,15){\shortstack{.\\.\\.}}
+\put(40,0){\shortstack{.\\.\\.}}
+\thicklines\put(40,67){{\bf socket_client(P,N,T,D)}}
+\put(20,65){\vector(1,0){150}}
+\put(0,88){ECLiPSe}
+\put(150,88){Remote}
+\put(20,0){\line(0,1){85}}
+\put(170,0){\line(0,1){85}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6739}%
+\begin{picture}
+(200,60)
+\put(40,12){resume}
+\put(170,10){\vector(-1,0){150}}
+\thicklines\put(40,32){{\bf queue_close(Q)}}
+\put(20,30){\vector(1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,0){\line(0,1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6757}%
+\begin{picture}
+(200,60)
+\put(70,12){disconnect_resume}
+\put(170,10){\vector(-1,0){150}}
+\thicklines\put(70,32){\bf disconnect}
+\put(20,30){\vector(1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6774}%
+\begin{picture}
+(200,60)
+\put(50,32){disconnect}
+\put(20,30){\vector(1,0){150}}
+\thicklines\put(50,12){\bf disconnect_yield}
+\put(170,10){\vector(-1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{paragraph}
+{\newpage\clearpage
+\lthtmlfigureA{picture6797}%
+\begin{picture}
+(200,70)
+\thicklines\put(70,52){\bf resume}
+\put(170,50){\vector(-1,0){150}}
+\put(0,65){ECLiPSe}
+\put(150,65){Remote}
+\put(70,25){\shortstack{.\\.\\.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(170,0){\line(0,1){65}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6806}%
+\begin{picture}
+(200,70)
+\put(40,52){ec_flushio(Q,L) {\footnotesize\it (L bytes via Q)}}
+\put(20,50){\vector(1,0){170}}
+\put(20,46){\dashbox{5}(170,0){}}
+\put(190,46){\vector(1,0){0}}
+\thicklines\put(40,12){\bf resume}
+\put(190,10){\vector(-1,0){170}}
+\put(0,65){ECLiPSe}
+\put(170,65){Remote}
+\put(40,25){\shortstack{.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6821}%
+\begin{picture}
+(210,110)
+\put(30,82){ec_waitio(Q)}
+\put(20,80){\vector(1,0){170}}
+\put(30,32){yield}
+\put(20,30){\vector(1,0){170}}
+\put(20,56){\dashbox{5}(170,0){}}
+\put(20,56){\vector(-1,0){0}}
+\put(30,62){rem_flushio(Q,L) {\footnotesize\it (L bytes via Q)}}
+\put(190,60){\vector(-1,0){170}}
+\thicklines\put(30,12){\bf resume}
+\put(190,10){\vector(-1,0){170}}
+\put(0,95){ECLiPSe}
+\put(170,95){Remote}
+\put(20,0){\line(0,1){95}}
+\put(190,0){\line(0,1){95}}
+\put(30,70){\shortstack{.\\.}}
+\put(30,40){\shortstack{.\\.\\.}}
+\put(30,20){\shortstack{.\\.}}
+\put(30,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6842}%
+\begin{picture}
+(210,110)
+\put(190,10){\vector(-1,0){170}}
+\put(30,82){ec_waitio(Q)}
+\put(30,32){yield}
+\put(20,30){\vector(1,0){170}}
+\put(20,56){\dashbox{5}(170,0){}}
+\put(20,56){\vector(-1,0){0}}
+\put(30,62){rem_flushio(Q) {\footnotesize\it (data via Q)}}
+\put(190,60){\vector(-1,0){170}}
+\thicklines\put(30,12){{\bf resume}}
+\put(20,80){\vector(1,0){170}}
+\put(0,95){ECLiPSe}
+\put(170,95){Remote}
+\put(20,0){\line(0,1){95}}
+\put(190,0){\line(0,1){95}}
+\put(30,70){\shortstack{.\\.}}
+\put(30,40){\shortstack{.\\.\\.}}
+\put(30,20){\shortstack{.\\.}}
+\put(30,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6863}%
+\begin{picture}
+(200,105)
+\put(40,52){socket_connect(N,S)}
+\put(170,50){\vector(-1,0){150}}
+\put(40,37){socket_accept(N,Q)}
+\put(20,35){\vector(1,0){150}}
+\put(40,67){socket_client(P,N,T,D)}
+\put(20,65){\vector(1,0){150}}
+\put(40,15){\shortstack{.\\.\\.}}
+\put(40,0){\shortstack{.\\.\\.}}
+\thicklines\put(40,12){\bf resume}
+\put(170,10){\vector(-1,0){150}}
+\put(0,88){ECLiPSe}
+\put(150,88){Remote}
+\put(20,0){\line(0,1){85}}
+\put(170,0){\line(0,1){85}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6879}%
+\begin{picture}
+(200,60)
+\put(40,32){queue_close(Q)}
+\put(20,30){\vector(1,0){150}}
+\thicklines\put(40,12){\bf resume}
+\put(170,10){\vector(-1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,0){\line(0,1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6892}%
+\begin{picture}
+(200,70)
+\put(40,16){yield {\footnotesize\it (answer via rpc)}}
+\put(20,14){\vector(1,0){150}}
+\put(20,46){\dashbox{5}(150,0){}}
+\put(20,46){\vector(-1,0){0}}
+\put(20,10){\dashbox{5}(150,0){}}
+\put(170,10){\vector(1,0){0}}
+\thicklines\put(40,52){{\bf rpc} {\footnotesize\it (goal via rpc)}}
+\put(170,50){\vector(-1,0){150}}
+\put(0,65){ECLiPSe}
+\put(150,65){Remote}
+\put(40,25){\shortstack{.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(170,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6917}%
+\begin{picture}
+(200,70)
+\thinlines\put(40,12){yield}
+\put(20,10){\vector(1,0){170}}
+\put(20,46){\dashbox{5}(170,0){}}
+\put(20,46){\vector(-1,0){0}}
+\thicklines\put(40,52){{\bf rem_flushio(Q)} {\footnotesize\it (data via Q)}}
+\put(190,50){\vector(-1,0){170}}
+\put(0,65){ECLiPSe}
+\put(170,65){Remote}
+\put(40,25){\shortstack{.\\.\\.\\.}}
+\put(20,0){\line(0,1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6969}%
+\begin{picture}
+(200,120)
+\put(40,77){socket_client(P,N,T,D)}
+\put(20,75){\vector(1,0){150}}
+\put(40,62){socket_connect(N,S)}
+\put(170,60){\vector(-1,0){150}}
+\put(40,47){socket_accept(N,Q)}
+\put(20,45){\vector(1,0){150}}
+\put(40,32){resume}
+\put(170,30){\vector(-1,0){150}}
+\put(40,20){\shortstack{.\\.\\.}}
+\put(40,12){yield}
+\put(20,10){\vector(1,0){150}}
+\thicklines\put(40,92){{\bf queue_create(N,T,D,E)}}
+\put(170,90){\vector(-1,0){150}}
+\put(0,108){ECLiPSe}
+\put(150,108){Remote}
+\put(20,0){\line(0,1){105}}
+\put(170,0){\line(0,1){105}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture6989}%
+\begin{picture}
+(200,60)
+\put(40,12){yield}
+\put(20,10){\vector(1,0){150}}
+\thicklines\put(40,32){{\bf queue_create(N,T,D,E)}}
+\put(170,30){\vector(-1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,0){\line(0,1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture7016}%
+\begin{picture}
+(200,60)
+\put(40,12){\bf yield}
+\put(20,10){\vector(1,0){150}}
+\thicklines\put(40,32){queue_close(Q)}
+\put(170,30){\vector(-1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,0){\line(0,1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\.}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture7033}%
+\begin{picture}
+(200,60)
+\put(70,12){disconnect_yield}
+\put(20,10){\vector(1,0){150}}
+\thicklines\put(70,32){\bf disconnect}
+\put(170,30){\vector(-1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+{\newpage\clearpage
+\lthtmlfigureA{picture7052}%
+\begin{picture}
+(200,60)
+\put(50,32){disconnect}
+\put(170,30){\vector(-1,0){150}}
+\thicklines\put(50,12){\bf disconnect_resume}
+\put(20,10){\vector(1,0){150}}
+\put(0,45){ECLiPSe}
+\put(150,45){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsection}
+\stepcounter{section}
+\appendix
+\stepcounter{chapter}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+
+\end{document}

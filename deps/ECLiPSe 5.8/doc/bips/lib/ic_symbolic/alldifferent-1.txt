@@ -1,0 +1,22 @@
+
+alldifferent(?List)
+
+   All elements of List are different
+
+Arguments
+   List                list of variables or domain values
+
+Type
+   library(ic_symbolic)
+
+Description
+
+	Constrains all list elements to be different values of the same domain.
+	This is implemented by mapping onto ic_global:alldifferent/1.
+	All list elements must be variables or values of the same domain.
+	If one or more of them are domain-less, they will be given the same
+	domain as the others.
+
+
+See Also
+   ic_global : alldifferent / 1

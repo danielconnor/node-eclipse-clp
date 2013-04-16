@@ -1,0 +1,117 @@
+<HTML><HEAD><TITLE>subscript(+Term, +Subscript, ?Elem)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>subscript(+Term, +Subscript, ?Elem)</H1>
+Accesses the subterm Elem of Term, as specified by Subscript.
+
+
+<DL>
+<DT><EM>+Term</EM></DT>
+<DD>Compound term (possibly nested), string, or external data handle.
+</DD>
+<DT><EM>+Subscript</EM></DT>
+<DD>A list of integers, ranges or integer arithmetic expressions.
+</DD>
+<DT><EM>?Elem</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   If term is a compound term, e.g. a vector represented as a structure,
+   or a matrix represented as a structure of structures and so on, then
+   subscript/3 provides access to the term's components.
+   Subscript is a list of (sub)structure argument indices describing
+   which element to access. subscript/3 could be implemented with a
+   sequence of calls to arg/3.
+
+<P>
+   The indices can be either an integer expression or a range in the form 
+   Lower..Upper where Lower and Upper are integer expressions. The
+   expressions are evaluated and the corresponding components (or the
+   components in the range specified) accessed.
+
+<P>
+   If Term is a string, Subscript must be a list of the form [Index], and
+   Elem is obtained via string_code(Index, Term, Elem).
+
+<P>
+   If Term is an external data handle, Subscript must be a list of the form
+   [Index], and Elem is obtained via xget(Term, Index, Elem).
+
+<P>
+   The main use for this predicate is to provide array syntax in arithmetic
+   expressions. Consider the arithmetic expression
+
+<P>
+<PRE>
+    X is Mat[I,J] + 1
+</PRE>
+    which the ECLiPSe parser parses as
+
+<P>
+<PRE>
+    X is subscript(Mat,[I,J]) + 1
+</PRE>
+    and the arithmetic evaluation mechanism turns that into
+
+<P>
+<PRE>
+    subscript(Mat,[I,J],T), +(T,1,X)
+</PRE>
+    If Subscript contains a range of the form From..To, then
+    this results in the retrieval of a list of elements with
+    the indices from From to To.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Term or Subscript are not sufficiently instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Term not compound or Subscript not integer list.
+<DT><EM>(6) out of range </EM>
+<DD>Subscript out of range.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 6]: subscript(s(t(a,b),t(c,d),t(e,f)), [3,2], X).
+    X = f
+    yes.
+
+    [eclipse 11]: Vector = v(12,13,14,15), X is Vector[3].
+    X = 14
+    Vector = v(12, 13, 14, 15)
+    yes.
+
+    [eclipse 12]: Matrix = m(r(1,2,3),r(4,5,6),r(7,8,9)), X is Matrix[2,1].
+    X = 4
+    Matrix = m(r(1, 2, 3), r(4, 5, 6), r(7, 8, 9))
+    yes.
+
+    [eclipse 18]: Matrix = m(r(1,2,3),r(4,5,6),r(7,8,9)), Row is Matrix[2].
+    Row = r(4, 5, 6)
+    Matrix = m(r(1, 2, 3), r(4, 5, 6), r(7, 8, 9))
+    yes.
+
+    [eclipse 5]: Matrix = m(r(1,2,3),r(4,5,6),r(7,8,9)), 
+                 subscript(Matrix, [2,1..3], Row),
+                 subscript(Matrix, [1..3,2], Col),
+                 subscript(Matrix, [2..3,1..2], Sub).
+    Matrix = m(r(1, 2, 3), r(4, 5, 6), r(7, 8, 9))
+    Row = [4, 5, 6]
+    Col = [2, 5, 8]
+    Sub = [[4, 5], [7, 8]]
+    yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/arg-3.html">arg / 3</A>, <A HREF="../../kernel/termmanip/dim-2.html">dim / 2</A>, <A HREF="../../kernel/externals/xget-3.html">xget / 3</A>
+</BODY></HTML>

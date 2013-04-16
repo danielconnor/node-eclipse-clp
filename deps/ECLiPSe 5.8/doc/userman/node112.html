@@ -1,0 +1,481 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Waking conditions</TITLE>
+<META NAME="description" CONTENT="Waking conditions">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node113.html">
+<LINK REL="previous" HREF="node111.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node113.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3925"
+ HREF="node113.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3921"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3915"
+ HREF="node111.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3923"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3926"
+ HREF="node113.html">Lower-level Primitives</A>
+<B> Up:</B> <A NAME="tex2html3922"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3916"
+ HREF="node111.html">Explicit supension with suspend/3</A>
+ &nbsp <B>  <A NAME="tex2html3924"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3927"
+ HREF="node112.html#SECTION001771000000000000000">Standard Waking Conditions on Variables</A>
+<UL>
+<LI><A NAME="tex2html3928"
+ HREF="node112.html#SECTION001771100000000000000">Waking on Instantiation: inst</A>
+<LI><A NAME="tex2html3929"
+ HREF="node112.html#SECTION001771200000000000000">Waking on Binding: bound</A>
+<LI><A NAME="tex2html3930"
+ HREF="node112.html#SECTION001771300000000000000">Waking on Constraining: constrained</A>
+</UL>
+<LI><A NAME="tex2html3931"
+ HREF="node112.html#SECTION001772000000000000000">Library-defined Waking Conditions on Variables</A>
+<LI><A NAME="tex2html3932"
+ HREF="node112.html#SECTION001773000000000000000">Global Symbolic Waking Conditions: Triggers</A>
+<UL>
+<LI><A NAME="tex2html3933"
+ HREF="node112.html#SECTION001773100000000000000">Postponed Goals</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001770000000000000000">
+Waking conditions</A>
+</H1>
+The usual purpose of suspending a goal is to wait and resume it later
+when more information about its arguments is available.
+In Logic Programming, this is usually the case when certain events
+related to variables occur.
+When such an event occurs, the suspended goal is passed to the
+waking scheduler which puts it at the appropriate place
+in the priority queue of woken goals and as soon as it becomes
+first in the queue, the suspended goal is executed.
+
+<P>
+The event which causes a suspended goal to be woken is usually
+related to one or more variables, for example
+variable instantiation, or a modification of a variable's
+attribute.
+However, it is also possible to trigger suspension with symbolic events
+not related to any variable.
+
+<P>
+
+<H2><A NAME="SECTION001771000000000000000"></A>
+<A NAME="suspend"></A><A NAME="10375"></A>
+<A NAME="10376"></A>
+<A NAME="coroutining"></A>
+<BR>
+Standard Waking Conditions on Variables
+</H2>
+There are three very general standard waking conditions which
+can be used with any variable. They are, in order of increasing generality:
+<DL>
+<DT><STRONG><B>inst:</B></STRONG>
+<DD>wake when a variable gets instantiated
+<DT><STRONG><B>bound:</B></STRONG>
+<DD>wake when a variable gets instantiated or bound to
+        another variable
+<DT><STRONG><B>constrained:</B></STRONG>
+<DD>wake when a variable gets instantiated or bound to
+        another variable or becomes otherwise constrained 
+</DL>
+Each condition subsumes the preceding, more specific ones.
+
+<P>
+
+<H3><A NAME="SECTION001771100000000000000">
+Waking on Instantiation: inst</A>
+</H3>
+
+<P>
+To wake a goal when a variable gets instantiated, the <B>inst</B>
+condition is used. For example the following code suspends a goal until
+variable X is instantiated:<PRE>
+?- suspend(writeln(woken(X)), 0, X-&gt;inst).
+X = X
+There is 1 delayed goal.
+Yes (0.00s cpu)
+</PRE>
+If this variable is later instantiated (bound to a non-variable),
+the goal executes in a data-driven way:<PRE>
+?- suspend(writeln(woken(X)), 0, X-&gt;inst), X = 99.
+woken(99)
+X = 99
+Yes (0.00s cpu)
+</PRE>
+If we specify several instantiation conditions for the same goal,
+the goal will wake up as soon as the first of them occurs:<PRE>
+?- suspend(writeln(woken(X,Y)), 0, [X,Y]-&gt;inst), X = 99.
+woken(99, Y)
+X = 99
+Y = Y
+Yes (0.00s cpu)
+</PRE>
+It is not possible to specify a conjunction of conditions directly!
+
+<P>
+Let us now suppose we want to implement a predicate succ(X,Y) which
+is true when Y is the next integer after X. If we want the predicate
+to act as a lazy test, we need to let it suspend until both variables
+are instantiated. This can be programmed as follows:<PRE>
+succ_lazy(X, Y) :-
+        ( var(X) -&gt; suspend(succ_lazy(X,Y), 0, X-&gt;inst)
+        ; var(Y) -&gt; suspend(succ_lazy(X,Y), 0, Y-&gt;inst)
+        ; Y =:= X+1
+        ).
+</PRE>
+The conjunctive condition "wait until X and Y are instantiated" is
+implemented by first waiting for X's instantiation, then waking up and
+re-suspending waiting for Y's instantiation.
+
+<P>
+A more eager implementation of succ/2 would delay only until
+a single variable argument is left, and then compute the variable from
+the nonvariable argument:<PRE>
+succ_eager(X, Y) :-
+        ( var(X) -&gt;
+            ( var(Y) -&gt;
+                suspend(succ_eager(X,Y), 0, [X,Y]-&gt;inst)
+            ;
+                X is Y-1
+            )
+        ;
+            Y is X+1
+        ).
+</PRE>
+Here, we suspend only in the case that both arguments are variables,
+and wake up as soon as either of them gets instantiated.
+
+<P>
+Waiting for groundness of a term can be done in a way similar to the
+way succ_lazy/2 waited for both arguments to be instantiated: we pick
+any variable in the nonground term and wait for its instantiation.
+If this happens, we check whether other variables remain, and if yes,
+we re-suspend on one of the remaining variables. The following predicate
+waits for a term to become ground, and then calls arithmetic evaluation on it:<PRE>
+eval_lazy(Expr, Result) :-
+        ( nonground(Expr, Var) -&gt;
+            suspend(eval_lazy(Expr,Result), 0, Var-&gt;inst)
+        ;
+            Result is Expr
+        ).
+</PRE>
+We have used the built-in predicate
+<A NAME="tex2html1411"
+ HREF="../bips/kernel/typetest/nonground-2.html">nonground/2</A><A NAME="10845"></A>
+which tests a term for groundness and returns one of its variables
+if it is nonground. Note also that in this implementation the same
+<code>eval_lazy/2</code> goal gets woken and re-suspended possibly many times.
+See section <A HREF="node114.html#secdemon">17.9</A> below for how to address this inefficiency.
+
+<P>
+
+<H3><A NAME="SECTION001771200000000000000">
+Waking on Binding: bound</A>
+</H3>
+
+<P>
+Sometimes it is interesting to wake a goal when the number of variables
+among its arguments is reduced. This happens not only when a variable
+disappears due to instantiation, but also when two variables get unified
+(the result being a single variable). Consider the succ_eager/2 predicate
+above: we know that a goal like <code>succ_eager(X,X)</code> must always fail
+because an integer cannot be equal to its successor. However, the above
+implementation does not detect this case until X gets instantiated.
+
+<P>
+The <B>bound</B> waking condition subsumes the <B>inst</B> condition, but
+also wakes when any two of the variables in the condition specification get
+unified with each other (aliased).
+Using this property, we can improve the implementation of succ_eager/2
+as follows:<PRE>
+succ_eager1(X, Y) :-
+        ( var(X) -&gt;
+            ( var(Y) -&gt;
+                X \== Y,
+                suspend(succ_eager1(X,Y), 0, [X,Y]-&gt;bound)
+            ;
+                X is Y-1
+            )
+        ;
+            Y is X+1
+        ).
+</PRE>
+This gives us the desirable behaviour of failing as soon as possible:<PRE>
+?- succ_eager1(X, Y), X = Y.
+No (0.00s cpu)
+</PRE>
+Note that the built-in predicate
+<A NAME="tex2html1413"
+ HREF="../bips/kernel/termcomp/TE-2.html"><IMG
+ WIDTH="22" HEIGHT="21" ALIGN="BOTTOM" BORDER="0"
+ SRC="img12.gif"
+ ALT="$\sim$">=/2</A><A NAME="10848"></A>
+is a similar case and uses the <B>bound</B> waking condition for the
+same reason.
+
+<P>
+
+<H3><A NAME="SECTION001771300000000000000">
+Waking on Constraining: constrained</A>
+</H3>
+
+<P>
+In plain Prolog, variable instantiation is the only way in which a single
+variable can become more constrained.  In the presence of constraints,
+there are other ways. The most obvious example are variable domains:
+when a variable's domain gets reduced, the variable becomes more
+constrained. This means that a delayed goal that previously still had
+a chance to succeed, could now have become impossible to satisfy,
+and should therefore be checked again.
+
+<P>
+The purpose of the <B>constrained</B> waking condition is to make it
+possible to wake a suspended goal whenever a variable becomes more
+constrained in a general sense. Having this general notion
+of constrained-ness makes it possible to write generic libraries
+that do interesting things with constraints and constrained variables
+without their implementation having to be linked to a particular
+constraint-solver<A NAME="tex2html1415"
+ HREF="footnode.html#foot10428"><SUP>17.3</SUP></A>.
+
+<P>
+The <B>constrained</B> waking condition subsumes the <B>bound</B> condition
+(which in turn subsumes the <B>inst</B> condition). 
+While goals suspended on the <B>inst</B> and <B>bound</B> conditions
+are woken implicitly by the unification routine, libaries which implement
+domain variables are responsible for notifying the system when they
+constrain a variable. They do so by invoking the built-ins
+<A NAME="tex2html1416"
+ HREF="../bips/kernel/suspensions/notify_constrained-1.html">notify_constrained/1</A><A NAME="10851"></A>
+and <A NAME="tex2html1418"
+ HREF="../bips/kernel/suspensions/wake-0.html">wake/0</A><A NAME="10854"></A>
+which is the generic way of telling the system that a variable has been
+constrained.
+
+<P>
+The simplest application using the <B>constrained</B> condition is a little
+debugging support predicate that prints a variable's current partial value
+(e.g. domain) whenever it changes:<PRE>
+report(X) :-
+        ( var(X) -&gt;
+            writeln(constrained(X)),
+            suspend(report(X), 1, X-&gt;constrained) % (re)suspend
+;
+            writeln(instantiated(X))
+        ).
+</PRE>
+This now works with any library that implements a notion of constrainedness,
+e.g. the interval solver library(ic):<PRE>
+?- report(X), X :: 1..5, X #&gt; 2, X #&lt; 4.
+constrained(X)
+constrained(X{1 .. 5})
+constrained(X{3 .. 5})
+instantiated(3)
+X = 3
+Yes (0.01s cpu)
+</PRE>
+The report/1 predicate is woken when the domain is initally attached to X,
+whenever the domain gets reduced, and finally when X gets instantiated.
+
+<P>
+
+<H2><A NAME="SECTION001772000000000000000">
+Library-defined Waking Conditions on Variables</A>
+</H2>
+
+<P>
+Constraint-solver libraries typically define additional, specialised
+waking conditions for the type of variable that they implement.
+For instance, the interval solver lib(ic) defines the following
+conditions:
+<DL>
+<DT><STRONG>min</STRONG>
+<DD>wake when the minimum domain value changes
+<DT><STRONG>max</STRONG>
+<DD>wake when the maximum domain value changes
+<DT><STRONG>hole</STRONG>
+<DD>wake when the domain gets a new hole
+<DT><STRONG>type</STRONG>
+<DD>wake when the variable type changes from real to integer
+</DL>
+Obviously, these conditions only make sense for domain variables
+that are created by the lib(ic) library, and are mainly useful for
+implementing extensions to this library, e.g. new constraints.
+The library-defined waking conditions can be used with
+<A NAME="tex2html1421"
+ HREF="../bips/kernel/suspensions/suspend-3.html">suspend/3</A><A NAME="10857"></A>
+by using one of the following syntactic forms:<PRE>
+[A, B]-&gt;ic:min
+[A, B]-&gt;ic:(min of ic)
+</PRE>
+Using these conditions, we can define a more specialised form of
+the above report/1 predicate which only wakes up on the specified
+ic-domain changes:<PRE>
+report_ic(X) :-
+        ( var(X) -&gt;
+            writeln(newdomain(X)),
+            suspend(report_ic(X), 1, [X-&gt;ic:min,X-&gt;ic:max,X-&gt;ic:hole])
+        ;
+            writeln(instantiated(X))
+        ).
+</PRE>
+The behaviour is similar to above, the predicate wakes up on every
+domain change:<PRE>
+?- X::1..5, report_ic(X), X#&gt; 2, X #&lt; 4.
+newdomain(X{1 .. 5})
+newdomain(X{3 .. 5})
+instantiated(3)
+X = 3
+Yes (0.00s cpu)
+</PRE>
+Note that we now have to set up the delayed goal <EM>after</EM> the
+variable already has a domain. This is because the ic-specific waking
+conditions can only be used with ic-variables<A NAME="tex2html1420"
+
+HREF="footnode.html#foot10795"><SUP>17.4</SUP></A>,
+not with domain-less generic variables.
+
+<P>
+
+<H2><A NAME="SECTION001773000000000000000"></A>
+<A NAME="trigger"></A>
+<BR>
+Global Symbolic Waking Conditions: Triggers
+</H2>
+
+<P>
+Although waking conditions for a goal are usually related to variables
+within the goal's arguments, it is also possible to specify symbolic
+waking conditions which are unrelated to variables.
+<A NAME="10468"></A><A NAME="10469"></A>
+These are called <B>triggers</B> and are identified simply by an
+arbitrary name (an atom). Goals can be suspended on such triggers,
+and the trigger can be pulled explicitly by program code in
+particular circumstances. By combining triggers with the event mechanism
+<A NAME="10471"></A>
+(chapter <A HREF="node71.html#chapexcept">13</A>) it is even possible to wake goals in
+response to synchronous or asynchronous events.
+
+<P>
+A goal is suspended on a trigger using the syntax <B>trigger(Name)</B>
+in <A NAME="tex2html1426"
+ HREF="../bips/kernel/suspensions/suspend-3.html">suspend/3</A><A NAME="10860"></A>
+as in the following example:<PRE>
+?- suspend(writeln(woken), 0, trigger(happy)).
+There is 1 delayed goal.
+Yes (0.00s cpu)
+</PRE>
+The built-in
+<A NAME="tex2html1428"
+ HREF="../bips/kernel/suspensions/trigger-1.html">trigger/1</A><A NAME="10863"></A>
+can then be used to wake the goal:<PRE>
+?- suspend(writeln(woken), 0, trigger(happy)), trigger(happy).
+woken
+Yes (0.00s cpu)
+</PRE>
+Of course, symbolic triggers can be used together with other
+waking conditions to specify alternative reasons to wake a goal.
+
+<P>
+
+<H3><A NAME="SECTION001773100000000000000"></A>
+<A NAME="10487"></A>
+<BR>
+Postponed Goals
+</H3>
+There is one system-defined trigger called <B>postponed</B>.
+It is provided as a way to postpone the triggering of a goal as much
+as possible. This trigger is pulled just before the end of
+certain encapsulated executions, like
+
+<UL><LI>end of toplevel execution
+
+<LI>inside all-solution predicates (<A NAME="tex2html1431"
+ HREF="../bips/kernel/allsols/findall-3.html">findall/3</A><A NAME="10866"></A>, <A NAME="tex2html1433"
+ HREF="../bips/kernel/allsols/setof-3.html">setof/3</A><A NAME="10869"></A>)
+
+<LI>inside <A NAME="tex2html1435"
+ HREF="../bips/lib/branch_and_bound/bb_min-3.html">bb_min/3</A><A NAME="10872"></A> and <A NAME="tex2html1437"
+ HREF="../bips/lib/branch_and_bound/minimize-2.html">minimize/2</A><A NAME="10875"></A>
+
+</UL>
+A suspension should be attached to the <B>postponed</B> trigger only when
+
+<UL><LI>it might not have any other waking conditions left
+
+<LI>and it might at the same time have other waking conditions left
+        that could make it fail during further execution
+
+<LI>and one does not want to execute it now, e.g. because it is known
+        to succeed or re-suspend
+
+</UL>
+An example is a goal that originally woke on modifications of the upper
+bound of an interval variable. If the variable gets instantiated to its
+upper bound, there is no need to wake the goal (since the bound has not
+changed), but the variable (and with it the waking condition) disappears
+and the goal may be left orphaned.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3925"
+ HREF="node113.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3921"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3915"
+ HREF="node111.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3923"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3926"
+ HREF="node113.html">Lower-level Primitives</A>
+<B> Up:</B> <A NAME="tex2html3922"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3916"
+ HREF="node111.html">Explicit supension with suspend/3</A>
+ &nbsp <B>  <A NAME="tex2html3924"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,29 @@
+<HTML><HEAD><TITLE>delayed_goals_number(?Var, -Number)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delayed_goals_number(?Var, -Number)</H1>
+Returns the number of goals delayed on the ic attribute of Var.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>Variable or term
+</DD>
+<DT><EM>Number</EM></DT>
+<DD>Number of goals delayed on the ic attribute of Var.
+</DD>
+</DL>
+<H2>Description</H2>
+   N is the number of constraints and suspended goals currently attached to
+   the IC attribute of the variable Var.  Note that this number may not
+   correspond to the exact number of different constraints attached to Var,
+   as goals in different suspension lists are counted separately, and a
+   constraint may decompose into more than one suspension.  This predicate
+   is often used when looking for the most or least constrained variable
+   from a set of domain variables.  If Var is not a variable, N is bound to
+   1.0Inf; otherwise if Var is not an IC variable, N is zero.
+</P><P>
+   Note that this predicate only counts goals attached to the IC attribute;
+   if you want to count all goals attached to a variable, use the generic
+   delayed_goals_number/2.
+
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/delayed_goals_number-2.html">delayed_goals_number / 2</A>, <A HREF="../../lib/ic_kernel/index.html">ic_kernel : delayed_goals_number / 2</A>
+</BODY></HTML>

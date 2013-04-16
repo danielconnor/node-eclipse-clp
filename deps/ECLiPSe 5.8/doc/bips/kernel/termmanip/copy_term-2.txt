@@ -1,0 +1,69 @@
+
+copy_term(+OldTerm, ?NewTerm)
+
+   A copy of OldTerm with new variables is created and unified with NewTerm.
+
+
+
+Arguments
+   +OldTerm            Prolog term.
+   ?NewTerm            Prolog term.
+
+Type
+   Term Manipulation
+
+Description
+   A copy of OldTerm is created, ie.  a term that is similar to OldTerm but
+   the free variables of OldTerm have been replaced by new variables which
+   do not occur elsewhere.  In other words, the new term is a most general
+   variant of the old one in the sense of variant/2.
+
+
+   Metaterms are treated like normal variables, except that their
+   attributes are copied as specified by the corresponding copy_term handler.
+
+
+   The effect of copy_term/2 is almost the same as of the sequence
+
+
+
+    setval(reserved_name, OldTerm),
+    getval(reserved_name, NewTerm)
+
+   or a similar application of record/erase or assert/retract.  However,
+   copy_term/2 is faster, handles attributed variables more sensibly and is also
+   more space efficient since it does not physically copy ground subterms.
+
+
+   Note that when the structure of the term to be copied is known, then
+   it is more efficient to use specialised unification code or a combination
+   of functor/3 and arg/3 to do the job.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if NewTerm does not unify with the copy of OldTerm.
+
+
+
+Examples
+   
+   Success:
+   copy_term(a, C).          (gives C=a).
+   copy_term(s(X,a,Y,X), C). (gives C=s(_g1, a, _g2, _g1)).
+   copy_term([X,2|Y], C).    (gives C=[_g1, 2| _g2]).
+   copy_term(X, C).
+   copy_term(X, s(1,2,3)).
+   Fail:
+   copy_term(s(X,X), s(3,4)).
+
+
+
+
+
+See Also
+   copy_term_vars / 3, copy_term / 3, variant / 2, functor / 3, term_variables / 2

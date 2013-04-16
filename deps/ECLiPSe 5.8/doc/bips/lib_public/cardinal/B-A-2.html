@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>?Element `-@ ?SetVariable</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Element `-@ ?SetVariable</H1>
+Set non-membership constraint
+<DL>
+<DT><EM>SetVariable</EM></DT>
+<DD>A set variable.
+</DD>
+<DT><EM>Element</EM></DT>
+<DD>A ground term or a variable.
+</DD>
+</DL>
+<H2>Description</H2>
+Constrain SetVariable to not include Element.<P>
+		If Element is a variable then the constraint
+		is suspended until it becomes ground.
+<H3>Fail Conditions</H3>
+Fails if Element must be a member of SetVariable.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S `:: []..[a,b], a `-@ S, glb_poss(S,G,P).
+G = [], P = [b]
+
+?- S `:: [c]+[a,b], c `-@ S.
+no
+
+?- S `:: [a]+[b,c], z `-@ S, glb_poss(S,G,P).
+G = [a], P = [b,c]
+
+?- S `:: []..[a,b], X `-@ S, glb_poss(S,G,P).
+G = [], P = [a,b]
+
+?- S `:: []..[a,b], X `-@ S, X=b, glb_poss(S,G,P).
+G = [], P = [a]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/BA-2.html">`@ / 2</A>, <A HREF="../../lib_public/cardinal/in-2.html">in / 2</A>, <A HREF="../../lib_public/cardinal/notin-2.html">notin / 2</A>, <A HREF="../../lib_public/cardinal/BNN-2.html">`:: / 2</A>
+</BODY></HTML>

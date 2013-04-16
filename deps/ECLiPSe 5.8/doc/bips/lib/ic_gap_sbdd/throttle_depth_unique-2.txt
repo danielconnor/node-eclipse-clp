@@ -1,0 +1,21 @@
+
+throttle_depth_unique(++MaxDepth, +SBDDInfo)
+
+   Example throttling predicate
+
+Arguments
+   MaxDepth            Cut-off depth
+   SBDDInfo            The sbdd_shared data structure
+
+Type
+   library(ic_gap_sbdd)
+
+Description
+   Throttling predicate for use as an option to sbdd_initialise/5
+   or sbdd_initialise_set/5.  This predicate succeeds if the search depth
+   does not exceed MaxDepth, or if the variable array is ground (ensuring
+   solutions are guaranteed to be unique).
+
+
+See Also
+   sbdd_initialise / 5, sbdd_initialise_set / 5, throttle_default / 1, throttle_depth_non_unique / 2, throttle_depth_mod_unique / 2, throttle_depth_mod_non_unique / 2

@@ -1,0 +1,46 @@
+
+string_code(+String, +Index, ?Code)
+
+   Succeeds if Code is the value of the Index'th byte in String
+
+Arguments
+   String              String
+   Index               Integer between 1 and the length of String
+   Code                Variable or Integer
+
+Type
+   Strings and Atoms
+
+Description
+	This predicate extracts the Index'th byte from the given string String. 
+	Bytes in the string are numbered from 1 (analogous to array indices in
+	subscript/3 and arg/3).
+
+
+Resatisfiable
+      No.
+
+Exceptions
+     5 --- Index is not an integer
+     5 --- String is not a string
+     5 --- Code is instantiated but not to an integer
+     6 --- Index is an integer less than 1 or greater than String's length
+     4 --- Either Index or String are uninstantated
+
+Examples
+   
+   string_code("abc", 1, 97).		% succeeds
+   string_code("abc", 3, C).		% gives C = 99
+
+   string_code("abc", 2, 100).		% fails
+
+   string_code("abc", _, C).		% Error 4
+   string_code(_, 1, C).		% Error 4
+   string_code("abc", 1.5, C).		% Error 5
+   string_code(abc, 1, C).		% Error 5
+   string_code("abc", 0, C).		% Error 6
+   string_code("abc", 4, C).		% Error 6
+
+
+See Also
+   string_list / 2, char_code / 2

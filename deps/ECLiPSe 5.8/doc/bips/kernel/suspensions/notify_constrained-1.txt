@@ -1,0 +1,38 @@
+
+notify_constrained(?Var)
+
+   Notify the system that the given variable was constrained
+
+Arguments
+   Var                 A variable or any term
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   When an extension package recognizes that new constraints have been
+   imposed on a particular attributed variable, it must notify the system
+   about it, so that other packages (e.g.  Propia) or system primitives
+   (e.g.  guards) can deliver proper results.
+   
+   The operational semantics is that the 'constrained' suspension list
+   of the given variable will be scheduled for waking.  After calling
+   notify_constrained/1 (and possibly after scheduling further suspension
+   lists in one go) a call to wake/0 must be made in order to actually
+   execute the scheduled suspensions.
+   
+   Although notify_constrained/1 can safely be called with a simple variable
+   or nonvariable argument, doing so has no effect and will simply succeed.
+   
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None
+
+
+
+See Also
+   wake / 0

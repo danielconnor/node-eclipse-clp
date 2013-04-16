@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Debugging-related Predicate Properties</TITLE>
+<META NAME="description" CONTENT="Debugging-related Predicate Properties">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node79.html">
+<LINK REL="previous" HREF="node77.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node79.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3447"
+ HREF="node79.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3443"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3437"
+ HREF="node77.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3445"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3448"
+ HREF="node79.html">Starting the Debugger</A>
+<B> Up:</B> <A NAME="tex2html3444"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3438"
+ HREF="node77.html">Format of the Tracing</A>
+ &nbsp <B>  <A NAME="tex2html3446"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001430000000000000000">
+Debugging-related Predicate Properties</A>
+</H1>
+
+<P>
+Predicates have a number of properties which can be listed using the
+<A NAME="tex2html1113"
+ HREF="../bips/kernel/env/pred-1.html">pred/1</A><A NAME="8086"></A> built-in.
+The following predicate flags and properties affect the way the
+predicate is traced by the debugger:
+<DL>
+<DT><STRONG>debugged</STRONG>
+<DD> 
+<BR>
+Indicates whether the predicate has been compiled in debug-compile mode.
+        If <B>on</B>, calls to the predicate's subgoal will be traced.
+        The value of this property can only be changed by re-compiling
+        the predicate in a different mode.
+
+<P>
+<DT><STRONG>leash</STRONG>
+<DD> 
+<BR>
+If <B>notrace</B>, no port of the predicate will be shown
+        in the trace (but the invocations will be counted nevertheless).
+        If <B>stop</B>, the ports of this predicate will be shown and
+        the debugger will stop and await new commands.
+        (The <B>print</B> setting is currently not supported).
+        The value of this property can be changed with
+        <A NAME="tex2html1115"
+ HREF="../bips/kernel/debug/traceable-1.html">traceable/1</A><A NAME="8089"></A>,
+
+<A NAME="tex2html1117"
+ HREF="../bips/kernel/debug/untraceable-1.html">untraceable/1</A><A NAME="8092"></A> or
+
+<A NAME="tex2html1119"
+ HREF="../bips/kernel/database/set_flag-3.html">set_flag/3</A><A NAME="8095"></A>.
+
+<P>
+<DT><STRONG>spy</STRONG>
+<DD> 
+<BR>
+If <B>on</B>, the predicate has a spy-point and the debugger will
+        stop at its ports when in leap mode.
+        The value of this property can be changed with
+        <A NAME="tex2html1121"
+ HREF="../bips/kernel/debug/spy-1.html">spy/1</A><A NAME="8098"></A>,
+
+<A NAME="tex2html1123"
+ HREF="../bips/kernel/debug/nospy-1.html">nospy/1</A><A NAME="8101"></A> or
+
+<A NAME="tex2html1125"
+ HREF="../bips/kernel/database/set_flag-3.html">set_flag/3</A><A NAME="8104"></A>.
+
+<DT><STRONG>skipped</STRONG>
+<DD> 
+<BR>
+If <B>on</B>, the predicate's subgoal will not be traced even
+        if it has been compiled in debug-compile mode.
+        The value of this property can be changed with
+        <A NAME="tex2html1127"
+ HREF="../bips/kernel/debug/skipped-1.html">skipped/1</A><A NAME="8107"></A>,
+
+<A NAME="tex2html1129"
+ HREF="../bips/kernel/debug/unskipped-1.html">unskipped/1</A><A NAME="8110"></A> or
+
+<A NAME="tex2html1131"
+ HREF="../bips/kernel/database/set_flag-3.html">set_flag/3</A><A NAME="8113"></A>.
+
+<P>
+<DT><STRONG>start_tracing</STRONG>
+<DD> 
+<BR>
+If <B>on</B>, a call to the predicate will activate the debugger if it
+        is not already running.
+        Only the execution within this predicate's box will be traced.
+        This is useful for debugging part of a big
+        program without having to change the source code.
+        The effect is similar to wrapping all call of the predicate into
+        <A NAME="tex2html1133"
+ HREF="../bips/kernel/debug/trace-1.html">trace/1</A><A NAME="8116"></A>.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3447"
+ HREF="node79.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3443"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3437"
+ HREF="node77.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3445"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3448"
+ HREF="node79.html">Starting the Debugger</A>
+<B> Up:</B> <A NAME="tex2html3444"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3438"
+ HREF="node77.html">Format of the Tracing</A>
+ &nbsp <B>  <A NAME="tex2html3446"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

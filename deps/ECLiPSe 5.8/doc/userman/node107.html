@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Concepts</TITLE>
+<META NAME="description" CONTENT="Concepts">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node108.html">
+<LINK REL="previous" HREF="node106.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node108.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3862"
+ HREF="node108.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3858"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3852"
+ HREF="node106.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3860"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3863"
+ HREF="node108.html">Suspending Built-Ins and the</A>
+<B> Up:</B> <A NAME="tex2html3859"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3853"
+ HREF="node106.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html3861"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3864"
+ HREF="node107.html#SECTION001721000000000000000">The Structured Resolvent</A>
+<LI><A NAME="tex2html3865"
+ HREF="node107.html#SECTION001722000000000000000">Floundering</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001720000000000000000">
+Concepts</A>
+</H1>
+
+<H2><A NAME="SECTION001721000000000000000"></A>
+<A NAME="10191"></A>
+<BR>
+The Structured Resolvent
+</H2>
+The term <B>resolvent</B> originates from Logic Programming.
+It is the set of all goals that need to be satisfied.
+The computation typically starts with a resolvent consisting only of the top-level goal
+(the initial query).
+This then gets successively transformed (by substituting goals that
+match a clause head with an instance of the clause body, ie. a
+sequence of sub-goals),
+and eventually terminates with one of the trivial goals
+<B>true</B> or <B>fail</B>.
+For example, given the program<PRE>
+p :- q, r. % clause 1
+q :- true. % clause 2
+r :- q. % clause 3
+</PRE>
+and the goal p, the resolvent goes through the following states
+before the goal is proven (by reduction to true) and the computation terminates:<PRE>
+p --1--&gt; (q,r) --2--&gt; (true,r) ----&gt; (r) --3--&gt; (q) --2--&gt; true
+</PRE>
+
+<P>
+<A NAME="10203"></A>
+While in Prolog the resolvent is always processed from left to right
+like in this example,
+the resolvent in ECLiPSe is more structured, and can be manipulated
+in a much more flexible way.
+This is achieved by two basic mechanisms, <B>suspension</B>
+and <B>priorities</B>.
+
+<P>
+<A NAME="10207"></A>
+<B>Suspended</B> goals form the part of the resolvent which is
+currently not being considered. This is typically done when we
+know that we cannot currently infer any interesting information from them.
+
+<P>
+<A NAME="10209"></A>
+The remaining goals are ordered according to their <B>priority</B>.
+At any time, the system attempts to solve the most urgent subgoal first.
+ECLiPSe currently supports a fixed range of 12 different priorities,
+priority 1 being the most urgent and 12 the least urgent.
+
+<P>
+Figure <A HREF="node107.html#figresolv">17.1</A> shows the structure of the resolvent.
+When a toplevel goal is launched, it has priority 12 and is the only
+member of the resolvent. As execution proceeds, active goals may be
+suspended, and suspended goals may be woken and scheduled with a
+particular priority.
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="figresolv"></A><A NAME="10215"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 17.1:</STRONG>
+Structure of the resolvent</CAPTION>
+<TR><TD><!-- MATH: $\includegraphics{resolv.eps}$ -->
+<IMG
+ WIDTH="709" HEIGHT="197" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="\includegraphics{resolv.eps}"></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<H2><A NAME="SECTION001722000000000000000"></A>
+<A NAME="10219"></A>
+<BR>
+Floundering
+</H2>
+The case that a subgoal remains suspended (delayed) at the end of the computation
+<A NAME="10220"></A> is sometimes referred to as <I>floundering</I>.
+When floundering occurs, it means that the resolvent could not be reduced
+to true or fail, and that the answer bindings that have been found
+are valid only under the assumption that the remaining delayed goals
+are in fact true. Since such a conditional answer is normally not
+satisfactory (even though it may be correct), it is then necessary to change
+the control aspect of the program.  The solution would usually be to either
+make further variable instantiations or to change control annotations.
+The aim is to get the delayed goals out of the suspended state and
+into the scheduled state, where they will eventually be executed and reduced.
+As a rule of thumb, goals will not suspend when all their arguments are
+fully instantiated. Therefore, a program that makes sure that all its
+variables are instantiated at the end of computation will typically not
+suffer from floundering.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3862"
+ HREF="node108.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3858"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3852"
+ HREF="node106.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3860"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3863"
+ HREF="node108.html">Suspending Built-Ins and the</A>
+<B> Up:</B> <A NAME="tex2html3859"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3853"
+ HREF="node106.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html3861"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

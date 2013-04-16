@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Understanding failure</TITLE>
+<META NAME="description" CONTENT="Understanding failure">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node48.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1246"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1240"
+ HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1234"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1242"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1244"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1247"
+ HREF="node50.html">Checking program points</A>
+<B> Up:</B> <A NAME="tex2html1241"
+ HREF="node48.html">If it doesn't Work</A>
+<B> Previous:</B> <A NAME="tex2html1235"
+ HREF="node48.html">If it doesn't Work</A>
+ &nbsp <B>  <A NAME="tex2html1243"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1245"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1248"
+ HREF="node49.html#SECTION00811000000000000000">Run-time errors</A>
+<LI><A NAME="tex2html1249"
+ HREF="node49.html#SECTION00812000000000000000">Environment limits</A>
+<LI><A NAME="tex2html1250"
+ HREF="node49.html#SECTION00813000000000000000">Failure</A>
+<LI><A NAME="tex2html1251"
+ HREF="node49.html#SECTION00814000000000000000">Wrong answer</A>
+<LI><A NAME="tex2html1252"
+ HREF="node49.html#SECTION00815000000000000000">Missing answer</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00810000000000000000">
+Understanding failure</A>
+</H1>
+We can distinguish five types of failure<A NAME="927"></A>, each with its own set of causes and possible remedies.
+
+<P>
+
+<H2><A NAME="SECTION00811000000000000000">
+Run-time errors</A>
+</H2> 
+Run-time errors<A NAME="929"></A><A NAME="930"></A> occur if we call a built-in predicate with a wrong argument pattern. This will usually either be a type mismatch<A NAME="931"></A>, i.e. using a number where an atom is expected, or an instantiation problem, i.e. passing a variable where a ground value was expected or vice versa. In this case the ECLiPSe system prints out the offending call together with an error message<A NAME="932"></A> indicating the problem. If we are lucky, we can identify the problem immediately, otherwise we may have to look up the documentation of the built-in to understand the problem.
+
+<P>
+In the following example <I>bug0</I>, we have called the predicate <I>open/3</I><A NAME="935"></A> with an incorrect first argument.
+
+<TT> :-export(bug0/0).
+<BR>
+bug0:-
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;open(1,read,S), % wrong
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read(S,X),
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeln(X),
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close(S).
+<BR></TT>
+
+<P>
+When we run the query <I>bug0</I>, the ECLiPSe system prints out the message:
+<A NAME="939"></A>
+<PRE>
+type error in open(1, read, S)
+</PRE>
+In general run-time errors are quite simple to locate and to fix. But the system does not indicate which particular call of a built-in is to blame. We may need to use the tracer to find out which of dozens of calls to the predicate <I>is/2</I> for example may have caused a particular problem. There are several things that may help to avoid the tedious tracing.
+
+<UL><LI>If the call to the predicate contains some variable name, we may be able to locate the problem by searching for that name in the source file(s). 
+
+<LI>Well placed logging messages may also be helpful, they indicate which program part is responsible.
+
+<LI>If we have only applied a small change to a previously working program, then it is likely that the error is located close to the change we have made. Testing the program after each change will speed up development.
+
+</UL> 
+
+<P>
+
+<H2><A NAME="SECTION00812000000000000000"></A> 
+<A NAME="946"></A>
+<BR>
+Environment limits
+</H2>These errors occur when we hit some limit of the run-time system, typically exceeding available memory<A NAME="947"></A>. An example is the run-away recursion in the program <I>bug1</I> below:
+
+<P>
+<TT> :-export(bug1/0).
+<BR>
+bug1:-
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lp(X), &nbsp;% wrong
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeln(X).
+<BR>
+<BR>
+lp([_H|T]):-
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lp(T).
+<BR>
+lp([]).
+<BR></TT>
+
+<P>
+After some seconds, the system returns an error message of the form:
+<FONT SIZE="-1">
+<A NAME="952"></A>
+</FONT><PRE>
+*** Overflow of the local/control stack!
+You can use the "-l kBytes" (LOCALSIZE) option to have a larger stack.
+Peak sizes were: local stack 13184 kbytes, control stack 117888 kbytes
+</PRE>
+Typical error sources are passing free variables to a recursion, where the terminating clause is not executed first or the use of an infinite data structure.
+
+<P>
+
+<H2><A NAME="SECTION00813000000000000000">
+Failure</A>
+</H2> Probably the most common error symptom is a failure<A NAME="957"></A> of the application. Instead of producing an answer, the system returns 'no'<A NAME="958"></A>. This is caused by:
+
+<UL><LI>Calling a user-defined predicate <A NAME="960"></A>with the wrong calling pattern. If none of the rules of a predicate matches the calling pattern, then the predicate will fail. Of course, quite often this is intentional (tests for some condition for example). It becomes a problem if the calling predicate does not handle the failure properly. We should know for each predicate that we define if it can fail and make sure that any calling predicate handles that situation.
+
+<LI>Calling a built-in predicate with arguments so that it fails unexpectedly. This is much less likely, but some built-in predicates can fail if the wrong arguments are passed.
+
+<LI>Wrong control structure. A common problem is to miss the alternative branch in an <I>if-then-else construct</I><A NAME="962"></A>. If the condition part fails, then the whole call fails. We must always add an <I>else</I> <A NAME="964"></A>part, perhaps with an empty statement <I>true</I><A NAME="966"></A>.
+
+</UL>
+The best way of finding failures is by code inspection, helped by logging messages which indicate the general area of the failure. If this turns out to be too complex, we may have to use the tracer.
+
+<P>
+
+<H2><A NAME="SECTION00814000000000000000">
+Wrong answer</A>
+</H2> 
+More rare is the situation where a ``wrong'' answer <A NAME="969"></A>is returned. This means that the program computes a result, which we do not accept as an answer. The cause of the problem typically lies in a mismatch of the intended behaviour of the program (what we think it is doing) and the actual behaviour.
+
+<P>
+In a constraint problem we then have to identify which constraint(s) should eliminate this answer and why that didn't happen. There are two typical scenarios.
+
+<P>
+
+<UL><LI>The more simple one is caused by missing a constraint alltogether, or misinterpreting the meaning of a constraint that we did include. 
+
+<LI>The more complex scenario is a situation where the constraint did not trigger and therefore was not activated somewhere in the program execution. 
+
+</UL>
+We can often distinguish these problems by re-stating the constraint a second time after the wrong answer has been found. 
+
+<P>
+If the constraint still accepts the solution, then we can assume that it simply does not exclude this solution. We will have to reconsider the declarative definition of the constraint to reject this wrong answer.
+
+<P>
+If the program fails when the constraint is re-stated, then we have a problem with the dynamic execution of the constraints in the constraint solver. That normally is a much more difficult problem to solve, and may involve the constraint engine itself.
+
+<P>
+
+<H2><A NAME="SECTION00815000000000000000">
+Missing answer</A>
+</H2> Probably the most complex problem is a missing answer<A NAME="973"></A>, i.e. the program produces correct answers, but not all of them. This assumes that we know this missing answer, or we know how many answers there should be to a particular problem and we get a different count when we try to generate them all. In the first case we can try to instantiate our problem variables with the missing answer before stating the constraints and then check where this solution is rejected.
+
+<P>
+This type of problem often occurs when we develop our own constraints and have made a mistake in one of the propagation rules<A NAME="974"></A>. It should not occur if we use a pre-defined constraint solver.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1246"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1240"
+ HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1234"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1242"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1244"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1247"
+ HREF="node50.html">Checking program points</A>
+<B> Up:</B> <A NAME="tex2html1241"
+ HREF="node48.html">If it doesn't Work</A>
+<B> Previous:</B> <A NAME="tex2html1235"
+ HREF="node48.html">If it doesn't Work</A>
+ &nbsp <B>  <A NAME="tex2html1243"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1245"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

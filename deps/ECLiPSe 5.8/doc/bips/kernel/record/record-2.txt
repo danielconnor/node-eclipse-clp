@@ -1,0 +1,66 @@
+
+record(+Key, ?Value)
+
+   Records the term Value at the end of key Key in the indexed database.
+
+
+
+Arguments
+   +Key                An atom or compound term.
+   ?Value              Any prolog term.
+
+Type
+   Recorded Database
+
+Description
+   Used to record any prolog term Value at the end of the indexed database
+   entry associated with the key Key.  A synonym for recordz/2.  In the
+   case of compound terms, all keys of the same name and arity are treated
+   as equal.
+
+
+   If backtracking occurs through the call of record/2 the associated Value
+   is not removed from the indexed database.  Recording the same Value
+   twice results in two identical entries in the indexed database.  All
+   variables are recorded according to their internal representations.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Key is not instantiated.
+     5 --- Key is neither an atom nor a compound term.
+
+Examples
+   
+   Success:
+    record(a(compound,term),value1).
+    record([a,different,term],value2).
+
+    [eclipse]: record(whiskey,jameson),
+    >        record(whiskey,glenlivet),
+    >        record(whiskey,bushmills).
+    yes.
+    [eclipse]: recorded(whiskey,Value).
+    Value = jameson     More (;)
+    Value = glenlivet     More (;)
+    Value = bushmills     More (;)
+    no (more) solution.
+Error:
+    record(Key, anything).             (Error 4)
+    record("key",anything).            (Error 5)
+
+
+
+
+
+See Also
+   recorda / 2, recordz / 2

@@ -1,0 +1,54 @@
+
+break
+
+   A new invocation of a top level loop is called as a subgoal
+
+Arguments
+
+Type
+   library(toplevel)
+
+Description
+
+    Used to start a new invocation of the top level loop.  Compiled
+    procedures and event handler redefinitions remain valid within the new
+    invocation level.  Exiting with a Control-D (or end_of_file) or
+    calling exit_block(end) will return the control to the previous level.
+    
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+[eclipse]: [user].
+ go:- writeln("**** Enter prolog goals and press ^D"),
+      break,
+      writeln("**** Execution continues...").
+ user compiled 144 bytes in 0.02 seconds
+
+yes.
+[eclipse]: go.
+**** Enter prolog goals and press ^D
+
+Entering break level 1
+[eclipse]: date(X).
+
+X = "Wed Aug  9 12:21:48 1989\n"
+yes.
+[eclipse]: ^D
+
+Leaving break level 1
+**** Execution continues...
+
+yes.
+[eclipse]:
+
+
+See Also
+   toplevel / 0, exit_block / 1

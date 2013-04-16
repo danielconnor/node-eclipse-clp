@@ -1,0 +1,78 @@
+
+term_string(?Term, ?String)
+
+   Conversion between a Prolog term and a string.
+
+
+
+Arguments
+   ?Term               Prolog term.
+   ?String             String or a variable.
+
+Type
+   Term Manipulation
+
+Description
+   If String is instantiated, its contents are parsed, and if the whole
+   string can be parsed as one Prolog term it is unified with Term.  If
+   String is not instantiated, Term is written into a string (using
+   writeq/2) and String is bound to it.
+
+
+   To change the way the term is converted into a string, e.g.  to include
+   attributed variable print handlers, it is possible to define it as follows:
+
+
+
+term_to_string(T, S) :-
+    open(string(""), write, Stream),
+    % use the flags which you want
+    printf(Stream, "%mw", [T]),
+    get_stream_info(Stream, name, S),
+    close(Stream).
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if String is not the string conversion of the term Term.
+
+
+
+Exceptions
+     5 --- String is instantiated, but not to a string.
+     7 --- String cannot be converted to a Prolog term.
+
+Examples
+   
+Success:
+      term_string(T, "look").      (gives T=look).
+      term_string(T, "26.0").      (gives T=26.0).
+      term_string(T, "f(1,2).").   (gives T=f(1,2)).
+      term_string(T, "f(1,2)").    (gives T=f(1,2)).
+      term_string(f(1,2),L).       (gives L="f(1, 2)").
+      term_string(f(1,2),"f(1, 2)").
+      term_string(atom,S).         (gives S="atom").
+      term_string(.(a,.(1,[])),S). (gives S="[a, 1]").
+      term_string(2.60,"2.6").
+      term_string(2.6,"2.60").
+      term_string(T,S).            (gives T=_g94; S="_g94").
+
+Fail: term_string(2.6,"2.5").
+
+Error:
+      term_string(T,atom).              (Error 5).
+      [eclipse]: term_string(T,"F(1,2)").  % String not a string
+      F(1,2)                               % of a prolog term
+       ^ (here?)
+      syntax error: unexpected token
+      string contains unexpected characters in term_string(T, "F(1,2)")
+
+
+
+
+
+See Also
+   integer_atom / 2, number_string / 2, string_list / 2, split_string / 4

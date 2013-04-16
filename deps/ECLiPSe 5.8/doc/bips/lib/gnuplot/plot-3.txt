@@ -1,0 +1,40 @@
+
+plot(++Data, +Options, +OutputFile)
+
+   Plots the given data to a file.
+
+Arguments
+   Data                The data to be plotted, array or list.
+   Options             Options list
+   OutputFile          Name of file to store plot in
+
+Type
+   library(gnuplot)
+
+Description
+
+ Plots the data to a file as Postscript (by default).
+
+ Can either be a list or a nested list of a 1D or 2D array of y
+ values or x-y points.
+
+ The output format can be changed either by explicitly setting the
+ 'terminal' variable using the 'set' option, or by calling plot/4.
+
+
+Resatisfiable
+   false
+
+Fail Conditions
+   Options are malformed, or data is not in a valid format.
+
+Examples
+   
+% multiple t-r pairs, in polar coordinates with a grid and lines, into
+% a postscript file
+?- A=[[1-3,5-2,9-2,8-2,5-7], [1-2,5-4,8-6,9-1,12-4]],
+   plot(A,[set:[polar, grid=polar], with:lines], "polar.ps").
+
+
+See Also
+   plot / 1, plot / 2, plot / 4

@@ -1,0 +1,14 @@
+
+par_member(?Element, +List)
+
+   Parallel version of member/2
+
+Type
+   library(par_util)
+
+Description
+Parallel version of member/2, i.e.  selects elements from
+    the given list in parallel.  Note that it cannot work backwards
+    and generate lists like member/2 can, the list must be a proper list.
+
+

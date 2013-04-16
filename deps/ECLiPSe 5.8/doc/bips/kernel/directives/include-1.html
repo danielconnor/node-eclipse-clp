@@ -1,0 +1,38 @@
+<HTML><HEAD><TITLE>include(+FileSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Directives</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>include(+FileSpec)</H1>
+Include other files for compilation.
+<DL>
+<DT><EM>FileSpec</EM></DT>
+<DD>File name(s) (atom/string or list of atoms/strings)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+     Include other file(s) for compilation as if the contents of those
+     file(s) have been inserted in place of the directive. If more than
+     one file is specified, they are included in the order in which they
+     appear in the list FileSpec. 
+
+</P><P>
+     A compile/1 directive can also be used for recursive compilation.
+     However, the semantics is different if the recursively compiled
+     file contains any new module definition. With recursive compile, 
+     those module end with the end of that file. However, with include/1, 
+     the behaviour is as if the included file has appeared in place, and 
+     so the new module will not end with the end of the included file.
+     It is recommended that that include/1 should be used to include the
+     compilation of different files in the same module, and compile/1 used
+     to compile files that contain different modules.
+
+</P><P>
+     Currently, include/1 is implemented by a call to recursive compile, so
+     it behaves like compile/1. This is to change in future releases. The
+     documentation tools and fcompile assume that include/1 has the correct
+     semantics described previously.
+</P>
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>
+</BODY></HTML>

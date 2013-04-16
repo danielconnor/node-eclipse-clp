@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>dvar_remove_greater(+DVar, +El)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dvar_remove_greater(+DVar, +El)</H1>
+Remove all elements in the domain of DVar which are greater than the
+integer El and wake all concerned lists.
+
+
+<DL>
+<DT><EM>+DVar</EM></DT>
+<DD>A domain variable.
+</DD>
+<DT><EM>+El</EM></DT>
+<DD>An atomic term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Remove all elements in the domain of DVar which are greater than the
+   integer El and wake all concerned lists.  If the resulting domain is
+   empty, this predicate fails, if it is a singleton, DVar is instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/dvar_attribute-2.html">dvar_attribute / 2</A>, <A HREF="../../lib/fd/NN-2.html">:: / 2</A>, <A HREF="../../lib/fd/HNN-2.html">#:: / 2</A>
+</BODY></HTML>

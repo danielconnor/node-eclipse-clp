@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>erase_macro(+TransTerm, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Syntax Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>erase_macro(+TransTerm, +Options)</H1>
+Erases the macro definition for TransTerm done in the current module
+
+
+<DL>
+<DT><EM>+TransTerm</EM></DT>
+<DD>Term in the form Atom/Integer.
+</DD>
+<DT><EM>+Options</EM></DT>
+<DD>Possibly empty list of option flags.
+</DD>
+</DL>
+<H2>Description</H2>
+   The macro defined for TransTerm and matching the specified Options
+   is erased.  If there was no matching macro definition, the predicate
+   silently succeeds. See macro/3 and portray/3 for the valid options.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>TransTerm is not instantiated or Options is not fully instantiated.
+<DT><EM>(5) type error </EM>
+<DD>TransTerm not of form Atom/Integer or Options is not a list of atoms.
+<DT><EM>(6) out of range </EM>
+<DD>Options contains an element which is not a valid option.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   erase_macro(a/1, [read]).
+   erase_macro(a/1, [write,goal]).
+   Error:
+   erase_macro(X, []).           (Error 4).
+   erase_macro(a, [write]).      (Error 5).
+   erase_macro(a/1, [hello]).    (Error 6).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/current_macro-4.html">current_macro / 4</A>, <A HREF="../../kernel/syntax/macro-3.html">macro / 3</A>, <A HREF="../../kernel/syntax/portray-3.html">portray / 3</A>, <A HREF="../../kernel/control/phrase-3.html">phrase / 3</A>
+</BODY></HTML>

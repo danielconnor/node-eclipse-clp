@@ -1,0 +1,14 @@
+
+EplexInstance:suspend_on_change(+Handle, ?Var, +Susp)
+
+   Record the given suspension to be scheduled whenever a solution is found for the Eplex handle.
+
+Arguments
+   Handle              Handle to an eplex problem
+   Var                 A solver problem variable for solver associated with EplexInstance
+   Susp                Suspension to schedule when the typed solution for this variable changes
+
+Type
+   library(eplex)
+
+

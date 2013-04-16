@@ -1,0 +1,49 @@
+<HTML><HEAD><TITLE>set_labeling(++UpDown, +SetVars)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_labeling(++UpDown, +SetVars)</H1>
+Label set variables
+<DL>
+<DT><EM>UpDown</EM></DT>
+<DD>Atom: 'up' or 'down'.
+</DD>
+<DT><EM>SetVars</EM></DT>
+<DD>List of set variables.
+</DD>
+</DL>
+<H2>Description</H2>
+Instantiate all variables in SetVars from first to last, with
+		consecutive refinements of their domains until they are ground.<P>
+		If heuristic UpDown is 'up' then, for each set variable, for each element
+		in its poss (lub\glb), inclusion is tried first; otherwise (down)
+		exclusion is tried first.
+<H3>Fail Conditions</H3>
+Fails if SetVars can not be labeled (there is no solution to the CSP).
+<H3>Resatisfiable</H3>
+Yes.
+<H2>Examples</H2>
+<PRE>
+?- S `:: [a] + [b, c], T `:: [1] + [2], set_labeling(up, [S, T]).
+S = [a, b, c], T = [1, 2] ;
+S = [a, b, c], T = [1] ;
+S = [a, b], T = [1, 2] ;
+S = [a, b], T = [1] ;
+S = [a, c], T = [1, 2] ;
+S = [a, c], T = [1] ;
+S = [a], T = [1, 2] ;
+S = [a], T = [1] ;
+no
+
+?- S `:: [a] + [b, c], T `:: [1] + [2], set_labeling(down, [S, T]).
+S = [a], T = [1] ;
+S = [a], T = [1, 2] ;
+S = [a, c], T = [1] ;
+S = [a, c], T = [1, 2] ;
+S = [a, b], T = [1] ;
+S = [a, b], T = [1, 2] ;
+S = [a, b, c], T = [1] ;
+S = [a, b, c], T = [1, 2] ;
+no
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/set_labeling-1.html">set_labeling / 1</A>, <A HREF="../../lib_public/cardinal/refine-2.html">refine / 2</A>
+</BODY></HTML>

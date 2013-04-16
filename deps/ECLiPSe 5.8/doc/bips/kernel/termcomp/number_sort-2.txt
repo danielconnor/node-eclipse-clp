@@ -1,0 +1,48 @@
+
+number_sort(+List1, ?List2)
+
+   Succeeds if List2 is the numerically ordered version of List1.
+
+
+
+Arguments
+   +List1              List of numeric terms.
+   ?List2              List of numeric terms or variable.
+
+Type
+   Comparing and Sorting
+
+Description
+   List1 is sorted according to numerical ordering, and unified with List2.
+
+   The sort is done according to numerical ordering and duplicates are
+   retained as opposed to sort/2 which uses the standard ordering of
+   terms and removes duplicates. See number_sort/4 for a discussion of
+   the differences between numerical and standard ordering of numeric types.
+
+Note
+   number_sort(L1,L2) is equivalent to number_sort(0,=<,L1,L2).
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List2 does not unify with the sorted list version of List1.
+
+
+
+Examples
+   
+Success:
+      sort([3,1,6,7,2],S).     (gives S=[1,2,3,6,7]).
+      sort([1,3,2,3,4,1],S).   (gives S=[1,1,2,3,3,4]).
+Fail:
+      sort([2,1,3,4],[2,1,3,4]).
+
+
+
+
+
+See Also
+   number_sort / 4, sort / 2, sort / 4

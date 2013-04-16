@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Embedding into Tcl/Tk</TITLE>
+<META NAME="description" CONTENT="Embedding into Tcl/Tk">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node24.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="embroot.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html874"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html870"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html864"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html872"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html875"
+ HREF="node16.html">Loading the interface</A>
+<B> Up:</B> <A NAME="tex2html871"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html865"
+ HREF="node14.html">Restrictions and Recommendations</A>
+ &nbsp <B>  <A NAME="tex2html873"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00500000000000000000"></A>
+<A NAME="chaptcl"></A>
+<BR>
+Embedding into Tcl/Tk
+</H1>
+
+<P>
+This chapter describes how to embed ECLiPSe into a Tcl host program.
+Tcl/Tk is a cross-platform toolkit for the development of graphical
+user interfaces. 
+The facilities described here make it possible to implement ECLiPSe
+applications with platform-independent graphical user interfaces.
+The interface is similar in spirit to the ECLiPSe embedding
+interfaces for other languages.
+
+<P>
+An alternative method of using ECLiPSe with Tcl is to use the Tcl remote
+interface, described in chapter&nbsp;<A HREF="node24.html#chapremote">6</A>. In this case, the
+ECLiPSe is ran as a separate program. The facilities provided by the
+remote and embedding interfaces are largely compatible, so that it is
+possible to reuse the same Tcl and ECLiPSe code in both interface. The
+advantage of the embedding interface is that ECLiPSe is much more
+tightly coupled with the Tcl program, and communication between the two is
+more efficient. The advantage of the remote interface is that the Tcl and
+ECLiPSe programs are not tightly coupled, and in fact can be run on
+separate machines.  
+
+<P>
+The <B>tkeclipse</B> development environment is entirely
+implemented using the facilities described in this chapter. The toplevel of
+<B>tkeclipse</B> is currently implemented using only the embedding interface,
+but the development tools can be used with both the embedding and remote
+interfaces. 
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html876"
+ HREF="node16.html">Loading the interface</A>
+<LI><A NAME="tex2html877"
+ HREF="node17.html">Initialising the ECLiPSe Subsystem</A>
+<LI><A NAME="tex2html878"
+ HREF="node18.html">Passing Goals and Control to ECLiPSe</A>
+<LI><A NAME="tex2html879"
+ HREF="node19.html">Communication via Queues</A>
+<UL>
+<LI><A NAME="tex2html880"
+ HREF="node19.html#SECTION00541000000000000000">From-ECLiPSe to Tcl</A>
+<LI><A NAME="tex2html881"
+ HREF="node19.html#SECTION00542000000000000000">To-ECLiPSe from Tcl</A>
+</UL>
+<LI><A NAME="tex2html882"
+ HREF="node20.html">Attaching Handlers to Queues</A>
+<UL>
+<LI><A NAME="tex2html883"
+ HREF="node20.html#SECTION00551000000000000000">Tcl handlers</A>
+<UL>
+<LI><A NAME="tex2html884"
+ HREF="node20.html#SECTION00551100000000000000">To-ECLiPSe queues</A>
+<LI><A NAME="tex2html885"
+ HREF="node20.html#SECTION00551200000000000000">From-ECLiPSe queues</A>
+</UL>
+<LI><A NAME="tex2html886"
+ HREF="node20.html#SECTION00552000000000000000">ECLiPSe handlers</A>
+</UL>
+<LI><A NAME="tex2html887"
+ HREF="node21.html">Obtaining the Interface Type</A>
+<LI><A NAME="tex2html888"
+ HREF="node22.html">Type conversion between Tcl and ECLiPSe</A>
+<LI><A NAME="tex2html889"
+ HREF="node23.html">Incompatible and obsolete commands</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html874"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html870"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html864"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html872"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html875"
+ HREF="node16.html">Loading the interface</A>
+<B> Up:</B> <A NAME="tex2html871"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html865"
+ HREF="node14.html">Restrictions and Recommendations</A>
+ &nbsp <B>  <A NAME="tex2html873"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

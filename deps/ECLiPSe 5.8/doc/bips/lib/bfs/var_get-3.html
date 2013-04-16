@@ -1,0 +1,42 @@
+<HTML><HEAD><TITLE>BfsInstance:var_get(+Var, ++What, -Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(bfs)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>BfsInstance:var_get(+Var, ++What, -Value)</H1>
+Obtain information for an individual solver problem variable Var.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>A solver problem variable for the solver associated with BfsInstance
+</DD>
+<DT><EM>What</EM></DT>
+<DD>Specification for information wanted (atom)
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>Returned value of What
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Retrieve information about solver results related to a particular
+   variable, for the bfs instance BfsInstance. Fails if Var is not a
+   problem variable for BfsInstance. What can take one of the following
+   values: 
+
+<DL>
+    <DT><TT>optimal_val</TT>
+    <DD>Returns the floating-point solution for variable Var.
+<P>
+
+    <DT><TT>node_val</TT>
+    <DD>Returns the floating-point solution for variable Var for the
+    current node in the search tree of this instance.
+<P>
+
+    <DT><TT>type</TT>
+    <DD>Returns the type real or integer of Var in this instance.
+</DL>
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(6) out of range </EM>
+<DD>What is not a valid value.
+</DL>
+
+</BODY></HTML>

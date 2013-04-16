@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>memberchk(+Term, ?List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>memberchk(+Term, ?List)</H1>
+Succeeds if Term is a member of the list List.
+
+
+<DL>
+<DT><EM>+Term</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>?List</EM></DT>
+<DD>List or a variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Tries to unify Term with an element of the list List.
+<P>
+   If List is not instantiated, memberchk/2 binds List to a new partial
+   list containing an element Term.
+<P>
+   The definition of this Prolog library predicate is:
+<PRE>
+memberchk(X,[X|_]) :- !.
+memberchk(X,[_|T]):- memberchk(X,T).
+</PRE>
+   This predicate does not perform any type testing functions.
+	
+<H3>Fail Conditions</H3>
+   Fails if Term is not a member of the list List.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      memberchk(0,[1,B,2]). (gives B=0).
+      memberchk(1,[1,X]).   (gives X=_g76).
+      memberchk(1,X), memberchk(2,X).
+                            (gives X=[1,2|_g98]).
+
+Fail:
+      memberchk(0,[1,2,3,4]).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/lists/member-2.html">member / 2</A>
+</BODY></HTML>

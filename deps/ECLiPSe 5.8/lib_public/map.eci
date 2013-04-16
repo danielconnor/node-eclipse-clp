@@ -1,0 +1,20 @@
+:- module(map).
+:- export map_map / 4.
+:- export portray_map / 1.
+:- export map_value / 3.
+:- export map_update / 4.
+:- export map_update / 3.
+:- export map_union / 3.
+:- export map_to_assoc / 2.
+:- export map_range / 2.
+:- export map_map / 3.
+:- export map_invert / 2.
+:- export map_include / 3.
+:- export map_exclude / 3.
+:- export map_domain / 2.
+:- export map_disjoint / 2.
+:- export map_compose / 3.
+:- export map_agree / 2.
+:- export list_to_map / 2.
+:- export is_map / 1.
+:- comment(map_map / 4, hidden).

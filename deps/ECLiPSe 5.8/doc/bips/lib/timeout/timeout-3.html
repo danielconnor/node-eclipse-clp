@@ -1,0 +1,51 @@
+<HTML><HEAD><TITLE>timeout(+Goal, ++TimeLimit, +TimeOutGoal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(timeout)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>timeout(+Goal, ++TimeLimit, +TimeOutGoal)</H1>
+Run the goal Goal for a maximum of TimeLimit seconds.
+<DL>
+<DT><EM>Goal</EM></DT>
+<DD>Goal to run
+</DD>
+<DT><EM>TimeLimit</EM></DT>
+<DD>Time limit of Goal in seconds (integer or float)
+</DD>
+<DT><EM>TimeOutGoal</EM></DT>
+<DD>Goal to run on expiry of TimeLimit
+</DD>
+</DL>
+<H2>Description</H2>
+
+<P>
+    Goal is executed as if called via call(Goal),
+    but only for a maximum of TimeLimit seconds. If the goal is
+    still executing after TimeLimit, time-out occurs, the execution of the
+    goal is terminated (via exit_block/1) and TimeOutGoal is executed.  If
+    the value of TimeLimit is 0 or 1.0Inf, no timeout is applied to the Goal.
+<P>
+    Note that, if Goal is nondeterministic, execution flow may leave the scope
+    of timeout/3 on success and re-enter on failure. In this case, only time
+    spent within Goal will be counted towards the TimeLimit.
+<P>
+    The predicate is based on the after event timers, so TimeLimit is 
+    measured in the timer currently used by after events. The current time
+    used for the associated event timer can be retrieved using
+    statistics(event_time, CurrentTime). The timeout predicate can be used 
+    with other after events, and can be nested within itself (i.e. embedded
+    within Goal or TimeOutGoal).
+<P>
+    Note that timeout/3 can be defined in terms of timeout/7 as:
+<PRE>
+    timeout(Goal, TimeLimit, TimeOutGoal) :-
+        timeout(Goal, TimeLimit, TimeOutGoal, all_solution, _, _, _).
+</PRE>
+    
+<H3>Resatisfiable</H3>
+If Goal is resatisfiable.
+<H2>Examples</H2>
+<PRE>    ?- timeout((repeat,fail), 1.5, writeln(timed-out)). % time-out from infinite loop
+    timed - out
+    Yes (1.51s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/timeout/timeout-7.html">timeout / 7</A>, <A HREF="../../lib/timeout/call_timeout_safe-1.html">call_timeout_safe / 1</A>, <A HREF="../../kernel/event/event_after-2.html">event_after / 2</A>
+</BODY></HTML>

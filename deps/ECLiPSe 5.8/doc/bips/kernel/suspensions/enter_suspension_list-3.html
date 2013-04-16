@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>enter_suspension_list(++Position, +Attribute, +Susp)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>enter_suspension_list(++Position, +Attribute, +Susp)</H1>
+Enter the suspension Susp into the suspension list at position Positiion within the structure Attribute.
+<DL>
+<DT><EM>Position</EM></DT>
+<DD>Integer indicating the position of the suspension list.
+</DD>
+<DT><EM>Attribute</EM></DT>
+<DD>Compound term, typically a variable's attribute.
+</DD>
+<DT><EM>Susp</EM></DT>
+<DD>A suspension
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   This predicate is used to add a suspension to a single suspension list.
+   The suspension list is expected in the Position'th argument of the
+   structure Attribute. This argument can be either an existing suspension
+   list, or a variable. If it is a variable, a new suspension list with
+   Susp will be created. 
+</P><P>
+   The functionality is similar to insert_suspension/3, but while
+   enter_suspension_list/3 enters only into a single suspension list,
+   insert_suspension/3 finds all variables in a term and inserts a
+   suspension into the attribute structures of all those variables.
+</P><P>
+   Suspension lists should be regarded an opaque data structure and
+   only be accessed and manipulated by the set of primitives provided
+   for this purpose.
+</P>
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Attribute, Susp or Position not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Attribute is not a structure, or Susp not a suspension or Position is a non-integer number.
+<DT><EM>(6) out of range </EM>
+<DD>Attribute's arity is less than Position, or Position is zero or less.
+<DT><EM>(24) number expected </EM>
+<DD>Position is a non-number.
+<DT><EM>(271) bad format of the variable attribute </EM>
+<DD>The suspension list in Position of Attribute is neither a list nor a free variable, or it contains an element which is not a suspension.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: Att = att(_, hello), init_suspension_list(1, Att),
+         make_suspension(true, 3, S), enter_suspension_list(1, Att, S).
+
+Att = att(['SUSP-_286-susp'], hello)
+S = 'SUSP-_286-susp'
+
+Delayed goals:
+        true
+Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/insert_suspension-3.html">insert_suspension / 3</A>, <A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-2.html">schedule_suspensions / 2</A>, <A HREF="../../kernel/suspensions/init_suspension_list-2.html">init_suspension_list / 2</A>
+</BODY></HTML>

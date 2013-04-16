@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>set_option(++Name, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(config_opts)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_option(++Name, ?Value)</H1>
+Gives a new value to an option
+<DL>
+<DT><EM>Name</EM></DT>
+<DD>Name of the option
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>Value to be given to the option
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate gives a new value Value to the option with name Name.  The
+   option must have already been registered with register_option/3.  If the
+   option has an associated validation predicate (see register_option/3),
+   then this is called before the option is given the new value, and if the
+   validation predicate fails the value is not assigned and set_option/2
+   fails.<P>
+
+   If the new value is successfully set, then any notification predicates
+   associated with the option (see request_notification/2 and
+   register_option/3) are called.<P>
+
+   The value set is persistent across backtracking.  Value is copied during
+   setting, which means that if it is non-ground then it will contain fresh
+   copies of variables rather than the original ones when retrieved later.
+
+<H2>See Also</H2>
+<A HREF="../../lib/config_opts/register_option-3.html">register_option / 3</A>, <A HREF="../../lib/config_opts/get_option-2.html">get_option / 2</A>, <A HREF="../../lib/config_opts/request_notification-2.html">request_notification / 2</A>
+</BODY></HTML>

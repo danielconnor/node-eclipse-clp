@@ -1,0 +1,149 @@
+
+get_file_info(+File, ?Attr, ?Value)
+
+   Succeeds if the file File (with absolute or relative pathname) exists and
+the value of its attribute Attr unfies with Value.
+
+
+
+Arguments
+   +File               Atom or string.
+   ?Attr               Atom or variable.
+   ?Value              Constant or variable.
+
+Type
+   Operating System
+
+Description
+   This predicate is used to test the properties of a specified file, it
+   allows to examine the values obtained from the stat(2) system call.
+   Attr specifies one of the attributes listed below or a variable, on
+   return, Value is unified with the attribute value.
+
+
+   The possible attributes and their meanings are:
+
+
+
+    Attribute  Meaning
+   ----------------------------------
+    mode       file mode; see
+               values below
+    inode      inode number
+    nlink      number of links
+    uid        user ID of the
+               owner
+    uname      user name of the
+               owner
+    gid        group ID of the
+               owner
+    gname      group name of the
+               owner
+    size       file size
+    atime      time of last access
+    adate      date of last access
+    mtime      time of last data
+               modification
+    mdate      date of last data
+               modification
+    ctime      time of last status
+               change
+    cdate      date of last status
+               change
+    readable   on or off
+    writable   on or off
+    executable on or off
+
+   All attributes are integers except for the *name attributes, which are
+   string representation of the corresponding *id attributes and *date
+   attributes, which are string representation of the corresponding *time
+   attributes.  The time for the *time attributes is measured as seconds
+   elapsed since 00:00:00 GMT, Jan.  1, 1970.  The flags readable, writable
+   and executable indicate whether the running ECLiPSe process has the
+   corresponding permissions on the file.
+   The meaning of the bits in the mode attribute is as follows:
+
+
+
+ Mode     Meaning
+------------------------------------------------
+ 8'170000 file type
+ 8'040000 directory
+ 8'020000 character special
+ 8'060000 block special
+ 8'100000 normal file
+ 8'120000 symbolic link
+ 8'140000 socket
+------------------------------------------------
+ 8'004000 set user ID on execution
+ 8'002000 set group ID on execution
+------------------------------------------------
+ 8'000700 owner access
+ 8'000400 read permission for owner
+ 8'000200 write permission for owner
+------------------------------------------------
+ 8'000070 group access
+ 8'000040 read permission for group
+ 8'000020 write permission for group
+------------------------------------------------
+ 8'000007 other access
+ 8'000004 read permission for others
+ 8'000002 write permission for others
+ 8'000001 execute/search permission for others
+
+   The bit masks can be defined as user arithmetic functors so that the
+   code is more readable (see the examples).
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if the file File does not exist or if the value of its attribute
+   does not unify with Value.
+
+
+
+Exceptions
+     4 --- File is not instantiated.
+     5 --- File is neither an atom nor a string.
+     5 --- Attr is instantiated but not to an atom.
+     5 --- Value is instantiated but not to a constant.
+
+Examples
+   
+Success:
+   file_type(8'170000).
+
+   directory_flag(8'40000).
+
+   owner_read(8'400).
+
+   is_directory(File) :-
+        get_file_info(File, mode, Mode),
+        Mode /\ file_type =:= directory_flag.
+   readable(File) :-
+        get_file_info(File, mode, Mode),
+        Mode /\ owner_read =:= owner_read.
+
+   % A file is younger if its time is greater
+   is_younger(File1, File2) :-
+        get_file_info(File1, mtime) > get_file_info(File2, mtime).
+
+Fail:
+   get_file_info(nofile, mode, Mode).
+   get_file_info('/', mode, 8'100000).
+
+Error:
+   get_file_info(File, ctime, T).                (Error 4).
+   get_file_info([file], gid, G).                (Error 5).
+   get_file_info(file, 1, X).                    (Error 5).
+
+
+
+
+
+See Also
+   exists / 1, delete / 1, exec / 3, local_time / 8, local_time_string / 3

@@ -1,0 +1,100 @@
+<HTML><HEAD><TITLE>set_chtab(+Char, +Class)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Syntax Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_chtab(+Char, +Class)</H1>
+Sets the lexical class of character Char to class Class, this provides an
+interface to ECLiPSe 's lexical analyser.
+
+
+<DL>
+<DT><EM>+Char</EM></DT>
+<DD>Integer in range 0 to 255.
+</DD>
+<DT><EM>+Class</EM></DT>
+<DD>Atom indicating the character class.
+</DD>
+</DL>
+<H2>Description</H2>
+   Changes the lexical class of a given character.  This is especially
+   useful for implementing compatibility packages.  The possible character
+   classes which a character may have been given are shown below.
+
+<P>
+Note
+   It is not recommended to change the class of the special characters,
+   since in some cases it might make it impossible to correctly parse
+   Prolog terms.
+
+<P>
+   The following table lists the character classes and the default
+   corresponding characters:
+
+<P>
+<PRE>
+ Class          Default member characters
+---------------------------------------------------------
+ upper_case     all upper case letters
+ underline      _
+ lower_case     all lower case letters
+ digit          digits
+ blank_space    space, tab, carriage return (CR) etc
+ end_of_line    newline (NL)
+ atom_quote     '
+ string_quote   "
+ list_quote
+ radix
+ ascii
+ solo           ( ) ] }
+ special        ! , ; [ { |
+ line_comment   %
+ escape         \
+ first_comment  /
+ second_comment *
+ symbol         # + - . : &lt; = &gt; ? @ ^ ` ~ &amp; $
+ unused         ASCII codes 8, 17, 21, 24
+</PRE>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Char and/or Class are not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Char is not an integer in the range 0 to 255.
+<DT><EM>(6) out of range </EM>
+<DD>Class is not a valid lexical class.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   % The following example illustrates the use
+   % of set_chtab/2 to redefine the class of the
+   % dollar symbol.
+   %
+   [eclipse]: X = $a.
+                 ^ (here?)
+   syntax error: postfix/infix operator expected
+   [eclipse]: set_chtab(0'$, lower_case).
+
+   yes.
+   [eclipse]: X = $a.
+
+   X = $a
+   yes.
+   [eclipse]:
+
+Error:
+   set_chtab("a",symbol).       (Error 5)
+   set_chtab(97,fred).          (Error 6)
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/get_chtab-2.html">get_chtab / 2</A>, <A HREF="../../kernel/iochar/read_token-2.html">read_token / 2</A>, <A HREF="../../kernel/iochar/read_token-3.html">read_token / 3</A>
+</BODY></HTML>

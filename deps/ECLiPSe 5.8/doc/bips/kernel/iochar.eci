@@ -1,0 +1,823 @@
+:- comment(alias, "Character I/O").
+:- comment(summary, "Built-ins to input and output characters or byte strings").
+
+:- comment(read_token / 2, [
+	summary:"Succeeds if the next token from the current input stream is successfully
+read and unified with Token and its token class with Class.
+
+",
+	template:"read_token(?Token, ?Class)",
+	desc:html("   This predicate is an interface to the Sepia tokenizer.  It can be used
+   to read terms which are not ended by a fullstop or even to build whole
+   new parsers.  The next token from the input stream is read and unified
+   with Token.  The token class of this token is unified with Class.
+
+<P>
+   read_token(Token, Class) is equivalent to read_token(input, Token,
+   Class).  See read_token/3 for details.
+
+<P>
+"),
+	args:["?Token" : "Variable or constant.", "?Class" : "Variable or atom."],
+	resat:"   No.",
+	fail_if:"   Fails if Token does not unify with the next token read from the input\n   stream or its class with Class.\n\n",
+	exceptions:[5 : "Class does not unify with an atom.", 190 : "End of file was encountered before reading any character.", 198 : "Trying to read even after the error 190 was raised."],
+	eg:"   See read_token/3 for examples.
+
+
+
+",
+	see_also:[get_chtab / 2, set_chtab / 2, read_token / 3]]).
+
+:- comment(read_token / 3, [
+	summary:"Succeeds if the next token from the input stream Stream is successfully
+read and unified with Token and its token class with Class.
+
+",
+	template:"read_token(+Stream, ?Token, ?Class)",
+	desc:html("   This predicate is an interface to the Sepia tokenizer.  It can be used
+   to read terms which are not ended by a fullstop or even to build whole
+   new parsers.  The next token from the input stream Stream is read and
+   unified with Token.  The token class of this token is unified with
+   Class.
+
+<P>
+   The possible token classes with examples:
+
+<P>
+<PRE>
+   ---------------------------------------
+   | Input Example  Token    Class        |
+   |------------------------------------  |
+   | X              \"X\"      var          |
+   | _              \"_\"      anonymous    |
+   | abc            'abc'    atom         |
+   | 'a-b'          'a-b'    quoted_atom  |
+   | 123            123      integer      |
+   | 1.2            1.2      float        |
+   | 1_3            1_3      rational     |
+   | 0.9__1.1       0.9__1.1 breal        |
+   | \"abc\"          \"abc\"    string       |
+   | ,              ','      comma        |
+   | )              \")\"      solo         |
+   | &lt;SPACE&gt;(       \"(\"      open_par     |
+   | .&lt;NL&gt;          '.'      fullstop     |
+   | 1e789&lt;NL&gt;      \"1e789\"  error        |
+   ---------------------------------------|
+</PRE>
+   Note that square brackets and curly brackets are single tokens; solo
+   characters are read as string tokens.  All syntax errors are reported as
+   class error, with the input string up to the error as Token.  The
+   default error handler for the event 190 (reading EOF) returns
+   end_of_file in both Class and Token.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "?Token" : "Variable or constant.", "?Class" : "Variable or atom."],
+	resat:"   No.",
+	fail_if:"   Fails if Token does not unify with the next token read from the input\n   stream Stream or its class with Class.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is not an atom or an integer.", 5 : "Class does not unify with an atom.", 190 : "End of file was encountered before reading any character.", 192 : "Stream is not an input stream.", 193 : "Stream is an illegal stream specification.", 198 : "Trying to read even after the error 190 was raised."],
+	eg:"
+Success:
+      [eclipse 1]: read_token(input,T,C).
+              []
+      T = []
+      C = atom
+      [eclipse 2]: read_token(input,T,C).
+              [
+      T = \"[\"
+      C = solo
+      [eclipse 3]: read_token(input, \"k\",C).
+              \"k\"
+      C = string
+      [eclipse 4]: read_token(input,T,C).
+              X
+      T = \"X\"
+      C = var
+      [eclipse 5]: read_token(input,T,C).
+              1.6e-5.
+      T = 1.6e-05
+      C = float
+
+Fail:
+      [eclipse 6]: read_token(input, \"[\", C).
+              &
+      no.
+
+Error:
+      [eclipse 7]: read_token(input, T, C).
+              ^D
+      T = end_of_file
+      C = end_of_file
+      yes. (Error 190, default handler)
+
+      read_token(S, a(b,c), C).         (Error 4).
+      read_token(\"string\", a(b,c), C).  (Error 5).
+      read_token(9, X + 2, C).          (Error 192). % stream not open
+      read_token(atom, X + 2, C).       (Error 193).
+
+
+
+
+",
+	see_also:[get_chtab / 2, set_chtab / 2, read_token / 2]]).
+
+:- comment(nl / 0, [
+	summary:"A newline is printed on the output stream.",
+	template:"nl",
+	desc:html("\
+	Used to print a newline sequence on the current output stream.
+	The exact character sequence emitted depends on the setting of
+	the stream's <CODE>end_of_line</CODE> flag (lf or crlf).
+	In addition, if the stream's <CODE>flush</CODE> flag is set to
+	<CODE>end_of_line</CODE>, the stream is also flushed.
+"),
+	args:[],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	see_also:[nl / 1]]).
+
+:- comment(nl / 1, [
+	summary:"A newline is printed on the output stream Stream.",
+	template:"nl(+Stream)",
+	desc:html("\
+	Used to print a newline sequence on the output stream Stream.
+	The exact character sequence emitted depends on the setting of
+	the stream's <CODE>end_of_line</CODE> flag (lf or crlf).
+	In addition, if the stream's <CODE>flush</CODE> flag is set to
+	<CODE>end_of_line</CODE>, the stream is also flushed.
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name)."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is neither an atom nor a number.", 192 : "Stream is not an output stream.", 193 : "Stream is an illegal stream specification."],
+	eg:"
+   Success:
+      open(file1,update,s), nl(s), close(s).
+      nl(output).
+Error:
+      nl(Stream).               (Error 4).
+      nl(7.0).                  (Error 5).
+      open(file1,read,s),nl(s). (Error 192). % read mode
+      nl(29).                   (Error 192). % stream not open
+      nl(-1).                   (Error 193). % out of range
+      nl(30).                   (Error 193). % out of range
+      nl(atom).                 (Error 193). % no such stream
+
+
+
+",
+	see_also:[nl / 0, flush/1, open/4, set_stream_property/3, get_stream_info/3]]).
+
+:- comment(unget / 1, [
+	summary:"Back up one character on Stream",
+	template:"unget(+Stream)",
+	desc:html("\
+    Go back one character on the given Stream. This can be used to
+    implement lookaheads.
+    <P>
+    The number of characters that can be reliably ungotten is 4, and the
+    result is only defined if these characters have been read previously.
+    <P>
+    The result of the operation is undefined if
+    <UL>
+    <LI>trying to unget more than 4 characters
+    <LI>trying to unget more characters than had been read previously
+    <LI>trying to unget after a seek operation
+    </UL>
+    In these cases, unget/1 will succeed, but subsequent read operations
+    will return undefined results.
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name)."],
+	resat:"   No.",
+	fail_if:"None",
+	exceptions:[4 : "Stream is not instantiated.",
+		5 : "Stream is neither an integer nor an atom.",
+		192 : "Stream not in read mode."],
+	eg:"
+% look ahead one character in Stream:
+
+    peek(Stream, X) :-
+    	get(Stream, X),
+	unget(Stream).
+",
+	see_also:[get / 2, get_char/2]]).
+
+
+:- comment(get / 1, [
+	summary:"Reads the next character from the current input stream and unifies its
+ASCII code with Ascii.
+
+",
+	template:"get(?Ascii)",
+	desc:html("   Takes the next character from the current input and unifies its integer
+   ASCII code (in the range 0 to 255) to Ascii.
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+"),
+	args:["?Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   Fails if Ascii does not unify with the next character from the buffered\n   current input.\n\n",
+	exceptions:[5 : "Ascii is instantiated, but not to an integer.", 190 : "End of file has been reached."],
+	eg:"   Equivalent to get(input, Ascii).  (see get/2 for details).
+
+
+
+",
+	see_also:[get / 2, put / 1, put / 2]]).
+
+:- comment(get / 2, [
+	summary:"Reads the next character from the input stream Stream and unifies its ASCII
+code with Ascii.
+
+",
+	template:"get(+Stream, ?Ascii)",
+	desc:html("   Takes the next character from the open input stream Stream and unifies
+   its integer ASCII code (in the range 0 to 255) to Ascii.  ASCII codes
+   for the non-printable characters (i.e.  control characters) are also
+   acceptable.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "?Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   Fails if Ascii does not unify with the next character from the buffered\n   input stream Stream.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is neither an integer nor an atom.", 5 : "Ascii is instantiated, but not to an integer.", 190 : "End of file has been reached.", 192 : "Stream is not an input stream.", 193 : "Stream is an illegal stream specification."],
+	eg:"
+Success:
+      [eclipse]: get(input, 0'a),get(input,97).
+      > aa
+      yes.
+Fail:
+      [eclipse]: get(input,98).
+      > a
+      no.
+Error:
+      get(Stream,98).                 (Error 4).
+      get(input, '98').               (Error 5).
+      get(10,A).                      (Error 192).
+      get(atom,A).                    (Error 193).
+
+
+
+",
+	see_also:[get / 1, put / 1, put / 2]]).
+
+:- comment(get_char / 1, [
+	summary:"Reads the next character from the current input and unifies it with a
+single character string Char.
+
+",
+	template:"get_char(?Char)",
+	desc:html("   Takes a single-character string from the current input and unifies it
+   with Char.
+
+<P>
+"),
+	args:["?Char" : "Single character string or variable."],
+	resat:"   No.",
+	fail_if:"   Fails if Char does not unify with the next character from the buffered\n   current input.\n\n",
+	exceptions:[5 : "Char is instantiated, but not to a string."],
+	eg:"   Equivalent to get_char(input, Char).  (see get_char/2 for details).
+
+
+
+",
+	see_also:[get_char / 2, put_char / 1, put_char / 2]]).
+
+:- comment(get_char / 2, [
+	summary:"Reads the next character from the input stream Stream and unifies it with a
+single character string Char.
+
+",
+	template:"get_char(+Stream, ?Char)",
+	desc:html("   Takes a single character string from the input stream Stream.  and
+   unifies it with Char.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "?Char" : "Single character string or variable."],
+	resat:"   No.",
+	fail_if:"   Fails if Char does not unify with the next character from the buffered\n   input stream Stream.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is neither an integer nor an atom.", 5 : "Char is instantiated, but not to a single character string.", 190 : "End of file has been reached.", 192 : "Stream is not open for reading.", 193 : "Stream is not a valid stream number."],
+	eg:"
+   Success:
+      [eclipse]: get_char(input,Char).
+      > a
+      Char = \"a\"
+      yes.
+
+      [eclipse]: get_char(input, \"b\").
+      > b
+      yes.
+
+      [eclipse]: sh('cat file1').
+      p
+      yes.
+      [eclipse]: open(file1, update,s),
+      > get_char(s,X).
+      X = \"p\"
+      yes.
+Fail:
+      [eclipse]: get_char(input, \"b\").
+      > a
+      no.
+
+Error:
+      get_char(Stream, \"b\").             (Error 4).
+      get_char(input, 'b').              (Error 5).
+      get_char(input, 98.0).             (Error 5).
+      get_char(\"string\", Char).          (Error 5).
+      get_char(null,Char).              (Error 190).
+      get_char(9,Char).                 (Error 192).
+      get_char(atom,Char).              (Error 193).
+
+
+
+",
+	see_also:[get / 1, get / 2, get_char / 1, put / 1, put / 2, put_char / 1, put_char / 2]]).
+
+:- comment(put / 1, [
+	summary:"The character represented by the ascii integer Ascii is put onto the
+buffered current output.
+
+",
+	template:"put(+Ascii)",
+	desc:html("   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the buffered current output.
+
+<P>
+   The output from put/1 is buffered first, and is only output to the
+   screen when the output is flushed e.g.when returning to the ECLiPSe
+   prompt or explicitly using flush(1)..
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+"),
+	args:["+Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Ascii is not instantiated.", 5 : "Ascii is instantiated, but not to an integer."],
+	eg:"   Equivalent to put(output, Ascii).  (see put/2 for details).
+
+
+
+",
+	see_also:[get / 1, get / 2, put / 2]]).
+
+:- comment(put / 2, [
+	summary:"The character represented by the ascii integer code Ascii is put onto the
+buffered output stream Stream.
+
+",
+	template:"put(+Stream, +Ascii)",
+	desc:html("   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the buffered output stream Stream.
+
+<P>
+   The output from put/2 is buffered first, and is only output to the
+   stream when the output is flushed (e.g.  using flush/1).
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "+Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 4 : "Ascii is not instantiated.", 5 : "Stream is neither an integer nor an atom.", 5 : "Ascii is instantiated, but not to an integer.", 192 : "Stream is not an output stream.", 193 : "Stream is an illegal stream specification."],
+	eg:"
+Success:
+      [eclipse]: put(output, 0'a).
+      a
+      yes.
+
+      [eclipse]: sh('cat file1').
+      a
+      yes.
+      [eclipse]: open(file1,read,s1),
+      >        open(file2,write,s2),repeat,
+      > (at_eof(s1)->!,
+      >             flush(s2),
+      >             close(s1),close(s2)
+      >            ;
+      >             get(s1,Char),
+      >             put(s2,Char),
+      >             fail).
+      Char = _g72
+      yes.
+      [eclipse]: sh('cat file2').
+      a
+      yes.
+
+Error:
+      put(output,A).             (Error 4).
+      put(Stream,98).            (Error 4).
+      put(output, '98').         (Error 5).
+      put(output, 98.0).         (Error 5).
+      put(\"string\" A).           (Error 5).
+      put(11,97).                (Error 192). % stream not open
+      put(atom,97).              (Error 193).
+
+
+
+",
+	see_also:[get / 1, get / 2, put / 1]]).
+
+:- comment(put_char / 1, [
+	summary:"Puts the single character string Char onto the buffered current output.
+
+",
+	template:"put_char(+Char)",
+	desc:html("   Puts the single-character string Char onto the current output.
+
+<P>
+"),
+	args:["+Char" : "Single character string."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Char is not instantiated.", 5 : "Char is instantiated, but not to a single character string."],
+	eg:"   Equivalent to put_char(output, Char).  (see put_char/2 for details).
+
+
+
+",
+	see_also:[get_char / 1, get_char / 2, put_char / 2]]).
+
+:- comment(put_char / 2, [
+	summary:"Puts the single character string Char onto the buffered output stream
+Stream.
+
+",
+	template:"put_char(+Stream, +Char)",
+	desc:html("   Puts the single-character string Char onto the output stream Stream.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "+Char" : "Single character string."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 4 : "Char is not instantiated.", 5 : "Stream is neither an integer nor an atom.", 5 : "Char is instantiated, but not to a single character string.", 192 : "Stream is not an output stream.", 193 : "Stream is an illegal stream specification."],
+	eg:"
+Success:
+  [eclipse]: put_char(output, \"a\").
+  a
+  yes.
+
+  [eclipse]: get_char(input,C),put_char(output,C).
+  > a
+  a
+  C = \"a\"
+  yes.
+Error:
+  put_char(Stream,A).      (Error 4).
+  put_char(output,a).      (Error 5).
+  put_char(output,98).     (Error 5).
+  put_char(11, \"a\").        (Error 192).
+  put_char(atom, \"a\").      (Error 193).
+
+
+
+",
+	see_also:[get_char / 1, get_char / 2, put_char / 1]]).
+
+:- comment(read_string / 3, [
+	summary:"Reads a string from the input stream up to a delimiter or up to a specified
+length.
+
+",
+	template:"read_string(+Delimiters, ?Length, ?String)",
+	desc:html("   A string of characters is read from the input up to one character which
+   occurs in the delimiter string Delimiters.  This character is also
+   consumed, but does not appear in the string which is unified with
+   String.
+   
+   Two symbolic Delimiters can be specified:
+
+<P>
+<PRE>
+    end_of_line   a newline or carriage-return/newline sequence
+    end_of_file   the end of the file/input
+</PRE>
+   End of file always acts like a delimiter.
+
+<P>
+   If Length is a variable, it is unified with the length of the string
+   String.  If Length is an integer, the number of characters read from
+   the input is limited by the Length.
+
+<P>
+"),
+	args:["+Delimiters" : "String or atom.", "?Length" : "Integer or variable.", "?String" : "String or variable."],
+	resat:"   No.",
+	fail_if:"   Fails if String does not unify with the next string of characters read\n   from input satisfying the described conditions.  The default handler for\n   the error 190 also lets the predicate fail.\n\n",
+	exceptions:[4 : "Delimiters is not instantiated.", 5 : "Delimiters is not a string or atom.", 5 : "Length is not an atom or an integer.", 5 : "String is not an atom or a string.", 6 : "Delimiters is an atom but not a valid symbolic delimiter.", 190 : "End of file was encountered before reading any character.", 198 : "Trying to read even after the error 190 was raised."],
+	eg:"   Equivalent to read_string(input, Delimiters, Length, String).  (see
+   read_string/4 for details).
+
+
+
+",
+	see_also:[read_string / 4, read_token / 2, read_token / 3, open / 3]]).
+
+:- comment(read_string / 4, [
+	summary:"Reads a string from the stream Stream up to a delimiter or up to a
+specified length.
+
+",
+	template:"read_string(+Stream, +Delimiters, ?Length, ?String)",
+	desc:html("   A string of characters is read from the input stream Stream up to one
+   character which occurs in the delimiter string Delimiters.  This
+   character is also consumed, but does not appear in the string which is
+   unified with String.
+
+<P>
+   Two symbolic Delimiters can be specified:
+
+<P>
+<PRE>
+    end_of_line   a newline or carriage-return/newline sequence
+    end_of_file   the end of the file/input
+</PRE>
+   End of file always acts like a delimiter.
+
+<P>
+   If Length is a variable, it is unified with the length of the string
+   String.  If Length is an integer, the number of characters read from
+   the input stream Stream is limited by Length.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "+Delimiters" : "String or atom.", "?Length" : "Integer or variable.", "?String" : "String or variable."],
+	resat:"   No.",
+	fail_if:"   Fails if String does not unify with the next string of
+	characters read\n   from input satisfying the described conditions.
+	The default handler for\n   the error 190 also lets the predicate
+	fail.\n\n", 
+        exceptions:[4 : "Delimiters is not instantiated.", 5 : "Delimiters is not a string or atom.", 5 : "Length is a non-integer number.", 5 : "String is not a variable or a string.", 6 : "Delimiters is an atom but not a valid symbolic delimiter.", 24 : "Length is not a variable or number.", 190 : "End of file was encountered before reading any character.", 192 : "Stream is not an input stream.", 193 : "Stream is an illegal stream specification.", 198 : "Trying to read even after the error 190 was raised."],
+	eg:"
+Success:
+      [eclipse]: read_string(input, \"123\", Length, String).
+          abcdef2ghi
+
+      Length = 6
+      String = \"abcdef\"
+      yes.
+      [eclipse]: read_string(input, \" \\t\", Length, String).
+      one two
+
+      Length = 3
+      String = \"one\"
+      yes.
+      [eclipse]: read_string(input, end_of_line, Length, String).
+      abcdefghi
+
+      Length = 9
+      String = \"abcdefghi\"
+      yes.
+      [eclipse]: read_string(input, end_of_line, 6, String).
+      abcdefghi
+
+      String = \"abcdef\"
+      yes.
+
+      [eclipse]: open(file1, read, s).
+
+      yes.
+      [eclipse]: system('cat file1').
+      abcd
+
+      yes.
+      [eclipse]: read_string(s, \"\", Length, String).
+
+      Length = 5
+      String = \"abcd\\n\"           % Read up to end of file
+      yes.
+
+
+% Code example: read lines from a file and return
+% a list of strings, each string containing a line
+
+    get_lines(File, Lines) :-
+	open(File, read, S),
+	get_lines(S, Lines),
+	close(S).
+
+    get_lines(S, Lines) :-
+	( read_string(S, end_of_line, _, Line) ->
+	    Lines = [Line|Ls],
+	    get_lines(S, Ls)
+	;
+	    Lines = []
+	).
+
+
+Fail:
+      [eclipse]: open(string(\"\"),read,s), read_string(s,\"\",L,String).
+
+      no (more) solution.         % EOF - Error 190 - handler fails
+
+Error:
+    read_string(Stream, \"\", Length, String).       (Error 4).
+    read_string(stream, Dels, Length, String).     (Error 4).
+    read_string(\"stream\", \"\", Length, String).     (Error 5).
+    read_string(stream, 12, Length, String).       (Error 5).
+    read_string(stream, \"\", \"abc\", String).        (Error 5).
+    read_string(stream, \"\", Length, 12).           (Error 5).
+    read_string(stream, stop, Length, String).     (Error 6).
+    read_string(output, \"\", Length, String).       (Error 192).
+    read_string(atom, \"\", Length, String).         (Error 193).
+
+
+
+",
+	see_also:[read_string / 3, read_token / 2, read_token / 3, open / 3]]).
+
+:- comment(tyi / 1, [
+	summary:"Succeeds if the ascii code of the next character read in raw mode from the
+current input is successfully unified with Ascii.
+
+",
+	template:"tyi(?Ascii)",
+	desc:html("   Takes the next character from the current input and unifies its integer
+   ASCII code (in the range 0 to 255) with Ascii.  The input is in raw mode
+   so that no newline character must be typed.
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+"),
+	args:["?Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   Fails if Ascii does not unify with the next character from the current\n   input.\n\n",
+	exceptions:[5 : "Ascii is instantiated, but not to an integer.", 190 : "End of file was encountered before reading any character.", 198 : "Trying to read even after the error 190 was raised."],
+	eg:"   Equivalent to tyi(input, Ascii).  (see tyi/2 for details).
+
+
+
+",
+	see_also:[tyi / 2, tyo / 1, tyo / 2]]).
+
+:- comment(tyi / 2, [
+	summary:"Succeeds if the ascii code of the next character read in raw mode from the
+input stream Stream is successfully unified with Ascii.
+
+",
+	template:"tyi(+Stream, ?Ascii)",
+	desc:html("   Takes the next character from the unbuffered input stream Stream and
+   unifies its integer ASCII code (in the range 0 to 255) with Ascii.  The
+   input is in raw mode so that no newline character must be typed, and the
+   character is not echoed on the screen.
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+Note
+   tyi/2 reads from the stream in raw mode.  If it is combined with the
+   buffered predicates, it might happen that some characters typed ahead
+   may be lost if the input device is a terminal.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "?Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   Fails if Ascii does not unify with the next character from the input\n   stream Stream.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is neither an integer nor an atom.", 5 : "Ascii is instantiated, but not to an integer.", 190 : "End of file has been reached.", 192 : "Stream is not an input stream.", 193 : "Stream is an illegal stream specification.", 198 : "Trying to read even after the error 190 was raised."],
+	eg:"
+Success:
+      [eclipse]: tyi(input,Ascii).
+      Ascii = 97            % press 'a'
+      yes.
+
+      [eclipse]: tyi(input,97).
+                            % press 'a'
+      yes.
+
+      [eclipse]: tyi(input,Ascii).
+      Ascii = 4                 % press ^D
+      yes.
+
+Fail:
+      [eclipse]: tyi(input, 0'b).
+                               % press 'a'
+      no.
+
+Error:
+      tyi(Stream,98).             (Error 4).
+      tyi(input, '98').           (Error 5).
+      tyi(input, 98.0).           (Error 5).
+      tyi(\"string\", A).           (Error 5).
+
+      [eclipse]: open(file1,update,s), write(s,p),
+      > seek(s,0), tyi(s,Ascii),
+      tyi(s,Ascii).              (Error 190).
+      tyi(9,A).                  (Error 192).
+      tyi(atom,A).               (Error 193).
+
+
+
+",
+	see_also:[tyi / 1, tyo / 1, tyo / 2]]).
+
+:- comment(tyo / 1, [
+	summary:"The character represented by the ascii integer Ascii is put onto the
+current output in raw mode.
+
+",
+	template:"tyo(+Ascii)",
+	desc:html("   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the current output in raw mode.
+
+<P>
+   If the output device is a terminal, the tyo/1 output goes directly to
+   the screen, whereas the output from put/1 is buffered first, and is only
+   output to the screen when the current output is flushed (e.g.
+   explicitly using flush(1).).
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+"),
+	args:["+Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Ascii is not instantiated.", 5 : "Ascii is instantiated, but not to an integer."],
+	eg:"   Equivalent to tyo(output, Ascii).  (see tyo/2 for details).
+
+
+
+",
+	see_also:[tyi / 1, tyi / 2, tyo / 2]]).
+
+:- comment(tyo / 2, [
+	summary:"The character represented by the ascii integer Ascii is put onto the output
+stream Stream in raw mode.
+
+",
+	template:"tyo(+Stream, +Ascii)",
+	desc:html("   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the output stream Stream in raw mode.
+
+<P>
+   If the stream is a terminal, the tyo/2 output goes directly to the
+   stream, whereas the output from put/2 is buffered first, and is only
+   output to the stream when the output is flushed (e.g.  explicitly using
+   flush/1).
+
+<P>
+   If the stream is not a terminal, tyo/2 behaves like put/2.
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+"),
+	args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).", "+Ascii" : "Integer."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "Stream is not instantiated.", 4 : "Ascii is not instantiated.", 5 : "Stream is neither an integer nor an atom.", 5 : "Ascii is instantiated, but not to an integer.", 192 : "Stream is not an output stream.", 193 : "Stream is an illegal stream specification."],
+	eg:"
+   Success:
+      [eclipse]: set_stream(screen,output),
+      > tyo(screen,91),tyo(screen,97),
+      > tyo(screen,93).
+      [a]
+      yes.
+
+      [eclipse]: put(screen, 0'a), tyo(screen, 0'b),
+      > put(screen, 0'c), tyo(screen, 0'd).
+      bdac
+      yes.
+
+      [eclipse]: write(screen,i), tyo(screen, 0'h).
+      hi
+      yes.
+
+Error:
+      tyo(Stream,A).                (Error 4).
+      tyo(output,a).                (Error 5).
+      tyo(98.0,output).             (Error 5).
+      tyo(\"string\", A).             (Error 5).
+      tyo(11,97).                   (Error 192).
+      tyo(atom,97).                 (Error 193).
+
+
+
+",
+	see_also:[tyi / 1, tyi / 2, tyo / 1]]).

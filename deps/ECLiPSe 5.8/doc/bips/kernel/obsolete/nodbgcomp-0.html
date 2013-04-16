@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>nodbgcomp</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>nodbgcomp</H1>
+Tells the compiler to generate code without debug instructions and not to
+retain the source variable names.
+
+
+<DL>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Only predicates that have been compiled with debug instructions can
+   be traced by the debugger.  The generation of debug instruction is
+   switched on by default, and can be switched off globally using
+   nodbgcomp/0 or set_flag(debug_compile, off).  This can be reversed
+   using dbgcomp/0 or set_flag(debug_compile, on).  This global
+   setting can always be overruled on a file-by-file basis using
+   pragma(debug) and pragma(nodebug) respectively. 
+
+<P>
+   Internals of predicates that have been compiled without debug
+   instructions cannot be traced by the debugger (only entering and
+   leaving such a predicate can be shown).  On the other hand, this
+   code uses less space and runs slightly faster than code with debug
+   instructions.  So it makes sense to compile well-tested predicates
+   without debug instructions.  Note however that predicates with
+   debug instructions that are called by predicates without debug
+   instructions are also invisible to the debugger.
+
+<P>
+   Calling nodbgcomp/0 is equivalent to set_flag(debug_compile, off),
+   set_flag(variable_names, off).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: nodbgcomp, [user], dbgcomp, [user].
+       q :- writeln(hi).
+       user compiled 36 bytes in 0.00 seconds
+       p :- q.
+       user compiled 32 bytes in 0.00 seconds
+      yes.
+      [eclipse]: trace.
+      Debugger switched on - creep mode
+      yes.
+      [eclipse]: p.
+        (1) 0  CALL   p (dbg)?- creep
+      N (2) 1  CALL   q (dbg)?- creep
+      hi
+      N (2) 1  EXIT   q (dbg)?- creep     % call to writeln/1
+        (1) 0  EXIT   p (dbg)?- creep     % invisible to the
+      yes.                                % debugger.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/directives/pragma-1.html">pragma / 1</A>, <A HREF="../../kernel/obsolete/dbgcomp-0.html">dbgcomp / 0</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/directives/pragma-1.html">pragma / 1</A>
+</BODY></HTML>

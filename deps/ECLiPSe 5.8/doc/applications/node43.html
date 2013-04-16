@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Reading input data into data structures</TITLE>
+<META NAME="description" CONTENT="Reading input data into data structures">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node44.html">
+<LINK REL="previous" HREF="node42.html">
+<LINK REL="up" HREF="node42.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1151"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1145"
+ HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1139"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1147"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1149"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1152"
+ HREF="node44.html">How to use DCGs</A>
+<B> Up:</B> <A NAME="tex2html1146"
+ HREF="node42.html">Input/Output</A>
+<B> Previous:</B> <A NAME="tex2html1140"
+ HREF="node42.html">Input/Output</A>
+ &nbsp <B>  <A NAME="tex2html1148"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1150"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00710000000000000000"></A>
+<A NAME="ReadingInput"></A>
+<BR>
+Reading input data into data structures
+</H1>
+The easiest way to read data <A NAME="825"></A>into ECLiPSe programs is to use the Prolog term format for the data. Each term is terminated by a fullstop<A NAME="826"></A>, which is a dot (.) followed by some white space. The following code reads terms from a file until the end of file is encountered and returns the terms in a list.
+<PRE>
+:-mode read_data(++,-).
+read_data(File,Result):-
+        open(File,read,S),
+        read(S,X),
+        read_data_lp(S,X,Result),
+        close(S).
+
+read_data_lp(_S,end_of_file,[]):-
+        !.
+read_data_lp(S,X,[X|R]):-
+        read(S,Y),
+        read_data_lp(S,Y,R).
+</PRE>
+This method is very easy to use if both source and sink of the data are ECLiPSe programs. Unfortunately, data provided by other applications will normally not be in the Prolog term format. For them we will have to use some other techniques<A NAME="tex2html13"
+ HREF="footnode.html#foot829"><SUP>6.1</SUP></A>.
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

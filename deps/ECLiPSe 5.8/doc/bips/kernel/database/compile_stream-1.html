@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>compile_stream(+Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>compile_stream(+Stream)</H1>
+Compile the given stream Stream.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer or atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to compile from an arbitrary input stream Stream.
+
+<P>
+   Stream may be a physical stream number or a reserved or user-defined
+   symbolic stream name.  The stream can be of any type, e.g. file, tty,
+   socket, queue, string, etc.
+
+<P>
+   If Stream is an opened input stream, its content is read and compiled as
+   in compile/1.  The compilation stops at the stream end, but the stream
+   remains open.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an atom or integer.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is in an illegal stream mode.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+compile_string(String) :-
+	open(string(String), read, S),
+	compile_stream(S),
+	close(S).
+
+
+Error:
+     compile_stream(X).      (Error 4).
+     compile_stream(1.0).    (Error 5).
+     compile_stream(1).      (Error 192).
+     compile_stream(2).      (Error 192).
+     compile_stream(20).     (Error 192).
+     compile_stream(a).      (Error 193).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/compile-2.html">compile / 2</A>, <A HREF="../../kernel/database/compiled_stream-1.html">compiled_stream / 1</A>, <A HREF="../../kernel/database/compile_term-1.html">compile_term / 1</A>, <A HREF="../../kernel/database/current_compiled_file-3.html">current_compiled_file / 3</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/directives/pragma-1.html">pragma / 1</A>
+</BODY></HTML>

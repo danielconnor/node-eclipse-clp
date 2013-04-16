@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>intset(?Set, +Min, +Max)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_hybrid_sets)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>intset(?Set, +Min, +Max)</H1>
+Set is a set containing numbers between Min and Max
+<DL>
+<DT><EM>Set</EM></DT>
+<DD>A free variable, set variable or an integer list
+</DD>
+<DT><EM>Min</EM></DT>
+<DD>integer
+</DD>
+<DT><EM>Max</EM></DT>
+<DD>integer
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Unifies Set with a set variable whose lower bound is the empty set
+    and whose upper bound is the set of all integers between Min and Max.
+    Equivalent to Set::[]..[Min,Min+1,..,Max].
+</P>
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Min or Max are uninstantiated
+<DT><EM>(5) type error </EM>
+<DD>Set is not a variable or list
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/ic_hybrid_sets/intsets-4.html">intsets / 4</A>, <A HREF="../../lib/ic_hybrid_sets/NN-2.html">:: / 2</A>
+</BODY></HTML>

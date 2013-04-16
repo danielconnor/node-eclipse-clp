@@ -1,0 +1,21 @@
+
+graph_get_edge(+Graph, +Source, +Target, -Edge)
+
+   Finds a graph edge given source and target node
+
+Arguments
+   Graph               a graph structure
+   Source              an integer node number
+   Target              an integer node number
+   Edge                an e/3 edge structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    This operation is linear in the number of edges adjacent to Source.
+    
+
+See Also
+   graph_get_all_edges / 2, graph_get_adjacent_edges / 3, graph_edge / 2, graph_adjacent_edge / 3, graph_get_edges / 4

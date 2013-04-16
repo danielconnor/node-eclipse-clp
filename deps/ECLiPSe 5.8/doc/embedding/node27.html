@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Attaching and Initialising the Interface</TITLE>
+<META NAME="description" CONTENT="Attaching and Initialising the Interface">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node28.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1068"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1064"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1058"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1066"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1069"
+ HREF="node28.html">Type Conversion Between Tcl</A>
+<B> Up:</B> <A NAME="tex2html1065"
+ HREF="node24.html">Remote Tcl Interface</A>
+<B> Previous:</B> <A NAME="tex2html1059"
+ HREF="node26.html">Loading the Interface</A>
+ &nbsp <B>  <A NAME="tex2html1067"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1070"
+ HREF="node27.html#SECTION00631000000000000000">A Note on Security</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00630000000000000000">
+Attaching and Initialising the Interface</A>
+</H1>
+
+<P>
+To use the interface, the Tcl program needs to be
+attached to the ECLiPSe program. The attach request is initiated on the
+ECLiPSe side, by calling the predicate
+<A NAME="tex2html160"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="2497"></A> <A NAME="tex2html152"
+
+HREF="footnode.html#foot2463"><SUP>6.2</SUP></A> from ECLiPSe. The Tcl program is then attached to the
+ECLiPSe program by executing the procedure <B>ec_remote_init</B><A NAME="1829"></A> from Tcl. If no error
+occurs, then the connection is established and the interface is set up.
+
+<P>
+In more detail, the ECLiPSe predicate remote_connect/3  establishes a
+socket listening for the connection from the Tcl side. It prints out, on
+the stream <TT>log_output</TT>, the
+hostname and the port number that the Tcl side should connect to:
+
+<P>
+<PRE>
+[eclipse 1]: remote_connect(Host/Port, Control, _InitGoal).
+Socket created at address chicken.icparc.ic.ac.uk/25909
+</PRE>
+
+<P>
+On the Tcl side, ec_remote_init is called with the hostname and port number
+given by remote_connect/3:
+
+<P>
+<PRE>
+ec_remote_init chicken.icparc.ic.ac.uk 25909
+</PRE>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="1837"></A><B>ec_remote_init</B> <I>host port ?init_command? ?pass? ?format?</I></STRONG>
+<DD> 
+<BR>
+Initialise the remote Tcl interface on the Tcl side. A
+	corresponding <B>remote_connect/3</B> must have been started on the
+	ECLiPSe side, which specifies the hostname (<I>host</I>) and port
+	number (<I>port</I>) to connect to. The optional <I>	init_command</I> is an is a Tcl command that will be invoked at the
+	end of the attachment, before control is handed over to the
+	ECLiPSe side (see section&nbsp;<A HREF="node31.html#remote-control">6.7</A> for more
+	details). <I>pass</I> and <I>format</I> are optional arguments for a simple
+	security check: they specify an ECLiPSe term that will be
+	matched against a corresponding term (using <A NAME="tex2html163"
+ HREF="../bips/kernel/termcomp/EE-2.html">==/2</A><A NAME="2506"></A>) on the
+
+ECLiPSe side before the connection is allow to proceed (<I>pass</I>
+	will be sent to the ECLiPSe side in EXDR format<A NAME="tex2html158"
+ HREF="footnode.html#foot2464"><SUP>6.3</SUP></A>; the default is
+	an empty string, which is what <A NAME="tex2html165"
+ HREF="../bips/kernel/externals/remote_connect_setup-3.html">remote_connect_setup/3</A><A NAME="2509"></A>
+
+expects).
+
+<P>
+</DL>
+
+<P>
+If successful, some initial links are established between the two sides,
+such as the control connection and the connection to allow rpc goals to be
+sent from the Tcl to the ECLiPSe side. 
+After the attachment, optional user-defined
+initialisations are performed on both sides (via the InitGoal argument on
+the ECLiPSe side, and the init_command on the Tcl side), and the two
+sides can then interact. Initially, the control is given to the Tcl side,
+and <I>remote_connect/3</I> returns only when control is handed over to the
+ECLiPSe side. 
+
+<P>
+As part of the attachment process, the ECLiPSe name of the control
+connection  is passed to the Tcl side. This can be accessed by the user
+using the command:
+
+<P>
+<DL>
+<DT><STRONG><A NAME="1866"></A><B>ec_control_name</B></STRONG>
+<DD> 
+<BR>
+returns the ECLiPSe name of the control
+connection. An error is raised if this procedure is called before
+an attachment to ECLiPSe is made.
+</DL>
+
+<P>
+Unimplemented functionality error will be raised if the Tcl or
+ECLiPSe side are incompatible with each other. This can happen if
+one side is outdated, e.g. if the remote Tcl interface used and the ECLiPSe
+being connected to are not from the same version of ECLiPSe. In this
+case, it is best to update both sides to the latest version of ECLiPSe.
+
+<P>
+
+<H2><A NAME="SECTION00631000000000000000">
+A Note on Security</A>
+</H2>
+
+<P>
+Once a Tcl side is attached to an ECLiPSe, the Tcl side can execute 
+ECLiPSe goals on the ECLiPSe side via the <B>ec_rpc</B> mechanism. This 
+may be a security concern as
+this gives the Tcl side as much access to the resources on the ECLiPSe
+side as the ECLiPSe process itself, even though the Tcl side can
+potentially be anywhere reachable from the ECLiPSe side via TCP.
+However, the connection must be initiated from the ECLiPSe side, and the
+attachment process must follow a protocol in order for a successful
+attachment. Nevertheless,
+if a third party somehow knew which Address to connect to, and follows the
+protocol, it can `steal' the connection to ECLiPSe. No
+authentication is performed by the simple <code>remote_connect_setup/3</code>,
+but <A NAME="tex2html167"
+ HREF="../bips/kernel/externals/remote_connect_accept-6.html">remote_connect_accept/6</A><A NAME="2512"></A> does allow a simple authentication
+where it can require the Tcl side to send an ECLiPSe term that matches
+the one specified in calling the predicate. This is done before the Tcl
+side is given the ability to run rpc goals on the ECLiPSe side. 
+
+<P>
+It is also possible to limit the remote connection to the same machine as the
+ECLiPSe process by specifying `localhost' as the host name in the
+Host/Port address of <code>remote_connect/3</code>. The Tcl side must also
+use `localhost' for the Host name in its client connection. 
+
+<P>
+Each peer queue is created by creating a new server socket on the
+ECLiPSe side and then accepting a client connection from the Tcl
+side. The accept command is told where the client connection is from, and
+the client host is checked against the client's host from the attachment,
+to ensure that the same host has been connected. If not, the ECLiPSe
+side will reject the particular connection. At this point, the security has
+probably been compromised, and the two side should disconnect.
+
+<P>
+Note also that by default, none of the information sent through the queues
+between the remote side and the ECLiPSe side is encrypted. If the
+programmer requires these communication channels to be secure, then such
+encryptions need to be provided by the programmer.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1068"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1064"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1058"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1066"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1069"
+ HREF="node28.html">Type Conversion Between Tcl</A>
+<B> Up:</B> <A NAME="tex2html1065"
+ HREF="node24.html">Remote Tcl Interface</A>
+<B> Previous:</B> <A NAME="tex2html1059"
+ HREF="node26.html">Loading the Interface</A>
+ &nbsp <B>  <A NAME="tex2html1067"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

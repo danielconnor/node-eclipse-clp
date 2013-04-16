@@ -1,0 +1,38 @@
+
+quadnorm(?Expression, -Const, -Linear, -Quadratic, -PolyRes, -Residue)
+
+   Extracts constant, linear and quadratic part of an arithmetic expression
+
+Arguments
+   Expression          Arithmetic expression with constants and variables
+   Const               Variable or number
+   Linear              Variable or normalized linear polynomial
+   Quadratic           Variable or normalized quadratic polynomial
+   PolyRes             Variable or normalized superquadratic polynomial
+   Residue             Residual nonpolynomial components in the form AuxVar=Expr
+
+Type
+   library(linearize)
+
+Description
+	This predicate is a simplified interface to polynorm/3 for the case
+	where one is only interested in linear and quadratic components.
+	See polynorm/3 for details.
+    
+
+Examples
+   
+    ?- quadnorm(2*5 + 3*(X+5*Y+7)*Z, Const, Lin, Quad, Poly, Res).
+    X = X
+    Y = Y
+    Z = Z
+    Const = 10
+    Lin = [[21, Z]]
+    Quad = [[3, X, Z], [15, Y, Z]]
+    Poly = []
+    Res = []
+    yes.
+    
+
+See Also
+   polynorm / 3, linearize / 3

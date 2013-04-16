@@ -1,0 +1,56 @@
+<HTML><HEAD><TITLE>remote_connect_setup(?Address, ?Peer, -Socket)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">External Interface</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>remote_connect_setup(?Address, ?Peer, -Socket)</H1>
+First half of initiating a remote interface connection.
+<DL>
+<DT><EM>Address</EM></DT>
+<DD>Address for remote connection (Host/Port or variable)
+</DD>
+<DT><EM>Peer</EM></DT>
+<DD>Remote Peer name (atom or variable)
+</DD>
+<DT><EM>Socket</EM></DT>
+<DD>Server socket stream number (variable)
+</DD>
+</DL>
+<H2>Description</H2>
+    <P>
+    Set up the initial stage for a remote interface connection. This
+    predicate type checks the arguments and creates a socket server at
+    address Host/Port. This socket server will accept the socket stream
+    connections from the remote process that is to be attached. The socket
+    server stream is returned in Socket. Peer should be the name of the new
+    remote Peer; if it is a variable, the predicate will assign a new name
+    to the Peer. If Peer is an atom, the predicate will fail if Peer is an
+    existing peer name (including names which has been created using
+    remote_connect_setup/3, but not yet attached by remote_connect_accept/6).
+    </P><P>
+    When the predicate returns, the remote process can make its socket
+    connections at Host/Port. The connecting request will suspend until
+    they are accepted on the ECLiPSe side by calling
+    remote_connect_accept/6. 
+    </P><P>
+    This predicate should always be followed by a call to
+    remote_connect_accept/6, which completes the remote connection. The
+    predicates are separated to allow the user to start the connecting
+    request on the remote process. This can be done for example via exec/3.
+    </P><P>
+    If Host and Port are not initially variables, they must be valid for
+    forming a socket connection. If Host is `localhost', then the remote
+    connection would be restricted to the same host as the ECLiPSe process.
+    </P><P>
+    The predicates remote_connect_setup/3 and remote_connect_accept/6 are
+    used to implement remote_connect/3. 
+
+<H3>Fail Conditions</H3>
+Peer is an existing peer name; Host or Port are not valid.
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Arguments are not of the correct type
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/remote_connect_accept-6.html">remote_connect_accept / 6</A>, <A HREF="../../kernel/externals/remote_disconnect-1.html">remote_disconnect / 1</A>, <A HREF="../../kernel/externals/remote_yield-1.html">remote_yield / 1</A>, <A HREF="../../kernel/externals/remote_connect-3.html">remote_connect / 3</A>, <A HREF="../../kernel/opsys/exec-3.html">exec / 3</A>
+</BODY></HTML>

@@ -1,0 +1,86 @@
+<HTML><HEAD><TITLE>b_external(+PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>b_external(+PredSpec)</H1>
+Declares PredSpec to be a non-deterministic external predicate.
+
+
+<DL>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Of the form Atom/Integer (predicate name/arity).
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Declares the (may be not yet visible) predicate PredSpec to be a
+   non-deterministic external predicate.
+
+<P>
+   This declaration is needed to compile calls to an external predicate
+   before it is actually defined with b_external/2.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredSpec is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not of the form Atom/Integer.
+<DT><EM>(62) inconsistent procedure redefinition </EM>
+<DD>A call to PredSpec has already been compiled as a    deterministic external call.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+
+   % compiling a call to an external before its definition (see description
+   % of b_external/2 for detail on creating external predicates).
+      [eclipse]: [user].
+       :- import sines/2 from trig_lib.
+       :- b_external(sines/2). % declare its call_type
+       p(Values) :- sines(Res, Values), writeln(Res), fail.
+       p(_).
+       user      compiled 216 bytes in 0.03 seconds
+
+   % definition of sines/2 will not raise an inconsistent type definition
+   % thanks to the proper declaration above.
+      [eclipse]: sh("cat trig_lib.pl").
+      :- module(trig_lib).
+      :- load('sin.o', "-lm"). % see example in b_external/2
+      :- b_external(sines/2, p_sines).
+      :- export sines/2.
+
+      yes
+      [eclipse]: [trig_lib].
+       trig_lib.pl      compiled 0 bytes in 0.18 seconds
+      yes.
+      [eclipse]: p([0.0,45.0,90.0,270.0]).
+      0.0
+      0.707107
+      1.0
+      -1.0
+      yes.
+
+Error:
+      b_external(PredSpec).         (Error 4).
+      b_external("p/0").            (Error 5).
+
+      [eclipse]: [user].
+       :- external(a/0).
+       p :- a.
+       user   compiled 32 bytes in 0.00 seconds
+      yes.
+      [eclipse]: b_external(a/0).     (Error 62).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/external-1.html">external / 1</A>, <A HREF="../../kernel/obsolete/b_external-2.html">b_external / 2</A>, <A HREF="../../kernel/externals/external-2.html">external / 2</A>, <A HREF="../../kernel/externals/load-1.html">load / 1</A>
+</BODY></HTML>

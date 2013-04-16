@@ -1,0 +1,90 @@
+
+tyi(+Stream, ?Ascii)
+
+   Succeeds if the ascii code of the next character read in raw mode from the
+input stream Stream is successfully unified with Ascii.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   ?Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Takes the next character from the unbuffered input stream Stream and
+   unifies its integer ASCII code (in the range 0 to 255) with Ascii.  The
+   input is in raw mode so that no newline character must be typed, and the
+   character is not echoed on the screen.
+
+
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+
+Note
+   tyi/2 reads from the stream in raw mode.  If it is combined with the
+   buffered predicates, it might happen that some characters typed ahead
+   may be lost if the input device is a terminal.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Ascii does not unify with the next character from the input
+   stream Stream.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is neither an integer nor an atom.
+     5 --- Ascii is instantiated, but not to an integer.
+   190 --- End of file has been reached.
+   192 --- Stream is not an input stream.
+   193 --- Stream is an illegal stream specification.
+   198 --- Trying to read even after the error 190 was raised.
+
+Examples
+   
+Success:
+      [eclipse]: tyi(input,Ascii).
+      Ascii = 97            % press 'a'
+      yes.
+
+      [eclipse]: tyi(input,97).
+                            % press 'a'
+      yes.
+
+      [eclipse]: tyi(input,Ascii).
+      Ascii = 4                 % press ^D
+      yes.
+
+Fail:
+      [eclipse]: tyi(input, 0'b).
+                               % press 'a'
+      no.
+
+Error:
+      tyi(Stream,98).             (Error 4).
+      tyi(input, '98').           (Error 5).
+      tyi(input, 98.0).           (Error 5).
+      tyi("string", A).           (Error 5).
+
+      [eclipse]: open(file1,update,s), write(s,p),
+      > seek(s,0), tyi(s,Ascii),
+      tyi(s,Ascii).              (Error 190).
+      tyi(9,A).                  (Error 192).
+      tyi(atom,A).               (Error 193).
+
+
+
+
+
+See Also
+   tyi / 1, tyo / 1, tyo / 2

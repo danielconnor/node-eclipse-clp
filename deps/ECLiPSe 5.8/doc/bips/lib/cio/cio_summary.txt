@@ -1,0 +1,4 @@
+lib(cio)
+
+   Predicates for C-Prolog style I/O (see/tell family)
+

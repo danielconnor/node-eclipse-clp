@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>var_fd(+Var, +Dom)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>var_fd(+Var, +Dom)</H1>
+Create a domain variable with a given domain.
+
+
+<DL>
+<DT><EM>+Var</EM></DT>
+<DD>A variable or a domain variable.
+</DD>
+<DT><EM>+Dom</EM></DT>
+<DD>A finite domain.
+</DD>
+</DL>
+<H2>Description</H2>
+   If Var is a free variable, is becomes a domain variable with the domain
+   Dom and with empty suspension lists.  The domain Dom is copied to make
+   in-place updates logically sound.  If Var is already a domain variable,
+   its domain is intersected with the domain Dom.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Var is not a variable.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/NN-2.html">:: / 2</A>, <A HREF="../../lib/fd/HNN-2.html">#:: / 2</A>, <A HREF="../../lib/fd/dvar_domain-2.html">dvar_domain / 2</A>
+</BODY></HTML>

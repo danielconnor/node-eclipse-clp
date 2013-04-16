@@ -1,0 +1,30 @@
+
+get_var_name(?Var, -Name)
+
+   Retrieve the name given to a variable via set_var_name/2
+
+Arguments
+   Var                 Named variable
+   Name                Variable, will be bound to a string
+
+Type
+   library(var_name)
+
+Description
+	
+	  Used to retrieve the unique name that was given to a variable via
+	  the set_var_name/2 predicate. This name is always of the form
+	  BaseName#N, where BaseName is the base name that was specified in
+	  set_var_name/2, and N is an integer.
+	
+	  These variable names are intended solely for purposes of debugging
+	  and visualisation of a program execution. Any use of this feature
+	  in the actual program logic or algorithm is strongly discouraged.
+	
+	
+
+Fail Conditions
+   Var is not a variable or has not been named via set_var_name/2
+
+See Also
+   set_var_name / 2

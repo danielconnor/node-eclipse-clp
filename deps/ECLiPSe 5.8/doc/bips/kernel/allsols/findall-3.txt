@@ -1,0 +1,117 @@
+
+findall(?Term, +Goal, ?List)
+
+   List is the (possibly empty) list of all instances of Term such that Goal
+is provable.
+
+
+
+Arguments
+   ?Term               Prolog term, usually a variable, a compound term or list                containing variables.
+   +Goal               Callable term.
+   ?List               List or variable.
+
+Type
+   All Solutions
+
+Description
+   Unifies List with the list (not ordered, duplicates retained, no choice
+   point) of all instances of Term such that Goal is satisfied.  The
+   variables appearing in Term should not appear anywhere else in the
+   clause except within Goal.
+
+
+   The following table illustrates the difference between the all solutions
+   predicates:
+
+
+
+    built-in  choice pts  duplicates  sorted pruned *
+    bagof/3   yes         yes         no     no
+    coverof/3 yes         no          no     yes
+    findall/3 no          yes         no     no
+    setof/3   yes         no          yes    no
+   * prune_instances/2 used on list of solutions.
+
+   If Goal is not a callable term, exceptions are raised in call/2.
+
+
+Note
+
+
+ 1. Even if there are uninstantiated variables in Goal which do not appear
+    in Term, then unlike bagof/3, findall/3 has no choice points i.e.
+    these variables are taken to be existentially quantified.
+
+
+ 2. findall/3 never fails; if no solution exists, the empty list is
+    returned.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List does not unify with the list of all instances of Term such
+   that Goal is provable.
+
+
+
+Exceptions
+     4 --- Goal is not instantiated.
+     5 --- Goal is instantiated, but not to a compound term.
+    68 --- Goal is an undefined procedure.
+
+Examples
+   
+Success:
+
+
+   % all variables are taken to be existentially quantified:
+  [eclipse]: findall(Name,current_stream(Name,Mode,Num),L),
+  > writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , _g78 , _g84 , [user, user, error, debug_input, null, ""]
+  no (more) solution.
+
+  [eclipse]: [user].
+   h(f(1,2)).
+   h(f(1,2)).
+   h(f(1,X)).
+   h(f(X,Y)).   % instances of this element...
+   user compiled 476 bytes in 0.00 seconds
+  yes.
+  [eclipse]: findall(X,h(X),L).
+  X = _g58
+  L = [f(1, 2), f(1,2), f(1, _g116), f(_g100, _g102)]
+  yes.  % ...all bagged; includes duplicates.
+
+  [eclipse]: findall(X,current_built_in(X),L).
+  X = _g58
+  L = [findall/3, !/0, delayed_goals/1, delayed_goals/2,
+  '.'/2, (;)/2, (<)/2, (;)/4, (;)/5, error/2, error/3,
+  (',')/2, (',')/4, close_window/0, (=)/2, op/3, (>)/2,
+  array/3, (spied)/1, ... / ..., ...]
+  yes.
+
+  [eclipse]: findall(X,append_strings(X,Y,"abc"),L).
+  X = _g58
+  Y = _g66
+  L = ["", "a", "ab", "abc"]
+
+Fail:
+  findall(Y,current_stream(X,Y,Z),[strin]).
+
+Error:
+  findall(X,G,L).         (Error 4).
+  findall(X,"G",L).       (Error 5).
+  findall(X,a,L).         (Error 68).
+  findall(X,a(X),L).      (Error 68).
+
+
+
+
+
+See Also
+   bagof / 3, coverof / 3, setof / 3

@@ -1,0 +1,72 @@
+
+xml_parse(+Controls, ?Chars, ?Document)
+
+   Parse or generate XML documents
+
+Arguments
+   Controls            List of options
+   Chars               List of characters (XML text)
+   Document            Document as structured term
+
+Type
+   library(xml)
+
+Description
+
+xml_parse( {+Controls}, +?Chars, ?+Document ) parses Chars to/from a data
+structure of the form xml(<atts>, <content>). <atts> is a list of
+<atom>=<string> attributes from the (possibly implicit) XML signature of the
+document. <content> is a (possibly empty) list comprising occurrences of :
+
+pcdata(<string>)		:	Text
+comment(<string>)		:	An xml comment;
+element(<tag>,<atts>,<content>)	:	<tag>..</tag> encloses <content>
+				:       <tag /> if empty
+instructions(<atom>, <string>)	:	Processing <? <atom> <params> ?>
+cdata( <string> )		:	<![CDATA[ <string> ]]>
+doctype(<atom>, <doctype id>)	:	DTD <!DOCTYPE .. >
+
+The conversions are not completely symmetrical, in that weaker XML is
+accepted than can be generated. Specifically, in-bound (Chars -> Document)
+does not  require strictly well-formed XML. Document is instantiated to the
+term malformed(Attributes, Content) if Chars does not represent well-formed
+XML. The Content of a malformed/2 structure can contain:
+
+unparsed( <string> )		:	Text which has not been parsed
+out_of_context( <tag> )		:	<tag> is not closed
+
+in addition to the standard term types.
+
+Out-bound (Document -> Chars) parsing _does_ require that Document defines
+strictly well-formed XML. If an error is detected a 'domain' exception is
+raised.
+
+The domain exception will attempt to identify the particular sub-term in
+error and the message will show a list of its ancestor elements in the form
+<tag>{(id)}* where <id> is the value of any attribute _named_ id.
+
+At this release, the Controls applying to in-bound (Chars -> Document)
+parsing are:
+
+extended_characters(<bool>)	:	Use the extended character
+				:	entities for XHTML (default true)
+
+format(<bool>)			:	Strip layouts when no character data
+				:	appears between elements.
+				:	(default true)
+
+[<bool> is one of 'true' or 'false']
+
+For out-bound (Document -> Chars) parsing, the only available option is:
+
+format(<Bool>)			:	Indent the element content
+				:	(default true)
+
+Different DCGs for input and output are used because input parsing is
+more flexible than output parsing. Errors in input are recorded as part
+of the data structure. Output parsing throws an exception if the document
+is not well-formed, diagnosis tries to identify the specific culprit term.
+
+
+See Also
+   xml_parse / 2

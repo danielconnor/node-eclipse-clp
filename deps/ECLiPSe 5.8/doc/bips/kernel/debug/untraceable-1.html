@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>untraceable +SpecList</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>untraceable +SpecList</H1>
+Declares the procedure(s) in SpecList to be untraceable.
+
+
+<DL>
+<DT><EM>SpecList</EM></DT>
+<DD>Sequence of expressions of the form name/arity.
+</DD>
+</DL>
+<H2>Description</H2>
+   Sets all the procedures given by SpecList untraceable.  Marking a
+   predicate as untraceable will prevent any information about it being
+   displayed.  The subgoals of this predicate will be shown in their normal
+   way.
+
+<P>
+   Note that untraceable/1 is superseded by the predicate set_flag(Proc,
+   leash, notrace), which declares the procedure Proc to be untraceable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SpecList is not of the form Atom/Integer.
+<DT><EM>(60) referring to an undefined procedure </EM>
+<DD>SpecList is an undefined procedure.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>, <A HREF="../../kernel/debug/traceable-1.html">traceable / 1</A>
+</BODY></HTML>

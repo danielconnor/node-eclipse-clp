@@ -1,0 +1,17 @@
+
+dwy_to_mjd(++DWY, ++FirstWeekday, ?MJD)
+
+   Convert a DayOfWeek/WeekOfYear/Year representation to MJD
+
+Arguments
+   DWY                 Structure of the form Day/Week/Year
+   FirstWeekday        Atom (monday,tuesday,etc)
+   MJD                 Variable or integer
+
+Type
+   library(calendar)
+
+Description
+as dwy_to_mjd/2, but allows to choose a different starting day for weeks, specified as atom monday, tuesday etc
+
+

@@ -1,0 +1,55 @@
+
+get_timer(+Timer, ?Interval)
+
+   Succeed if the specified Timer is running and sends signals in intervals of
+Interval seconds.
+
+
+
+Arguments
+   +Timer              One of the atoms real, virtual or profile.
+   ?Interval           A variable or a float number.
+
+Type
+   Obsolete
+
+Description
+   Used to examine the states of the 3 system interval timers.  When the
+   specified timer is switched off, the predicate fails.  Otherwise, the
+   Interval argument is unified with a float number indicating the timer
+   interval in seconds.  The names of the timers are real, virtual and
+   profile.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the timer is not running.
+
+
+
+Exceptions
+     4 --- Timer is not instantiated.
+     5 --- Timer is not an atom.
+     6 --- Timer is an atom not naming a timer.
+     5 --- Interval neither a variable nor a float number.
+
+Examples
+   
+[eclipse 1]: set_timer(virtual, 9), get_timer(virtual, I).
+
+I = 9.0
+yes.
+[eclipse 2]: set_timer(virtual, 0), get_timer(virtual, I).
+
+no (more) solution.
+
+
+
+
+
+See Also
+   event_after / 2, event_after_every / 2, alarm / 1, current_interrupt / 2, sleep / 1, set_interrupt_handler / 2, set_timer / 2

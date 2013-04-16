@@ -1,0 +1,4 @@
+lib(edge_finder3)
+
+   Cubic edge-finder algorithm for disjunctive and cumulative constraints for FD
+

@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>poss(?SetVariable, -Poss)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>poss(?SetVariable, -Poss)</H1>
+Obtaining the still possible elements of a set (lub\glb)
+<DL>
+<DT><EM>SetVariable</EM></DT>
+<DD>A set variable.
+</DD>
+<DT><EM>Poss</EM></DT>
+<DD>A set.
+</DD>
+</DL>
+<H2>Description</H2>
+Poss is unified with the set of still possible elements of SetVariable
+		(i.e. its lub\glb).<P>
+		If SetVariable is a set of sets and a union function attribute has been set,
+		then each element of Poss comes annotated with its respective length.
+<H3>Fail Conditions</H3>
+Fails if Poss can not be unified with the current poss (lub\glb) of SetVariable.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S `::[c]+[a,b], poss(S,P).
+P = [a,b]
+
+?- S `::[[c]]+[[a,b]], poss(S,P).
+P = [[a,b]]
+
+?- set(S, [],[[a,b],[b,c],[a,c],[b]],[union:[a,b,c]]), poss(S,P).
+P = [[a, b] : 2, [a, c] : 2, [b] : 1, [b, c] : 2]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/glb-2.html">glb / 2</A>, <A HREF="../../lib_public/cardinal/glb_poss-3.html">glb_poss / 3</A>, <A HREF="../../lib_public/cardinal/domain-2.html">domain / 2</A>, <A HREF="../../lib_public/cardinal/domain-3.html">domain / 3</A>, <A HREF="../../lib_public/cardinal/lub-2.html">lub / 2</A>, <A HREF="../../lib_public/cardinal/lub-4.html">lub / 4</A>
+</BODY></HTML>

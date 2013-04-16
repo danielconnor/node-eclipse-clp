@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>get_timer(+Timer, ?Interval)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_timer(+Timer, ?Interval)</H1>
+Succeed if the specified Timer is running and sends signals in intervals of
+Interval seconds.
+
+
+<DL>
+<DT><EM>+Timer</EM></DT>
+<DD>One of the atoms real, virtual or profile.
+</DD>
+<DT><EM>?Interval</EM></DT>
+<DD>A variable or a float number.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Used to examine the states of the 3 system interval timers.  When the
+   specified timer is switched off, the predicate fails.  Otherwise, the
+   Interval argument is unified with a float number indicating the timer
+   interval in seconds.  The names of the timers are real, virtual and
+   profile.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the timer is not running.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Timer is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Timer is not an atom.
+<DT><EM>(6) out of range </EM>
+<DD>Timer is an atom not naming a timer.
+<DT><EM>(5) type error </EM>
+<DD>Interval neither a variable nor a float number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: set_timer(virtual, 9), get_timer(virtual, I).
+
+I = 9.0
+yes.
+[eclipse 2]: set_timer(virtual, 0), get_timer(virtual, I).
+
+no (more) solution.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_after-2.html">event_after / 2</A>, <A HREF="../../kernel/event/event_after_every-2.html">event_after_every / 2</A>, <A HREF="../../kernel/opsys/alarm-1.html">alarm / 1</A>, <A HREF="../../kernel/event/current_interrupt-2.html">current_interrupt / 2</A>, <A HREF="../../kernel/opsys/sleep-1.html">sleep / 1</A>, <A HREF="../../kernel/event/set_interrupt_handler-2.html">set_interrupt_handler / 2</A>, <A HREF="../../kernel/obsolete/set_timer-2.html">set_timer / 2</A>
+</BODY></HTML>

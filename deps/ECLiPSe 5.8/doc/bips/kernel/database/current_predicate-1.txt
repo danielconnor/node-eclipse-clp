@@ -1,0 +1,64 @@
+
+current_predicate(?PredSpec)
+
+   Succeeds if PredSpec is a visible predicate defined by the user, or a
+visible library predicate.
+
+
+
+Arguments
+   ?PredSpec           Expression of the form Atom/Integer or variable.
+
+Type
+   Predicate Database and Compiler
+
+Description
+   Used to check that PredSpec is a user or library predicate visible from
+   the caller module, or else to return on backtracking all the current
+   visible predicates.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if PredSpec is not a visible (user or library) predicate.
+
+
+
+Exceptions
+     5 --- PredSpec is instantiated, but not to the form Atom/Integer.
+
+Examples
+   
+Success:
+     [eclipse]: current_predicate(X/Y).
+     X = intersection
+     Y = 3     More? (;)
+     yes.
+     [eclipse]: current_predicate(X).
+     X = (^) / 2     More? (;)
+     X = intersection / 3     More? (;)
+     X = subtract / 3     More? (;)
+     X = append / 3     More? (;)
+     yes.
+
+     [eclipse]: [user].
+      p.
+      user compiled 28 bytes in 0.00 seconds
+     yes.
+     [eclipse]: current_predicate(p/0).
+     yes.
+Fail:
+     current_predicate(assert/1).
+Error:
+     current_predicate(a/a).         (Error 5).
+
+
+
+
+
+See Also
+   current_module_predicate / 2, current_built_in / 1, is_predicate / 1, get_flag / 3

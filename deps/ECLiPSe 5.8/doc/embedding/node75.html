@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Foreign C Interface</TITLE>
+<META NAME="description" CONTENT="Foreign C Interface">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node76.html">
+<LINK REL="previous" HREF="node65.html">
+<LINK REL="up" HREF="embroot.html">
+<LINK REL="next" HREF="node76.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1811"
+ HREF="node76.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1807"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1801"
+ HREF="node74.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1809"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1812"
+ HREF="node76.html">Index</A>
+<B> Up:</B> <A NAME="tex2html1808"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html1802"
+ HREF="node74.html">Miscellaneous</A>
+ &nbsp <B>  <A NAME="tex2html1810"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001400000000000000000"></A>
+<A NAME="libforeign"></A><A NAME="8678"></A>
+<A NAME="8679"></A>
+<BR>
+Foreign C Interface
+</H1>
+This library (loaded with <TT>:- lib(foreign)</TT>)
+allows to use external functions written
+for Quintus or SICStus Prolog, or to interface
+C functions which are independent of ECLiPSe.
+It accepts the syntax and semantics of the
+predicates <A NAME="tex2html474"
+ HREF="../bips/lib/foreign/index.html">foreign/3</A><A NAME="8700"></A>, <A NAME="tex2html476"
+ HREF="../bips/lib/foreign/index.html">load_foreign_files/2</A><A NAME="8703"></A> and <A NAME="tex2html478"
+ HREF="../bips/lib/foreign/index.html">load_foreign_files/2</A><A NAME="8706"></A>
+of Quintus/SICStus.
+Since their external interface is incompatible with the ECLiPSe one,
+this library generates a C source file which converts the ECLiPSe
+interface into the foreign one, by defining a new C function
+for every C function defined in the foreign interface.
+Note that this approach uses more C code, but it is still more efficient
+than using a generic procedure to check the argument
+of every external function.
+
+<P>
+After compiling definitions of the <B>foreign/3</B> predicate,
+(the predicate <B>foreign_file/2</B> is ignored),
+the predicate <B>make_simple_interface</B> has to be called.
+This predicate generates a file <I>interface.c</I>, which contains
+the auxiliary C definitions.
+This file has to be compiled to obtain the <I>interface.o</I> file,
+it might also have to be edited to include other <I>.h</I> files.
+After the file <I>interface.o</I> has been generated,
+the system is fully compatible with the Quintus/SICStus foreign
+interface, and calling <B>load_foreign_files/2</B> will connect
+the external functions with ECLiPSe.
+
+<P>
+Although it is possible to use this library to interface
+existing independent C functions, its main use is to
+port foreign interface from Quintus or SICStus.
+Please refer to their manuals for the description of the
+foreign interface.
+
+<P>
+
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1811"
+ HREF="node76.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1807"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1801"
+ HREF="node74.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1809"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1812"
+ HREF="node76.html">Index</A>
+<B> Up:</B> <A NAME="tex2html1808"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html1802"
+ HREF="node74.html">Miscellaneous</A>
+ &nbsp <B>  <A NAME="tex2html1810"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

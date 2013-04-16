@@ -1,0 +1,9 @@
+
+list2rows(+List, +NRows, +NCols, -Rows)
+
+   Create a matrix from a flat list of row-wise listed elements
+
+Type
+   library(matrix_util)
+
+

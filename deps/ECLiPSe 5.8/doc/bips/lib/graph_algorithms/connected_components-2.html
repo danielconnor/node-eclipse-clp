@@ -1,0 +1,23 @@
+<HTML><HEAD><TITLE>connected_components(+Graph, -ConnectedComponents)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>connected_components(+Graph, -ConnectedComponents)</H1>
+Computes the connected components of graph
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>ConnectedComponents</EM></DT>
+<DD>a list of lists of node numbers
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Computes the connected components of a (bidirected) graph. Each resulting
+    connected component is represented as an (unsorted) list of nodes.
+</P><P>
+    This operation is only defined on bidirected graphs.
+    The runtime complexity is O(Nnodes + Nedges).
+    </P>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/graph_is_bidirected-1.html">graph_is_bidirected / 1</A>, <A HREF="../../lib/graph_algorithms/articulation_points-2.html">articulation_points / 2</A>
+</BODY></HTML>

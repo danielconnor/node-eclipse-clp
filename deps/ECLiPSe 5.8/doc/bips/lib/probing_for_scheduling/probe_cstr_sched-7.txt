@@ -1,0 +1,67 @@
+
+probe_cstr_sched(+Starts, +Durations, +Resources, ++MaxResource, +Constraints, -Cost, ++Options)
+
+   Find a resource-feasible schedule that minimises the
+cost, subject to the constraints
+
+Arguments
+   Starts               A list of (n) task start times (integers or
+finite domain variables)
+   Durations           A list of (n) task durations (integers or
+finite domain variables)
+   Resources           A list of (n) task resource needs (integers)
+   MaxResource         The available resource, not to be exceeded
+   Constraints         A list of numeric equations and inequations, 
+using functors '=:=', '>=', '>', '=<' and '<'.
+   Cost                A numeric variable which will be minimised during search
+   Options              A list, '[granularity(G),priority(P)]',
+    where
+    'G' is an integer specifying the time granularity, and
+    'P' is the priority of the probe demon.
+
+Type
+   library(probing_for_scheduling)
+
+Description
+ 
+This offers the same functionality as probe_sched/5, but with added 
+flexibility, and a more complex user interface.  The extra arguments offer 
+the user  more control.  
+
+The Cost argument is a variable, and it must be linked to the task 
+variables by the list of linear constraints.  The user can add not only 
+linear constraints on the cost function, but also constraints between the 
+task variables.  Only constraints made explicit in this list are 'seen' by 
+the probe.   probe_cstr_sched also posts them to the fd solver.
+
+The options offer user control over
+the temporal granularity, and the priority of the probe.
+
+The algorithm uses min_max, but directs the search using a probe
+which focusses the search on the optimum.  The probe is a procedure
+that finds optimal solutions to a relaxed problem ignoring resource
+limits.  For details see setup_probe.  Additionally the algorithm
+sets up a binary variable between each pair of tasks, see
+make_overlap_bivs.  Whenever the probe returns tentative start
+times, these are propagated to the overlap binary variables yielding a
+total resource usage which reveals any bottlenecks, where needed
+resources exceed thos available.  probe_search then
+non-deterministically introduces a new constraint which reduces the
+bottleneck.
+The probe_sched call:
+
+probe_sched(Ss,Ds,Rs,MaxR,abs(X-X1)+Y)
+
+translates into the probe_cstr_sched call:
+
+probe_cstr_sched(Ss,Ds,Rs,MaxR,[Cost=:=E1+Y,E1>=X-X1,E1>=X1-X],Cost,
+[granularity(1),priority(5)])
+
+Thus making the default granularity '1' and the default priority '5'.
+
+
+Resatisfiable
+   no
+
+See Also
+   probe_sched / 5, fd : min_max / 2, ic_probe : set_up_probe / 5, probe : set_up_probe / 5, ic_make_overlap_bivs : make_overlap_bivs / 5, make_overlap_bivs : make_overlap_bivs / 5, ic_probe_search : probe_search / 5, probe_search : probe_search / 5

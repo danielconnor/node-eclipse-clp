@@ -1,0 +1,18 @@
+
+hash_get(+Table, +Key, -Value)
+
+   Find the entry stored under key Key and return its value
+
+Arguments
+   Table               A hash table
+   Key                 a ground term
+   Value               Any term
+
+Type
+   library(hash)
+
+Fail Conditions
+   No entry for Key
+
+See Also
+   hash_create / 1, hash_set / 3, hash_list / 3, hash_contains / 2

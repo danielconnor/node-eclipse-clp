@@ -1,0 +1,62 @@
+<HTML><HEAD><TITLE>pred(+PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Development Environment and Global Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>pred(+PredSpec)</H1>
+The flags of the predicate described by PredSpec are printed out on the
+current output.
+
+
+<DL>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Predicate name in the form Atom/Integer
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to print on the current output the flags of the visible predicate
+   described by PredSpec.  For the description of the flags see get_flag/3.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if PredSpec does not exist.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredSpec is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not in the format Atom/Integer
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- pred(pred/1).
+    mode                pred(?)
+    visibility          imported
+    definition_module   sepia_kernel
+    declared            on
+    defined             on
+    autoload            off
+    auxiliary           off
+    call_type           prolog
+    demon               off
+    deprecated          off
+    parallel            off
+    priority            2
+    stability           static
+    tool                on
+    type                built_in
+    debugged            on
+    leash               notrace
+    skip                on
+    spy                 off
+    start_tracing       off
+    Yes (0.01s cpu)
+
+    ?- pred(nopred/1).
+    No (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>, <A HREF="../../kernel/database/current_built_in-1.html">current_built_in / 1</A>
+</BODY></HTML>

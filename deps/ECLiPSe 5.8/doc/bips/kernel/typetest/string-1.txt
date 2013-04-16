@@ -1,0 +1,41 @@
+
+string(?String)
+
+   Succeeds if String is a string.
+
+
+
+Arguments
+   ?String             Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether String is a string.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if String is not a string.
+
+
+
+Examples
+   
+   Success:
+   string("astring").
+   Fail:
+   string('astring').
+   string(X).
+
+
+
+
+
+See Also
+   atom / 1, atomic / 1, var / 1

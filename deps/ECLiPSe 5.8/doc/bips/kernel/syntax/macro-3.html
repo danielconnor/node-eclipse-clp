@@ -1,0 +1,170 @@
+<HTML><HEAD><TITLE>[local macro(+TermClass, +TransPred, +Options), export macro(+TermClass, +TransPred, +Options)]</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Syntax Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>local macro(+TermClass, +TransPred, +Options)</H1>
+<H1>export macro(+TermClass, +TransPred, +Options)</H1>
+Defines a macro transformation for the functor or type specified by TermClass.
+<DL>
+<DT><EM>+TermClass</EM></DT>
+<DD>Term in the form Atom, Atom/Integer or type(Type).
+</DD>
+<DT><EM>+TransPred</EM></DT>
+<DD>Term in the form Atom/Integer.
+</DD>
+<DT><EM>+Options</EM></DT>
+<DD>Possibly empty list of option flags.
+</DD>
+</DL>
+<H2>Description</H2>
+   This declaration is used to define a macro transformation on a class of
+   terms.  Macro transformations are performed when a term is read by one of
+   the predicates read/1,2, read_term/2,3 or readvar/3 (unless the stream
+   flag or global flag macro_expansion is switched off).
+<P>
+   The TermClass specifies to which terms the transformation will be
+   applied:
+<DL>
+    <DT><STRONG>Name/Arity</STRONG><DD>
+	transform all terms with the specified functor
+    <DT><STRONG>type(Type)</STRONG><DD>
+	transform all terms of the specified type, where Type is one of
+	compound, string, integer, rational, float, breal, goal, atom, meta.
+</DL>
+   The +TransPred argument specifies the predicate that will perform the
+   transformation.  TransPred must be of arity 2 or 3 and be in the form:
+<PRE>
+	trans_function(OldTerm, NewTerm [, Module]) :- ... .
+</PRE>
+   At transformation time, the system will call TransPred in the module
+   where <CODE>local macro/3</CODE> was invoked.  The term to transform is passed
+   as the first argument, the second is a free variable which the
+   transformation should bind to the transformed term, and the optional
+   third argument is the module where the term was being read in.
+<P>
+   Options is a list which may be empty or contain one of the following
+   type specification atoms:
+<DL>
+    <DT><STRONG>term</STRONG> (default)<DD>
+	Transform the term in all contexts (this is the default, and the
+	transformation is done in the parser, or explicitly via expand_macros/2)
+    <DT><STRONG>clause</STRONG><DD>
+	Transform only if the term is a program clause, i.e. inside
+        compile/1, assert/1 etc, or explicitly via expand_clause/2.
+    <DT><STRONG>goal</STRONG> (deprecated)<DD>
+	Transform only if the term is a goal. This form is deprecated,
+	please use inline/2 to transform goals.
+</DL>
+   and possibly some of the following options:
+<DL>
+    <DT><STRONG>protect_arg</STRONG> (optional)<DD>
+	Disable transformation of subterms. If this option is used, the
+	transformation predicate itself should take care of transforming
+	those subterms that should be transformed (expand_macros/2).
+	This option is only useful for term-macros because only those
+	perform automatic subterm transformation.
+    <DT><STRONG>top_only</STRONG> (deprecated)<DD>
+	Consider only the whole term, not subterms.
+	This option is deprecated, use clause and goal options instead.
+</DL>
+   The visibility of macros is controlled by the module system.
+   Transformations only take place when the macro declaration is
+   visible in the module where the term is read in.
+   The macro visibility is local or exported, depending on the declaration.
+<P>
+   In rare cases it is necessary to suppress macro expansion explicitly.
+   The functor no_macro_expansion/1 can be wrapped around specific
+   instances of a term to prevent it from being transformed.
+   Macro expansion will then remove this wrapper so that the end
+   result is the untransformed term alone.
+<P>
+   Term-transformations (but not clause/goal transformation) automatically
+   transform all subterms of a term in a bottom-up fashion. This means that
+   the transformation predicate will see a term with already transformed
+   subterms.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>One or more arguments not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>TermClass not of form Atom, Atom/Integer or type(Type).
+<DT><EM>(5) type error </EM>
+<DD>TransPred not of form Atom/Integer.
+<DT><EM>(5) type error </EM>
+<DD>Options not a list or contains invalid flags.
+<DT><EM>(6) out of range </EM>
+<DD>Arity of TransPred is not 2 or 3.
+<DT><EM>(6) out of range </EM>
+<DD>Illegal flag in Options.
+<DT><EM>(161) macro transformation already defined in this module </EM>
+<DD>Transformation already defined in the current module for TermClass
+</DL>
+<H2>Examples</H2>
+<PRE>
+% The following example illustrates how a/1 may be
+% transformed into b/2 using the reader:
+
+   [eclipse]: [user].
+
+    trans_a(a(X),b(X,10)).
+
+    :- local macro(a/1,trans_a/2,[]).
+
+   yes.
+   [eclipse]: read(X).
+    a(fred).
+
+   X = b(fred, 10)
+   yes.
+
+
+% Example showing use of protect_arg:
+
+   [eclipse]: [user].
+
+    trb(X, newfunctor(Arg)) :- arg(1, X, Arg).
+    trd(d, newd).
+
+    :- local macro(b/1, trb/2, []),
+	     macro(b_protect/1, trb/2, [protect_arg]),
+	     macro(d/0, trd/2, []).
+
+   yes.
+   [eclipse]: read(X1),read(X2).
+    b(d).
+    b_protect(d).
+
+   X1 = newfunctor(newd)    % d is transformed
+   X2 = newfunctor(d)       % d is not transformed
+   yes.
+
+
+% Example showing use of type macros
+
+    [eclipse 1]: [user].
+
+     tr_int(0, 0).
+     tr_int(N, s(S)) :- N &gt; 0, N1 is N-1, tr_int(N1, S).
+
+     :- local macro(type(integer), tr_int/2, []).
+
+    yes.
+    [eclipse 2]: read(X).
+    3.
+
+    X = s(s(s(0)))
+    yes.
+
+
+Error:
+   local macro(X, trx/2, []).              (Error 4).
+   local macro(a/1, tra/2, [c]).           (Error 6).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/portray-3.html">portray / 3</A>, <A HREF="../../kernel/ioterm/expand_macros-2.html">expand_macros / 2</A>, <A HREF="../../kernel/database/expand_clause-2.html">expand_clause / 2</A>, <A HREF="../../kernel/syntax/current_macro-4.html">current_macro / 4</A>, <A HREF="../../kernel/syntax/erase_macro-2.html">erase_macro / 2</A>, <A HREF="../../kernel/control/phrase-3.html">phrase / 3</A>, <A HREF="../../kernel/database/inline-2.html">inline / 2</A>
+</BODY></HTML>

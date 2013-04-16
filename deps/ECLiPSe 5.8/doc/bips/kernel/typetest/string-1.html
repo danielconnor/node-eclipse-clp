@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>string(?String)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>string(?String)</H1>
+Succeeds if String is a string.
+
+
+<DL>
+<DT><EM>?String</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether String is a string.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if String is not a string.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   Success:
+   string("astring").
+   Fail:
+   string('astring').
+   string(X).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/atom-1.html">atom / 1</A>, <A HREF="../../kernel/typetest/atomic-1.html">atomic / 1</A>, <A HREF="../../kernel/typetest/var-1.html">var / 1</A>
+</BODY></HTML>

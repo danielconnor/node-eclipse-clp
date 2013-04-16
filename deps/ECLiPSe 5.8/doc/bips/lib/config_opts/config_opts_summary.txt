@@ -1,0 +1,4 @@
+lib(config_opts)
+
+   Library for managing configuration options for libraries and applications
+

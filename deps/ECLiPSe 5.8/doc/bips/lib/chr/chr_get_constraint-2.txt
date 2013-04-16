@@ -1,0 +1,80 @@
+
+chr_get_constraint(Variable,?Constraint)
+
+   Remove a constraint in which the variable Variable occurs and which unifies
+with Constraint from the constraint store.
+
+
+
+Arguments
+   Variable            A free variable.
+   ?Constraint         A constraint (callable term) defined by constraint handling                rules.
+
+Type
+   library(chr)
+
+Description
+   Removes a constraint in which the variable Variable occurs and which
+   unifies with Constraint from the constraint store.  Note that if the
+   unification with Constraint binds variables occurring also in other
+   constraints in the constraint store, these constraints may be simplified
+   (see last examples).  Thus it is recommended to use either a free
+   variable or a term with variable arguments for Constraint.  Used by
+   advanced constraint handling rules users to manipulate themselves the
+   constraints defined by constraint handling rules.  See also
+   chr_get_constraint/1 for more examples.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if Variable is not a free variable or if there is no constraint
+   (defined by constraint handling rules) in the constraint store that
+   unifies with Constraint and in which the variable Variable occurs.
+
+
+
+Examples
+      Example using the constraint handler for Booleans  bool.chr:
+[eclipse]: and(X,Y,Z), or(A,B,C), chr_get_constraint(Y,Cstr).
+
+X = X
+Z = Z
+A = A
+B = B
+Y = Y
+Cstr = X * Y = Z
+
+Constraints:
+(2) A + B = C   % pretty print for or/3 - constraint
+
+     More? (;)
+
+no (more) solution.
+
+
+   The following predicate labeling(+Varlist) labels the variables in the
+   list Varlist:
+labeling([X|VL]) :-
+   var(X),
+   chr_get_constraint(X,C),
+   chr_label_with(C),
+   !,
+   chr_resolve(C),
+   labeling([X|VL]).
+
+labeling([X|VL]) :-
+   labeling(VL).
+
+labeling([]).
+
+
+
+
+
+
+See Also
+   chr_labeling / 0, chr_label_with / 1, chr_resolve / 1, chr_get_constraint / 2

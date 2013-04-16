@@ -1,0 +1,65 @@
+
+current_domain(?Name, ?DefModule, ?DomainDef)
+
+   Name is the name of a visible domain, defined by DomainDef in DefModule
+
+Arguments
+   Name                Atom or variable
+   DefModule           Variable or atom (module)
+   DomainDef           Usually variable, will be bound to a ground structure
+
+Type
+   Comparing and Sorting
+
+Description
+
+	Used to look up a domain definition, or to enumerate all domain
+	definitions visible in the caller module. Visible domain definitions
+	are those which have been either declared locally, or exported,
+	or which have been imported or reexported from another module.
+	
+	DefModule is the module where the domain was declared local or
+	exported. DomainDef is the structure which was specified in the
+	original domain definition.
+	
+
+
+Fail Conditions
+   No visible domain name unifies with Name
+
+Examples
+   
+    :- local domain(colour(red,green,blue)).
+
+    :- export domain(vowel(a,e,i,o,u)).
+
+    :- local domain(abc(a,b,c)).
+    Domain value a not unique in module eclipse
+    out of range in local domain(abc(a, b, c))
+    Abort
+
+    ?- current_domain(Name, DefModule, Def).
+    Name = colour
+    DefModule = eclipse
+    Def = colour(red, green, blue)
+    More (0.00s cpu) ? ;
+
+    Name = vowel
+    DefModule = eclipse
+    Def = vowel(a, e, i, o, u)
+    More (0.00s cpu) ? ;
+
+    No (0.00s cpu)
+
+    ?- current_domain(vowel, DefModule, Def).
+    Name = vowel
+    DefModule = eclipse
+    Def = vowel(a, e, i, o, u)
+    Yes (0.00s cpu)
+
+    ?- current_domain(abc, DefModule, Def).
+    No (0.00s cpu)
+    
+
+See Also
+   domain / 1, domain_index / 3

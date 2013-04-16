@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>External data representation</TITLE>
+<META NAME="description" CONTENT="External data representation">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html573"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html567"
+ HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html561"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html569"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html571"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html574"
+ HREF="node16.html">Internal data representation</A>
+<B> Up:</B> <A NAME="tex2html568"
+ HREF="node14.html">Data Structures</A>
+<B> Previous:</B> <A NAME="tex2html562"
+ HREF="node14.html">Data Structures</A>
+ &nbsp <B>  <A NAME="tex2html570"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html572"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00410000000000000000">
+External data representation</A>
+</H1>
+The first question is how the data <A NAME="352"></A>will be fed to the application. We can distinguish five alternatives.
+
+<P>
+<DL>
+<DT><STRONG>arguments</STRONG>
+<DD>In the first alternative, all data are passed in arguments to the query. Multiple items of the same type will usually be represented as lists, with structures to hold different attributes of the different objects. This form has the advantage that each query can be run with a completely new data set without changing the database or creating a new set of files. But debugging data in this form can be more difficult, as there is not direct way to look up some data item. This method also requires work on the Java side to build all the data structures before a call to the ECLiPSe solver. A similar effort is required to develop testing code written in ECLiPSe which exercises the interface.
+
+<P>
+<DT><STRONG>data files</STRONG>
+<DD>The second alternative is to use data files in a fixed format. The ECLiPSe program then has to read these files and build the internal data structures at the same time. Depending on the format, this may require parsing the input format with definite clause grammars (DCG) <A NAME="354"></A><A NAME="355"></A>(see section <A HREF="node44.html#howtousedcgs">6.2</A>), adding to the development effort<A NAME="tex2html9"
+ HREF="footnode.html#foot357"><SUP>3.1</SUP></A>. But as the files can be read and written easily, it is quite simple to create test data sets and to analyze problems by hand. The design for the fixed format may require some extra effort if we want to use the full character set for atoms and strings. A proper quoting mechanism may be required in order to distinguish say a comma separator from a comma contained inside a data field.
+
+<P>
+<DT><STRONG>prolog terms</STRONG>
+<DD>The third alternative is to use data files as before, but to format them as valid Prolog terms <A NAME="358"></A>that can directly read with the ECLiPSe term I/O predicates. This avoids the overhead of writing parsers in ECLiPSe, but may be difficult for the calling side of the application, unless that is also written in ECLiPSe. Note that we again may face quoting problems, in particular for single and double quotes.
+
+<P>
+<DT><STRONG>EXDR</STRONG>
+<DD>ECLiPSe also provides a binary data format called EXDR that can be used to exchange information. This can be generated and parsed quite easily in ECLiPSe and in Java, and often allows significant space savings. In addition, problems with quoting are avoided. A disadvantage is that EXDR files are not directly readable by humans, and so may require extra effort during debugging. 
+
+<P>
+<DT><STRONG>facts</STRONG>
+<DD>The last alternative is to store the data as facts <A NAME="359"></A>in the application. They can then be accessed from any part of the ECLiPSe code quite easily. Testing the code is simple by compiling some data files into the system. The Java interface can also store facts into the database quite easily. But changing the data for a new query can be rather complex, and may require recompiling some data modules.
+
+<P>
+</DL>
+
+<P>
+We should note that instead of using files we can also build queues between the ECLiPSe and the Java parts of the application, avoiding the need for file system space.
+
+<P>
+Which of these methods should be used? This depends on the application. Passing data as arguments clearly is the cleanest way, but requires significant work on the interface and on code for testing. Using data files in fixed formats is simple if the format is defined correctly, but its use of the file system can cause problems when multiple queries should be run concurrently on the same machine. Using Prolog terms in data files has the same disadvantage, but is very simple to use if different ECLiPSe systems exchange data. EXDR files are the safest form to store data, but also the least intuitive. Using queues instead of files avoids problems with multiple instances running at the same time, but require some form of logging to allow debugging. Using facts is a valid alternative if most of the data do not change from one query to the next, but requires extra work to reclaim memory after each change. The following table tries to summarize the advantages and disadvantages of each method.
+
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="1283"></A>
+<TABLE>
+<CAPTION><STRONG>Table 3.1:</STRONG>
+Data representation</CAPTION>
+<TR><TD>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Property</TD>
+<TD ALIGN="RIGHT">Argument</TD>
+<TD ALIGN="RIGHT">Data file</TD>
+<TD ALIGN="RIGHT">Terms</TD>
+<TD ALIGN="RIGHT">Facts</TD>
+<TD ALIGN="RIGHT">EXDR</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Multiple runs</TD>
+<TD ALIGN="RIGHT">++</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">+</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Debugging</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">++</TD>
+<TD ALIGN="RIGHT">-</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Test generation effort</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">-</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Java I/O effort</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">+</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe I/O effort</TD>
+<TD ALIGN="RIGHT">++</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">++</TD>
+<TD ALIGN="RIGHT">++</TD>
+<TD ALIGN="RIGHT">++</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Memory</TD>
+<TD ALIGN="RIGHT">++</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">- -</TD>
+<TD ALIGN="RIGHT">-</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Development effort</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">-</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">+</TD>
+<TD ALIGN="RIGHT">-</TD>
+</TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+</DIV>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html573"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html567"
+ HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html561"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html569"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html571"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html574"
+ HREF="node16.html">Internal data representation</A>
+<B> Up:</B> <A NAME="tex2html568"
+ HREF="node14.html">Data Structures</A>
+<B> Previous:</B> <A NAME="tex2html562"
+ HREF="node14.html">Data Structures</A>
+ &nbsp <B>  <A NAME="tex2html570"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html572"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

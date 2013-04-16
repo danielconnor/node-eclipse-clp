@@ -1,0 +1,54 @@
+
+default_domain(-Var)
+
+   This predicate is called to assign a default domain to a free variable Var
+which occurs in arithmetic constraints.
+
+
+
+Arguments
+   -Var                
+   A                   variable
+
+Type
+   library(fd)
+
+Description
+   This is a simple hook predicate which allows the user to modify the
+   domain which is by default assigned to domainless variables that occur
+   in arithmetic constraints.  When such a variable is encountered, this
+   predicate is invoked and it must give the variable an integer finite
+   domain.  To modify the default domain, it is necessary to recompile this
+   predicate in the module fd_arith.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None
+
+
+
+Examples
+   
+   [eclipse 13]: A #> B.
+   A = A[-9999999..10000000]
+   B = B[-10000000..9999999]
+   ...
+   [eclipse 14]: compile(user, fd_arith).
+   default_domain(X) :- X::0..100000000.
+   user       compiled traceable 56 bytes in 0.00 seconds
+   yes.
+   [eclipse 20]: X #> Y.
+   X = X[1..100000000]
+   Y = Y[0..99999999]
+
+
+
+
+
+See Also
+   new_domain_var / 1, :: / 2, #:: / 2

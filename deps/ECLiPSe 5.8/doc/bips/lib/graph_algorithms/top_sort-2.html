@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>top_sort(+Graph, -Sorted)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>top_sort(+Graph, -Sorted)</H1>
+Finds a topological ordering of the graph if one exists
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>Sorted</EM></DT>
+<DD>a list of integer node numbers
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Finds a topological ordering of the graph, i.e. an ordering of the
+    nodes such that all edges go from earlier to later nodes.
+    Such an ordering exists if and only if the graph is acyclic.
+    If the graph is cyclic, the predicate fails.
+    </P><P>
+    In general, the ordering is not unique, an arbitrary one is computed.
+    The complexity is O(Nnodes + Nedges).
+    </P>
+<H3>Fail Conditions</H3>
+No topological ordering exists, i.e. the graph is cyclic
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/graph_is_acyclic-1.html">graph_is_acyclic / 1</A>, <A HREF="../../lib/graph_algorithms/graph_cycles-2.html">graph_cycles / 2</A>
+</BODY></HTML>

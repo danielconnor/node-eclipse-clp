@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>get_domain(?Var, ?Domain)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_domain(?Var, ?Domain)</H1>
+Returns a ground representation of the current IC domain of a variable.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>An IC variable or a number.
+</DD>
+<DT><EM>Domain</EM></DT>
+<DD>A ground representation of the domain of Var.
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>get_domain(?, -)
+<LI>get_domain(?, ++)
+</UL>
+<H2>Description</H2>
+<P>
+   If Var is a number, Domain will be unified with that number.</P><P>
+
+   If Var is a real IC variable, Domain will be unified with the term
+   Lo..Hi where Lo and Hi are floats corresponding to the current lower
+   and upper bounds of Var, respectively.</P><P>
+
+   If Var is an integer IC variable with no holes in its domain, Domain will
+   be unified with the term Lo..Hi where Lo and Hi are integers
+   corresponding to the current lower and upper bounds of Var, respectively.</P><P>
+
+   If Var is an integer IC variable with holes in its domain, Domain will
+   be unified with an ordered list of integers and/or terms Lo..Hi where Lo
+   and Hi are integers; in this case the elements of the domain of Var are
+   exactly those integers appearing directly in the list or falling within
+   any of the intervals Lo..Hi.</P>
+
+<H3>Fail Conditions</H3>
+The initial value of DomainList fails to unify with the returned value.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Var is neither an IC variable or number.
+<DT><EM>(6) out of range </EM>
+<DD>Var is a IC variable of type real.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/ic/get_domain_as_list-2.html">get_domain_as_list / 2</A>, <A HREF="../../lib/ic/get_bounds-3.html">get_bounds / 3</A>
+</BODY></HTML>

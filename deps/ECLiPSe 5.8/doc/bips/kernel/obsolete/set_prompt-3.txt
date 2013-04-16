@@ -1,0 +1,102 @@
+
+set_prompt(+InStream, +Prompt, +OutStream)
+
+   The prompt Prompt is output on the stream OutStream for input to the input
+stream InStream.
+
+
+
+Arguments
+   +InStream           Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   +Prompt             String or atom.
+   +OutStream          Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+
+Type
+   Obsolete
+
+Description
+   The prompt Prompt is output on the stream OutStream for input to the
+   input stream InStream.
+
+
+   When new data is to be read from an input stream, the system prints on
+   the specified output stream a prompt, to notify the user for input.
+
+
+   InStream and OutStream can be symbolic stream names (atom) or physical
+   stream numbers (integer).
+
+
+   InStream must be an existing stream open in read or update mode.
+   OutStream must be an existing stream open in write or update mode.
+
+
+   Note that the prompt for toplevel-input printed by the system at the end
+   of each query is made using the predicate toplevel-prompt/1 and not by
+   using the string set by set_prompt/3.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- One or more of InStream, Prompt or OutStream are not    instantiated.
+     5 --- Either InStream or OutStream (or both) is neither an atom    nor an integer.
+     5 --- Prompt is neither an atom nor a string.
+   192 --- InStream is in write mode.
+   192 --- OutStream is in read mode.
+
+Examples
+   
+Success:
+  [eclipse]: get_prompt(input,_,Out),
+  > set_prompt(input,"myprompt> ",Out).
+  Out = 1
+  yes.
+  [eclipse]: get_prompt(input,Prompt,_),
+  myprompt> !.
+  Prompt = "myprompt> "
+  yes.
+
+  [eclipse]: read( input,X).
+  > a.
+  X = a
+  yes.
+  [eclipse]: set_prompt(input, "Enter a term: ", output).
+  yes.
+  [eclipse]: read(input,X).
+  Enter a term: a.
+  X = a
+  yes.
+
+  [eclipse]: get_stream(debug_input,S),
+  > set_prompt(S, "   DEBUG: ", 1).
+  S = 3
+  yes.
+  [eclipse]: trace.
+  yes.
+  [eclipse]: length([a,b],N).
+  S (1) 0  CALL   length([a, b], _g52)   DEBUG: creep
+  S (1) 0  EXIT   length([a, b], 2)   DEBUG: creep
+  N = 2
+  yes.
+
+
+Error:
+  set_prompt(4, Prompt, 1).        (Error 4).
+  set_prompt(4, 4, 1).             (Error 5).
+  set_prompt(output, "p> ", Stream). (Error 192).
+
+
+
+
+
+See Also
+   set_stream_property / 3, get_prompt / 3

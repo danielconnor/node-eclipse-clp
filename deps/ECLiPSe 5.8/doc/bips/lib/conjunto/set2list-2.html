@@ -1,0 +1,43 @@
+<HTML><HEAD><TITLE>set2list(+Svar, ?List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set2list(+Svar, ?List)</H1>
+Transforms a ground set Svar into a list of ordered elements List.
+
+
+<DL>
+<DT><EM>+Svar</EM></DT>
+<DD>A ground set.
+</DD>
+<DT><EM>?List</EM></DT>
+<DD>Term unifying with a list of ground values.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate forces List to be the list of ordered elements associated
+   to the ground set Svar.  List can be a free variable or a ground term.
+   This predicate is convenient when iterations over set elements are
+   required.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Svar is not ground or if List is ground and different from the
+   computed list.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 3]: S = {1,4,2,6,2,7}, set2list(S, L).
+
+S = {1, 2, 4, 6, 7}
+L = [1, 2, 4, 6, 7]
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/list2set-2.html">list2set / 2</A>
+</BODY></HTML>

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Managing Data and Memory in Mixed-Language Applications</TITLE>
+<META NAME="description" CONTENT="Managing Data and Memory in Mixed-Language Applications">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="embroot.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html745"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html741"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html735"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html743"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html746"
+ HREF="node7.html">Constructing ECLiPSe data</A>
+<B> Up:</B> <A NAME="tex2html742"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html736"
+ HREF="node5.html">Control flow</A>
+ &nbsp <B>  <A NAME="tex2html744"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00300000000000000000"></A>
+<A NAME="chapmixed"></A>
+<BR>
+Managing Data and Memory in Mixed-Language Applications
+</H1>
+
+<P>
+ECLiPSe is a software engine for constraint propagation and search tasks.
+As such, it represents its data in a form that is different
+from how it would be represented in a traditional C/C++ program.
+<A NAME="425"></A>
+<A NAME="426"></A>
+<A NAME="427"></A>
+In particular,
+the ECLiPSe data representation supports automatic memory management
+and garbage collection, modifications that can be undone in a search context,
+referential transparency and dynamic typing.
+
+<P>
+In a mixed-language application, there are two basic ways of communicating
+information between the components coded in the different languages:
+<A NAME="429"></A>
+<DL>
+<DT><STRONG>Conversion:</STRONG>
+<DD>When data is needed for processing in another language,
+        it can be converted to the corresponding representation.
+        This technique is appropriate for simple data types (integers, strings),
+        but can have a lot of overhead for complex structures.
+<DT><STRONG>Sharing:</STRONG>
+<DD>The bulk of the data is left in its original representation,
+        referred to by a handle, and interface functions (or methods) provide
+        access to its components when required.
+</DL>
+Both techniques are supported by the ECLiPSe/C and ECLiPSe/C++ interface.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html747"
+ HREF="node7.html">Constructing ECLiPSe data</A>
+<UL>
+<LI><A NAME="tex2html748"
+ HREF="node7.html#SECTION00311000000000000000">ECLiPSe atoms and functors</A>
+<LI><A NAME="tex2html749"
+ HREF="node7.html#SECTION00312000000000000000">Building ECLiPSe terms</A>
+<LI><A NAME="tex2html750"
+ HREF="node7.html#SECTION00313000000000000000">Building atomic ECLiPSe terms</A>
+<LI><A NAME="tex2html751"
+ HREF="node7.html#SECTION00314000000000000000">Building ECLiPSe lists</A>
+<LI><A NAME="tex2html752"
+ HREF="node7.html#SECTION00315000000000000000">Building ECLiPSe structures</A>
+</UL>
+<LI><A NAME="tex2html753"
+ HREF="node8.html">Converting ECLiPSe data to C data</A>
+<UL>
+<LI><A NAME="tex2html754"
+ HREF="node8.html#SECTION00321000000000000000">Converting simple ECLiPSe terms to C data types</A>
+<LI><A NAME="tex2html755"
+ HREF="node8.html#SECTION00322000000000000000">Decomposing ECLiPSe terms</A>
+</UL>
+<LI><A NAME="tex2html756"
+ HREF="node9.html">Referring to ECLiPSe terms</A>
+<LI><A NAME="tex2html757"
+ HREF="node10.html">Passing generic C or C++ data to ECLiPSe</A>
+<UL>
+<LI><A NAME="tex2html758"
+ HREF="node10.html#SECTION00341000000000000000">Wrapping and unwrapping external data in an ECLiPSe term</A>
+<LI><A NAME="tex2html759"
+ HREF="node10.html#SECTION00342000000000000000">The method table</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html745"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html741"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html735"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html743"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html746"
+ HREF="node7.html">Constructing ECLiPSe data</A>
+<B> Up:</B> <A NAME="tex2html742"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html736"
+ HREF="node5.html">Control flow</A>
+ &nbsp <B>  <A NAME="tex2html744"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

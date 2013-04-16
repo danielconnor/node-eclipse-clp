@@ -1,0 +1,12 @@
+
+mjd_now(?MJD)
+
+   Returns the current date/time as (float) MJD
+
+Arguments
+   MJD                 Variable or float
+
+Type
+   library(calendar)
+
+

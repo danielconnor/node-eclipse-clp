@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>put_char(+Stream, +Char)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>put_char(+Stream, +Char)</H1>
+Puts the single character string Char onto the buffered output stream
+Stream.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+<DT><EM>+Char</EM></DT>
+<DD>Single character string.
+</DD>
+</DL>
+<H2>Description</H2>
+   Puts the single-character string Char onto the output stream Stream.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Char is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is neither an integer nor an atom.
+<DT><EM>(5) type error </EM>
+<DD>Char is instantiated, but not to a single character string.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an output stream.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+  [eclipse]: put_char(output, "a").
+  a
+  yes.
+
+  [eclipse]: get_char(input,C),put_char(output,C).
+  &gt; a
+  a
+  C = "a"
+  yes.
+Error:
+  put_char(Stream,A).      (Error 4).
+  put_char(output,a).      (Error 5).
+  put_char(output,98).     (Error 5).
+  put_char(11, "a").        (Error 192).
+  put_char(atom, "a").      (Error 193).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/get_char-1.html">get_char / 1</A>, <A HREF="../../kernel/iochar/get_char-2.html">get_char / 2</A>, <A HREF="../../kernel/iochar/put_char-1.html">put_char / 1</A>
+</BODY></HTML>

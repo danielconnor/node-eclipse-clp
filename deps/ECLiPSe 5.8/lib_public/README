@@ -1,0 +1,28 @@
+This directory contains public domain code that is either unchanged
+or may have been adapted for ECLiPSe.  In any case, the files retain
+their original copying conditions. 
+_______________________________________________________________________________
+
+Some files are under the GNU GENERAL PUBLIC LICENSE (see COPYING),
+others are under the GNU LIBRARY GENERAL PUBLIC LICENSE (see COPYING.LIB),
+other have their own conditions. See the file headers for details.
+_______________________________________________________________________________
+
+The following files are taken from the Edinburgh DEC-10 Prolog Library:
+
+applic.hlp applic.pl arrays.pl assoc.pl bags.hlp bags.pl between.pl
+distfix.pl flat.pl graphs.pl heaps.pl intervals.pl listut.hlp
+listut.pl logarr.pl map.pl metutl.pl occur.pl order.pl project.pl
+queues.pl random.pl rdtok.pl read.pl struct.pl tidy.pl trees.pl
+
+and the following is cited from this library's CONTENTS file:
+
+These files are all in the "public domain" so you can  use  them  freely, copy
+them,  incorporate them into programs of your own and so forth without payment.
+The work of producing them in  the  first  place  and  of  organising  them as
+detailed  here has been funded over the years at Edinburgh University mainly by
+the Science and Engineering Research Council.   Their  dissemination  has been
+encouraged  by  the  Alvey Special Interest Group: Artificial Intelligence.  We
+would appreciate it if you were to acknowledge these bodies  when  you  use or
+re-distribute any of these files.
+_______________________________________________________________________________

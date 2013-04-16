@@ -1,0 +1,19 @@
+
+halve(+List, -Front, -Back)
+
+   Split a list in the middle
+
+Type
+   library(lists)
+
+Description
+Returns two lists (Front and Back) which can be concatenated to give
+	the original List. The length of the sub-lists is half the length of
+	the original. If the original length is odd, Front is one longer
+
+Examples
+   	halve([a,b,c,d,e,f], [a,b,c], [d,e,f])
+	halve([a,b,c,d,e,f,g], [a,b,c,d], [e,f,g])
+
+See Also
+   append / 3

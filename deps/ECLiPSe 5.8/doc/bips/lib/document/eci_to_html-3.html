@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE>eci_to_html(++EciFile, ++HtmlTopDir, ++LinkBack)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(document)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>eci_to_html(++EciFile, ++HtmlTopDir, ++LinkBack)</H1>
+Create HTML documentation from one .eci file
+<DL>
+<DT><EM>EciFile</EM></DT>
+<DD>String
+</DD>
+<DT><EM>HtmlTopDir</EM></DT>
+<DD>String
+</DD>
+<DT><EM>LinkBack</EM></DT>
+<DD>HTML string (may be empty)
+</DD>
+</DL>
+<H2>Description</H2>
+
+        This predicate processes one ECLiPSe interface information file
+	EciFile (usually with .eci Extension) and generates .html
+	files. The .html files are placed in a subdirectory in HtmlTopDir
+	with the same name as EciFile but without the extension. This
+	directory is created if it does not exist. The generated files are
+	index.html, containing a summary description of the library, plus
+	one file for each predicate that was commented using a comment/2
+	directive in the source. The LinkBack argument should contain a
+	hyperlink in HTML format. This will appear at the top of the
+	generated pages and should usually point back to a parent page.
+<H2>See Also</H2>
+<A HREF="../../lib/document/ecis_to_htmls-3.html">ecis_to_htmls / 3</A>, <A HREF="../../lib/document/ecis_to_htmls-0.html">ecis_to_htmls / 0</A>, <A HREF="../../kernel/directives/comment-2.html">comment / 2</A>
+</BODY></HTML>

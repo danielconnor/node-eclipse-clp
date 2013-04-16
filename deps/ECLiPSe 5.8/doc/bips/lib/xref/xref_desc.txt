@@ -1,0 +1,8 @@
+lib(xref)
+
+
+    This library analyses an ECLiPSe source module or file and build
+    a call graph. The graph can either be returned in the format of
+    lib(graph_algorithms), or output in different ways.
+    
+

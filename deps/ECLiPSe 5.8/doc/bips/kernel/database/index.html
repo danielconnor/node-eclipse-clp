@@ -1,0 +1,106 @@
+<HTML><HEAD><TITLE>Predicate Database and Compiler</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Predicate Database and Compiler</H1>
+Built-ins for creation of handling of executable code
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="D-2.html"><STRONG>[+File_1, ...., +File_N]</STRONG></A></DT>
+<DD>Compile file or list of files --- shorthand for compile/1.
+
+</DD>
+<DT><A HREF="abolish-1.html"><STRONG>abolish +SpecList</STRONG></A></DT>
+<DD>Remove the definition of the predicates specified in SpecList.
+
+</DD>
+<DT><A HREF="als-1.html"><STRONG>als(+PredSpec)</STRONG></A></DT>
+<DD>Outputs the abstract code for the compiled predicate PredSpec.
+
+</DD>
+<DT><A HREF="compile-1.html"><STRONG>compile(+File)</STRONG></A></DT>
+<DD>Compile specified file or list of files File.
+
+</DD>
+<DT><A HREF="compile-2.html"><STRONG>compile(+File,+Module)</STRONG></A></DT>
+<DD>Compiles specified file or list of files File into the specified module
+Module.
+
+</DD>
+<DT><A HREF="compile_stream-1.html"><STRONG>compile_stream(+Stream)</STRONG></A></DT>
+<DD>Compile the given stream Stream.
+
+</DD>
+<DT><A HREF="compile_term-1.html"><STRONG>compile_term(+Clause)</STRONG></A></DT>
+<DD>Compile specified clause or list of clauses Clause.
+
+</DD>
+<DT><A HREF="compiled_stream-1.html"><STRONG>compiled_stream(?Stream)</STRONG></A></DT>
+<DD>Succeeds if the I/O stream currently being compiled is Stream.
+
+</DD>
+<DT><A HREF="current_built_in-1.html"><STRONG>current_built_in(?PredSpec)</STRONG></A></DT>
+<DD>Succeeds if the predicate defined by PredSpec is a visible built-in
+predicate.
+
+</DD>
+<DT><A HREF="current_compiled_file-3.html"><STRONG>current_compiled_file(?File, ?Time, ?Module)</STRONG></A></DT>
+<DD>Succeeds if File is a file that has been compiled into the system.
+
+</DD>
+<DT><A HREF="current_module_predicate-2.html"><STRONG>current_module_predicate(+Property, ?PredSpec)</STRONG></A></DT>
+<DD>Used to enumerate all predicates with given property in the caller module</DD>
+<DT><A HREF="current_predicate-1.html"><STRONG>current_predicate(?PredSpec)</STRONG></A></DT>
+<DD>Succeeds if PredSpec is a visible predicate defined by the user, or a
+visible library predicate.
+
+</DD>
+<DT><A HREF="demon-1.html"><STRONG>demon +SpecList</STRONG></A></DT>
+<DD>Declares the procedure(s) specified by SpecList to be demons.
+
+</DD>
+<DT><A HREF="discontiguous-1.html"><STRONG>discontiguous(++SpecList)</STRONG></A></DT>
+<DD>Declares the procedure(s) specified by SpecList as discontiguous</DD>
+<DT><A HREF="ensure_loaded-1.html"><STRONG>ensure_loaded(+Files)</STRONG></A></DT>
+<DD>Compile the specified Files if necessary.
+
+</DD>
+<DT><A HREF="expand_clause-2.html"><STRONG>expand_clause(+Term, ?TransTerm)</STRONG></A></DT>
+<DD>Apply clause transformation to Term</DD>
+<DT><A HREF="expand_goal-2.html"><STRONG>expand_goal(+Term, ?TransTerm)</STRONG></A></DT>
+<DD>Apply goal inline expansion to Term</DD>
+<DT><A HREF="get_flag-3.html"><STRONG>get_flag(+PredSpec, ?Flag, ?Value)</STRONG></A></DT>
+<DD>Succeeds if the flag Flag of the procedure specified by PredSpec has the
+value Value.
+
+</DD>
+<DT><A HREF="inline-2.html"><STRONG>inline(+Pred, +TransPred)</STRONG></A></DT>
+<DD>Declares TransPred as the predicate to be used to do compile-time
+transformation (e.g. inlining) of calls to Pred.
+
+</DD>
+<DT><A HREF="is_predicate-1.html"><STRONG>is_predicate(+PredSpec)</STRONG></A></DT>
+<DD>Succeeds if PredSpec is a defined predicate.
+
+</DD>
+<DT><A HREF="lib-1.html"><STRONG>lib(+LibraryName)</STRONG></A></DT>
+<DD>Makes the library LibraryName available in the current module if not loaded
+already.
+
+</DD>
+<DT><A HREF="mode-1.html"><STRONG>mode +PredModes</STRONG></A></DT>
+<DD>Specifies the mode (calling pattern) for the given predicates.
+
+</DD>
+<DT><A HREF="parallel-1.html"><STRONG>parallel +SpecList</STRONG></A></DT>
+<DD>Declares the procedure(s) specified by SpecList as parallel.
+
+</DD>
+<DT><A HREF="set_flag-3.html"><STRONG>set_flag(+PredSpec, +Flag, +Value)</STRONG></A></DT>
+<DD>Sets the flag Flag of the procedure specified by PredSpec to the value
+Value.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<HR>Generated from database.eci on Tue Jan 25 01:58:22 2005
+
+</BODY></HTML>

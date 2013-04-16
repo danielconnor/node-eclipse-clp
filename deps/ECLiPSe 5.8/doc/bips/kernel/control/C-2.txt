@@ -1,0 +1,49 @@
+
++Goal1 , +Goal2
+
+   Comma (AND) operator - succeeds if the goals Goal1 and Goal2 both succeed
+
+
+
+Arguments
+   +Goal1              Atom or compound term.
+   +Goal2              Atom or compound term.
+
+Type
+   Control
+
+Description
+   Succeeds if both Goal1 and Goal2 can be satisfied.
+
+
+   Note that !/0 cuts through ,/2.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: (F="file1", writeln(F)).
+      file1
+      F = "file1"
+      yes.
+
+      [eclipse]: call((write(a), write(b))).
+      ab
+      yes.
+
+
+
+
+
+See Also
+   ; / 2

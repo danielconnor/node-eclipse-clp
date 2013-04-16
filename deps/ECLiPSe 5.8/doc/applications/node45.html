@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Creating output data files</TITLE>
+<META NAME="description" CONTENT="Creating output data files">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node46.html">
+<LINK REL="previous" HREF="node44.html">
+<LINK REL="up" HREF="node42.html">
+<LINK REL="next" HREF="node46.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1179"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1173"
+ HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1167"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1175"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1177"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1180"
+ HREF="node46.html">Good and bad data</A>
+<B> Up:</B> <A NAME="tex2html1174"
+ HREF="node42.html">Input/Output</A>
+<B> Previous:</B> <A NAME="tex2html1168"
+ HREF="node44.html">How to use DCGs</A>
+ &nbsp <B>  <A NAME="tex2html1176"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1178"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1181"
+ HREF="node45.html#SECTION00731000000000000000">Creating Prolog data</A>
+<LI><A NAME="tex2html1182"
+ HREF="node45.html#SECTION00732000000000000000">Simple tabular format</A>
+<LI><A NAME="tex2html1183"
+ HREF="node45.html#SECTION00733000000000000000">Using <I>printf</I></A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00730000000000000000">
+Creating output data files</A>
+</H1>
+In this section we discuss how to generate output data files<A NAME="873"></A>. We present three methods which implement different output formats.
+
+<P>
+
+<H2><A NAME="SECTION00731000000000000000">
+Creating Prolog data</A>
+</H2>
+We first look at a special case where we want to create a file which can be read back with the input routine shown in section <A HREF="node43.html#ReadingInput">6.1</A>. The predicate <I>output_data</I> writes each item in a list of terms on one line of the output file, each line terminated by a dot (.). The predicate <I>writeq</I><A NAME="878"></A> ensures that atoms are quoted, operator definitions<A NAME="879"></A> are handled correctly, etc.
+<PRE>
+:-mode output_data(++,+).
+output_data(File,L):-
+        open(File,'write',S),
+        (foreach(X,L),
+         param(S) do
+           writeq(S,X),writeln('.')
+        ),
+        close(S).
+</PRE>
+It is not possible to write unbound constrained variables to a file and to load them later, they will not be re-created with their previous state and constraints. In general, it is a good idea to restrict the data format to ground terms<A NAME="882"></A>, i.e. terms that do not contain any variables.
+
+<P>
+
+<H2><A NAME="SECTION00732000000000000000">
+Simple tabular format</A>
+</H2>
+Generating data in Prolog format is easy if the receiver of the data is another ECLiPSe program, but may be inconvienient if the receiver is written in another language. In that case a tabular format<A NAME="884"></A> that can be read with routines like <I>scanf</I><A NAME="886"></A> is easier to handle. The following program segment shows how this is done. For each item in a list we extract the relevant arguments, and write them to the output file separated by white space.
+<PRE>
+:-mode output_data(++,+).
+output_data(File,L):-
+        open(File,'write',S),
+        (foreach(X,L),
+         param(S) do
+            output_item(S,X)
+        ),
+        close(S).
+
+output_item(S,data_item with [attr1:A1,attr2:A2]):-
+        write(S,A1),
+        write(S,' '),
+        write(S,A2),
+        nl(S).
+</PRE>
+We use the predicate <I>write</I><A NAME="890"></A> to print out the individual fields. As this predicate handles arbitrary argument types, this is quite simple, but it does not give us much control over the format of the fields.
+
+<P>
+
+<H2><A NAME="SECTION00733000000000000000">
+Using <I>printf</I></A>
+</H2>
+Instead, we can use the predicate <I>printf</I><A NAME="893"></A> which behaves much like the C-library routine. For each argument we must specify the argument type and an optional format<A NAME="894"></A>. If we make a mistake in the format specification, a run-time error will result.
+<PRE>
+:-mode output_data(++,+).
+output_data(File,L):-
+        open(File,'write',S),
+        (foreach(X,L),
+         param(S) do
+            output_item(S,X)
+        ),
+        close(S).
+
+output_item(S,data_item with [attr1:A1,attr2:A2]):-
+        printf(S,"%s %d\n",[A1,A2]).
+</PRE>
+We can use the same schema for creating tab<A NAME="897"></A> or comma separated files<A NAME="898"></A>, which provides a simple interface to spreadsheets<A NAME="899"></A> and data base readers<A NAME="900"></A>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1179"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1173"
+ HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1167"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1175"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1177"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1180"
+ HREF="node46.html">Good and bad data</A>
+<B> Up:</B> <A NAME="tex2html1174"
+ HREF="node42.html">Input/Output</A>
+<B> Previous:</B> <A NAME="tex2html1168"
+ HREF="node44.html">How to use DCGs</A>
+ &nbsp <B>  <A NAME="tex2html1176"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1178"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

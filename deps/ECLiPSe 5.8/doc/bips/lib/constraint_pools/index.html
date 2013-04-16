@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>library(constraint_pools)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(constraint_pools)</H1>
+Support for the creation of constraint pools
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="collect_all_pool_constraints-2.html"><STRONG>collect_all_pool_constraints(+Pool, -Constraints)</STRONG></A></DT>
+<DD>Collect all currently stored constraints in Pool</DD>
+<DT><A HREF="collect_typed_pool_constraints-3.html"><STRONG>collect_typed_pool_constraints(+Pool, +Type, -Constraints)</STRONG></A></DT>
+<DD>Collect all currently stored constraints of type Type in Pool</DD>
+<DT><A HREF="create_constraint_pool-3.html"><STRONG>create_constraint_pool(+PoolName, +NTypes, ++SpecList)</STRONG></A></DT>
+<DD>Create a "constraint pool" module</DD>
+<DT><A HREF="get_all_pool_constraints-2.html"><STRONG>get_all_pool_constraints(+Pool, -Constraints)</STRONG></A></DT>
+<DD>Get all currently stored constraints Pool</DD>
+<DT><A HREF="get_pool_item-2.html"><STRONG>get_pool_item(+Pool, -Item)</STRONG></A></DT>
+<DD>Associate a term Item with the pool Pool</DD>
+<DT><A HREF="get_typed_pool_constraints-3.html"><STRONG>get_typed_pool_constraints(+Pool, +Type, -Constraints)</STRONG></A></DT>
+<DD>Get all currently stored constraints of type Type in Pool</DD>
+<DT><A HREF="is_constraint_pool-1.html"><STRONG>is_constraint_pool(+Pool)</STRONG></A></DT>
+<DD>Check whether Pool is a constraint pool</DD>
+<DT><A HREF="pool_is_empty-1.html"><STRONG>pool_is_empty(+Pool)</STRONG></A></DT>
+<DD>Check whether Pool is an empty constraint pool</DD>
+<DT><A HREF="post_typed_pool_constraint-3.html"><STRONG>post_typed_pool_constraint(+Pool, +Type, +Constraint)</STRONG></A></DT>
+<DD>Stores the term Constraint in Pool's constraint store as type Type</DD>
+<DT><A HREF="set_pool_item-2.html"><STRONG>set_pool_item(+Pool, +Item)</STRONG></A></DT>
+<DD>Associate a term Item with the pool Pool</DD>
+<DT><A HREF="set_typed_pool_constraints-3.html"><STRONG>set_typed_pool_constraints(+Pool, +Type, +Constraints)</STRONG></A></DT>
+<DD>Replace the stored constraints for type Type</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+    This library contains support for constraint pools. Constraint
+    pools are a way to have several instances of a constraint solver.
+</P><P>
+    A constraint pool is an Eclipse module. It exports a number of
+    predicates (often constraint predicates) which are specified when
+    the pool is created. The constraint pool does not implement these
+    predicates (constraints) itself, but simply forwards every predicate
+    call, or stores the calls, annotated with the pool name.
+</P>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Kish Shen and Joachim Schimpf, IC-Parc, Imperial College
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date
+</UL>
+<HR>Generated from constraint_pools.eci on Tue Jan 25 01:58:39 2005
+
+</BODY></HTML>

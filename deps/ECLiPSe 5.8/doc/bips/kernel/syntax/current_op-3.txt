@@ -1,0 +1,75 @@
+
+current_op(?Precedence, ?Associativity, ?Name)
+
+   Succeeds if Name is a visible operator with precedence Precedence and
+associativity Associativity.
+
+
+
+Arguments
+   ?Precedence         Integer or variable.
+   ?Associativity      Atom or variable.
+   ?Name               Atom or variable.
+
+Type
+   Syntax Settings
+
+Description
+   Used to check for the existence of a visible operator of precedence
+   Precedence with name Name and associativity Associativity.  Alternative
+   solutions are returned on backtracking.
+
+
+   Precedence is an integer in the range 1 to 1200.
+
+
+   Associativity is one of the atoms
+
+
+
+   xfx, xfy, yfx, fx, fy, xf, yf, fxx, fxy.
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if Name does not unify with an existing operator whose precedence
+   unifies with Precedence and associativity with Associativity.
+
+
+
+Exceptions
+     5 --- Precedence is not an integer.
+     5 --- Associativity is not one of the above atoms.
+     5 --- Name is instantiated but not to an atom.
+     6 --- Precedence is not in the range 0 to 1200.
+
+Examples
+   
+Success:
+   current_op(300, fx, *).
+
+   [eclipse]: current_op(P, A, +).
+   P = 500
+   A = fx     More? (;)
+   P = 500
+   A = yfx     More? (;)   % RETURN pressed
+   yes.
+
+Fail:
+   current_op(10, fx, noop).
+
+Error:
+   current_op(prec, fx, +).             (Error 5).
+   current_op(100, fff, +).             (Error 5).
+   current_op(100, fx, bad(op)).        (Error 5).
+   current_op(-1, fx, +).               (Error 6).
+
+
+
+
+
+See Also
+   op / 3

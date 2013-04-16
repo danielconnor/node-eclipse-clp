@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>all_union(?Lsets, ?Svar)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>all_union(?Lsets, ?Svar)</H1>
+Lsets is a list of set domain variables whose union is the set term Svar.
+
+
+<DL>
+<DT><EM>?Lsets</EM></DT>
+<DD>A list of set domain variables.
+</DD>
+<DT><EM>?Svar</EM></DT>
+<DD>A free variable or a set variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Svar is the union of all the set variables appearing in Lsets.  If Svar
+   is a free variable, it becomes a set variable and its attached domain is
+   defined from the union of the domains or known sets appearing in Lsets.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if some elements of Lsets are not set variables and if Svar can
+   not be the union of the Lsets elements.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 13]: S `:: {}.. {1,2,3,5}, S1 `:: {1} .. {1,2,3,4},
+all_union([S, S1],{1,2,3,4,5}).
+
+S = S{{5} .. {1, 2, 3, 5}}
+S1 = S1{{1, 4} .. {1, 2, 3, 4}}
+
+Delayed goals:
+        ground_union(S{{5} .. {1, 2, 3, 5}},
+S1{{1, 4} .. {1, 2, 3, 4}}, {1, 2, 3, 4, 5})
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/BNN-2.html">`:: / 2</A>, <A HREF="../../lib/conjunto/BE-2.html">`= / 2</A>, <A HREF="../../lib/conjunto/BLG-2.html">`<> / 2</A>, <A HREF="../../lib/conjunto/all_disjoint-1.html">all_disjoint / 1</A>
+</BODY></HTML>

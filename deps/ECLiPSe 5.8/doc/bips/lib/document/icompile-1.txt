@@ -1,0 +1,26 @@
+
+icompile(+File)
+
+   Generates an information file from the ECLiPSe source File.
+
+Arguments
+   File                Name of source file (Atom or string)
+
+Type
+   library(document)
+
+Description
+
+    Given an ECLiPSe source file (usually a file with a .ecl suffix), this
+    tool generates an ECLiPSe interface information file (with .eci suffix).
+    
+    The given source file must contain a module definition. icompile then
+    extracts all information about this module's interface (in particular
+    all export directives), as well as the corresponding documentation
+    (comment/2) directives, and writes those into an interface information
+    file with .eci suffix. The latter can then be used to generate HTML
+    documentation about the module.
+    
+
+See Also
+   icompile / 2, comment / 2, eci_to_html / 3, ecis_to_htmls / 4

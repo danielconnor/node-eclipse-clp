@@ -1,0 +1,28 @@
+
+eci_to_html(++EciFile, ++HtmlTopDir, ++LinkBack)
+
+   Create HTML documentation from one .eci file
+
+Arguments
+   EciFile             String
+   HtmlTopDir          String
+   LinkBack            HTML string (may be empty)
+
+Type
+   library(document)
+
+Description
+
+        This predicate processes one ECLiPSe interface information file
+	EciFile (usually with .eci Extension) and generates .html
+	files. The .html files are placed in a subdirectory in HtmlTopDir
+	with the same name as EciFile but without the extension. This
+	directory is created if it does not exist. The generated files are
+	index.html, containing a summary description of the library, plus
+	one file for each predicate that was commented using a comment/2
+	directive in the source. The LinkBack argument should contain a
+	hyperlink in HTML format. This will appear at the top of the
+	generated pages and should usually point back to a parent page.
+
+See Also
+   ecis_to_htmls / 3, ecis_to_htmls / 0, comment / 2

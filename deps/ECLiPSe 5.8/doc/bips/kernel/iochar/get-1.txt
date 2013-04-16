@@ -1,0 +1,47 @@
+
+get(?Ascii)
+
+   Reads the next character from the current input stream and unifies its
+ASCII code with Ascii.
+
+
+
+Arguments
+   ?Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Takes the next character from the current input and unifies its integer
+   ASCII code (in the range 0 to 255) to Ascii.
+
+
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Ascii does not unify with the next character from the buffered
+   current input.
+
+
+
+Exceptions
+     5 --- Ascii is instantiated, but not to an integer.
+   190 --- End of file has been reached.
+
+Examples
+      Equivalent to get(input, Ascii).  (see get/2 for details).
+
+
+
+
+
+See Also
+   get / 2, put / 1, put / 2

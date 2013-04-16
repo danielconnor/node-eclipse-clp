@@ -1,0 +1,82 @@
+<HTML><HEAD><TITLE>call_explicit(+Goal, +Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>call_explicit(+Goal, +Module)</H1>
+Succeeds if Goal which is defined in module Module succeeds.
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   This predicate provides a means to override the module system's
+   visibility rules.  While the builtins call/1 and call/2 call the
+   predicate that is visible from a certain module, call_explicit/2 allows
+   to call a predicate which is defined in a certain module.  This allows
+   calling a predicate that is otherwise not visible in the caller module.
+   The most plausible use of this feature is to allow local redefinition of
+   a predicate using the existing definition in the implementation.
+
+<P>
+   Note that call_explicit can only call exported or global predicates in
+   order to preserve module privacy.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is neither an atom nor a compound term.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>Goal is an undefined procedure in Module.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse]: cd(~).
+     system interface error:
+                      No such file or directory in cd(~)
+
+     [eclipse]: [user].         % redefine cd/1, using its
+                              % original definition
+      cd(~) :- !,
+               getenv('HOME', Home),
+               call_explicit(cd(Home), sepia_kernel).
+      cd(Dir) :-
+               call_explicit(cd(Dir), sepia_kernel).
+
+      [eclipse]: cd(~).
+      yes.
+
+Fail:
+      call_explicit(fail, sepia_kernel).
+
+Error:
+      call_explicit(Var,eclipse).                (Error 4).
+      call_explicit(ls,Var).                     (Error 4).
+      call_explicit("write(a)",eclipse).         (Error 5).
+      call_explicit(foo(a),eclipse).             (Error 68).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/N-2.html">: / 2</A>, <A HREF="../../kernel/control/call-1.html">call / 1</A>, <A HREF="../../kernel/control/A-2.html">@ / 2</A>
+</BODY></HTML>

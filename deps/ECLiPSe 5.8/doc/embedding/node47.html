@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>ECLiPSe primitives to read/write EXDR terms</TITLE>
+<META NAME="description" CONTENT="ECLiPSe primitives to read/write EXDR terms">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node48.html">
+<LINK REL="previous" HREF="node46.html">
+<LINK REL="up" HREF="node46.html">
+<LINK REL="next" HREF="node48.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1445"
+ HREF="node48.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1441"
+ HREF="node46.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1435"
+ HREF="node46.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1443"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1446"
+ HREF="node48.html">Serialized representation of EXDR</A>
+<B> Up:</B> <A NAME="tex2html1442"
+ HREF="node46.html">EXDR Data Interchange Format</A>
+<B> Previous:</B> <A NAME="tex2html1436"
+ HREF="node46.html">EXDR Data Interchange Format</A>
+ &nbsp <B>  <A NAME="tex2html1444"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00910000000000000000">
+ECLiPSe primitives to read/write EXDR terms</A>
+</H1>
+
+<P>
+The ECLiPSe predicates to create and interpret EXDR-representation
+read from and write directly to ECLiPSe streams. This means that
+EXDR-format can be used readily to communicate via files, pipes,
+sockets, queues etc.
+<DL>
+<DT><STRONG><A NAME="tex2html397"
+ HREF="../bips/kernel/ioterm/write_exdr-2.html">write_exdr(+Stream, +Term)</A><A NAME="6316"></A></STRONG>
+<DD> 
+<BR>
+This predicate writes terms in exdr format.
+	The type of the generated EXDR-term is the type resulting
+	from the "natural" mapping of the Eclipse terms.
+	Atoms are written as structures of arity 0 (not as strings).
+	Note that all information about variable sharing, variable
+	names and variable attributes is lost in the EXDR representation.
+
+<P>
+<DT><STRONG><A NAME="tex2html399"
+ HREF="../bips/kernel/ioterm/read_exdr-2.html">read_exdr(+Stream, -Term)</A><A NAME="6319"></A></STRONG>
+<DD> 
+<BR>
+This predicate reads exdr format and constructs a
+	corresponding Eclipse term.
+</DL>
+
+<P>
+Please refer to chapter <A HREF="node15.html#chaptcl">5</A> for the Tcl primitives,
+and to chapter <A HREF="node39.html#chapjava">8</A> for the Java primitives for manipulating
+EXDR terms. 
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,4 @@
+lib(externals)
+
+For more information, see the Embedding and Interfacing Manual
+

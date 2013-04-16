@@ -1,0 +1,40 @@
+
+glb_poss(?SetVariable, -Glb, -Poss)
+
+   Obtaining both the glb and the still possible elements of a set
+
+Arguments
+   SetVariable         A set variable.
+   Glb                 A set.
+   Poss                A set.
+
+Type
+   library(cardinal)
+
+Description
+Glb is unified with the (greatest) lower bound of SetVariable.
+		Poss is unified with the set of still possible elements of SetVariable
+		(i.e. its lub\glb).
+		If SetVariable is a set of sets and a union function attribute has been set,
+		then each element of Poss comes annotated with its respective length.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Glb can not be unified with the current glb of SetVariable or
+		if Poss can not be unified with the current poss (lub\glb) of SetVariable.
+
+Examples
+   
+?- S `::[c]+[a,b], glb_poss(S,G,P).
+G = [c]
+P = [a,b]
+
+?- set(S, [],[[a,b],[b,c],[a,c],[b]],[union:[a,b,c]]), glb_poss(S,G,P).
+G = []
+P = [[a, b] : 2, [a, c] : 2, [b] : 1, [b, c] : 2]
+
+
+See Also
+   glb / 2, poss / 2, domain / 2, domain / 3, lub / 2, lub / 4

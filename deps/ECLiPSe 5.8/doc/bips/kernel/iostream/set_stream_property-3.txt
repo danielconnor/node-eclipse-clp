@@ -1,0 +1,86 @@
+
+set_stream_property(+Stream, +Prop, +Value)
+
+   Sets the property Prop of the stream Stream to the value Value.
+
+
+
+Arguments
+   +Stream             Atom or integer denoting an open stream.
+   +Prop               Atom.
+   ?Value              atom, string or integer.
+
+Type
+   Stream I/O
+
+Description
+   Used to set various stream properties:
+
+
+
+    Prop            Value         Description
+
+    compress        on, off       a hint for output operations (e.g.
+                                  write_exdr/2) to use a more compact
+                                  output format (output streams only).
+                                  Default: on (file,pipe,socket) or off.
+
+    end_of_line     lf, crlf      which end-of-line sequence to write
+
+    event           atom          event on writing to empty stream
+                                  (see open/4)
+    flush           flush,        explicit or implicit flushing
+                    end_of_line
+
+    macro_expansion on, off       expand term macros (input streams only)
+
+    offset          integer       current position in the
+                                  stream, same as seek/2
+
+    output_options  list          default output options for all term
+                                  output on this stream. The list
+                                  format is as in write_term/2,3.
+
+    prompt          string        prompt string (input streams only)
+
+    prompt_stream   integer       output stream for the prompt
+                    or atom       (input streams only)
+
+    sigio           on, off       enable/disable SIGIO signals on
+                                  this stream (UNIX only)
+
+    yield           on, off       yield on end-of-file (see open/4)
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Stream, Prop or Value is not instantiated.
+     5 --- Stream is neither an atom nor an integer.
+     5 --- Prop is instantiated, but not to an atom.
+     5 --- Value is of the wrong type for the given property.
+     6 --- Prop is an atom, but not a settable property.
+     6 --- Value is not recognised for the given property.
+   193 --- Stream does not denote an open stream.
+
+Examples
+   
+Success:
+    set_stream_property(input, prompt, "hello: ").
+    set_stream_property(Stream, flush, end_of_line).
+    set_stream_property(Stream, end_of_line, crlf).
+
+
+
+
+
+See Also
+   open / 3, open / 4, current_stream / 1, seek / 2, get_stream_info / 3, write_term / 2, write_term / 3

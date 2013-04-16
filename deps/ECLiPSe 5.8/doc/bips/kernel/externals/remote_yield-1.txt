@@ -1,0 +1,33 @@
+
+remote_yield(++Peer)
+
+   Explicitly yield to the remote peer Peer
+
+Arguments
+   Peer                Remote peer (atom)
+
+Type
+   External Interface
+
+Description
+
+    
+   If Peer is a valid current remote peer, this predicate will cause the control to be
+   transfer to that peer, i.e. the ECLiPSe will yield to the remote
+   side. This predicate returns when ECLiPSe side resumes control.
+   If the remote side initiates disconnection while it has control,
+   remote_yield/1 will abort after the disconnection.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+   Peer is not a valid current remote peer.
+
+Exceptions
+   peer_abort_disconnected --- Peer has disconnected.
+   peer_abort_error --- Some internal error has occured (this should be reported as an ECLiPSe bug to the ECLiPSe team).
+
+See Also
+   remote_connect / 3, remote_disconnect / 1

@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>library(heaps)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(heaps)</H1>
+Implement heaps in Prolog
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="add_to_heap-4.html"><STRONG>add_to_heap(+OldHeap, +Key, +Datum, -NewHeap)</STRONG></A></DT>
+<DD>inserts the new Key-Datum pair into the heap</DD>
+<DT><A HREF="get_from_heap-4.html"><STRONG>get_from_heap(+OldHeap, ?Key, ?Datum, -NewHeap)</STRONG></A></DT>
+<DD>returns the Key-Datum pair in OldHeap with the smallest Key</DD>
+<DT><A HREF="heap_size-2.html"><STRONG>heap_size(+Heap, ?Size)</STRONG></A></DT>
+<DD>reports the number of elements currently in the heap</DD>
+<DT><A HREF="heap_to_list-2.html"><STRONG>heap_to_list(+Heap, -List)</STRONG></A></DT>
+<DD>returns the current set of Key-Datum pairs in the Heap as a List.</DD>
+<DT><A HREF="list_to_heap-2.html"><STRONG>list_to_heap(+List, -Heap)</STRONG></A></DT>
+<DD>takes a list of Key-Datum pairs and forms them into a heap</DD>
+<DT><A HREF="min_of_heap-3.html"><STRONG>min_of_heap(+Heap, ?Key, ?Datum)</STRONG></A></DT>
+<DD>returns the Key-Datum pair at the top of the heap</DD>
+<DT><A HREF="min_of_heap-5.html"><STRONG>min_of_heap(+Heap, ?Key1, ?Datum1, ?Key2, ?Datum2)</STRONG></A></DT>
+<DD>returns the smallest and second smallest pairs in the heap</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+    A heap is a labelled binary tree where the key of each node is less
+    than or equal to the keys of its sons.  The point of a heap is that
+    we can keep on adding new elements to the heap and we can keep on
+    taking out the minimum element.  If there are N elements total, the
+    total time is O(NlgN).  If you know all the elements in advance, you
+    are better off doing a merge-sort, but this file is for when you
+    want to do say a best-first search, and have no idea when you start
+    how many elements there will be, let alone what they are.
+</P><P>
+    A heap is represented as a triple t(N, Free, Tree) where N is the
+    number of elements in the tree, Free is a list of integers which
+    specifies unused positions in the tree, and Tree is a tree made of
+<PRE>
+	t			terms for empty subtrees and
+	t(Key,Datum,Lson,Rson)	terms for the rest
+</PRE>
+    The nodes of the tree are notionally numbered like this:
+<PRE>
+				    1
+		     2				    3
+             4               6               5               7
+         8      12      10     14       9       13      11     15
+      ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  ..
+</PRE>
+    The idea is that if the maximum number of elements that have been in
+    the heap so far is M, and the tree currently has K elements, the tree
+    is some subtreee of the tree of this form having exactly M elements,
+    and the Free list is a list of K-M integers saying which of the 
+    positions in the M-element tree are currently unoccupied.  This free
+    list is needed to ensure that the cost of passing N elements through
+    the heap is O(NlgM) instead of O(NlgN).  For M say 100 and N say 10^4
+    this means a factor of two.  The cost of the free list is slight.
+    The storage cost of a heap in a copying Prolog (which Dec-10 Prolog is
+    not) is 2K+3M words.
+</P>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>R.A.O'Keefe
+<LI><STRONG>Date: </STRONG>29 November 1983
+</UL>
+<HR>Generated from heaps.eci on Tue Jan 25 01:58:32 2005
+
+</BODY></HTML>

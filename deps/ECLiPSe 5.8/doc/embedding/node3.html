@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>To get started</TITLE>
+<META NAME="description" CONTENT="To get started">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html701"
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html697"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html691"
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html699"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html702"
+ HREF="node4.html">Creating an ECLiPSe context</A>
+<B> Up:</B> <A NAME="tex2html698"
+ HREF="node2.html">Calling ECLiPSe from C++</A>
+<B> Previous:</B> <A NAME="tex2html692"
+ HREF="node2.html">Calling ECLiPSe from C++</A>
+ &nbsp <B>  <A NAME="tex2html700"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html703"
+ HREF="node3.html#SECTION00211000000000000000">Directories</A>
+<LI><A NAME="tex2html704"
+ HREF="node3.html#SECTION00212000000000000000">Definitions</A>
+<LI><A NAME="tex2html705"
+ HREF="node3.html#SECTION00213000000000000000">Compiling, linking and running on Unix/Linux</A>
+<LI><A NAME="tex2html706"
+ HREF="node3.html#SECTION00214000000000000000">Static linking (Unix/Linux)</A>
+<LI><A NAME="tex2html707"
+ HREF="node3.html#SECTION00215000000000000000">Compiling, linking and running on Windows</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00210000000000000000">
+To get started</A>
+</H1>
+
+<P>
+This section is about the prerequisites for working with
+ECLiPSe in your development environment. The directory structure,
+the libraries and the include files are described.
+
+<P>
+
+<H2><A NAME="SECTION00211000000000000000"></A>
+<A NAME="297"></A>
+<BR>
+Directories
+</H2>
+
+<P>
+The libraries and include files needed to use ECLiPSe as an
+embedded component are available under the ECLiPSe
+<A NAME="300"></A>
+directory which was set-up during installation. If you have access
+to a stand-alone ECLiPSe it can be found using the following query
+at the ECLiPSe prompt:
+
+<P>
+<PRE>
+    [eclipse 1]: get_flag(installation_directory,Dir).
+
+    Dir = "/usr/local/eclipse"
+    yes.
+    [eclipse 2]
+</PRE>
+
+<P>
+We will assume from here that ECLiPSe was installed in "/usr/local/eclipse".
+
+<P>
+You would find the include files in "/usr/local/eclipse/include/$ARCH"
+and the the libraries in "/usr/local/eclipse/lib/$ARCH" where
+"$ARCH" is a string naming the architecture of your machine.
+<A NAME="306"></A>
+<A NAME="307"></A>
+This can be found using the following ECLiPSe query:
+
+<P>
+<PRE>
+    [eclipse 2]: get_flag(hostarch,Arch).
+
+    Arch = "sun4"
+    yes.
+    [eclipse 3]:
+</PRE>
+
+<P>
+You will need to inform your C or C++ compiler and linker about these
+directories so that these tools can include and link the appropriate files.
+A make file "Makefile.external" can be found together with the libraries.
+<A NAME="311"></A>
+The definitions in that makefile may  have to be updated according to
+your operating system environment.
+
+<P>
+A set of example C and C++ programs can be found in
+"/usr/local/eclipse/doc/examples".
+
+<P>
+When delivering an application you will have to include with it the
+contents of the directory 
+"/usr/local/eclipse/lib" without which ECLiPSe
+cannot work. Normally this would be copied into the directory structure
+of the delivered application. The interface can set different values
+for this directory, enabling different applications to have different
+sets of libraries.
+
+<P>
+
+<H2><A NAME="SECTION00212000000000000000">
+Definitions</A>
+</H2>
+
+<P>
+To include the definitions needed for calling the ECLiPSe library
+in a C program use:
+<A NAME="315"></A>
+<PRE>
+    #include &lt;eclipse.h&gt;
+</PRE>
+
+<P>
+For C++ a more convenient calling convention can be used based on
+some classes wrapped around these C definitions. To include these use:
+
+<P>
+<PRE>
+    #include &lt;eclipseclass.h&gt;
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00213000000000000000">
+Compiling, linking and running on Unix/Linux</A>
+</H2>
+
+<P>
+Assuming that the environment variable ECLIPSEDIR is set to the
+ECLiPSe installation directory and the environment variable ARCH is set to
+the architecture/operating system name,
+an application can be built as follows:
+<PRE>
+gcc -I$ECLIPSEDIR/include/$ARCH eg_c_basic.c -L$ECLIPSEDIR/lib/$ARCH -leclipse
+</PRE>
+This will link your application with the shared library <code>libeclipse.so</code>.
+
+<P>
+At runtime, your application must be able to locate <code>libeclipse.so</code>.
+This can be achieved by adding <!-- MATH: $ECLIPSEDIR/lib/$ -->
+<I>ECLIPSEDIR</I>/lib/ARCH to your
+<code>LD_LIBRARY_PATH</code> environment variable.
+
+<P>
+The embedded ECLiPSe finds its own support files (e.g. ECLiPSe libraries)
+through the <code>ECLIPSEDIR</code> environment variable.
+This must be set to the location where ECLiPSe is installed,
+e.g. <code>/usr/local/eclipse</code>.
+Alternatively, the application can invoke <code>ec_set_option</code> to specify
+the <code>ECLIPSEDIR</code> location before initialising the embedded ECLiPSe
+with <code>ec_init</code>.
+
+<P>
+
+<H2><A NAME="SECTION00214000000000000000">
+Static linking (Unix/Linux)</A>
+</H2>
+
+<P>
+If your operating system only supports static linking, or if you want
+to link statically for some reason, you have to link explicitly with
+<code>libeclipse.a</code> and the necessary support libraries must be specified, e.g.
+<PRE>
+gcc -I$ECLIPSEDIR/include/$ARCH eg_c_basic.c $ECLIPSEDIR/lib/$ARCH/libeclipse.a
+    -L$ECLIPSEDIR/lib/$ARCH -lgmp -lshm -ldummies -ldl -lnsl -lsocket -lm
+</PRE>
+The libraries <code>gmp</code>, <code>shm</code> and <code>dummies</code> are ECLiPSe
+support libraries and must be specified in that order.
+The others are Unix libraries.
+
+<P>
+It is recommended that you copy the makefile "Makefile.external"
+provided in your  installation directory under lib/$ARCH and adapt it
+for your purposes.
+<A NAME="332"></A>
+
+<P>
+
+<H2><A NAME="SECTION00215000000000000000">
+Compiling, linking and running on Windows</A>
+</H2>
+
+<P>
+You need to have the following additional setting in your C/C++
+compiler/development system:
+
+<UL><LI>In the <B>C/C++ Preprocessor</B> settings,
+specify the ECLiPSe include directory as an additional
+include directory, e.g. <code>C:/Eclipse/include/i386_nt</code>.
+
+<LI>In the <B>Link</B> settings,
+specify <code>eclipse.lib</code> as an additional object/library
+module, and the location of this library, e.g. <code>C:/Eclipse/lib/i386_nt</code> as an additional library path.
+
+</UL>
+
+<P>
+At runtime, your application must be able to locate <code>eclipse.dll</code>,
+i.e. you should either
+
+<UL><LI>copy <code>eclipse.dll</code> into the folder where your application is located, or
+
+<LI>copy <code>eclipse.dll</code> into one of Windows' standard library folders, or
+
+<LI>add the path to the folder where <code>eclipse.dll</code> can be found
+	to your PATH environment variable.
+
+</UL>
+The <code>eclipse.dll</code> finds its own support files (e.g. ECLiPSe libraries)
+through the <code>ECLIPSEDIR</code> registry entry under the registry key
+<code>HKEY_LOCAL_MACHINE\SOFTWARE\IC-Parc\ECLiPSe\X.Y</code> (X.Y is the version
+number).
+This must be set to the location where ECLiPSe is installed,
+e.g. <code>C:/Eclipse</code>.
+Alternatively, the application can invoke <code>ec_set_option</code> to specify
+the <code>ECLIPSEDIR</code> location before initialising the embedded ECLiPSe
+with <code>ec_init</code>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html701"
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html697"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html691"
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html699"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html702"
+ HREF="node4.html">Creating an ECLiPSe context</A>
+<B> Up:</B> <A NAME="tex2html698"
+ HREF="node2.html">Calling ECLiPSe from C++</A>
+<B> Previous:</B> <A NAME="tex2html692"
+ HREF="node2.html">Calling ECLiPSe from C++</A>
+ &nbsp <B>  <A NAME="tex2html700"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

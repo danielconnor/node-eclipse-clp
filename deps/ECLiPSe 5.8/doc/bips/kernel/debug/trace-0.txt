@@ -1,0 +1,56 @@
+
+trace
+
+   Execute subsequent top-level queries with the debugger on.
+
+
+
+Arguments
+
+Type
+   Debugging
+
+Description
+   If the debugger is already on, no effect.  If not, the debugger
+   will be switched on at the next top-level query.  The debugger will
+   stay on until it is switched off with notrace/0.
+
+
+   The debugger will stop at the first traceable port.
+
+
+   This is not actually a predicate but a toplevel-command.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+[eclipse 1]: [user].
+p :- true, writeln(hello).
+user       compiled traceable 68 bytes in 0.00 seconds
+
+yes.
+[eclipse 2]: trace.
+Debugger switched on - creep mode
+[eclipse 3]: p.
+  (1) 1 CALL  p   %> creep
+S (2) 2 CALL  writeln(hello)   %> creep
+hello
+S (2) 2 EXIT  writeln(hello)   %> creep
+  (1) 1 EXIT  p   %> creep
+
+yes.
+
+
+
+
+
+See Also
+   debug / 0, debug / 1, notrace / 0, trace / 1

@@ -1,0 +1,301 @@
+lib(xml)
+
+
+Note for ECLiPSe users
+
+This code creates and accepts character lists rather than ECLiPSe strings. 
+To convert between character lists and (UTF8 or ASCII) strings, use the
+ECLiPSe built-in string_list/3. For example, to parse a UTF-8 encoded
+XML file, use the following code:
+
+xml_parse_file(File, Document) :-
+	open(File, read, Stream),
+	read_string(Stream, end_of_file, _, Utf8String),
+	close(Stream),
+	string_list(Utf8String, Chars, utf8),
+	xml_parse(Chars, Document).
+
+Most of the subsequent text is taken literally from
+
+http://www.john.fletcher.dial.pipex.com/xml.pl.shtml.
+
+
+
+TERMS AND CONDITIONS
+
+This program is offered free of charge, as unsupported source code. You may
+use it, copy it, distribute it, modify it or sell it without restriction. 
+
+We hope that it will be useful to you, but it is provided "as is" without
+any warranty express or implied, including but not limited to the warranty
+of non-infringement and the implied warranties of merchantability and fitness
+for a particular purpose.
+
+Binding Time Limited will not be liable for any damages suffered by you as
+a result of using the Program. In no event will Binding Time Limited be
+liable for any special, indirect or consequential damages or lost profits
+even if Binding Time Limited has been advised of the possibility of their
+occurrence. Binding Time Limited will not be liable for any third party
+claims against you.
+
+
+History:
+$Log: xml_comments.ecl,v $
+Revision 1.1  2003/03/31 13:58:02  js10
+Upgraded to latest version from John Fletcher's web site
+
+Revision 1.2  2002/03/26 22:56:55  js10
+Added John Fletcher's public domain XML parser/generator
+
+Revision 1.1  2002/03/26 22:50:07  js10
+Added John Fletcher's public domain XML parser/generator
+
+Revision 1.1  2002-01-31 21:04:45+00  john
+Updated Copyright statements.
+
+Revision 1.0  2001-10-17 20:46:24+01  john
+Initial revision
+
+
+  Background
+  xml.pl is a module for parsing 
+XML with Prolog, which provides Prolog applications with a simple
+interface to XML documents. We have used it successfully in a number of
+applications.
+  It supports a subset of XML suitable for XML Data and Worldwide Web
+  applications. It is neither as strict nor as comprehensive as the XML 1.0 Specification
+mandates.
+  It is not as strict, because, while the specification must eliminate
+ambiguities, not all errors need to be regarded as faults, and some reasonable
+examples of real XML usage would have to be rejected if they were.
+  It is not as comprehensive, because, where the XML specification makes
+  provision for more or less complete DTDs to be provided as part of a
+document, xml.pl supports the local definition of ENTITIES only.
+  We have placed the code, and a small Windows
+application which embodies it, into the public domain, to encourage the use
+of Prolog with XML.
+  We hope that they will be useful to you, but they are not supported, and
+Binding Time Limited accept NO LIABILITY WHATSOEVER in respect of their
+use.
+  Specification
+  Three predicates are exported by the module: xml_parse/[2,3], xml_subterm/2
+and xml_pp/1.
+  xml_parse( {+Controls}, +?Chars, ?+Document ) parses 
+Chars, a list of character codes, to/from a data structure of the form
+
+xml(<attributes>, <content>)
+ , where:
+  <attributes> is a list of 
+ <name>=<data>
+ attributes from the (possibly implicit) XML signature of the
+document.
+  <content> is a (possibly empty) list comprising occurrences of :
+  
+   
+    pcdata(<data>)
+    Text
+   
+   
+     comment(<string>)
+    An xml comment;
+   
+   
+    namespace(<URI>,<prefix>,<element>)
+    a Namespace
+   
+   
+     element(<tag>, <attributes>, <content>)
+    <tag>..</tag> encloses <content> or <tag /> if empty
+   
+   
+     instructions(<name>, <data>)
+     A PI  <? <name> <data> ?>
+   
+   
+     cdata(<data>)
+    <![CDATA[ <string> ]]>
+   
+   
+     doctype(<tag>, <doctype id>)
+     DTD <!DOCTYPE .. >
+   
+   
+     
+   
+   
+    The conversions are not completely symmetrical, in that weaker XML is
+accepted than can be generated. Specifically, in-bound (Chars ->
+Document) parsing does not require strictly well-formed XML. If 
+Chars does not represent well-formed XML, Document is
+instantiated to the term 
+malformed(<attributes>, <content>)
+ .
+   
+   
+     
+   
+   
+    The <content> of a malformed/2 structure can include:
+   
+   
+     
+   
+   
+    unparsed( <string> )
+    Text which has not been parsed
+   
+   
+    out_of_context( <tag> )
+    <tag> is not closed
+   
+   
+    in addition to the parsed term types.Out-bound (Document -> Chars) parsing does require that
+Document defines well-formed XML. If an error is detected a 'domain'
+exception is raised.The domain exception will attempt to identify the particular sub-term in
+error and the message will show a list of its ancestor elements in the form
+<tag>{(id)}* where 
+<id>
+ is the value of any attribute named id.At this release, the Controls applying to in-bound (Chars ->
+Document) parsing are:
+   
+   
+     
+   
+   
+    extended_characters(<bool>)
+    Use the extended character entities for XHTML (default true)
+   
+   
+     format(<bool>)
+    Strip layouts when no non-layout character data appears between elements. default
+true)
+   
+   
+    For out-bound (Document -> Chars) parsing, the only available
+option is:
+   
+   
+     
+   
+   
+    format(<bool>)
+    Indent the element content, (default true)
+   
+   
+     
+   
+   
+    Types
+   
+   
+    <tag>
+    An atom naming an element
+   
+   
+    <data>
+    A "string"
+   
+   
+    <name>
+    An atom, not naming an element
+   
+   
+    <URI>
+    An atom giving the URI of a Namespace
+   
+   
+    <string>
+    A "string": list of character codes.
+   
+   
+    <doctype id>
+    one of public(<string>, <string>), system(<string>) or local
+   
+   
+    <bool>
+    one of 'true' or 'false'
+   
+  
+  xml_subterm( +XMLTerm, ?Subterm ) unifies Subterm with
+a sub-term of Term. This can be especially useful when trying to
+test or retrieve a deeply-nested subterm from a document. Note that 
+XMLTerm is a sub-term of itself.
+  xml_pp( +XMLDocument )"pretty prints" XMLDocument on
+the current output stream.
+  Features of xml.pl
+  The xml/2 data structure has some useful properties.
+  Reusability
+  Using an "abstract" Prolog representation of XML, in which terms represent
+document "nodes", makes the parser reuseable for any XML application.
+  In effect, xml.pl encapsulates the application-independent tasks of document
+parsing and generation, which is essential where documents have components
+from more than one Namespace.
+  Same Structure
+  The Prolog term representing a document has the same structure as the
+document itself, which makes the correspondence between the literal
+representation of the Prolog term and the XML source readily apparent.
+  For example, this simple SVG image:
+  <?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/.../svg10.dtd"
+    [
+    <!ENTITY redblue "fill: red; stroke: blue; stroke-width: 1">
+    ]>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+ <circle cx=" 25 " cy=" 25 " r=" 24 " style="&redblue;"/>
+</svg>
+  ... translates into this Prolog term:
+  xml( [version="1.0", standalone="no"],
+    [
+    doctype( svg, public( "-//W3C//DTD SVG 1.0//EN", "http://www.w3.org/.../svg10.dtd" ) ),
+    namespace( 'http://www.w3.org/2000/svg', "",
+        element( svg,
+            [width="500", height="500"],
+            [
+            element( circle,
+                [cx="25", cy="25", r="24", style="fill: red; stroke: blue; stroke-width: 1"],
+                [] )
+            ] )
+        )
+    ] ).
+  Efficient Manipulation
+  Each type of node in an XML document is represented by a different Prolog
+functor, while data, (PCDATA, CDATA and Attribute Values), are left as
+"strings", (lists of character codes).
+  The use of distinct functors for mark-up structures enables the efficient
+recursive traversal of a document, while leaving the data as strings
+facilitates application specific parsing of data content (aka 
+Micro-parsing).
+  For example, to turn every CDATA node into a PCDATA node with tabs expanded
+into spaces:
+  
+cdata_to_pcdata( cdata(CharsWithTabs), pcdata(CharsWithSpaces) ) :-
+    tab_expansion( CharsWithTabs, CharsWithSpaces ).
+cdata_to_pcdata( xml(Attributes, Content1), xml(Attributes, Content2) ) :-
+    cdata_to_pcdata( Content1, Content2 ).
+cdata_to_pcdata( namespace(URI,Prefix,Content1), namespace(URI,Prefix,Content2) ) :-
+    cdata_to_pcdata( Content1, Content2 ).
+cdata_to_pcdata( element(Name,Attrs,Content1), element(Name,Attrs,Content2) ) :-
+    cdata_to_pcdata( Content1, Content2 ).
+cdata_to_pcdata( [], [] ).
+cdata_to_pcdata( [H1|T1], [H2|T2] ) :-
+    cdata_to_pcdata( H1, H2 ),
+    cdata_to_pcdata( T1, T2 ).
+cdata_to_pcdata( pcdata(Chars), pcdata(Chars) ).
+cdata_to_pcdata( comment(Chars), comment(Chars) ).
+cdata_to_pcdata( instructions(Name, Chars), instructions(Name, Chars) ).
+cdata_to_pcdata( doctype(Tag, DoctypeId), doctype(Tag, DoctypeId) ).
+
+  The above uses no 'cuts', but will not create any choice points with ground
+input.
+  Elegance
+  The resolution of entity references and the decomposition of the document
+into distinct nodes means that the calling application is not concerned with
+the occasionally messy syntax of XML documents.
+  For example, the clean separation of namespace nodes means that Namespaces,
+which are useful in combining specifications developed separately, have similar
+usefulness in combining applications developed separately.
+  The source code is available here. Although
+it is unsupported, please feel free to 
+e-mail queries and suggestions. We will respond as time allows.
+
+

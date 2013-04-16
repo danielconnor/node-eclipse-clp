@@ -1,0 +1,29 @@
+<HTML><HEAD><TITLE>colgen_instance(++ColgenInstance)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(colgen)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>colgen_instance(++ColgenInstance)</H1>
+Initialises the colgen instance ColgenInstance.
+<DL>
+<DT><EM>ColgenInstance</EM></DT>
+<DD>Colgen instance name (atom)
+</DD>
+</DL>
+<H2>Description</H2>
+  <P>
+  Initialises the colgen instance ColgenInstance. A colgen instance is an
+  instance of the colgen solver, to which colgen partial linear arithmetic
+  constraints can be posted, and to which an external LP solver can be
+  associated and used to optimise the posted constraints with respect
+  to some objective.
+  </P><P>
+  If ColgenInstance is not an already existing colgen instance, a new colgen
+  instance will be created and initialised. If it is an existing colgen
+  instance, and it is not currently being used (having no outstanding posted
+  constraints and no associated solver), it is effectively reinitialised.
+  Otherwise, the predicate aborts with an error. Note that a colgen instance
+  is a module, and each colgen instance can be associated with at most one
+  solver at any time and vice versa.
+  </P>
+  
+<H2>See Also</H2>
+<A HREF="../../lib/colgen/GE-2.html">>= / 2</A>, <A HREF="../../lib/colgen/ENE-2.html">=:= / 2</A>, <A HREF="../../lib/colgen/EL-2.html">=< / 2</A>, <A HREF="../../lib/colgen/SGE-2.html">$>= / 2</A>, <A HREF="../../lib/colgen/SE-2.html">$= / 2</A>, <A HREF="../../lib/colgen/SEL-2.html">$=< / 2</A>, <A HREF="../../lib/colgen/var_get-3.html">var_get / 3</A>
+</BODY></HTML>

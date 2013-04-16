@@ -1,0 +1,62 @@
+<HTML><HEAD><TITLE>delayed_goals(?GoalList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delayed_goals(?GoalList)</H1>
+Succeeds if GoalList is the list of all goals currently delayed.
+
+
+<DL>
+<DT><EM>?GoalList</EM></DT>
+<DD>List, nil or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies GoalList with the list of all goals currently delayed.  If there
+   are no goals delayed, GoalList is unified with nil.  The order of goals
+   in the list is implementation-dependent.  Note that if GoalList is nil,
+   the system only checks if there are any delayed goals and it does not
+   actually construct the list.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if GoalList does not unify with the list of currently delayed
+   goals.  It also fails when GoalList contains the right elements but in
+   different order.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>GoalList is instantiated but not to a list or nil.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: X &gt; 0, delayed_goals(L).
+
+    X = _d89
+    L = [_d89 &gt; 0]
+
+    Delayed goals:
+        _d89 &gt; 0
+    yes.
+    [eclipse]: X &gt; 0, delayed_goals([1 &gt; 0]).
+
+    X = 1
+    yes.
+
+Fail:
+    X &gt; 0, delayed_goals([]).
+
+Error:
+    delayed_goals(X &gt; 0).        (Error 5).
+    delayed_goals(0).            (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/delayed_goals-2.html">delayed_goals / 2</A>, <A HREF="../../kernel/suspensions/delayed_goals_number-2.html">delayed_goals_number / 2</A>, <A HREF="../../kernel/suspensions/subcall-2.html">subcall / 2</A>
+</BODY></HTML>

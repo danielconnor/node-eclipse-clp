@@ -1,0 +1,57 @@
+
+pause
+
+   The ECLiPSe session is suspended (the same as Control-Z at the top-level
+loop).
+
+
+
+Arguments
+
+Type
+   Operating System
+
+Description
+   Used to suspend the ECLiPSe session.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: [user].
+       w(X) :- write(X).
+       user compiled 92 bytes in 0.02 seconds
+      yes.
+      [eclipse]: w(bird).
+      bird
+      yes.
+      [eclipse]: pause.
+      Stopped (signal)
+      % fg                       % foreground command
+      eclipse
+      yes.
+      [eclipse]: w(duck).
+      duck
+      yes.
+      [eclipse]: ^D
+      bye
+      % eclipse
+      [eclipse]: w(cow).
+      calling an undefined procedure
+
+
+
+
+
+See Also
+   halt / 0

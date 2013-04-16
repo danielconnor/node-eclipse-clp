@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>insert(+Map0, ++Key, ?Value, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>insert(+Map0, ++Key, ?Value, -Map)</H1>
+Insert a key/value pair into a map, failing if the key already exists.
+<DL>
+<DT><EM>Map0</EM></DT>
+<DD>A map
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>A key to insert
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value corresponding to Key
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The map after insertion
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	This predicate inserts the key Key with corresponding value Value
+	into the map Map0, resulting in the map Map.  If the key Key is
+	already in the map, then the predicate fails.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails if Key already appears in Map0.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/det_insert-4.html">det_insert / 4</A>, <A HREF="../../lib_public/m_map/update-4.html">update / 4</A>, <A HREF="../../lib_public/m_map/det_update-4.html">det_update / 4</A>, <A HREF="../../lib_public/m_map/set-4.html">set / 4</A>
+</BODY></HTML>

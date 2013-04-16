@@ -1,0 +1,4 @@
+lib(viewable)
+
+   Module for the management of viewables: arrays for visualisation
+

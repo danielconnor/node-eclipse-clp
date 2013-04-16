@@ -1,0 +1,62 @@
+
+mutex(+MutexId, +Goal)
+
+   Equivalent to once(Goal) but with mutual exclusion among parallel workers.
+
+
+
+Arguments
+   +MutexId            Atom.
+   +Goal               Atom or compound term.
+
+Type
+   Control
+
+Description
+   This built-in can be used in parallel programs to implement mutual
+   exclusion between parallel workers.  A Goal that is called via mutex/2
+   can be sure that no parallel worker is executing at the same time any
+   goal that is protected by a mutex/2 with the same MutexId.
+
+
+   Note that in a side effect free program there is no need ever to worry
+   about mutual exclusion.  Only when side effects are involved (e.g.
+   read/1,2 and write/1,2, assert/1, setval/2, record/2 etc.)  it may be
+   necessary to acquire exclusive access to the common resource by using
+   mutex/2.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Goal fails.
+
+
+
+Exceptions
+     4 --- Goal is not instantiated.
+     5 --- Goal is not an atom or a compound term.
+
+Examples
+   
+    :- mutex_init(my_lock).
+
+    atomic_write_list(List) :-
+        % make sure the list is printed in one chunk
+        mutex(my_lock, write_list(List)).
+
+    write_list([]) :- nl.
+    write_list([X|Xs]) :- writeln(X), write_list(Xs).
+
+    [eclipse]: generate_lists_in_parallel(L),
+               atomic_write_list(L), fail.
+
+
+
+
+
+See Also
+   mutex_init / 1, once / 1

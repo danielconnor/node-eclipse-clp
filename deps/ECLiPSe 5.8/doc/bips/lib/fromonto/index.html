@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>library(fromonto)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(fromonto)</H1>
+Redirect input and output streams in a convenient way
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="from_file-2.html"><STRONG>+Goal from_file ++File</STRONG></A></DT>
+<DD>Redirect Goal's standard input stream to File</DD>
+<DT><A HREF="from_stream-2.html"><STRONG>+Goal from_stream ++Stream</STRONG></A></DT>
+<DD>Redirect Goal's standard input stream to Stream</DD>
+<DT><A HREF="from_string-2.html"><STRONG>+Goal from_string ++String</STRONG></A></DT>
+<DD>Redirect Goal's standard input stream to String</DD>
+<DT><A HREF="onto_file-2.html"><STRONG>+Goal onto_file ++File</STRONG></A></DT>
+<DD>Redirect Goal's standard output stream to File</DD>
+<DT><A HREF="onto_stream-2.html"><STRONG>+Goal onto_stream ++Stream</STRONG></A></DT>
+<DD>Redirect Goal's standard output stream to Stream</DD>
+<DT><A HREF="onto_string-2.html"><STRONG>+Goal onto_string ?String</STRONG></A></DT>
+<DD>Redirect Goal's standard output stream to String</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export op(800, yfx, [from_string, onto_string, from_stream, onto_stream, from_file, onto_file])</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: write(hello) onto_file scratch.
+    yes.
+    [eclipse 2]: read(X) from_file scratch.
+    X = hello
+    yes.
+    [eclipse 3]: read(X) from_string "s(a,2,[3])".
+    X = s(a, 2, [3])
+    yes.
+    [eclipse 4]: (write(hello), put(0' ), write(world)) onto_string S.
+    S = "hello world"
+    yes.
+    </PRE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, ECRC Munich
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2004/11/19 14:54:48 $
+</UL>
+<HR>Generated from fromonto.eci on Tue Jan 25 01:58:32 2005
+
+</BODY></HTML>

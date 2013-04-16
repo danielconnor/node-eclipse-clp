@@ -1,0 +1,66 @@
+
+floor(+Number, ?Result)
+
+   Unifies Result with the greatest integral value that is less or equal than
+Number and of the same numeric type as Number.
+
+
+
+Arguments
+   +Number             A number.
+   ?Result             A variable or number.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to floor(Number, Result) is
+   equivalent to
+
+    Result is floor(Number)
+
+   which should be preferred for portability.
+
+
+   In coroutining mode, if Number is a free variable, the call to floor/2
+   is delayed until this variable is instantiated.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated (non-coroutining mode only).
+     5 --- Result and Number are numbers of different types.
+    24 --- Number is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+
+Examples
+   
+Success:
+      floor(1.8, 1.0).
+      floor(-1.8, -2.0).
+      floor(5, 5).
+      floor(-6.4, Result).      (gives Result = -7.0)
+Fail:
+      floor(1.0, 0.0).
+Error:
+      floor(A, 6.0).                   (Error 4).
+      floor(0.5, 0).                   (Error 5).
+      floor(1, r).                     (Error 24).
+      floor(4 + 2.3, 6.0).             (Error 24).
+
+
+
+
+
+See Also
+   is / 2

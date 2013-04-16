@@ -1,0 +1,12 @@
+
++Goal from_file ++File
+
+   Redirect Goal's standard input stream to File
+
+Type
+   library(fromonto)
+
+Description
+Equivalent to once(Goal), with input redirected to File.
+
+

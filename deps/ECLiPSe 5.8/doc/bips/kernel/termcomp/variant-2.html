@@ -1,0 +1,48 @@
+<HTML><HEAD><TITLE>variant(?Term1, ?Term2)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Comparing and Sorting</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>variant(?Term1, ?Term2)</H1>
+Succeeds if Term1 is a variant of Term2.
+
+
+<DL>
+<DT><EM>?Term1</EM></DT>
+<DD>An arbitrary term.
+</DD>
+<DT><EM>?Term2</EM></DT>
+<DD>An arbitrary term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Succeeds if the given terms are equal in the sense that all
+   ground instantiations in Term1 are also instantiations in Term2 and vice
+   versa.  The result is undefined if Term1 and Term2 share variables.  No
+   unification is performed.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Term1 is not a variant of Term2.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H2>Examples</H2>
+<PRE>
+   Success:
+   variant(1,1).
+   variant(X,Y).
+   variant(f(a,b),f(a,b)).
+   variant(f(a,X),f(a,Y)).
+   variant(f(X,Y),f(Y,X)).
+   variant([X,2], [Y,2]).
+   Fail:
+   variant(f(a,b),f(a,Y)).
+   variant(f(a,X),f(a,b)).
+   variant(f(X,Y),f(Z,Z)).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/instance-2.html">instance / 2</A>, <A HREF="../../kernel/termcomp/compare_instances-3.html">compare_instances / 3</A>, <A HREF="../../kernel/termcomp/prune_instances-2.html">prune_instances / 2</A>
+</BODY></HTML>

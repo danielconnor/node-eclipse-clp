@@ -1,0 +1,78 @@
+<HTML><HEAD><TITLE>xml_parse(+Controls, ?Chars, ?Document)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(xml)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>xml_parse(+Controls, ?Chars, ?Document)</H1>
+Parse or generate XML documents
+<DL>
+<DT><EM>Controls</EM></DT>
+<DD>List of options
+</DD>
+<DT><EM>Chars</EM></DT>
+<DD>List of characters (XML text)
+</DD>
+<DT><EM>Document</EM></DT>
+<DD>Document as structured term
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>xml_parse(+, +, -)
+<LI>xml_parse(+, -, +)
+</UL>
+<H2>Description</H2>
+<PRE>
+xml_parse( {+Controls}, +?Chars, ?+Document ) parses Chars to/from a data
+structure of the form xml(&lt;atts&gt;, &lt;content&gt;). &lt;atts&gt; is a list of
+&lt;atom&gt;=&lt;string&gt; attributes from the (possibly implicit) XML signature of the
+document. &lt;content&gt; is a (possibly empty) list comprising occurrences of :
+
+pcdata(&lt;string&gt;)		:	Text
+comment(&lt;string&gt;)		:	An xml comment;
+element(&lt;tag&gt;,&lt;atts&gt;,&lt;content&gt;)	:	&lt;tag&gt;..&lt;/tag&gt; encloses &lt;content&gt;
+				:       &lt;tag /&gt; if empty
+instructions(&lt;atom&gt;, &lt;string&gt;)	:	Processing &lt;? &lt;atom&gt; &lt;params&gt; ?&gt;
+cdata( &lt;string&gt; )		:	&lt;![CDATA[ &lt;string&gt; ]]&gt;
+doctype(&lt;atom&gt;, &lt;doctype id&gt;)	:	DTD &lt;!DOCTYPE .. &gt;
+
+The conversions are not completely symmetrical, in that weaker XML is
+accepted than can be generated. Specifically, in-bound (Chars -&gt; Document)
+does not  require strictly well-formed XML. Document is instantiated to the
+term malformed(Attributes, Content) if Chars does not represent well-formed
+XML. The Content of a malformed/2 structure can contain:
+
+unparsed( &lt;string&gt; )		:	Text which has not been parsed
+out_of_context( &lt;tag&gt; )		:	&lt;tag&gt; is not closed
+
+in addition to the standard term types.
+
+Out-bound (Document -&gt; Chars) parsing _does_ require that Document defines
+strictly well-formed XML. If an error is detected a 'domain' exception is
+raised.
+
+The domain exception will attempt to identify the particular sub-term in
+error and the message will show a list of its ancestor elements in the form
+&lt;tag&gt;{(id)}* where &lt;id&gt; is the value of any attribute _named_ id.
+
+At this release, the Controls applying to in-bound (Chars -&gt; Document)
+parsing are:
+
+extended_characters(&lt;bool&gt;)	:	Use the extended character
+				:	entities for XHTML (default true)
+
+format(&lt;bool&gt;)			:	Strip layouts when no character data
+				:	appears between elements.
+				:	(default true)
+
+[&lt;bool&gt; is one of 'true' or 'false']
+
+For out-bound (Document -&gt; Chars) parsing, the only available option is:
+
+format(&lt;Bool&gt;)			:	Indent the element content
+				:	(default true)
+
+Different DCGs for input and output are used because input parsing is
+more flexible than output parsing. Errors in input are recorded as part
+of the data structure. Output parsing throws an exception if the document
+is not well-formed, diagnosis tries to identify the specific culprit term.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/xml/xml_parse-2.html">xml_parse / 2</A>
+</BODY></HTML>

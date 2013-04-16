@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>call_timeout_safe(+Goal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(timeout)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>call_timeout_safe(+Goal)</H1>
+Execute Goal, deferring the execution of an interrupting timeout predicate TimeOutGoal until Goal completes.
+<DL>
+<DT><EM>Goal</EM></DT>
+<DD>Goal to execute
+</DD>
+</DL>
+<H2>Description</H2>
+
+<P>
+    Metacall Goal, ensuring that its execution is not interrupted and
+    preemptively aborted by a timeout of the timeout/3 or timeout/7 predicate.
+    If a timeout would have occurred during the execution of Goal, it is
+    effectively deferred until Goal completes.
+<P>
+    The predicate can be used within a computation which is subject to timeouts,
+    to ensure that subgoals which should be executed as an atomic sequence
+    preserve this atomicity at the cost of delaying the execution
+    of TimeOutGoal.
+<P>
+    In all other respects the semantics of call_timeout_safe/1 is the same
+    as call/1.
+    
+<H3>Resatisfiable</H3>
+If Goal is resatisfiable.
+<H2>Examples</H2>
+<PRE>    ?- timeout(call_timeout_safe((writeln('Goal started'), 
+                               sleep(5), 
+                               writeln('Goal completed'))),
+            3, writeln('Timeout expired!')).
+    Goal started
+    Goal completed
+    Timeout expired!
+    Yes (0.01s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/timeout/timeout-3.html">timeout / 3</A>, <A HREF="../../lib/timeout/timeout-7.html">timeout / 7</A>
+</BODY></HTML>

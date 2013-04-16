@@ -1,0 +1,73 @@
+
+arg(+N, +Term, ?Arg)
+
+   Succeeds if Arg is the Nth argument of the compound term Term.
+
+
+
+Arguments
+   +N                  Integer not greater than the arity of Term, or a list.
+   +Term               Compound term.
+   ?Arg                Prolog term.
+
+Type
+   Term Manipulation
+
+Description
+   If Term is a structure, unifies Arg with the Nth argument of a structure
+   Term.
+
+
+   If Term is a list (N must be either the integer 1 (for the head) or 2
+   (for the tail), unifies Arg with the head or tail of the list.  This is
+   a consequence of the fact that ./2 is the list functor and
+   .(a,.(b,.(c,[]))) is the same as [a,b,c].
+
+
+   If N is a list of integers and Term is a nested structure, then Arg
+   is the subterm of Term described by this list of integers.
+   E.g. arg([2,1,3], Term, Arg) is the same as arg(2, Term, T1),
+   arg(1, T1, T2), arg(3, T2, Arg).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Arg does not unify with the Nth argument of Term.
+
+
+
+Exceptions
+     4 --- Either N or Term (or both) is not instantiated    (non-coroutine mode only).
+     5 --- N is instantiated, but not to an integer or list of integers.
+     5 --- Term is instantiated, but not to a compound term.
+     6 --- N is an integer less than 1 or greater than the arity of    Term.
+
+Examples
+   
+Success:
+      arg(2,foo(boo,moo),moo).
+      arg(2,.(a,b,c),b).
+      arg(2,.(a,b),b).
+      arg(2,term1(term2(a,b),c),c).
+      arg(2,f(a,f(a,b)),f(X,Y)).        (gives X=a; Y=b).
+      arg(2,[a,b,c],[b,c]).
+      arg(2,.(a,.(b,.(c,[]))),[b,c]).
+      arg(2,[1],[]).
+      arg([2,1], f(a,g(b,c)), X).       (gives X=b).
+Fail:
+      arg(2,f(a,f(a,b)),f(X,X)).
+Error:
+      arg(N,f(1,2),1).         (Error 4).
+      arg(N,[],X),             (Error 5).
+      arg(0,foo(boo,moo),moo). (Error 6).
+      arg(3,foo(boo,moo),moo). (Error 6).
+
+
+
+
+See Also
+   functor / 3, =.. / 2, subscript / 3

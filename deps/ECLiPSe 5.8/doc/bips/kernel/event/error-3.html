@@ -1,0 +1,108 @@
+<HTML><HEAD><TITLE>error(+EventId, ?Culprit, +Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>error(+EventId, ?Culprit, +Module)</H1>
+An error EventId is raised with Culprit and context module Module, and the corresponding error handler is executed
+<DL>
+<DT><EM>+EventId</EM></DT>
+<DD>Atom, integer or structure with functor default/1.
+</DD>
+<DT><EM>?Culprit</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   The event or error EventId with Culprit as its culprit goal is raised.
+   EventId is either an integer error number, or an atomic event name.
+   The error handler which is associated with EventId is invoked,
+   with its first argument set to EventId, its second argument to Culprit,
+   its third argument to Module, and its fourth argument to the context module
+   in which error/3 is invoked. If the handler has less than four arguments,
+   the extra information is lost.
+<P>
+   This simulates an occurrence of the error EventId inside a call
+   to Culprit in Module.  The valid error numbers are those returned by
+   current_error/1.  Event names can be any atom as long as an event handler
+   has been defined for them.
+<P>
+   If EventId is a structure with functor default/1, the structure argument
+   is taken as the error number and the default handler is executed, even
+   if the error handler has been redefined using set_event_handler/2.
+   This is useful for writing user error handlers.
+<P>
+   If the event handler succeeds, possibly binding some variables
+   inside Culprit, then error/3 succeeds as well. If the handler fails
+   or calls exit_block/1, then so does error/3.
+<P>
+   Not that when the error handler ignores the module (ie.  has arity less
+   than three), then error/2 and error/3 are equivalent.
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the handler fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>EventId is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>EventId is not an error specification.
+<DT><EM>(6) out of range </EM>
+<DD>EventId is a number but not a valid error number.
+<DT><EM>(32) no handler for event </EM>
+<DD>No handler is associated to EventId
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+
+    ?- error(68, length(X, Y), lists).
+    calling an undefined procedure eclipse:length(X, Y) in module lists
+
+   % writing an alternative error handler for undefined predicates:
+    ?- arg(1,2).           % we want to change this
+    calling an undefined procedure arg(1, 2) in module eclipse
+
+    ?- [user].             % compile the new handler
+
+     undef_handler(_, Goal, _Context, Module) :-
+            functor(Goal, Name, BadArity),
+            (
+                current_predicate(Name/Arity)@Module
+            ;
+                current_built_in(Name/Arity)@Module
+            ),
+            !,
+            printf("%w does not exist, but there is %w\n",
+                               [Name/BadArity, Name/Arity]),
+            fail.
+     undef_handler(Err, Goal, Context, Module) :-
+            error(default(Err), Goal, Context, Module).
+     user compiled 592 bytes in 0.02 seconds
+    yes.
+
+    ?- set_event_handler(68, undef_handler/4).
+    yes.
+
+    ?- arg(1,2).            % check if it works
+    arg / 2 does not exist, but there is arg / 3
+
+    no.
+
+Error:
+      error(N,dummy(1),eclipse).    (Error 4).
+      error(5.0,dummy(1),eclipse).  (Error 5).
+      error(-2,dummy(1),eclipse).   (Error 6).
+      error(95,dummy(1),eclipse).   (Error 6).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/error-2.html">error / 2</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/current_error-1.html">current_error / 1</A>, <A HREF="../../kernel/event/error_id-2.html">error_id / 2</A>, <A HREF="../../kernel/event/get_event_handler-3.html">get_event_handler / 3</A>, <A HREF="../../kernel/event/reset_event_handler-1.html">reset_event_handler / 1</A>, <A HREF="../../kernel/event/reset_error_handlers-0.html">reset_error_handlers / 0</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>
+</BODY></HTML>

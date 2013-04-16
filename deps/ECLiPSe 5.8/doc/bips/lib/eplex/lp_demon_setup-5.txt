@@ -1,0 +1,170 @@
+
+lp_demon_setup(+Objective, ?Cost, ++ListOfOptions, ++TriggerModes, -Handle)
+
+   Setup the external solver as a simplex demon.
+
+Arguments
+   Objective           Objective function: min(CostExpr) or max(CostExpr)
+   Cost                Variable bounded by the optimal solution
+   ListOfOptions       List of solver options
+   TriggerModes        List of conditions for re-triggering solver
+   Handle              handle to solver state
+
+Type
+   library(eplex)
+
+Description
+
+  Setup the external solver as a simplex demon. A simplex demon collects
+  linear constraints and re-solves the problem whenever the triggering
+  conditions in TriggerModes are met.
+
+
+  Declaratively, this can be seen as a compound constraint representing all
+  the individual linear constraints that have been set so far and are going
+  to be set up later.  Operationally, the delayed constraints are collected
+  and an external solver is set up (as with lp_setup/4).  Then the problem
+  is solved once initially (if initial_solve option is yes) and a
+  delayed goal lp_demon is set up which will re-trigger the solver when 
+  certain  conditions are met.
+
+
+  CostExpr is a linear cost expression (or quadratic, if supported
+  by the external solver).
+
+
+  Handle refers to the created solver state (as in lp_setup/4 or
+  lp_read/3 described below). It can be used to access and modify the state
+  of the solver, retrieve solution information etc. 
+
+
+  Unlike with lp_solve/2, Cost will not be instantiated to a
+  solution's cost, but only be bounded by it (if the solution is optimal):
+  For a minimization problem, each solution's cost becomes a lower bound,
+  for maximization an upper bound on Cost.  This technique allows for
+  repeated re-solving with reduced bounds or added constraints. Note that
+  Cost is not automatically made a problem variable (it can be a problem
+  variable if there are constraints that involve it), and thus may not have
+  bounds associated with in. In order for the bounds information not to be
+  lost, some bounds should be given to Cost (e.g. making it a
+  problem variable (but this might introduce unecessarly self-waking on
+  bounds change), or via another solver with bounds (e.g. ic)).
+
+  ListOfOptions is a list of solver options as described for
+  lp_setup/4. In addition, the following extra options are also available:
+   
+
+
+collect_from(+Pool)
+    Specifies if this solver state should be associated with an eplex
+    instance. If Pool is none, then the solver is not associated
+    with an eplex instance. If Pool is pool(Instance), where
+    Instance is the (atomic) name of an existing eplex instance, then this
+    eplex instance would be associated with the solver state, i.e. when the
+    solver is invoked, it will collect constraints posted to
+    Instance.  Note that Instance must not be associated
+    with any other solver state already.
+
+    The default value for Pool is pool(eplex) (for backward
+    compatibility).
+
+
+initial_solve(+YesNo)
+    Specifies if an initial solve (call to the external solver) should
+    be performed immediately after problem setup.
+    YesNo is one of the atoms yes or no, the default is 
+    yes if any trigger condition is specified in TriggerModes, 
+    no if no trigger condition is specified.
+
+   
+
+
+  TriggerModes specifies under which conditions the solver demon
+  will be re-triggered. It can be a list of the following specifiers
+
+
+
+  inst
+  re-trigger if a problem variable gets instantiated.
+
+  ModuleName:Index
+  re-trigger when the  suspension list given by ModuleName:Index is woken
+  for any of the problem variables.
+  The format for ModuleName:Index is the same as for specifying
+  the suspension list in suspend/3,4.
+
+  deviating_inst
+  re-trigger if a problem variable gets instantiated
+      to a value that differs from its lp-solution more than a tolerance.
+
+  bounds
+  re-trigger each time a variable bound for the solver instance changes.
+
+  deviating_bounds
+  re-trigger each time a variable's solver instance bound changes
+      such that its lp-solution gets excluded more than a tolerance.
+
+  new_constraint
+  re-trigger each time a new (arithematic or integral) constraint is
+      added to the solver instance. Note that integral constraint on new 
+      problem variables will not re-trigger.
+
+  trigger(Atom)
+  re-trigger each time the symbolic trigger Atom is pulled by invoking 
+      schedule_suspensions/1
+
+  pre(Goal)
+  an additional condition to be used together with other triggers. When 
+      the demon is triggered, it first executes PreGoal. Only if 
+      that succeeds, does the appropriate external solver get invoked.
+      This provides a way of reducing the number of (possibly expensive)
+      solver invocations when given preconditions are not met.
+
+  post(Goal)
+  this is not a trigger condition, but specifies a goal to be executed
+      after solver success, but before the Cost variable gets
+      constrained. It is intended as a hook for exporting solution
+      information, e.g. copying solutions from the solver state into
+      variable attributes (eg. tentative value), or computing weights for
+      labeling heuristics from the solver state.  
+  suspension(Susp)
+  this is not a trigger condition, but instead is used to access the 
+      demon used to trigger the solver. Susp is instantiated to
+      the suspension that triggers the solver: by waking Susp, the solver
+      is triggered. Susp is a demon in that it stays around after being
+      woken. Accessing Susp allows the user to specify orbitally conditions 
+      for triggering the solver.
+
+
+  The tolerances mentioned can be specified in lp_setup/4 or lp_set/3
+  as demon_tolerance.
+
+
+  If several trigger conditions are specified, then any of them will trigger
+  the solver.
+
+
+  When a solver demon runs frequently on relatively small problems,
+  it can be important for efficiency to switch off the presolve option
+  to reduce overheads.
+
+
+  The solver demon calls lp_solve/2 when it wakes up. See the description
+  of lp_solve/2 for the handling of exceptions.
+
+  Note: Some external solvers need to write temporary files when they
+  are solving a problem. These are written to the temporary directory
+  specified in ECLiPSe's tmp_dir setting (get_flag/2, set_flag/2).
+
+
+Examples
+      Some common invocations patterns for this predicate are the following.
+   The first triggers the solver only on instantiation of variables to
+   values that don't fit with the simplex solution:
+
+      lp_demon_setup(min(Expr), C, [], [deviating_inst], H)
+
+
+
+See Also
+   lp_solve / 2, lp_set / 3, lp_setup / 4, solution_out_of_range / 1, schedule_suspensions / 1, library(constraint_pools)

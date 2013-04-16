@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>\+ +Goal</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>\+ +Goal</H1>
+Succeeds if Goal cannot be satisfied.  Uses negation as failure (synonym of not/1).
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Goal.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to fail if the goal Goal can be satisfied.  Uses the standard
+   Prolog form of negation as failure.
+
+<P>
+   May be used to check whether a call Goal succeeds without binding
+   variables, the call \+ \+ Goal can be used.
+
+<P>
+   Note that:
+
+<P>
+   !/0 does not cut through \+/1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal succeeds.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      \+ fail.
+      \+ 1 == 2.
+      \+ X == 1.
+      \+ \+ X = 1.
+          % does not bind X
+Fail:
+      \+ X = 1.
+      \+ true.
+      \+ 3 == 3.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/-G-2.html">-> / 2</A>, <A HREF="../../kernel/control/not-1.html">not / 1</A>, <A HREF="../../kernel/control/T-1.html">~ / 1</A>
+</BODY></HTML>

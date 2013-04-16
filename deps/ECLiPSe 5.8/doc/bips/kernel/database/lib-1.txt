@@ -1,0 +1,64 @@
+
+lib(+LibraryName)
+
+   Makes the library LibraryName available in the current module if not loaded
+already.
+
+
+
+Arguments
+   +LibraryName        String or atom.
+
+Type
+   Predicate Database and Compiler
+
+Description
+
+   Used to load the library LibraryName into the system if it has not
+   already been loaded.  The currently used Prolog suffix(es) is appended
+   to LibraryName and the resulting library is loaded if it exists.
+
+   The search path used when loading libraries is specified by the global
+   flag library_path using the get_flag/2 and set_flag/2 predicates.  This
+   flag contains a list of strings containing the pathnames of the
+   directories to be searched when loading a library file.  User libraries
+   may be added to the system simply by copying the desired file into the
+   ECLiPSe library directory.  Alternatively the library_path flag may be
+   updated to point at a number of user specific directories.
+
+   lib(Lib) is identical to use_module(library(Lib)).
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- LibraryName is not instantiated.
+     5 --- LibraryName is neither a string nor an atom.
+    80 --- Library file does not contain a matching module.
+   173 --- Library file LibraryName not found.
+
+Examples
+   
+Success:
+   [eclipse]: lib(sorts).
+   loading the library /usr/local/ECLIPSE/lib/sorts.pl
+   yes.
+   [eclipse]: lib(sorts).
+   yes.              % library already loaded - succeeds
+Error:
+   lib(X).            (Error 4).
+   lib(1).            (Error 5).
+   lib(no_lib).       (Error 173).
+
+
+
+
+See Also
+   ensure_loaded / 1, existing_file / 4, get_flag / 2, set_flag / 2, use_module / 1

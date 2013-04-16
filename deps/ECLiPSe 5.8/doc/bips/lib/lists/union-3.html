@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>union(+List1, +List2, ?Union)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>union(+List1, +List2, ?Union)</H1>
+Succeeds if Union is the list which contains the union of elements in List1
+and those in List2.
+
+
+<DL>
+<DT><EM>+List1</EM></DT>
+<DD>List.
+</DD>
+<DT><EM>+List2</EM></DT>
+<DD>List.
+</DD>
+<DT><EM>?Union</EM></DT>
+<DD>List or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to create the list of elements in List1 and not in List2, added to
+   those in List2.
+<P>
+   The definition of this Prolog library predicate is:
+<PRE>
+union([], L, L).
+union([Head|L1tail], L2, L3) :-
+        memberchk(Head, L2),
+        !,
+        union(L1tail, L2, L3).
+union([Head|L1tail], L2, [Head|L3tail]) :-
+        union(L1tail, L2, L3tail).
+</PRE>
+   This predicate does not perform any type testing functions.
+<P>
+   This predicate works properly for set operations only, so repeated
+   elements and variable elements should not be used.
+	
+<H3>Fail Conditions</H3>
+   Fails if Union does not unify with the list which contains the union of
+   elements in List1 and those in List2.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      union([1,2,3],[1,3],L).     (gives L=[2,1,3]).
+
+Fail:
+      union([1,2,3,2],[1,3],[1,2,3]).  % repeated elements
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/lists/subtract-3.html">subtract / 3</A>, <A HREF="../../lib/lists/intersection-3.html">intersection / 3</A>
+</BODY></HTML>

@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Writing Good CHR Programs</TITLE>
+<META NAME="description" CONTENT="Writing Good CHR Programs">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node51.html">
+<LINK REL="previous" HREF="node49.html">
+<LINK REL="up" HREF="node43.html">
+<LINK REL="next" HREF="node51.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1577"
+ HREF="node51.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1573"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1567"
+ HREF="node49.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1575"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1578"
+ HREF="node51.html">Debugging CHR Programs</A>
+<B> Up:</B> <A NAME="tex2html1574"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1568"
+ HREF="node49.html">Labeling</A>
+ &nbsp <B>  <A NAME="tex2html1576"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1579"
+ HREF="node50.html#SECTION00871000000000000000">Choosing CHRs</A>
+<LI><A NAME="tex2html1580"
+ HREF="node50.html#SECTION00872000000000000000">Optimizations</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00870000000000000000">
+Writing Good CHR Programs</A>
+</H1>
+
+<P>
+This section gives some programming hints. For maximum efficiency of
+your constraint handler, see also the subsection on options,
+especially on <TT>check_guard_bindings</TT><A NAME="3219"></A> and the <TT>debug_compile</TT><A NAME="3221"></A><A NAME="3222"></A><A NAME="3223"></A>
+flag.
+
+<P>
+
+<H2><A NAME="SECTION00871000000000000000">
+Choosing CHRs</A>
+</H2>
+
+<P>
+Constraint handling rules for a given constraint system can often be
+derived from its definition in formalisms such as inference rules,
+rewrite rules, sequents, formulas expressing axioms and theorems.
+CHRs can also be found by first considering
+special cases of each constraint and then looking at interactions of
+pairs of constraints sharing a variable. Cases that don't occur in the
+application can be ignored.
+CHRs can also improve application programs by turning
+certain predicates into constraints to provide ``short-cuts''
+(lemmas). For example, to the predicate <TT>append/3</TT> one can add
+<TT>append(L1,[],L2) &lt;=&gt; L1=L2</TT> together with <TT>label_with<A NAME="3227"></A>
+append(L1,L2,L3) if true</TT>.  
+
+<P>
+Starting from an executable specification, the rules can then be
+refined and adapted to the specifics of the application. <EM>Efficiency can be improved</EM> by strengthening or weakening the guards to
+perform simplification as early as needed and to do the ``just right''
+amount of propagation.  Propagation rules can be expensive, because no
+constraints are removed.  If the speed of the final handler is not
+satisfactory, it can be rewritten using meta-terms or auxiliary C
+functions.
+
+<P>
+The rules for a constraint can be scattered across the <TT>chr</TT> file
+as long as they are in the same module.
+The rules are tried in <EM>some order</EM> determined by
+the CHR compiler. Due to optimizations this order is not necessarily
+the textual order in which the rules where written.  In addition, the
+incremental addition of constraints at run-time causes constraints to
+be tried for application of rules in some dynamically determined
+order.
+
+<P>
+
+<H2><A NAME="SECTION00872000000000000000">
+Optimizations</A>
+</H2>
+
+<P>
+Single-headed rules should be preferred to two-headed rules which
+involve the expensive search for a partner constraint.
+Rules with <EM>two heads can be avoided</EM> by changing the ``granularity'' of
+the constraints. For example, assume one wants to express that <EM>n</EM>
+variables are different from each other.  It is more efficient to have
+a single constraint <TT>all_different(List_of_n_Vars)</TT> than
+<I>n</I><SUP>2</SUP>
+inequality constraints (see handler <TT>domain.chr</TT>).  However, the
+extreme case of having a single constraint modeling the whole
+constraint store will usually be inefficient.
+
+<P>
+<EM>Rules with two heads</EM> are more efficient, if the two heads of the
+rule share a variable (which is usually the case). Then the search for
+a partner constraint has to consider less candidates.  Moreover, two
+rules with identical (or sufficiently similar) heads can be merged
+into one rule so that the search for a partner constraint is only
+performed once instead of twice.
+
+<P>
+<EM>Rules with more than two heads</EM> are not allowed for efficiency
+reasons.  If needed, they can usually be written as several rules with
+two heads.  For example, in the handler for set constraints <TT>set.chr</TT>, the propagation rule:
+<PRE>
+set_union(S1, S2, S), set(S1, S1Glb, S1Lub), set(S2, S2Glb, S2Lub) ==&gt;
+        s_union(S1Glb, S2Glb, SGlb),
+        s_union(S1Lub, S2Lub, SLub),
+        set(S, SGlb, SLub).
+</PRE>
+is translated into:
+<PRE>
+set_union(S1, S2, S), set(S1, S1Glb, S1Lub) ==&gt;
+        '$set_union'(S2, S1, S1Glb, S1Lub, S).
+set(S2, S2Glb, S2Lub) \ '$set_union'(S2, S1, S1Glb, S1Lub, S) &lt;=&gt;
+        s_union(S1Glb, S2Glb, SGlb),
+        s_union(S1Lub, S2Lub, SLub),
+        set(S, SGlb, SLub).
+</PRE>
+
+<P>
+As <EM>guards</EM><A NAME="3244"></A> are tried frequently, they should be
+simple <EM>tests</EM> not involving side-effects. For efficiency and
+clarity reasons, one should also avoid using user-defined constraints
+in guards.  Currently, besides conjunctions, disjunctions are allowed
+in the guard, but they should be used with care.  The use of other
+control built-in predicates of ECLiPSe is discouraged.  Negation and
+if-then-else can be used if their first arguments are either <EM>simple goals</EM> (see ECLiPSe user manual) or goals that don't touch
+global variables. Similarly, goals preceding a cut must fulfill this
+condition.
+<EM>Built-in constraints</EM> (e.g. finite domains, rational arithmetic)
+work as tests only in the current implementation.
+Head matching is more efficient than
+explicitly checking equalities in the guard (which requires the <TT>check_guard_bindings</TT><A NAME="3249"></A> flag to be on).
+In the current
+implementation, local variables (those
+that do not occur in the heads) can be shared between the guard and
+the body. 
+
+<P>
+<EM>Several handlers can be used simultaneously if</EM> they don't share
+user-defined constraints. The current implementation will not work
+correctly if the same constraint is defined in rules of different
+handlers that have been compiled separately. In such a case, the
+handlers must be merged ``by hand''. This means that the source code
+has to be edited so that the rules for the shared constraint are
+together (in one module). Changes may be necessary (like
+strengthening guards) to avoid divergence or loops in the computation.
+
+<P>
+<EM>Constraint handlers</EM> can be tightly integrated with constraints
+defined with <EM>other extensions of ECLiPSe</EM> (e.g. meta-terms) by using
+the ECLiPSe built-in predicate <TT>notify_constrained(Var)</TT> to notify
+ECLiPSe each time a variable becomes more constrained.
+This happens if a user-defined constraint is called for the first time
+or if a user-defined constraint is rewritten by a CHR into a stronger
+constraint with the same functor.
+
+<P>
+For <EM>pretty printing</EM> of the user-defined constraints in the answer at
+the top-level and debuggers, ECLiPSe macro transformation (for write
+mode) can be used.  This is especially useful when the constraints
+have some not so readable notation inside the handler.  For an
+example, see the constraint handler bool <TT>bool.chr</TT>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1577"
+ HREF="node51.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1573"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1567"
+ HREF="node49.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1575"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1578"
+ HREF="node51.html">Debugging CHR Programs</A>
+<B> Up:</B> <A NAME="tex2html1574"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1568"
+ HREF="node49.html">Labeling</A>
+ &nbsp <B>  <A NAME="tex2html1576"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

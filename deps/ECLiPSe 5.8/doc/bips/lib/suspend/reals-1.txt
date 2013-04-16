@@ -1,0 +1,28 @@
+
+reals(?Vars)
+
+   Constrain Vars to be a number or list of numbers
+
+Arguments
+   Vars                List of variables or numbers
+
+Type
+   library(suspend)
+
+Description
+    This constraint suspends until its argument is ground. It then succeeds
+    iff Vars is a number or a list of numbers (any type).
+
+Fail Conditions
+   Vars contains non-numbers.
+
+Examples
+   
+    ?- reals(L), L = [3.4, 7].
+    L = [3.4, 7]
+    Yes (0.00s cpu)
+
+    
+
+See Also
+   :: / 2, $:: / 2, integers / 1

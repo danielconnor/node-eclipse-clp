@@ -1,0 +1,12 @@
+
++Goal onto_string ?String
+
+   Redirect Goal's standard output stream to String
+
+Type
+   library(fromonto)
+
+Description
+Equivalent to once(Goal), with output redirected to String.
+
+

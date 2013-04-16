@@ -1,0 +1,58 @@
+
+is_built_in(+PredSpec)
+
+   Succeeds if PredSpec is a system built-in predicate.
+
+
+
+Arguments
+   +PredSpec           Term of the form Atom/Integer.
+
+Type
+   Obsolete
+
+Description
+   Used to test whether PredSpec is a ECLiPSe built-in predicate.
+
+
+   This predicate only succeeds for a PredSpec which is known to be a
+   built-in.  Undefined Predspec's raise an exception.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if PredSpec is not a built-in predicate.
+
+
+
+Exceptions
+     4 --- PredSpec is not fully instantiated.
+     5 --- PredSpec is not in the format Atom/Integer.
+    60 --- PredSpec is not a defined procedure.
+
+Examples
+   
+Success:
+   is_built_in(nl/0).
+   is_built_in(write/1).
+
+Fail:
+   is_built_in(append/3). % append/3 is a library
+                          % predicate, not a built-in.
+Error:
+   is_built_in(X).           (Error 4).
+   is_built_in(a/X).         (Error 4).
+   is_built_in(a).           (Error 5).
+   is_built_in(1).           (Error 5).
+   is_built_in(undefined/0). (Error 60).
+
+
+
+
+
+See Also
+   current_built_in / 1, is_predicate / 1, get_flag / 3

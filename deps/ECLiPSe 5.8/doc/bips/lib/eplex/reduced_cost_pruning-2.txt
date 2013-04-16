@@ -1,0 +1,36 @@
+
+reduced_cost_pruning(+Handle, ?GlobalCost)
+
+   Prune bounds of all problem variables based on their reduced costs
+
+Arguments
+   Handle              Handle to a (solved) solver state
+   GlobalCost          Bounded global cost variable
+
+Type
+   library(eplex)
+
+Description
+
+    
+    Handle is a problem handle referring to the linear relaxation of
+    a more complex problem. GlobalCost is the overall cost variable
+    of the complex problem.
+    
+    This predicate tries to prune the bounds of all variables that
+    occur in the linear relaxation, based on their reduced costs,
+    the optimum of the relaxation, and the currently known bounds
+    (lower if maximizing, upper if minimizing) on the global cost.
+    
+    This predicate should be called just after the Handle has been solved.
+    In particular, it can be used as the post-goal in an lp-demon.
+    The solver should have been set up with the reduced_cost(yes)
+    option.
+    
+
+
+Fail Conditions
+   None
+
+See Also
+   lp_demon_setup / 5

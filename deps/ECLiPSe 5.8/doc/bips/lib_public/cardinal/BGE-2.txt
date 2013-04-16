@@ -1,0 +1,46 @@
+
+?SetVar1 `>= ?SetVar2
+
+   Set inclusion constraint
+
+Arguments
+   SetVar1             A set variable.
+   SetVar2             A variable.
+
+Type
+   library(cardinal)
+
+Description
+Constrain sets SetVar1 and SetVar2 so that SetVar1 contains SetVar2.
+		If SetVar2 is not yet a set domain variable it is declared as such, using
+		SetVar1's lub.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if SetVar1 can not contain SetVar2.
+
+Examples
+   
+?- [7,8,9] `>= [7,9], [7,8,9] `>= [7,8,9], [7,8,9] `>= [], [7,8,9] `>= [9].
+yes
+
+?- [1,7,9] `>= [7,8].
+no
+
+?- X `:: [a]+[b,c,d], Y `:: []+[a,b,c,d,e,f], X `>= Y, poss(Y,PY).
+PY = [a,b,c,d]
+
+?- X `:: [a]+[b,c,d], Y `:: []+[a,b,c,d,e,f], Y `>= X, glb(Y,GY).
+GY = [a]
+
+?- X `:: [a]+[b,c,d,z]:CX, Y `:: []+[a,b,c,d,e,f]:CY, X `>= Y, CX=2, fd:maxdomain(CY,MaxCY).
+MaxCY = 2
+
+?- X `:: [a]+[b,c,d,z]:CX, Y `:: []+[a,b,c,d,e,f]:CY, X `>= Y, CY=3, fd:mindomain(CX,MinCX).
+MinCX = 3.
+
+
+See Also
+   `< / 2, `= / 2

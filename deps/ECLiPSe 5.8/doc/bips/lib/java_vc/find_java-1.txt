@@ -1,0 +1,18 @@
+
+find_java(-JavaLocation)
+
+   Determine the path of the known Java installation.
+
+Arguments
+   JavaLocation        A string: the path of the known Java Runtime Environment installation.
+
+Type
+   library(java_vc)
+
+Description
+If this predicate succeeds, JavaLocation is instantiated to the root directory of the Java Runtime Environment which ECLiPSe will use to run a new Java VC. If the predicate fails, this means that to use the you need to install a Java Runtime Environment (JRE) on your computer (at least version 1.2.2) and then re-run the installation script. 
+
+Resatisfiable
+   no
+
+

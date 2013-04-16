@@ -1,0 +1,10 @@
+
+socket_accept(+Socket, -Stream)
+
+   Extract the first connection to socket
+
+Type
+   library(sockets)
+
+See Also
+   accept / 3

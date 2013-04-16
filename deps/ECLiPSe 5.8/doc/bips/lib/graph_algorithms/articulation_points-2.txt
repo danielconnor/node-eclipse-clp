@@ -1,0 +1,24 @@
+
+articulation_points(+Graph, -Articulations)
+
+   Finds the articulation points of the graph
+
+Arguments
+   Graph               a graph structure
+   Articulations       a list of integer node numbers
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Finds the articulation points of a graph, i.e. those nodes that,
+    when deleted, would break the graph into two or more disconnected
+    components. If there are no articulation points, the graph is
+    called biconnected.
+
+    This operation is only defined for bidirected graphs.
+    
+
+See Also
+   graph_is_bidirected / 1, critical_links / 2, biconnected_components / 3

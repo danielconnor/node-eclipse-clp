@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>How do I make things happen at compile time?</TITLE>
+<META NAME="description" CONTENT="How do I make things happen at compile time?">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2437"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2433"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2427"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2435"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2438"
+ HREF="node14.html">How do I use</A>
+<B> Up:</B> <A NAME="tex2html2434"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html2428"
+ HREF="node12.html">How do I use</A>
+ &nbsp <B>  <A NAME="tex2html2436"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00360000000000000000">
+How do I make things happen at compile time?</A>
+</H1>
+
+<P>
+A file being compiled may contain queries.  These are goals
+<A NAME="1041"></A>
+preceded by either the symbol ``?-'' or the symbol ``:-''.
+As soon as a query or command is encountered in the compilation of a file,
+the ECLiPSe system will try to satisfy it.
+Thus by inserting goals in this fashion, things can be made to happen at
+compile time.
+
+<P>
+In particular, a file can contain a directive to the system
+to compile another file, and so large programs can be split between files,
+while still only requiring a single simple command to compile them.
+<A NAME="1043"></A>
+When this happens, ECLiPSe interprets the pathnames of the nested
+compiled files relative to the directory of the parent compiled file;
+if, for example, the user calls<PRE>
+[eclipse 1]: compile('src/pl/prog').
+</PRE>
+and the file src/pl/prog.pl contains a query<PRE>
+:- [part1, part2].
+</PRE>
+then the system searches for the files <TT>part1.pl</TT> and <TT>part2.pl</TT> in the
+directory <TT>src/pl</TT> and not in the current directory.
+Usually larger ECLiPSe programs have one main file which contains
+only commands to compile all the subfiles.
+In ECLiPSe it is possible to compile this main file from any directory.
+(Note that if your program is large enough to warrant breaking into multiple
+files (let alone multiple directories), it is probably worth turning the
+constituent components into modules -- see chapter <A HREF="node39.html#chapmodules">7</A>.)
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2437"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2433"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2427"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2435"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2438"
+ HREF="node14.html">How do I use</A>
+<B> Up:</B> <A NAME="tex2html2434"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html2428"
+ HREF="node12.html">How do I use</A>
+ &nbsp <B>  <A NAME="tex2html2436"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

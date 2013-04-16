@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Errors</TITLE>
+<META NAME="description" CONTENT="Errors">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node74.html">
+<LINK REL="previous" HREF="node72.html">
+<LINK REL="up" HREF="node71.html">
+<LINK REL="next" HREF="node74.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3364"
+ HREF="node74.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3360"
+ HREF="node71.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3354"
+ HREF="node72.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3362"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3365"
+ HREF="node74.html">Interrupts</A>
+<B> Up:</B> <A NAME="tex2html3361"
+ HREF="node71.html">Events and Interrupts</A>
+<B> Previous:</B> <A NAME="tex2html3355"
+ HREF="node72.html">Events</A>
+ &nbsp <B>  <A NAME="tex2html3363"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3366"
+ HREF="node73.html#SECTION001321000000000000000">Error Handlers</A>
+<LI><A NAME="tex2html3367"
+ HREF="node73.html#SECTION001322000000000000000">Arguments of Error Handlers</A>
+<LI><A NAME="tex2html3368"
+ HREF="node73.html#SECTION001323000000000000000">User Defined Errors</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001320000000000000000"></A>
+<A NAME="7015"></A>
+<BR>
+Errors
+</H1>
+Error handling is one particular use of events.
+The main property of error events is that they have a culprit goal,
+ie. the goal that detected or caused the error.
+The error handler obtains that goal as an argument.
+
+<P>
+The errors that the system raises have numerical identifiers,
+as documented in appendix <A HREF="node147.html#chaperrors">C</A>.
+User-defined errors have atomic names, they are the same as events.
+Whenever an error occurs, the ECLiPSe system identifies the type of error, and
+calls the appropriate handler. For each type of error, it is possible
+for the user to define a separate handler. This definition will replace
+the default error handling routine for that particular error - all other
+errors will still
+be handled by their respective
+handlers.
+It is of
+course possible to associate the same user defined error handler to more
+than one error type.
+
+<P>
+When a goal is called and produces an error, execution of the goal
+is aborted and the appropriate error handler is invoked.
+This invocation of the error handler is seen as <I>replacing</I>
+the invocation of the erroneous goal:
+
+<UL><LI>If the error handler fails it has the same effect as if the
+erroneous goal failed.
+
+<LI>If the error handler succeeds, possibly binding some variables,
+the execution continues at the point behind the call of the erroneous goal.
+
+<LI>If the handler calls <A NAME="tex2html1027"
+ HREF="../bips/kernel/control/exit_block-1.html">exit_block/1</A><A NAME="7220"></A>, it has the same effect as if
+this was done by the erroneous goal itself.
+
+</UL>
+For errors that are classified as warnings the second point is somewhat
+different: If the handler succeeds, the goal that raised the warning
+is allowed to continue execution.
+
+<P>
+Apart from binding variables in the erroneous goal, error handlers can
+also leave backtrack points. However, if the error was raised by
+an external or a builtin that is implemented as an external, these
+choicepoints are discarded<A NAME="tex2html1026"
+ HREF="footnode.html#foot7023"><SUP>13.3</SUP></A>.
+
+<P>
+
+<H2><A NAME="SECTION001321000000000000000">
+Error Handlers</A>
+</H2>
+The predicate <A NAME="tex2html1029"
+ HREF="../bips/kernel/event/set_event_handler-2.html">set_event_handler/2</A><A NAME="7223"></A> is used to assign a procedure as
+an error handler. The call<PRE>
+set_event_handler(ErrorId, PredSpec)
+</PRE>
+<A NAME="7031"></A>
+sets the event handler for error type <I>ErrorId</I> to the procedure specified by
+<I>PredSpec</I>, which must be of the form <I>Name/Arity</I>.
+
+<P>
+<A NAME="7035"></A>
+The corresponding predicate <A NAME="tex2html1033"
+ HREF="../bips/kernel/event/get_event_handler-3.html">get_event_handler/3</A><A NAME="7226"></A> may be used to identify
+the current handler for a particular error. The call<PRE>
+get_event_handler(ErrorId, PredSpec, HomeModule)
+</PRE>
+will, provided <I>ErrorId</I> is a valid error identifier, unify <I>PredSpec</I> 
+with the
+specification of the current handler for error <I>ErrorId</I> in the form
+Name/Arity, and <I>HomeModule</I> will be unified with the module where the
+error handler has been defined. Note that this error handler might not be
+visible from every module and therefore may not be callable.
+
+<P>
+To re-install the system's error handler in case the user error handler is
+no longer needed, <A NAME="tex2html1035"
+ HREF="../bips/kernel/event/reset_event_handler-1.html">reset_event_handler/1</A><A NAME="7229"></A> should be used.
+<A NAME="tex2html1037"
+ HREF="../bips/kernel/event/reset_error_handlers-0.html">reset_error_handlers/0</A><A NAME="7232"></A> resets all error handlers to their default values.
+
+<P>
+To enable the user to conveniently write predicates with error checking
+the built-ins
+<A NAME="7050"></A>
+<A NAME="7051"></A><PRE>
+error(ErrorId, Goal)
+error(ErrorId, Goal, Module)
+</PRE>
+are provided to raise the error <I>ErrorId</I> (an error number or a name atom)
+with the culprit <I>Goal</I>.
+Inside tool procedures it is usually necessary to use <A NAME="tex2html1041"
+ HREF="../bips/kernel/event/error-3.html">error/3</A><A NAME="7235"></A>
+in order to pass the caller module to the error handler.
+Typical error checking code looks like this<PRE>
+increment(X, X1) :-
+        ( integer(X) -&gt;
+            X1 is X + 1
+        ;
+            error(5, increment(X, X1))
+        ).
+</PRE>
+
+<P>
+The predicate <A NAME="tex2html1043"
+ HREF="../bips/kernel/event/current_error-1.html">current_error/1</A><A NAME="7238"></A>
+<A NAME="7066"></A>
+can be used to yield all valid error numbers, a valid error is that one
+to which an error message and an error handler are associated.
+The predicate <A NAME="tex2html1046"
+ HREF="../bips/kernel/event/error_id-2.html">error_id/2</A><A NAME="7241"></A>
+<A NAME="7069"></A>
+<A NAME="7070"></A>
+gives the corresponding error message to the specified error number.
+To ease the search for the appropriate error number,
+the library <B>util</B> contains the predicate<PRE>
+util:list_error(Text, N, Message)
+</PRE>
+which returns on backtracking all the errors whose error message
+contains the string <I>Text</I>.
+
+<P>
+The ability to define any Prolog predicate as the error handler permits a
+great deal of flexibility in error handling. However, this flexibility
+should be used with caution. The action of an error handler could have side
+effects altering the correctness of a program; indeed it could be responsible
+for further errors being introduced. One particular area of danger is in the
+use of input and output streams by error handlers.
+
+<P>
+
+<H2><A NAME="SECTION001322000000000000000">
+Arguments of Error Handlers</A>
+</H2>
+An error handler has 4 optional arguments.
+<DL COMPACT>
+<DT>1.
+<DD>The first argument is the number or atom that identifies the error.
+<DT>2.
+<DD>The second argument is
+the culprit (a structure corresponding to the call which caused the
+error).
+For instance, if,
+say, a type error occurs upon calling the second goal of the procedure
+<TT>p(2, Z)</TT>:<PRE>
+ p(X, Y) :- a(X), b(X, Y), c(Y).
+</PRE>
+the structure given to the error handler is <TT>b(2, Y)</TT>.
+Note that the handler could bind Y which would have the same effect
+as if <TT>b/2</TT> had done the binding.
+<P>
+<DT>3.
+<DD>The third argument is only defined for a subset of the existing errors.
+If the error occurred inside a tool body, it holds the caller module,
+otherwise it is identical to the fourth argument<A NAME="tex2html1050"
+ HREF="footnode.html#foot7172"><SUP>13.4</SUP></A>.
+
+<P>
+<DT>4.
+<DD>The fourth argument is the lookup module for the culprit goal.  This
+is needed for example when the handler wants to call the culprit reliably,
+using a qualified call via <A NAME="tex2html1051"
+ HREF="../bips/kernel/control/N-2.html">: /2</A><A NAME="7244"></A>.
+</DL>
+
+<P>
+The error handler is free to ignore some of these arguments,
+i.e. it can have any arity from 0 to 4.
+The first argument is provided for the case that the same procedure serves
+as the handler for several error types - then it can distinguish
+which is the actual error type.
+<A NAME="7090"></A>
+An error handler is just an ordinary Prolog procedure and thus within
+it a call may be made to any other procedure, or any built in predicate;
+this in particular means that a call to <A NAME="tex2html1054"
+ HREF="../bips/kernel/control/exit_block-1.html">exit_block/1</A><A NAME="7247"></A> may be
+made (see the section on the <A NAME="tex2html1056"
+ HREF="../bips/kernel/control/block-3.html">block/3</A><A NAME="7250"></A>
+predicate).<A NAME="7095"></A> This will work
+'through' the call to the error handler, and so an exit may be made from
+within the handler out of the current block (i.e. back to the corresponding
+call of the <A NAME="tex2html1059"
+ HREF="../bips/kernel/control/block-3.html">block/3</A><A NAME="7253"></A> predicate).
+Specifying the predicates <A NAME="tex2html1061"
+ HREF="../bips/kernel/control/true-0.html">true/0</A><A NAME="7256"></A> or <A NAME="tex2html1063"
+ HREF="../bips/kernel/control/fail-0.html">fail/0</A><A NAME="7259"></A> as error handlers
+will make the erroneous predicate succeed (without binding
+any further variables) or fail respectively.
+
+<P>
+The following two templates are the most common for error handlers.
+The first simply prints an error message and aborts:
+<PRE>
+my_error_handler(ErrorId, Goal, ContextModule) :-
+        printf(error, "Error %w in %w in module %w%n",
+[ErrorId,Goal,ContextModule]),
+        abort.
+</PRE>
+The following handler tries to repair the error and call the goal again:
+<PRE>
+my_error_repair_handler(ErrorId, Goal, ContextModule, LookupModule) :-
+ % repair the error
+... some code to repair the cause for the error ...
+ % try call the erroneous goal again
+LookupModule : Goal @ ContextModule.
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION001323000000000000000"></A>
+<A NAME="user-errors"></A><A NAME="7108"></A>
+<BR>
+User Defined Errors
+</H2>
+The following example illustrates the use of a user-defined error.
+We declare a handler for the event 'Invalid command' and
+raise the new error in the application code.<PRE>
+% Command error handler - output invalid command, sound bell and abort
+command_error_handler(_, Command) :-
+        printf("\007\nInvalid command: %w\n", [Command]),
+abort.
+
+% Activate the handler
+:- set_event_handler('Invalid command', command_error_handler/2).
+
+% top command processing loop
+go :-
+        writeln("Enter command."),
+        read(Command),
+        ( valid_command(Command)-&gt;
+            process_command(Command),
+            go
+        ;
+            error('Invalid command',Command) % Call the error handler
+).
+
+% Some valid commands
+valid_command(start).
+valid_command(stop).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3364"
+ HREF="node74.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3360"
+ HREF="node71.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3354"
+ HREF="node72.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3362"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3365"
+ HREF="node74.html">Interrupts</A>
+<B> Up:</B> <A NAME="tex2html3361"
+ HREF="node71.html">Events and Interrupts</A>
+<B> Previous:</B> <A NAME="tex2html3355"
+ HREF="node72.html">Events</A>
+ &nbsp <B>  <A NAME="tex2html3363"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

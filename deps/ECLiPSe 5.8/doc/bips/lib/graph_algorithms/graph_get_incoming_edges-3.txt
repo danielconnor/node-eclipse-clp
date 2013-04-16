@@ -1,0 +1,26 @@
+
+graph_get_incoming_edges(+Graph, +TargetNode, -EdgeList)
+
+   Returns a sorted list of all edges ending in TargetNode
+
+Arguments
+   Graph               a graph structure
+   TargetNode          an integer node number
+   EdgeList            a list of e/3 edge structures
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Note on performance: By default, the graph structure only stores the
+    outgoing (adjacent) edges of every node.  The incoming edge lists are
+    computed lazily when graph_get_incoming_edges/3 is called for the first
+    time (but then they are built for all nodes at once).  Therefore the
+    first call to this predicate has O(NlogN) complexity, subsequent calls
+    are only O(1). It may therefore make sense to do a dummy call to this
+    predicate before starting time critical or nondeterministic computation.
+    
+
+See Also
+   graph_get_all_edges / 2, graph_get_adjacent_edges / 3

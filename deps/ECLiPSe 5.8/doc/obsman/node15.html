@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>General Guidelines to the Use of Domains</TITLE>
+<META NAME="description" CONTENT="General Guidelines to the Use of Domains">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html569"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html565"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html559"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html567"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html570"
+ HREF="node16.html">User-Defined Constraints</A>
+<B> Up:</B> <A NAME="tex2html566"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html560"
+ HREF="node14.html">Examples</A>
+ &nbsp <B>  <A NAME="tex2html568"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002130000000000000000">
+General Guidelines to the Use of Domains</A>
+</H1>
+The <I>send more money</I> example already shows the general
+principle of solving problems
+using finite domain constraints:
+
+<UL><LI>First the variables are defined and their domains are specified.
+
+<P>
+
+<LI>Then the constraints are imposed on these variables.
+In the above example the constraints are simply built-in predicates.
+For more complicated problems it is often necessary to define
+Prolog predicates that process the variables and impose constraints
+on them.
+
+<P>
+
+<LI>If stating the constraints alone did not solve the problem,
+one tries to assign values to the variables. Since every
+instantiation immediately wakes all constraints associated with the variable,
+and changes are propagated to the other variables, the search space
+is usually quickly reduced and either an early failure occurs
+or the domains of other variables are reduced or directly instantiated.
+This labeling procedure is therefore incomparably more efficient
+<A NAME="705"></A>
+than the simple <I>generate and test</I> algorithm.
+
+</UL>
+
+<P>
+The complexity of the program and the efficiency of the solving
+depends very much on the way these three points are performed.
+Quite frequently it is possible to state the same problem
+using different sets of variables with different domains.
+A guideline is that the search space should be as small as possible,
+and thus e.g. five variables with domain 1..10
+(i.e. search space size is
+
+<P>
+10<code>^</code>5
+)
+are likely to be better than
+twenty variables with domain 0..1
+(space size
+
+<P>
+2<code>^</code>20
+).
+
+<P>
+The choice of constraints is also very important.
+Sometimes a redundant constraint, i.e. one that follows from the
+other constraints, can speed up the search considerably.
+This is because the system does not propagate <I>all</I>
+information it has to all concerned variables, because
+most of the time this would not bring anything, and thus it would
+slow down the search.
+Another reason is that the library performs no meta-level reasoning on
+constraints themselves (unlike the <I>CHR</I> library).
+For example, the constraints<PRE>
+X + Y #= 10, X + Y + Z #= 14
+</PRE>
+allow only the value 4 for <I>Z</I>, however the system is not
+able to deduce this and thus it has to be provided
+as a redundant constraint.
+
+<P>
+The constraints should be stated in such a way that allows the system
+to propagate all important domain updates to the appropriate variables.
+
+<P>
+Another rule of thumb is that creation of choice points should be delayed
+as long as possible. Disjunctive constraints, if there are any,
+should be postponed as much as possible. Labeling, i.e. value
+choosing, should be done after all deterministic operations
+are carried out.
+
+<P>
+The choice of the labeling procedure is perhaps the most
+<A NAME="719"></A>
+sensitive one.
+It is quite common that only a very minor change in the order
+of instantiated variables can speed up or slow down the search
+by several orders of magnitude.
+There are very few common rules available.
+If the search space is large, it usually pays off to spend
+more time in selecting the next variable to instantiate.
+The provided predicates <A NAME="tex2html145"
+ HREF="../bips/lib/fd/deleteff-3.html">deleteff/3</A><A NAME="1265"></A> and <A NAME="tex2html147"
+ HREF="../bips/lib/fd/deleteffc-3.html">deleteffc/3</A><A NAME="1268"></A>
+can be used to select the most constrained variable, but in
+many problems it is possible to extract even more information
+about which variable to instantiate next.
+
+<P>
+Often it is necessary to try out several approaches
+and see how they work, if they do.
+The profiler and the statistics package can be of a great help here,
+it can point to predicates which are executed too often, or
+choice points unnecessarily backtracked over.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html569"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html565"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html559"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html567"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html570"
+ HREF="node16.html">User-Defined Constraints</A>
+<B> Up:</B> <A NAME="tex2html566"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html560"
+ HREF="node14.html">Examples</A>
+ &nbsp <B>  <A NAME="tex2html568"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

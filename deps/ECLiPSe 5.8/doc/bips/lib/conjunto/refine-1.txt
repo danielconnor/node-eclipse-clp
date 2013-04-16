@@ -1,0 +1,52 @@
+
+refine(?Svar)
+
+   Instanciate Svar to a value in its set domain.
+
+
+
+Arguments
+   ?Svar               A set domain variable or a ground set.
+
+Type
+   library(conjunto)
+
+Description
+   If Svar is a set domain variable, it labels Svar to its first possible
+   value (which satisfies the constraints) by taking the largest possible
+   set of elements chosen from the smallest one to the biggest one.  If
+   there are several possible instances of Svar, it creates choice points.
+   It backtracks on the element taken.  If Svar is a ground set, nothing
+   happens.  Otherwise it fails.  If List is a possible list of set domain
+   variables occuring in the program, the simplest labeling procedure is:
+
+
+
+            labelings([]).
+            labelings([S | List]) :-
+                 refine(S),
+                 labelings(List).
+
+
+
+Resatisfiable
+      On the taken elements.
+
+Fail Conditions
+      Fails if Svar is not a set domain variable or ground set.
+
+
+
+Examples
+   
+[eclipse 21]: S `:: {} ..{1,2,5,3,8}, refine(S).
+
+S = {1, 2, 3, 5, 8}     More? (;)
+yes
+
+
+
+
+
+See Also
+   `:: / 2

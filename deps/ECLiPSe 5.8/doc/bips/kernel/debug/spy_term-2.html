@@ -1,0 +1,82 @@
+<HTML><HEAD><TITLE>spy_term(?Term, +Cond)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>spy_term(?Term, +Cond)</H1>
+Create a SPYTERM-port in the debugger and prepare for tracing
+modifications to Term as MODIFY-ports.
+
+
+<DL>
+<DT><EM>Term</EM></DT>
+<DD>A variable or any term containing variables.
+</DD>
+<DT><EM>Cond</EM></DT>
+<DD>A trigger condition (as in suspend/3).
+</DD>
+</DL>
+<H2>Description</H2>
+    This predicate allows to trace modifications to variables in Term.
+
+<P>
+    When the debugger is on, this predicate causes a SPYTERM-port
+    to be displayed. In the subsequent execution, any variable
+    modification in Term which satisfies the trigger condition Cond
+    will be shown as a MODIFY-port. The SPYTERM and MODIFY-port have
+    the same unique invocation number, therefore the invocation-skip
+    command (i) can be used to follow the chain of modifications.
+
+<P>
+    The  trigger conditions are specified in the same way as in the
+    suspend/3 built-in.
+    
+    This feature is implemented using high-priority (1) delayed goals
+    which create the MODIFY-ports.  These goals are visible to the
+    user as monitor_term/4 goals among the delayed goals.
+
+<P>
+    CAUTION: Term is interpreted by the debugger as a goal. If Term
+    looks like a call of a visible predicate, this predicate's settings
+    (spy, traceable, etc) are taken into account for the SPYTERM and
+    MODIFY ports as well. In particular, don't use a list for Term,
+    since that looks like the compile-built-in ./2 which is untraceable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(6) out of range </EM>
+<DD>Not a valid trigger condition.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: lib(fd).
+yes.
+
+[eclipse 1]: trace.
+Debugger switched on - creep mode
+
+[eclipse 3]: [X, Y] :: 1..9,
+	     spy_term(v(X,Y), v(X,Y)-&gt;any),
+	     X #&gt; Y, Y #&gt; X.
+  (1) 1 CALL  [X, Y] :: 1..9   %&gt; creep
+  (1) 1 EXIT  [X{[... .. ...]}, Y{[...]}] :: 1..9   %&gt; creep
+  (3) 2 SPYTERM  v(X{[1..9]}, Y{[1..9]})   %&gt; jump to invoc: [3]? 
+  (3) 3 MODIFY  v(X{[2..9]}, Y{[1..8]})   %&gt; jump to invoc: [3]? 
+  (3) 3 MODIFY  v(X{[2..7]}, Y{[3..8]})   %&gt; jump to invoc: [3]? 
+  (3) 4 MODIFY  v(X{[4..7]}, Y{[3..6]})   %&gt; jump to invoc: [3]? 
+  (3) 4 MODIFY  v(X{[4, 5]}, Y{[5, 6]})   %&gt; jump to invoc: [3]? 
+
+no (more) solution.
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/debug/spy_var-1.html">spy_var / 1</A>, <A HREF="../../kernel/debug/trace_point_port-3.html">trace_point_port / 3</A>, <A HREF="../../kernel/debug/trace-1.html">trace / 1</A>
+</BODY></HTML>

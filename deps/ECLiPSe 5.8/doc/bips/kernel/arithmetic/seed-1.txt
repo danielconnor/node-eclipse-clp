@@ -1,0 +1,58 @@
+
+seed(+Seed)
+
+   Sets the initial seed Seed for generating random numbers with random/1 or
+frandom/1.
+
+
+
+Arguments
+   +Seed               Integer.
+
+Type
+   Arithmetic
+
+Description
+   Used to initialise the seed which is used for the generation of random
+   numbers by random/1 or frandom/1.  Setting the same seed value with
+   seed/1 enables the generation of a repeatable random sequence with
+   random/1 ie.  pseudo-random number generation.
+
+   The seed value should be an integer in the range 1 .. 2^31-1.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Seed is not instantiated.
+     5 --- Seed is instantiated, but not to an integer.
+
+Examples
+   
+Success:
+      [eclipse]: repeat, random(S).
+      S = 464880439   More? (;)
+      S = 285401533   More? (;)
+      yes.
+      [eclipse]: seed(1), repeat, random(S).
+      S = 2078917053   More? (;)
+      S = 143302914   More? (;)
+      yes.
+      [eclipse]: seed(1), repeat, random(S).
+      S = 2078917053   More? (;)
+      S = 143302914   More? (;)
+      yes.
+
+
+
+
+
+See Also
+   random / 1

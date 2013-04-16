@@ -1,0 +1,37 @@
+<HTML><HEAD><TITLE>integer(?Integer)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>integer(?Integer)</H1>
+Succeeds if Integer is an integer number.
+
+
+<DL>
+<DT><EM>?Integer</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether Integer is of type integer.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Integer is not an integer number.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   Success:
+   integer(10).
+   integer(-40).
+   Fail:
+   integer('4').
+   integer(Integer).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/stratom/integer_atom-2.html">integer_atom / 2</A>, <A HREF="../../kernel/typetest/number-1.html">number / 1</A>, <A HREF="../../kernel/typetest/float-1.html">float / 1</A>, <A HREF="../../kernel/typetest/real-1.html">real / 1</A>, <A HREF="../../kernel/typetest/rational-1.html">rational / 1</A>, <A HREF="../../kernel/typetest/breal-1.html">breal / 1</A>
+</BODY></HTML>

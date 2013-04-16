@@ -1,0 +1,10 @@
+
+socket_bind(+Socket, +Address)
+
+   Bind a socket to an address
+
+Type
+   library(sockets)
+
+See Also
+   bind / 2

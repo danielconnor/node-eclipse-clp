@@ -1,0 +1,25 @@
+
+jump_queue(Element, OldQueue, NewQueue)
+
+   adds the new element at the front of the list
+
+Type
+   library(queues)
+
+Description
+
+    adds the new element at the front of the list.  Unlike join_queue,
+
+ 	jump_queue(1, OldQ, NewQ1),
+ 	jump_queue(2, OldQ, NewQ2)
+
+    *does* work, though if you add things at the end of NewQ1 they
+    will also show up in NewQ2.  Note that
+
+ 	jump_queue(1, OldQ, MidQ),
+ 	jump_queue(2, MidQ, NewQ)
+
+    makes NewQ start 2, 1, ...
+    
+
+

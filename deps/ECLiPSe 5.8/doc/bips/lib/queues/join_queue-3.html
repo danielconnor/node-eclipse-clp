@@ -1,0 +1,22 @@
+<HTML><HEAD><TITLE>join_queue(Element, OldQueue, NewQueue)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(queues)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>join_queue(Element, OldQueue, NewQueue)</H1>
+adds the new element at the end of the queue
+<H2>Description</H2>
+
+    adds the new element at the end of the queue.  The old queue is
+    side-effected, so you *can't* do
+<PRE>
+ 	join_queue(1, OldQ, NewQ1),
+ 	join_queue(2, OldQ, NewQ2).
+</PRE>
+    There isn't any easy way of doing that, sensible though it might
+    be.  You *can* do
+<PRE>
+ 	join_queue(1, OldQ, MidQ),
+ 	join_queue(2, MidQ, NewQ).
+</PRE>
+    
+<H2>See Also</H2>
+<A HREF="../../lib/queues/list_join_queue-3.html">list_join_queue / 3</A>
+</BODY></HTML>

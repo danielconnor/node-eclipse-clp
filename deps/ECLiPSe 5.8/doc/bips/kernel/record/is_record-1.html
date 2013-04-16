@@ -1,0 +1,55 @@
+<HTML><HEAD><TITLE>is_record(+Key)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>is_record(+Key)</H1>
+Succeeds if Key is a key of a recorded item.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>An atom or compound term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether Key is a key of a recorded item.  Fails if Key is
+   not a key for a recorded item.  In the case of compound terms, all keys
+   of the same name and arity are treated as equal.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Key is not a key for a recorded item.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is uninstantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is neither an atom nor a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   [eclipse]: record(whiskey,jameson),
+   &gt;        record(whiskey,bushmills),
+   &gt;        record(beer,lowenbrau).
+   yes.
+   [eclipse]: is_record(whiskey).
+   yes.
+   [eclipse]: is_record(beer).
+   yes.
+   Fail:
+   [eclipse]: is_record(wine).
+   no.
+   Error:
+   is_record(Key).                   (Error 4)
+   is_record("whiskey").             (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/current_record-1.html">current_record / 1</A>, <A HREF="../../kernel/modules/local-1.html">record / 1</A>
+</BODY></HTML>

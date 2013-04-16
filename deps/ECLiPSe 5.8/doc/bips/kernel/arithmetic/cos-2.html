@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>cos(+Number, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>cos(+Number, ?Result)</H1>
+Evaluates the trigonometric function cos(Number) and unifies the resulting
+value with Result.
+
+
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable, float or breal.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to cos(Number, Result) is
+   equivalent to
+<PRE>
+    Result is cos(Number)
+</PRE>
+    which should be preferred for portability.
+<P>
+   In coroutining mode, if Number is a free variable, the call to cos/2 is
+   delayed until this variable is instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated (non-coroutining mode only).
+<DT><EM>(5) type error </EM>
+<DD>Result is a number but not a float or breal
+<DT><EM>(24) number expected </EM>
+<DD>Number is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      cos(0, 1.0).
+      cos(1.2, Result).        (gives Result = 0.362358)
+      cos(-33, Result).        (gives Result = -0.0132767)
+Fail:
+      cos(1, 0.0).
+Error:
+      cos(A, 6.0).                   (Error 4).
+      cos(0, 1).                     (Error 5).
+      cos(4 + 2, 0.96017).           (Error 24).
+      cos(5, r).                     (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

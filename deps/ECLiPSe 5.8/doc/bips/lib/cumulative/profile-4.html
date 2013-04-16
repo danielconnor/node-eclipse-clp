@@ -1,0 +1,28 @@
+<HTML><HEAD><TITLE>profile(+StartTimes, +Durations, +Resources, ?Profile)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cumulative)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>profile(+StartTimes, +Durations, +Resources, ?Profile)</H1>
+Cumulative constraint on specified tasks.
+<DL>
+<DT><EM>StartTimes</EM></DT>
+<DD>List of start times for tasks (fd variables or integers)
+</DD>
+<DT><EM>Durations</EM></DT>
+<DD>List of duration for tasks (fd variables or integers)
+</DD>
+<DT><EM>Resources</EM></DT>
+<DD>List of resource usages by tasks (fd variables or integers)
+</DD>
+<DT><EM>Profile</EM></DT>
+<DD>List of resource usage at the start of each task
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+
+   StartTimes, Durations, Resources and Profile are lists of equal length N
+   of finite domain variable or integers with the same meaning as in
+   cumulative/4.  The list Profile indicates the level of resource usage at
+   the starting point of each task.
+</P>
+
+</BODY></HTML>

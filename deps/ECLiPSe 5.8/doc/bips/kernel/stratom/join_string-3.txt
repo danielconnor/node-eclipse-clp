@@ -1,0 +1,65 @@
+
+join_string(+List, +Glue, ?String)
+
+   String is the string formed by concatenating the elements of List with
+an instance of Glue beween each of them.
+
+
+
+Arguments
+   +List               List of atomic terms.
+   +Glue               A string or atom.
+   ?String             A string or variable.
+
+Type
+   Strings and Atoms
+
+Description
+   String is the string formed by concatenating the elements of List
+   with an instance of Glue beween each of them.  List may contain
+   numbers, atoms and strings.  The result of the concatenation is
+   always a string.
+
+
+   Note that concat_string/2 can be defined as
+
+
+
+       concat_string(List, String) :-
+	    join_string(List, "", String).
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- List is not instantiated (non-coroutine mode only).
+     4 --- List contains free variables (non-coroutine mode only).
+     5 --- List is instantiated, but not to a list of atomic terms.
+     5 --- String is neither an string nor a variable.
+     5 --- Glue is neither an string nor an atom.
+
+Examples
+   
+Success:
+    join_string([usr,"local",bin], "/", "usr/local/bin").
+    join_string([1,2,3], " -> ", "1 -> 2 -> 3").
+
+Error:
+    join_string(A,"-",X).        (Error 4).
+    join_string([abc,D],",",X).  (Error 4).
+    join_string(art,",",X).      (Error 5).
+    join_string([a,b],3,X).      (Error 5).
+
+
+
+
+
+See Also
+   concat_string / 2, concat_strings / 3, append_strings / 3, atom_string / 2, split_string / 4

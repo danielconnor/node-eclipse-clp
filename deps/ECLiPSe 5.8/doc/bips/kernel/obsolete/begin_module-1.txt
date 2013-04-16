@@ -1,0 +1,71 @@
+
+begin_module(+Module)
+
+   Start the definition of the body of the Module.
+
+
+
+Arguments
+   +Module             Atom.
+
+Type
+   Obsolete
+
+Description
+   This is a directive that can occur only in a compiled file.  Module must
+   be an existing, non-locked module.  All following code will be added to
+   the module Module up to the next begin_module/1 or module_interface/1
+   directive or up to the file end.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is not an atom.
+    68 --- When called from Prolog.
+    80 --- Module is not a module.
+    82 --- Module is locked.
+
+Examples
+   
+Success:
+     [eclipse 2]: [user].
+     :- module_interface(m).
+     :- op(700, xf, there).
+     :- export p/1.
+     :- begin_module(m).
+      p(X) :- writeln(X).
+      user compiled 56 bytes in 0.03 seconds
+     yes.
+     [eclipse 3]: p(hello there).
+     syntax error: postfix/infix operator expected
+     | p(hello there).
+     |             ^ here
+     [eclipse 3]: use_module(m).
+
+     yes.
+     [eclipse 4]: p(hello there).
+     hello there
+
+     yes.
+
+Error:
+    begin_module(M).                 (Error 4).
+    begin_module(1).                 (Error 5).
+    begin_module(a_locked_module).   (Error 82).
+
+
+
+
+
+See Also
+   module / 1, create_module / 1, erase_module / 1, current_module / 1, module_interface / 1

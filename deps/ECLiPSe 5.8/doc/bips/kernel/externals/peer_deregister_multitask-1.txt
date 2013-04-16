@@ -1,0 +1,35 @@
+
+peer_deregister_multitask(++Peer)
+
+   Deregisters and removes the peer Peer from peer multitasking.
+
+Arguments
+   Peer                Existing multitasking peer name (atom)
+
+Type
+   External Interface
+
+Description
+
+   This predicate is intended for use only in implementing peer 
+   multitasking for an external language interface.
+
+   Deregisters the existing multitasking peer Peer as a multitask peer.
+   The  multitasking control peer queue for Peer, created when the peer was
+   registered  for multitasking, is closed. Peer will no longer be involved 
+   in future multitasking phases.
+
+   Note that while information associated with the multitasking for Peer is
+   removed from the ECLiPSe side, any information on the external side is
+   not touched. It is the responsibility of the external language interface
+   to remove any multitasking information on the external side, before or
+   after using this predicate.
+
+Fail Conditions
+   Peer is a peer, but not registered for multitasking.
+
+Exceptions
+     6 --- Peer is not an existing peer name
+
+See Also
+   peer_register_multitask / 2, peer_do_multitask / 1, peer_multitask_terminate / 0, peer_multitask_confirm / 0

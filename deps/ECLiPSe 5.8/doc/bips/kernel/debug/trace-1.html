@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>trace(+Goal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>trace(+Goal)</H1>
+Execute the goal Goal with the debugger in creep mode.
+
+
+<DL>
+<DT><EM>Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+</DL>
+<H2>Description</H2>
+   The goal Goal is called with the debugger in creep mode.
+   trace/1 succeeds or fails depending if Goal succeeds or fails.
+
+<P>
+   This predicate is particularly useful for debugging large programs that
+   would take too much space or time to run completely with the debugger.
+   The debugger is only switched on in creep mode at the call port of Goal
+   and switched off when Goal exits (or fails, leaves,...).
+
+<P>
+   If the debugger was already on before calling trace/1, it has
+   no effect.
+
+<P>
+   An alternative way of turning on the debugger selectively is to
+   set the start_tracing property of a particular predicate using
+   set_flag/3.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: [user].
+       p :- big_goal1, trace(buggy_goal), big_goal2.
+       big_goal1.
+       big_goal2.
+       buggy_goal.
+       user        compiled 208 bytes in 0.02 seconds
+      yes.
+      [eclipse]: p.
+        % big_goal1/0 is executed without the debugger
+      Start debugging - creep mode
+        (1) 0  CALL   buggy_goal %&gt; creep
+        (1) 0  EXIT   buggy_goal %&gt; creep
+      Stop debugging.
+        % big_goal2/0 is executed without the debugger
+      yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/notrace-0.html">notrace / 0</A>, <A HREF="../../kernel/debug/trace-0.html">trace / 0</A>, <A HREF="../../kernel/debug/debug-0.html">debug / 0</A>, <A HREF="../../kernel/debug/debug-1.html">debug / 1</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>
+</BODY></HTML>

@@ -1,0 +1,105 @@
+<HTML><HEAD><TITLE>library(conjunto)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(conjunto)</H1>
+Finite Set Constraints Library - obsolescent, use library(fd_sets) instead
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="H-2.html"><STRONG>#(?Sterm,?Var)</STRONG></A></DT>
+<DD>Var is the cardinality of the set term Sterm.
+
+</DD>
+<DT><A HREF="BNN-2.html"><STRONG>?Svar `::  +Domain</STRONG></A></DT>
+<DD>Terms in Svar have the set domain Domain.
+
+</DD>
+<DT><A HREF="BL-2.html"><STRONG>?Sterm `< ?Sterm1</STRONG></A></DT>
+<DD>Sterm is a subset of Sterm1.
+
+</DD>
+<DT><A HREF="BLG-2.html"><STRONG>?Sterm `<> ?Sterm1</STRONG></A></DT>
+<DD>Sterm and Sterm1 are disjoint.
+
+</DD>
+<DT><A HREF="BE-2.html"><STRONG>?Sterm `= ?Sterm1</STRONG></A></DT>
+<DD>Sterm and Sterm1 are equal.
+
+</DD>
+<DT><A HREF="all_disjoint-1.html"><STRONG>all_disjoint(?Lsets)</STRONG></A></DT>
+<DD>Lsets is a list of set domain variables which are constrained to be
+pairwise disjoint.
+
+</DD>
+<DT><A HREF="all_union-2.html"><STRONG>all_union(?Lsets, ?Svar)</STRONG></A></DT>
+<DD>Lsets is a list of set domain variables whose union is the set term Svar.
+
+</DD>
+<DT><A HREF="el_weight-2.html"><STRONG>el_weight(+Var, ?Wvar)</STRONG></A></DT>
+<DD>Var is an element of type e(Val,Weight) from a weighted domain.  Wvar is a
+free variable unifying with the weight Weight of Var.
+
+</DD>
+<DT><A HREF="glb-2.html"><STRONG>glb(?S, ?Glb)</STRONG></A></DT>
+<DD>S is a set domain variable and Glb is the lower bound of its domain.
+
+</DD>
+<DT><A HREF="in-2.html"><STRONG>?E in ?Sterm</STRONG></A></DT>
+<DD>E belongs to the set term Sterm.
+
+</DD>
+<DT><A HREF="list2set-2.html"><STRONG>list2set(+List, ?Svar)</STRONG></A></DT>
+<DD>Transforms a ground list List into a ground set Svar.
+
+</DD>
+<DT><A HREF="lub-2.html"><STRONG>lub(?S, ?Lub)</STRONG></A></DT>
+<DD>S is a set domain variable and Lub is the lower bound of its domain.
+
+</DD>
+<DT><A HREF="max_weight-2.html"><STRONG>max_weight(?Svar, ?Var)</STRONG></A></DT>
+<DD>Svar is a weighted set domain variable whose maximal possible weight
+attached to an element is Var.
+
+</DD>
+<DT><A HREF="modify_bound-3.html"><STRONG>modify_bound(+Flag, ?Svar, +Var)</STRONG></A></DT>
+<DD>Flag is a flag which takes its value in fglb, lubg.  It indicates the bound
+of the set domain variable Svar which should be updated and take the value
+Var which is ground.
+
+</DD>
+<DT><A HREF="notin-2.html"><STRONG>?E notin ?Sterm</STRONG></A></DT>
+<DD>E does not belong to the set term Sterm.
+
+</DD>
+<DT><A HREF="refine-1.html"><STRONG>refine(?Svar)</STRONG></A></DT>
+<DD>Instanciate Svar to a value in its set domain.
+
+</DD>
+<DT><A HREF="set-1.html"><STRONG>set(?SVar)</STRONG></A></DT>
+<DD>Succeeds if SVar is a ground set (not a set domain)
+
+</DD>
+<DT><A HREF="set2list-2.html"><STRONG>set2list(+Svar, ?List)</STRONG></A></DT>
+<DD>Transforms a ground set Svar into a list of ordered elements List.
+
+</DD>
+<DT><A HREF="set_range-3.html"><STRONG>set_range(?Svar, ?Glb, ?Lub)</STRONG></A></DT>
+<DD>Svar is a set domain variable and Glb and Lub are the respective lower
+bound and upper bound of its domain.
+
+</DD>
+<DT><A HREF="sum_weight-2.html"><STRONG>sum_weight(?Svar, ?Var)</STRONG></A></DT>
+<DD>Svar is a weighted set domain variable or a weighted ground set and Var a
+free variable or a domain variable or an integer which represents the
+weight of Svar.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>deprecated
+<LI><STRONG>Author: </STRONG>Carmen Gervet and Pascal Brisset, ECRC
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2003/06/05 19:36:58 $
+</UL>
+<HR>Generated from conjunto.eci on Tue Jan 25 01:58:39 2005
+
+</BODY></HTML>

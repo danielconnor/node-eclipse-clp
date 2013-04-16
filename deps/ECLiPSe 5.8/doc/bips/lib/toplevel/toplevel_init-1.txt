@@ -1,0 +1,22 @@
+
+toplevel_init(?Type)
+
+   Initialize a toplevel
+
+Arguments
+   Type                one of the atoms 'tty' or 'gui'
+
+Type
+   library(toplevel)
+
+Description
+
+    	Initializes streams and event handlers in preparation to
+	a call to toplevel/0. Two variants of toplevel loop can be
+	selected: command line oriented (tty) or graphical user
+	interface (gui). The latter is intended for an ECLiPSe 
+	which is embedded into a GUI-based host program.
+    
+
+See Also
+   toplevel / 0, break / 0

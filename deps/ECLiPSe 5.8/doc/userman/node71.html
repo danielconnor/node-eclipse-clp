@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Events and Interrupts</TITLE>
+<META NAME="description" CONTENT="Events and Interrupts">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node75.html">
+<LINK REL="previous" HREF="node67.html">
+<LINK REL="up" HREF="umsroot.html">
+<LINK REL="next" HREF="node72.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3304"
+ HREF="node72.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3300"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3294"
+ HREF="node70.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3302"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3305"
+ HREF="node72.html">Events</A>
+<B> Up:</B> <A NAME="tex2html3301"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html3295"
+ HREF="node70.html">Definite Clause Grammars </A>
+ &nbsp <B>  <A NAME="tex2html3303"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001300000000000000000"></A>
+<A NAME="chapexcept"></A>
+<BR>
+Events and Interrupts
+</H1>
+
+<P>
+The normal execution of a Prolog program may be interrupted by
+Events and Interrupts:
+
+<P>
+<DL>
+<DT><STRONG>Events</STRONG>
+<DD> 
+<BR>
+
+<UL><LI>they may occur asynchronously (posted by the environment)
+        or synchronously (raised by the program itself).
+
+<LI>they are handled synchronously by a handler goal that is inserted
+        into the resolvent.
+
+<LI>the handler can cause the interrupted execution to fail or to abort.
+
+<LI>the handler can interact with the interrupted execution only via
+        nonlogical features (e.g. global variable or references).
+
+<LI>the handler can cause waking of delayed goals via symbolic triggers.
+    
+</UL>
+
+<P>
+<DT><STRONG>Errors</STRONG>
+<DD> 
+<BR>
+Errors can be viewed as a special case of events. They are raised by
+    built-in predicates (e.g. when the arguments are of the wrong type)
+    and usually pass the culprit goal to the error handler.
+
+<P>
+<DT><STRONG>Interrupts</STRONG>
+<DD> 
+<BR>
+Interrupts usually originate from the operating system, e.g. on a Unix
+    host, signals are mapped to ECLiPSe interrupts.
+
+<UL><LI>they occur asynchronously, but may be mapped into a sychronous event.
+
+<LI>certain predefined actions (like aborting) can be performed
+        asynchronously
+
+</UL></DL>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html3306"
+ HREF="node72.html">Events</A>
+<UL>
+<LI><A NAME="tex2html3307"
+ HREF="node72.html#SECTION001311000000000000000">Event Identifiers and Event Handling</A>
+<UL>
+<LI><A NAME="tex2html3308"
+ HREF="node72.html#SECTION001311100000000000000">Creating Named Events</A>
+<LI><A NAME="tex2html3309"
+ HREF="node72.html#SECTION001311200000000000000">Creating Anonymous Events</A>
+</UL>
+<LI><A NAME="tex2html3310"
+ HREF="node72.html#SECTION001312000000000000000">Raising Events</A>
+<UL>
+<LI><A NAME="tex2html3311"
+ HREF="node72.html#SECTION001312100000000000000">Raising Events Explicitly</A>
+<LI><A NAME="tex2html3312"
+ HREF="node72.html#SECTION001312200000000000000">Raising Events from Foreign Code</A>
+<LI><A NAME="tex2html3313"
+ HREF="node72.html#SECTION001312300000000000000">Timed Events (after events)</A>
+<UL>
+<LI><A NAME="tex2html3314"
+ HREF="node72.html#SECTION001312310000000000000">event_after(+EventId, +Time)</A>
+<LI><A NAME="tex2html3315"
+ HREF="node72.html#SECTION001312320000000000000">event_after_every(+EventId, +Time)</A>
+<LI><A NAME="tex2html3316"
+ HREF="node72.html#SECTION001312330000000000000">events_after(+EventList)</A>
+<LI><A NAME="tex2html3317"
+ HREF="node72.html#SECTION001312340000000000000">cancel_after_event(+EventId, -Cancelled)</A>
+<LI><A NAME="tex2html3318"
+ HREF="node72.html#SECTION001312350000000000000">current_after_events(-Events)</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html3319"
+ HREF="node72.html#SECTION001313000000000000000">Events and Waking</A>
+<LI><A NAME="tex2html3320"
+ HREF="node72.html#SECTION001314000000000000000">Aborting an Execution with Events</A>
+</UL>
+<LI><A NAME="tex2html3321"
+ HREF="node73.html">Errors</A>
+<UL>
+<LI><A NAME="tex2html3322"
+ HREF="node73.html#SECTION001321000000000000000">Error Handlers</A>
+<LI><A NAME="tex2html3323"
+ HREF="node73.html#SECTION001322000000000000000">Arguments of Error Handlers</A>
+<LI><A NAME="tex2html3324"
+ HREF="node73.html#SECTION001323000000000000000">User Defined Errors</A>
+</UL>
+<LI><A NAME="tex2html3325"
+ HREF="node74.html">Interrupts</A>
+<UL>
+<LI><A NAME="tex2html3326"
+ HREF="node74.html#SECTION001331000000000000000">Interrupt Identifiers</A>
+<LI><A NAME="tex2html3327"
+ HREF="node74.html#SECTION001332000000000000000">Asynchronous handling</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3304"
+ HREF="node72.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3300"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3294"
+ HREF="node70.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3302"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3305"
+ HREF="node72.html">Events</A>
+<B> Up:</B> <A NAME="tex2html3301"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html3295"
+ HREF="node70.html">Definite Clause Grammars </A>
+ &nbsp <B>  <A NAME="tex2html3303"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,496 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>How do I write an ECLiPSe program?</TITLE>
+<META NAME="description" CONTENT="How do I write an ECLiPSe program?">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2386"
+ HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2382"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2376"
+ HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2384"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2387"
+ HREF="node12.html">How do I use</A>
+<B> Up:</B> <A NAME="tex2html2383"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html2377"
+ HREF="node10.html">How do I use</A>
+ &nbsp <B>  <A NAME="tex2html2385"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html2388"
+ HREF="node11.html#SECTION00341000000000000000">Compiling a program</A>
+<LI><A NAME="tex2html2389"
+ HREF="node11.html#SECTION00342000000000000000">Executing a query</A>
+<LI><A NAME="tex2html2390"
+ HREF="node11.html#SECTION00343000000000000000">Editing a file</A>
+<LI><A NAME="tex2html2391"
+ HREF="node11.html#SECTION00344000000000000000">Debugging a program</A>
+<LI><A NAME="tex2html2392"
+ HREF="node11.html#SECTION00345000000000000000">Getting help</A>
+<LI><A NAME="tex2html2393"
+ HREF="node11.html#SECTION00346000000000000000">Other tools</A>
+<UL>
+<LI><A NAME="tex2html2394"
+ HREF="node11.html#SECTION00346100000000000000">Compile scratch-pad</A>
+<LI><A NAME="tex2html2395"
+ HREF="node11.html#SECTION00346200000000000000">Source File Manager</A>
+<LI><A NAME="tex2html2396"
+ HREF="node11.html#SECTION00346300000000000000">Predicate Browser</A>
+<LI><A NAME="tex2html2397"
+ HREF="node11.html#SECTION00346400000000000000">Source Viewer</A>
+<LI><A NAME="tex2html2398"
+ HREF="node11.html#SECTION00346500000000000000">Delayed Goals</A>
+<LI><A NAME="tex2html2399"
+ HREF="node11.html#SECTION00346600000000000000">Tracer</A>
+<LI><A NAME="tex2html2400"
+ HREF="node11.html#SECTION00346700000000000000">Inspector</A>
+<LI><A NAME="tex2html2401"
+ HREF="node11.html#SECTION00346800000000000000">Global Settings</A>
+<LI><A NAME="tex2html2402"
+ HREF="node11.html#SECTION00346900000000000000">Statistics</A>
+<LI><A NAME="tex2html2403"
+ HREF="node11.html#SECTION003461000000000000000">Simple Query</A>
+<LI><A NAME="tex2html2404"
+ HREF="node11.html#SECTION003461100000000000000">Library Help</A>
+</UL>
+<LI><A NAME="tex2html2405"
+ HREF="node11.html#SECTION00347000000000000000">Preference Editor</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00340000000000000000">
+How do I write an ECLiPSe program?</A>
+</H1>
+You need to use an editor to write your programs. ECLiPSe does not come
+with an editor, but any editor that can save plain text files can be used. 
+Save your program as a plain text file, and you can then compile the
+program into ECLiPSe and run it.
+
+<P>
+With TkECLiPSe, you can specify the editor you want to use, and this
+editor will be started by TkECLiPSe, e.g. when you select a file in
+the `Edit' option under the File menu. The default values are the value of
+the VISUAL environment variable  under Unix, or Wordpad under Windows.
+This can be changed with the Preference Editor under the Tools menu.
+
+<P>
+
+<H2><A NAME="SECTION00341000000000000000">
+Compiling a program</A>
+</H2>
+
+<P>
+From the <TT>File</TT> menu, select the <TT>Compile ...</TT> option.
+This will bring up a file selection dialog.
+Select the file you wish to compile, and click on the <TT>Open</TT> button.
+This will compile the file and any others it depends on.
+Messages indicating which files have been compiled and describing any errors
+encountered will be displayed in the bottom portion of the TkECLiPSe
+window (<TT>Output and Error Messages</TT>).
+
+<P>
+If a file has been modified since it was compiled,
+it may be recompiled by clicking on the <TT>make</TT> button.
+This recompiles any files which have become out-of-date.
+
+<P>
+For more information on program compilation and the compiler, please see
+chapter <A HREF="node27.html#chapcompiler">6</A>.
+
+<P>
+
+<H2><A NAME="SECTION00342000000000000000">
+Executing a query</A>
+</H2>
+
+<P>
+To execute a query, first enter it into the <TT>Query Entry</TT>
+text field.
+You will also need to specify which module the query should be run from, by
+selecting the appropriate entry from the drop-down list to the left of the
+<TT>Query Entry</TT> field.
+Normally, the default selection of <TT>eclipse</TT> will be fine; this will
+allow access to all ECLiPSe built-ins and all predicates that have not
+explicitly been compiled into a different module.
+Selecting another module for the query is only needed if you wish to call a
+predicate which is not visible from the <TT>eclipse</TT> module, in which
+case you need to select that module.
+(For more information about the module system, please see chapter
+<A HREF="node39.html#chapmodules">7</A>.)
+
+<P>
+To actually execute the query, either hit the <TT>Enter</TT> key while
+editing the query, or click on the <TT>run</TT> button.
+TkECLiPSe maintains a history of commands entered during the session, and
+these may be recalled either by using the drop-down list to the right of the
+<TT>Query Entry</TT> field, or by using the up and down arrow keys while
+editing the <TT>Query Entry</TT> field.
+
+<P>
+If ECLiPSe cannot find a solution to the query, it will print <TT>No</TT>
+in the <TT>Results</TT> section of the TkECLiPSe window.
+If it finds a solution and knows there are no more, it will print it in the
+<TT>Results</TT> section, and then print <TT>Yes</TT>.
+If it finds a solution and there may be more, it will print the solution
+found as before, print <TT>More</TT>, and enable the <TT>more</TT> button.
+Clicking on the <TT>more</TT> button tells ECLiPSe to try to find
+another solution.
+In all cases it also prints the total time taken to execute the query.
+
+<P>
+Note that a query can be interrupted during execution by clicking on the
+<TT>interrupt</TT> button.
+
+<P>
+
+<H2><A NAME="SECTION00343000000000000000"></A>
+<A NAME="secedit"></A>
+<BR>
+Editing a file
+</H2>
+
+<P>
+If you wish to edit a file (e.g. a program source file), then you may do so
+by selecting the <TT>Edit ...</TT> option from the <TT>File</TT> menu.
+This will bring up a file selection dialog.
+Select the file you wish to edit, and click on the <TT>Open</TT> button.
+
+<P>
+When you have finished editing the file, save it.
+After you've saved it, if you wish to update the version compiled into
+ECLiPSe (assuming it had been compiled previously), simply click on the
+<TT>make</TT> button.
+
+<P>
+You can change which program is used to edit your file by using the
+TkECLiPSe Preference Editor, available from the <TT>Tools</TT> menu.
+
+<P>
+
+<H2><A NAME="SECTION00344000000000000000"></A>
+<A NAME="secdebug"></A>
+<BR>
+Debugging a program
+</H2>
+
+<P>
+To help diagnose problems in ECLiPSe programs, TkECLiPSe provides the
+tracer.
+This can be invoked by selecting the <TT>Tracer</TT> option from the
+<TT>Tools</TT> menu.
+The next time a goal is executed, the tracer window will become active,
+allowing you to step through the program's execution and examine the
+program's state as it executes.
+
+<P>
+The tracer displays the current call stack and a trace log.
+By using the left mouse button in the <TT>Call Stack</TT> region of the
+tracer window, you can bring up a menu of additional operations you can
+perform on that goal, such as inspecting it, or setting a spy point on the
+predicate in question.
+Selecting <TT>Configure filter ...</TT> from the <TT>Options</TT> menu
+of the tracer will launch the conditional filter.
+This filter allows you to 
+specify conditions on which the tracer should stop at a debug port. This
+can be very useful for skipping over unwanted debug ports.
+
+<P>
+For more information on using the tracer, please see the online help,
+available by selecting <TT>Tracer Help</TT> from the <TT>Help</TT> menu.
+
+<P>
+Other TkECLiPSe tools which are useful while using the tracer are:
+
+<P>
+
+<UL><LI>the predicate browser (available by selecting the <TT>Predicate
+Browser</TT> option from the <TT>Tools</TT> menu), which is useful for setting
+or removing spy points on predicates, or for setting the <B>start_tracing</B>
+flag which activates the tracer when a particular predicate is called for
+the first time; and
+
+<P>
+
+<LI>the term inspector (available by double left clicking on a term from
+the stack window, or by selecting the <TT>Inspector</TT>
+option from the <TT>Tools</TT> menu), which is useful for examining and
+browse the arguments of a term in detail. 
+
+<P>
+
+<LI>the delayed goals browser (available by selecting the <TT>Delayed
+Goals</TT> option from the <TT>Tools</TT> menu), which allows you to inspect
+the current list of delayed goals.
+
+<P>
+
+<LI>the display matrix (available either from calls in user's code, or by
+interactively selecting terms to be observed from the inspector, tracer or
+delay goals tools), which allows you to monitor any changes to a term and
+its arguments.
+
+<P>
+
+</UL>
+
+<P>
+More information about debugging in ECLiPSe may be found in chapter
+<A HREF="node75.html#chapdebug">14</A>.
+
+<P>
+
+<H2><A NAME="SECTION00345000000000000000">
+Getting help</A>
+</H2>
+
+<P>
+More detailed help than is provided here can be obtained online for all
+the features of TkECLiPSe.
+Simply select the entry from the <TT>Help</TT> menu on TkECLiPSe's
+top-level window which corresponds to the topic or tool you are interested
+in.
+
+<P>
+
+<H2><A NAME="SECTION00346000000000000000">
+Other tools</A>
+</H2>
+
+<P>
+TkECLiPSe comes with a number of useful tools.
+Some have been mentioned above, but here is a more complete list.
+Note that we only provide brief descriptions here; for more details, please
+see the online help for the tool in question.
+
+<P>
+
+<H3><A NAME="SECTION00346100000000000000">
+Compile scratch-pad</A>
+</H3>
+
+<P>
+This tool allows you to enter small amounts of program code and have it
+compiled.
+This is useful for quick experimentation, but not for larger examples or
+programs you wish to keep, since the source code is lost when the session is
+exited.
+
+<P>
+
+<H3><A NAME="SECTION00346200000000000000">
+Source File Manager</A>
+</H3>
+
+<P>
+This tool allows you to keep track of and manage which source files have
+been compiled in the current ECLiPSe session.
+You can select files to edit them, or compile them individually, as well as
+adding new files.
+
+<P>
+
+<H3><A NAME="SECTION00346300000000000000">
+Predicate Browser</A>
+</H3>
+
+<P>
+This tool allows you to browse through the modules and predicates which have
+been compiled in the current session.
+It also lets you alter some properties of compiled predicates.
+
+<P>
+
+<H3><A NAME="SECTION00346400000000000000">
+Source Viewer</A>
+</H3>
+
+<P>
+This tool attempts to display the source code for predicates selected in
+other tools.
+
+<P>
+
+<H3><A NAME="SECTION00346500000000000000">
+Delayed Goals</A>
+</H3>
+
+<P>
+This tool displays the current delayed goals, as well as allowing a spy
+point to be placed on the predicate and the source code viewed.
+
+<P>
+
+<H3><A NAME="SECTION00346600000000000000">
+Tracer</A>
+</H3>
+
+<P>
+As discussed in section <A HREF="node11.html#secdebug">3.4.4</A>, the tracer is useful for debugging
+programs.
+See also chapter <A HREF="node75.html#chapdebug">14</A>.
+
+<P>
+
+<H3><A NAME="SECTION00346700000000000000">
+Inspector</A>
+</H3>
+
+<P>
+This tool provides a graphical browser for inspecting terms.
+Goals and data terms are displayed as a tree structure.
+Sub-trees can be collapsed and expanded by double-clicking.
+A navigation panel can be launched which provides arrow buttons as an
+alternative way to navigate the tree.
+
+<P>
+Note that while the inspector window is open, interaction with other
+TkECLiPSe windows is disallowed.
+This prevents the term from changing while being inspected.
+To continue TkECLiPSe, the inspector window must be closed.
+
+<P>
+
+<H3><A NAME="SECTION00346800000000000000">
+Global Settings</A>
+</H3>
+
+<P>
+This tool allows the setting of some global flags governing the way
+ECLiPSe behaves.
+See also the documentation for the
+<A NAME="tex2html70"
+ HREF="../bips/kernel/env/set_flag-2.html">set_flag/2</A><A NAME="1242"></A> and
+<A NAME="tex2html72"
+ HREF="../bips/kernel/env/get_flag-2.html">get_flag/2</A><A NAME="1245"></A> predicates.
+
+<P>
+
+<H3><A NAME="SECTION00346900000000000000">
+Statistics</A>
+</H3>
+
+<P>
+This tool displays some statistics about memory and CPU usage of the
+ECLiPSe system, updated at regular intervals.
+See also the documentation for the
+<A NAME="tex2html74"
+ HREF="../bips/kernel/env/statistics-0.html">statistics/0</A><A NAME="1248"></A> and
+<A NAME="tex2html76"
+ HREF="../bips/kernel/env/statistics-2.html">statistics/2</A><A NAME="1251"></A> predicates.
+
+<P>
+
+<H3><A NAME="SECTION003461000000000000000">
+Simple Query</A>
+</H3>
+
+<P>
+This tool allows the user to send a simple query to ECLiPSe even while
+ECLiPSe is running some program and the Toplevel Query Entry window
+is unavailable.
+Note that the reply is shown in EXDR format (see the ECLiPSe Embedding
+and Interfacing Manual).
+
+<P>
+
+<H3><A NAME="SECTION003461100000000000000">
+Library Help</A>
+</H3>
+
+<P>
+This tool allows you to browse the online help for the ECLiPSe libraries.
+On the left is a tree display of the libraries available and the predicates
+they provide.
+
+<UL><LI>Double clicking on a node in this tree either expands it or collapses it
+again.
+
+<LI>Clicking on an entry displays help for that entry to the right.
+
+<LI>Double clicking on a word in the right-hand pane searches for help
+entries containing that string.
+
+</UL>
+You can also enter a search string or a predicate specification manually
+in the text entry box at the top right.
+If there is only one match, detailed help for that predicate is displayed.
+If there are multiple matches, only very brief help is displayed for each;
+to get detailed help, try specifying the module and/or the arity of the
+predicate in the text field.
+
+<P>
+
+<H2><A NAME="SECTION00347000000000000000">
+Preference Editor</A>
+</H2>
+
+<P>
+This tool allows you to edit and set various user preferences. This include
+parameters for how TkECLiPSe will start up, e.g. the amount of memory it
+will be able to use, and a initial query to execute; and parameters which
+affects the appearance of TkECLiPSe, such as the fonts TkECLiPSe
+uses.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2386"
+ HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2382"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2376"
+ HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2384"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2387"
+ HREF="node12.html">How do I use</A>
+<B> Up:</B> <A NAME="tex2html2383"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html2377"
+ HREF="node10.html">How do I use</A>
+ &nbsp <B>  <A NAME="tex2html2385"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

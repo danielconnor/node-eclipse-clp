@@ -1,0 +1,51 @@
+
+EplexInstance:eplex_var_get(+Var, ++What, -Value)
+
+   Obtain information for an individual solver problem variable Var.
+
+Arguments
+   Var                 A solver problem variable for solver associated with EplexInstance
+   What                Specification for information wanted (atom)
+   Value               Returned value of What
+
+Type
+   library(eplex)
+
+Description
+
+   Retrieve information about solver state and results related to a
+   particular variable or constraint, for the eplex instance EplexInstance.
+   Fails if no solution has been computed yet.  What can take one of the
+   following values:
+
+
+    solution
+    Returns the floating-point solution for variable Var.
+
+
+    typed_solution
+    Returns the properly typed (integer or float) solution for variable
+        Var, depending on if the variable was constrained to be an integer
+        or not for EplexInstance.
+
+
+    reduced_cost
+    Returns the reduced cost for variable Var. If the problem is a MIP, 
+        then depending on the external solver, this is either unavailable
+        or is the value at the optimal LP node. 
+
+
+
+  Note that solution or reduced_cost can only be retrieved
+  when previously requested in the option list of eplex_solver_setup/4,
+  lp_demon_setup/5, lp_setup/4 or with lp_set/3.
+
+
+Exceptions
+     4 --- Handle is not instantiated.
+     5 --- Handle is not a compound term.
+     6 --- What is not a valid value.
+     6 --- Var is not a problem variable for Handle.
+     6 --- What is unavailable; the information was not requested at solver setup.
+
+

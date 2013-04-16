@@ -1,0 +1,54 @@
+<HTML><HEAD><TITLE>?Sterm `= ?Sterm1</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Sterm `= ?Sterm1</H1>
+Sterm and Sterm1 are equal.
+
+
+<DL>
+<DT><EM>?Sterm</EM></DT>
+<DD>A ground set, a set domain variable or a set expression                containing set operators (union \/, intersection /\,                difference \).
+</DD>
+<DT><EM>?Sterm1</EM></DT>
+<DD>A ground set, a set domain variable or a set expression.
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint states that the two set terms are equal.  It is
+   activated whenever the upper or the lower bound of a set domain variable
+   is updated.  When propagating set domain updates, the system reasons
+   only over the upper and lower bound sets of values of the set domain and
+   makes sure that these sets of values are consistent with those of other
+   set domain variables.
+
+<P>
+   If this constraint is not solved, this predicate delays until it can be
+   completely solved.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the two set terms have a different set value.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 2]: S `:: {}.. {1,2,3}, [S1,S2] `:: {}..{3,4,5},
+             S \/  S1 `= S2.
+
+S = S{{} .. {3}}
+S1 = S1{{} .. {3, 4, 5}}
+S2 = S2{{} .. {3, 4, 5}}
+
+Delayed goals:
+        union_s(S{{} .. {3}}, S1{{} .. {3, 4, 5}},
+S2{{} .. {3, 4, 5}})
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/BNN-2.html">`:: / 2</A>
+</BODY></HTML>

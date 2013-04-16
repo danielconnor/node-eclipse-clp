@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>current_predicate(?PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_predicate(?PredSpec)</H1>
+Succeeds if PredSpec is a visible predicate defined by the user, or a
+visible library predicate.
+
+
+<DL>
+<DT><EM>?PredSpec</EM></DT>
+<DD>Expression of the form Atom/Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to check that PredSpec is a user or library predicate visible from
+   the caller module, or else to return on backtracking all the current
+   visible predicates.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if PredSpec is not a visible (user or library) predicate.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is instantiated, but not to the form Atom/Integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse]: current_predicate(X/Y).
+     X = intersection
+     Y = 3     More? (;)
+     yes.
+     [eclipse]: current_predicate(X).
+     X = (^) / 2     More? (;)
+     X = intersection / 3     More? (;)
+     X = subtract / 3     More? (;)
+     X = append / 3     More? (;)
+     yes.
+
+     [eclipse]: [user].
+      p.
+      user compiled 28 bytes in 0.00 seconds
+     yes.
+     [eclipse]: current_predicate(p/0).
+     yes.
+Fail:
+     current_predicate(assert/1).
+Error:
+     current_predicate(a/a).         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/current_module_predicate-2.html">current_module_predicate / 2</A>, <A HREF="../../kernel/database/current_built_in-1.html">current_built_in / 1</A>, <A HREF="../../kernel/database/is_predicate-1.html">is_predicate / 1</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>
+</BODY></HTML>

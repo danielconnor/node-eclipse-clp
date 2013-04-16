@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Array Notation</TITLE>
+<META NAME="description" CONTENT="Array Notation">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node24.html">
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node24.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2590"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2586"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2580"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2588"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2591"
+ HREF="node24.html">The String Data Type</A>
+<B> Up:</B> <A NAME="tex2html2587"
+ HREF="node20.html">ECLiPSe-specific Language Features</A>
+<B> Previous:</B> <A NAME="tex2html2581"
+ HREF="node22.html">Loop/Iterator Constructs</A>
+ &nbsp <B>  <A NAME="tex2html2589"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html2592"
+ HREF="node23.html#SECTION00531000000000000000">Implementation Note</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00530000000000000000"></A>
+<A NAME="2229"></A>
+<A NAME="2230"></A>
+<BR>
+Array Notation
+</H1>
+
+<P>
+Since our language has no type declarations, there is really
+no difference between a structure and an array. In fact,
+a structure can always be used as an array, creating it with
+<A NAME="tex2html180"
+ HREF="../bips/kernel/termmanip/functor-3.html">functor/3</A><A NAME="2363"></A>
+and accessing elements with
+<A NAME="tex2html182"
+ HREF="../bips/kernel/termmanip/arg-3.html">arg/3</A><A NAME="2366"></A>.
+However, this can look clumsy, especially in arithmetic expressions.
+
+<P>
+ECLiPSe therefore provides array syntax which enables the
+programmer to write code like<PRE>
+[eclipse 1]: Prime = a(2,3,5,7,11), X is Prime[2] + Prime[4].
+X = 10
+Prime = a(2, 3, 5, 7, 11)
+yes.
+</PRE>
+Within expressions, array elements can be written as variable-indexlist
+or structure-indexlist sequences, e.g.<PRE>
+X[3] + M[3,4] + s(4,5,6)[3]
+</PRE>
+Indices run from 1 up to the arity of the array-structure.
+The number of array dimensions is not limited.
+
+<P>
+To create multi-dimensional arrays conveniently, the built-in
+<A NAME="tex2html184"
+ HREF="../bips/kernel/termmanip/dim-2.html">dim/2</A><A NAME="2369"></A>
+is provided (it can also be used backwards to access
+the array dimensions):<PRE>
+[eclipse]: dim(M,[3,4]), dim(M,D).
+M = []([](_131, _132, _133, _134),
+       [](_126, _127, _128, _129),
+       [](_121, _122, _123, _124))
+D = [3, 4]
+yes.
+</PRE>
+Although
+<A NAME="tex2html186"
+ HREF="../bips/kernel/termmanip/dim-2.html">dim/2</A><A NAME="2372"></A>
+creates all structures with the functor [], this has
+no significance other than reminding the programmer that
+these structures are intended to represent arrays.
+
+<P>
+Array notation is especially useful within loops.
+Here is the code for a matrix multiplication routine:<PRE>
+matmult(M1, M2, M3) :-
+        dim(M1, [MaxIJ,MaxK]),
+        dim(M2, [MaxK,MaxIJ]),
+        dim(M3, [MaxIJ,MaxIJ]),
+        (
+            for(I,1,MaxIJ),
+            param(M1,M2,M3,MaxIJ,MaxK)
+        do
+            (
+                for(J,1,MaxIJ),
+                param(M1,M2,M3,I,MaxK)
+            do
+                (
+                    for(K,1,MaxK),
+                    fromto(0,Sum0,Sum1,Sum),
+                    param(M1,M2,I,J)
+                do
+                    Sum1 is Sum0 + M1[I,K] * M2[K,J]
+                ),
+                subscript(M3, [I,J], Sum)
+            )
+        ).
+</PRE>
+<A NAME="2256"></A>
+
+<P>
+
+<H2><A NAME="SECTION00531000000000000000">
+Implementation Note</A>
+</H2>
+
+<P>
+Array syntax is implemented by parsing variable-list and
+structure-list sequences as terms with the functor subscript/2.
+<A NAME="2258"></A>
+For example:<PRE>
+X[3]          ---&gt;      subscript(X, [3])
+M[3,4]        ---&gt;      subscript(M, [3,4])
+s(4,5,6)[3]   ---&gt;      subscript(s(4,5,6), [3])
+</PRE>
+If such a term is then used within an arithmetic expression,
+a result argument is added and the built-in predicate
+<A NAME="tex2html190"
+ HREF="../bips/kernel/termmanip/subscript-3.html">subscript/3</A><A NAME="2375"></A>
+is called, which is a generalised form of
+<A NAME="tex2html192"
+ HREF="../bips/kernel/termmanip/arg-3.html">arg/3</A><A NAME="2378"></A>
+and extracts the indicated array element.
+
+<P>
+When printed, subscript/2 terms are again printed in array notation,
+unless the print-option to suppress operator notation ("O") is used.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2590"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2586"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2580"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2588"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2591"
+ HREF="node24.html">The String Data Type</A>
+<B> Up:</B> <A NAME="tex2html2587"
+ HREF="node20.html">ECLiPSe-specific Language Features</A>
+<B> Previous:</B> <A NAME="tex2html2581"
+ HREF="node22.html">Loop/Iterator Constructs</A>
+ &nbsp <B>  <A NAME="tex2html2589"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

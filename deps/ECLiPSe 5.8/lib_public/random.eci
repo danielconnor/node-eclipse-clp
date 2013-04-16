@@ -1,0 +1,6 @@
+:- module(random).
+:- export rand_perm / 2.
+:- export random / 3.
+:- export randomise / 1.
+:- export randomise / 0.
+:- export random / 2.

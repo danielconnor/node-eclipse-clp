@@ -1,0 +1,4 @@
+lib(sicstus)
+
+   SICStus Prolog Compatibility Package
+

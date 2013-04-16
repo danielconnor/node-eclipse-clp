@@ -1,0 +1,13 @@
+lib(time_log)
+
+	This module is used for logging and collating the times taken to run
+	tests (but could be used for other similar purposes).  Before
+	running any tests, call initialise_time_logging/1.  This deletes any
+	old administrative files from a previous test run.  Then, within the
+	test harness for an individual test, call log_time_local/2 to log
+	the time taken for the test to a temporary local file.  Finally,
+	once all the tests have completed successfully, call
+	collate_time_logs/4 to collect all the local administrative files
+	and add all the data to the master log file.
+
+

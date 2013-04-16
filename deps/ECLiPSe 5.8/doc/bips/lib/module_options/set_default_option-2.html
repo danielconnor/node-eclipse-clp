@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>set_default_option(+OptionName, +OptionValue)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(module_options)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_default_option(+OptionName, +OptionValue)</H1>
+Permanently set the default value for the given option in the context module
+<DL>
+<DT><EM>OptionName</EM></DT>
+<DD>An atom
+</DD>
+<DT><EM>OptionValue</EM></DT>
+<DD>A valid option term
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    The exact behaviour of this predicate depends on the module from where
+    it is invoked: It changes the default value for a named option in the
+    context module. The initial default values are defined by the predicate
+    default_options/1 in the context module.
+</P><P>
+    The option name OptionName must be valid according to the predicate
+    valid_option_field/2 in the context module, and OptionValue
+    must be valid according to valid_option_value/2.
+</P>
+    
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>OptionName or OptionValue are uninstantiated
+<DT><EM>(5) type error </EM>
+<DD>OptionName is not an atom
+<DT><EM>(6) out of range </EM>
+<DD>OptionName is not a valid option, or OptionValue is not a valid value in the context module
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/module_options/index.html">library(module_options)</A>, <A HREF="../../lib/module_options/get_options-2.html">get_options / 2</A>, <A HREF="../../lib/module_options/print_default_options-1.html">print_default_options / 1</A>
+</BODY></HTML>

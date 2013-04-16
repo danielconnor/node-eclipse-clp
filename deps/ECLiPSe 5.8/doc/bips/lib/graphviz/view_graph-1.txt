@@ -1,0 +1,23 @@
+
+view_graph(+Graph)
+
+   Display a given graph in a window (using default options)
+
+Arguments
+   Graph               A graph structure
+
+Type
+   library(graphviz)
+
+Examples
+   
+    ?- lib(graph_algorithms), lib(graphviz).
+    Yes (1.17s cpu)
+
+    ?- make_random_graph(10,30,true,true,true,G), view_graph(G).
+    G = graph(...)
+    Yes (0.03s cpu)
+    
+
+See Also
+   view_graph / 2, library(graph_algorithms)

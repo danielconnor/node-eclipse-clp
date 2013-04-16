@@ -1,0 +1,12 @@
+:- module(graphs).
+:- export warshall / 2.
+:- export vertices / 2.
+:- export top_sort / 2.
+:- export s_transpose / 2.
+:- export s_to_p_trans / 2.
+:- export s_to_p_graph / 2.
+:- export s_member / 3.
+:- export p_transpose / 2.
+:- export p_to_s_graph / 2.
+:- export p_member / 3.
+:- export compose / 3.

@@ -1,0 +1,20 @@
+<HTML><HEAD><TITLE>start_tty_vc(++VCName)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(tty_vc)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>start_tty_vc(++VCName)</H1>
+Start a TTY visualisation client.
+<DL>
+<DT><EM>VCName</EM></DT>
+<DD>An atom; the name of the TTY VC.
+</DD>
+</DL>
+<H2>Description</H2>
+
+
+	    <p> This predicate starts a TTY visualisation client (VC). The change condition is <code>constrained of suspend</code>. The view granularity is <code>fine</code>. For more control over these options, use <code>start_tty_vc/2</code> or <code>start_tty_vc/3</code>. </p> The TTY VC is a non-logical entity in the sense that backtracking over the <code>start_tty_vc</code> goal does not affect the existence of the TTY VC. 
+<H3>Fail Conditions</H3>
+Fails when any other TTY VC exists. Only one TTY VC can exist at a time, although in general there can be multiple VCs.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib/tty_vc/stop_tty_vc-0.html">stop_tty_vc / 0</A>, <A HREF="../../lib/tty_vc/start_tty_vc-2.html">start_tty_vc / 2</A>, <A HREF="../../lib/tty_vc/start_tty_vc-3.html">start_tty_vc / 3</A>
+</BODY></HTML>

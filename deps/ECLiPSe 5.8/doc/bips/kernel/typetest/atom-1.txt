@@ -1,0 +1,50 @@
+
+atom(?Atom)
+
+   Succeeds if Atom is a Prolog atom.
+
+
+
+Arguments
+   ?Atom               Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Atom is an atom.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Atom is not an atom.
+
+
+
+Examples
+   
+Success:
+        atom(atom).
+        atom('Anything').
+        atom(*).
+        atom([]).
+        atom(#).
+        atom($).
+        atom(/).
+        atom(\).
+
+Fail:
+        atom(1).
+        atom(this(is,a,structure)).
+        atom(X).
+
+
+
+
+
+See Also
+   var / 1, type_of / 2

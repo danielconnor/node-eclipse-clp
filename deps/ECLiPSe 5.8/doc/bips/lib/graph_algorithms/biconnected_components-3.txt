@@ -1,0 +1,31 @@
+
+biconnected_components(+Graph, -Articulations, -BCC)
+
+   Finds the biconnected components of the graph
+
+Arguments
+   Graph               a graph structure
+   Articulations       a list of integer node numbers
+   BCC                 list of lists of integer node numbers
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes the biconnected components of a graph, i.e. maximal subsets of
+    the graph's nodes whose nodes are mutually accessible via at least two
+    distinct paths (in other words, subgraphs which have no articulation
+    points).
+
+    Also compute a list of articulation points, i.e. those nodes that
+    connect the biconnected components to each other.
+
+    This operation is only defined for bidirected graphs.
+
+    Note that by convention, isolated nodes and pairs of nodes connected
+    by a single (bidirected) edge also form biconnected components.
+    
+
+See Also
+   graph_is_bidirected / 1, articulation_points / 2, strong_components / 2

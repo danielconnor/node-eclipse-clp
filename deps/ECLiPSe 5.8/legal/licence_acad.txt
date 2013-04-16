@@ -1,0 +1,310 @@
+ECLiPSe III Academic Software Release Agreement
+ACAD-08/04
+
+
+Preamble
+
+ECLiPSe has been developed over several years, largely supported by
+industry funding.  Today, ECLiPSe is owned by Cisco Technology Inc. 
+On the academic front, ECLiPSe development continues at IC-Parc,
+Imperial College London, with the aim of providing an integrated
+platform for optimization and problem solving with hybrid techniques.
+
+The intention of this academic licence is to make ECLiPSe as widely
+and freely available as possible for academic research and for
+teaching to an academic audience.
+
+You will find that this general academic licence places a number of
+restrictions on the funding and the results of your research.  Should
+these restrictions prevent you from using ECLiPSe under this general
+academic licence (for example because your work is industry-funded, or
+you cannot make your results publicly available), we would like to
+encourage you to instead apply for a commercial development licence,
+whose terms and conditions would take account of your specific
+circumstances. 
+
+In striving to enhance the applicability and usefulness of ECLiPSe, we
+greatly appreciate and encourage any kind of cooperation and feedback
+from our users.  Of particular value are contributions of software,
+which could be either
+
+ * Modifications to Eclipse (in particular its original set of
+   Generic Libraries)
+ * Newly developed Generic Libraries for ECLiPSe
+ * Other software related to ECLiPSe
+
+In case you want to contribute a modification, you give ownership of
+your modification to the owner, so the legal status of ECLiPSe's
+initial components does not change and we can continue to licence
+ECLiPSe without having to involve you in the process.
+
+If you want to contribute a new Generic Library, your code remains
+yours.  All we will ask you to do is to grant to all Authorised
+ECLiPSe users rights of use that are at least equivalent to the rights
+they have on the original ECLiPSe Generic Libraries.  This will allow
+us to fully integrate your contribution.
+
+If you develop any other code or components, you are completely free
+to decide on the terms and conditions relating to this other code or
+components.
+
+In any case, the ECLiPSe developers will reserve the right to accept
+or reject a contribution. 
+
+
+Terms and Conditions
+
+Imperial College of Science, Technology and Medicine in London,
+hereafter called the Licensor, grants to the Licensee (as identified
+at the end of this Agreement) a non-exclusive, non-transferable
+licence to use the computer software and associated documentation
+known as "The ECLiPSe III Constraint Logic Programming System" owned
+by Cisco Technology Inc (the "Owner") made available on the Imperial
+College website, hereafter referred to as the Work, subject to the
+following conditions:
+
+
+Definitions:
+
+"Academic Purposes" means teaching to an academic audience and
+Academic Research carried out by any Licencee.
+
+"Academic Research" means research (1) which is funded only from
+non-commercial sources, (2) whose results are intended for the public
+domain and are unencumbered by patents, commercial obligations or
+other restrictions, and (3) which is carried out independent of any
+commercial partners.
+
+"Authorised ECLiPSe User" means any person who has rights to use the
+Work in any way; this includes, but is not limited to, the Owner, the
+Licensor, and every holder of an ECLiPSe academic or commercial
+licence.
+
+"ECLiPSe Program" means a program or set of programs in source form
+written in the ECLiPSe programming language, or using ECLiPSe
+libraries, but not containing any part of the Work..
+
+"ECLiPSe Application" means an ECLiPSe Program together with the Work
+or part of the Work; an ECLiPSe Application is a derivative of the
+Work.
+
+"Generic Library" means a program or a collection of related programs,
+designed to be re-used without modification as a standard component or
+module in different applications and packaged in such a way that it
+can be loaded and executed by an ECLiPSe runtime system and intended
+for distribution within ECLiPSe.
+
+"Work" means the ECLiPSe III Constraint Logic Programming System
+licensed by the Owner to the Licensor, consisting of (1) a runtime
+core, (2) a modelling and control language processor, (3) a
+development environment, (4) a collection of libraries, (5) interfaces
+for embedding into host environments, (6) interfaces to third-party
+solvers and (7) documentation and certain library source code.
+
+
+1.	Prerequisites
+
+The Licensee is responsible for obtaining any further licence(s) that
+may be required by any part of the said Work.  Rights implied by this
+Software Release Agreement shall never exceed the rights implied by
+such further licence(s).
+
+
+2.	Ownership 
+
+The Licensee agrees that all intellectual property rights in the Work
+are, and shall at all times remain, the property of the Owner.  The
+Licensee shall have no right, title, or interest therein or thereto
+except as expressly set forth in this Agreement.
+
+Neither the Owner nor the Licensor claim any ownership of ECLiPSe
+Programs in source form created by the Licensee and this shall be
+unaffected by the use of the Work.  The compiled form of an ECLiPSe
+Program shall belong to the owner of the corresponding source form. 
+
+The creation of an ECLiPSe Application shall not affect the ownership
+of its components.  The corresponding ECLiPSe Program remains the
+property of its owner, and the included parts of the Work remain the
+property of the Owner.  The owner of an ECLiPSe Program or any third
+party sub-licensee of the same may only use the ECLiPSe Program with
+the Work if they obtain an appropriate academic or commercial license
+for the Work. 
+
+All improvements, enhancements and modifications to the Work made by
+the Licensee, including but not limited to modifications of the
+Owner's Generic Libraries, shall be disclosed, promptly after release
+by the Licensee, to the Owner and the Licensor and all such items
+shall be assigned to the Owner.  The Licensor reserves the right to
+accept or reject any improvements, enhancements or modifications for
+future Eclipse releases.  The Owner hereby grants and agrees to grant
+to the Licensee and to all other Authorised ECLiPSe Users a
+non-exclusive licence to all such improvements, enhancements and
+modifications assigned to it under this clause. 
+
+Any new Generic Libraries in connection with the Work developed by the
+Licensee shall be made available to all Authorised ECLiPSe Users at
+the time the Libraries are released to a third party and shall be
+owned by the Licensee.  The Owner and the Licensor shall be granted a
+non-exclusive, royalty free, irrevocable, sub-licensable licence to
+make, have made, use, import, copy, modify, offer to sell, sell, lease
+and otherwise distribute all such new Generic Libraries and the
+Licensee shall grant a non-exclusive licence to use such new Generic
+Libraries to all Authorised ECLiPSe Users.
+
+
+3.	Limitations on Use
+
+This licence permits the Licensee to use the Work for Academic
+Purposes only.  The Licensee shall not distribute the Work, or any
+part thereof, to others including without limitation the Licensee
+shall not distribute any ECLiPSe Applications containing the Work or
+part of the Work, to others.  Such distribution requires a separate
+agreement with the Licensor.
+
+The Licensee shall not sell products or services based on the Work,
+including educational and research services (other than teaching
+materials and services sold incidental to the teaching of ECLiPSe to
+an academic audience), or use the Work or any part thereof for any
+other commercial purpose.  Such commercial exploitation requires a
+separate agreement with the Licensor.
+
+This Agreement does not permit the Licensee to disassemble or
+reverse-engineer the software.
+
+The Licensee shall not copy the Work, except as necessary for use and
+archival purposes.  The Licensee shall maintain a record of the number
+and location of all originals and copies of the Work made during the
+use of the Work.
+
+The Licensee shall notify immediately the Licensor of any unauthorised
+use or disclosure and cooperate in the prosecution of the malefactor.
+
+If at any time the Licensee obtains patent protection anywhere in the
+world in respect of the exercise of the rights granted under this
+Agreement the Licensee hereby grants to the Owner, Imperial and all
+other Authorised ECLiPSe Users a non-exclusive, royalty free,
+perpetual, irrevocable licence to any such patents, with the right to
+sub-license such rights. 
+
+
+4.	Non-disclosure
+
+Subject to its obligations of disclosure to the Owner in paragraph 2,
+the Licensee shall take all precautions to maintain the
+confidentiality of the Work; these precautions shall be at least
+equivalent to those employed by the receiving organisation to protect
+its own confidential information.
+
+
+5.	Non-exclusivity
+
+The Licensee recognises that the Work is released on a non-exclusive
+basis and the Licensor shall have the right to grant licences to
+others or to make such other use of the Work as it shall desire.
+
+
+6.	Credits
+
+All credits in the Work, both in listings and/or documentation,
+whether names of individuals or organisations, will be retained intact
+and in place by the Licensee.  The Licensee will acknowledge in any
+published copy or in any other use of the Work or any derived work the
+authorship of the Work and the fact that the Work was developed by the
+Licensor.
+
+The Licensee shall not remove any proprietary copyright or trade
+secret legend from the Work or any part thereof.
+
+
+7.	Product warranty
+
+The Work is released on an "as is" basis, and there is no warranty
+expressed or implied as to the functioning, performance or effect on
+hardware or other software.  The Licensee recognises that neither the
+Licensor nor the Owner is obliged to provide maintenance, consultation
+or revision of the Work.
+
+
+8.	Liability
+
+None of Licensor, Owner, or the individual shall be responsible for
+the development and/or maintenance of the Work, and none of the
+foregoing parties accept any liability of any kind in releasing the
+Work.
+
+
+9.	Title
+
+The Licensor warrants it has the legal right to grant the licence
+under this Agreement and that, to its knowledge at the time of
+granting the licence, the Works do not infringe upon the proprietary
+rights of others.
+
+
+10.	Governing Law
+
+This licence shall be subject to and construed and interpreted in
+accordance with English Law and shall be subject to the jurisdiction
+of the Courts of England.
+
+
+11.	Severability
+
+If any provision or clause of the Agreement for any reason whatsoever
+should be or become void or unenforceable the remainder of the
+Agreement shall be unaffected hereby and shall nevertheless remain in
+full force and effect.
+
+
+12.	Termination
+
+Each party shall have the right to terminate this Agreement.  The
+Licensor agrees not to terminate this Agreement unless the Licensee
+violates it.  In addition, the Owner or Licensor may terminate this
+Agreement immediately if the Owner or the Licensor receives
+notification from another person that the Work infringes the rights of
+any other person, with no liability to the Licensor or to the Owner. 
+
+This Agreement may be terminated by the Licensor at any time upon
+notice in writing if the Licensee fails to comply with any material
+term or condition of this Agreement.  The Licensee shall have thirty
+days after notice to cure any failure and avoid termination.
+
+Upon termination of this Agreement the Licensee shall return all
+originals and copies of the software (including the source code) and
+associated documentation to the Licensor within two weeks, including
+any technical data or information disclosed in writing, or any related
+material to that.
+
+The Licensee shall ensure that the validity of the protected measures of 
+the Agreement is maintained even after the end of this Agreement.
+
+
+13.	Changes to this agreement
+
+This Agreement may only be changed if both parties agree to the
+proposed changes in writing.
+
+
+14.	Enforcement by the Owner
+
+The Owner shall at any time be entitled to enforce the benefit of this
+Agreement against the Licensee under the Contracts (Rights of Third
+Parties) Act 1999.
+
+
+
+We have read this Agreement, understand it, and agree to be bound by
+its terms and conditions.
+
+
+For the Licensor:
+
+		IC-Parc, Centre for Planning and Resource Control
+		Imperial College of Science, Technology and Medicine
+		London SW7 2AZ
+		UK
+    Fax:
+		(44) 20 7594 8432
+    Represented by:
+		Prof. Barry Richards, Director of IC-Parc

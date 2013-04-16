@@ -1,0 +1,60 @@
+
+current_after_event(?Event)
+
+      Check or find currently pending after events (inside handler).
+
+
+
+Arguments
+   Event               Atom or variable
+
+Type
+   Obsolete
+
+Description
+
+   If Event is an atom, succeeds if Event is a currently pending after
+   event, i.e. an event which is setup by either event_after/2 or
+   event_after_every/2, and which is waiting to be raised
+   (event_after_every/2 will always be pending as it is raised
+   repeatedly). If Event is a variable, then all the currently pending
+   events are returned as a list. An event will appear as many times as it
+   had been setup. 
+
+
+   Note that this predicate can only be called from within an after event 
+   handler, i.e. when the timer is paused, and the after event state can be
+   safely examined. An error would be raised otherwise.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Event is not a pending after event.
+
+
+
+Exceptions
+     1 --- Predicate is called while after events was not frozen.
+     5 --- Event is not an atom or variable.
+
+Examples
+   
+   setup :-
+      set_event_handler(hi, hi/0),
+      event_after_every(hi, 3.2).
+
+   hi :-
+      current_after_event(Es),
+      writeln(hi),
+      writeln('Pending events'-Es).
+
+   :- setup, repeat, fail.  
+   % just spinning after the setup for events to be raised.
+
+
+
+See Also
+   event_after / 2, event_after_every / 2, event / 1, set_event_handler / 2, cancel_after_event / 1

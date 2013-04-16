@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Style rules</TITLE>
+<META NAME="description" CONTENT="Style rules">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node59.html">
+<LINK REL="previous" HREF="node57.html">
+<LINK REL="up" HREF="node57.html">
+<LINK REL="next" HREF="node59.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1390"
+ HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1384"
+ HREF="node57.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1378"
+ HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1386"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1388"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1391"
+ HREF="node59.html">Module structure</A>
+<B> Up:</B> <A NAME="tex2html1385"
+ HREF="node57.html">Style Guide</A>
+<B> Previous:</B> <A NAME="tex2html1379"
+ HREF="node57.html">Style Guide</A>
+ &nbsp <B>  <A NAME="tex2html1387"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1389"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001010000000000000000">
+Style rules</A>
+</H1>
+<DL COMPACT>
+<DT>1.
+<DD>There is one directory containing all code and its documentation (using sub-directories).
+<DT>2.
+<DD>Filenames<A NAME="1063"></A> are of form [a-z][a-z_]+ with extension .ecl .
+<DT>3.
+<DD>One file per module, one module per file.
+<DT>4.
+<DD>Each module is documented with comment directives.
+<DT>5.
+<DD>All required interfaces are defined in separate spec files which are included in the source with a <I>comment include</I> directive. This helps to separate specification and implementation code.
+<DT>6.
+<DD>The actual data of the problem is loaded dynamically from the Java interface; for stand-alone testing data files from the data directory are included in the correct modules.
+<DT>7.
+<DD>The file name is equal to the module name.
+<DT>8.
+<DD>Predicate names<A NAME="1065"></A> are of form [a-z][a-z_]*[0-9]* . Underscores are used to separate words. Digits should only be used at the end of the name. Words should be English.
+<DT>9.
+<DD>Variable names<A NAME="1066"></A> are of form [A-Z_][a-zA-Z]*[0-9]* . Separate words star with capital letters. Words should be English. The plural should be used for lists and other collections. Digits should only be used at the end to distinguish different versions of the same conceptual thing.
+<DT>10.
+<DD>The code should not contain singleton variables<A NAME="1067"></A>, unless their names start with _. The final program may not generate singleton warnings.
+<DT>11.
+<DD>Each exported predicate is documented with a comment directive<A NAME="1068"></A>.
+<DT>12.
+<DD>Clauses for a predicate must be consecutive.
+<DT>13.
+<DD>Base clauses should be stated before recursive cases.
+<DT>14.
+<DD>Input arguments should be placed before output arguments.
+<DT>15.
+<DD>Predicates which are not exported should be documented with a single line comment. It is possible to use comment directives instead.
+<DT>16.
+<DD>The sequence of predicates in a file is top-down with a (possibly empty) utility section at the end.
+<DT>17.
+<DD>All structures are defined in one file (e.g. flow_structures.ecl) and are documented with comment directives.
+<DT>18.
+<DD>Terms should not be used; instead use named structures<A NAME="1069"></A>.
+<DT>19.
+<DD>When possible, use do loops instead of recursion.
+<DT>20.
+<DD>When possible, use separate predicates instead of disjunction<A NAME="1070"></A> or if-then-else.
+<DT>21.
+<DD>There should be no nested if-then-else<A NAME="1071"></A> construct in the code.
+<DT>22.
+<DD>All input data should be converted into structures at the beginning of the program; there should be no direct access to the data afterwards. 
+<DT>23.
+<DD>All numeric constants<A NAME="1072"></A> should be parametrized via facts. There should be no numeric values (other than 0 and 1) in rules.
+<DT>24.
+<DD>The final code should not use failure-loops<A NAME="1073"></A>; they are acceptable for debugging or testing purposes.
+<DT>25.
+<DD>Cuts (!) <A NAME="1074"></A> should be inserted only to eliminate clearly defined choice points.
+<DT>26.
+<DD>The final code may not contain open choice points, except for alternative solutions that still can be explored. This is verified with the tracer tool in the debugger.
+<DT>27.
+<DD>Customizable data facts should always be at the end of a file; their use is deprecated.
+<DT>28.
+<DD>The predicate member/2<A NAME="1075"></A> should only be used where backtracking is required; otherwise use memberchk/2<A NAME="1076"></A> to avoid hidden choice points.
+<DT>29.
+<DD>The final code may not contain dead code<A NAME="1077"></A> except in the file/module unsupported.ecl. This file should contain all program pieces which are kept for information/debugging, but which are not part of the deliverable.
+<DT>30.
+<DD>The test set(s) should exercise 100 percent of the final code. Conformity is checked with the line coverage profiler.
+<DT>31.
+<DD>Explicit unification (=/2) should be replaced with unification inside terms where possible.
+<DT>32.
+<DD>There is a top-level file (document.ecl) which can be used to generated all on-line documentation automatically.
+<DT>33.
+<DD>Don't use ','/2 to make tuples.
+<DT>34.
+<DD>Don't use lists to make tuples.
+<DT>35.
+<DD>Avoid append/3 where possible, use accumulators instead.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1390"
+ HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1384"
+ HREF="node57.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1378"
+ HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1386"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1388"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1391"
+ HREF="node59.html">Module structure</A>
+<B> Up:</B> <A NAME="tex2html1385"
+ HREF="node57.html">Style Guide</A>
+<B> Previous:</B> <A NAME="tex2html1379"
+ HREF="node57.html">Style Guide</A>
+ &nbsp <B>  <A NAME="tex2html1387"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1389"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

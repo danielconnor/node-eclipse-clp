@@ -1,0 +1,9 @@
+
+matrix(+NRows, +NCols, -Rows, -Cols)
+
+   Create a matrix as both a list of rows and a list of columns
+
+Type
+   library(matrix_util)
+
+

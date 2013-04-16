@@ -1,0 +1,114 @@
+<HTML><HEAD><TITLE>number_sort(+Key, +Order, +Random, ?Sorted)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Comparing and Sorting</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>number_sort(+Key, +Order, +Random, ?Sorted)</H1>
+Succeeds if Sorted is the numerically sorted list
+	version of Random.  The sort is done according to the Key and
+	Order specifications.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>A non-negative integer or a list of positive integers.
+</DD>
+<DT><EM>+Order</EM></DT>
+<DD>One of the atoms &lt;, =&lt;, &gt; or &gt;=.
+</DD>
+<DT><EM>+Random</EM></DT>
+<DD>List.
+</DD>
+<DT><EM>?Sorted</EM></DT>
+<DD>List or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Sorts the list Random according to the Key and Order specifications,
+   and unifies Sorted with the result.  The sort is stable, i.e. the
+   order of elements with the same key is preserved.
+
+<P>
+   If Random is not a list of compound terms, use Key = 0. The list
+   elements must be numerical terms.
+
+<P>
+   If Random is a list of compound terms, then the sort will be according
+   to the Keyth argument of the list elements. The Keyth argument of each
+   list element must be a numeric term.
+
+<P>
+   In all cases, Order specifies whether the list is sorted into ascending
+   (&lt;, =&lt;) or descending (&gt;, &gt;=) order and whether duplicates are to be
+   retained (=&lt;, &gt;=) or eliminated (&lt;, &gt;).  The way to remember the Order
+   argument is that it is the relation which holds between adjacent
+   elements in the result.
+
+<P>
+   The sort is done according to numerical ordering as opposed to
+   sort/4 which uses the standard ordering of terms. See compare/3 for 
+   this standard ordering. In particular for numeric terms of
+   different type, e.g. integers and floats, the numerical and
+   standard orderings differ: 1 &lt; 2.0 but 2.0 @&lt; 1. Additionally
+   the ordering of bounded reals differs. While the standard ordering
+   treats a bounded real as a compound term and orders them by lower
+   bound and then upper bound, numerical ordering treats them as true
+   intervals. As a consequence the order of overlapping intervals is
+   undefined: 1.0__1.1 @&lt; 1.0__1.2 while no numerical order is
+   defined. In such cases an arithmetic exception is thrown. This can
+   have unexpected consequences: care must be taken when  sorting a
+   list containing both rationals and bounded reals. While integers
+   and floats are converted to zero-width intervals for the purposes
+   of comparison, rationals are converted to small intervals
+   guaranteed to contain the rational, e.g X is breal(1_1) gives
+   X=0.99999999999999989__1.0000000000000002 and thus no order is
+   defined between 1_1 and 1.0__1.0.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Sorted does not unify with the sorted list version of Random.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>One of List1 and List2 has an element whose Keyth argument is a variable
+<DT><EM>(5) type error </EM>
+<DD>Key is greater than 0, and one of List1 and List2 has an element whose Keyth argument is a non-numeric term
+<DT><EM>(5) type error </EM>
+<DD>Key is greater than 0, and one of List1 and List2 does not    have all elements compound terms.
+<DT><EM>(5) type error </EM>
+<DD>Key is not an integer or a list of integers.
+<DT><EM>(6) out of range </EM>
+<DD>One of the compound terms in List1 or List2 has not got as    many as Key arguments.
+<DT><EM>(20) arithmetic exception </EM>
+<DD>One of List1 and List2 has elements whose numerical order is undefined.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      number_sort(0,&lt;,[3,1,6,7,2],S).             (gives S=[1,2,3,6,7]).
+      number_sort(0,=&lt;,[1,1.0,1_1,3,2,3,4,1],S).
+			   (gives S=[1,1.0,1_1,1,2,3,3,4]).
+      number_sort(0,=&lt;,[1,1.0,1.0__1.0,3,2,3,4,1],S).
+			   (gives S=[1,1.0,1.0__1.0,1,2,3,3,4]).
+      number_sort(2,&lt;,[f(a,3),h(b,1)],S).         (gives S=[h(2,1),f(1,3)]).
+      number_sort([2,1],=&lt;,[f(3,a(2)),f(1,a(1)),f(0,a(3)),f(1,a(4))],S).
+                           (gives S=[f(1,a(1)),f(3,a(2)),f(0,a(3)),f(1,a(4))]).
+
+Fail:
+      number_sort(0,&lt;,[2,1,3,4],[2,1,3,4]).
+
+Error:
+      number_sort(0,&gt;,[1,3,N],S).              (Error 4).
+      number_sort(0,&gt;,[q,1,3,a,e],S).          (Error 5).
+      number_sort(1,&lt;,[f(1),f(3),5],S).        (Error 5).
+      number_sort(1.0,&lt;,[f(1),f(3),f(5)],S).   (Error 5).
+      number_sort(1,&lt;,[f(a,3),h(b,1)],S).      (Error 5).
+      number_sort(2,&lt;,[f(1,2),g(3,1),f(5)],S). (Error 6).
+      number_sort(0,&lt;,[1,0.9__1.1],S).         (Error 20).
+      number_sort(0,=&lt;,[1_1,1.0__1.0],S).      (Error 20).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/compare-3.html">compare / 3</A>, <A HREF="../../kernel/termcomp/number_sort-2.html">number_sort / 2</A>, <A HREF="../../kernel/termcomp/sort-2.html">sort / 2</A>, <A HREF="../../kernel/termcomp/sort-4.html">sort / 4</A>
+</BODY></HTML>

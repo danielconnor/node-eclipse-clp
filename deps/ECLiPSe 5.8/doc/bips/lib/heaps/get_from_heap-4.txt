@@ -1,0 +1,20 @@
+
+get_from_heap(+OldHeap, ?Key, ?Datum, -NewHeap)
+
+   returns the Key-Datum pair in OldHeap with the smallest Key
+
+Type
+   library(heaps)
+
+Description
+
+    returns the Key-Datum pair in OldHeap with the smallest Key, and
+    also a New Heap which is the Old Heap with that pair deleted.
+    The easy part is picking off the smallest element.  The hard part
+    is repairing the heap structure.  repair_heap/4 takes a pair of
+    heaps and returns a new heap built from their elements, and the
+    position number of the gap in the new tree.  Note that repair_heap
+    is *not* tail-recursive.
+    
+
+

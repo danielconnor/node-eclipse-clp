@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>CHIP Compatibility Constraints Predicates</TITLE>
+<META NAME="description" CONTENT="CHIP Compatibility Constraints Predicates">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html485"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html481"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html475"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html483"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html486"
+ HREF="node9.html">Utility Constraints Predicates</A>
+<B> Up:</B> <A NAME="tex2html482"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html476"
+ HREF="node7.html">Evaluation Constraint Predicates</A>
+ &nbsp <B>  <A NAME="tex2html484"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00260000000000000000">
+CHIP Compatibility Constraints Predicates</A>
+</H1>
+These constraints, defined in the module <B>fd_chip</B>,
+are provided for CHIP v.3 compatibility and they are defined using
+<A NAME="588"></A>
+native ECLiPSe constraints.
+Their source is available in the file <B>fd_chip.pl</B>.
+
+<P>
+<DL>
+<DT><STRONG>?T1 ## ?T2</STRONG>
+<DD><A NAME="591"></A>
+The value of the rational term <I>T1</I> is not equal to the value of the
+rational term <I>T2</I>.
+
+<P>
+<DT><STRONG>alldistinct(?List)</STRONG>
+<DD><A NAME="594"></A>
+All elements of <I>List</I> (domain variables and ground terms) are pairwise
+different.
+
+<P>
+<DT><STRONG>deleteff(?Var, +List, -Rest)</STRONG>
+<DD><A NAME="596"></A>
+This predicate is used to select a variable from a list of domain variables
+which has the smallest domain.
+<I>Var</I> is the selected variable from <I>List</I>,
+<I>Rest</I> is the rest of the list without <I>Var</I>.
+
+<P>
+<DT><STRONG>deleteffc(?Var, +List, -Rest)</STRONG>
+<DD><A NAME="601"></A>
+This predicate is used to select the most constrained variable from a list
+of domain variables.
+<I>Var</I> is the selected variable from <I>List</I> which has the least domain
+and which has the most constraints attached to it.
+<I>Rest</I> is the rest of the list without <I>Var</I>.
+
+<P>
+<DT><STRONG>deletemin(?Var, +List, -Rest)</STRONG>
+<DD><A NAME="606"></A>
+This predicate is used to select the domain variable with the smallest
+lower domain bound from a list of domain variables.
+<I>Var</I> is the selected variable from <I>List</I>,
+<I>Rest</I> is the rest of the list without <I>Var</I>.
+
+<P>
+<I>List</I> is a list of domain variables or integers. Integers are treated
+as if they were variables with singleton domains.
+
+<P>
+<DT><STRONG>dom(+DVar, -List)</STRONG>
+<DD><A NAME="612"></A>
+<I>List</I> is the list of elements in the domain of the domain variable
+<I>DVar</I>.
+The predicate <B>::/2</B> can also be used to query the domain
+of a domain variable, however it yields a list of intervals.
+
+<P>
+<B>NOTE:</B> This predicate 
+should not be used in ECLiPSe programs, because all intervals
+in the domain will be expanded into element lists which causes
+unnecessary space and time overhead.
+Unless an explicit list representation is required, finite
+domains should be processed by the family of the <B>dom_*</B>
+predicates in sections <A HREF="node16.html#domaccess">2.14.2</A> and <A HREF="node16.html#dommodify">2.14.3</A>.
+
+<P>
+<DT><STRONG>maxdomain(+DVar, -Max)</STRONG>
+<DD><A NAME="620"></A>
+<I>Max</I> is the maximum value in the domain of the integer domain
+variable <I>DVar</I>.
+
+<P>
+<DT><STRONG>mindomain(+DVar, -Min)</STRONG>
+<DD><A NAME="623"></A>
+<I>Min</I> is the minimum value in the domain of the integer domain
+variable <I>DVar</I>.
+
+<P>
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html485"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html481"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html475"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html483"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html486"
+ HREF="node9.html">Utility Constraints Predicates</A>
+<B> Up:</B> <A NAME="tex2html482"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html476"
+ HREF="node7.html">Evaluation Constraint Predicates</A>
+ &nbsp <B>  <A NAME="tex2html484"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

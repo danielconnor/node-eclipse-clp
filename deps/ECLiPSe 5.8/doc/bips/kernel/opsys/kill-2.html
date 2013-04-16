@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>kill(+Pid, +Signal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>kill(+Pid, +Signal)</H1>
+Send the signal Signal to the process number Pid
+
+
+<DL>
+<DT><EM>+Pid</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>+Signal</EM></DT>
+<DD>Integer
+</DD>
+</DL>
+<H2>Description</H2>
+   Send the signal number Signal to the process with process ID Pid.  This
+   predicate is an interface to the UNIX system call kill(2).
+
+<P>
+   If Signal is 0, then only a check for existence of the process is
+   performed.  In this case, kill/2 fails if the process does not exist.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Signal is 0 and process Pid does not exist.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Pid or Signal are not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Pid or Signal are instantiated to non-integers.
+<DT><EM>(170) system interface error </EM>
+<DD>Pid or Signal has an invalid value.
+<DT><EM>(170) system interface error </EM>
+<DD>The process Pid belongs to another user.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: get_flag(pid, Pid), kill(Pid, 31).
+      Signal 31
+
+      Pid = 2929
+      yes.
+      [eclipse]: kill(2929, 0)
+
+      yes.
+Failure:
+      [eclipse]: kill(9999, 0)
+
+      no.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/exec-2.html">exec / 2</A>, <A HREF="../../kernel/opsys/exec-3.html">exec / 3</A>, <A HREF="../../kernel/opsys/exec_group-3.html">exec_group / 3</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/opsys/wait-2.html">wait / 2</A>
+</BODY></HTML>

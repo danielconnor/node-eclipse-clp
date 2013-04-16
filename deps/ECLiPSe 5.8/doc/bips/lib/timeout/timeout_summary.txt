@@ -1,0 +1,4 @@
+lib(timeout)
+
+   Impose time limit for goals
+

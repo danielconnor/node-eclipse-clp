@@ -1,0 +1,43 @@
+<HTML><HEAD><TITLE>get_leash(?Port, ?Leash)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_leash(?Port, ?Leash)</H1>
+Currently not supported.
+
+
+<DL>
+<DT><EM>Port</EM></DT>
+<DD>Atom or variable.
+</DD>
+<DT><EM>Leash</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies Leash with the leashing mode of the port or ports specified by
+   Port.  Currently not supported.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Port is instantiated, but not to an atom.
+<DT><EM>(5) type error </EM>
+<DD>Port is instantiated to an atom, but not to one of the valid    ports.
+<DT><EM>(5) type error </EM>
+<DD>Leash is instantiated, but not to an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/set_leash-2.html">set_leash / 2</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>
+</BODY></HTML>

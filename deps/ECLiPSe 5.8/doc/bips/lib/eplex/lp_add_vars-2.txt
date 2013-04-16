@@ -1,0 +1,26 @@
+
+lp_add_vars(+Handle, +Vars)
+
+   Declare Vars to be problem variables for the solver state Handle
+
+Arguments
+   Handle              Handle to a solver state
+   Vars                A list of variables or numbers
+
+Type
+   library(eplex)
+
+Description
+
+   Declares variables in Vars as problem variables for the solver state
+   represented by Handle. Any of the variables that are not existing 
+   problem variables for Handle are added to the problem. The new
+   variables' bounds are constrained to -infinity..infinity (infinity as 
+   defined by the external solver).
+
+
+Fail Conditions
+   Vars contain elements which are neither variables or numbers.
+
+See Also
+   lp_setup / 4, lp_demon_setup / 5

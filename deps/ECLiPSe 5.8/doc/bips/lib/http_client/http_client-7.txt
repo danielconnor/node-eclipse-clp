@@ -1,0 +1,40 @@
+
+http_client(+Method, +Uri, +ObjectBody, +HttpParams, -RespError, -RespParam, -RespObjectBody)
+
+   Used to access HTML pages, given their URI (the method GET is applied)
+
+Arguments
+   Method              A string
+   Uri                 A string
+   ObjectBody          A string
+   HttpParams          A list of terms as defined in the DCG grammar
+   RespError           Outputs a term error(ErrorCode, ErrorPhrase),
+	where ErrorCode is he error code contained in the response
+	and ErrorPhrase is the error phrase contained in the response
+   RespParam           Outputs a list of terms as defined in the DCG grammar
+   RespObjectBody      Outputs the object body of the response
+
+Type
+   library(http_client)
+
+Examples
+   
+    [eclipse 1]: use_module(http).
+    http_grammar.pl compiled traceable 25048 bytes in 0.38 seconds
+    http_client.pl compiled traceable 5916 bytes in 0.47 seconds
+    http_server.pl compiled traceable 5304 bytes in 0.07 seconds
+    http.pl    compiled traceable 0 bytes in 0.57 seconds
+
+    yes.
+    [eclipse 2]:  http_client("GET", "http://www.ecrc.de/staff/", "", [],
+	    Status, Param, Resp).
+
+    Status = error(200, "Document follows ")
+    Param = [date, server, contentType(mt(text, html))]
+
+    Resp = "<HTML>...</HTML>"
+
+    yes.
+    
+
+

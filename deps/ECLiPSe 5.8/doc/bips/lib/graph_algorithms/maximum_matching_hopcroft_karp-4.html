@@ -1,0 +1,42 @@
+<HTML><HEAD><TITLE>maximum_matching_hopcroft_karp(+G, ++A, ++B, -MaximalM)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>maximum_matching_hopcroft_karp(+G, ++A, ++B, -MaximalM)</H1>
+Compute the maximum matching in a bipartite graph using Hopcroft and Karp's algorithm
+<DL>
+<DT><EM>G</EM></DT>
+<DD>A directed bipartite graph, with all edges starting and ending in 'A' or 'B'
+</DD>
+<DT><EM>A</EM></DT>
+<DD>List of nodes in one half of the graph
+</DD>
+<DT><EM>B</EM></DT>
+<DD>List of nodes in the other half of the graph
+</DD>
+<DT><EM>MaximalM</EM></DT>
+<DD>List of edges constituting the maximum matching
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+
+        Computes the maximum matching in the given bipartite graph. A
+        matching in a bipartite graph, is a set of edges from the
+        graph such that no two edges are incident to the same node.  A
+        maximum matching is a matching with the most edges possible.
+        The may be more than one maximum matching, this predicate
+        returns only one.
+
+</P><P>
+
+        The implementation uses Hopcroft and Karp's algorithm which
+        has a complexity of O(Nedges*SQRT(Nnodes in A)).
+       </P>
+<H3>Fail Conditions</H3>
+Graph is not bipartite
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE></PRE>
+<H2>See Also</H2>
+
+</BODY></HTML>

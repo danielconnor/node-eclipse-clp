@@ -1,0 +1,56 @@
+handler geons.
+
+operator(31,xfx,#).      % to describe points
+
+	%:-nodbgcomp.
+
+	option(keep_heads,off).            
+	option(check_already_in,off).            
+
+constrained(X) :-
+	delayed_goals(X, [_|_]).
+
+delay ground(X) if nonground(X).
+ground(X).
+
+geon(S,A,B):- geons(S,[rect(A,B)]).		% upward compatibility
+
+% approximate walls by small rectangles
+approx_walls([],[]).
+approx_walls([wall(A#B,A#C)|W],[rect(A1#B,A2#C)|R]):- !,
+	A1 is A-1, A2 is A+1,
+	approx_walls(W,R).
+approx_walls([wall(B#A,C#A)|W],[rect(B#A1,C#A2)|R]):- !,
+	A1 is A-1, A2 is A+1,
+	approx_walls(W,R).
+approx_walls([wall(A#B,C#D)|W],[rect(A#B,C#D)|R]):-
+	approx_walls(W,R).
+
+
+
+constraints geons/2.
+
+/**** geons(Sender, GeonList) ***/
+
+label_with geons(S, L) if true.
+
+geons(X#Y, L1), geons(X#Y, L2) <=> 
+	intersect_geons(L1, L2, L3), 
+	L3 \== [], 
+	geons(X#Y, L3).
+
+geons(X#Y, GeonList):-
+	member(rect(A#B, C#D), GeonList), 
+	X is (A+C)/2, Y is (B+D)/2.
+
+
+intersect_geons(L1, L2, L3):-
+	bagof(Rect, intersect_geon(L1, L2, Rect), L3).
+
+intersect_geon(L1, L2, rect(A#B, C#D)):-
+	member(rect(A1#B1, C1#D1), L1), 
+	member(rect(A2#B2, C2#D2), L2), 
+	A is max(A1, A2), B is max(B1, B2), 
+	C is min(C1, C2), D is min(D1, D2), 
+	A=<C, B=<D.
+

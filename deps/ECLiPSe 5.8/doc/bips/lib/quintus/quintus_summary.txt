@@ -1,0 +1,4 @@
+lib(quintus)
+
+   Quintus prolog compatibility package
+

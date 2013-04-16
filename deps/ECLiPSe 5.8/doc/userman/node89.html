@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Pretty Printer Tool</TITLE>
+<META NAME="description" CONTENT="Pretty Printer Tool">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node90.html">
+<LINK REL="previous" HREF="node88.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node90.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3600"
+ HREF="node90.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3596"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3590"
+ HREF="node88.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3598"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3601"
+ HREF="node90.html">Timing Profiler</A>
+<B> Up:</B> <A NAME="tex2html3597"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3591"
+ HREF="node88.html">Cross Referencing Tool</A>
+ &nbsp <B>  <A NAME="tex2html3599"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001550000000000000000">
+Pretty Printer Tool</A>
+</H1>
+
+The pretty printer library provides a set of predicates for the printing
+of a file's contents as a file in a number of formats.
+In particular, an ECLiPSe source file can be converted into an
+HTML document with proper indentation, syntax colouring, hyperlinks
+from predicate uses to definition, and hyperlinks to documentation.
+
+The <A NAME="tex2html1269"
+ HREF="../bips/lib/pretty_printer/pretty_print-2.html">pretty_print/2</A><A NAME="9430"></A> 
+predicate is used to print the file, or list of files.
+A list of options can be given which modifies the format of the output
+file, its location, etc.  The following creates a <TT>pretty</TT>
+directory in the current directory. Within the pretty directory reside
+<TT>index.html</TT> and <TT>queen.html</TT>, where <TT>queen.html</TT> is the 
+<TT>queen</TT> module pretty printed in HTML:
+<PRE>
+
+?- pretty_printer:pretty_print(queen).
+Writing /examples/pretty/queen.html
+</PRE>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

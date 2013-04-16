@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>string_code(+String, +Index, ?Code)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>string_code(+String, +Index, ?Code)</H1>
+Succeeds if Code is the value of the Index'th byte in String
+<DL>
+<DT><EM>String</EM></DT>
+<DD>String
+</DD>
+<DT><EM>Index</EM></DT>
+<DD>Integer between 1 and the length of String
+</DD>
+<DT><EM>Code</EM></DT>
+<DD>Variable or Integer
+</DD>
+</DL>
+<H2>Description</H2>
+	This predicate extracts the Index'th byte from the given string String. 
+	Bytes in the string are numbered from 1 (analogous to array indices in
+	subscript/3 and arg/3).
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Index is not an integer
+<DT><EM>(5) type error </EM>
+<DD>String is not a string
+<DT><EM>(5) type error </EM>
+<DD>Code is instantiated but not to an integer
+<DT><EM>(6) out of range </EM>
+<DD>Index is an integer less than 1 or greater than String's length
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either Index or String are uninstantated
+</DL>
+<H2>Examples</H2>
+<PRE>
+   string_code("abc", 1, 97).		% succeeds
+   string_code("abc", 3, C).		% gives C = 99
+
+   string_code("abc", 2, 100).		% fails
+
+   string_code("abc", _, C).		% Error 4
+   string_code(_, 1, C).		% Error 4
+   string_code("abc", 1.5, C).		% Error 5
+   string_code(abc, 1, C).		% Error 5
+   string_code("abc", 0, C).		% Error 6
+   string_code("abc", 4, C).		% Error 6
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/stratom/string_list-2.html">string_list / 2</A>, <A HREF="../../kernel/termmanip/char_code-2.html">char_code / 2</A>
+</BODY></HTML>

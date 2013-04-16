@@ -1,0 +1,68 @@
+
+seek(+Stream, +Offset)
+
+   The pointer in stream Stream is offset Offset from the start of the file.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined symbolic stream name).
+   +Offset             Integer or the atom end_of_file.
+
+Type
+   Stream I/O
+
+Description
+   Moves the file pointer to offset Offset from the start of the file
+   opened.  It is an error if Stream is not a stream or if Offset is not an
+   integer or the atom end_of_file.
+
+
+   seek/2 seeks to the end of the file when Offset is instantiated to
+   end_of_file.
+
+
+   seek/2 has no effect on the null stream, it always succeeds.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Either Stream or Offset is uninstantiated.
+     5 --- Offset is instantiated, but not to an integer or the atom    end_of_file.
+     5 --- Stream is instantiated, but not to an atom or an integer.
+     6 --- Offset is a negative integer or greater than the file    length.
+   192 --- Stream is in an illegal stream mode.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+Success:
+      seek( 0,null). % does not modify, only succeeds
+
+      [eclipse]: open(file1,update,s), write(s,hello),
+      > seek(s,3), read(s,T), close(s).
+      T = lo
+      yes.
+
+Error:
+      seek( Offset,7).      (Error 4).
+      seek("7", 2).         (Error 5).
+      seek(7, -1).          (Error 6).
+      seek( 0,input).       (Error 192).
+      seek(-1, 0).          (Error 193). % does not exist
+
+
+
+
+
+See Also
+   at / 2, at_eof / 1, set_stream_property / 3

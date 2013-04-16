@@ -1,0 +1,80 @@
+
+set_timer(+Timer, +Interval)
+
+   Start (or stop) the specified Timer to send signals in intervals of
+Interval seconds.
+
+
+
+Arguments
+   +Timer              One of the atoms real, virtual or profile.
+   +Interval           Number (integer or float)
+
+Type
+   Obsolete
+
+Description
+   Used to initialise one of the 3 operating system's interval timers.
+   After a call to this predicate, the corresponding timer will start
+   sending signals to the ECLiPSe process every Interval seconds.  Every
+   call will change the previous interval of the specified timer.  A timer
+   is switched off by setting its Interval to 0.
+
+
+
+                             -----------------
+                             |Timer   |Signal |
+                             -----------------
+                             |real    |alrm   |
+                             |virtual |vtalrm |
+                             |profile |prof   |
+                             -----------------
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Timer orInterval is not instantiated.
+     5 --- Timer is not an atom.
+     5 --- Interval is not integer or float.
+     6 --- Timer is an atom not naming a timer.
+   170 --- Interval is an out of range timer interval.
+
+Examples
+   
+[eclipse]: [user].
+ handler(N) :-
+        getval(count, Count),
+        writeln(signal(N)-Count),
+        ( Count > 0 ->
+                decval(count)
+        ;
+                set_timer(real, 0)      % switch off the timer
+        ).
+
+ :- set_interrupt_handler(alrm, handler/1).
+ user       compiled traceable 372 bytes in 0.00 seconds
+
+yes.
+[eclipse]: setval(count, 4), set_timer(real, 0.5).
+
+yes.
+[eclipse]: signal(14) - 4
+signal(14) - 3
+signal(14) - 2
+signal(14) - 1
+signal(14) - 0
+
+
+
+
+
+See Also
+   event_after / 2, event_after_every / 2, alarm / 1, current_interrupt / 2, get_timer / 2, sleep / 1, set_interrupt_handler / 2

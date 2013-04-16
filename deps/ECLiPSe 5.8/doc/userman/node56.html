@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Non-logical Variables</TITLE>
+<META NAME="description" CONTENT="Non-logical Variables">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node57.html">
+<LINK REL="previous" HREF="node55.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node57.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3079"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3075"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3069"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3077"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3080"
+ HREF="node57.html">Non-logical Arrays</A>
+<B> Up:</B> <A NAME="tex2html3076"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3070"
+ HREF="node55.html">Stores</A>
+ &nbsp <B>  <A NAME="tex2html3078"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00950000000000000000"></A>
+<A NAME="4934"></A>
+<BR>
+Non-logical Variables
+</H1>
+Non-logical variables in ECLiPSe are a means of storing a copy
+of a Prolog term under a name (an atom).
+The atom is the <I>name</I> and the associated
+term is the <I>value</I> of the non-logical variable.
+This term may be of any form, whether an integer or a huge compound
+structure.
+Note that the associated term is being copied and so if it is not ground,
+the retrieved term is not strictly identical to the stored one
+but is a <I>variant</I> of it<A NAME="tex2html646"
+ HREF="footnode.html#foot5107"><SUP>9.1</SUP></A>.
+There are two fundamental operations that can be performed on a non-logical variable:
+setting the variable (giving it a value), and referencing the variable
+(finding the value currently associated with it).
+
+<P>
+The value of a non-logical variable is set using the <A NAME="tex2html650"
+ HREF="../bips/kernel/arrays/setval-2.html">setval/2</A><A NAME="5164"></A> predicate.
+<A NAME="4943"></A>
+This has the format
+<BLOCKQUOTE>
+<B>setval(Name, Value)</B>
+
+</BLOCKQUOTE>
+For instance, the goal <PRE>
+setval(firm, 3)
+</PRE>
+gives the non-logical variable <I>firm</I> the value 3.
+The value of a non-logical variable is retrieved using the <A NAME="tex2html653"
+ HREF="../bips/kernel/arrays/getval-2.html">getval/2</A><A NAME="5167"></A> predicate.
+<A NAME="4954"></A>
+The goal <PRE>
+getval(firm, X)
+</PRE>
+will unify <I>X</I> to
+the value of the non-logical variable <I>firm</I>, which has been previously set by
+<A NAME="tex2html656"
+ HREF="../bips/kernel/arrays/setval-2.html">setval/2</A><A NAME="5170"></A>.
+If no value has been previously set, the call raises an exception.
+If the value of a non-logical variable is an integer, the predicates <A NAME="tex2html658"
+ HREF="../bips/kernel/arrays/incval-1.html">incval/1</A><A NAME="5173"></A>
+and <A NAME="tex2html660"
+ HREF="../bips/kernel/arrays/decval-1.html">decval/1</A><A NAME="5176"></A> may be used to increment and decrement the value of the
+<A NAME="4967"></A>
+<A NAME="4968"></A>
+variable, respectively.
+The predicates <A NAME="tex2html664"
+ HREF="../bips/kernel/arrays/incval-1.html">incval/1</A><A NAME="5179"></A> and
+<A NAME="tex2html666"
+ HREF="../bips/kernel/arrays/decval-1.html">decval/1</A><A NAME="5182"></A> may be used e.g. in a failure-driven loop to provide
+an incremental count across failures as in the example:<PRE>
+count_solutions(Goal, _) :-
+        setval(count, 0),
+        call(Goal),
+        incval(count),
+        fail.
+count_solutions(_, N) :-
+        getval(count, N).
+</PRE>
+However, code like this should be used carefully.
+Apart from being a non-logical feature, it also causes the code to be
+not reentrant. I.e. if count_solutions/2 would be called recursively from
+inside <TT>Goal</TT>, this would smash the counter and yield incorrect
+results<A NAME="tex2html649"
+
+HREF="footnode.html#foot4978"><SUP>9.2</SUP></A>.
+
+<P>
+The visibility of a non-logical variable is local to the module
+where it is first set. It is good style to declare them using
+<A NAME="tex2html668"
+ HREF="../bips/kernel/modules/local-1.html">local/1</A><A NAME="5185"></A>
+<A NAME="tex2html670"
+ HREF="../bips/kernel/arrays/variable-1.html">variable/1</A><A NAME="5188"></A>
+declarations. E.g. in the above example one should use<PRE>
+:- local variable(count).
+</PRE>
+If it is necessary to access the value of a variable in other modules,
+exported access predicates should be provided.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3079"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3075"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3069"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3077"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3080"
+ HREF="node57.html">Non-logical Arrays</A>
+<B> Up:</B> <A NAME="tex2html3076"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3070"
+ HREF="node55.html">Stores</A>
+ &nbsp <B>  <A NAME="tex2html3078"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

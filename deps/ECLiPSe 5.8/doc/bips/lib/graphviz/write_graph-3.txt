@@ -1,0 +1,31 @@
+
+write_graph(+Graph, +File, +Format)
+
+   Write a picture of a graph as a file of a given format
+
+Arguments
+   Graph               A graph structure
+   File                A file name
+   Format              An atom (ps,dot,png,gif,...)
+
+Type
+   library(graphviz)
+
+Examples
+   
+    ?- lib(graph_algorithms), lib(graphviz).
+    Yes (1.17s cpu)
+
+    ?- make_random_graph(10,30,true,true,true,G),
+       write_graph(G, "mygraph", png).
+    G = graph(...)
+    Yes (0.03s cpu)
+
+    ?- make_random_graph(10,30,true,true,true,G),
+       write_graph(G, "mygraph", dot).
+    G = graph(...)
+    Yes (0.03s cpu)
+    
+
+See Also
+   write_graph / 2, write_graph / 4, view_graph / 2, library(graph_algorithms)

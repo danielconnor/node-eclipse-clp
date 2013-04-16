@@ -1,0 +1,82 @@
+
+view_graph(+Graph, +Options)
+
+   Display a given graph in a window
+
+Arguments
+   Graph               A graph structure
+   Options             A list of Option:Value pairs
+
+Type
+   library(graphviz)
+
+Description
+
+    This predicate takes a graph, applies one of the graphviz layout routines
+    to it, and displays the result in a viewer window.
+    
+    Possible options are:
+    
+    graph_attrs
+	a list of Name=Value pairs which specify the graph attributes
+    default_edge_attrs
+	a list of Name=Value pairs which specify the default edge attributes
+    default_node_attrs
+	a list of Name=Value pairs which specify the default node attributes
+    node_attrs_generator
+	a partialpredicate specification pred(ExtraArgs,...) that
+	will generate node attributes for specific nodes. This
+	predicate will be invoked for every node in the graph with the
+	arguments pred(ExtraArgs,...,+Graph, +Node, -AttrList). It is
+	expected to compute an attribute list for a particular
+	node. If it fails, the node will be displayed using the
+	default node attributes.
+
+    edge_attrs_generator
+	a partialpredicate specification pred(ExtraArgs,...) that
+	will generate edge attributes for specific edges. This
+	predicate will be invoked for every edge in the graph with the
+	arguments pred(ExtraArgs,...,+Graph, +Edge, -AttrList). It is
+	expected to compute an attribute list for a particular
+	edge. If it fails, the edge will be displayed using the
+	default edge attributes.
+    layout
+	One of the atoms: none, dot, neato, twopi, force_directed, radial,
+	tree, top_to_bottom, left_to_right.
+	Alternatively, a list specifying a layout command (see exec/3).
+    
+    For the exact definition of graph, node and edge attributes, see the
+    specification of the DOT language in the graphviz documentation.
+    
+
+Examples
+   
+    ?- lib(graph_algorithms), lib(graphviz).
+    Yes (1.17s cpu)
+
+    ?- make_random_graph(10, 30, true, true, true, G),
+       view_graph(G, [layout:left_to_right]).
+    G = graph(...)
+    Yes (0.03s cpu)
+
+    ?- make_random_graph(10, 30, true, true, true, G),
+       view_graph(G, [layout:left_to_right]).
+    G = graph(...)
+    Yes (0.03s cpu)
+
+
+% Sample node attribute generator
+
+node_colour(Graph, Node, Attrs) :-
+	( Node mod 2 =:= 0 -> Attrs = [color=red] ; Attrs = [color=green] ).
+
+% Sample run
+
+    ?- make_random_graph(10, 30, true, true, true, G),
+       view_graph(G, [node_attrs_generator:node_colour]).
+    G = graph(...)
+    Yes (0.03s cpu)
+    
+
+See Also
+   view_graph / 1, library(graph_algorithms)

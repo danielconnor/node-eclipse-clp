@@ -1,0 +1,12 @@
+
+daVinci_exit
+
+   This commands closes the connection and exits daVinci.
+
+Arguments
+
+Type
+   library(daVinci)
+
+See Also
+   daVinci_begin / 0

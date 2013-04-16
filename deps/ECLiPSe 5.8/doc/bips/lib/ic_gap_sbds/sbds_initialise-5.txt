@@ -1,0 +1,33 @@
+
+sbds_initialise(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)
+
+   Initialises the data structures required by the SBDS algorithm
+
+Arguments
+   Array               Array of (integer) decision variables
+   VarDimNames         Names for the dimensions of Array
+   ValueDimSpec        Name of the value dimension and its range
+   SymSpecs            List of symmetry specifiers
+   Options             List of extra options
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Sets up the data structures required to perform an SBDS search.  Array is
+   an array containing the (integer) search variables, SymSpecs defines the
+   symmetries of the problem, with VarDimNames and ValueDimSpec providing
+   some extra required information; these four arguments are the same as the
+   first four arguments of construct_group/8: please see the documentation
+   for that predicate for a complete description of these arguments and
+   details of the supported symmetry specifiers.
+
+   Options is a list of options which modify the way the search progresses.
+   Currently no options are supported.
+
+   During search, use sbds_try/2 or sbds_try/3 on variables from Array when
+   making search decisions.
+
+
+See Also
+   sbds_initialise_set / 5, sym_expr : construct_group / 8, sbds_try / 2, sbds_try / 3

@@ -1,0 +1,59 @@
+
+nodebug
+
+   Switch the debugger off for subsequent top-level queries.
+
+
+
+Arguments
+
+Type
+   Debugging
+
+Description
+   Used to switch tracing mode off (the default).  This disables printing
+   of any trace information. A synonym for notrace/0.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: [user].
+       w(X) :- writeln(X).
+       user compiled 44 bytes in 0.00 seconds
+      yes.
+      [eclipse]: trace.
+      yes.
+      Debugger switched on - creep mode
+      [eclipse]: w(X = 2).
+        (1) 0  CALL   w(_g54 = 2) (dbg)?- creep     % type c
+      B (2) 1  CALL   writeln(_g54 = 2) (dbg)?- creep
+      _g54 = 2
+      B (2) 1  EXIT   writeln(_g54 = 2) (dbg)?- creep
+        (1) 0  EXIT   w(_g54 = 2) (dbg)?- creep
+      X = _g54
+      yes.
+      [eclipse]: nodebug.
+      Debugger switched off
+      yes.
+      [eclipse]: w(X = 2).
+      _g54 = 2
+      X = _g54
+      yes.
+
+
+
+
+
+See Also
+   notrace / 0, trace / 0, trace / 1, debug / 0, debug / 1

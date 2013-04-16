@@ -1,0 +1,22 @@
+
+node_to_nodename(+Graph, +Node, -NodeName)
+
+   Retrieves the name of a node
+
+Arguments
+   Graph               a graph structure
+   Node                an integer node number
+   NodeName            ground data, usually node name
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    
+
+Fail Conditions
+   Fails if no node name information is available
+
+See Also
+   nodes_to_nodenames / 3, nodename_to_node / 3, nodenames_to_nodes / 3

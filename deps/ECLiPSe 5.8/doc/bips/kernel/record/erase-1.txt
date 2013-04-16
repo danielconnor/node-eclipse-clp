@@ -1,0 +1,63 @@
+
+erase(+DBRef)
+
+   Succeeds if the database reference DBRef designates a term recorded in the
+indexed database and this term is successfully erased.
+
+
+
+Arguments
+   +DBRef              A database reference.
+
+Type
+   Recorded Database
+
+Description
+   The database reference DBRef must refer to a term that has been recorded
+   in the indexed database.  Database references can be obtained from the
+   predicates recorda/3, recordz/3 and recorded/3.  If the referenced term
+   has already been erased, erase/1 fails.  Backtracking through calls of
+   erase/1 does not undo an erasure.  Note that database references are not
+   integers.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if DBRef refers to an already erased record.
+
+
+
+Exceptions
+     4 --- DBRef is not instantiated.
+     5 --- DBRef is not a database reference.
+
+Examples
+   
+   Success:
+   [eclipse]: recordz(whiskey, jameson, _),
+   recordz(whiskey, glenfiddich, Ref),
+   recordz(whiskey, dimple, _),
+   erase(Ref).
+   Ref = 98538
+   yes.
+   [eclipse]: recorded(whiskey, L, _).
+   L = jameson     More? (;)
+   L = dimple     More? (;)
+   no (more) solution.
+   Fail:
+   [eclipse]: recorded(whiskey,_,R), !, erase(R), erase(R).
+   no (more) solution.
+   Error:
+   erase(Var).                            (Error 4)
+   erase(123).                            (Error 5)
+
+
+
+
+
+See Also
+   erase_all / 1, recorda / 3, recordz / 3, recorded / 3, referenced_record / 2

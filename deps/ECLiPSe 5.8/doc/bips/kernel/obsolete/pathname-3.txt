@@ -1,0 +1,65 @@
+
+pathname(+FilePath, ?Path, ?Name)
+
+   If FilePath is a pathname of a file, succeed if Path is the pathname of its
+parent directory and Name is the local file name.
+
+
+
+Arguments
+   +FilePath           String or atom.
+   ?Path               Variable or string.
+   ?Name               Variable or string.
+
+Type
+   Obsolete
+
+Description
+   This predicate is used to decompose FilePath which is either a relative
+   or absolute pathname of a file, into two components, namely the pathname
+   of its parent directory including the trailing "/" if any, and the plain
+   name of the file Name.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if FilePath does not unify with the concatenation of Path and
+   Name.
+
+
+
+Exceptions
+     4 --- FilePath is not instantiated.
+     5 --- FilePath is neither a string nor an atom.
+     5 --- Path is neither a string nor a variable.
+     5 --- Name is neither a string nor a variable.
+
+Examples
+   
+Success:
+      [eclipse]: pathname("/home/user/userfile", P, F).
+      P = "/home/user/"
+      F = "userfile"
+      yes.
+
+      pathname("/home/user","/home/").
+      pathname("/home/","/home/","").
+      pathname("home","","home").
+
+Fail:
+      pathname("/home/file","/home","file").
+
+Error:
+      pathname(F,P,R).                 (Error 4).
+      pathname("/home/file",P,file)    (Error 5).
+
+
+
+
+
+See Also
+   pathname / 4, pathname / 2, suffix / 2

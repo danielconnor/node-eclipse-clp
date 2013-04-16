@@ -1,0 +1,49 @@
+<HTML><HEAD><TITLE>attach_suspensions(+Trigger, +Susps)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>attach_suspensions(+Trigger, +Susps)</H1>
+Insert the suspensions Susps into the suspension list of the symbolic
+trigger Trigger.
+
+
+<DL>
+<DT><EM>?Trigger</EM></DT>
+<DD>An atom.
+</DD>
+<DT><EM>+Susps</EM></DT>
+<DD>A suspension or list of suspensions.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used to insert one or more suspensions into a
+   suspension list which is associated to the symbolic name Trigger.
+   This name can be an arbitrary atom.
+
+<P>
+   The suspensions will be woken by a corresponding invocation of
+   schedule_suspensions/1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Susps or Trigger is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Susps is not a suspension or list.
+<DT><EM>(5) type error </EM>
+<DD>Trigger is not an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/suspensions/suspend-4.html">suspend / 4</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-1.html">schedule_suspensions / 1</A>, <A HREF="../../kernel/database/demon-1.html">demon / 1</A>
+</BODY></HTML>

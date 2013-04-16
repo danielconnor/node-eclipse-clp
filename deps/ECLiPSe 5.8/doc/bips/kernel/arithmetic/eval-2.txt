@@ -1,0 +1,51 @@
+
+eval(+Expression, ?Result)
+
+   Used to evaluate eval/1 terms in arithmetic expressions.
+
+Arguments
+   +Expression         An arithmetic expression.
+   ?Result             A variable or a number.
+
+Type
+   Arithmetic
+
+Description
+   This is one of the predicates used by the ECLiPSe compiler to expand
+   arithmetic expressions. If an expression contains a subexpression that
+   is not known at compile time, it must be wrapped in eval/1, e.g.
+
+   X is eval(Expr)+1
+
+   This will be compiled into the sequence
+
+   eval(Expr,T1), +(T1,1,X)
+
+   and eval/2 will interpret the expression Expr at runtime.
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result or if a
+   user-defined evaluation predicate fails.
+
+
+
+Exceptions
+     4 --- Expression is uninstantiated.
+     5 --- Result is neither a number nor a variable.
+     5 --- Evaluation of Expression gives a different type than Result.
+    21 --- An evaluation predicate in the expression is not defined.
+    24 --- Expression is not a valid arithmetic expression.
+
+Examples
+   
+
+
+
+
+
+See Also
+   is / 2, + / 2, - / 2, abs / 2, sgn / 2, ceiling / 2, floor / 2, round / 2, + / 3, - / 3, * / 3, / / 3, // / 3, mod / 3, ^ / 3, min / 3, max / 3, \ / 2, /\ / 3, \/ / 3, xor / 3, >> / 3, << / 3, clrbit / 3, getbit / 3, setbit / 3, sin / 2, cos / 2, tan / 2, asin / 2, acos / 2, atan / 2, exp / 2, ln / 2, sqrt / 2, fix / 2, float / 2, rational / 2, numerator / 2, denominator / 2

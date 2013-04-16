@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>event(+EventId)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>event(+EventId)</H1>
+The event EventId is raised and the corresponding error handler is
+executed.
+
+
+<DL>
+<DT><EM>+EventId</EM></DT>
+<DD>Atom or event Handle, or a list of atoms and/or event handles.
+</DD>
+</DL>
+<H2>Description</H2>
+   The event EventId is raised and the corresponding error handler is
+   executed.
+
+<P>
+   Other ways to raise events are by
+<PRE>
+   - one of the builtins error/2 or error/3.
+   - posting an event from external code using ec_post_event().
+   - an interrupt whose handler has been specified as event/1.
+</PRE>
+   The latter two have the effect of dynamically inserting an event/1
+   goal into the current execution at the next synchronous point,
+   which is usually just before the next predicate call.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the handler fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>EventId is not ground
+<DT><EM>(5) type error </EM>
+<DD>EventId is instantiated, but neither an atom nor an event handle, or a list of them
+<DT><EM>(32) no handler for event </EM>
+<DD>No handler is associated to an atomic EventId
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- event(hello).
+    warning: no handler for event in hello
+    yes.
+
+    ?- set_event_handler(hello, writeln/1).    
+    yes.
+
+    ?- event(hello).
+    hello
+    yes.
+
+    ?- event([hello,hello]).
+    hello
+    hello
+    Yes (0.00s cpu)
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>, <A HREF="../../kernel/typetest/is_event-1.html">is_event / 1</A>, <A HREF="../../kernel/event/error-2.html">error / 2</A>, <A HREF="../../kernel/event/error-3.html">error / 3</A>, <A HREF="../../kernel/event/reset_event_handler-1.html">reset_event_handler / 1</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/set_interrupt_handler-2.html">set_interrupt_handler / 2</A>
+</BODY></HTML>

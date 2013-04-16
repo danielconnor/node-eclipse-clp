@@ -1,0 +1,43 @@
+
+par_indomain(?Var)
+
+   Instantiate Var to a number of values in its domain in parallel.
+
+
+
+Arguments
+   ?Var                An integer or a domain variable
+
+Type
+   library(fd)
+
+Description
+   This predicate instantiates the domain variable Var to a value from its
+   domain.  The instantiation is executed in Or-parallel, i.e.  several
+   parallel jobs are created which may be executed in parallel on different
+   processors.  There is no specified order of enumerating the domain of
+   the variable, the user should not rely on a particular order.  It is
+   used mostly to find an instantiation of the variable which is consistent
+   with the current set of constraints in labeling procedures of a parallel
+   program.  If List is a list of all domain variables occurring in the
+   program, the simplest parallel labeling procedure is written as
+
+
+
+        labeling([]).
+        labeling([Var|Rest]) :-
+            par_indomain(Var),
+            labeling(Rest).
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   :: / 2, #:: / 2, indomain / 1

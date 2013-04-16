@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>splice(?Odds, ?Evens, ?List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>splice(?Odds, ?Evens, ?List)</H1>
+Merge two lists by interleaving the elements
+<DL>
+<DT><EM>Odds</EM></DT>
+<DD>List or variable
+</DD>
+<DT><EM>Evens</EM></DT>
+<DD>List or variable
+</DD>
+<DT><EM>List</EM></DT>
+<DD>Variable or list
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>splice(+, +, ?)
+<LI>splice(?, ?, +)
+</UL>
+<H2>Description</H2>
+Create a new list by alternating elements from two input lists,
+    	starting with the first. When one input list is longer, its extra
+	elements form the tail of the result list.
+	<P>
+	The reverse mode splice(-,-,+) is nondeterministic, and
+	the most balanced solution(s) will be found first.
+<H2>Examples</H2>
+<PRE>?- splice([1,2,3], [a,b,c], X).
+X = [1, a, 2, b, 3, c]
+Yes (0.00s cpu)
+
+?- splice([1,2,3], [a,b,c,d,e], X).               
+X = [1, a, 2, b, 3, c, d, e]
+Yes (0.00s cpu)
+
+?- splice(A, B, [1,a,2,b,3,c]).
+A = [1, 2, 3]
+B = [a, b, c]
+More (0.00s cpu) ? ;
+A = [1, 2, 3, c]
+B = [a, b]
+More (0.00s cpu) ? ;
+A = [1, 2]
+B = [a, b, 3, c]
+More (0.00s cpu) ? ;
+A = [1, 2, b, 3, c]
+B = [a]
+More (0.00s cpu) ? ;
+A = [1]
+B = [a, 2, b, 3, c]
+More (0.00s cpu) ? ;
+A = [1, a, 2, b, 3, c]
+B = []
+More (0.00s cpu) ? ;
+A = []
+B = [1, a, 2, b, 3, c]
+Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/merge-3.html">merge / 3</A>
+</BODY></HTML>

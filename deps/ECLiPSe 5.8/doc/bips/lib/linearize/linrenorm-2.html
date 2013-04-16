@@ -1,0 +1,37 @@
+<HTML><HEAD><TITLE>linrenorm(+LinOld, -LinNew)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(linearize)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>linrenorm(+LinOld, -LinNew)</H1>
+Renormalize a linear form
+<DL>
+<DT><EM>LinOld</EM></DT>
+<DD>Possibly denormal lists of monomials
+</DD>
+<DT><EM>LinNew</EM></DT>
+<DD>Normalized lists of monomials
+</DD>
+</DL>
+<H2>Description</H2>
+	The normal form of linear expressions is
+<PRE>
+		[C0*1, C1*X1, C2*X2, ...]
+</PRE>
+	where Ci are numbers and Xi are distinct variables.
+	The first (constant) term is always present, Ci (i>=1) are nonzero.
+<P>
+	Such a form can become denormalized due to unifications
+	(instantiation or variable-variable aliasing). This predicate
+	renormalizes it. Note that variables may only become instantiated
+	to numbers!
+    
+<H2>Examples</H2>
+<PRE>
+    ?- linearize(3*X-7*Y+2*(X+Y), L1, R), writeln(L1),
+	Y = 3,
+	linrenorm(L1,L2), writeln(L2).
+
+    [0 * 1, 5 * X, -5 * Y]
+    [-15 * 1, 5 * X]
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/linearize/linearize-3.html">linearize / 3</A>, <A HREF="../../lib/linearize/delinearize-2.html">delinearize / 2</A>
+</BODY></HTML>

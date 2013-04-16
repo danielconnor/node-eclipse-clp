@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>?Vars tent_set ++Values</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(repair)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Vars tent_set ++Values</H1>
+Assigns tentative values for the variables in a term.
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>Term with variables (non-ground term)
+</DD>
+<DT><EM>Values</EM></DT>
+<DD>Tentative values for variables in Vars (ground term)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+Associate tentative values with variables. Vars can be any non-ground term,
+and Values the corresponding ground term. The tentative values of the
+variables are set to the ground values in Values. Typically Var is a
+variable or a list of variables.
+
+</P></P>
+A tentative value is generally used to record preferred or previous
+assigments to this variable. It does not actually bind the variable to the
+value.  It can be changed through later calls to tent_set. Together with
+other tentative values and actual values for the problem variables in a
+program, they can form a tentative assignment which may be a partial or
+inconsistent solution to the problem. Variables with inconsistent tentative
+values are known as non-tenable.
+</P>
+
+<H3>Fail Conditions</H3>
+Vars is non-unifiable with Values
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE>
+% lib(fd) is loaded
+
+[eclipse 3]: X::1..5, X tent_set 3.
+X = X{fd:[1..5], repair:3} % X is tenable 
+
+[eclipse 3]: X::1..5, X tent_set 7.
+X = X{fd:[1..5], repair:7} % X is non-tenable 
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/repair/tent_get-2.html">tent_get / 2</A>, <A HREF="../../lib/repair/tenable-1.html">tenable / 1</A>
+</BODY></HTML>

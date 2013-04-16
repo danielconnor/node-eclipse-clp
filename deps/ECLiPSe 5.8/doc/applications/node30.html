@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Transformation</TITLE>
+<META NAME="description" CONTENT="Transformation">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html906"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html900"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html894"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html902"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html904"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html907"
+ HREF="node31.html">Filter</A>
+<B> Up:</B> <A NAME="tex2html901"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html895"
+ HREF="node29.html">Iteration on array</A>
+ &nbsp <B>  <A NAME="tex2html903"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html905"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html908"
+ HREF="node30.html#SECTION00660010000000000000">Description</A>
+<LI><A NAME="tex2html909"
+ HREF="node30.html#SECTION00660020000000000000">Parameters</A>
+<LI><A NAME="tex2html910"
+ HREF="node30.html#SECTION00660030000000000000">Schema</A>
+<LI><A NAME="tex2html911"
+ HREF="node30.html#SECTION00660040000000000000">Comments</A>
+<LI><A NAME="tex2html912"
+ HREF="node30.html#SECTION00660050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00660000000000000000">
+Transformation</A>
+</H1>
+
+<H4><A NAME="SECTION00660010000000000000">
+Description</A>
+</H4>
+This next concept is used to perform some transformation<A NAME="582"></A> on each element of a list and to create a list of the transformed elements. At the end, both lists will have the same length, and the elements match, i.e. the first element of the second list is the transformed first element of the first list. 
+
+<P>
+This concept uses the <I>foreach</I><A NAME="584"></A> keyword in two different ways. The first is used to scan an existing list <I>L</I>, the second is used to construct a list<A NAME="585"></A> <I>K</I> as the result of the operation.
+
+<H4><A NAME="SECTION00660020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>L</STRONG>
+<DD>a list
+<DT><STRONG>K</STRONG>
+<DD>a free variable, will be bound to a list
+</DL>
+<H4><A NAME="SECTION00660030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode transformation(+,-).
+transformation(L,K):-
+        (foreach(X,L),
+         foreach(Y,K) do
+            q(X,Y)
+        ).
+</PRE>
+<H4><A NAME="SECTION00660040000000000000">
+Comments</A>
+</H4>
+In the code above we cannot see that list <I>L</I> is an input and list <I>K</I> is an output. This can only be deduced from the calling pattern or from the mode declaration<A NAME="593"></A>. 
+
+<P>
+
+<H4><A NAME="SECTION00660050000000000000">
+Example</A>
+</H4>
+The example takes a list of <I>router_mib_data</I> terms and builds a list of temporary <I>t/2</I> terms where the second argument consists of <I>router_mib</I> terms.
+<A NAME="598"></A>
+<PRE>
+:-mode convert_to_router_mib(+,-,-).
+convert_to_router_mib(L,K,Router):-
+        (foreach(router_mib_data with 
+                 [router:Router,
+                  time:Time,
+                  tcp_segm_in:A,
+                  tcp_segm_out:B,
+                  udp_datagram_in:C,
+                  udp_datagram_out:D],L),
+         foreach(t(Time,router_mib with 
+                   [tcp_segm_in:A,
+                   tcp_segm_out:B,
+                   udp_datagram_in:C,
+                   udp_datagram_out:D]),K),
+         param(Router) do
+            true
+         ).
+</PRE>
+In this example the transformation is completely handled by matching arguments in the <I>foreach</I> statements. We use the predicate <I>true</I> <A NAME="603"></A>for an empty loop body<A NAME="604"></A>.
+
+<P>
+Figuring out what is happening with the variable <I>Router</I> is left as an exercise for the advanced reader.
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html906"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html900"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html894"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html902"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html904"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html907"
+ HREF="node31.html">Filter</A>
+<B> Up:</B> <A NAME="tex2html901"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html895"
+ HREF="node29.html">Iteration on array</A>
+ &nbsp <B>  <A NAME="tex2html903"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html905"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

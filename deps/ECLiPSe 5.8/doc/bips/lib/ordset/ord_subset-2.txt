@@ -1,0 +1,18 @@
+
+ord_subset(+Set1, +Set2)
+
+   Checks whether Set1 is a subset of Set2
+
+Arguments
+   Set1                A set
+   Set2                A set
+
+Type
+   library(ordset)
+
+Description
+	Succeeds when every element of the ordered set Set1 appears
+	in the ordered set Set2.
+    
+
+

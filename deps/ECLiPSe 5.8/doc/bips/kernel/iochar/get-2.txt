@@ -1,0 +1,63 @@
+
+get(+Stream, ?Ascii)
+
+   Reads the next character from the input stream Stream and unifies its ASCII
+code with Ascii.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   ?Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Takes the next character from the open input stream Stream and unifies
+   its integer ASCII code (in the range 0 to 255) to Ascii.  ASCII codes
+   for the non-printable characters (i.e.  control characters) are also
+   acceptable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Ascii does not unify with the next character from the buffered
+   input stream Stream.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is neither an integer nor an atom.
+     5 --- Ascii is instantiated, but not to an integer.
+   190 --- End of file has been reached.
+   192 --- Stream is not an input stream.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+Success:
+      [eclipse]: get(input, 0'a),get(input,97).
+      > aa
+      yes.
+Fail:
+      [eclipse]: get(input,98).
+      > a
+      no.
+Error:
+      get(Stream,98).                 (Error 4).
+      get(input, '98').               (Error 5).
+      get(10,A).                      (Error 192).
+      get(atom,A).                    (Error 193).
+
+
+
+
+
+See Also
+   get / 1, put / 1, put / 2

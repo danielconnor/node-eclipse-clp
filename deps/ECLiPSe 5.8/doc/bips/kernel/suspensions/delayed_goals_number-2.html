@@ -1,0 +1,76 @@
+<HTML><HEAD><TITLE>delayed_goals_number(?Var, ?Number)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delayed_goals_number(?Var, ?Number)</H1>
+Succeeds if Number is the number of goals delayed by the variable Var.
+
+
+<DL>
+<DT><EM>?Var</EM></DT>
+<DD>Any term.
+</DD>
+<DT><EM>?Number</EM></DT>
+<DD>Integer or a variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies Number with the number of goals delayed by the variable Var.  If
+   Var is instantiated, Number is unified with 1000000.  If Var is not
+   instantiated and there are no goals delayed by it, Number is unified
+   with 0.  This predicate does not construct the list of delayed goals and
+   hence it is faster than delayed_goals/2.  Its purpose is to give each
+   variable a weight corresponding to the number of constraints imposed on
+   the variable to be able to select the most constrained one.  It is
+   assumed that one million constraints cannot be placed on any variable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Number does not unify with the above described number.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+    % Make an intelligent permutation choosing
+    % the most constrained variable.
+    perm([], []).
+    perm([Var|List], Values) :-
+        delayed_goals_number(Var, C),
+        maxval(List, Var, C, Chosen, RestVar),
+        delete(Chosen, Values, RestVal),
+        perm(RestVar, RestVal).
+
+    maxval(L, Chosen, 1000000, Chosen, L) :- !.
+    maxval([], Chosen, _, Chosen, []).
+    maxval([X|L], SoFar, MaxVal, Chosen, [V|Rest]) :-
+        delayed_goals_number(X, C),
+        (C =&lt; MaxVal -&gt; V = X, Next = SoFar, Max = MaxVal ;
+            V = SoFar, Next = X, Max = C),
+        maxval(L, Next, Max, Chosen, Rest).
+    % the values are generated in the listed order
+    [eclipse]: perm([A, B, C], [1,2,3]).
+
+    A = 1
+    B = 2
+    C = 3     More? (;)
+    yes.
+
+    % B is more constrained than the others, and so
+    % its value will be generated first.
+    [eclipse]: B &lt; 3, perm([A, B, C], [1,2,3]).
+
+    A = 2
+    B = 1
+    C = 3     More? (;)
+
+Fail:
+    X &gt; 0, delayed_goals_number(X, 0).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/delayed_goals-1.html">delayed_goals / 1</A>, <A HREF="../../kernel/suspensions/delayed_goals-2.html">delayed_goals / 2</A>, <A HREF="../../kernel/suspensions/subcall-2.html">subcall / 2</A>
+</BODY></HTML>

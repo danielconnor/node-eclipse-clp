@@ -1,0 +1,32 @@
+<HTML><HEAD><TITLE>bb_probe(++From, ++To, +Goal, ?Template, ?Cost, ++Handle, ++Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(branch_and_bound)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>bb_probe(++From, ++To, +Goal, ?Template, ?Cost, ++Handle, ++Module)</H1>
+Low-level primitive for building branch-and-bound-style search procedures
+<H2>Description</H2>
+
+	bb_probe tries to find a solution for Goal in the range From..To.
+	If there is a solution, its Template and Cost are stored in Handle,
+	the computation is undone, and bb_probe succeeds.
+	If there is no solution, Handle is not changed and bb_probe fails.
+	The primitive set_var_bounds/3 is used to impose cost bounds
+	during the search process in a generic way.
+<H2>Examples</H2>
+<PRE>% a simple branch-and-bound procedure
+my_minimize(Goal, Cost, Solution, OptCost, Module) :-
+	bb_init(1000000, Handle),
+	(
+	    bb_delta(0, 1000000, Goal, Cost, Handle, Module)
+	;
+	    bb_solution(Handle, Solution),
+	    bb_cost(Handle, OptCost)
+	),
+	bb_finish(Handle).
+
+bb_delta(From, To, Goal, Cost, Handle, Module) :-
+	bb_probe(From, To, Goal, Goal, Cost, Handle, Module),
+	NewTo is bb_cost(Handle) - 1,
+	bb_delta(From, NewTo, Goal, Cost, Handle, Module).
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/branch_and_bound/bb_init-2.html">bb_init / 2</A>, <A HREF="../../lib/branch_and_bound/bb_cost-2.html">bb_cost / 2</A>, <A HREF="../../lib/branch_and_bound/bb_solution-2.html">bb_solution / 2</A>, <A HREF="../../lib/branch_and_bound/bb_finish-1.html">bb_finish / 1</A>, <A HREF="../../lib/branch_and_bound/bb_min-3.html">bb_min / 3</A>, bb_min / 4, <A HREF="../../kernel/termmanip/set_var_bounds-3.html">set_var_bounds / 3</A>
+</BODY></HTML>

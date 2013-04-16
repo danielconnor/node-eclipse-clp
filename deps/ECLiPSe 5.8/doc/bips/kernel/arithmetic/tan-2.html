@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>tan(+Number, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>tan(+Number, ?Result)</H1>
+Evaluates the trigonometric function tan(Number) and unifies the resulting
+value with Result.
+
+
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable, float or breal.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to tan(Number, Result) is
+   equivalent to
+<PRE>
+    Result is tan(Number)
+</PRE>
+    which should be preferred for portability.
+<P>
+   In coroutining mode, if Number is a free variable, the call to tan/2 is
+   delayed until this variable is instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated (non-coroutining mode only).
+<DT><EM>(5) type error </EM>
+<DD>Result is a number but not a float or breal.
+<DT><EM>(24) number expected </EM>
+<DD>Number is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+<DT><EM>(20) arithmetic exception </EM>
+<DD>Illegal arithmetic operation:  Number is (2k +1) * pi/2 for    every integer k.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      tan(0, 0.0).
+      tan(12.3, Result).      (gives Result = -0.272854)
+      tan(-1, Result).        (gives Result = -1.55741)
+Fail:
+      tan(1, 0.0).
+Error:
+      tan(A, 6.0).                      (Error 4).
+      tan(0, 0).                        (Error 5).
+      X is pi/2, tan(X, Result).        (Error 20).
+      tan(10.3 + 2, -0.272854).         (Error 24).
+      tan(5, r).                        (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

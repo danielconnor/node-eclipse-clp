@@ -1,0 +1,30 @@
+
+dom_check_in(+Element, +Dom)
+
+   Element is in the domain Dom.
+
+
+
+Arguments
+   +Element            A Prolog term.
+   +Dom                A finite domain.
+
+Type
+   library(fd)
+
+Description
+   Succeed if the term Element is in the domain Dom.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the element does not occur in the domain.
+
+
+
+See Also
+   dom_compare / 3, dom_member / 2, dom_range / 3, dom_size / 2, dvar_domain / 2

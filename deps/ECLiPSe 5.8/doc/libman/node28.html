@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Constraints</TITLE>
+<META NAME="description" CONTENT="Constraints">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node29.html">
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node29.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1272"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1268"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1262"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1270"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1273"
+ HREF="node29.html">Set Expressions</A>
+<B> Up:</B> <A NAME="tex2html1269"
+ HREF="node24.html">The Integer Sets Library</A>
+<B> Previous:</B> <A NAME="tex2html1263"
+ HREF="node27.html">Set Variables</A>
+ &nbsp <B>  <A NAME="tex2html1271"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1274"
+ HREF="node28.html#SECTION00541000000000000000">Membership</A>
+<LI><A NAME="tex2html1275"
+ HREF="node28.html#SECTION00542000000000000000">Cardinality</A>
+<LI><A NAME="tex2html1276"
+ HREF="node28.html#SECTION00543000000000000000">Set Relations</A>
+<LI><A NAME="tex2html1277"
+ HREF="node28.html#SECTION00544000000000000000">N-ary Set Relations</A>
+<LI><A NAME="tex2html1278"
+ HREF="node28.html#SECTION00545000000000000000">Set Weights</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00540000000000000000">
+Constraints</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00541000000000000000">
+Membership</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html291"
+ HREF="../bips/lib/fd_sets/in-2.html">?X in ?Set</A><A NAME="2385"></A></STRONG>
+<DD>The integer X is member of the integer set Set 
+<DT><STRONG><A NAME="tex2html293"
+ HREF="../bips/lib/fd_sets/notin-2.html">?X notin ?Set</A><A NAME="2388"></A></STRONG>
+<DD>The integer X is not a member of the integer set Set 
+<DT><STRONG><A NAME="tex2html295"
+ HREF="../bips/lib/fd_sets/membership_booleans-2.html">membership_booleans(?Set, ?BoolArr)</A><A NAME="2391"></A></STRONG>
+<DD>BoolArr is an array of booleans describing Set 
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00542000000000000000">
+Cardinality</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html297"
+ HREF="../bips/lib/fd_sets/H-2.html">#(?Set, ?Card)</A><A NAME="2394"></A></STRONG>
+<DD>Card is the cardinality of the integer set Set 
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00543000000000000000">
+Set Relations</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html299"
+HREF="../bips/lib/fd_sets/difference-3.html">difference(?Set1, ?Set2, ?Set3)</A><A NAME="2397"></A></STRONG>
+<DD>Set3 is the difference of the integer sets Set1 and Set2 
+
+<P>
+<DT><STRONG><A NAME="tex2html301"
+ HREF="../bips/lib/fd_sets/disjoint-2.html">?Set1 disjoint ?Set2</A><A NAME="2400"></A></STRONG>
+<DD>The integer sets Set1 and Set2 are disjoint 
+
+<P>
+<DT><STRONG><A NAME="tex2html303"
+ HREF="../bips/lib/fd_sets/includes-2.html">?Set1 includes ?Set2</A><A NAME="2403"></A></STRONG>
+<DD>Set1 includes (is a superset) of the integer set Set2 
+
+<P>
+<DT><STRONG><A NAME="tex2html305"
+ HREF="../bips/lib/fd_sets/intersection-3.html">intersection(?Set1, ?Set2, ?Set3)</A><A NAME="2406"></A></STRONG>
+<DD>Set3 is the intersection of the integer sets Set1 and Set2 
+
+<P>
+<DT><STRONG><A NAME="tex2html307"
+ HREF="../bips/lib/fd_sets/sameset-2.html">?Set1 sameset ?Set2</A><A NAME="2409"></A></STRONG>
+<DD>The sets Set1 and Set2 are equal 
+<DT><STRONG><A NAME="tex2html309"
+ HREF="../bips/lib/fd_sets/subset-2.html">?Set1 subset ?Set2</A><A NAME="2412"></A></STRONG>
+<DD>Set1 is a subset of the integer set Set2 
+<DT><STRONG><A NAME="tex2html311"
+ HREF="../bips/lib/fd_sets/symdiff-3.html">symdiff(?Set1, ?Set2, ?Set3)</A><A NAME="2415"></A></STRONG>
+<DD>Set3 is the symmetric difference of the integer sets Set1 and Set2 
+<DT><STRONG><A NAME="tex2html313"
+ HREF="../bips/lib/fd_sets/union-3.html">union(?Set1, ?Set2, ?Set3)</A><A NAME="2418"></A></STRONG>
+<DD>Set3 is the union of the integer sets Set1 and Set2 
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00544000000000000000">
+N-ary Set Relations</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html315"
+ HREF="../bips/lib/fd_sets/all_disjoint-1.html">all_disjoint(+Sets)</A><A NAME="2421"></A></STRONG>
+<DD>Sets is a list of integers sets which are all disjoint 
+<DT><STRONG><A NAME="tex2html317"
+ HREF="../bips/lib/fd_sets/all_union-2.html">all_union(+Sets, ?SetUnion)</A><A NAME="2424"></A></STRONG>
+<DD>SetUnion is the union of all the sets in the list Sets 
+<DT><STRONG><A NAME="tex2html319"
+ HREF="../bips/lib/fd_sets/all_intersection-2.html">all_intersection(+Sets, ?SetIntersection)</A><A NAME="2427"></A></STRONG>
+<DD>SetIntersection is the intersection of all the sets in the list Sets 
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00545000000000000000">
+Set Weights</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html321"
+ HREF="../bips/lib/fd_sets/weight-3.html">weight(?Set, ++ElementWeights, ?Weight)</A><A NAME="2430"></A></STRONG>
+<DD>According to the array of element weights, the weight of set Set1 is Weight 
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1272"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1268"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1262"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1270"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1273"
+ HREF="node29.html">Set Expressions</A>
+<B> Up:</B> <A NAME="tex2html1269"
+ HREF="node24.html">The Integer Sets Library</A>
+<B> Previous:</B> <A NAME="tex2html1263"
+ HREF="node27.html">Set Variables</A>
+ &nbsp <B>  <A NAME="tex2html1271"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

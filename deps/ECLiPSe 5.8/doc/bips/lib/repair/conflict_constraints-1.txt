@@ -1,0 +1,10 @@
+
+conflict_constraints(?)
+
+   Obsolete: use conflict_constraints/2 instead.
+
+Type
+   library(repair)
+
+See Also
+   conflict_constraints / 2

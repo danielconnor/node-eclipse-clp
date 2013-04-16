@@ -1,0 +1,24 @@
+
+error(++Message)
+
+   Abort, printing an error message.
+
+Arguments
+   Message             A string giving the error message to display
+
+Type
+   library(mercury)
+
+Description
+	
+	Corresponds to Mercury's require:error/1 predicate.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+

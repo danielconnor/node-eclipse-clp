@@ -1,0 +1,175 @@
+<HTML><HEAD><TITLE>EplexInstance:eplex_set(++ParamName, -Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>EplexInstance:eplex_set(++ParamName, -Value)</H1>
+Change initial options for solver state associated with EplexInstance
+<DL>
+<DT><EM>ParamName</EM></DT>
+<DD>Name of parameter (atom)
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>New value for ParamName
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+This primitive can be used to change some of the initial options
+even after setup of a solver for eplex instance <EM>EplexInstance</EM>.
+<EM>What</EM> can be one of the following:
+
+<DL>
+    <DT><STRONG><TT>method</TT></STRONG>
+        <DD>Set the method that will be used to solve the problem.  Value
+        is one of <TT>default, primal, dual, net, net(Simplex), barrier,
+        barrier(Crossover), sifting, sifting(SubMethod)</TT>. Simplex can
+        be one of <TT>default, primal, dual</TT>, specifying the Simplex
+        method to use in the Network Simplex algorithm. Crossover can be
+        one of <TT>default, primal, dual, none</TT>, specifying the
+        crossover method to use for the barrier method. SubMethod could be
+        one of default, primal, dual, net, barrier</TT>, specifying the
+        method to use for the subproblems in the sifting method. Note that
+        some of these methods may not be available on all external solvers.
+        In case of MIP solving, this is the start algorithm (the one that
+        is used to solve the initial relaxation). 
+
+<P>
+    <DT><STRONG><TT>node_method</TT></STRONG>
+        <DD>Applicable to MIP problems only. Set the method that will be
+        used to solve the problem at the nodes (except the root) of the 
+        branch-and-bound tree. Note that the method for solving the root
+        node is controlled by the <TT>method</TT> option. Value can be set
+        to the same values as in the <TT>method</TT> option, although 
+        there may be more restrictions on what the actual methods/auxiliary
+        methods that are allowed in combination with the root method,
+        due to limitations/restrictions from the external solver. A warning
+        will be given when the problem is solveed if this is the case, and 
+        the default method used instead.
+
+<P>
+    <DT><STRONG><TT>solution</TT></STRONG>
+        <DD>Make the solutions available each time the problem has been
+        (re-)solved successfully.
+        Value is one of the atoms <TT>yes</TT> or <TT>no</TT>.
+
+<P>
+    <DT><STRONG><TT>reduced_cost</TT></STRONG>
+        <DD>Make the reduced costs available each time the problem has been
+        (re-)solved successfully. If the problem is a MIP, then depending on
+        the external solver, this is either unavailable or are the values
+        for the optimal LP node. 
+        Value is one of the atoms <TT>yes</TT> or <TT>no</TT>.
+
+<P>
+    <DT><STRONG><TT>slack</TT></STRONG>
+        <DD>Make the constraint slacks available each time the problem has been
+        (re-)solved successfully.
+        Value is one of the atoms <TT>yes</TT> or <TT>no</TT>.
+
+<P>
+    <DT><STRONG><TT>dual_solution</TT></STRONG>
+        <DD>Make the dual solutions available each time the problem has been
+        (re-)solved successfully. If the problem is a MIP, then depending on
+        the external solver, this is either unavailable or are the values
+        for the optimal LP node. 
+        Value is one of the atoms <TT>yes</TT> or <TT>no</TT>.
+
+<P>
+    <DT><STRONG><TT>keep_basis</TT></STRONG>
+        <DD>Store the basis each time the problem has been solved successfully,
+        and use this basis as a starting point for re-solving next time.
+        Value is one of the atoms <TT>yes</TT> or <TT>no</TT>.
+
+<P>
+    <DT><STRONG><TT>demon_tolerance</TT></STRONG>
+        <DD>Specify how far outside a variable's range an lp-solution
+        can fall before lp_demon_setup/5 re-triggers.
+        Value is a comma-separated pair <TT>(RealTol,IntTol)</TT> of 
+        floating-point values (default <TT>(0.00001,0.5)</TT>).
+
+<P>
+    <DT><STRONG><TT>use_var_names</TT></STRONG>
+        <DD>Specify if variable names (set using <TT>set_var_name/2</TT> of the
+        var_name library) should be passed to the external solver. If a
+        particular variable does not have a name, a solver's default name
+        would be used. Note that for XPRESS-MP, there is a limit on the
+        length of the name, which can be changed between 8 and 64 in steps
+        of 8 with the parameter <TT>N_NAMLEN</TT>. Variable names longer
+        than this limit are truncated to the limit. Note also that only 
+        new variables from constraints added after the <TT>lp_set/3</TT> call 
+        will pass their names to the external solver.
+        Value is one of the atoms <TT>yes</TT> or <TT>no</TT>.
+<P>
+    <DT><STRONG><TT>timeout</TT></STRONG>
+        <DD>Set the external solver to time-out after <TT>Value</TT>
+        seconds.  The solver will abort (in either the abort or suboptimal
+        state, depending on if a suboptimal solution was found) if the
+        optimal solution was not found within the time limit. In cases
+        where the solver expects an integer for the time-out interval, the
+        time given is rounded up to the next integer value. This should be
+        used instead of the solver specific optimizer_param(Param) for
+        setting timeouts.
+        Value is a positive number.
+<P>
+<DT><STRONG><TT>suboptimal_handler</TT></STRONG>
+        <DD>Value is a user defined goal to handle the case when the
+        external solver returned a suboptimal solution (because the problem
+        was aborted). Value would replace any existing suboptimal handler,
+        and would also be run in place of raising the default
+        <TT>eplex_suboptimal</TT> event.
+<P>
+<DT><STRONG><TT>unbounded_handler</TT></STRONG>
+        <DD>Value is a user defined goal to handle the case when the
+        problem is unbounded. Value would replace any existing unbounded
+        handler, and would be run in place of raising the default
+        <TT>eplex_unbounded</TT> event.
+<P>
+<DT><STRONG><TT>unknown_handler</TT></STRONG>
+        <DD>Value is a user defined goal to handle the case when the
+        external solver was not able to determine if the problem is
+        unbounded Value would replace any existing unknown handler, and
+        would be run in place of raising the default <TT>eplex_unknown</TT>
+        event.
+<P>
+<DT><STRONG><TT>abort_handler</TT></STRONG>
+        <DD>Value is a user defined goal to handle the case when the
+        external solver aborted without finding any solution.  Value would
+        replace any existing abort handler, and would be run in place of
+        raising the default <TT>eplex_abort</TT> event.
+<P>
+    <DT><STRONG><TT>optimizer_param(Param)</TT></STRONG>
+        <DD>Set the external solver's control parameter Param for the problem
+        <TT>Handle</TT>. If the solver's parameters are global and not
+        problem specific, an unimplemented functionality exception would
+        be raised. See lp_get/3 for more details on the external solver's
+        parameters. Note that the new setting is <EM>not</EM> undone on 
+        backtracking.
+<P>
+    <DT><STRONG><TT>write_before_solve</TT></STRONG>
+       <DD>Value can be the pair (Format,File) or the atom no. If
+       (Format,File) is given, Eplex will ask the external solver to dump
+       the problem each time the solver is invoked by calling
+       <TT>lp_write/3</TT>. This allows the problem in an
+       <TT>eplex_probe/2</TT> or <TT>lp_probe/3</TT> to be
+       dumped. <TT>Format</TT> and <TT>File</TT> are simply passed to
+       <TT>lp_write/3</TT>. `no' will turn off this dumping.
+<P>
+    <DT><STRONG><TT>post_equality_when_unified</TT></STRONG>
+        <DD>Value can be the atoms yes or no. Determines if an equlity
+        constraint will be posted to a solver when two of its variables are
+        unified. Setting Value to no means that the constraint will not be
+        posted. Note that this could mean that the
+        solver's problem may become inconsistent with ECLiPSe's. 
+<P>
+</DL>
+  Making solutions available means that they can be retrieved using
+  lp_get/3 or lp_var_get/4 after the solver has been run successfully.
+</P>
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>EplexInstance does not a solver setup for it.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/eplex_solver_setup-4.html">eplex_solver_setup / 4</A>, <A HREF="../../lib/eplex/eplex_set-2.html">eplex_set / 2</A>, <A HREF="../../lib/eplex/lp_set-3.html">lp_set / 3</A>, <A HREF="../../lib/eplex/lp_get-3.html">lp_get / 3</A>
+</BODY></HTML>

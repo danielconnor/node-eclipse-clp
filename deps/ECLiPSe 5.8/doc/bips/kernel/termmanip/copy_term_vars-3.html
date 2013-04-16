@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>copy_term_vars(+Vars, +OldTerm, ?NewTerm)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>copy_term_vars(+Vars, +OldTerm, ?NewTerm)</H1>
+NewTerm gets unified with a variant of OldTerm where all occurrences
+of variables in Vars are replaced by fresh variables.
+
+
+<DL>
+<DT><EM>+Vars</EM></DT>
+<DD>Prolog term, usually a variable or a list of variables.
+</DD>
+<DT><EM>+OldTerm</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>?NewTerm</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   A copy of OldTerm is created, ie. a term that is similar to OldTerm but
+   all occurrences of the variables mentioned in Vars have been replaced
+   by new variables which do not occur elsewhere.
+
+<P>
+   Metaterms are treated like normal variables. Their attributes are
+   copied as specified by the corresponding copy_term handler.
+
+<P>
+   Subterms that do not contain any of the variables to replace are
+   not physically copied.
+
+<P>
+   Note that when the structure of the term to be copied is known, then
+   it is more efficient to use specialised unification code to do the job.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if NewTerm does not unify with the copy of OldTerm.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>   [eclipse]: Term=s(X,Y,Z), copy_term_vars(Y, Term, Copy).
+   X = _79
+   Z = _81
+   Y = _60
+   Term = s(_79, _60, _81)
+   Copy = s(_79, _120, _81)
+   yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/copy_term-2.html">copy_term / 2</A>, <A HREF="../../kernel/termmanip/copy_term-3.html">copy_term / 3</A>, <A HREF="../../kernel/termcomp/variant-2.html">variant / 2</A>, <A HREF="../../kernel/termmanip/functor-3.html">functor / 3</A>, <A HREF="../../kernel/termmanip/term_variables-2.html">term_variables / 2</A>
+</BODY></HTML>

@@ -1,0 +1,34 @@
+
+dom_difference(+Dom1, +Dom2, -DomDiff, -Size)
+
+   The domain DomDifference is Dom1 \Dom2 and Size is the number of its
+elements.
+
+
+
+Arguments
+   +Dom1               A finite domain.
+   +Dom2               A finite domain.
+   -DomDiff            A variable.
+   -Size               A variable.
+
+Type
+   library(fd)
+
+Description
+   The domain DomDifference is Dom1 \Dom2 and Size is the number of its
+   elements.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Dom1 is a subset of Dom2.
+
+
+
+See Also
+   dom_compare / 3, dom_member / 2, dom_range / 3, dom_size / 2, dvar_domain / 2

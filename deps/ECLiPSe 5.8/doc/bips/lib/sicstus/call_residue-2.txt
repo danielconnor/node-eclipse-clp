@@ -1,0 +1,9 @@
+
+call_residue(+Goal,-Residue)
+
+   This is only approximate, the variables in the second argument are dummies
+
+Type
+   library(sicstus)
+
+

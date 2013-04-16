@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE>optimize(+Map0, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>optimize(+Map0, -Map)</H1>
+Optimize a map for many lookups but few/no modification.
+<DL>
+<DT><EM>Map0</EM></DT>
+<DD>A map to optimize
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The optimized map
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	Declaratively, this predicate does nothing (i.e. the map Map is
+	equivalent to the map Map0).  However, operationally it suggests to
+	the implementation that the representation of the map be optimised
+	for lookups, with few or no modifications to be expected.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Never fails.
+<H3>Resatisfiable</H3>
+no
+
+</BODY></HTML>

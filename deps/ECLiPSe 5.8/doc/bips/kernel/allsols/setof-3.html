@@ -1,0 +1,130 @@
+<HTML><HEAD><TITLE>setof(?Term, +Goal, ?List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">All Solutions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>setof(?Term, +Goal, ?List)</H1>
+Succeeds if List is the (non-empty) ordered list of all instances of Term
+such that Goal is provable.
+
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term, usually a variable, a compound term or list                containing variables.
+</DD>
+<DT><EM>+Goal</EM></DT>
+<DD>Callable term.
+</DD>
+<DT><EM>?List</EM></DT>
+<DD>List or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies List with the ordered list (no duplicates) of all instances of
+   Term such that Goal is satisfied.  The variables appearing in Term
+   should not appear anywhere else in the clause except within Goal.
+
+<P>
+   The following table illustrates the difference between the all solutions
+   predicates:
+
+<P>
+<PRE>
+    built-in  choice pts  duplicates  sorted pruned *
+    bagof/3   yes         yes         no     no
+    coverof/3 yes         no          no     yes
+    findall/3 no          yes         no     no
+    setof/3   yes         no          yes    no
+   * prune_instances/2 used on list of solutions.
+</PRE>
+   If Goal is not a callable term, exceptions are raised in call/2.
+
+<P>
+Note
+   If there are uninstantiated variables in Goal which do not appear in
+   Term, then setof/3 can be resatisfied.  It generates alternative values
+   for List corresponding to different instantiations of the free variables
+   of Goal not in Term.  Such variables occurring in Goal will not be
+   treated as free if they are explicitly bound within Goal through an
+   existential quantification written as, for example,
+
+<P>
+<PRE>
+   setof(X, Y^(X likes Y), S).
+</PRE>
+   Then setof/3 will not backtrack over Y when getting a set of solutions
+   of X.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if List does not unify with the (non-empty) list of all instances
+   of Term such that Goal is provable.  Also fails if Goal has no solution.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is instantiated, but not to a compound term.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>Goal is an undefined procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+
+
+   % example using existential quantification:
+  [eclipse]: setof(Name,Num^current_stream(Name,Mode,Num),L),
+  &gt; writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , read , _g84 , [debug_input, user] % does not
+  _g72 , string , _g84 , [""]              % backtrack over
+  _g72 , update , _g84 , [null]            &amp; Num.
+  _g72 , write , _g84 , [error, user]
+
+  no (more) solution.
+  [eclipse]: setof(Name,current_stream(Name,Mode,Num),L),
+  &gt; writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , read , 0 , [user]           % backtracks over Num.
+  _g72 , read , 3 , [debug_input]
+  _g72 , string , 5 , [""]
+  _g72 , update , 4 , [null]
+  _g72 , write , 1 , [user]
+  _g72 , write , 2 , [error]
+
+  no (more) solution.
+  [eclipse]: setof(N,(Mode,Num)^current_stream(N,Mode,Num),L),
+  &gt; writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , _g78 , _g84 , ["", debug_input, error, null, user]
+
+  no (more) solution. % removes duplicates; sorted.
+
+
+  [eclipse]: [user].
+   h(f(1,2)).
+   h(f(1,2)).
+   h(f(1,X)).
+   h(f(X,Y)).   % instances of this element...
+   user compiled 476 bytes in 0.00 seconds
+  yes.
+  [eclipse]: setof(X,h(X),L).
+  X = _g58
+  L = [f(_g86, _g88), f(1, _g102), f(1, 2)]
+  yes.   % ...all bagged; removes duplicates; sorted.
+
+Fail:
+  setof(Y,current_stream(X,Y,Z),[strin]).
+
+Error:
+  setof(X,G,L).         (Error 4).
+  setof(X,"G",L).       (Error 5).
+  setof(X,a,L).         (Error 68).
+  setof(X,a(X),L).      (Error 68).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/allsols/bagof-3.html">bagof / 3</A>, <A HREF="../../kernel/allsols/coverof-3.html">coverof / 3</A>, <A HREF="../../kernel/allsols/findall-3.html">findall / 3</A>
+</BODY></HTML>

@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>library(ic_gap_sbdd)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(ic_gap_sbdd)</H1>
+GAP-based Symmetry Breaking via Dominance Detection (SBDD)
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="all_solutions-1.html"><STRONG>all_solutions(+Goal)</STRONG></A></DT>
+<DD>Find all solutions to the given goal</DD>
+<DT><A HREF="all_solutions-2.html"><STRONG>all_solutions(+Goal, ?NSols)</STRONG></A></DT>
+<DD>Find all solutions to the given goal</DD>
+<DT><A HREF="first_solution-1.html"><STRONG>first_solution(+Goal)</STRONG></A></DT>
+<DD>Find the first solution to the given goal</DD>
+<DT><A HREF="is_sbdd_var-1.html"><STRONG>is_sbdd_var(?Var)</STRONG></A></DT>
+<DD>Checks whether a variable is an SBDD variable</DD>
+<DT><STRONG>print_sbdd(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="sbdd_indomain-1.html"><STRONG>sbdd_indomain(?Var)</STRONG></A></DT>
+<DD>Instantiate an integer SBDD variable to an element of its domain</DD>
+<DT><A HREF="sbdd_initialise-5.html"><STRONG>sbdd_initialise(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)</STRONG></A></DT>
+<DD>Initialises the data structures required by the SBDD algorithm</DD>
+<DT><A HREF="sbdd_initialise_set-5.html"><STRONG>sbdd_initialise_set(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)</STRONG></A></DT>
+<DD>Initialises the data structures required by the SBDD algorithm (set version)</DD>
+<DT><A HREF="sbdd_labeling-1.html"><STRONG>sbdd_labeling(?List)</STRONG></A></DT>
+<DD>Instantiate all integer SBDD variables in a list to elements of their domains</DD>
+<DT><STRONG>sbdd_record(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>sbdd_recorded_indomain(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="sbdd_try-2.html"><STRONG>sbdd_try(+Var, ++Value)</STRONG></A></DT>
+<DD>Try assigning a value to an SBDD search variable</DD>
+<DT><A HREF="sbdd_try-3.html"><STRONG>sbdd_try(+Var, ++Value, ?Success)</STRONG></A></DT>
+<DD>Try assigning a value to an SBDD search variable</DD>
+<DT><A HREF="sbdd_try_set-3.html"><STRONG>sbdd_try_set(+Var, ++Value, ++Bool)</STRONG></A></DT>
+<DD>Try adding/excluding a value to/from an SBDD set search variable</DD>
+<DT><A HREF="sbdd_try_set-4.html"><STRONG>sbdd_try_set(+Var, ++Value, ++Bool, ?Success)</STRONG></A></DT>
+<DD>Try adding/excluding a value to/from an SBDD set search variable</DD>
+<DT><A HREF="throttle_default-1.html"><STRONG>throttle_default(+SBDDInfo)</STRONG></A></DT>
+<DD>Default throttling predicate</DD>
+<DT><A HREF="throttle_depth_mod_non_unique-2.html"><STRONG>throttle_depth_mod_non_unique(++DepthModulus, +SBDDInfo)</STRONG></A></DT>
+<DD>Example throttling predicate</DD>
+<DT><A HREF="throttle_depth_mod_unique-2.html"><STRONG>throttle_depth_mod_unique(++DepthModulus, +SBDDInfo)</STRONG></A></DT>
+<DD>Example throttling predicate</DD>
+<DT><A HREF="throttle_depth_non_unique-2.html"><STRONG>throttle_depth_non_unique(++MaxDepth, +SBDDInfo)</STRONG></A></DT>
+<DD>Example throttling predicate</DD>
+<DT><A HREF="throttle_depth_unique-2.html"><STRONG>throttle_depth_unique(++MaxDepth, +SBDDInfo)</STRONG></A></DT>
+<DD>Example throttling predicate</DD>
+<DT><STRONG>unify_sbdd(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Structures</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="sbdd_shared-s.html"><STRONG>struct sbdd_shared(array, depth, dec_info_list, dim_factors, val_offset, ground_points, throttle_pred, module)</STRONG></A></DT>
+<DD>Structure containing information for GAP-SBDD search</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+   This library provides a GAP-based Symmetry Breaking via Dominance
+   Detection (SBDD) library, as described in:<P>
+
+   Ian P. Gent, Warwick Harvey, Tom Kelsey and Steve Linton.  "Generic SBDD
+   using Computational Group Theory".  In Francesca Rossi, editor,
+   <EM>Proceedings of the Ninth International Conference on Principles and
+   Practice of Constraint Programming - CP 2003</EM>, LNCS 2833, pages
+   333-347.  Springer-Verlag, 2003.<P>
+
+   It has been enhanced by (amongst other things) being integrated with the
+   symmetry expression library described in:<P>
+
+   Warwick Harvey, Tom Kelsey and Karen Petrie.  "Symmetry Group Expression
+   for CSPs."  In Barbara Smith et al., editors, <EM>Proceedings of
+   SymCon'03: Third International Workshop on Symmetry in Constraint
+   Satisfaction Problems, a workshop of CP 2003</EM>, pages 86-96.
+   September, 2003.<P>
+
+   This library is still being developed and is expected to evolve.
+   Feedback, suggestions, problem reports, etc. welcome.<P>
+
+   Please note that this library currently does not work on Windows machines
+   due to its dependence on the GAP interface library.<P>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>evolving
+<LI><STRONG>Author: </STRONG>Warwick Harvey, Steve Linton, Tom Kelsey, Ian Gent (and probably others...)
+</UL>
+<H2>See Also</H2>
+<A HREF="../../lib/sym_expr/index.html">library(sym_expr)</A>, <A HREF="../../lib/gap/index.html">library(gap)</A><HR>Generated from ic_gap_sbdd.eci on Tue Jan 25 01:58:50 2005
+
+</BODY></HTML>

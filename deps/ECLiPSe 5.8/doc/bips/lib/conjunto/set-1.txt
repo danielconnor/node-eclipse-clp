@@ -1,0 +1,42 @@
+
+set(?SVar)
+
+   Succeeds if SVar is a ground set (not a set domain)
+
+
+
+Arguments
+   ?SVar               A Prolog term.
+
+Type
+   library(conjunto)
+
+Description
+   This predicate is used to test if a term is a ground set, that is a set
+   variable where the domain is reduced to a singleton or a set of ground
+   values defined with the symbols fg.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if SVar is not a ground set.
+
+
+
+Examples
+   
+[eclipse 3]: S = {a,{f(a,g),3},c}, set(S).
+
+S = {a,{f(a,g),3},c}
+yes.
+
+
+
+
+
+See Also
+   `:: / 2, glb / 2, lub / 2, set_range / 3

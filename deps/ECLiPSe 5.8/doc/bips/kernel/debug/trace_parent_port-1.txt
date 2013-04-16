@@ -1,0 +1,56 @@
+
+trace_parent_port(+Port)
+
+   Create a user-defined debugger port for the parent box.
+
+Arguments
+   Port                An atom.
+
+Type
+   Debugging
+
+Description
+
+    This predicate allows to generate a user-defined debugger port,
+    thus enhancing the debugger's basic box model with application-
+    specific checkpoints. In the box model, the execution is viewed as
+    consisting of nested boxes, which are being entered via CALL or
+    REDO ports, and left via EXIT, FAIL or LEAVE ports.
+
+    When the debugger is on, this predicate causes a trace line to
+    be displayed for the current innermost box, with Port being the
+    name of the port, and all other information being the current
+    box's ones.
+
+
+
+Examples
+   
+    p :-
+	trace_parent_port(clause1),  
+	writeln(hello),
+	fail.
+    p :-
+	trace_parent_port(clause2),  
+	writeln(world).
+
+?- p.
+  (1) 1 CALL  p   %> creep
+  (1) 1 CLAUSE1  p   %> creep
+S (2) 2 CALL  writeln(hello)   %> creep
+hello
+S (2) 2 EXIT  writeln(hello)   %> creep
+  (3) 2 CALL  fail   %> creep
+  (3) 2 FAIL  fail   %> creep
+  (1) 1 NEXT  p   %> creep
+  (1) 1 CLAUSE2  p   %> creep
+S (4) 2 CALL  writeln(world)   %> creep
+world
+S (4) 2 EXIT  writeln(world)   %> creep
+  (1) 1 EXIT  p   %> creep
+
+Yes (0.00s cpu)
+
+
+See Also
+   trace_call_port / 3, trace_point_port / 3, trace_exit_port / 0, spy_term / 2, spy_var / 1, trace / 1

@@ -1,0 +1,22 @@
+
+nodenames_to_nodes(+Graph, +NodeNames, -Nodes)
+
+   Returns the names corresponding to a list of nodes
+
+Arguments
+   Graph               a graph structure
+   NodeNames           a list of ground data, usually node names
+   Nodes               a list of integer node numbers
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    
+
+Fail Conditions
+   Fails if no node name information is available
+
+See Also
+   node_to_nodename / 3, nodename_to_node / 3, nodes_to_nodenames / 3

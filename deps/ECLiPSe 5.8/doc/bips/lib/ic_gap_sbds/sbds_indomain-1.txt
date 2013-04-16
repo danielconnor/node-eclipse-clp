@@ -1,0 +1,18 @@
+
+sbds_indomain(?Var)
+
+   Instantiate an integer SBDS variable to an element of its domain
+
+Arguments
+   Var                 The (integer) SBDS variable to instantiate, or an integer
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Like indomain/1, but uses sbds_try/2 to do the instantiation so that the
+   SBDS algorithms are invoked appropriately.
+
+
+See Also
+   fd : indomain / 1, ic : indomain / 1, ic_symbolic : indomain / 1, sbds_try / 2, sbds_labeling / 1

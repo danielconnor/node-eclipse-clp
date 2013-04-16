@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Error Handling</TITLE>
+<META NAME="description" CONTENT="Error Handling">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node62.html">
+<LINK REL="previous" HREF="node60.html">
+<LINK REL="up" HREF="node53.html">
+<LINK REL="next" HREF="node62.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1832"
+ HREF="node62.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1828"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1822"
+ HREF="node60.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1830"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1833"
+ HREF="node62.html">Solver Behaviour Differences</A>
+<B> Up:</B> <A NAME="tex2html1829"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1823"
+ HREF="node60.html">Dealing with Large and</A>
+ &nbsp <B>  <A NAME="tex2html1831"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00980000000000000000">
+Error Handling</A>
+</H1>
+
+<P>
+The external solver's optimization can abort without completely solving the
+problem, because of some error, or some resource limit was reached. Eplex
+classifies these into the following cases, with default ways of handling them:
+
+<P>
+<DL>
+<DT><STRONG>suboptimal</STRONG>
+<DD>This means that a solution was found but it may be suboptimal.
+	The default behaviour is to print a warning and succeed.
+    <DT><STRONG>unbounded</STRONG>
+<DD>This means that the problem is unbounded.  The default
+	behaviour is to bind Cost to infinity (positive or negative
+	depending on the optimisation direction), print a warning and
+	succeed.  CAUTION: No solution values are computed when the
+	problem is unbounded, so unless the problem was set up with
+	the solution(no) option, an error will occur when trying to
+	continue as if the optimisation had succeeded.
+    <DT><STRONG>unknown</STRONG>
+<DD>This means that due to the solution method chosen, it is unknown
+	whether the problem is unbounded or infeasible. The default
+	behaviour is to print a warning and fail (even though this
+	may be logically wrong!).
+    <DT><STRONG>abort</STRONG>
+<DD>Some other error condition occurred during optimisation.
+	The default behaviour is to print an error and abort.
+</DL>
+
+<P>
+The default behaviours can be overridden for each problem by giving a user
+defined goal to handle each case during problem setup in
+eplex_solver_setup/4 (lp_setup/4, lp_demon_setup/5, or later with
+eplex_set/2 or lp_set/3) as an option. If given, the user defined goal will
+be executed instead. The user defined handler could for instance change
+parameter settings and call lp_solve again. 
+
+<P>
+<A NAME="lpevents"></A>The default behaviour is implemented by raising the events <TT>eplex_suboptimal</TT>, <TT>eplex_unbounded</TT>, <TT>eplex_unknown</TT> and <TT>eplex_abort</TT> for the different abort cases. These events can themselves be
+redefined to change the default behaviours. However, as this changes the
+behaviour globally, it is not recommended.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1832"
+ HREF="node62.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1828"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1822"
+ HREF="node60.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1830"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1833"
+ HREF="node62.html">Solver Behaviour Differences</A>
+<B> Up:</B> <A NAME="tex2html1829"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1823"
+ HREF="node60.html">Dealing with Large and</A>
+ &nbsp <B>  <A NAME="tex2html1831"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

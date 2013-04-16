@@ -1,0 +1,18 @@
+
+hash_remove(+Table, +Key, -Value)
+
+   Remove the entry with key Key and retrieve its value Value
+
+Arguments
+   Table               A hash table
+   Key                 a ground term
+   Value               Any term
+
+Type
+   library(hash)
+
+Fail Conditions
+   No entry for Key
+
+See Also
+   hash_get / 3, hash_delete / 2, hash_erase / 1

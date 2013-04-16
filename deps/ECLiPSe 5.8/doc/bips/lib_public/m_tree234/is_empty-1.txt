@@ -1,0 +1,19 @@
+
+is_empty(+Tree)
+
+   Check whether a tree is empty.
+
+Arguments
+   Tree                A 2-3-4 tree
+
+Type
+   library(m_tree234)
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Tree is not an empty tree.
+
+See Also
+   init / 1

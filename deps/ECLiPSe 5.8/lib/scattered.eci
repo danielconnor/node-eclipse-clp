@@ -1,0 +1,16 @@
+:- module(scattered).
+:- export non_consecutive_handler / 3.
+:- export abort_compile_file / 3.
+:- export end_compile_file / 3.
+:- export start_compile_file / 3.
+:- export scattered_body / 2.
+:- export scattered / 1.
+:- export op(1000, fy, scattered).
+:- comment(summary, "Allow a source file to contain non-consecutive clauses").
+:- comment(author, "Joachim Schimpf and Micha Meier, ECRC Munich").
+:- comment(copyright, "Imperial College London and ICL").
+:- comment(date, "$Date: 2004/11/19 14:54:48 $").
+:- comment(status, deprecated).
+:- comment(desc, html("\n    The ECLiPSe compiler does not allow the clauses for static predicates\n    being non-consecutive, i.e.  interleaved with clauses for other\n    predicates.  The event 134 \"procedure clauses are not consecutive\" is\n    raised in such a case.  The correct way to avoid this error is to use\n    the discontiguous/1 declaration (ISO-Prolog compatible).\n    <P>\n    This library is therefore mostly obsolete!\n    <P>\n    It can still be useful for very old Prolog programs, which have been\n    written for an interpreted system, and expect non-consecutive predicates\n    to be generally allowed (without declaration).  It is enough to load\n    this library before compiling such a source file.  It redefines the\n    handler for the event 134 in such a way that the procedures with\n    non-consecutive clauses are recompiled in one chunk after encountering\n    the end of the file. \n    <P>\n    When not compiling from a file, the non-consecutive clauses have to be\n    declared using the directive scattered/1.  This declaration has to\n    precede any clauses of the predicate. \n    <PRE>\n    :- lib(scattered).\n    :- scattered p/3, q/1.\n    </PRE>\n    Note that this applies to predicates whose clauses are\n    non-consecutive, but in a single file.  Predicates that are spread\n    over multiple files still have to be declared as dynamic.\n    ")).
+:- comment(scattered / 1, [amode : scattered(++), args : ["PredSpec" : "Structure of the form Name/Arity, or a comma-separated sequence of those"], see_also : [discontiguous / 1], summary : "This declaration is obsolete, use discontiguous/1 instead."]).
+:- comment(scattered_body / 2, hidden).

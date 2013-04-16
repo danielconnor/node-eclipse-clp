@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Debugging Parts of Programs</TITLE>
+<META NAME="description" CONTENT="Debugging Parts of Programs">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node81.html">
+<LINK REL="previous" HREF="node79.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node81.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3471"
+ HREF="node81.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3467"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3461"
+ HREF="node79.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3469"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3472"
+ HREF="node81.html">Using the Debugger via</A>
+<B> Up:</B> <A NAME="tex2html3468"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3462"
+ HREF="node79.html">Starting the Debugger</A>
+ &nbsp <B>  <A NAME="tex2html3470"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3473"
+ HREF="node80.html#SECTION001451000000000000000">Mixing debuggable and non-debuggable code</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001450000000000000000">
+Debugging Parts of Programs</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION001451000000000000000">
+Mixing debuggable and non-debuggable code</A>
+</H2>
+
+<P>
+The debugger can trace only procedures which have been compiled in
+debug mode.  The compiler debug mode is by default switched on and it
+can be changed globally by setting the flag <I>debug_compile</I> with the
+<A NAME="tex2html1157"
+ HREF="../bips/kernel/env/set_flag-2.html">set_flag/2</A><A NAME="8149"></A>
+predicate or using
+<A NAME="tex2html1159"
+ HREF="../bips/kernel/obsolete/dbgcomp-0.html">dbgcomp/0</A><A NAME="8152"></A> or
+<A NAME="tex2html1161"
+ HREF="../bips/kernel/obsolete/nodbgcomp-0.html">nodbgcomp/0</A><A NAME="8155"></A>.
+The global compiler debug mode can be overruled on a file-by-file basis
+using one of the compiler pragmas<PRE>
+:- pragma(nodebug).
+:- pragma(debug).
+</PRE>
+Once a program (or a part of it) has been
+debugged, it can be compiled in <I>nodbgcomp</I> mode so that all
+optimisations are done by the compiler.  The advantages of
+non-debugged procedures are
+
+<P>
+
+<UL><LI>They run slightly faster than the debugged procedures
+when the debugger is switched off.  When the debugger is switched on,
+the non-debugged procedures run considerably faster than the debugged
+ones and so the user can selectively influence the speed of the code
+which is being traced as well as its space consumption.
+
+<P>
+
+<LI>Their code is shorter than that of the debugged procedures.
+
+</UL>
+
+<P>
+Although only procedures compiled in the <I>dbgcomp</I> mode can be
+traced, it is possible to mix the execution of procedures in both
+modes.  Then, calls of <I>nodbgcomp</I> procedures from <I>dbgcomp</I> ones are
+traced, however further execution within <I>nodbgcomp</I> procedures,
+i.e. the execution of their subgoals, no matter in which mode, is not
+traced.  In particular, when a <I>nodbgcomp</I> procedure calls a <I>dbgcomp</I>
+one, the latter is normally not traced.
+There are two important exceptions from this rule:
+
+<A NAME="7623"></A>
+
+<UL><LI>When a debuggable procedure has delayed and its DELAY port has
+been traced, then its RESUME port is also traced, even when it is woken
+inside non-debuggable code.
+<A NAME="7624"></A>
+<A NAME="7625"></A>
+<A NAME="7626"></A>
+
+<LI>When non-debuggable code <I>meta-calls</I> a debuggable procedure
+(i.e. via <A NAME="tex2html1167"
+ HREF="../bips/kernel/control/call-1.html">call/1</A><A NAME="8158"></A>),
+then this procedure can be traced.  This is a useful feature for the
+implementation of meta- predicates like
+<A NAME="tex2html1169"
+ HREF="../bips/kernel/allsols/setof-3.html">setof/3</A><A NAME="8161"></A>, because it
+allows to hide the details of the setof-implementation, while allowing
+to trace the argument goal.
+
+</UL>
+
+<P>
+Setting a procedure to skipped (with
+<A NAME="tex2html1171"
+ HREF="../bips/kernel/database/set_flag-3.html">set_flag/3</A><A NAME="8164"></A> or
+<A NAME="tex2html1173"
+ HREF="../bips/kernel/debug/skipped-1.html">skipped/1</A><A NAME="8167"></A>
+)
+is another way
+to speed up the execution of procedures that do not need to be
+debugged.  The debugger will ignore everything that is called inside
+the skipped procedure like for a procedure compiled in <I>nodbgcomp</I>
+mode.  However, the debugger will keep track of the execution of a
+procedure skipped with the command <B>s</B> of the debugger so that it
+will be possible to 'creep' in it on later backtracking or switch the
+debugger to <I>creep</I> mode while the skip is running (e.g.  by
+interrupting a looping predicate with ^ C and switching to <I>creep</I> mode).
+
+<P>
+The two predicates
+<A NAME="tex2html1175"
+ HREF="../bips/kernel/debug/trace-1.html">trace/1</A><A NAME="8170"></A> and
+<A NAME="tex2html1177"
+ HREF="../bips/kernel/debug/debug-1.html">debug/1</A><A NAME="8173"></A> can be used to
+switch on the debugger in the middle of a program.  They execute their
+argument in <I>creep</I> or <I>leap</I> mode respectively.  This is
+particularly useful when debugging large programs that take too much
+time (or need a lot of memory) to run completely with the debugger.<PRE>
+[eclipse 1]: debugging.
+Debugger is switched off
+
+yes.
+[eclipse 2]: big_goal1, trace(buggy_goal), big_goal2.
+Start debugging - creep mode
+  (1) 0  CALL   buggy_goal %&gt; c creep
+(1) 0  EXIT   buggy_goal %&gt; c creep
+Stop debugging.
+
+yes.
+</PRE>
+
+<P>
+It is also possible to enable the debugger in the middle of execution
+without changing the code.  To do so, use
+<A NAME="tex2html1179"
+ HREF="../bips/kernel/database/set_flag-3.html">set_flag/3</A><A NAME="8176"></A>
+<A NAME="7653"></A>
+to set the <B>start_tracing</B> flag of the predicate of interest.
+Tracing will then start (in leap mode) at every call of this
+predicate<A NAME="tex2html1156"
+
+HREF="footnode.html#foot7655"><SUP>14.1</SUP></A>. To see the starting predicate itself,
+set a spy point in addition to the <B>start_tracing</B> flag:<PRE>
+[eclipse 1]: debugging.
+Debugger is switched off
+
+yes.
+[eclipse 2]: set_flag(buggy_goal/0, start_tracing, on),
+             set_flag(buggy_goal/0, spy, on).
+
+yes.
+[eclipse 3]: big_goal1, buggy_goal, big_goal2.
+ +(0) 0 CALL  buggy_goal %&gt; creep
++(0) 0 EXIT  buggy_goal %&gt; creep
+
+yes.
+</PRE>
+
+<P>
+In tkeclipse, the debugger can also be started in this way. The tracer tool
+will popup at the appropriate predicate if it has not been invoked
+already. The <B>start_tracing</B> flag can also be set with the predicate
+browser tool.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3471"
+ HREF="node81.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3467"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3461"
+ HREF="node79.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3469"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3472"
+ HREF="node81.html">Using the Debugger via</A>
+<B> Up:</B> <A NAME="tex2html3468"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3462"
+ HREF="node79.html">Starting the Debugger</A>
+ &nbsp <B>  <A NAME="tex2html3470"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

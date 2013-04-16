@@ -1,0 +1,62 @@
+
+linearize(?Expression, -Linear, -Residue)
+
+   Split and arithmetic expression into linear and nonlinear parts
+
+Arguments
+   Expression          Arithmetic expression with constants and variables
+   Linear              Normalized lists of monomials
+   Residue             Residual nonlinear components in the form AuxVar=Expr
+
+Type
+   library(linearize)
+
+Description
+	The linear component of expression is normalised into a list
+	(sum) of monomials of the form
+
+		[C0*1, C1*X1, C2*X2, ...]
+
+	where Ci are numbers and Xi are distinct variables.
+	The first (constant) term is always present, Ci (i>=1) are nonzero.
+
+	linearize/3 converts a general arithmetic expression into a
+	normalised linear form. The nonlinear parts are extracted using
+	auxiliary variables, and returned as Residue, which is a list of
+	Aux=NonLinExpr constraints.
+
+	linearize/3 understands all arithmetic expressions plus
+
+	    lin(Lin)
+
+	where Lin is an already normalised linear expression. All variables
+	within Expression (which are free at linearization time) are taken
+	to be numerical variables. If you intend to have variables which can
+	be bound to symbolic expressions rather than numbers, they must be
+	wrapped into an eval/1 functor.
+    
+
+Examples
+   
+    ?- linearize(3*X-7*Y+2*(X+Y), L, R).
+    X = X
+    Y = Y
+    L = [0 * 1, 5 * X, -5 * Y]
+    R = []
+    yes.
+
+    ?- linearize(12*3, L, R).
+    L = [36 * 1]
+    R = []
+    yes.
+
+    ?- linearize(X*(3+7*Y)-X, L, R).
+    Y = Y
+    X = X
+    L = [0 * 1, 1 * _308, 2 * X]
+    R = [_308 = X * (7 * Y)]
+    yes.
+    
+
+See Also
+   polynorm / 3, linrenorm / 2, delinearize / 2

@@ -1,0 +1,8 @@
+:- module(mercury).
+:- export report_lookup_error / 3.
+:- export error / 1.
+:- comment(summary, "Mercury compatibility predicates.").
+:- comment(author, "Warwick Harvey").
+:- comment(desc, html("\t<P>\n\tThis module provides (a few) Mercury compatibility predicates,\n\tuseful for when porting Mercury modules to ECLiPSe.\n\t</P>\n\t")).
+:- comment(error / 1, [amode : error(++), args : ["Message" : "A string giving the error message to display"], summary : "Abort, printing an error message.", fail_if : "Never fails.", resat : no, desc : html("\t<P>\n\tCorresponds to Mercury's require:error/1 predicate.\n\t</P>\n\t")]).
+:- comment(report_lookup_error / 3, [amode : report_lookup_error(++, ++, ?), args : ["Message" : "A string giving the error message to display", "Key" : "The key that wasn't found", "Value" : "The corresponding value, if supplied"], summary : "Report a lookup error and abort.", fail_if : "Never fails.", resat : no, desc : html("\t<P>\n\tCorresponds to Mercury's require:report_lookup_error/3 predicate.\n\t</P>\n\t")]).

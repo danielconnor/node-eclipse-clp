@@ -1,0 +1,39 @@
+
+bag_erase(+BagHandle)
+
+   Erase the contents of a bag
+
+Arguments
+   BagHandle           A bag handle
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+	This explicitly erases the contents of a previously created
+	bag object and frees the associated memory. After erasing,
+	the bag is in the same state as immediately after creation,
+	and can be filled with new contents.
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- BagHandle is not instantiated
+     5 --- BagHandle is not a bag
+    40 --- BagHandle refers to an already destroyed bag
+
+Examples
+   
+    ?- bag_create(B), bag_enter(B, one), bag_erase(B), bag_enter(B, two), bag_retrieve(B, L).
+    B = 'BAG'(16'0030db60)
+    L = [two]
+    Yes (0.00s cpu)
+    
+
+See Also
+   bag_create / 1, bag_abolish / 1, bag_enter / 2, bag_count / 2, bag_retrieve / 2, bag_dissolve / 2

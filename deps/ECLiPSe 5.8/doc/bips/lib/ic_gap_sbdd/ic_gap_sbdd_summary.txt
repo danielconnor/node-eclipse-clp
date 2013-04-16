@@ -1,0 +1,4 @@
+lib(ic_gap_sbdd)
+
+   GAP-based Symmetry Breaking via Dominance Detection (SBDD)
+

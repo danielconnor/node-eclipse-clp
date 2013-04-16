@@ -1,0 +1,9 @@
+
+all_disjoint(+Sets)
+
+   Sets is a list of integers sets which are all disjoint
+
+Type
+   library(fd_sets)
+
+

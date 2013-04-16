@@ -1,0 +1,86 @@
+
+setval(+ElemSpec, ?Value)
+
+   Sets the value of a non-logical variable, array element, or reference to the value Value.
+
+Arguments
+   +ElemSpec           Atom (non-logical variable or reference) or fully instantiated compound term with positive integer arguments (array element specification).
+   ?Value              Prolog term.
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   If ElemSpec is the name of a visible non-logical variable, its
+   value gets set to a copy of the term value.  If there was no
+   variable visible from the caller module, a local non-logical
+   variable is created and its value is set.  The value of a
+   non-logical variable can be overwritten any number of times with
+   any data type, including a free variable. Values of non-logical
+   variables are copies of the original term and persist across failures.
+
+   If ElemSpec is a compound term, it must specify a visible array element:
+   all its argument must be non negative integers smaller than the bounds
+   specified with array/1 or array/2.
+   If the array has been created with array/2, then Value is restricted
+   to the type given in the declaration; otherwise Value can have any type,
+   including a free variable.  Its value can be overwritten any number of times.
+   Values of non-logical arrays are copies of the original term and persist
+   across failures.
+
+   If ElemSpec is the name of a visible reference, its value will be set
+   to the term value.  Unlike for non-logical variables, the value of a
+   reference is the original term, not a copy. Setting the value of a
+   reference is undone on backtracking, i.e. the value of the reference
+   reverts to what it was before being changed.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- ElemSpec is not ground
+     4 --- ElemSpec is of an array of type integer, float or byte and Value is not instantiated
+     5 --- the type of Value is not of the declared type of ElemSpec.
+     5 --- ElemSpec is a structure whose arguments are not all integers.
+     5 --- ElemSpec is neither an atom nor a ground structure.
+     6 --- Array index in ElemSpec is out of bounds.
+    41 --- ElemSpec is an element of an array which does not exist.
+
+Examples
+   
+Success:
+      local(array(a(4,3))),
+          setval(a(0,0), 2),
+          setval(a(1,2), "string"),
+          % overwrite a(0,0) (= 2) with a free variable
+          setval(a(0,0), X).
+      local(array(a(4), float)),
+          setval(a(0), 2.0),
+          setval(a(3), -19.6).
+      setval(i, 4).
+      setval(j, 4),
+           setval(j, "string data").
+
+Error:
+      setval(A, 2.0).            (Error 4).
+      setval(a(V), 2.0).         (Error 4).
+      setval(a(1.0), 2).         (Error 5).
+      setval("b(0)", 2.0).       (Error 5).
+      local(array(a(4))),
+          setval(a(-2), 2).      (Error 6).
+      local(array(a(9), integer)),
+          setval(a(9), 4).       (Error 6).
+      setval(no_array(1), 2.0).  (Error 41).
+
+
+
+
+
+See Also
+   decval / 1, erase_array / 1, incval / 1, array / 1, array / 2, variable / 1, getval / 2

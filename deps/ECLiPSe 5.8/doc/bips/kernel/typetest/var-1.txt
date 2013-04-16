@@ -1,0 +1,55 @@
+
+var(?Var)
+
+   Succeeds if Var is a variable or an attributed variable.
+
+
+
+Arguments
+   ?Var                Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Var is a variable or an attributed variable.  The
+   difference between var/1 and free/1 is that var/1 succeeds on attributed
+   variables as well.
+
+
+   var/1 could be defined as
+
+
+
+    var(X) :- free(X).
+    var(X) :- meta(X).
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Var is instantiated.
+
+
+
+Examples
+   
+Success:
+      var(X).
+      var(_abc).
+      var(_).
+      var(X{a}).
+      suspend:(X>0), var(X).
+
+Fail:
+      var(atom).
+      var('Abc').
+
+
+
+
+
+See Also
+   free / 1, meta / 1, nonground / 1, nonvar / 1, type_of / 2

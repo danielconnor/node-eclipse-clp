@@ -1,0 +1,9 @@
+
+heap_size(+Heap, ?Size)
+
+   reports the number of elements currently in the heap
+
+Type
+   library(heaps)
+
+

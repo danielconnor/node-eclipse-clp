@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Shelves</TITLE>
+<META NAME="description" CONTENT="Shelves">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node55.html">
+<LINK REL="previous" HREF="node53.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node55.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3055"
+ HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3051"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3045"
+ HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3053"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3056"
+ HREF="node55.html">Stores</A>
+<B> Up:</B> <A NAME="tex2html3052"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3046"
+ HREF="node53.html">Bags</A>
+ &nbsp <B>  <A NAME="tex2html3054"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00930000000000000000">
+Shelves</A>
+</H1>
+
+<P>
+<A NAME="4895"></A>
+A <B>shelf</B> is an anonymous object which can be used to store information
+across failures.  A typical application is counting of solutions,
+keeping track of the best solution, aggregating information across
+multiple solutions etc. 
+
+<P>
+A shelf is an object with multiple slots whose contents survive
+backtracking.  The content of each slot can be set and retrieved
+individually, or the whole shelf can be retrieved as a term. 
+
+<P>
+Shelves are referred to by handle, not by name, so they make it easy
+to write robust, reentrant code.  A shelf disappears when the system
+backtracks over its creation, when the shelf handle gets garbage
+collected, or when it is explicitly destroyed. 
+
+<P>
+A shelf is initialised using
+<A NAME="tex2html617"
+ HREF="../bips/kernel/arrays/shelf_create-2.html">shelf_create/2</A><A NAME="5122"></A> or
+<A NAME="tex2html619"
+ HREF="../bips/kernel/arrays/shelf_create-3.html">shelf_create/3</A><A NAME="5125"></A>.
+Data is stored in the slots (or the shelf as a whole) with
+<A NAME="tex2html621"
+ HREF="../bips/kernel/arrays/shelf_set-3.html">shelf_set/3</A><A NAME="5128"></A>
+and retrieved with
+<A NAME="tex2html623"
+ HREF="../bips/kernel/arrays/shelf_get-3.html">shelf_get/3</A><A NAME="5131"></A>.
+
+<P>
+Example: Counting how many solutions a goal has:
+<PRE>
+    count_solutions(Goal, Total) :-
+        shelf_create(count(0), Shelf),
+        (
+            call(Goal),
+            shelf_get(Shelf, 1, Old),
+            New is Old + 1,
+            shelf_set(Shelf, 1, New),
+            fail
+        ;
+            shelf_get(Shelf, 1, Total)
+        ).
+</PRE>
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

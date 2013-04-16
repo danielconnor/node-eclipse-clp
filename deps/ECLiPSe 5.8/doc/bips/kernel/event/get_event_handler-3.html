@@ -1,0 +1,48 @@
+<HTML><HEAD><TITLE>get_event_handler(+Event, ?Predspec, ?Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_event_handler(+Event, ?Predspec, ?Module)</H1>
+Returns the event handler for event/error Event and its home module Module.
+<DL>
+<DT><EM>Event</EM></DT>
+<DD>atom or integer.
+</DD>
+<DT><EM>Predspec</EM></DT>
+<DD>term which unifies with atom/integer.
+</DD>
+<DT><EM>Module</EM></DT>
+<DD>atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Given the event name/error number Event, Predspec is unified with the specification
+   (i.e.  a term of the form name/arity) of the current handler for 
+   event; Module is unified with its home module.
+
+<p>
+   The events which exist are user defined; the errors which exist are
+   implementation defined. 
+
+
+<p>
+
+<H3>Fail Conditions</H3>
+   fails if Event is not an event.
+ fails if Predspec or Module do not unify with the
+	specification of the
+   current event handler for Event.
+
+
+<H3>Resatisfiable</H3>
+   no.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Event is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Event is not an atom nor integer.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is neither a variable nor of the form Atom/Integer.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>
+</BODY></HTML>

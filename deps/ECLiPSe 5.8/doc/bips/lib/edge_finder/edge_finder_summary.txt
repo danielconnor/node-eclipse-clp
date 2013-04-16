@@ -1,0 +1,4 @@
+lib(edge_finder)
+
+   Quadratic edge-finder algorithm for disjunctive and cumulative constraints for FD
+

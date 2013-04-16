@@ -1,0 +1,54 @@
+
+cd(+Directory)
+
+   Directory is made the current working directory.  Equivalent to
+set_flag(cwd, Directory).
+
+
+
+Arguments
+   +Directory          Atom or string of any form acceptable to the operating                system.
+
+Type
+   Operating System
+
+Description
+   Changes the current working directory to Directory.  Directory may be an
+   absolute or relative pathname.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Directory is not instantiated.
+     5 --- Directory is neither an atom nor a string.
+   170 --- Directory doesn't exist.
+
+Examples
+   
+Success:
+      cd(workdir).
+      cd("workdir").
+      cd('/home/lp/user/workdir').
+      cd('..').
+      cd('../workdir').
+
+Error:
+      cd(Dir).                    (Error 4).
+      cd(20).                     (Error 5).
+      cd('nonexist').             (Error 170).
+
+
+
+
+
+See Also
+   getcwd / 1, set_flag / 2

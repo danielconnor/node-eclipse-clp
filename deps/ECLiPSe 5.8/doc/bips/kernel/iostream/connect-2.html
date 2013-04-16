@@ -1,0 +1,84 @@
+<HTML><HEAD><TITLE>connect(+Stream, +Address)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>connect(+Stream, +Address)</H1>
+Connects a socket with the given address.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Atom or integer.
+</DD>
+<DT><EM>+Address</EM></DT>
+<DD>Atom, integer or structure.
+</DD>
+</DL>
+<H2>Description</H2>
+   connect/2 is a direct link to the connect(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3.
+   If the socket was created in the unix domain, Address must be an atom
+   which identifies the file associated with the socket.  If Address is 0
+   and socket type is datagram, the socket is disconnected.
+
+<P>
+   If the socket is in the internet domain, the address is in the form
+   HostName/Port, where the atom HostName denotes the host to be connected
+   on the given integer port Port.  If Address is 0/0 and socket type is
+   datagram, the socket is disconnected.
+
+<P>
+   Every socket communication in ECLiPSe requires at least one of every two
+   communicating processes to call connect/2, because system calls to
+   perform direct datagram addressing are not available.  The socket
+   connection can be queried with get_stream_info(s, connection, C).
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+   Datagram sockets require a connect/2 call from the process that wants to
+   write on the socket and bind/2 from the one that reads from it.
+
+<P>
+   If a system interface error (170) is raised while calling connect/2, the
+   socket will be automatically closed. This is to get around a problem
+   where the connect(2) system call can leave the socket in an incorrect
+   state on some operating systems. 
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Address is HostName/Port and HostName does not unify with the
+   name of the host machine.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream or Address is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an atom or an integer.
+<DT><EM>(5) type error </EM>
+<DD>Address is instantiated but not to the form accepted by the    socket domain.
+<DT><EM>(6) out of range </EM>
+<DD>Address is a nonzero integer.
+<DT><EM>(170) system interface error </EM>
+<DD>It was not possible to connect the socket.
+</DL>
+<H2>Examples</H2>
+<PRE>Success:
+
+Error:
+      bind(s, Host/p)               (Error 5).
+      bind(s, '/usr/bin')           (Error 170).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/socket-3.html">socket / 3</A>, <A HREF="../../kernel/iostream/listen-2.html">listen / 2</A>, <A HREF="../../kernel/iostream/accept-3.html">accept / 3</A>, <A HREF="../../kernel/iostream/connect-2.html">connect / 2</A>, <A HREF="../../kernel/iostream/current_stream-1.html">current_stream / 1</A>, <A HREF="../../kernel/iostream/get_stream_info-3.html">get_stream_info / 3</A>
+</BODY></HTML>

@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>write_canonical(?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>write_canonical(?Term)</H1>
+The term Term is written on the stream output in a form that ignores
+operator declarations and can be read in.
+
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to write the term Term in a form that can be read back independent
+   of the current operator declarations.  Atoms and strings are quoted,
+   operator declarations are ignored, lists are printed as ./2 structures,
+   the (stream-specific or global) print_depth flag is not taken into account,
+   variable attributes are printed, and variables are printed with unique
+   identifiers.
+
+<P>
+   write_canonical(S, Term) is equivalent to printf(S, "%MOQ.vDw", Term).
+
+<P>
+   Note that as usual, the output is buffered, so it may need to be flushed
+   either by closing the output stream, by writing again or by using
+   flush/1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   Equivalent to write_canonical(output, Term).
+   (see write_canonical/2 for details).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/write-1.html">write / 1</A>, <A HREF="../../kernel/ioterm/write-2.html">write / 2</A>, <A HREF="../../kernel/ioterm/writeq-1.html">writeq / 1</A>, <A HREF="../../kernel/ioterm/writeq-2.html">writeq / 2</A>, <A HREF="../../kernel/ioterm/write_canonical-2.html">write_canonical / 2</A>
+</BODY></HTML>

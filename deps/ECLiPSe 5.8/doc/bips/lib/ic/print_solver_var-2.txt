@@ -1,0 +1,23 @@
+
+print_solver_var(?Var, -Printed)
+
+   Returns a representation of the IC variable Var suitable for printing.
+
+Arguments
+   Var                 An IC variable (or IC attribute)
+   Printed             A printable representation of Var
+
+Type
+   library(ic)
+
+Description
+
+   The print handler for the IC attribute.  Returns a representation of the
+   IC variable (or attribute) Var suitable for printing, encoding the type
+   of the variable, the bounds, and any holes in the domain.
+
+
+Fail Conditions
+   Var is not an IC variable or attribute
+
+

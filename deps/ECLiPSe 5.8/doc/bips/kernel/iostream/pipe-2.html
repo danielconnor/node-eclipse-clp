@@ -1,0 +1,78 @@
+<HTML><HEAD><TITLE>pipe(?StreamIn, ?StreamOut)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>pipe(?StreamIn, ?StreamOut)</H1>
+Creates a pipe and two streams StreamIn and StreamOut to its read and write
+ends.
+
+
+<DL>
+<DT><EM>?StreamIn</EM></DT>
+<DD>Atom or variable.
+</DD>
+<DT><EM>?StreamOut</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Opens a pipe, i.e.  two streams, StreamIn for for reading and StreamOut
+   for writing, which are connected together.  This can be used, for
+   example, to temporarily store data instead of writing it to a file.
+
+<P>
+   Prolog data Data may be written using write( StreamOut,Data).  Note that
+   in order to read data using read/1,2, it must have been written in
+   Prolog term format (i.e.  ended with a period and a blank space
+   character).  Before reading is possible the output must be flushed with
+   the call flush(StreamOut).
+
+<P>
+   When instantiated, StreamIn and StreamOut can be symbolic stream names
+   (atom) or physical stream numbers (integer).
+
+<P>
+   Each stream can also be specified as sigio(Stream) (BSD systems only).
+   In this case a pipe is set up and in addition it is instructed to send
+   the signal io each time new data appears in it.  In this way it is
+   possible to set up an interrupt handler that reads the data from the
+   pipe and behaves as a lightweight consumer process.
+
+<P>
+   Note that when StreamIn is closed, writing to StreamOut will cause
+   signal 13.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Either StreamIn or StreamOut is instantiated, but not to an    atom or a sigio structure.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>StreamIn or StreamOut have wrong mode or are equal.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      pipe(a,b).
+
+      [eclipse]: pipe(in, out), printf(out, "a. %b", []), read(in, A).
+
+      A = a
+      yes.
+Error:
+      pipe(0,1).           (Error 5).
+      pipe(26.9,M).        (Error 5).
+      pipe(output, X).     (Error 193).
+      pipe(a, a).          (Error 193).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/open-3.html">open / 3</A>, <A HREF="../../kernel/iostream/open-4.html">open / 4</A>, <A HREF="../../kernel/iostream/close-1.html">close / 1</A>, <A HREF="../../kernel/iostream/get_stream_info-3.html">get_stream_info / 3</A>, <A HREF="../../kernel/iostream/select-3.html">select / 3</A>
+</BODY></HTML>

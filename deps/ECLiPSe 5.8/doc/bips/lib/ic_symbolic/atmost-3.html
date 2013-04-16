@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>atmost(++N, +List, ++Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_symbolic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>atmost(++N, +List, ++Value)</H1>
+Value occurs N times in List
+<DL>
+<DT><EM>N</EM></DT>
+<DD>integer
+</DD>
+<DT><EM>List</EM></DT>
+<DD>list of variables or domain values
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>domain value
+</DD>
+</DL>
+<H2>Description</H2>
+
+	Constrains its arguments such that Value occurs at most N times
+	in List.
+	This is implemented by mapping onto ic_global:atmost/3.
+	All list elements and Value must be variables or values of the
+	same domain.  If one or more of them are domain-less, they will
+	be given the same domain as the others.
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic_global/atmost-3.html">ic_global : atmost / 3</A>
+</BODY></HTML>

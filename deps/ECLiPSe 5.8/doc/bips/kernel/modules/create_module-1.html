@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>create_module(+Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Modules</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>create_module(+Module)</H1>
+Create a module at runtime
+<DL>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   create_module/1 creates the given module if it does not exist yet.
+   If the module already exists, an exception is raised (error 97).
+<P>
+   Note that modules are normally created by the compiler when it
+   encounters a module/1 directive.  The create_module/1 predicate
+   however creates modules dynamically at runtime.  The intended
+   applications are therefore mainly source processing tools, e.g.
+   compilers and loaders, or programs that need a clean name space
+   to store code and data.
+<P>
+   Note that the created module will by default import the language
+   module <CODE>eclipse_language</CODE>.  To create a completely empty
+   module, use the more general predicate create_module/3.  In fact, 
+   create_module/1 is defined as
+<PRE>
+   create_module(Module) :-
+       create_module(Module, [], eclipse_language).
+</PRE>
+   The system does not allow the atom [] to be used as a module name!
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom, or Module is the atom [].
+<DT><EM>(97) module already exists </EM>
+<DD>Module already exists.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse 1]: create_module(m).
+    yes.
+    [eclipse 2]: export(data/1)@m.
+    yes.
+    [eclipse 3]: compile_term(data(99))@m.
+    yes.
+    [eclipse 4]: m:data(X).
+
+    X = 99
+    yes.
+    [eclipse 5]: erase_module(m).
+    yes.
+
+Error:
+    create_module(M).                   (Error 4).
+    create_module(1).                   (Error 5).
+    create_module(m), create_module(m). (Error 97).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/module-1.html">module / 1</A>, <A HREF="../../kernel/modules/create_module-3.html">create_module / 3</A>, <A HREF="../../kernel/modules/erase_module-1.html">erase_module / 1</A>, <A HREF="../../kernel/modules/get_module_info-3.html">get_module_info / 3</A>, <A HREF="../../kernel/modules/current_module-1.html">current_module / 1</A>
+</BODY></HTML>

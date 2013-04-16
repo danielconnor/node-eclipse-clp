@@ -1,0 +1,51 @@
+
+put(+Ascii)
+
+   The character represented by the ascii integer Ascii is put onto the
+buffered current output.
+
+
+
+Arguments
+   +Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the buffered current output.
+
+
+   The output from put/1 is buffered first, and is only output to the
+   screen when the output is flushed e.g.when returning to the ECLiPSe
+   prompt or explicitly using flush(1)..
+
+
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Ascii is not instantiated.
+     5 --- Ascii is instantiated, but not to an integer.
+
+Examples
+      Equivalent to put(output, Ascii).  (see put/2 for details).
+
+
+
+
+
+See Also
+   get / 1, get / 2, put / 2

@@ -1,0 +1,21 @@
+
+?ExprX #> ?ExprY
+
+   ExprX is strictly greater than ExprY (with integrality constraints).
+
+Arguments
+   ExprX               Integer arithmetic expression
+   ExprY               Integer arithmetic expression
+
+Type
+   library(ic)
+
+Description
+
+   Constrains ExprX to be greater than ExprY.  Also constrains all variables
+   appearing in ExprX and ExprY to be integral and checks that all constants
+   are integers.
+
+
+See Also
+   #< / 2, #=< / 2, #= / 2, #>= / 2, #\= / 2, > / 2, #> / 3, suspend : #> / 2, fd : #> / 2

@@ -1,0 +1,148 @@
+<HTML><HEAD><TITLE>get_flag(+PredSpec, ?Flag, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_flag(+PredSpec, ?Flag, ?Value)</H1>
+Succeeds if the flag Flag of the procedure specified by PredSpec has the
+value Value.
+
+
+<DL>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Expression of the form Atom/Integer.
+</DD>
+<DT><EM>?Flag</EM></DT>
+<DD>Atom or variable.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Atom, integer, compound_term or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to get the value Value of the flag Flag of the procedure specified
+   by PredSpec.  The values of certain flags may be set using set_flag/3.
+   It can also be used to test if a procedure with a given functor exists
+   or has certain properties.
+
+<P>
+   The possible flags, their values and their meanings are:
+
+<P>
+<PRE>
+    Flags             Values        Description
+   ------------------------------------------------------
+    call_type         prolog,       predicate source
+                      external      language
+    debugged          on, off       compiled in
+                                    debugging mode
+    declared          on, off       predicate was
+                                    declared
+    defined           on, off       predicate code
+                                    exists
+    definition_module an atom       where the procedure
+                                    is defined
+    deprecated        on, off       predicate is deprecated,
+                                    warning on use
+    leash             stop,         see below
+                      print,
+                      notrace
+    mode              pred(Mode1,   the mode of the
+                      ...)          predicate
+    parallel          on, off       clauses may be exe-
+                                    cuted in parallel
+    priority          1..12         waking priority
+    skip              on, off       procedure will be
+                                    traced, but its
+                                    children will not
+    spy               on, off       procedure has a
+                                    spypoint
+    stability         static,       is the procedure
+                      dynamic       dynamic?
+    tool              on, off       tool property
+    type              built-in,     type of predicate
+                      user
+    visibility        local,        module scope
+                      exported,
+                      reexported,
+                      imported
+    source_file       an atom       the file where
+                                    defined
+    source_line       an integer    starting line
+                                    number in the file
+    source_offset     an integer    byte offset at
+                                    which the procedure
+                                    definition starts
+                                    in its source file
+</PRE>
+   The possible values of leash and their meanings are:
+
+<P>
+<PRE>
+   -----------------------------------------------------
+   | Values   Description                               |
+   |--------------------------------------------------  |
+   | stop     procedure ports are printed and the       |
+   |          debugger stops on them                    |
+   | print    procedure ports are printed and the       |
+   |          debugger does not stop on them            |
+   | notrace  procedure ports will not be shown, but    |
+   |          its childrens's ports will                |
+   -----------------------------------------------------|
+</PRE>
+
+<H3>Fail Conditions</H3>
+   Fails if the flag Flag of the procedure specified by PredSpec does not
+   have the value Value, if its value is unknown or if the procedure does
+   not exist.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredSpec is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not an expression of the form Atom/Integer.
+<DT><EM>(5) type error </EM>
+<DD>Flag is instantiated but not to an atom.
+<DT><EM>(5) type error </EM>
+<DD>Value is not an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: get_flag(member/2, F, V),
+            printf("%-20s%w\n", [F, V]), fail.
+
+    mode                member(?, ?)
+    call_type           prolog
+    debugged            off
+    declared            on
+    autoload            off
+    auxiliary           off
+    defined             on
+    leash               stop
+    skip                off
+    spy                 off
+    start_tracing       off
+    stability           static
+    tool                off
+    type                built_in
+    visibility          imported
+    priority            2
+    demon               off
+    parallel            off
+    definition_module   sepia_kernel
+
+Fail:
+    get_flag(true/0, defined, off).
+    get_flag(undef/0, F, V).
+Error:
+    get_flag(X, spy, on).           (Error 4).
+    get_flag("a", spy, on).         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/env/pred-1.html">pred / 1</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>, <A HREF="../../kernel/database/current_module_predicate-2.html">current_module_predicate / 2</A>
+</BODY></HTML>

@@ -1,0 +1,29 @@
+
+erase_module_templates
+
+   Erase all instrument template stores for a specific module.
+
+Arguments
+
+Type
+   library(instrument)
+
+Description
+
+   This predicate erases all templates of the calling module context, 
+   that are persisted in the global and file local template stores 
+   between successive calls to instrument/2 and instrument/3. 
+   The predicate is a tool and the templates of a module other than the 
+   current calling module context can be erased by invoking 
+   erase_module_templates@Module. To erase templates 
+   applicable to all modules, the atom every_module may be 
+   specified.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   No instrumentation templates exist for the calling module.
+
+See Also
+   erase_all_templates / 0, erase_file_templates / 1, instrument / 2, instrument / 3, library(instrument), struct(itemplate), defined_modules / 2

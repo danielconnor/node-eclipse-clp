@@ -1,0 +1,16 @@
+
+graph_is_acyclic(+Graph)
+
+   Succeeds iff the given graph has no cycles
+
+Arguments
+   Graph               a graph structure
+
+Type
+   library(graph_algorithms)
+
+Fail Conditions
+   No topological ordering exists, i.e. the graph is cyclic
+
+See Also
+   top_sort / 2, graph_cycles / 2

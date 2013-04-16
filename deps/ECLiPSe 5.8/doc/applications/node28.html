@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Iteration on terms</TITLE>
+<META NAME="description" CONTENT="Iteration on terms">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node29.html">
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node29.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html868"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html862"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html856"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html864"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html866"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html869"
+ HREF="node29.html">Iteration on array</A>
+<B> Up:</B> <A NAME="tex2html863"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html857"
+ HREF="node27.html">Iteration on lists</A>
+ &nbsp <B>  <A NAME="tex2html865"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html867"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html870"
+ HREF="node28.html#SECTION00640010000000000000">Description</A>
+<LI><A NAME="tex2html871"
+ HREF="node28.html#SECTION00640020000000000000">Parameters</A>
+<LI><A NAME="tex2html872"
+ HREF="node28.html#SECTION00640030000000000000">Schema</A>
+<LI><A NAME="tex2html873"
+ HREF="node28.html#SECTION00640040000000000000">Comments</A>
+<LI><A NAME="tex2html874"
+ HREF="node28.html#SECTION00640050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00640000000000000000">
+Iteration on terms</A>
+</H1>
+
+<H4><A NAME="SECTION00640010000000000000"></A>
+<A NAME="523"></A>
+<BR>
+Description
+</H4>We can iterate not only over all elements of a list, as in the previous concept, but also over all arguments of a term. Obviously, this only makes sense if all arguments of the term are of a similar type i.e. the term is used as a <I>vector</I><A NAME="525"></A>. The <I>foreacharg</I><A NAME="527"></A> keyword of the <I>do</I> loop iterates over each argument of a term.
+
+<H4><A NAME="SECTION00640020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>T</STRONG>
+<DD>a term
+</DL>
+<H4><A NAME="SECTION00640030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode iteration(+).
+iteration(T):-
+        (foreacharg(X,T) do
+            q(X)
+        ).
+</PRE>
+<H4><A NAME="SECTION00640040000000000000">
+Comments</A>
+</H4>
+We can use multiple <I>foreacharg</I> keywords to scan multiple vectors at the same time, but we cannot use <I>foreacharg</I> to create terms<A NAME="538"></A> (we do not know the functor of the term). If we want to create a new term, we have to generate it with the right functor and arity before the <I>do</I> loop. The following code segment performs vector addition<A NAME="540"></A> <!-- MATH: $\vec{C} = \vec{A}+ \vec{B}$ -->
+.
+<A NAME="544"></A>
+<PRE>
+:-mode vector_add(+,+,-).
+vector_add(A,B,C):-
+        functor(A,F,N),
+        functor(C,F,N),
+        (foreacharg(X,A),
+         foreacharg(Y,B),
+         foreacharg(Z,C) do
+           Z is X + Y
+        ).
+</PRE>
+If the terms A and B do not have the same number of arguments, the predicate will fail.
+
+<H4><A NAME="SECTION00640050000000000000"></A>
+<A NAME="548"></A>
+<BR>
+Example
+</H4>
+<PRE>
+:-mode interface_mib_add(+,+,-).
+interface_mib_add(A,B,C):-
+        C = interface_mib with [],
+        (foreacharg(A1,A),
+         foreacharg(B1,B),
+         foreacharg(C1,C) do
+            C1 is A1 + B1
+        ).
+</PRE>
+This predicate adds vectors with the functor <I>interface_mib</I> and returns such a vector.
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html868"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html862"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html856"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html864"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html866"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html869"
+ HREF="node29.html">Iteration on array</A>
+<B> Up:</B> <A NAME="tex2html863"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html857"
+ HREF="node27.html">Iteration on lists</A>
+ &nbsp <B>  <A NAME="tex2html865"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html867"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>fail_if(+Goal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>fail_if(+Goal)</H1>
+Succeeds if Goal cannot be satisfied.  Uses negation as failure (synonym of
+not/1 and \+/1).
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Used to fail if Goal succeeds.  Uses the standard Prolog form of
+   negation as failure.
+
+<P>
+   To check whether a call Goal succeeds without binding variables, the
+   call fail_if( fail_if( Goal)) can be used.
+
+<P>
+   Not that !/0 does not cut through fail_if/1.  Unlike not/1 and \+/1,
+   fail_if/1 is a protected predicate and cannot be redefined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal succeeds.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      fail_if(fail).
+      fail_if(1 == 2).
+      fail_if(X == 1).
+      fail_if(fail_if(X = 1)).
+          % does not bind X
+
+Fail:
+      fail_if(X = 1).
+      fail_if(true).
+      fail_if(3 == 3).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/RP-1.html">\+ / 1</A>, <A HREF="../../kernel/control/not-1.html">not / 1</A>, <A HREF="../../kernel/control/T-1.html">~ / 1</A>
+</BODY></HTML>

@@ -1,0 +1,20 @@
+
+?ExprX $< ?ExprY
+
+   ExprX is strictly less than ExprY.
+
+Arguments
+   ExprX               Arithmetic expression
+   ExprY               Arithmetic expression
+
+Type
+   library(ic)
+
+Description
+
+   Constrains ExprX to be strictly less than ExprY.  Alternate form of
+   ic:(ExprX < ExprY).
+
+
+See Also
+   < / 2

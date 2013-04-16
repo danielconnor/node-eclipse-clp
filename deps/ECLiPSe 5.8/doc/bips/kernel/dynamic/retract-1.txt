@@ -1,0 +1,85 @@
+
+retract(+Clause)
+
+   Succeeds if a clause that unifies with Clause can be removed from the
+database.
+
+
+
+Arguments
+   +Clause             Atom or compound term
+
+Type
+   Dynamic Predicates
+
+Description
+   Removes the first clause that matches the argument from the database.
+   On backtracking, successive clauses that match are removed.  The clauses
+   are not reasserted when backtracking occurs through retract/1.
+
+
+   The functor of the head of Clause must be that of a predicate declared
+   as dynamic, otherwise an error occurs.  If no clause matches, it fails.
+
+
+   retract/1 satisfies the logical update semantics.  When retract/1 is
+   first called, it makes a virtual copy of the clauses that match and, on
+   backtracking, unifies its argument with them and removes them from the
+   database.  Any modifications made to the procedure after retract/1 has
+   started executing do not, in any way, affect its behaviour.  A
+   subsequent call, however, makes and uses a new, virtual, copy of the
+   modified database.
+
+
+
+
+Resatisfiable
+      Yes
+
+Fail Conditions
+      Fails if no dynamic clause unifies with Clause
+
+
+
+Exceptions
+     4 --- Clause is not instantiated
+     4 --- The head of Clause is a free variable.
+     5 --- Clause or the head of Clause is not a callable term.
+    63 --- Procedure is not dynamic
+    70 --- Procedure is undefined
+
+Examples
+   
+Success:
+    [eclipse]: assert(city(munich)), assert(city(london)),
+    assert((p :- write(hi), write(there))).
+
+    yes.
+    [eclipse]: retract(city(X)).
+
+    X = munich     More? (;)
+    yes.
+    [eclipse]: retract(city(X) :- Body).
+
+    X = london
+    Body = true
+    yes.
+    [eclipse]: retract(p :- Body).
+
+    Body = write(hi) , write(there)
+    yes.
+Fail:
+    assert(fact),retract(fact),retract(fact).
+
+Error:
+    retract(X).                            (Error 4).
+    retract("x").                          (Error 5).
+    retract(listing).                      (Error 63).
+    retract(undef).                        (Error 70).
+
+
+
+
+
+See Also
+   asserta / 1, dynamic / 1, listing / 1

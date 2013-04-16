@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>library(edge_finder3)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(edge_finder3)</H1>
+Cubic edge-finder algorithm for disjunctive and cumulative constraints for FD
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="cumulative-4.html"><STRONG>cumulative(+StartTimes, +Durations, +Resources, ++ResourceLimit)</STRONG></A></DT>
+<DD>Cumulative constraint on specified tasks.</DD>
+<DT><A HREF="cumulative-5.html"><STRONG>cumulative(+StartTimes, +Durations, +Resources, +Areas, ++ResourceLimit)</STRONG></A></DT>
+<DD>Cumulative constraint on specified tasks.</DD>
+<DT><A HREF="disjunctive-2.html"><STRONG>disjunctive(+StartTimes, +Durations)</STRONG></A></DT>
+<DD>Constraint the tasks with specified start times and durations do not overlap in time.</DD>
+<DT><STRONG>disjunctive_bools(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+    This library implements the cubic edge-finder algorithm for the
+    disjunctive and cumulative scheduling constraints for the FD solver.
+    It provides the strongest propagation of the three libraries for
+    cumulative constraints: cumulative, edge_finder and edge_finder3.
+    It is also computationally the most expensive.
+
+    Note that the same predicates are implemented in both edge_finder and
+    edge_finder3 libraries.
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2002/07/26 13:25:02 $
+</UL>
+<HR>Generated from edge_finder3.eci on Tue Jan 25 01:58:48 2005
+
+</BODY></HTML>

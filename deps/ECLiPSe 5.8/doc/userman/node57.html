@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Non-logical Arrays</TITLE>
+<META NAME="description" CONTENT="Non-logical Arrays">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node58.html">
+<LINK REL="previous" HREF="node56.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node58.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3091"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3087"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3081"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3089"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3092"
+ HREF="node58.html">Global References</A>
+<B> Up:</B> <A NAME="tex2html3088"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3082"
+ HREF="node56.html">Non-logical Variables</A>
+ &nbsp <B>  <A NAME="tex2html3090"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00960000000000000000"></A>
+<A NAME="4988"></A>
+<BR>
+Non-logical Arrays
+</H1>
+Non-logical arrays are a generalisation of the non-logical variable, capable of storing
+multiple values.
+Arrays have to be declared in advance.
+They have a fixed number of dimensions and a fixed size in each dimension.
+Arrays in ECLiPSe are managed solely by special predicates.
+In these predicates, arrays are represented by compound terms, e.g.
+<B>matrix(5, 8)</B>
+where <B>matrix</B> is the name of the array, the arity of 2 specifies
+the number of dimensions, and the integers 5 and 8 specify the size
+in each dimension. The number of elements this array can hold is 
+thus 5*8 = 40.
+The elements of this array can be addressed from <B>matrix(0,0)</B>
+up to <B>matrix(4,7)</B>.
+
+<P>
+An array must be explicitly created using a
+<A NAME="tex2html673"
+ HREF="../bips/kernel/modules/local-1.html">local/1</A><A NAME="5191"></A>
+<A NAME="tex2html675"
+ HREF="../bips/kernel/arrays/array-1.html">array/1</A><A NAME="5194"></A>
+declaration, e.g.<PRE>
+:- local array(matrix(5, 8)).
+</PRE>
+The array is only accessible from within the module where it was declared.
+The declaration will create a two-dimensional, 5-by-8 array with 40 elements
+matrix(0,0) to matrix(4, 7).
+Arrays can be  erased using the predicate
+<A NAME="tex2html677"
+ HREF="../bips/kernel/arrays/erase_array-1.html">erase_array/1</A><A NAME="5197"></A>, e.g.
+<A NAME="5004"></A><PRE>
+erase_array(matrix/2).
+</PRE>
+
+<P>
+The value of an element of the array is set using the <A NAME="tex2html680"
+ HREF="../bips/kernel/arrays/setval-2.html">setval/2</A><A NAME="5200"></A>
+<A NAME="5011"></A>
+predicate. The first argument of <A NAME="tex2html683"
+ HREF="../bips/kernel/arrays/setval-2.html">setval/2</A><A NAME="5203"></A> specifies the element which is
+to be set, the second specifies the value to assign to it.
+The goal<PRE>
+setval(matrix(3, 2), plato)
+</PRE>
+sets the value
+of element (3, 2) of array <TT>matrix</TT> to the atom <TT>plato</TT>.
+Similarly, values of array elements are retrieved by use of the <A NAME="tex2html685"
+ HREF="../bips/kernel/arrays/getval-2.html">getval/2</A><A NAME="5206"></A>
+<A NAME="5022"></A>
+predicate. The first argument of <A NAME="tex2html688"
+ HREF="../bips/kernel/arrays/getval-2.html">getval/2</A><A NAME="5209"></A> specifies the element to be
+referenced, the second is unified with the value of that element.
+Thus if the value of matrix(3, 2) had been set as above, the goal<PRE>
+getval(matrix(3, 2), Val)
+</PRE>
+would unify <TT>Val</TT> with the atom <TT>plato</TT>.
+Similarly to non-logical variables, the value of integer array elements
+can be updated using <A NAME="tex2html690"
+ HREF="../bips/kernel/arrays/incval-1.html">incval/1</A><A NAME="5212"></A> and <A NAME="tex2html692"
+ HREF="../bips/kernel/arrays/decval-1.html">decval/1</A><A NAME="5215"></A>.
+
+<P>
+It is possible to declare arrays whose elements are
+constrained to belong to certain types. This allows ECLiPSe to increase
+time and space efficiency of array element manipulation.
+Such an array is created for instance by the predicate<PRE>
+:- local array(primes(100),integer).
+</PRE>
+The second argument specifies the type of the elements of the array.
+It takes as value an atom from the
+list <TT>float</TT> (for floating point numbers),
+<TT>integer</TT> (for integers), <TT>byte</TT> (an integer modulo 256),
+or <TT>prolog</TT> (any Prolog term - the resulting array is the
+same as if no type was specified).
+When a typed array is created, the value of each element is initialised to zero
+in the case of <TT>byte</TT>, <TT>integer</TT> and <TT>float</TT>, and to
+an uninstantiated variable in the case of <TT>prolog</TT>.
+Whenever a typed array element is set, type checking is carried out.
+
+<P>
+As an example of the use of a typed array, consider the following goal, which
+creates a 3-by-3 matrix describing a 90 degree rotation about the x-axis of
+a Cartesian coordinate system.<PRE>
+:- local array(rotate(3, 3), integer).
+:- setval(rotate(0, 0), 1),
+   setval(rotate(1, 2), -1),
+   setval(rotate(2, 1), 1).
+</PRE>
+(The other elements of the above array are automatically initialised to zero).
+
+<P>
+The predicate <A NAME="tex2html694"
+ HREF="../bips/kernel/arrays/current_array-2.html">current_array/2</A><A NAME="5218"></A>
+<A NAME="5054"></A>
+is provided to find the size, type and visibility of defined arrays.
+of the array and its type to be found:
+<BLOCKQUOTE>
+<B>current_array(Array, Props)</B>
+
+</BLOCKQUOTE>
+where <I>Array</I> is the array specification as in the declaration (but it
+may be uninstantiated or partially instantiated), and <I>Props</I> is
+a list indicating the array's type and visibility.
+Non-logical variables are also returned, with <I>Array</I> being an atom and their
+type is <TT>prolog</TT>.<PRE>
+[eclipse 1]: local(array(pair(2))),
+        setval(count, 3),
+        local(array(count(3,4,5), integer)).
+
+yes.
+[eclipse 2]: current_array(Array, Props).
+
+Array = pair(2)
+Props = [prolog, local]     More? (;) 
+
+Array = count
+Props = [prolog, local]     More? (;) 
+
+Array = count(3, 4, 5)
+Props = [integer, local]     More? (;) 
+
+no (more) solution.
+[eclipse 3]: current_array(count(X,Y,Z), _).
+
+X = 3
+Y = 4
+Z = 5
+yes.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3091"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3087"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3081"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3089"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3092"
+ HREF="node58.html">Global References</A>
+<B> Up:</B> <A NAME="tex2html3088"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3082"
+ HREF="node56.html">Non-logical Variables</A>
+ &nbsp <B>  <A NAME="tex2html3090"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

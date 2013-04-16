@@ -1,0 +1,16 @@
+
+substitute_placeholders(+PageTemplate, +NameValuePairs, -Page)
+
+   Substitute placeholders in a html source with a value string
+
+Type
+   library(cgi)
+
+Description
+Takes a string (usually a html-source) with embedded
+    placeholders and replaces the placeholders by their value according
+    to the NameValuePairs argument. The syntax for placeholders is their
+    name enclosed in ^ (up arrow) characters.
+
+See Also
+   posted_params / 1, get_param_value / 3

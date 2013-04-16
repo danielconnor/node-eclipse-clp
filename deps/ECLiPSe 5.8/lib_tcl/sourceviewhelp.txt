@@ -1,0 +1,36 @@
+Summary of function
+===================
+
+Display the source of a selected predicate.
+
+Layout
+======
+
+This tool consists of:
+
+Source window: the source of the selected predicate is shown here, the
+  source is obtained from the file in which the predicate is defined.
+
+Refresh button: rereads the source file and redisplays the predicate. 
+
+Close button: closes the window
+
+
+Functionality
+=============
+
+A predicate can be selected from the predicate properties window or from
+the tracer tool. If show source is selected, then Tkeclipse tries to read 
+the file in which the predicate is defined, and attempts to find the
+predicate and displays it. It may not be able to do so because the
+predicate is not available in source form, or because tkeclipse was unable
+to locate it in the source file. 
+
+Refresh button
+--------------
+
+A predicate source can be changed because it has been edited since the
+source was displayed. Such changes are not automatically reflected in the
+source window, and the refresh button re-reads the source file to redisplay
+the predicate source.
+

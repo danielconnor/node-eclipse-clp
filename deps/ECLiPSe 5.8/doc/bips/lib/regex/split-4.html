@@ -1,0 +1,94 @@
+<HTML><HEAD><TITLE>split(+Pattern, +String, +Options, -Parts)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(regex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>split(+Pattern, +String, +Options, -Parts)</H1>
+Parts is a list of substrings, partitioning String according to Pattern
+<DL>
+<DT><EM>Pattern</EM></DT>
+<DD>A string (or a compiled pattern handle)
+</DD>
+<DT><EM>String</EM></DT>
+<DD>A string
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of atoms
+</DD>
+<DT><EM>Parts</EM></DT>
+<DD>Output: List of strings
+</DD>
+</DL>
+<H2>Description</H2>
+
+	This predicates always succeeds.
+	<P>
+    	Options is a (possibly empty) list of atomic option names,
+	as described in the library(regex) page.
+	<P>
+	Parts is bound to a list of strings which are consecutive substrings
+	of the input string String (i.e. concatenating this list using
+	concat_strings/2 will yield the original String). The list is
+	constructed such that it has an odd number of elements, where the
+	even numbered elements match the pattern, and the odd numbered
+	elements contains those portions of String that did not match
+	the Pattern. Some of these substrings may be empty.
+	<P>
+	This partitioning of the String can be used to construct a new
+	string with the matches replaced by something else. Use the
+	following code pattern:
+	<PRE>
+	    split(Pattern, String, Options, Parts),
+	    (
+		fromto(Parts, [NoMatch,Match|NMs], NMs, [Last]),
+		fromto(Repl,  [NoMatch,Subst|NSs], NSs, [Last])
+	    do
+		%%% compute Subst from Match here %%%
+	    ),
+	    concat_string(Repl, NewString),
+	</PRE>
+	<P>
+	Note that the split/4 predicate does not return any information about
+	matching (parenthesised) sub-expressions!
+    
+<H3>Fail Conditions</H3>
+None
+<H2>Examples</H2>
+<PRE>
+    ?- split("cad", "abracadabra", [], Parts).
+    Parts = ["abra", "cad", "abra"]
+    Yes (0.00s cpu)
+
+    ?- split("bra", "abracadabra", [], Parts).
+    Parts = ["a", "bra", "cada", "bra", ""]
+    Yes (0.00s cpu)
+
+    ?- split("bla", "abracadabra", [], Parts).
+    Parts = ["abracadabra"]
+    Yes (0.00s cpu)
+
+    ?- split("a", "aaa", [], Parts).
+    Parts = ["", "a", "", "a", "", "a", ""]
+    Yes (0.00s cpu)
+ 
+    ?- split("%[a-z]", "format %s %f=%d.", [], Parts).
+    Parts = ["format ", "%s", " ", "%f", "=", "%d", "."]
+    Yes (0.00s cpu)
+
+
+    % With the following definition
+    replace(Pattern, New, String, NewString) :-
+	split(Pattern, String, [], Parts),
+	(
+	    fromto(Parts, [NoMatch,_Match|NMs], NMs, [Last]),
+	    fromto(Repl,  [NoMatch, Subst|NSs], NSs, [Last]),
+	    param(New)
+	do
+	    Subst = New
+	),
+	concat_string(Repl, NewString).
+
+    ?- replace("2", "to", "2 be or not 2 be", S).
+    S = "to be or not to be"
+    Yes (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/regex/index.html">library(regex)</A>, <A HREF="../../lib/regex/matchall-4.html">matchall / 4</A>, <A HREF="../../lib/regex/compile_pattern-3.html">compile_pattern / 3</A>, <A HREF="../../kernel/stratom/concat_string-2.html">concat_string / 2</A>, <A HREF="../../kernel/stratom/split_string-4.html">split_string / 4</A>
+</BODY></HTML>

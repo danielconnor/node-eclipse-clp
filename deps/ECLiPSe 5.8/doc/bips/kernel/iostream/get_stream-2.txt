@@ -1,0 +1,69 @@
+
+get_stream(++StreamId, ??Stream)
+
+   Succeeds if Stream is the stream to which the stream StreamId is assigned.
+
+
+
+Arguments
+   +StreamId           Atom or integer.
+   ?Stream             Integer, atom or variable.
+
+Type
+   Stream I/O
+
+Description
+   StreamId is an existing symbolic or physical stream identifier.
+   If Stream is a variable, it will get bound to the physical stream number
+   corresponding to StreamId.  If Stream is an existing symbolic or physical
+   stream identifier, then the predicate succeeds iff StreamId and Stream
+   denote the same physical stream.
+
+
+   The predefined symbolic system stream names are:
+
+
+   input, output, error, warning_output, log_output,
+   stdin, stdout, stderr, null
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Stream is not a stream with the stream identifier StreamId.
+
+
+
+Exceptions
+     4 --- One or both of StreamId and Stream is not instantiated.
+     5 --- Stream is neither an atom, an integer nor a variable.
+     5 --- StreamId is neither an atom nor an integer.
+   193 --- StreamId is an illegal stream specification.
+
+Examples
+   
+Success:
+      [eclipse]: get_stream(input,X).
+      X = 0
+      yes.
+
+      [eclipse]: set_stream(a,input), get_stream(input,a), get_stream(a,input).
+      yes.
+
+Fail:
+      set_stream(b,4), get_stream(b, 10).
+
+Error:
+      get_stream(Id, S).      (Error 4).
+      get_stream(1.0,S).      (Error 5).
+      get_stream(3, S).       (Error 5).
+      get_stream(blah,S).     (Error 193). % does not exist
+
+
+
+
+
+See Also
+   set_stream / 2

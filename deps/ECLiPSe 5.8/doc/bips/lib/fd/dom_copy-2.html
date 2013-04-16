@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>dom_copy(+Dom1, -Dom2)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dom_copy(+Dom1, -Dom2)</H1>
+Dom2 is a copy of the domain Dom1.
+
+
+<DL>
+<DT><EM>+Dom1</EM></DT>
+<DD>A finite domain.
+</DD>
+<DT><EM>-Dom2</EM></DT>
+<DD>A variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Dom2 is a copy of the domain Dom1.  Since the updates are done in-place,
+   two domain variables must not share the same physical domain and so when
+   defining a new variable with an existing domain, the domain has to be
+   copied first.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/dom_compare-3.html">dom_compare / 3</A>, <A HREF="../../lib/fd/dom_member-2.html">dom_member / 2</A>, <A HREF="../../lib/fd/dom_range-3.html">dom_range / 3</A>, <A HREF="../../lib/fd/dom_size-2.html">dom_size / 2</A>, <A HREF="../../lib/fd/dvar_domain-2.html">dvar_domain / 2</A>
+</BODY></HTML>

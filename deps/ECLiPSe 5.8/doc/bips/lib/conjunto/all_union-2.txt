@@ -1,0 +1,50 @@
+
+all_union(?Lsets, ?Svar)
+
+   Lsets is a list of set domain variables whose union is the set term Svar.
+
+
+
+Arguments
+   ?Lsets              A list of set domain variables.
+   ?Svar               A free variable or a set variable.
+
+Type
+   library(conjunto)
+
+Description
+   Svar is the union of all the set variables appearing in Lsets.  If Svar
+   is a free variable, it becomes a set variable and its attached domain is
+   defined from the union of the domains or known sets appearing in Lsets.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if some elements of Lsets are not set variables and if Svar can
+   not be the union of the Lsets elements.
+
+
+
+Examples
+   
+[eclipse 13]: S `:: {}.. {1,2,3,5}, S1 `:: {1} .. {1,2,3,4},
+all_union([S, S1],{1,2,3,4,5}).
+
+S = S{{5} .. {1, 2, 3, 5}}
+S1 = S1{{1, 4} .. {1, 2, 3, 4}}
+
+Delayed goals:
+        ground_union(S{{5} .. {1, 2, 3, 5}},
+S1{{1, 4} .. {1, 2, 3, 4}}, {1, 2, 3, 4, 5})
+yes.
+
+
+
+
+
+See Also
+   `:: / 2, `= / 2, `<> / 2, all_disjoint / 1

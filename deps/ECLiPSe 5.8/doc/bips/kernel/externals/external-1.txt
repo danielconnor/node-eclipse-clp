@@ -1,0 +1,81 @@
+
+external(+PredSpec)
+
+   Declares PredSpec to be a deterministic external predicate.
+
+
+
+Arguments
+   +PredSpec           Of the form Atom/Integer (predicate name/arity).
+
+Type
+   External Interface
+
+Description
+   Declares the (may be not yet visible) predicate PredSpec to be a
+   deterministic external predicate.
+
+
+   This declaration is needed to compile calls to an external predicate
+   before it is actually defined with external/2.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- PredSpec is not instantiated.
+     5 --- PredSpec is not of the form Atom/Integer.
+    62 --- A call to PredSpec has already been compiled as a Prolog    call or a non-deterministic external call.
+
+Examples
+   
+Success:
+
+   % compiling a call to an external before its definition (see description
+   % of external/2 for detail on creating external predicates).
+      [eclipse]: [user].
+       :- import prmsg/1 from msg_lib.
+       :- external(prmsg/1). % declare its call_type
+       hello :- prmsg("hello").
+       user      compiled 216 bytes in 0.03 seconds
+
+   % definition of sines/2 will not raise an inconsistent type definition
+   % thanks to the proper declaration above.
+      [eclipse]: sh("cat msg_lib.pl").
+      :- module(msg_lib).
+      :- load('msg.o', "-lm"). % see example in external/2
+      :- external(prmsg/1, p_prmsg).
+      :- export prmsg/1.
+
+      yes
+      [eclipse]: [msg_lib].
+       msg_lib.pl      compiled 0 bytes in 0.18 seconds
+      yes.
+      [eclipse]: hello.
+      message: hello
+      yes.
+
+Error:
+      external(PredSpec).            (Error 4).
+      external("p/0").               (Error 5).
+
+      [eclipse]: [user].
+       p :- a.
+       user   compiled 32 bytes in 0.00 seconds
+      yes.
+      [eclipse]: external(a/0).        (Error 62).
+
+
+
+
+
+See Also
+   external / 2, load / 1

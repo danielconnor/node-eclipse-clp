@@ -1,0 +1,92 @@
+
+split(+Pattern, +String, +Options, -Parts)
+
+   Parts is a list of substrings, partitioning String according to Pattern
+
+Arguments
+   Pattern             A string (or a compiled pattern handle)
+   String              A string
+   Options             List of atoms
+   Parts               Output: List of strings
+
+Type
+   library(regex)
+
+Description
+
+	This predicates always succeeds.
+	
+    	Options is a (possibly empty) list of atomic option names,
+	as described in the library(regex) page.
+	
+	Parts is bound to a list of strings which are consecutive substrings
+	of the input string String (i.e. concatenating this list using
+	concat_strings/2 will yield the original String). The list is
+	constructed such that it has an odd number of elements, where the
+	even numbered elements match the pattern, and the odd numbered
+	elements contains those portions of String that did not match
+	the Pattern. Some of these substrings may be empty.
+	
+	This partitioning of the String can be used to construct a new
+	string with the matches replaced by something else. Use the
+	following code pattern:
+	
+	    split(Pattern, String, Options, Parts),
+	    (
+		fromto(Parts, [NoMatch,Match|NMs], NMs, [Last]),
+		fromto(Repl,  [NoMatch,Subst|NSs], NSs, [Last])
+	    do
+		%%% compute Subst from Match here %%%
+	    ),
+	    concat_string(Repl, NewString),
+	
+	
+	Note that the split/4 predicate does not return any information about
+	matching (parenthesised) sub-expressions!
+    
+
+Fail Conditions
+   None
+
+Examples
+   
+    ?- split("cad", "abracadabra", [], Parts).
+    Parts = ["abra", "cad", "abra"]
+    Yes (0.00s cpu)
+
+    ?- split("bra", "abracadabra", [], Parts).
+    Parts = ["a", "bra", "cada", "bra", ""]
+    Yes (0.00s cpu)
+
+    ?- split("bla", "abracadabra", [], Parts).
+    Parts = ["abracadabra"]
+    Yes (0.00s cpu)
+
+    ?- split("a", "aaa", [], Parts).
+    Parts = ["", "a", "", "a", "", "a", ""]
+    Yes (0.00s cpu)
+ 
+    ?- split("%[a-z]", "format %s %f=%d.", [], Parts).
+    Parts = ["format ", "%s", " ", "%f", "=", "%d", "."]
+    Yes (0.00s cpu)
+
+
+    % With the following definition
+    replace(Pattern, New, String, NewString) :-
+	split(Pattern, String, [], Parts),
+	(
+	    fromto(Parts, [NoMatch,_Match|NMs], NMs, [Last]),
+	    fromto(Repl,  [NoMatch, Subst|NSs], NSs, [Last]),
+	    param(New)
+	do
+	    Subst = New
+	),
+	concat_string(Repl, NewString).
+
+    ?- replace("2", "to", "2 be or not 2 be", S).
+    S = "to be or not to be"
+    Yes (0.00s cpu)
+    
+
+See Also
+   library(regex), matchall / 4, compile_pattern / 3, concat_string / 2, split_string / 4

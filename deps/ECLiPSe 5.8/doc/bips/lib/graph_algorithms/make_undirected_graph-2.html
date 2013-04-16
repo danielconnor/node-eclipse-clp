@@ -1,0 +1,21 @@
+<HTML><HEAD><TITLE>make_undirected_graph(+DirectedGraph, -UndirectedGraph)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>make_undirected_graph(+DirectedGraph, -UndirectedGraph)</H1>
+Creates an undirected from a directed graph
+<DL>
+<DT><EM>DirectedGraph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>UndirectedGraph</EM></DT>
+<DD>will be bound to a graph structure
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Creates an undirected graph from a directed graph by adding reverse
+    edges for every existing edge. Moreover, all loops (edges from S to S)
+    are removed from the undirected graph.
+    </P>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/graph_is_bidirected-1.html">graph_is_bidirected / 1</A>
+</BODY></HTML>

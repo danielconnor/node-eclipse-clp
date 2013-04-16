@@ -1,0 +1,10 @@
+
+hash_next(+Iter0,-Key,-Value,-Iter1)
+
+   Get the next Key - Value pair according to the iterator
+
+Type
+   library(hash)
+
+See Also
+   hash_iter / 2, hash_last / 1, hash_list / 3

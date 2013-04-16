@@ -1,0 +1,31 @@
+
+dom_member(?Element, +Dom)
+
+   Element is in the domain Dom.
+
+
+
+Arguments
+   ?Element            A Prolog term.
+   +Dom                A finite domain.
+
+Type
+   library(fd)
+
+Description
+   Successively instantiate Element to the values in the domain Dom
+   (similar to indomain/1).
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dom_check_in / 2, indomain / 1

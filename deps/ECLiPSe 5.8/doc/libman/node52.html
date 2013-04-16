@@ -1,0 +1,487 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Extended CHR Implementation</TITLE>
+<META NAME="description" CONTENT="The Extended CHR Implementation">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="previous" HREF="node51.html">
+<LINK REL="up" HREF="node43.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1602"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1598"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1594"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1600"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1603"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Up:</B> <A NAME="tex2html1599"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1595"
+ HREF="node51.html">Debugging CHR Programs</A>
+ &nbsp <B>  <A NAME="tex2html1601"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1604"
+ HREF="node52.html#SECTION00891000000000000000">Invoking the extended CHR library</A>
+<LI><A NAME="tex2html1605"
+ HREF="node52.html#SECTION00892000000000000000">Syntactic Differences</A>
+<LI><A NAME="tex2html1606"
+ HREF="node52.html#SECTION00893000000000000000">Compiling</A>
+<LI><A NAME="tex2html1607"
+ HREF="node52.html#SECTION00894000000000000000">Semantics</A>
+<UL>
+<LI><A NAME="tex2html1608"
+ HREF="node52.html#SECTION00894100000000000000">Addition and removal of constraints</A>
+<LI><A NAME="tex2html1609"
+ HREF="node52.html#SECTION00894200000000000000">Executing Propagation and simpagation rules</A>
+<LI><A NAME="tex2html1610"
+ HREF="node52.html#SECTION00894300000000000000">Execution Priority</A>
+</UL>
+<LI><A NAME="tex2html1611"
+ HREF="node52.html#SECTION00895000000000000000">Options and Built-In Predicates</A>
+<LI><A NAME="tex2html1612"
+ HREF="node52.html#SECTION00896000000000000000">Compiler generated predicates</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00890000000000000000"></A>
+<A NAME="newchr"></A>
+<BR>
+The Extended CHR Implementation
+</H1>
+
+<P>
+A new, extended, <TT>chr</TT> library has been developed, with the intention of providing
+the basis for a system that will allow more optimisations than the previous 
+implementation. At the same time, some of the syntax of the CHR  has
+been changed to conform better to standard Prolog. 
+
+<P>
+The system is still experimental, and provides no special support for 
+debugging CHR  code. Please report any problems encountered while 
+using this system.
+
+<P>
+The main user visible differences from the original <TT>chr</TT> library are as 
+follows:
+
+<P>
+
+<UL><LI>The extended library produces code that generally runs about twice as fast
+as the old non-debugging code. It is expected that further improvements
+should be possible.
+
+<LI>CHR  code is no longer compiled with a special command - the normal
+compile command will now recognise and compile CHR  code when the extended
+<TT>chr</TT> library is loaded. No intermediate Prolog file is produced. The
+<TT>.chr</TT> extension is no longer supported implicitly.
+
+<LI>Syntax of some operators have been changed to conform better to standard
+Prolog.
+
+<LI>A framework for supporting more than two head constraints has been
+introduced. However, support for propagation rules with more than two heads
+have not yet been added. Simplification and simpagation rules with more
+than two heads are currently supported.
+
+<LI>The compiler does not try to reorder the CHR  any more. Instead, 
+they are ordered in the way they are written by the user.
+
+<LI><TT>label_with</TT> is no longer supported. It can be replaced with
+user defined labelling.
+
+<LI>The operational semantics of rules have been clarified.
+
+<LI>The CHR  are run at the same priority before and after
+suspensions. Priorities can be specified for CHR  constraints.
+
+<LI>There is no special support for debugging yet. The CHR  code would be
+seen by the debugger as the transformed Prolog code that is generated by
+the compiler.
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION00891000000000000000">
+Invoking the extended CHR library</A>
+</H2>
+
+<P>
+The extended library is invoked by <code>lib(ech)</code>. Given that it is now
+integrated into the compiler. It can be invoked from a file that contains
+CHR  code, as <code>:- lib(ech).</code>, as long as this occurs before the CHR
+code.
+
+<P>
+
+<H2><A NAME="SECTION00892000000000000000">
+Syntactic Differences</A>
+</H2>
+
+<P>
+As programs containing CHRs are no longer compiled by a separate process, 
+the <TT>.chr</TT> extension is no longer implicitly supported. Files with
+the <TT>.chr</TT> extension can still be compiled by explicitly specifying 
+the extension in the compile command, as in <TT>['file.chr']</TT>. Associated
+with this change, there are some changes to the declarations of the <TT>.chr</TT>
+format:
+
+<P>
+
+<UL><LI><TT>operator/3</TT> does not exist. It is not needed because the
+standard Prolog <TT>op/3</TT> declaration can now handle all operator 
+declarations. Replace all <TT>operator/3</TT> with <TT>op/3</TT> declarations.
+
+<LI>The other declarations <TT>handler constraints option</TT> are now handled
+as normal Prolog declarations, i.e. they must be preceded with 
+<TT>:-</TT>. This is to conform with standard Prolog syntax.
+
+</UL>
+
+<P>
+The syntax for naming a rule has been changed, because the old method (using
+<TT>@</TT> clashes with the use of <TT>@</TT> in modules. The new operator
+for naming rules is <TT>::=</TT>. Here is part of the minmax handler in the
+new syntax:
+
+<P>
+<PRE>
+:- handler minmax.
+:- constraints leq/2, neq/2, minimum/3, maximum/3.
+:- op(700, xfx, leq).
+
+built_in    ::=  X leq Y &lt;=&gt; \+nonground(X), \+nonground(Y) | X @=&lt; Y.
+reflexivity ::=  X leq X &lt;=&gt; true.
+...
+</PRE>
+<H2><A NAME="SECTION00893000000000000000">
+Compiling</A>
+</H2>
+
+<P>
+After loading the extended <TT>chr</TT> library, programs containing CHR  code can
+be compiled directly. Thus, CHR  code can be freely mixed with normal Prolog
+code in any file. In particular, a compilation may now compile code from 
+different files in different modules which may all contain CHR  codes. This
+was not a problem with the old library because CHR  code had to be compile
+separately. 
+
+<P>
+In the extended library, CHR  code can occur anywhere in a particular module, and
+for each module, all the CHR  code (which may reside in different files)
+will all be compiled into one unit (<TT>handler</TT> declarations are ignored
+by the system, they are present for compatibility purposes only), with the
+same constraint store. CHR  code in different modules are entirely 
+separate and independent from each other. 
+
+<P>
+In order to allow CHR  code to occur anywhere inside a module, and also 
+because it is difficult to define a meaning for replacing multi-heads rules,
+compilation of CHR  code is always incremental, i.e. any existing CHR 
+code in a module is not replaced by a new compilation. Instead, the rules
+from the new compilation is added to the old ones. 
+
+<P>
+It is possible to clear out old CHR  code before compiling a file. This is done
+with the <TT>chr/1</TT> predicate. This first remove any existing CHR  code in
+any module before the compilation starts. It thus approximates the semantics
+of <TT>chr/1</TT> of the old library, but no Prolog file is generated.
+
+<P>
+
+<H2><A NAME="SECTION00894000000000000000">
+Semantics</A>
+</H2>
+
+<P>
+
+<H3><A NAME="SECTION00894100000000000000">
+Addition and removal of constraints</A>
+</H3>
+
+<P>
+In the old <TT>chr</TT> library, it was not clearly defined when a constraint
+will be added to or removed from the constraint store during the execution of 
+a rule.
+In the extended <TT>chr</TT> library, all head constraints
+that occur in the head of a rule are mutually exclusive, i.e. they cannot
+refer to the same constraint. This ensures that similar heads in a rule
+will match different constraints in the constraint store.
+Beyond this, the state of a constraint - if it 
+is in the constraint store or not - that has been matched in the head 
+is not defined during the execution of the rest of the head and guard.
+As soon as the guard is satisfied, any constraints removed by a rule will
+no longer be in the constraint store, and any constraint that is not
+removed by the rule will be present in the constraint store.
+
+<P>
+This can have an effect on execution. For example, in the finite domain
+example in the old <TT>chr</TT> directory (<TT>domain.chr</TT>), there is the following rule:
+
+<P>
+<PRE>
+ X lt Y, X::[A|L] &lt;=&gt; 
+        \+nonground(Y), remove_higher(Y,[A|L],L1), remove(Y,L1,L2) |
+        X::L2.
+</PRE>
+
+<P>
+Unfortunately this rule is not sufficiently specified in the extended
+CHR, and can lead to looping under certain circumstances. The two <TT>remove</TT> predicate in the guard removes elements from the domain, but if no
+elements are removed (because <code>X lt Y</code> is redundant, e.g. <code>X lt 5</code> with
+<code>X::[1..2]</code>), then in the old CHR execution, the body goal, the constraint
+<code>X::L2</code> would not be actually executed, because the older constraint in
+the head (the one that matched <code>X::[A|L]</code>) has not yet been removed when
+the new constraint is imposed. With the extended CHR, the old constraint
+is removed after the guard, so the <code>X::L2</code> is executed, and this can
+lead to looping. The rule should thus be written as:
+
+<P>
+<PRE>
+ X lt Y, X::[A|L] &lt;=&gt; 
+        \+nonground(Y), remove_higher(Y,[A|L],L1), remove(Y,L1,L2),
+                L2\==[A|L] |
+        X::L2.
+</PRE>
+
+<P>
+
+<H3><A NAME="SECTION00894200000000000000">
+Executing Propagation and simpagation rules</A>
+</H3>
+
+<P>
+Consider the following propagation rule:
+
+<P>
+<PRE>
+p(X), q(Y) ==&gt; &lt;Body&gt;.
+
+:- p(X).
+</PRE>
+
+<P>
+The execution of this rule, started by calling <code>p(X)</code>, will try to match
+all <code>q(Y)</code> in the constraint store, and thus it can be satisfied,
+with <code>&lt;Body&gt;</code> executed,
+multiple number of times with different <code>q(Y)</code>. <code>&lt;Body&gt;</code> for
+a particular <code>q(Y)</code> will be executed first, before trying to match
+the next <code>q(Y)</code>. The execution of <code>&lt;Body&gt;</code> may however cause the 
+removal of <code>p(X)</code>. In this case, no further matching with <code>q(Y)</code>
+will be performed.
+
+<P>
+Note that there is no commitment with propagation and simpagation rule
+if the constraint being matched is not removed:
+
+<P>
+<PRE>
+p(X), q(Y) ==&gt; &lt;Body1&gt;.
+p(X), r(Y) ==&gt; &lt;Body2&gt;.
+
+:- p(X).
+</PRE>
+
+<P>
+Both rules will always be executed.
+
+<P>
+The body of a rule is executed as soon as its guard succeeds. In the case
+of propagation rules, this means that the other propagation rules for this
+constraint will not be tried until the body goals have all been executed.
+This is
+unlike the old CHR, where for propagation rules, the body is not executed
+until all the propagation rules have been tried, and if more than one
+propagation rule has fired (successful in its guard execution), then the
+most recently fired rule's body is executed first. For properly written,
+mutually exclusive propagation rule, this should not make a difference
+(modulo the effect of the removal of constraints in the body).
+
+<P>
+
+<H3><A NAME="SECTION00894300000000000000">
+Execution Priority</A>
+</H3>
+
+<P>
+The priority at which an ECH rule is executed depends on the `active'
+constraint, i.e. the constraint that triggered the execution of the
+rules. Normally, the ECH rules are executed at the <I>default</I>
+priority, but a different priority can be associated with a constraint when it
+is declared, specifying the priority at which the ECH rules will be executed
+when that constraint is the active constraint. 
+
+<P>
+<PRE>
+:- constraints chr_labeling/0:at_lower(1).
+</PRE>
+
+<P>
+this specifies that if <TT>chr_labeling/0</TT> was the active constraint, then 
+the rules will be executed at a lower priority than the default. The
+priorities are mapped to the priority system of ECLiPSe, and <TT>at_lower(1)</TT> maps to a priority one lower than the default, so that ECH
+rules executing at the default priority will execute first. This is
+particularly useful for labelling, as this allow the other ECH constraints
+to be executed during the labelling process rather than afterwards.
+
+<P>
+The priority specified can be <TT>at_lower(N)</TT>, <TT>at_higher(N)</TT>, or
+<TT>at_absolute_priority(N)</TT>. For <TT>at_lower(N)</TT>, the priority is the
+default + N; for <TT>at_higher(N)</TT>, it is the default - N. <TT>at_absolute_priority(N)</TT> sets the priority to N, regardless of the default,
+and its use is not recommended. The available priorities are from 1
+(highest) to 11 (lowest). The default priority is initially set to 9, but
+can be changed with the <TT>chr_priority</TT> option. Note that the priority
+at which the rules will run at is determined at compile time, and changing
+the default priority will only affect new constraints compiled after the
+change. It should therefore only be used in a directive before any of the
+ECH rules.
+
+<P>
+This behaviour is different from the old <TT>chr</TT> library, and from older
+versions of <TT>ech</TT> library, where the rules ran at different
+priorities before and after suspension. This can lead to different
+behaviours with the same rule, either with other constraints solvers, or
+even with other CHR rules, as a woken CHR executes at much higher priority
+than the initial run. With the current <TT>ech</TT> execution, the rules are
+executed at the same priority before and after suspension, for the same
+active constraint. The default priority is set at 9 so that it is very
+likely to be lower than the priority used in other constraint solvers. The
+user is now allowed to alter the priority of specific ECH constraints to
+allow the user more control so that for example a labelling rule can run at
+a lower priority than the other constraints.
+
+<P>
+
+<H2><A NAME="SECTION00895000000000000000">
+Options and Built-In Predicates</A>
+</H2>
+
+<P>
+The <code>check_guard_bindings</code> and <code>already_in_store</code> options from
+the old <TT>chr</TT> library are supported. Note that the extended compiler can
+actually detect some cases where guard bindings cannot constrain any global
+variables (for example, <code>var/1</code>), and will in such cases no check 
+guard bindings.
+
+<P>
+New options, intended to control the way the compiler tries to optimise
+code, are introduced. These are intended for the developers of the compiler,
+and will not be discussed in detail here. The only currently supported 
+option in this category is <code>single_symmetric_simpagation</code>.
+
+<P>
+Another new option, <code>default_chr_priority</code>, allows the default
+priority to be changed, e.g.
+
+<P>
+<PRE>
+:- option(default_chr_priority, 6).
+</PRE>
+
+<P>
+changes the default priority to 6, so the compiler would generate new CHR
+code which defaults to this priority (unless overridden in the constraints
+declaration). The available values are from 1 to 11.
+
+<P>
+The old CHR  built-ins, <code>chr_get_constraint/1</code> and
+<code>chr_get_constraint/2</code> are both implemented in this library.
+
+<P>
+A new built-in predicate, <code>in_chrstore/1</code>, is used to inspect the
+constraint store:
+
+<P>
+<PRE>
+in_chrstore(+Constraint)
+</PRE>
+
+<P>
+is used to test if <code>Constraint</code> is in the constraint store or not. It
+can be used to prevent the addition of redundant constraints:
+
+<P>
+<PRE>
+X leq Y, Y leq Z ==&gt; \+in_chrstore(X leq Z)| X leq Z.
+</PRE>
+
+<P>
+The above usage is only useful if the <code>already_in_store</code> option is
+off. Note that as the state of a constraint that appears in the head is
+not defined in the guard, it is strongly suggested that the user does not
+perform this test in the guard for such constraints,
+
+<P>
+
+<H2><A NAME="SECTION00896000000000000000">
+Compiler generated predicates</A>
+</H2>
+
+<P>
+A source to source transformation is performed on CHR  code by the compiler,
+and the resulting code is compiled in the same module as the CHR  code. These
+transformed predicates all begin with 'CHR', so the user should avoid using
+such predicates. 
+
+<P>
+<A NAME="3353"></A>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1602"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1598"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1594"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1600"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1603"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Up:</B> <A NAME="tex2html1599"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1595"
+ HREF="node51.html">Debugging CHR Programs</A>
+ &nbsp <B>  <A NAME="tex2html1601"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

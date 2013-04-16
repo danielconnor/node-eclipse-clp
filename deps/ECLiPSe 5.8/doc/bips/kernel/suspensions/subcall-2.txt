@@ -1,0 +1,74 @@
+
+subcall(+Goal, ?Delayed_goals)
+
+   Succeeds iff Goal succeeds and unifies Delayed_goals with a list of
+remaining delayed goals.
+
+
+
+Arguments
+   +Goal               Atom or compound term.
+   ?Delayed_goals      Variable or list.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   Calls the goal Goal.  When Goal succeeds, Delayed_goals is unified with
+   a list of goals that were delayed, but not resumed during execution of
+   Goal.  These goals, together with the variable bindings in Goal, can be
+   regarded as a qualified answer to Goal.  I.e. Goal is true under the
+   condition that the conjunction of delayed goals is also true.
+
+
+   Note that, after exiting from subcall/2, the goals collected in
+   Delayed_goals do no longer exist as delayed goals.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Goal fails, or if Delayed_goals does not unify with the
+   returned list of goals.
+
+
+
+Exceptions
+     4 --- Goal is not instantiated.
+     5 --- Goal is neither an atom nor a compound term.
+    68 --- Goal is an undefined procedure.
+
+Examples
+   
+Success:
+    [eclipse]: X > 0, subcall(X < 5, DG).
+
+    X = X
+    DG = [X < 5]
+
+    Delayed goals:
+    X > 0
+    yes.
+    [eclipse]: subcall( (X > 0, Y > 0, X = 3) , DG).
+
+    Y = Y
+    X = 3
+    DG = [Y > 0]
+    yes.
+
+Fail:
+    subcall(fail, _).
+Error:
+    subcall(Var, D).                (Error 4).
+    subcall(3, D).                  (Error 5).
+    subcall(foo(a), D).             (Error 68).
+
+
+
+
+
+See Also
+   call / 1, @ / 2, : / 2, call_priority / 2

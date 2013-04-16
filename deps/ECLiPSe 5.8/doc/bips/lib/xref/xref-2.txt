@@ -1,0 +1,32 @@
+
+xref(+File, +Options)
+
+   Display a call graph for a source module file
+
+Arguments
+   File                Name of the source file (atom or string)
+   Options             A list of Option:Value structures
+
+Type
+   library(xref)
+
+Description
+
+    Computes a call graph for the given source file and displays it.
+    The possible options are:
+
+    builtins ('off' or 'on')
+	selects whether to show built-in predicates or not. Default: off.
+    output ('text', 'graphviz', graphviz(Options), 'daVinci' or file(File))
+	selects how to show the results. 'text' is a for a simple textual
+	listing on the output stream, file(File) writes text output into
+	the specified file, 'daVinci' uses the daVinci graph drawing library,
+	'graphviz' uses the graphviz graph drawing library. Default: text.
+    relation ('calls' or 'called_by')
+	selects whether to print the 'calls' relation or it inverse,
+	the 'called_by' relation. Default: calls.
+
+    
+
+See Also
+   call_graph / 3

@@ -1,0 +1,5 @@
+:- module(struct).
+:- export copy_ground / 3.
+:- export variables / 2.
+:- export occ / 3.
+:- export subst / 3.

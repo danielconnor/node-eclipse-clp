@@ -1,0 +1,128 @@
+<HTML><HEAD><TITLE>read_token(+Stream, ?Token, ?Class)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>read_token(+Stream, ?Token, ?Class)</H1>
+Succeeds if the next token from the input stream Stream is successfully
+read and unified with Token and its token class with Class.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+<DT><EM>?Token</EM></DT>
+<DD>Variable or constant.
+</DD>
+<DT><EM>?Class</EM></DT>
+<DD>Variable or atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is an interface to the Sepia tokenizer.  It can be used
+   to read terms which are not ended by a fullstop or even to build whole
+   new parsers.  The next token from the input stream Stream is read and
+   unified with Token.  The token class of this token is unified with
+   Class.
+
+<P>
+   The possible token classes with examples:
+
+<P>
+<PRE>
+   ---------------------------------------
+   | Input Example  Token    Class        |
+   |------------------------------------  |
+   | X              "X"      var          |
+   | _              "_"      anonymous    |
+   | abc            'abc'    atom         |
+   | 'a-b'          'a-b'    quoted_atom  |
+   | 123            123      integer      |
+   | 1.2            1.2      float        |
+   | 1_3            1_3      rational     |
+   | 0.9__1.1       0.9__1.1 breal        |
+   | "abc"          "abc"    string       |
+   | ,              ','      comma        |
+   | )              ")"      solo         |
+   | &lt;SPACE&gt;(       "("      open_par     |
+   | .&lt;NL&gt;          '.'      fullstop     |
+   | 1e789&lt;NL&gt;      "1e789"  error        |
+   ---------------------------------------|
+</PRE>
+   Note that square brackets and curly brackets are single tokens; solo
+   characters are read as string tokens.  All syntax errors are reported as
+   class error, with the input string up to the error as Token.  The
+   default error handler for the event 190 (reading EOF) returns
+   end_of_file in both Class and Token.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Token does not unify with the next token read from the input
+   stream Stream or its class with Class.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is not an atom or an integer.
+<DT><EM>(5) type error </EM>
+<DD>Class does not unify with an atom.
+<DT><EM>(190) end of file reached </EM>
+<DD>End of file was encountered before reading any character.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an input stream.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+<DT><EM>(198) reading past the file end </EM>
+<DD>Trying to read even after the error 190 was raised.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse 1]: read_token(input,T,C).
+              []
+      T = []
+      C = atom
+      [eclipse 2]: read_token(input,T,C).
+              [
+      T = "["
+      C = solo
+      [eclipse 3]: read_token(input, "k",C).
+              "k"
+      C = string
+      [eclipse 4]: read_token(input,T,C).
+              X
+      T = "X"
+      C = var
+      [eclipse 5]: read_token(input,T,C).
+              1.6e-5.
+      T = 1.6e-05
+      C = float
+
+Fail:
+      [eclipse 6]: read_token(input, "[", C).
+              &amp;
+      no.
+
+Error:
+      [eclipse 7]: read_token(input, T, C).
+              ^D
+      T = end_of_file
+      C = end_of_file
+      yes. (Error 190, default handler)
+
+      read_token(S, a(b,c), C).         (Error 4).
+      read_token("string", a(b,c), C).  (Error 5).
+      read_token(9, X + 2, C).          (Error 192). % stream not open
+      read_token(atom, X + 2, C).       (Error 193).
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/get_chtab-2.html">get_chtab / 2</A>, <A HREF="../../kernel/syntax/set_chtab-2.html">set_chtab / 2</A>, <A HREF="../../kernel/iochar/read_token-2.html">read_token / 2</A>
+</BODY></HTML>

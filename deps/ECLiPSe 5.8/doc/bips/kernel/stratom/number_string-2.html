@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>number_string(?Number, ?String)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>number_string(?Number, ?String)</H1>
+Conversion between any number and a string.
+<DL>
+<DT><EM>?Number</EM></DT>
+<DD>Number or variable.
+</DD>
+<DT><EM>?String</EM></DT>
+<DD>String or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   If String is instantiated, its contents is interpreted as a number which
+   is in turn unified with Number.
+
+<P>
+   If Number is instantiated and String is a variable, String is bound to
+   the textual representation of the number as writeq/1 would produce it.
+
+<P>
+   If String does not represent a number, then number_string/2 fails.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if String does not represent a number or the represented number
+   does not unify with Number.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Number is instantiated, but not to an number.
+<DT><EM>(5) type error </EM>
+<DD>String is instantiated, but not to a string.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Both arguments are free variables (non-coroutine mode only).
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   number_string(1989,X).       (gives X = "1989").
+   number_string(-7,X).         (gives X = "-7").
+   number_string(124.5,X).      (gives X = "124.5").
+   number_string(X,"+12").      (gives X = 12).
+   number_string(X,"-7").       (gives X = -7).
+   number_string(N,"123.4").     (gives N = 123.4).
+   number_string(3.0,"3.0").
+   number_string(3.0,"+3.00").
+   Fail:
+   number_string(N,"- 15").
+   number_string(N," +15").
+   number_string(N,"2 ").
+   number_string(N,".5").
+   number_string(N,"Abcd").
+   number_string(222,"123").
+   Error:
+   number_string(N,S).          (Error 4).
+   number_string(a,"12").       (Error 5).
+   number_string(N,1234).       (Error 5).
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/stratom/concat_string-2.html">concat_string / 2</A>, <A HREF="../../kernel/termmanip/term_string-2.html">term_string / 2</A>, <A HREF="../../kernel/stratom/atom_string-2.html">atom_string / 2</A>, <A HREF="../../kernel/typetest/number-1.html">number / 1</A>, <A HREF="../../kernel/stratom/split_string-4.html">split_string / 4</A>
+</BODY></HTML>

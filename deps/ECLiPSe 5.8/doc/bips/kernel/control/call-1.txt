@@ -1,0 +1,65 @@
+
+call(+Goal)
+
+   Succeeds if Goal succeeds.
+
+
+
+Arguments
+   +Goal               Atom or compound term.
+
+Type
+   Control
+
+Description
+   Calls the goal Goal.  This predicate is used to call goals whose
+   functors are known only at the time they are called.
+
+
+   Note that:
+
+
+   call(Goal) is logically the same as Goal and !/0 does not cut through
+   call/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Goal fails.
+
+
+
+Exceptions
+     4 --- Goal is not instantiated.
+     5 --- Goal is not an atom or a compound term.
+
+Examples
+   
+Success:
+      [eclipse]: [user].
+       or(A -> B, C) :- call(A), !, call(B).
+       or(_ -> _, C) :- call(C).
+       user compiled 412 bytes in 0.02 seconds
+      [eclipse]: or(write(a)->fail, write(k)).
+      a
+      no.
+      [eclipse]: or(fail->write(here),true).
+      yes.
+
+Fail:
+      [eclipse]: call(fail),write(here).
+      no.
+Error:
+      call(G).                  (Error 4).
+      call("write(a)").         (Error 5).
+
+
+
+
+
+See Also
+   subcall / 2, @ / 2, : / 2

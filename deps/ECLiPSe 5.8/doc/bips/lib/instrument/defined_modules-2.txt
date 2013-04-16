@@ -1,0 +1,27 @@
+
+defined_modules(+File, -Modules)
+
+   Retrieve the modules defined by a file.
+
+Arguments
+   File                Atom or string
+   Modules             List of atoms
+
+Type
+   library(instrument)
+
+Description
+
+   It is often necessary to know what modules a file has defined in order 
+   to operate on module specific data.  This predicate can be used to return 
+   the modules defined by a file which has been compiled with the instrument 
+   compiler.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   no
+
+See Also
+   get_callsite_data / 2, file_callsites / 3, instrument / 2, instrument / 3, library(instrument), set_callsite_data / 2, struct(itemplate), defined_modules / 2

@@ -1,0 +1,10 @@
+
+stream_select(+Streams, +TimeOut0, -ReadStreams)
+
+   Wait for data on Streams
+
+Type
+   library(sockets)
+
+See Also
+   select / 3

@@ -1,0 +1,33 @@
+
+delete(+Map0, ++Key, -Map)
+
+   Delete a key/value pair from a map.
+
+Arguments
+   Map0                A map
+   Key                 The key to delete
+   Map                 The map after deletion
+
+Type
+   library(m_map)
+
+Description
+	
+	If the key Key appears in the map Map0, then remove it and its
+	corresponding value, resulting in the map Map.  If the key Key
+	does not appear, Map is simply bound to Map0.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   delete_list / 3, remove / 4

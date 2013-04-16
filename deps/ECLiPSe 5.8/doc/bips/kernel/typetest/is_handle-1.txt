@@ -1,0 +1,46 @@
+
+is_handle(?Term)
+
+   Succeeds if Term is an external data handle.
+
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Term is a handle for external data.
+   Such handles can be created by external predicates using the
+   ECLiPSe C or C++ API.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Term is not an external data handle.
+
+
+
+Examples
+   
+
+    ?- bag_create(B), is_handle(B).
+    B = 'BAG'(16'edc90b18)
+    Yes (0.00s cpu)
+
+    ?- is_handle(_).
+    No (0.00s cpu)
+
+    ?- is_handle(42).
+    No (0.00s cpu)
+
+
+
+See Also
+   is_event / 1, type_of / 2, xget / 3, xset / 3

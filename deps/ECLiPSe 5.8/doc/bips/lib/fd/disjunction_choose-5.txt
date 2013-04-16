@@ -1,0 +1,68 @@
+
+disjunction_choose(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)
+
+   Flag indicates which of the two non-overlapping tasks is scheduled as
+first.  Either the one with starting time Start1 and duration Duration1
+(then the value of Flag is 1), or the second one with starting time Start2
+and duration Duration2 (and the Flag is 2).
+
+
+
+Arguments
+   ?Start1             A finite domain variable or integer
+   +Duration1          An integer
+   ?Start2             A finite domain variable or integer
+   +Duration2          An integer
+   ?Flag               A variable or integer
+
+Type
+   library(fd)
+
+Description
+   This constraint can be used, if there are two tasks that have to be
+   scheduled on the same machine.  It states which of the two tasks given
+   by their starting times and durations is scheduled as first.  It is
+   activated whenever the maximum or minimum of domain variables Start1 or
+   Start2 resp.  changes or the Flag is set to an integer.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if there is no possibility to schedule given two tasks in any
+   order under given conditions.
+
+
+
+Exceptions
+     4 --- Duration1 or Duration2 is not instantiated.
+     5 --- Duration1 or Duration2 or Flag is instantiated but not an    integer.
+
+Examples
+   
+   [eclipse 5]: [X, Y]::1..10, disjunction_choose(X, 5, Y, 7, F).
+   X = X[1..10]
+   Y = Y[1..10]
+   F = F[1, 2]
+   Delayed goals:
+   disjunction_choose_1(X[1..10], 5, Y[1..10], 7, F[1, 2])
+   yes.
+   [eclipse 6]: [X, Y]::1..10, disjunction_choose(X, 5, Y, 7, 1).
+   X = X[1..5]
+   Y = Y[6..10]
+   Delayed goals:
+   Y[6..10] - X[1..5]#>=5
+   disjunction_choose_1(X[1..5], 5, Y[6..10], 7, 1)
+   yes.
+   [eclipse 8]: [X, Y]::1..5, disjunction_choose(X, 5, Y, 7, 2).
+   no (more) solution.
+
+
+
+
+
+See Also
+   disjunctive / 3, disjunction / 5

@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>delete_list(+Map0, ++KeyList, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delete_list(+Map0, ++KeyList, -Map)</H1>
+Delete a list of key/value pairs from a map.
+<DL>
+<DT><EM>Map0</EM></DT>
+<DD>A map
+</DD>
+<DT><EM>KeyList</EM></DT>
+<DD>A list of keys to delete
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The map after deletions
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	This predicate takes a map Map0, and for each key in KeyList,
+	calls delete/3 to delete the key and its corresponding
+	value.  The result after all the deletions is the map Map.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Never fails.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/delete-3.html">delete / 3</A>, <A HREF="../../lib_public/m_map/remove-4.html">remove / 4</A>
+</BODY></HTML>

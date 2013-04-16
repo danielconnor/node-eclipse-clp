@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>event_create(+Goal, -EventHandle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>event_create(+Goal, -EventHandle)</H1>
+Create an ECLiPSe event from an arbitrary goal.
+<DL>
+<DT><EM>Goal</EM></DT>
+<DD>An arbitrary goal
+</DD>
+<DT><EM>EventHandle</EM></DT>
+<DD>A free variable
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+	This creates an event from the goal provided, which can be raised 
+	with the standard event handling predicates (e.g. event / 1, event_after / 2
+	and event_after_every / 2) using the associated handle.
+    <P>
+	The event creation requires non-logical copying of the goal.
+	As a result, if the goal contains variables, they lose their identity 
+	and are replaced with fresh ones.
+    <P>
+	The intended use of such events are for localised event handling
+	or when it is necessary to pass ground parameters to the event goal,
+	i.e. when the use of a global event handler is unnecessary or does not suffice.
+    <P>
+	It should be noted that the event handle is the only way to uniquely
+	identify a given event.  E.g. if an event has been scheduled as an
+	after-event (using event_after/3 or events_after/2), it can only be
+	cancelled by invoking cancel_after_event/2 with the correct handle.
+    
+<H3>Fail Conditions</H3>
+None
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>Goal is not a valid goal
+<DT><EM>(5) type error </EM>
+<DD>EventHandle is not a free variable
+</DL>
+<H2>Examples</H2>
+<PRE>    ?- event_create(writeln('Goodbye cruel world!'), Event),
+    	writeln('Hello world!'),
+	event(Event).
+    Hello world!
+    Goodbye cruel world!
+    Event = 'EVENT'(16'503f0238)
+    Yes (0.00s cpu)
+
+    ?- event_create(writeln('e1'), E1Event),
+	event_create(writeln('e2'), E2Event),
+	events_after([E1Event-every(0.2), E2Event-0.5]),
+	repeat, fail.
+    e1
+    e1
+    e2
+    e1
+    e1
+    ^C
+    interruption: type a, b, c, e, or h for help : ? e1
+    abort
+    Aborting execution ...
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>
+</BODY></HTML>

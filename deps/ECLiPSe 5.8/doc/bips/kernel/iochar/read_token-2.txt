@@ -1,0 +1,51 @@
+
+read_token(?Token, ?Class)
+
+   Succeeds if the next token from the current input stream is successfully
+read and unified with Token and its token class with Class.
+
+
+
+Arguments
+   ?Token              Variable or constant.
+   ?Class              Variable or atom.
+
+Type
+   Character I/O
+
+Description
+   This predicate is an interface to the Sepia tokenizer.  It can be used
+   to read terms which are not ended by a fullstop or even to build whole
+   new parsers.  The next token from the input stream is read and unified
+   with Token.  The token class of this token is unified with Class.
+
+
+   read_token(Token, Class) is equivalent to read_token(input, Token,
+   Class).  See read_token/3 for details.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Token does not unify with the next token read from the input
+   stream or its class with Class.
+
+
+
+Exceptions
+     5 --- Class does not unify with an atom.
+   190 --- End of file was encountered before reading any character.
+   198 --- Trying to read even after the error 190 was raised.
+
+Examples
+      See read_token/3 for examples.
+
+
+
+
+
+See Also
+   get_chtab / 2, set_chtab / 2, read_token / 3

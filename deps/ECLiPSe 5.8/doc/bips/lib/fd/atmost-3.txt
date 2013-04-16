@@ -1,0 +1,35 @@
+
+atmost(+N, ?List, +V)
+
+   At most N elements of the list List have the value V.
+
+
+
+Arguments
+   +N                  An integer
+   ?List               A list of domain variables or integers
+   +V                  An integer
+
+Type
+   library(fd)
+
+Description
+   If List is a list of domain variables and/or integers, this constraint
+   takes care that at most N element of this list have the value V. As soon
+   as some domain variable from the list is updated, this constraint is
+   woken and it checks if the constraint is still satisfiable and if so, if
+   it is already satisfied or not.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if more than N elements of List are instantiated to V.
+
+
+
+See Also
+   :: / 2, #:: / 2, ## / 2, element / 3

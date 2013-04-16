@@ -1,0 +1,25 @@
+
+attach_tools
+
+   Initiate the attachment of remote development tools
+
+Type
+   library(remote_tools)
+
+Description
+   Initiate the attachment of the remote development tools. This will create
+   a connection waiting for the remote development tools to be attached to.
+   It will print the hostname and the port number that should be given to
+   the development tools. The remote development tools should be started 
+   and supplied with the hostname and port number. Once this is done, the
+   development tools are ready to be used. Control is initially given back
+   to ECLiPSe when the tools have been attached.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Development tools already attached.
+
+See Also
+   tools / 0, attach_tools / 3

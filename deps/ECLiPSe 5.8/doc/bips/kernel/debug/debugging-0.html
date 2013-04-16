@@ -1,0 +1,49 @@
+<HTML><HEAD><TITLE>debugging</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>debugging</H1>
+Information about the current top-level tracing mode and spied
+procedures is printed on the current output.
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   Prints the information about the tracing mode:  whether it is off,
+   in creep or in leap mode.
+   It then lists all the visible procedures with a spypoint set.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: debugging.
+Debugger is switched off
+yes.
+
+[eclipse 2]: trace.
+Debugger switched on - creep mode
+
+[eclipse 3]: trace.
+Debugger switched on - creep mode
+
+[eclipse 4]: spy writeln/1.
+spypoint added to writeln / 1.
+yes.
+
+[eclipse 6]: debugging.
+Debug mode is debug
+writeln/1        is being spied
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/spy-1.html">spy / 1</A>, <A HREF="../../kernel/debug/trace-0.html">trace / 0</A>, <A HREF="../../kernel/debug/debug-0.html">debug / 0</A>, <A HREF="../../kernel/debug/notrace-0.html">notrace / 0</A>
+</BODY></HTML>

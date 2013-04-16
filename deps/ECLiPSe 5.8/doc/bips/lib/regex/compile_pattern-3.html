@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>compile_pattern(+Pattern, +Options, -CompiledPattern)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(regex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>compile_pattern(+Pattern, +Options, -CompiledPattern)</H1>
+Precompile a pattern for repeated use
+<DL>
+<DT><EM>Pattern</EM></DT>
+<DD>A string
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of atoms
+</DD>
+<DT><EM>CompiledPattern</EM></DT>
+<DD>Output: a compiled pattern handle
+</DD>
+</DL>
+<H2>Description</H2>
+
+	All matching predicates in this library accept either a regular
+	expression in string form, or a precompiled regular expression.
+	The matching predicates will execute faster if invoked with a
+	precompiled pattern instead of the string.  Whenever a pattern
+	needs to be matched more than once, it will typically be more
+	efficient to work with a precompiled pattern.
+	<P>
+    	Options is a (possibly empty) list of atomic option names,
+	as described in the library(regex) page.  The options give here
+	should be the same as the ones given to the matching-predicates later.
+	<P>
+	The space consumed by the compiled pattern will be automatically
+	reclaimed on failure, or on garbage collection when no longer needed.
+    
+<H3>Fail Conditions</H3>
+None
+<H2>Examples</H2>
+<PRE>
+    ?- compile_pattern("ab+a", [], C),
+       match(C, "bbabbbaab", [], M1),
+       match(C, "abacus", [], M2).
+
+    C = 'HANDLE'(16'00025c60)
+    M1 = "abbba"
+    M2 = "aba"
+    Yes
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/regex/index.html">library(regex)</A>, <A HREF="../../lib/regex/match-2.html">match / 2</A>, <A HREF="../../lib/regex/match-3.html">match / 3</A>, <A HREF="../../lib/regex/match-4.html">match / 4</A>, <A HREF="../../lib/regex/matchsub-4.html">matchsub / 4</A>, <A HREF="../../lib/regex/matchall-4.html">matchall / 4</A>
+</BODY></HTML>

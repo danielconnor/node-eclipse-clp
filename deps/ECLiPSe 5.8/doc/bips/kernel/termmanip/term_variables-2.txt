@@ -1,0 +1,53 @@
+
+term_variables(?Term, ?VarList)
+
+   Succeeds if VarList is the list of all variables in Term.
+
+
+
+Arguments
+   ?Term               Prolog term.
+   ?VarList            List or variable.
+
+Type
+   Term Manipulation
+
+Description
+   This predicate collects all the variables inside Term into the list
+   VarList.  Every variable occurs only once in VarList, even if it occurs
+   several times in Term.  The order of the variables in the list is not
+   specified.  As usual, attributed variables are also considered variables.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- VarList instantiated but not to a list.
+
+Examples
+   
+Success:
+    term_variables(atom, []).
+    term_variables(Term, L).       % gives L = [Term]
+    term_variables(f(a,B,c), L).   % gives L = [B]
+    term_variables([X,Y,Z], L).    % gives L = [Z,Y,X]
+    term_variables([X,Y,X], L).    % gives L = [Y,X]
+    term_variables(s(X{a}), L).    % gives L = [X{a}]
+
+Fail:
+    term_variables(f(a,B,c), []).
+
+
+
+
+
+See Also
+   nonground / 1, nonground / 2, nonground / 3, nonvar / 1, var / 1

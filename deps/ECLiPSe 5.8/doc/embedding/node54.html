@@ -1,0 +1,1001 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Control Messages</TITLE>
+<META NAME="description" CONTENT="Control Messages">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node55.html">
+<LINK REL="previous" HREF="node53.html">
+<LINK REL="up" HREF="node49.html">
+<LINK REL="next" HREF="node55.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1542"
+ HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1538"
+ HREF="node49.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1532"
+ HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1540"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1543"
+ HREF="node55.html">Support for the Remote</A>
+<B> Up:</B> <A NAME="tex2html1539"
+ HREF="node49.html">The Remote Interface Protocol</A>
+<B> Previous:</B> <A NAME="tex2html1533"
+ HREF="node53.html">Remote Peer Queues</A>
+ &nbsp <B>  <A NAME="tex2html1541"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1544"
+ HREF="node54.html#SECTION001050010000000000000">From ECLiPSe side to the remote side</A>
+<LI><A NAME="tex2html1545"
+ HREF="node54.html#SECTION001050020000000000000">Messages from remote side to ECLiPSe side</A>
+</UL>
+<LI><A NAME="tex2html1546"
+ HREF="node54.html#SECTION001051000000000000000">The disconnection protocol</A>
+
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001050000000000000000">
+Control Messages</A>
+</H1>
+
+<P>
+These are the messages that are exchanged between the ECLiPSe and remote
+sides when the remote side is attached. The messages are sent on the
+control connection, and are in EXDR format. All arguments for the messages
+are either atoms or integers. The messages are used to
+co-ordinate and synchronise the two sides. A message should only be sent from a
+particular side when that side has control, and control is handed over
+to the other side when the message is sent. 
+
+<P>
+Most messages are used to initiate an <I>interaction</I> with the
+other side. That is, used to cause some action to take place on the
+other side: control is handed over, the action takes place on the other
+side, and eventually control is handed back 
+when the action is completed. Control can also be explicitly handed over
+from one side to the other so that the other side can initiate
+interactions. Some additional messages can only be sent as part of an
+interaction, for exchanges of information between the two sides. Finally,
+there are messages for terminating the remote attachment. Note that
+interactions can be nested, that is, an interaction from one side can
+contain an interaction initiated from the other side. 
+
+<P>
+The implementer for the remote interface should provide the methods for a
+programmer to initiate the interactions from the remote side. These
+routines would send the appropriate control messages to the ECLiPSe
+side, and the messages should not be directly visible to the programmer. 
+
+<P>
+The usage of each message is summarised in the diagram(s) accompanying
+them. These diagrams show:
+
+<P>
+
+<UL><LI>time proceeds downward. The ECLiPSe side is shown on the left,
+the remote side on the right. Messages are shown as vertical arrows between
+the two sides. The direction of the arrow indicates the direction the
+message is sent.
+
+<P>
+
+<LI>the context in which the message can be sent, i.e. the message from
+the other side that it is either expecting as a response, or that it is a
+response to. The message sequence is shown, with the message highlighted.
+
+<P>
+
+<LI>any accompanying actions expected with the message. These actions are
+either sending or receiving data on some other connections between the two
+sides. These are shown as dashed arrows in the diagrams.
+
+<P>
+
+<LI>whether nested interactions can take place between messages of an interaction.
+This is indicated by vertical ellipsis between the messages in
+the diagram. In such cases, the nested interaction can be initiated, and this
+interaction completed before the next message for the original interaction
+is expected.
+
+</UL>
+
+<P>
+
+<H4><A NAME="SECTION001050010000000000000">
+From ECLiPSe side to the remote side</A>
+</H4>
+
+<P>
+<DL>
+<DT><STRONG>yield</STRONG>
+<DD>this yields control to the remote side.  The message is used either to
+implicitly return control to the remote side at the end of an 
+interaction initiated from the remote side, or it
+is used to explicitly hand over control to the remote side. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="121" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.gif"
+ ALT="\begin{picture}
+(200,70)
+\thicklines\put(70,52){\bf yield}
+\put(20,50){\vector(1...
+....\\ .\\ .}}
+\put(20,0){\line(0,1){65}}
+\put(170,0){\line(0,1){65}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.gif"
+ ALT="\begin{picture}
+(200,70)
+\put(40,52){rpc {\footnotesize\it (goal via rpc)}}
+\put...
+...1){65}}
+\put(170,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="\begin{picture}
+(210,80)
+\thicklines\put(40,12){{\bf yield}}
+\put(20,10){\vector...
+...1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="\begin{picture}
+(210,80)
+\thicklines\put(40,12){{\bf yield}}
+\put(20,10){\vector...
+...1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="89" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.gif"
+ ALT="\begin{picture}
+(210,60)
+\put(40,32){queue_close(Q)}
+\put(170,30){\vector(-1,0){...
+...1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="193" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.gif"
+ ALT="\begin{picture}
+(200,120)
+\put(40,92){queue_create(N,T,D,E)}
+\put(170,90){\vecto...
+...{105}}
+\put(170,0){\line(0,1){105}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+The interaction-initiating messages from the remote side will be described
+in more detail in their own sections.
+
+<P>
+<DT><STRONG>ec_flushio(Queue, Length)</STRONG>
+<DD>this message is sent when output on a remote
+synchronous queue is flushed on the ECLiPSe side:
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img10.gif"
+ ALT="\begin{picture}
+(200,70)
+\put(40,12){resume}
+\put(190,10){\vector(-1,0){170}}
+\p...
+...1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+Queue is the
+ECLiPSe stream number for the peer queue, and Length is the number of bytes
+that is being sent on the queue. Control is yielded to the remote
+side. The data on the queue Queue will be sent through the
+queue after sending this message on the control connection, so on receiving
+this message on the remote side, the remote side should read Length bytes from
+Queue. After processing the data, the remote side should return
+control to the ECLiPSe side via a <B>resume</B> message.
+
+<P>
+<DT><STRONG>ec_waitio(Queue)</STRONG>
+<DD>this message is sent when ECLiPSe requests input
+from a remote synchronous queue, and the data is not available in the
+queue's buffer. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="172" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="\begin{picture}
+(210,100)
+\put(30,12){resume}
+\put(190,10){\vector(-1,0){170}}
+\...
+....}}
+\put(30,20){\shortstack{.\\ .}}
+\put(30,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="172" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="\begin{picture}
+(210,100)
+\put(30,12){resume}
+\put(190,10){\vector(-1,0){170}}
+\...
+....}}
+\put(30,20){\shortstack{.\\ .}}
+\put(30,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+This interaction is triggered when the ECLiPSe side attempts a read
+operation on the empty buffer of a peer queue. The operation is suspended, 
+and control is yielded to remote side so that it can provide
+the required data. There should be a data-provider handler associated with
+the queue on the remote side. This handler should obtain the data, and send
+the data to the ECLiPSe side. The data will arrive from the remote side via a
+<B>rem_flushio</B> message, which initiates a remote flushio interaction, nested
+within the ECLiPSe waitio interaction. The data arrives on the socket
+associated with the remote peer queue Queue, and is automatically copied by
+ECLiPSe into the peer queue buffer. Control is then yielded back to 
+the remote side, completing the flushio interaction. The remote side then
+hands control back to ECLiPSe side by the resume message. The suspended
+read operation is resumed on the now non-empty buffer. 
+
+<P>
+The remote flushio interaction is described in more detail in its own
+section. The main difference between a remote flushio initiated on the
+remote side and one initiated by an ECLiPSe waitio described here is
+that there must not be a data-consumer handler on the ECLiPSe side, as
+the data is to be consumed by the suspended read operation instead.
+This is ensured in the protocol by prohibiting handlers on both sides 
+of a synchronous peer queue.
+
+<P>
+Note that the ECLiPSe side will also listen to the control connection
+while waiting for the data to be sent from the remote side. If a <B>resume</B> is sent before the data arrives, this is likely caused by a
+programming error in the data provider handler, which finished without
+sending data to the ECLiPSe side. The ECLiPSe side will print a
+warning message on the warning output stream, and immediately yield
+back to the remote side. Other messages are handled as normal, recursively
+while waiting for the data to arrive - this is mainly intended to allow
+for unexpected aborts from the remote side, although it could also be used to
+perform ec_rpc calls before the remote side sends the data.
+
+<P>
+<DT><STRONG>socket_client(Port, Name, Type, Dir)</STRONG>
+<DD>this requests the remote side
+to form a client socket connection for the remote peer queue Name. The
+queue is of type Type (sync or async), and direction Dir (fromec, toec for
+synchronous queues, bidirect for asynchronous queues). The client socket is
+to connect at port Port with the ECLiPSe side host name.  
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="160" ALIGN="BOTTOM" BORDER="0"
+ SRC="img12.gif"
+ ALT="\begin{picture}
+(200,100)
+\put(40,52){socket_connect(N,S)}
+\put(170,50){\vector(...
+...88){Remote}
+\put(20,0){\line(0,1){85}}
+\put(170,0){\line(0,1){85}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+The ECLiPSe side first creates a server socket for the peer queue Name.
+The port address is Port. This, along with the details of the queue is
+passed to the remote side via the <B>socket_client</B> message. The remote side
+should then connect a client socket with Port as the port, and the Host
+used for the initial attachment (which is either localhost or the hostname
+of the <code>eclipse</code> side) for the host. 
+It should also perform any additional
+setups for the peer queue using the information sent with the message
+(typically this involve setting up book-keeping information for the queue
+on the remote side). When the remote side connection is established, it
+returns control to ECLiPSe via a <B>socket_connect</B> message:
+
+<P>
+
+<B>socket_connect(Name, Status)</B>
+
+<P>
+Name is the name of the queue, and should be the same as the Name sent by
+the socket_client message. This is used to verify that the messages refer
+to same interaction. The ECLiPSe side will raise an error and disconnect
+from the remote side if the name does not match. Status is either 
+success or fail, depending on if the remote side successfully created the
+remote side of the queue or not.
+
+<P>
+If Status is success, then the ECLiPSe side will complete the connection
+for the peer queue by accepting the socket connection. Since the remote end
+of the socket exists, the accept operation should succeed very
+quickly. If not, the operation will time-out, using the time-out interval
+specified when the attachment was made. The server socket is closed
+immediately after the accept operation. On successful connection,
+ECLiPSe first checks that this client's host is indeed the same as the
+one previously recorded for the remote side. If so, the
+ECLiPSe will finish creating the ECLiPSe side of the queue. If not,
+the connection is closed, and the operation is considered to have failed. 
+
+<P>
+If Status from the socket_connect message is fail,
+then the ECLiPSe side will clean up the preparation for the peer queue. 
+
+<P>
+The ECLiPSe side then returns control to the remote side via a
+<B>socket_accept</B> message:
+
+<P>
+
+<B>socket_accept(Name,Queue)</B>
+
+<P>
+Name is again the name of the queue, and Queue the stream id. If the accept
+was unsuccessful (or if Status for socket_connect was fail), then Queue
+will be the atom fail, indicating that the peer queue connection was
+unsuccessful. 
+
+<P>
+The remote side should then record the  id Queue for later use (it is
+needed for the control messages connected with this peer queue). If instead
+fail was received, then the remote side should clean up the attempted queue
+connection. When the remote side has finished the final stage of the
+connection, control is returned to the ECLiPSe side via a <B>resume</B>
+message, and the socket_client interaction completes.
+
+<P>
+Note that the <B>socket_connect</B> and <B>socket_accept</B> messages are
+always exchanged during a socket_client interaction, even if the connection
+failed on the remote side before <B>socket_connect</B> is sent. They also
+can only occur in this context. If these messages occur in any other
+occasion, an error should be raised.
+
+<P>
+<DT><STRONG>queue_close(Queue)</STRONG>
+<DD>this message is sent when the ECLiPSe side
+closes the peer queue with id Queue. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="89" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(40,12){resume}
+\put(170,10){\vector(-1,0){150}}
+\t...
+...1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+The remote side should close the remote side of the peer queue Queue, and
+remove all bookkeeping information associated with it. Control should then
+be returned to ECLiPSe via a <B>resume</B> message. The ECLiPSe side should
+also close the queue and remove bookkeeping information on the ECLiPSe side.
+
+<P>
+<DT><STRONG>disconnect</STRONG>
+<DD>this message is sent when ECLiPSe side initiates
+disconnect. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="74" ALIGN="BOTTOM" BORDER="0"
+ SRC="img14.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(70,12){disconnect_resume}
+\put(170,10){\vector(-1,...
+...){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+Control is yielded to the remote side, which should acknowledge
+with the <B>disconnect_resume</B> message. Once the ECLiPSe side receives this
+message, the connection between the two sides is considered
+terminated. The ECLiPSe side will then close all the connections (the
+control and ec_rpc connections, and any asynchronous and synchronous
+queues) to the remote side, and clean up the information associated with the
+attachment. After sending the disconnect_resume message, the remote side
+should also shutdown its end of the connection by closing all the
+connections on its side. 
+
+<P>
+Note that the disconnection message can be used to terminate the attachment
+from within an interaction. In such cases, the interaction(s) would not be
+completed.
+
+<P>
+<DT><STRONG>disconnect_yield</STRONG>
+<DD>this message is sent when ECLiPSe side receives
+a <B>disconnect</B> message from the remote side, i.e. the remote side
+initiated disconnection. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="75" ALIGN="BOTTOM" BORDER="0"
+ SRC="img15.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(50,32){disconnect}
+\put(20,30){\vector(1,0){150}}
+...
+...){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+This message is sent as an acknowledgement to the
+disconnect message. Once the disconnect_yield is sent, the connection is
+considered terminated, and the ECLiPSe side will close all the
+connections and clean up. After the clean up, abort is called. This is
+done because the application on the ECLiPSe side (such as the remote
+development tools) may be deep inside some interaction loop with the remote
+side, and abort is the most general way of escaping from such a loop. It
+can be caught (see <A NAME="tex2html425"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="7402"></A> in section&nbsp;<A HREF="node55.html#remotesupport">10.6</A>) if
+the user wants a more graceful termination. 
+
+<P>
+</DL>
+
+<P>
+
+<H4><A NAME="SECTION001050020000000000000">
+Messages from remote side to ECLiPSe side</A>
+</H4>
+
+<P>
+<DL>
+<DT><STRONG>resume</STRONG>
+<DD>this message hands over control from remote side to
+ECLiPSe side. This is used to either implicitly return control to the
+ECLiPSe side at the end of an interaction initiated from the ECLiPSe
+side, or to explicitly hand over control to the remote side.
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="121" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.gif"
+ ALT="\begin{picture}
+(200,70)
+\thicklines\put(70,52){\bf resume}
+\put(170,50){\vector...
+....\\ .\\ .}}
+\put(20,0){\line(0,1){65}}
+\put(170,0){\line(0,1){65}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img17.gif"
+ ALT="\begin{picture}
+(200,70)
+\put(40,52){ec_flushio(Q,L) {\footnotesize\it (L bytes ...
+...1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="172" ALIGN="BOTTOM" BORDER="0"
+ SRC="img18.gif"
+ ALT="\begin{picture}
+(210,110)
+\put(30,82){ec_waitio(Q)}
+\put(20,80){\vector(1,0){170...
+....}}
+\put(30,20){\shortstack{.\\ .}}
+\put(30,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="172" ALIGN="BOTTOM" BORDER="0"
+ SRC="img19.gif"
+ ALT="\begin{picture}
+(210,110)
+\put(190,10){\vector(-1,0){170}}
+\put(30,82){ec_waitio...
+....}}
+\put(30,20){\shortstack{.\\ .}}
+\put(30,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="160" ALIGN="BOTTOM" BORDER="0"
+ SRC="img20.gif"
+ ALT="\begin{picture}
+(200,105)
+\put(40,52){socket_connect(N,S)}
+\put(170,50){\vector(...
+...88){Remote}
+\put(20,0){\line(0,1){85}}
+\put(170,0){\line(0,1){85}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="89" ALIGN="BOTTOM" BORDER="0"
+ SRC="img21.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(40,32){queue_close(Q)}
+\put(20,30){\vector(1,0){15...
+...1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+<DT><STRONG>rpc</STRONG>
+<DD>this message is sent before the remote side sends an ec_rpc goal
+on the rpc connection. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.gif"
+ ALT="\begin{picture}
+(200,70)
+\put(40,16){yield {\footnotesize\it (answer via rpc)}}
+...
+...1){65}}
+\put(170,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+After sending the <B>rpc</B> message, the remote side
+should then send the ec_rpc goal (in EXDR format) on the rpc
+connection. When the execution of the ec_rpc goal is finished, the
+ECLiPSe side will yield control back to the remote side with a <B>yield</B> message, followed by the result of the ec_rpc execution on the rpc
+connection (in EXDR format) - the goal with its bindings if the execution
+succeeded; `fail' if the goal failed; `throw' if an exception is generated.
+
+<P>
+<DT><STRONG>rem_flushio(Queue)</STRONG>
+<DD>this message is sent if the remote side wish to
+transfer data to the ECLiPSe side on peer queue with queue id Queue, and
+the remote side does not know how many bytes will be sent with the operation.
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img23.gif"
+ ALT="\begin{picture}
+(200,70)
+\thinlines\put(40,12){yield}
+\put(20,10){\vector(1,0){1...
+...1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+After sending the message, control is transferred over to the ECLiPSe
+side, and the data is sent on the socket stream. On the ECLiPSe side, if
+the queue is a synchronous queue, then the data sent must be a single EXDR
+term, because otherwise the ECLiPSe side would not know when the data
+transfer is complete. The ECLiPSe side would read the data from the
+socket stream as a single EXDR term, which is then written onto the
+buffer. If an event handler has been associated with the peer queue, this
+will now be invoked to consume the data from the buffer. If not (for
+example, if the <B>rem_flushio</B> was initiated by an <B>ec_waitio</B>
+message), then the data is left on the buffer to be processed later.
+
+<P>
+The <B>rem_flushio</B> message can also be used to sending data to ECLiPSe for
+asynchronous queues as well. In this case, an event handler is directly
+associated with the socket stream, and this event is invoked when the
+rem_flushio message is received. The event handler goal in this case is
+invoked with the `culprit' argument being the term <TT>rem_flushio(Queue, Len)</TT>,
+where Len is the atom `unknown'. It is up to the user-defined event handler
+goal to properly read the data: since the length is unknown, the data sent
+should have natural boundaries, e.g. EXDR terms, or use a mutually agreed
+`end of data' marker.
+
+<P>
+<DT><STRONG>rem_flushio(Queue, Length)</STRONG>
+<DD>this message is sent if the remote side wish to
+transfer data to the ECLiPSe side on peer queue with queue id Queue, and
+the length of data to be sent is known, and is specified in Length (the
+number of bytes to be sent). 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="342" HEIGHT="122" ALIGN="BOTTOM" BORDER="0"
+ SRC="img23.gif"
+ ALT="\begin{picture}
+(200,70)
+\thinlines\put(40,12){yield}
+\put(20,10){\vector(1,0){1...
+...1){65}}
+\put(190,0){\line(0,1){65}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+After sending the message, control is transferred over to the ECLiPSe
+side, and the data is sent on the socket stream. On the ECLiPSe side, if
+the queue is a synchronous queue, then it would read Length bytes of data
+from the socket stream and transfer the data to the queue buffer.
+If an event handler has been associated with the peer queue, this
+will now be invoked to consume the data from the buffer. If not (for
+example, if the <B>rem_flushio</B> was initiated by an <B>ec_waitio</B> message), then
+the data is left on the buffer to be processed later.
+
+<P>
+In the case that the peer queue is an asynchronous queue,
+an event handler is directly
+associated with the socket stream, and this event is invoked when the
+rem_flushio message is received. The event handler goal in this case is
+invoked with the `culprit' argument being the term <TT>rem_flushio(Queue, Length)</TT>,
+It is up to the user-defined event handler goal to properly read the data.
+
+<P>
+<DT><STRONG>queue_create(Name, Type, Dir, Event)</STRONG>
+<DD>this message is sent when the
+remote side wish to initiates the creation of a new peer queue. Name is the
+name of the peer queue, Type is its Type: sync for synchronous, async for
+asynchronous. Dir is the data direction: fromec or toec, and Event is the
+name of the event that will be raised for the event handler goal on the
+ECLiPSe side, if no event is to be associated with the queue, this
+should be the empty atom (<code>''</code>).
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="193" ALIGN="BOTTOM" BORDER="0"
+ SRC="img24.gif"
+ ALT="\begin{picture}
+(200,120)
+\put(40,77){socket_client(P,N,T,D)}
+\put(20,75){\vecto...
+...{105}}
+\put(170,0){\line(0,1){105}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="89" ALIGN="BOTTOM" BORDER="0"
+ SRC="img25.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(40,12){yield}
+\put(20,10){\vector(1,0){150}}
+\thic...
+...1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+Control is handed over to ECLiPSe side, which should then set up a new
+server socket for connecting the socket stream for the peer queue. Once
+this server socket is set up, the creation of the queue proceeds via a
+socket_client interaction from the ECLiPSe, i.e. the ECLiPSe side
+sends a <B>socket_client</B> message. For more detail, see the description
+for the socket_client message. At the end of the socket_client interaction,
+the peer queue would be established, and ECLiPSe side has
+control. The ECLiPSe side will yield control back to the remote side,
+completing the queue_create interaction.
+
+<P>
+Note that the <B>socket_client</B> interaction is performed by the
+ECLiPSe built-in <A NAME="tex2html427"
+ HREF="../bips/kernel/externals/peer_queue_create-5.html">peer_queue_create/5</A><A NAME="7405"></A>, this is the goal that
+ECLiPSe calls on receiving the <B>queue_create</B> message.
+
+<P>
+If the initial creation of the socket server fails, then the ECLiPSe
+side will not initiate a socket_client interaction. Instead, it will simple
+yield control back to the remote side with a <B>yield</B> message. In this
+case, no peer queue is created.
+
+<P>
+<DT><STRONG>queue_close(Queue)</STRONG>
+<DD>this message is sent when the remote side
+closes the peer queue with id Queue. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="89" ALIGN="BOTTOM" BORDER="0"
+ SRC="img26.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(40,12){\bf yield}
+\put(20,10){\vector(1,0){150}}
+\...
+...1){45}}
+\put(170,0){\line(0,1){45}}
+\put(40,0){\shortstack{.\\ .}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+The ECLiPSe side should close the ECLiPSe side of the peer queue Queue, and
+remove all bookkeeping information associated with it. Control should then
+be returned to ECLiPSe via a <B>yield</B> message. The queue should also be
+closed on the remote side, with the bookkeeping information removed too.
+
+<P>
+<DT><STRONG>disconnect</STRONG>
+<DD>this message is sent if the remote side wish to initiate
+disconnection. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="74" ALIGN="BOTTOM" BORDER="0"
+ SRC="img27.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(70,12){disconnect_yield}
+\put(20,10){\vector(1,0){...
+...){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+Control is handed over to the ECLiPSe side, which will
+acknowledge with <B>disconnect_yield</B> message. Once the ECLiPSe side
+receives this message, the remote attachment between the two sides is
+considered terminated. The remote side should now close all connections to the
+ECLiPSe side. Concurrently, the ECLiPSe side will also close down its
+end of the connections.
+
+<P>
+The <B>disconnect</B> message can be issued during an interaction. In such
+cases, the interaction will be terminated early along with the attachment.
+
+<P>
+<DT><STRONG>disconnect_resume</STRONG>
+<DD>this message is sent in acknowledgement of a
+disconnection initiated from the ECLiPSe side. 
+
+<P>
+<DIV ALIGN="CENTER">
+<BR>
+<IMG
+ WIDTH="309" HEIGHT="75" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.gif"
+ ALT="\begin{picture}
+(200,60)
+\put(50,32){disconnect}
+\put(170,30){\vector(-1,0){150}...
+...){Remote}
+\put(20,10){\line(0,1){35}}
+\put(170,10){\line(0,1){35}}
+\end{picture}">
+<BR>
+</DIV>
+
+<P>
+After sending this
+message, the remote attachment between the two sides is considered
+terminated. The remote side should now close all connections to the
+ECLiPSe side. Concurrently, the ECLiPSe side will also close down its
+end of the connections.
+In addition, this message should be sent if the remote side has to
+terminate the attachment while the ECLiPSe side has control. This can
+happen if the remote process is forced to quit. This is the only case where
+a message can be sent via the control connection on the remote side while
+it does not have control. Once the message is sent, the remote side can
+terminate its connection unilaterally. 
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION001051000000000000000"></A>
+<A NAME="disconnect"></A>
+<BR>
+The disconnection protocol
+</H2>
+
+<P>
+Under normal circumstances, the disconnection of the two sides is initiated
+by the side that has control, by sending a <B>disconnect</B> message to the
+other side. The other side acknowledges this by responding with a <B>disconnect_yield</B> (ECLiPSe side) or <B>disconnect_resume</B> (remote
+side). The acknowledgement should be sent when that side is ready to
+disconnect. Once the messages have been exchanged, both sides should be ready,
+and can physically disconnect. The exchange of messages should ensure that
+any asynchronous I/O between the two sides are properly terminated. 
+
+<P>
+However, under some circumstances, a side may be forced to disconnect when
+it does not have control. For example, in the Tcl remote interface, the
+root window for the Tcl process may be destroyed by the user. In such
+cases, a unilateral disconnect will be performed by that side - only the
+second part of the normal disconnect protocol is performed by sending the
+disconnect acknowledge message (<B>disconnect_resume</B> or <B>disconnect_yield</B>) without being initiated by a <B>disconnect</B> message. 
+
+<P>
+The ECLiPSe side checks the control connection for any unexpected
+incoming messages before it sends an outgoing control message. If there is
+a <B>disconnect_resume</B> message, the ECLiPSe side will perform the
+disconnection on its side. 
+
+<P>
+When the user exits normally from an ECLiPSe session, ECLiPSe will
+disconnect from all remote attachments. This is done in <B>sepia_end/0</B>
+event handler.
+
+<P>
+As part of the disconnection process on the ECLiPSe side, a user
+definable event will be raised in ECLiPSe, just before the remote queues
+are closed. This allows the user to define application specific handlers
+for dealing with the disconnection of the remote interface (on the
+ECLiPSe side). A similar handler should
+probably be provided on the remote side. The event raised has the same name
+as the control stream. The event handler for this event is initially
+defined to be <TT>true/0</TT> (i.e. a no-op) when the remote connection is set
+up. The handler can then be redefined by the user, e.g. during the
+user-defined initialisation during attachment:
+
+<P>
+<PRE>
+    ...
+    remote_connect(localhost/MyPort, Control, 
+        set_event_handler(Control, my_disconnect_handler/1)),
+    ...
+
+    my_disconnect_handler(Remote) :-  
+ % just print out a message about the disconnection
+printf("Disconnected from remote attachment %w", [Remote]).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1542"
+ HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1538"
+ HREF="node49.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1532"
+ HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1540"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1543"
+ HREF="node55.html">Support for the Remote</A>
+<B> Up:</B> <A NAME="tex2html1539"
+ HREF="node49.html">The Remote Interface Protocol</A>
+<B> Previous:</B> <A NAME="tex2html1533"
+ HREF="node53.html">Remote Peer Queues</A>
+ &nbsp <B>  <A NAME="tex2html1541"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

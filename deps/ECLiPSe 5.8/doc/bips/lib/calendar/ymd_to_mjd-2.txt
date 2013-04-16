@@ -1,0 +1,14 @@
+
+ymd_to_mjd(++YMD, ?MJD)
+
+   Convert a date in ISO8601 Year-Month-Day form to an MJD day number
+
+Arguments
+   YMD                 A structure of the form Y-M-D where D,M and Y are integers
+   MJD                 Variable or integer
+
+Type
+   library(calendar)
+
+See Also
+   mjd_to_ymd / 2

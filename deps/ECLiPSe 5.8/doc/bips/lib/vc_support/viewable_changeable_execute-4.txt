@@ -1,0 +1,16 @@
+
+viewable_changeable_execute(++ViewableName, ++ElementSpec, ?Goal, ++Solver)
+
+   Works as viewable_element_execute/3, but replaces the element spec with the changeable value as returned from the given Solver instead.
+
+Arguments
+   ViewableName        Atom: name of an existent viewable.
+   ElementSpec         Currently, this should be element(IndexList), where IndexList is a list of integers: the coordinates of the viewable element within the viewable.
+   Goal                Goal to be executed, mentioning ElementSpec.
+   Solver              Solver implementing the changeable interface (eg. an eplex instance)
+
+Type
+   library(vc_support)
+
+See Also
+   viewable_element_execute / 3

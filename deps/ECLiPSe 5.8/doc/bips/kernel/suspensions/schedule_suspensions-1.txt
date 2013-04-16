@@ -1,0 +1,55 @@
+
+schedule_suspensions(+Trigger)
+
+   Take the suspension list associated with the symbolic trigger
+Trigger and schedule them for execution.
+
+
+
+Arguments
+   +Trigger            An atom.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   Suspensions in ECLiPSe go through several stages: They are created,
+   attached to variables or symbolic triggers, later scheduled for execution,
+   and finally executed.
+
+
+   The task of schedule_suspensions/1 is to take suspensions from the
+   global suspension list associated to the symbolic name Trigger, and
+   schedule them for execution.  The suspensions are inserted into a
+   global priority list, according to their individual priority.  A
+   subsequent wake/0 will then actually execute them.
+
+
+   If no suspensions are associated to Trigger, schedule_suspensions/1
+   just succeeds and does nothing.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+[eclipse 1]: suspend(writeln(world), 2, trigger(hello)),
+        schedule_suspensions(hello), wake.  
+world
+yes.
+
+
+
+
+
+
+See Also
+   demon / 1, insert_suspension / 3, insert_suspension / 4, make_suspension / 3, get_suspension_data / 3, attach_suspensions / 2, trigger / 1, wake / 0

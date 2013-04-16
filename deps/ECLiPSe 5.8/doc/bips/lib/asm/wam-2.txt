@@ -1,0 +1,49 @@
+
+wam(+PredSpec, +Module)
+
+   Prints the formatted WAM code for predicate PredSpec from module Module.
+
+Arguments
+   +PredSpec           Atom, or Atom/Integer
+   +Module             Atom.
+
+Type
+   library(asm)
+
+Description
+   Prints the WAM instructions representing the predicate specified by
+   PredSpec in a formatted form. Requires the library asm to be loaded.
+
+
+   If PredSpec is an atom (i.e. no arity is given), then a predicate with
+   that name is printed, and if there are more than one predicate defined
+   (i.e. same name but different arities), then these different predicates
+   will be printed by backtracking.
+
+
+   This predicate is intended as a replacement for the lower level als/1,
+   which performs the same function. The differences are that the abstract
+   instruction names are printed in a more human oriented form (rather than
+   the internal names used by ECLiPSe), and labels and their references are
+   printed symbolically. Note that the predicate is implemented via the
+   disasm/3 predicate of the library, and hence the same restrictions
+   applies: it cannot be used to print the code for dynamic predicates.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      If PredSpec is a dynamic predicate.
+
+
+
+Exceptions
+     5 --- PredSpec or Module not in correct form.
+    60 --- PredSpec not defined in module Module.
+    80 --- Module is not an existing module.
+
+See Also
+   disasm / 2, disasm / 3, wam / 1, als / 1

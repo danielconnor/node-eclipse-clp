@@ -1,0 +1,44 @@
+
+nonground(?VarTerm)
+
+   Succeeds if VarTerm is not ground.
+
+
+
+Arguments
+   ?VarTerm            Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether VarTerm is not ground i.e.  contains at least one
+   free variable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if VarTerm is ground.
+
+
+
+Examples
+   
+   Success:
+   nonground(VarTerm).
+   nonground(f(a,B,c)).
+   nonground([x,y|Z]).
+   Fail:
+   nonground(atom).
+   nonground(likes(man,woman)).
+
+
+
+
+
+See Also
+   nonvar / 1, ground / 1, type_of / 2, var / 1

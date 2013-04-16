@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>erase(+DBRef)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>erase(+DBRef)</H1>
+Succeeds if the database reference DBRef designates a term recorded in the
+indexed database and this term is successfully erased.
+
+
+<DL>
+<DT><EM>+DBRef</EM></DT>
+<DD>A database reference.
+</DD>
+</DL>
+<H2>Description</H2>
+   The database reference DBRef must refer to a term that has been recorded
+   in the indexed database.  Database references can be obtained from the
+   predicates recorda/3, recordz/3 and recorded/3.  If the referenced term
+   has already been erased, erase/1 fails.  Backtracking through calls of
+   erase/1 does not undo an erasure.  Note that database references are not
+   integers.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if DBRef refers to an already erased record.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>DBRef is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>DBRef is not a database reference.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   [eclipse]: recordz(whiskey, jameson, _),
+   recordz(whiskey, glenfiddich, Ref),
+   recordz(whiskey, dimple, _),
+   erase(Ref).
+   Ref = 98538
+   yes.
+   [eclipse]: recorded(whiskey, L, _).
+   L = jameson     More? (;)
+   L = dimple     More? (;)
+   no (more) solution.
+   Fail:
+   [eclipse]: recorded(whiskey,_,R), !, erase(R), erase(R).
+   no (more) solution.
+   Error:
+   erase(Var).                            (Error 4)
+   erase(123).                            (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/erase_all-1.html">erase_all / 1</A>, <A HREF="../../kernel/record/recorda-3.html">recorda / 3</A>, <A HREF="../../kernel/record/recordz-3.html">recordz / 3</A>, <A HREF="../../kernel/record/recorded-3.html">recorded / 3</A>, <A HREF="../../kernel/record/referenced_record-2.html">referenced_record / 2</A>
+</BODY></HTML>

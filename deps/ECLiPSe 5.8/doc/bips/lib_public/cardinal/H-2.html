@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>#(?SetExpression, ?Cardinality)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>#(?SetExpression, ?Cardinality)</H1>
+Cardinality of a set expression
+<DL>
+<DT><EM>SetExpression</EM></DT>
+<DD>A Set expression.
+</DD>
+<DT><EM>Cardinality</EM></DT>
+<DD>An integer or an FD variable.
+</DD>
+</DL>
+<H2>Description</H2>
+Cardinality is the cardinality of SetExpression, a set term possibly
+		including set operators `/\, `\/ and `\ (or \). <P>
+		SetExpression is first evaluated into a ground set or a set variable and then
+		its Cardinality is applied as in cardinality/2.
+<H3>Fail Conditions</H3>
+Fails if Cardinality can not be the cardinality of SetExpression.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S `::[]..[a,b], #(S,C).
+?- S `::[]..[a,b], #(S `/\ [b,c],1).
+?- S `::[]..[a,b], #([b,c] `\/ S `\ [a,z] `/\ [g], C).
+C = 2,
+?- S `::[]..[a,b], #(([b,c] `\/ S `\ [a,z]) `/\ [g], C).
+C = 0
+?- S1 `::[]..[a,b], S2 `::[]..[b,c,d], #(S1 `/\ S2, 2).
+no
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/cardinality-2.html">cardinality / 2</A>, <A HREF="../../lib_public/cardinal/BE-2.html">`= / 2</A>
+</BODY></HTML>

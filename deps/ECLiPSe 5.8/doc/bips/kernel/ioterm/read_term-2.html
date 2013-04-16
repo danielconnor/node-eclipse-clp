@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>read_term(?Term, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>read_term(?Term, +Options)</H1>
+Read a whole term in ECLiPSe syntax from the current input stream, according to Options
+<DL>
+<DT><EM>Term</EM></DT>
+<DD>An term, usually a variable
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of option terms
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>read_term(-, +)
+<LI>read_term(+, +)
+</UL>
+<H2>Description</H2>
+<P>
+    This is a generalisation of the predicates read/1 and readvar/3.
+</P><P>
+    <CODE>read_term(Term, Options)</CODE> is equivalent to
+    <CODE>read_term(output, Term, Options)</CODE>.
+    For details see read_term/3.
+</P>
+    
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Options is not a list of compound terms.
+<DT><EM>(6) out of range </EM>
+<DD>Options list contains a unrecognised option.
+</DL>
+<H2>Examples</H2>
+<PRE>
+	Equivalent to read_term(output, Term, Options).
+	See read_term/3 for examples.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/read_term-3.html">read_term / 3</A>, <A HREF="../../kernel/ioterm/read-1.html">read / 1</A>, <A HREF="../../kernel/ioterm/read-2.html">read / 2</A>, <A HREF="../../kernel/ioterm/readvar-3.html">readvar / 3</A>
+</BODY></HTML>

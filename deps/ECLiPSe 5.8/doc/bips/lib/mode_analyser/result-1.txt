@@ -1,0 +1,113 @@
+
+result(+OptionList)
+
+   Produce the mode analysis results for predicates
+   compiled into the calling context module.
+
+Arguments
+   OptionList          List of Name:Value pairs
+
+Type
+   library(mode_analyser)
+
+Description
+
+   This predicate displays the suggested invocation modes for each predicate 
+   compiled using the mode analyser into the calling context module. 
+   The suggested mode annotations can be passed to the mode/1 directive for 
+   the associated predicate. The predicate is a tool and as such can be 
+   invoked for an arbitrary module using mode_analyser:result@Module.
+   
+   OptionList may contain the following options:
+   
+   verbose (default:off)
+   If set to 'on', the mode analyser will print details of argument 
+   invocation modes for each argument of every predicate compiled into 
+   the module with the mode analyser.
+   
+   The possible argument modes produced for each argument of each 
+   predicate are: 
+   
+   +   The argument is instantiated, i.e. it is not a variable.
+   
+   ++  The argument is ground.
+   
+   -   The argument is not instantiated, it must be a free variable without 
+       any constraints, especially it must not occur in any other argument 
+       and it cannot be a suspending variable. 
+   
+   *   The argument is an attributed variable that may have constraints 
+       or is a suspending variable. This detail is not a valid argument mode
+       to the mode/1 directive and is printed merely for interest. As a result
+       the actual argument mode will appear as '?'.
+   
+   ?   The mode is not known or it is neither of the above ones.
+   
+   NOTE: It is imperative to understand that the results of mode analysis 
+   are merely suggestions for the invocation modes of a predicate based on 
+   runtime information. If there are potential predicate invocation modes 
+   that were not exercised during runtime, the tool is unable to account 
+   for them in its analysis. For the mode specifier '-' the mode analyser
+   does not determine whether the variable occurs in any other argument
+   (i.e. is aliased), this must be manually verified. 
+   In summary, the programmer must verify that the suggested modes are correct 
+   before using the directive in the code.  If the instantiation of the 
+   predicate call violates its mode declaration, no exception is raised and 
+   its behaviour is undefined.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   No predicates have been compiled with the mode analyser 
+   into the calling context module.
+
+Exceptions
+     4 --- Calling context module is not instantiated
+
+Examples
+   
+   [eclipse 2]: nqueens(8, Qs).
+   L = [1, 5, 8, 6, 3, 7, 2, 4]
+   Yes (0.00s cpu, solution 1, maybe more) ?
+   ...
+   ...
+   Yes (0.10s cpu)
+   [eclipse 5]: mode_analyser:result([verbose:on]).
+
+   Mode analysis for eclipse : nqueens / 2:
+        Results for argument 1:
+                -: 0    *: 0    +: 0    ++: 1
+        Results for argument 2:
+                -: 1    *: 0    +: 0    ++: 0
+
+        nqueens(++, -)
+
+   Mode analysis for eclipse : noattack / 2:
+        Results for argument 1:
+                -: 0    *: 8    +: 0    ++: 0
+        Results for argument 2:
+                -: 0    *: 0    +: 7    ++: 1
+
+        noattack(?, ?)
+
+   Mode analysis for eclipse : safe / 1:
+        Results for argument 1:
+                -: 0    *: 0    +: 8    ++: 0
+
+        safe(+)
+
+   Mode analysis for eclipse : noattack / 3:
+        Results for argument 1:
+                -: 0    *: 28   +: 0    ++: 0
+        Results for argument 2:
+                -: 0    *: 0    +: 28   ++: 0
+        Results for argument 3:
+                -: 0    *: 0    +: 0    ++: 28
+
+        noattack(?, +, ++)
+
+   Yes (0.00s cpu)
+
+See Also
+   analyse / 1, result / 0, reset / 0

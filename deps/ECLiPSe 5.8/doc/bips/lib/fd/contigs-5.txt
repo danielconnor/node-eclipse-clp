@@ -1,0 +1,38 @@
+
+contigs(+List, +Item, ?MaxLength, ?Occurrences, ?Contigs)
+
+   MaxLength is the longest sequence of Item occurring in List, Occurrences is
+the total number of occurrences of Item in List and Contigs is the number
+of sequences of Item in List.
+
+
+
+Arguments
+   +List               A list of finite domain variables or integers
+   +Item               An integer
+   ?MaxLength          An integer finite domain variable or an integer.
+   ?Occurrences        An integer finite domain variable or an integer.
+   ?Contigs            An integer finite domain variable or an integer.
+
+Type
+   library(fd)
+
+Description
+   The constraint is satisfied when MaxLength is the longest sequence of
+   Item occurring in List, Occurrences is the total number of occurrences
+   of Item in List and Contigs is the number of all uninterrupted sequences
+   of Item in List.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   sequence / 4

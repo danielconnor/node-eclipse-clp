@@ -1,0 +1,32 @@
+
+open_receiver_init(+SendPort, +InitialMessages, -InitialMessagesTail, -ReceivePort)
+
+   Create a receiver for a given notification sender
+
+Arguments
+   SendPort            a send port structure
+   InitialMessages     the head of a list of initial messages
+   InitialMessagesTail the tail of the list of initial messages
+   ReceivePort         a variable, will be bound to a structure
+
+Type
+   library(notify_ports)
+
+Description
+
+    This predicate creates a receive port listening to messages sent
+    via the specified send port.  The new receive port will receive
+    all messages that are sent via the send port after the receiver
+    has been opened.  Messages that were sent before the receiver has
+    been opened will not be received by this receiver.
+    
+    In addition to open_receiver/2, there is a difference list pair
+    (InitialMessages and InitialMessagesTail) which can be used to
+    fake a sequence of initial message that will be received on
+    the receive port without actually having been sent from the
+    associated send port. This feature can be used to bring the
+    message receiving agent into a particular starting state.
+    
+
+See Also
+   open_receiver / 2

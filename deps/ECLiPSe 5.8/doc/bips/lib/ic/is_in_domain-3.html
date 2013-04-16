@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>is_in_domain(++Val, ?Var, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>is_in_domain(++Val, ?Var, ?Result)</H1>
+Binds Result to indicate presence of Val in domain of Var
+<DL>
+<DT><EM>Val</EM></DT>
+<DD>A number
+</DD>
+<DT><EM>Var</EM></DT>
+<DD>An IC variable or a number
+</DD>
+<DT><EM>Result</EM></DT>
+<DD>An atom
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Low level predicate which succeeds when Val is in the domain of Var with
+   Result bound to the atom 'yes'.  When Val is not in the domain of Var,
+   the predicate succeeds binding Result to the atom 'no'.  Should the
+   result be undecidable (as can be the case with bounded reals), the
+   predicate will succeed binding Result to the atom 'maybe'.  If Var is a
+   number, this predicate will succeed with Result bound to 'yes' iff
+   Var $= Val would succeed WITHOUT leaving a delayed goal.  If Var $= Val
+   would have left a delayed goal then Result gets bound to 'maybe'.
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Val is not ground
+<DT><EM>(5) type error </EM>
+<DD>either Val or Var is not a numeric type
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/ic/is_in_domain-2.html">is_in_domain / 2</A>
+</BODY></HTML>

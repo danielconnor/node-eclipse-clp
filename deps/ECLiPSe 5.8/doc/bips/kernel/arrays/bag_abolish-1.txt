@@ -1,0 +1,37 @@
+
+bag_abolish(+BagHandle)
+
+   Destroy a bag explicitly
+
+Arguments
+   BagHandle           A bag handle
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+	This explicitly destroys a previously created bag object and
+	frees all its memory.  Invoking bag_abolish/1 is optional,
+	the bag will be automatically destroyed when the system
+	backtracks across the call to bag_create/1, or when the
+	BagHandle is no longer needed and gets garbage collected.
+	bag_dissolve/2 will also destroy the bag.
+
+	Using the BagHandle after it has been destroyed will lead
+	to an error message. Destroying an already destroyed bag
+	does nothing and is silently accepted.
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- BagHandle is not instantiated
+     5 --- BagHandle is not a bag
+    40 --- BagHandle refers to an already destroyed bag
+
+See Also
+   bag_create / 1, bag_enter / 2, bag_count / 2, bag_erase / 1, bag_retrieve / 2, bag_dissolve / 2

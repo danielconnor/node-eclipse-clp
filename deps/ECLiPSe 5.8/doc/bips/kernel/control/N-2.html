@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>+LookupModule : +Goal</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>+LookupModule : +Goal</H1>
+Call the procedure visible in LookupModule rather than the caller module
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Callable term (atom or compound).
+</DD>
+<DT><EM>+LookupModule</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate provides a means to invoke a procedure which is not visible.
+   Normally, when a procedure is called, the system looks for a visible
+   definition (local or imported) in the caller module.  This primitive
+   on the other hand allows to specify a different lookup module.
+<P>
+   Two conditions must be satisfied for the lookup to succeed:
+<UL>
+   <LI>the definition wanted must be visible in the lookup module
+   <LI>the definition wanted must be exported from its home module
+</UL>
+   The purpose of this is to allow calling procedures whose definition is
+   not visible in the caller module.  The two main uses of this facility are:
+<OL>
+   <LI>If there are several definitions of a procedure with the same name
+       in different modules, :/2 can be used to specify which one to call.
+   <LI>If a module wants to define a procedure, but needs to call
+      another procedure of the same name (but from a different module),
+     :/2 can be used to call that one instead of the locally defined one.
+</OL>
+   Note that :/2 does not affect the caller (context) module.
+   The following table summarises the different idioms:
+<PRE>
+	Call within module(m)         lookup module    caller module
+
+	..., twice(X), ...               m               m
+	..., lm : twice(X), ...         lm               m
+	..., twice(X) @ cm, ...          m              cm
+	..., lm : twice(X) @ cm, ...    lm              cm
+	..., call(twice(X)) @ cm, ...   cm              cm
+</PRE>
+<P>
+   Note: In earlier versions of Eclipse the left hand side argument of
+   :/2 was required to be the module where the procedure was defined,
+   rather than just visible.
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is neither an atom nor a compound term.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>Goal is an undefined procedure in Module.
+</DL>
+<H2>Examples</H2>
+<PRE>
+% two definitions are visible:
+
+    :- lib(ria).    % exports #&gt;= / 2
+    :- lib(eplex).  % exports #&gt;= / 2
+
+	..., ria:(X #&gt;= Y), ...
+	..., eplex:(X #&gt;= Y), ...
+
+
+% the library predicate is hidden by the local definition:
+
+    :- lib(lists).     % exports print_list/1
+
+    print_list(List) :-
+	writeln("This is the list:"),
+	lists:print_list(List).
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/call-1.html">call / 1</A>, <A HREF="../../kernel/control/A-2.html">@ / 2</A>, <A HREF="../../kernel/modules/export-1.html">export / 1</A>
+</BODY></HTML>

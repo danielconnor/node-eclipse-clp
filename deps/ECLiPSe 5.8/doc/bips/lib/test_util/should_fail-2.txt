@@ -1,0 +1,13 @@
+
+should_fail(+Goal,+TestName)
+
+   Run the goal Goal and print a message if it doesn't fail
+
+Type
+   library(test_util)
+
+Examples
+   should_fail(3.0 > 3, test_float_not_greater_than_integer).
+
+See Also
+   should_give / 2, should_throw / 2, should_raise / 2, should_fail / 1, should_give / 3, should_throw / 3, should_raise / 3

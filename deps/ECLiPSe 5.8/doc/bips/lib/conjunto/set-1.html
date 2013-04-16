@@ -1,0 +1,37 @@
+<HTML><HEAD><TITLE>set(?SVar)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set(?SVar)</H1>
+Succeeds if SVar is a ground set (not a set domain)
+
+
+<DL>
+<DT><EM>?SVar</EM></DT>
+<DD>A Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used to test if a term is a ground set, that is a set
+   variable where the domain is reduced to a singleton or a set of ground
+   values defined with the symbols fg.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if SVar is not a ground set.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 3]: S = {a,{f(a,g),3},c}, set(S).
+
+S = {a,{f(a,g),3},c}
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/BNN-2.html">`:: / 2</A>, <A HREF="../../lib/conjunto/glb-2.html">glb / 2</A>, <A HREF="../../lib/conjunto/lub-2.html">lub / 2</A>, <A HREF="../../lib/conjunto/set_range-3.html">set_range / 3</A>
+</BODY></HTML>

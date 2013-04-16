@@ -1,0 +1,23 @@
+
+set_vars_type(?Vars, ++Type)
+
+   Sets the type of the given variables to the given type.
+
+Arguments
+   Vars                Var/list/matrix
+   Type                Type to be set 'real' or 'integer'
+
+Type
+   library(ic_kernel)
+
+Description
+
+   Typically not called directly but indirectly through reals/1 and
+   integers/1.
+
+
+Exceptions
+     4 --- Type is un-instantiated.
+
+See Also
+   set_var_type / 2, reals / 1, integers / 1

@@ -1,0 +1,71 @@
+<HTML><HEAD><TITLE>recorded(+Key, ?Value, -DBRef)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>recorded(+Key, ?Value, -DBRef)</H1>
+Succeeds if the term Value has been recorded in the indexed database under
+the key Key and DBRef is its unique reference.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>An atom or a compound term.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Any Prolog term.
+</DD>
+<DT><EM>-DBRef</EM></DT>
+<DD>A variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to find all values associated with a key.  Value is unified with
+   the first term that is associated with Key.  DBRef is unified with the
+   unique database reference of this database entry.  In the case of
+   compound terms, all keys of the same name and arity are treated as
+   equal.
+
+<P>
+   Backtracking will unify Value and DBRef with the value resp.  the
+   database reference of successive values associated with Key in the order
+   in which they were recorded.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the value Value cannot be unified with an associated value of
+   the key Key.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is neither an atom nor a compound term.
+<DT><EM>(5) type error </EM>
+<DD>DBRef is neither a variable nor a database reference.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   [eclipse]: recordz(beer, paulaner, _),
+   recordz(beer, lowenbrau, _),
+   recorded(beer, Value, Ref).
+   Value = paulaner
+   Ref = 98518     More? (;)
+   Value = lowenbrau
+   Ref = 98538     More? (;)
+   no (more) solution.
+   Fail:
+   erase_all(beer),recorded(beer,guiness, Ref).
+   Error:
+   recorded(Beer,Value,Ref).            (Error 4)
+   recorded("beer",Value,Ref).          (Error 5)
+   recorded(1,Value,Ref).               (Error 5)
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/recorda-3.html">recorda / 3</A>, <A HREF="../../kernel/record/recordz-3.html">recordz / 3</A>, <A HREF="../../kernel/record/erase-1.html">erase / 1</A>, <A HREF="../../kernel/record/referenced_record-2.html">referenced_record / 2</A>
+</BODY></HTML>

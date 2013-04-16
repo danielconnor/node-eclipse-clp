@@ -1,0 +1,84 @@
+<HTML><HEAD><TITLE>abolish_record(+Key)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>abolish_record(+Key)</H1>
+Remove the local record Key and all its recorded values.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>Key specification of the form Name/Arity or just Name.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Remove the local record Key visible from the caller module and all its
+   recorded values.  If global records are recorded under the key Key, they
+   become visible to that module.
+
+<P>
+   Key is equal to Key/0.
+
+<P>
+   If there is no local key declared in the caller module (with
+   local record/1), error 45 is raised.
+
+<P>
+   Note that abolish_record/1 is used to remove a records completely (even
+   its local declaration) so that a global record (if any) becomes visible
+   whereas erase_all/1 does not remove the local declaration.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is not of the form Atom or Atom/Integer.
+<DT><EM>(45) record does not exist </EM>
+<DD>No local key Key is declared in the caller module.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: record(type, integer). % global by default
+      yes.
+      [eclipse]: module(beer).
+      [beer]: record(type, string).   % added global
+      yes.
+      [beer]: local record(type).     % define a local
+      yes.
+      [beer]: record(type, lager),
+              record(type, stout).
+      yes.
+      [beer]: recorded(type, X).
+      X = lager     More? (;)
+      X = stout     More? (;)
+      no (more) solution.
+      [beer]: abolish_record(type/0).
+      yes. % the visible is now the global one again
+      [beer]: recorded(type, X).
+      X = integer     More? (;)
+      X = string     More? (;)
+      no (more) solution.
+
+Error:
+      abolish_record(X).               (Error 4).
+      abolish_record(123).             (Error 5).
+      local(record(key/3)),
+          abolish_record(key/3),
+          abolish_record(key/3).       (Error 45).
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/erase-2.html">erase / 2</A>, <A HREF="../../kernel/record/erase_all-1.html">erase_all / 1</A>, <A HREF="../../kernel/modules/local-1.html">record / 1</A>, <A HREF="../../kernel/record/record-2.html">record / 2</A>, <A HREF="../../kernel/record/recorded-2.html">recorded / 2</A>, <A HREF="../../kernel/record/recorded-3.html">recorded / 3</A>
+</BODY></HTML>

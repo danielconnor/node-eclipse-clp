@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Waiting for Instantiation</TITLE>
+<META NAME="description" CONTENT="Waiting for Instantiation">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node120.html">
+<LINK REL="previous" HREF="node118.html">
+<LINK REL="up" HREF="node118.html">
+<LINK REL="next" HREF="node120.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4029"
+ HREF="node120.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4025"
+ HREF="node118.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4019"
+ HREF="node118.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4027"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4030"
+ HREF="node120.html">Waiting for Binding</A>
+<B> Up:</B> <A NAME="tex2html4026"
+ HREF="node118.html">More About Suspension</A>
+<B> Previous:</B> <A NAME="tex2html4020"
+ HREF="node118.html">More About Suspension</A>
+ &nbsp <B>  <A NAME="tex2html4028"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001810000000000000000">
+Waiting for Instantiation</A>
+</H1>
+Goals that are to be woken when one or more variables become
+instantiated use the <B>inst</B> list.
+For instance, a predicate <B>freeze(Term, Goal)</B> which
+delays and is woken as soon as any variable in <B>Term</B>
+becomes instantiated can be implemented as follows:
+
+<P><PRE>
+freeze(Term, Goal) :-
+    suspend(Goal, 3, Term-&gt;inst).
+</PRE>
+
+<P>
+or equivalently by<PRE>
+freeze(Term, Goal) :-
+    make_suspension(Goal, 3, Susp),
+    insert_suspension(Term, Susp, inst of suspend, suspend).
+</PRE>
+
+<P>
+When it is called with a nonground term, it produces a delayed goal
+and when one variable is instantiated, the goal is woken:
+
+<P><PRE>
+[eclipse 2]: freeze(X, write(hello)).
+
+X = X
+
+Delayed goals:
+        write(hello)
+yes.
+[eclipse 3]: freeze(p(X, Y), write(hello)), X=Y.
+
+X = X
+Y = X
+
+Delayed goals:
+        write(hello)
+yes.
+[eclipse 4]: freeze(p(X, Y), write(hello)), Y=1.
+hello
+X = X
+Y = 1
+yes.
+</PRE>
+
+<P>
+However, if its argument is ground, it will still produce
+a suspended goal which may not be what we expect:<PRE>
+[eclipse 5]: 8.
+freeze(a, write(hello)).
+
+
+Delayed goals:
+        write(hello)
+yes.
+</PRE>
+To correct this problem, we can test this condition separately:<PRE>
+freeze(Term, Goal) :-
+    nonground(Term),
+    !,
+    suspend(Goal, 3, Term-&gt;inst).
+freeze(_, Goal) :-
+    call(Goal).
+</PRE>
+
+<P>
+and get the expected results:<PRE>
+[eclipse 8]: freeze(a, write(hello)).
+hello
+yes.
+</PRE>
+
+<P>
+Another possibility is to wait until a term becomes ground,
+i.e. all its variables become instantiated.
+In this case, it is not necessary to attach the suspension
+to <I>all</I> variables in the term.
+The <B>Goal</B> has to be called when the last variable in <B>Term</B>
+is instantiated, and so we can pick up any variable and
+attach the suspension to it.
+We may then save some unnecessary waking when other variables
+are instantiated before the selected one.
+To select a variable from the term,
+we can use the predicate <A NAME="tex2html1547"
+ HREF="../bips/kernel/termmanip/term_variables-2.html">term_variables/2</A><A NAME="11635"></A> which extracts
+all variables from a term.
+However, when we already have all variables available, we can in fact
+dispose of <B>Term</B> which may be huge and have
+a complicated structure.
+Instead, we pick up one variable from the list until
+we reach its end:
+
+<P><PRE>
+wait_for_ground(Term, Goal) :-
+    term_variables(Term, VarList),
+    wait_for_var(VarList, Goal).
+
+wait_for_var([], Goal) :-
+    call(Goal).
+wait_for_var([X|L], Goal) :-
+    (var(X) -&gt;
+        suspend(wait_for_var([X|L], Goal), 3, X-&gt;inst)
+    ;
+    nonground(X) -&gt;
+        term_variables(X, Vars),
+        append(Vars, L, NewVars),
+        wait_for_var(NewVars, Goal)
+    ;
+        wait_for_var(L, Goal)
+    ).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4029"
+ HREF="node120.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4025"
+ HREF="node118.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4019"
+ HREF="node118.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4027"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4030"
+ HREF="node120.html">Waiting for Binding</A>
+<B> Up:</B> <A NAME="tex2html4026"
+ HREF="node118.html">More About Suspension</A>
+<B> Previous:</B> <A NAME="tex2html4020"
+ HREF="node118.html">More About Suspension</A>
+ &nbsp <B>  <A NAME="tex2html4028"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

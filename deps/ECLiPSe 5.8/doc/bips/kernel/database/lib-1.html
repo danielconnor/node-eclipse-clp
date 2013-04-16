@@ -1,0 +1,64 @@
+<HTML><HEAD><TITLE>lib(+LibraryName)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lib(+LibraryName)</H1>
+Makes the library LibraryName available in the current module if not loaded
+already.
+
+
+<DL>
+<DT><EM>+LibraryName</EM></DT>
+<DD>String or atom.
+</DD>
+</DL>
+<H2>Description</H2>
+
+   Used to load the library LibraryName into the system if it has not
+   already been loaded.  The currently used Prolog suffix(es) is appended
+   to LibraryName and the resulting library is loaded if it exists.
+<P>
+   The search path used when loading libraries is specified by the global
+   flag library_path using the get_flag/2 and set_flag/2 predicates.  This
+   flag contains a list of strings containing the pathnames of the
+   directories to be searched when loading a library file.  User libraries
+   may be added to the system simply by copying the desired file into the
+   ECLiPSe library directory.  Alternatively the library_path flag may be
+   updated to point at a number of user specific directories.
+<P>
+   lib(Lib) is identical to use_module(library(Lib)).
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>LibraryName is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>LibraryName is neither a string nor an atom.
+<DT><EM>(80) not a module </EM>
+<DD>Library file does not contain a matching module.
+<DT><EM>(173) library not found </EM>
+<DD>Library file LibraryName not found.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   [eclipse]: lib(sorts).
+   loading the library /usr/local/ECLIPSE/lib/sorts.pl
+   yes.
+   [eclipse]: lib(sorts).
+   yes.              % library already loaded - succeeds
+Error:
+   lib(X).            (Error 4).
+   lib(1).            (Error 5).
+   lib(no_lib).       (Error 173).
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/ensure_loaded-1.html">ensure_loaded / 1</A>, <A HREF="../../kernel/opsys/existing_file-4.html">existing_file / 4</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/modules/use_module-1.html">use_module / 1</A>
+</BODY></HTML>

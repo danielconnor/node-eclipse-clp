@@ -1,0 +1,54 @@
+
+shelf_get(+ShelfHandle, +Index, -Term)
+
+   Retrieve a stored term from a shelf object
+
+Arguments
+   ShelfHandle         A shelf handle or shelf name
+   Index               An integer
+   Term                An arbitrary term or a variable
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+	This retrieves a copy of the stored term from the Index'th slot
+	of the shelf object denoted by ShelfHandle.
+
+	The slots are numbered from 1 to the maximum which was determined
+	during shelf creation (but note that ECLiPSe's struct-syntax can
+	be used to give the slots symbolic names, see struct/1).
+
+	Calling shelf_get/3 with an Index of 0 retrieves the whole
+	shelf with all its slots as a single compound term whose functor
+	corresponds to the one that was given during shelf creation.
+
+	Storing and retrieving terms from a shelf involves copying the
+	term each time, similar to what happens in setval/getval and
+	record/recorded.  In particular, if the term contains variables,
+	they lose their identity and are replaced with fresh ones.
+
+	Note: If ShelfHandle is not a handle, then it must be an atom or a
+	compound term, and the shelf is identified by this term's toplevel
+	functor together with the context module.
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- ShelfHandle is not instantiated
+     5 --- Index is not instantiated
+     5 --- ShelfHandle is not a shelf
+     5 --- Index is not an integer
+     6 --- Index is negative or greater than the number of slots on the shelf
+    40 --- ShelfHandle refers to an already destroyed shelf
+
+Examples
+   For examples see shelf_create/2,3.
+
+See Also
+   shelf_create / 2, shelf_create / 3, shelf_set / 3, shelf_abolish / 1, struct / 1

@@ -1,0 +1,73 @@
+<HTML><HEAD><TITLE>local reference(+Name, ++Init)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>local reference(+Name, ++Init)</H1>
+Creates a named reference called Name with intial value Init.
+<DL>
+<DT><EM>+Name</EM></DT>
+<DD>An atom.
+</DD>
+<DT><EM>++Init</EM></DT>
+<DD>A ground term
+</DD>
+</DL>
+<H2>Description</H2>
+   This creates a named reference with the atomic name Name.  A named
+   reference can be used to hold a reference to a term in the same way
+   as a logical variable.  Unlike the non-logical variables, the value
+   of a reference is not a copy, but identical to the original term it
+   was set to.  This implies that the value behaves logically, i.e. 
+   it disappears on backtracking, bindings to the variables inside it
+   are undone on backtracking etc.  A typical example of it use is global
+   state that a set of predicates wants to share without having to
+   pass an argument pair through all the predicate invocations. 
+<P>
+   Changing the value of a reference is similar to changing an argument
+   of a compound term using setarg/3.
+<P>
+   The initial value of the reference is Init, which must be a ground term.
+<P>
+   There are no arrays of references, but the same effect can be
+   achieved by storing a structure in a reference and using the
+   structure's arguments.  The arguments can then be accessed and
+   modified using arg/3 and setarg/3 respectively. 
+<P>
+   Note: Declaring a reference twice is silently accepted, and the second
+   declaration is ignored.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Name is not instantiated.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Init is not a ground term.
+<DT><EM>(5) type error </EM>
+<DD>Name is not an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+      [eclipse 1]: local reference(a,0).
+
+      yes.
+      [eclipse 2]: ( getval(a, Old), setval(a, 27), getval(a, New)
+		   ; getval(a, Then) ).
+      Old = 0
+      New = 27
+      Then = Then
+      Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+      Old = Old
+      New = New
+      Then = 0
+      Yes (0.00s cpu, solution 2)
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/reference-1.html">reference / 1</A>, <A HREF="../../kernel/arrays/setval-2.html">setval / 2</A>, <A HREF="../../kernel/arrays/getval-2.html">getval / 2</A>, <A HREF="../../kernel/termmanip/setarg-3.html">setarg / 3</A>, <A HREF="../../kernel/termmanip/arg-3.html">arg / 3</A>
+</BODY></HTML>

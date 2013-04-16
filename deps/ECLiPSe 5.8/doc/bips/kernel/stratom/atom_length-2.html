@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>atom_length(+Atom, ?Length)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>atom_length(+Atom, ?Length)</H1>
+Succeeds if Length is the length of Atom.
+
+
+<DL>
+<DT><EM>+Atom</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>?Length</EM></DT>
+<DD>Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   The length of an atom Atom is unified with Length.  The length of an
+   atom is the number of characters in the atom's name.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Length does not unify with the length of the atom Atom.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Atom is not instantiated (non-coroutine mode only).
+<DT><EM>(5) type error </EM>
+<DD>Atom is instantiated, but not to an atom.
+<DT><EM>(5) type error </EM>
+<DD>Length is neither an integer nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      atom_length(test, 4).
+      atom_length(test,L).         (gives L = 4).
+      atom_length(as, X).          (gives X = 2).
+      atom_length('4', 1).
+
+Fail:
+      atom_length(test, 5).
+
+Error:
+      atom_length(Atom, 2).        (Error 4).
+      atom_length(Atom, 2.0).      (Error 5).
+      atom_length(4, 1).           (Error 5).
+      atom_length(as, 2.0).        (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/atom-1.html">atom / 1</A>, <A HREF="../../kernel/stratom/atom_string-2.html">atom_string / 2</A>, <A HREF="../../kernel/stratom/string_length-2.html">string_length / 2</A>
+</BODY></HTML>

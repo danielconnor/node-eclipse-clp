@@ -1,0 +1,26 @@
+
+intset(?Set, +Min, +Max)
+
+   Set is a set containing numbers between Min and Max
+
+Arguments
+   Set                 A free variable, set variable or an integer list
+   Min                 integer
+   Max                 integer
+
+Type
+   library(ic_hybrid_sets)
+
+Description
+
+    Unifies Set with a set variable whose lower bound is the empty set
+    and whose upper bound is the set of all integers between Min and Max.
+    Equivalent to Set::[]..[Min,Min+1,..,Max].
+
+
+Exceptions
+     4 --- Min or Max are uninstantiated
+     5 --- Set is not a variable or list
+
+See Also
+   intsets / 4, :: / 2

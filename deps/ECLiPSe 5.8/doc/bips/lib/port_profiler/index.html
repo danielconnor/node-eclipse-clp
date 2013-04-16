@@ -1,0 +1,95 @@
+<HTML><HEAD><TITLE>library(port_profiler)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(port_profiler)</H1>
+Port Counting Profiler
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="last_port_profile-1.html"><STRONG>last_port_profile(++Options)</STRONG></A></DT>
+<DD>Output another port profile for the most recently profiled goal</DD>
+<DT><A HREF="port_profile-2.html"><STRONG>port_profile(+Goal, ++Options)</STRONG></A></DT>
+<DD>Create a (box model) port profile for the given Goal execution</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+    This is a performance analysis tool based on counting of events during
+    program execution. The events that are counted are defined in terms
+    of the 'box model' of execution (the same model that the debugger uses).
+    In this box model, predicates are entered though call, redo or resume
+    ports, and exited through exit, fail or leave ports. In addition, other
+    interesting events are indicated by ports as well (next, else, delay).
+    </P><P>
+    The usage is as follows:
+    <OL>
+    <LI>Compile your program in debug mode, as you would normally do during
+    program development, e.g.
+    <PRE>
+    	?- compile(queen).
+    </PRE>
+    <LI>Load the port_profiler library
+    <PRE>
+    	?- lib(port_profiler).
+    </PRE>
+    <LI>Run the query which you want to examine, using port_profile/2:
+    <PRE>
+    	?- port_profile(queen([1,2,3,4],Out), []).
+    </PRE>
+    This will print the results in a table.
+    </OL>
+    The default output you get looks like this:
+    <PRE>
+	PREDICATE       CALLER               call     exit     fail    *exit     redo
+	store_set   /3  nodiag      /3        106      106        .        .        .
+	-           /3  nodiag      /3         46       46        .        .        .
+	=\=         /2  nodiag      /3         46       45        1        .        .
+	qperm       /2  qperm       /2         30       28        .       16       14
+	qdelete     /4  qperm       /2         20       18        .       12       10
+	nodiag      /3  nodiag      /3         17       14        3        .        .
+	nodiag      /3  safe        /1         17        7       10        .        .
+	+           /3  nodiag      /3         17       17        .        .        .
+	qdelete     /4  qdelete     /4         10        9        .        3        2
+	qperm       /2  queen       /2          1        .        .       11       10
+	safe        /1  queen       /2         11        1       10        .        .
+	safe        /1  safe        /1          7        4        3        .        .
+	queen       /2  trace_body  /2          1        .        .        1        .
+    </PRE>
+    The port counts give information about
+    <UL>
+    <LI>what are the most frequently called predicates (call ports)
+    <LI>whether predicates failed unexpectedly (fail ports)
+    <LI>whether predicates exited nondeterministically (*exit ports), i.e.
+    	whether they left behind any choice-points for backtracking.
+    <LI>whether nondeterministically exited predicates were ever re-entered
+	to find alternative solutions (redo ports).
+    <LI>whether predicates did internal backtracking (next ports) in order
+    	to find the right clause. This may indicate suboptimal indexing.
+    <LI>how often predicates were delayed and resumed.
+    </UL>
+    By default, statistics are collected separately for each predicate-caller
+    pair, i.e. multiple lines appear for a predicate when it is called from
+    different caller predicates. This feature can be disabled so that predicates
+    are not distingushed by their caller. It is also possible to restrict
+    data collection to predicates with a spy point only (less time consuming).
+    </P><P>
+    Other options allow output in different formats, e.g. as an html file,
+    with a subset or different order of the ports, or with module information.
+    For details, see the description of port_profile/2.
+    </P><P>
+    Related, but different tools are:
+    <UL>
+    <LI>The sampling profiler (profile/1,2 from lib(profile)): this works
+	even on optimized, non-traceable code and gives timing information.
+	It does not give information about the caller predicate.
+    <LI>The coverage analyzer (see lib(coverage)): this is also based on
+	counting, but has counters for every program point and is probably
+	less useful for performance analysis.
+    </UL>
+</P>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, IC-Parc
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies Ltd
+<LI><STRONG>Date: </STRONG>$Date: 2005/01/04 16:27:57 $
+</UL>
+<HR>Generated from port_profiler.eci on Tue Jan 25 01:58:39 2005
+
+</BODY></HTML>

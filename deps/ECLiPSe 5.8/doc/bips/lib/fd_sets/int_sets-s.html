@@ -1,0 +1,42 @@
+<HTML><HEAD><TITLE>struct int_sets(dom, off, lcard, ucard, added, removed, add, rem, card, booleans, value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd_sets)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>struct int_sets(dom, off, lcard, ucard, added, removed, add, rem, card, booleans, value)</H1>
+Attribute structure for set variables (and constants)
+<H2>Fields</H2><DL>
+<DT><EM>dom</EM></DT>
+<DD>set domain representation (array of booleans)
+</DD>
+<DT><EM>off</EM></DT>
+<DD>offset between set element and corresponding array index (integer)
+</DD>
+<DT><EM>lcard</EM></DT>
+<DD>lower bound cardinality (integer)
+</DD>
+<DT><EM>ucard</EM></DT>
+<DD>upper bound cardinality (integer)
+</DD>
+<DT><EM>added</EM></DT>
+<DD>notification send-port for lower bound increases
+</DD>
+<DT><EM>removed</EM></DT>
+<DD>notification send-port for upper bound decreases
+</DD>
+<DT><EM>add</EM></DT>
+<DD>suspension list woken when lower bound increases
+</DD>
+<DT><EM>rem</EM></DT>
+<DD>suspension list woken when upper bound decreases
+</DD>
+<DT><EM>card</EM></DT>
+<DD>fd/ic variable for cardinality (see #/2)
+</DD>
+<DT><EM>booleans</EM></DT>
+<DD>array of fd/ic variables (see membership_booleans/2)
+</DD>
+<DT><EM>value</EM></DT>
+<DD>set variable belonging to this attribute
+</DD>
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/notify_ports/index.html">library(notify_ports)</A>, <A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/suspensions/suspend-4.html">suspend / 4</A>
+</BODY></HTML>

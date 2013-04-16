@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Heuristic Program Checker</TITLE>
+<META NAME="description" CONTENT="Heuristic Program Checker">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node87.html">
+<LINK REL="previous" HREF="node85.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node87.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3564"
+ HREF="node87.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3560"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3554"
+ HREF="node85.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3562"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3565"
+ HREF="node87.html">Document Generation Tools</A>
+<B> Up:</B> <A NAME="tex2html3561"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3555"
+ HREF="node85.html">Available Tools and Libraries</A>
+ &nbsp <B>  <A NAME="tex2html3563"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001520000000000000000">
+Heuristic Program Checker</A>
+</H1>
+
+The Heuristic Program Checking tool generates warning messages for 
+dubious programming constructs and violation of naming conventions for 
+an ECLiPSe source module or file. It is loaded as follows:
+<PRE>
+
+:- lib(lint).
+</PRE>
+
+The heuristic rules currently enforced are based on the style guide of
+Appendix <A HREF="node153.html#styleguide">E</A>. These rules are somewhat limited in scope. The library 
+is distributed as source and serves to provide a framework for the 
+addition of a more comprehensive set of rules that are tailored to each
+individual developer.
+
+Consider the following typographic mistakes in the <B>n-queens</B> 
+example:
+<PRE>
+
+queen(Data, Out) :-
+        qperm(Datas, Out),
+        safe(Out).
+
+n0diag([], _, _).
+</PRE>
+
+The tool is invoked using the
+<A NAME="tex2html1256"
+ HREF="../bips/lib/lint/lint-1.html">lint/1</A><A NAME="9412"></A> predicate with the source
+file specified as an atom or string:
+<PRE>
+
+?- lint(queen).
+ 
+--- File /tmp/queen.ecl, line 4:
+Singleton variables: [Data, Datas]
+ 
+--- File /tmp/queen.ecl, line 22:
+Questionable predicate name: n0diag
+ 
+Yes (0.01s cpu)
+</PRE>
+
+The checker identifies <TT>Data</TT> and <TT>Datas</TT> as being singleton variables
+and is dubious of the <TT>n0diag</TT> predicate name. Both are the result of 
+programmer error, <TT>Datas</TT> should read <TT>Data</TT> and <TT>n0diag</TT> 
+as <TT>nodiag</TT>. The <A NAME="tex2html1258"
+ HREF="../bips/lib/lint/lint-2.html">lint/2</A><A NAME="9415"></A> 
+predicate allows a list of options to be specified that turn on 
+and off the heuristic rules.
+
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3564"
+ HREF="node87.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3560"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3554"
+ HREF="node85.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3562"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3565"
+ HREF="node87.html">Document Generation Tools</A>
+<B> Up:</B> <A NAME="tex2html3561"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3555"
+ HREF="node85.html">Available Tools and Libraries</A>
+ &nbsp <B>  <A NAME="tex2html3563"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

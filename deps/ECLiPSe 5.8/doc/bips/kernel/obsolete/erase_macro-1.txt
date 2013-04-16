@@ -1,0 +1,48 @@
+
+erase_macro(+TransTerm)
+
+   Erases the macro definition for TransTerm done in the current module
+
+
+
+Arguments
+   +TransTerm          Term in the form Atom/Integer.
+
+Type
+   Obsolete
+
+Description
+   The macro (either global or local) defined for TransTerm in the current
+   module is erased.  If there was no macro definition, an error is raised.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- TransTerm is not instantiated.
+     5 --- TransTerm not of form Atom/Integer.
+   162 --- No macro transformation defined in this module for    TransTerm.
+
+Examples
+   
+   Success:
+   erase_macro(a/1).    (if a macro was defined for a/1)
+   Error:
+   erase_macro(X).      (Error 4).
+   erase_macro(a).      (Error 5).
+   erase_macro(a/1).    (Error 162). % if no macro was defined.
+
+
+
+
+
+See Also
+   erase_macro / 2, current_macro / 4, define_macro / 3, phrase / 2, phrase / 3

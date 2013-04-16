@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Example of Defining a New Constraint</TITLE>
+<META NAME="description" CONTENT="Example of Defining a New Constraint">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html610"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html606"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html600"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html608"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html611"
+ HREF="node19.html">Program Examples</A>
+<B> Up:</B> <A NAME="tex2html607"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html601"
+ HREF="node17.html">Extensions</A>
+ &nbsp <B>  <A NAME="tex2html609"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002160000000000000000">
+Example of Defining a New Constraint</A>
+</H1>
+We will demonstrate creation of new constraints on the
+following example.
+To show that the constraints are not restricted to linear terms,
+we can take the constraint
+<P>
+<BLOCKQUOTE>X^2 + Y^2 =&lt; C.
+</BLOCKQUOTE>
+<P>
+Assuming that <I>X</I> and <I>Y</I> are domain variables, we would
+like to define such a predicate that will be woken
+as soon as one or both variables' domains are updated in such a way that would
+require updating the other variable's domain, i.e. updates
+that would propagate via this constraint.
+For simplicity we assume that <I>X</I> and <I>Y</I> are nonnegative.
+We will define the predicate <B>sq(X, Y, C)</B> which will
+implement this constraint:
+
+<P><PRE>
+:- use_module(library(fd)).
+
+% A*A + B*B &lt;= C
+sq(A, B, C) :-
+    dvar_domain(A, DomA),
+    dvar_domain(B, DomB),
+    dom_range(DomA, MinA, MaxA),
+    dom_range(DomB, MinB, MaxB),
+    MiA2 is MinA*MinA,
+    MaB2 is MaxB*MaxB,
+    (MiA2 + MaB2 &gt; C -&gt;
+        NewMaxB is fix(sqrt(C - MiA2)),
+        dvar_remove_greater(B, NewMaxB)
+    ;
+        NewMaxB = MaxB
+    ),
+    MaA2 is MaxA*MaxA,
+    MiB2 is MinB*MinB,
+    (MaA2 + MiB2 &gt; C -&gt;
+        NewMaxA is fix(sqrt(C - MiB2)),
+        dvar_remove_greater(A, NewMaxA)
+    ;
+        NewMaxA = MaxA
+    ),
+    (NewMaxA*NewMaxA + NewMaxB*NewMaxB =&lt; C -&gt;
+        true
+    ;
+        suspend(sq(A, B, C), 3, (A, B)-&gt;min)
+    ),
+    wake. % Trigger the propagation
+</PRE>
+
+<P>
+The steps to be executed when this constraint becomes active,
+i.e. when the predicate <B>sq/3</B> is called or woken
+are the following:
+<DL COMPACT>
+<DT>1.
+<DD>We access the domains of the two variables
+using the predicate <A NAME="tex2html203"
+ HREF="../bips/lib/fd/dvar_domain-2.html">dvar_domain/2</A><A NAME="1310"></A> and
+and obtain their bounds using <A NAME="tex2html205"
+ HREF="../bips/lib/fd/dom_range-3.html">dom_range/3</A><A NAME="1313"></A>.
+Note that it may happen that one of the two variables is already instantiated,
+but these predicates still work as if the variable had a singleton domain.
+<P>
+<DT>2.
+<DD>We check if the maximum of one or the other variable is still
+consistent with this constraint, i.e. if there is a value
+in the other variable's domain that satisfies the constraint
+together with this maximum.
+
+<P>
+<DT>3.
+<DD>If the maximum value is no longer consistent, we compute
+the new maximum of the domain, and then update the domain
+so that all values greater than this value are removed
+using the predicate <A NAME="tex2html207"
+ HREF="../bips/lib/fd/dvar_remove_greater-2.html">dvar_remove_greater/2</A><A NAME="1316"></A>.
+This predicate also wakes all concerned suspension lists
+and instantiates the variable if its new domain is a singleton.
+
+<P>
+<DT>4.
+<DD>After checking the updates for both variables we test
+if the constraint is now satisfied for all values
+in the new domains.
+If this is not the case, we have to suspend the predicate
+so that it is woken as soon as the minimum of either domain
+is changed.
+This is done using the predicate <A NAME="tex2html209"
+ HREF="../bips/kernel/suspensions/suspend-3.html">suspend/3</A><A NAME="1319"></A>.
+
+<P>
+<DT>5.
+<DD>The last action is to trigger the execution of all goals that 
+are waiting for
+the updates we have made.
+It is necessary to wake these goals <B>after</B> inserting
+the new suspension, otherwise updates made in the
+woken goals would not be propagated back to this constraint.
+</DL>
+
+<P>
+Here is what we get:<PRE>
+[eclipse 20]: [X,Y]::1..10, sq(X, Y, 50).
+
+X = X{[1..7]}
+Y = Y{[1..7]}
+
+Delayed goals:
+	sq(X{[1..7]}, Y{[1..7]}, 50)
+yes.
+[eclipse 21]: [X,Y]::1..10, sq(X, Y, 50), X #&gt; 5.
+
+Y = Y{[1..3]}
+X = X{[6, 7]}
+
+Delayed goals:
+	sq(X{[6, 7]}, Y{[1..3]}, 50)
+yes.
+[eclipse 22]: [X,Y]::1..10, sq(X, Y, 50), X #&gt; 5, Y #&gt; 1.
+
+X = 6
+Y = Y{[2, 3]}
+yes.
+[eclipse 23]: [X,Y]::1..10, sq(X, Y, 50), X #&gt; 5, Y #&gt; 2.
+
+X = 6
+Y = 3
+yes.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html610"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html606"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html600"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html608"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html611"
+ HREF="node19.html">Program Examples</A>
+<B> Up:</B> <A NAME="tex2html607"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html601"
+ HREF="node17.html">Extensions</A>
+ &nbsp <B>  <A NAME="tex2html609"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

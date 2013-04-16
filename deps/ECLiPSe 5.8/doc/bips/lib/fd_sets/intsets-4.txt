@@ -1,0 +1,13 @@
+
+intsets(?Sets, ?N, +Min, +Max)
+
+   Sets is a list of N sets containing numbers between Min and Max
+
+Type
+   library(fd_sets)
+
+Exceptions
+     4 --- Min or Max are uninstantiated
+
+See Also
+   intset / 3, :: / 2

@@ -1,0 +1,79 @@
+lib(foreign)
+
+   
+Simple foreign interface like SICStus or Quintus(TM). For every C function
+an interface C function is generated which converts the arguments
+from and to the Sepia ones. Note that this is faster (and uses more
+C code) than one generic interface procedure which dispatches all
+external calls like in the above systems. Use it as follows:
+
+1) load this file with lib(foreign)
+2) compile (Sepia) the file with the foreign/3 clauses
+3) call make_simple_interface/0 or /1; this will generate the file
+   e_interface.c
+4) compile (cc) e_interface.c and the other C source files
+      On a SVR4 system (e.g. Solaris 2.x) produce one .so file
+      from all the .o files that should be loaded, including
+      the file e_interface.o. On Solaris this can be done with
+      something like
+	cc -I$ECLIPSEDIR/include -G -o myfile.so file1.c file2.c 		... e_interface.c
+5) call load_foreign_files/2. This assumes that the foreign/3 clauses
+   are still available.
+
+This means that a file which contains both foreign/3 facts and
+a goal :- load_foreign_files(...) must be split so that
+make_simple_interface/0 can be called before the goal.
+However, once the file e_interface.c is created, this file can be used
+in the original form.
+
+The main purpose of the interface is to port foreign files from
+SICStus or Quintus to Sepia, or to automate interfacing of
+other existing C functions. When writing new external functions,
+it is more efficient to use the Sepia external interface directly.
+
+
+User-defined types and conversion can also be specified.
+If some additional declarations and function calls are necessary
+before or after calling the C function, the type can be specified
+as a user type:
+	[+-]user(Type)
+
+When such a type is encountered, this library will call the predicate
+
+foreign_user_type(+Type, +I, -CType, -Local, -TypeCheck, -InConv,
+	-Call, -OutConv, -Unif)
+
+which is supposed to yield the data to be inserted into the
+source of the interface file. The arguments are as follows:
+Type	- the name of the user type with + or -, e.g. +mystring
+I	- the argument position; used to make distinction
+	  among several args of the same type
+CType	- the corresponding C type
+Local	- declaration of local variables for this type
+TypeCheck - type testing of the predicate arguments
+InConv	- calls to be made before calling the foreign function
+Call	- the actual argument passed to the foreign function
+OutConv	- calls to be made after the foreign call and before
+	  the unification of output arguments
+Unif	- unification of the output argument
+
+The source of the generated interface for a declaration
+foreign(funct, c, funct(+integer, +user(ut)))
+looks as follows:
+
+p_funct(val1, tag1, val2, tag2)
+value	val1, val2;
+type	tag1, tag2;
+{
+	LOCAL
+
+	Check_Integer(tag1);
+	TYPECHECK
+	INCONV
+	funct(val1.nint, CALL)
+	OUTCONV
+	Return_UNIF
+}
+where the capitalized ids are substituted by the user definition.
+
+

@@ -1,0 +1,34 @@
+lib(record)
+
+	ECLiPSe provides several facilities to store information across
+	backtracking. The following table gives an overview. If at all
+	possible, the handle-based facilities (bags, shelves, stores)
+	should be preferred because they lead to cleaner, reentrant code
+	(without global state) and reduce the risk of memory leaks.
+
+    Facility        Type            Reference       See
+    ================================================================
+    bags            unordered bag   by handle       bag_create/1
+    ----------------------------------------------------------------
+    shelves         array           by handle       shelf_create/2,3
+    ----------------------------------------------------------------
+    stores          hash table      by handle       store_create/1
+    ----------------------------------------------------------------
+    named shelves   array           by name         shelf/2
+    ----------------------------------------------------------------
+    named stores    hash table      by name         store/1
+    ----------------------------------------------------------------
+    non-logical     single cell     by name         variable/1,2
+    variables
+    ----------------------------------------------------------------
+    non-logical     array           by name         array/1,2
+    arrays
+    ----------------------------------------------------------------
+    records         ordered list    by name         record/1,2
+    ----------------------------------------------------------------
+    dynamic         ordered list    by name         dynamic/1,assert/1
+    predicates
+    ----------------------------------------------------------------
+
+    
+

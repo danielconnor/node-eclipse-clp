@@ -1,0 +1,30 @@
+
+alldifferent(?List)
+
+   The elements of the list List are pairwise different.
+
+
+
+Arguments
+   ?List               A list of integers and domain variables.
+
+Type
+   library(fd)
+
+Description
+   This constraint imposes the constraint ##/2 on every pair of element of
+   List.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if two element of the list are equal.
+
+
+
+See Also
+   :: / 2, #:: / 2, ## / 2, fd_global : alldifferent / 1

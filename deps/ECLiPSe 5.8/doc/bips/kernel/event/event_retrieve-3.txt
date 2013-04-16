@@ -1,0 +1,42 @@
+
+event_retrieve(+EventHandle, ?Goal, ?Module)
+
+   Given the handle with which an event is associated, retrieve the event goal and module
+
+Arguments
+   EventHandle         An event handle
+   Goal                A free variable or goal to unify
+   Module              A free variable or module name
+
+Type
+   Event Handling
+
+Description
+	The goal associated with an event handle, created using event_create/3,
+	is retrieved using this predicate. It also returns the context module
+	in which the event was created (and where the goal should be called).
+    
+	Like event creation, retrieval of the goal produces a copy of the
+	goal. As a result, if the goal contains variables, they lose their
+	identity and are replaced with fresh ones.
+    
+        If the event was disabled, the goal 'true' is retrieved instead of the
+	original goal.
+    
+
+Exceptions
+     4 --- EventHandle is un-instantiated
+     5 --- EventHandle is not a handle
+
+Examples
+       ?- event_create(writeln('Hello world!'), [], Event),
+    	event_retrieve(Event, EventGoal, Module).
+
+    Event = 'EVENT'(16'50421bd0)
+    EventGoal = writeln('Hello world!')
+    Module = eclipse
+    Yes (0.00s cpu)
+    
+
+See Also
+   event_create / 3, event / 1, event_after / 2, event_after / 3, event_after_every / 2, set_event_handler / 2, current_after_events / 1, cancel_after_event / 2, is_event / 1, event_disable / 1, event_enable / 1

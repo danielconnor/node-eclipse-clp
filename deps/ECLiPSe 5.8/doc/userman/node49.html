@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Multi-Directional Predicates plus/3 and times/3</TITLE>
+<META NAME="description" CONTENT="The Multi-Directional Predicates plus/3 and times/3">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2990"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2986"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2980"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2988"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2991"
+ HREF="node50.html">Arithmetic and Coroutining</A>
+<B> Up:</B> <A NAME="tex2html2987"
+ HREF="node44.html">Arithmetic Evaluation</A>
+<B> Previous:</B> <A NAME="tex2html2981"
+ HREF="node48.html">Low Level Arithmetic Builtins</A>
+ &nbsp <B>  <A NAME="tex2html2989"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00850000000000000000"></A>
+<A NAME="4643"></A>
+<A NAME="4644"></A>
+<BR>
+The Multi-Directional Predicates plus/3 and times/3
+</H1>
+A drawback of arithmetic using <A NAME="tex2html601"
+ HREF="../bips/kernel/arithmetic/is-2.html">is/2</A><A NAME="4699"></A> is that the right hand side must
+be fully instantiated at evaluation time.
+Often it is desirable to have predicates that define true logic
+relationships between their arguments like ``Z is the sum of X and Y''.
+For integer addition and multiplication this is provided as:
+<DL>
+<DT><STRONG>plus(X, Y, Z)</STRONG>
+<DD>True if the sum of X and Y is Z. At most one of X, Y, Z can be a variable.
+
+<P>
+<DT><STRONG>times(X, Y, Z)</STRONG>
+<DD>True if the product of X and Y is Z. At most one of X, Y, Z can be a variable.
+
+<P>
+</DL>
+
+<P>
+They work only with integer arguments but any single argument
+can be a variable which is then instantiated so that the relation holds.
+If more than one argument is uninstantiated, an instantiation fault is produced.
+
+<P>
+Note that if one of the first two arguments is a variable,
+a solution doesn't necessarily exist. For example, the following goal has
+no integer solution :<PRE>
+[eclipse 1]: times(2, X, 3).
+
+no (more) solution.
+</PRE>
+
+<P>
+Since any one of the arguments of these two predicates can be a variable,
+it does not make much sense to use them in arithmetic expressions
+where always the first arguments are taken as input and the last
+one as output.  
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2990"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2986"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2980"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2988"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2991"
+ HREF="node50.html">Arithmetic and Coroutining</A>
+<B> Up:</B> <A NAME="tex2html2987"
+ HREF="node44.html">Arithmetic Evaluation</A>
+<B> Previous:</B> <A NAME="tex2html2981"
+ HREF="node48.html">Low Level Arithmetic Builtins</A>
+ &nbsp <B>  <A NAME="tex2html2989"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

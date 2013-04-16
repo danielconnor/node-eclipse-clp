@@ -1,0 +1,75 @@
+
+timeout(+Goal, ++TimeLimit, +TimeOutGoal, ++SolutionMode, ?Timer, ?DueTime, ?TimeRemaining)
+
+   Run the goal Goal for a maximum of TimeLimit seconds.
+
+Arguments
+   Goal                Goal to run
+   TimeLimit           Time limit of Goal in seconds (integer or float)
+   TimeOutGoal         Goal to run on expiry of TimeLimit
+   SolutionMode        Time limit applies to all solutions or per solution (atom)
+   Timer               After event timer handle
+   DueTime             Time at which TimeLimit expires (float)
+   TimeRemaining       Time remaining until goal would have expired (float)
+
+Type
+   library(timeout)
+
+Description
+
+
+    Goal is executed for a maximum of TimeLimit seconds. If the goal is still
+    executing after TimeLimit, time-out occurs, the execution of the goal is
+    terminated (via exit_block/1) and TimeOutGoal is executed.  If the value
+    of TimeLimit is 0 or 1.0Inf, no timeout is applied to the Goal.
+
+    SolutionMode is one of all_solution or per_solution.  If Goal is
+    resatisfiable, then, having found a solution, the per_solution
+    option reapplies the full value of the originally specified
+    TimeLimit to the resuming Goal.  The all_solution option resumes
+    the Goal with the unelapsed portion of TimeLimit (i.e.  its
+    remainder) as the expiry time, the expiry time therefore remains
+    the same.
+
+    Timer is the after-event handle assigned to this timeout goal. It
+    may be used within Goal to force early expiry of the timeout using:
+    event(Timer). 
+
+    DueTime is the time at which TimeLimit expires and the TimeOutGoal is 
+    posted. It is instantiated before Goal starts executing and may therefore 
+    be used within Goal and TimeOutGoal. DueTime is undefined (and remains
+    uninstantiated) if the per_solution SolutionMode is specified.
+
+    On success, TimeRemaining is the time left until TimeLimit expiry,
+    if Goal completes before then, on timeout, TimeRemaining is 0.0.
+
+    The predicate is based on the after event timers, so TimeLimit is 
+    measured in the timer currently used by after events. The current time
+    used for the associated event timer can be retrieved using
+    statistics(event_time, CurrentTime). The timeout predicate can be used 
+    with other after events, and can be nested within itself (i.e. embedded
+    within Goal or TimeOutGoal). Within Goal, the remaining time that the Goal
+    has left to run before time-out can be computed using:
+
+    RemainingTime is max(0.0, DueTime - statistics(event_time)).
+
+    This may be useful for setting up sub-timeouts as a fraction of the
+    total remaining time.
+    
+
+Resatisfiable
+   If Goal is resatisfiable.
+
+Examples
+       % time-out from infinite loop
+    ?- timeout((repeat,fail), 1.5, writeln(timed-out), 
+            all_solution, Timer, Due, Remainder).
+    timed - out
+    Timer = 'EVENT'(16'ed920978)
+    Due = Due
+    Remainder = 0.0
+    Yes (1.51s cpu)
+    
+
+See Also
+   timeout / 3, call_timeout_safe / 1, event_after / 2, event / 1

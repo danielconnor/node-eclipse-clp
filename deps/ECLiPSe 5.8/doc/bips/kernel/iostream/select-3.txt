@@ -1,0 +1,95 @@
+
+select(+StreamList, +Timeout, ?ReadyStreams)
+
+   Returns streams from StreamList which are ready for I/O, blocking at most
+Timeout seconds.
+
+
+
+Arguments
+   +StreamList         A list of atoms or integers.
+   +Timeout            A number or an atom.
+   ?ReadyStreams       A term unifiable with a list of integers and atoms.
+
+Type
+   Stream I/O
+
+Description
+   select/3 is modelled after (and partially implemented using) the
+   select() Unix system call.  StreamList is a list of streams where
+   input or output is expected to occur.  If I/O is available on some
+   streams from the StreamList, ReadyStreams is unified with a list of
+   those. The same symbolic stream names are used in both lists.
+
+
+   If Timeout is a number, it must be non-negative and less than
+   100000000. select/3 then waits for at most Timeout seconds for I/O
+   on these streams and if none is available, it unifies ReadyStreams
+   with nil.  If Timeout is zero, select/3 does not wait but it
+   immediately returns the list of streams where I/O is available.  If
+   Timeout is the atom block, select/3 waits until I/O is possible on
+   one of the streams in StreamList.
+
+
+   The streams in StreamList can be sockets, queues or string streams. 
+   On Unix systems, pipes, files and ttys are also allowed.  Unlike the
+   select() system call, select/3 does not test any exceptional pending
+   conditions.
+
+
+Note
+   Currently it is not possible to return sockets on which output is
+   possible.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if ReadyStreams does not unify with the sublist of StreamList
+   containing streams with available I/O.
+
+
+
+Exceptions
+     4 --- StreamList is not instantiated or it contains uninstantiated    variables.
+     4 --- Timeout is not instantiated.
+     5 --- StreamList is not a list of integers and atoms.
+     5 --- Timeout instantiated, but not to a number or an atom.
+     5 --- ReadyStreams is instantiated, but not to a list or nil
+     6 --- Timeout is a negative number or an atom different from block.
+   141 --- Not implemented for this stream class on this system.
+   170 --- The system call was interrupted by a signal.
+   192 --- A stream in StreamList is not an input stream or a pipe,    or it is a string stream or null.
+   193 --- A stream in StreamList is not open or does not exist.
+
+Examples
+   
+     [eclipse 1]: socket(internet, datagram, s), bind(s, _/40000),
+		  socket(internet, datagram, r), bind(r, _/40001),
+		  select([s, r], block, Streams).
+
+     <blocks until data arrives>
+
+
+
+     [eclipse 1]: open(queue(""), update, q).
+     yes.
+     [eclipse 2]: select([q],0,L).
+     L = []
+     yes.
+     [eclipse 3]: write(q,hello).
+     yes.
+     [eclipse 4]: select([q],0,L).
+     L = [q]
+     yes.
+
+
+
+
+
+
+See Also
+   open / 3, open / 4, pipe / 2, socket / 3, get_stream_info / 3

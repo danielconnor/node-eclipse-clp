@@ -1,0 +1,50 @@
+
+abort
+
+   The current computation is aborted and control is returned to the top
+level.
+
+
+
+Arguments
+
+Type
+   Control
+
+Description
+   Used to abort the current computation and return control to the top
+   level.  This predicate is also executed when Ctrl-C is typed (unless the
+   interrupt handler for this event has been redefined).
+
+
+   abort/0 is implemented using exit_block(abort) which is caught by the
+   top level loop.  If there is an active block/3 call whose tag matches
+   the atom abort, the control does not return to the top level loop but is
+   caught by this block.  If there is neither a top level loop (eg the -e
+   option has been used) nor any block to catch the abort, then ECLiPSe will
+   either return to the host program (in case of an embedded ECLiPSe) or
+   the ECLiPSe process will exit (in case of a standalone ECLiPSe).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+   [eclipse]: abort.
+   Aborting execution....
+   [eclipse]:
+
+
+
+
+
+See Also
+   kill / 2, block / 3, exit_block / 1

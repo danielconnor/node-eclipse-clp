@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>length(?List, ?N)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>length(?List, ?N)</H1>
+Succeeds if the length of list List is N.
+
+
+<DL>
+<DT><EM>?List</EM></DT>
+<DD>List or variable.
+</DD>
+<DT><EM>?N</EM></DT>
+<DD>Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies N with the length of list List.  length/2 can be used to create
+   a list List of length N. The definition of this Prolog library predicate
+   is:
+<PRE>
+length(List, Length) :-
+        ( var(Length) ->
+          length(List, 0, Length)
+        ;
+          Length >= 0,
+          length1(List, Length) ).
+
+length([], Length, Length).
+length([_|L], N, Length) :-
+        N1 is N+1,
+        length(L, N1, Length).
+
+length1([], 0) :- !.
+length1([_|L], Length) :-
+        N1 is Length-1,
+        length1(L, N1).
+</PRE>
+   This predicate does not perform any type testing functions.
+	
+<H3>Fail Conditions</H3>
+   Fails if the length of list List does not unify with N.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>
+Success:
+  length([1,2,3],N).   (gives N=3).
+  length([1,2,1,X],N). (gives X=_g84; N=4).
+  length(L,2).         (gives L=[_g62,_g72]). % creates list
+Fail:
+  length([1,2,3],2).
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/lists/append-3.html">append / 3</A>
+</BODY></HTML>

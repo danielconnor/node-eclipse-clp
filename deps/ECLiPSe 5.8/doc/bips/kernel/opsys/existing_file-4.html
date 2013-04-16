@@ -1,0 +1,105 @@
+<HTML><HEAD><TITLE>existing_file(++Base, ++Completions, ++Permissions, ?MatchedFile)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>existing_file(++Base, ++Completions, ++Permissions, ?MatchedFile)</H1>
+Finds any existing file subject to the specified conditions.
+<DL>
+<DT><EM>Base</EM></DT>
+<DD>The start of a filename (non-empty atom or string (possibly with a library/1 wrapper))
+</DD>
+<DT><EM>Completions</EM></DT>
+<DD>Possible completions for Base (list of atomic elements)
+</DD>
+<DT><EM>Permissions</EM></DT>
+<DD>Permissions (list of readable,writable,executable)
+</DD>
+<DT><EM>MatchedFile</EM></DT>
+<DD>An existing file that matches the specification.
+</DD>
+</DL>
+<H2>Description</H2>
+
+    This file will search for any existing files that matches the
+    specifications given in the first three arguments: the file starts with
+    Base, which is a partial filepath name. Base may have a library/1
+    wrapper around the name. A list of possible completions (usually
+    suffixes) given in Completions is appended to Base, in the order they
+    are given, to give a complete name. If a proper file
+    (i.e. non-directory) with this name exists, the ECLiPSe process's
+    permission for this file are checked against the Permissions list --
+    the list can contain the atoms readable, writable, executable; each
+    specifying that the corresponding permission should be checked. If the
+    permissions match, then the filename is returned in MatchedFile.
+
+<P>
+    If the library/1 wrapper is used, then the file is searched for in the
+    paths specified in library path (including any subdirectory with the
+    same name as given in the library/1 wrapper).  Otherwise, the search is
+    relative to the current working directory. All matching names can be
+    returned via backtracking. The search order is that if library/1
+    wrapper is used, then the library path is tried in the order in which
+    they appear in the library_path flag of get_flag/2, and for each path,
+    the completions are tried in the order in which they appeared in
+    Completions.
+
+<P>
+    MatchedFile is in the same form as Base, except that if library(...) is 
+    used, the proper library path is substituted. Also, any leading '~' and
+    enviroment variables (specified with a leading '$') are replaced. 
+
+<P>
+    The predicates canonical_path_name/2 and existing_file/4 are intended
+    as replacement for absolute_file_name/2 in previous releases. The
+    functionality of completing an incomplete name and returning an
+    absolute path of absolute_file_name/2 has been separated. The following
+    approximately implements the old absolute_file_name/2:
+
+<PRE>
+    absolute_file_name(Rel, Abs) :-
+	(Rel == user ->
+	    Abs == user
+	; get_flag(prolog_suffix, Sufs),
+	  (existing_file(Rel, Sufs, [], ExtRel) -> true ; ExtRel = Rel),
+	  canonical_path_name(ExtRel, Abs)
+        ).
+</PRE>
+
+
+<H3>Fail Conditions</H3>
+MatchedFile cannot be found.
+<H3>Resatisfiable</H3>
+yes
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Base, Completions, Permissions not of right type.
+<DT><EM>(6) out of range </EM>
+<DD>Base is an empty atom or string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success: 
+
+      [eclipse 1]:  existing_file(library(fd), [".eco"], [readable], File).
+
+      File = "/homes/ks15/Eclipse/lib/fd.eco"     More? (;) 
+
+      % test1 and test3 exists in current working directory
+      [eclipse 1]: existing_file(test, [1,2,3], [], File).
+
+      File = test1     More? (;) 
+
+      File = test3     More? (;) 
+
+      no (more) solution.
+
+Failure:
+
+      [eclipse 1]:  existing_file(library(fd), [], [readable], File).
+      % no Completions at all; will always fail
+
+      [eclipse 1]:  existing_file(library(fd), [""], [readable], File).
+      % no library file with just 'fd' as the name (file has a suffix)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/canonical_path_name-2.html">canonical_path_name / 2</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/opsys/os_file_name-2.html">os_file_name / 2</A>, <A HREF="../../kernel/opsys/pathname-4.html">pathname / 4</A>
+</BODY></HTML>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Correctness and Performance</TITLE>
+<META NAME="description" CONTENT="Correctness and Performance">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node57.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="tutorial.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1293"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1287"
+ HREF="tutorial.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1281"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1289"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1291"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1294"
+ HREF="node53.html">Testing</A>
+<B> Up:</B> <A NAME="tex2html1288"
+ HREF="tutorial.html">Developing Applications with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html1282"
+ HREF="node51.html">Debugger</A>
+ &nbsp <B>  <A NAME="tex2html1290"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1292"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00900000000000000000"></A>
+<A NAME="correctnessandperformance"></A>
+<BR>
+Correctness and Performance
+</H1>
+
+<P>
+The effort in design and implementation is aimed at producing a working and maintainable program with minimal effort. But how do we check that a program is actually working?
+
+<P>
+We typically define what a correct program should do only in an informal way, stating constraints that should be satisfied, data formats that should be accepted, etc. Proving correctness<A NAME="1015"></A> would require a much more formal approach, where we first agree on a specification in a formal language and then prove that the implementation satisfies that specification. But even that does not protect us from a misunderstanding in defining the spec itself, which may not reflect the wishes of the user.
+
+<P>
+Lacking this formal approach, the best hope of checking correctness of a program lies in exercising it with different types of tests.
+
+<P>
+Related to the question of correctness is the issue of performance<A NAME="1016"></A>. The program should not only produce correct results, but must produce them within a limited time. The correct result which is available after five years of computation is (most of the time) as useless as the wrong result obtained in five seconds.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html1295"
+ HREF="node53.html">Testing</A>
+<LI><A NAME="tex2html1296"
+ HREF="node54.html">Profiling</A>
+<LI><A NAME="tex2html1297"
+ HREF="node55.html">Reviewing</A>
+<LI><A NAME="tex2html1298"
+ HREF="node56.html">Issues to check for</A>
+<UL>
+<LI><A NAME="tex2html1299"
+ HREF="node56.html#SECTION00941000000000000000">Unwanted choicepoints</A>
+<LI><A NAME="tex2html1300"
+ HREF="node56.html#SECTION00942000000000000000">Open streams</A>
+<LI><A NAME="tex2html1301"
+ HREF="node56.html#SECTION00943000000000000000">Modified global state</A>
+<LI><A NAME="tex2html1302"
+ HREF="node56.html#SECTION00944000000000000000">Delayed goals</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1293"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1287"
+ HREF="tutorial.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1281"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1289"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1291"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1294"
+ HREF="node53.html">Testing</A>
+<B> Up:</B> <A NAME="tex2html1288"
+ HREF="tutorial.html">Developing Applications with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html1282"
+ HREF="node51.html">Debugger</A>
+ &nbsp <B>  <A NAME="tex2html1290"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1292"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

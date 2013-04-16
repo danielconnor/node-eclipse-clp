@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Conflict Sets</TITLE>
+<META NAME="description" CONTENT="Conflict Sets">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node69.html">
+<LINK REL="previous" HREF="node67.html">
+<LINK REL="up" HREF="node64.html">
+<LINK REL="next" HREF="node69.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1961"
+ HREF="node69.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1957"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1951"
+ HREF="node67.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1959"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1962"
+ HREF="node69.html">Invariants</A>
+<B> Up:</B> <A NAME="tex2html1958"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1952"
+ HREF="node67.html">Repair Constraints</A>
+ &nbsp <B>  <A NAME="tex2html1960"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1963"
+ HREF="node68.html#SECTION001040100000000000000">conflict_vars(-Vars)</A>
+<LI><A NAME="tex2html1964"
+ HREF="node68.html#SECTION001040200000000000000">conflict_constraints(+ConflictSet, -Constraints)</A>
+<LI><A NAME="tex2html1965"
+ HREF="node68.html#SECTION001040300000000000000">poss_conflict_vars(+ConflictSet, -Vars)</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001040000000000000000">
+Conflict Sets</A>
+</H1>
+
+<P>
+Given a tentative assignment, there are two kinds of conflicts that
+can occur:
+
+<UL><LI>Untenable variables
+
+<LI>Violated constraints
+
+</UL>
+To obtain a tentative assignment which is a solution to the given problem,
+both kinds of conflicts must be repaired.
+The repair library supports this task by dynamically maintaining
+conflict sets.
+Typically, a search algorithm examines the conflict set(s) and attempts
+to repair the tentative assignment such that the conflicts disappear.
+When all conflict sets are empty, a solution is found.
+
+<P>
+
+<H3><A NAME="SECTION001040100000000000000"></A>
+<A NAME="5260"></A>
+<A NAME="5261"></A>
+<BR>
+conflict_vars(-Vars)
+</H3>
+When a variable becomes untenable, it appears in the set of conflict
+variable, when it becomes tenable, it disappears.
+This primitive returns the list of all currently untenable variables.
+Note that all these variables must be reassigned in any solution
+(there is no other way to repair untenability).
+Variable reassignment can be achieved
+by changing the variable's tentative value with tent_set/2,
+or by instantiating the variable.
+Care should be taken whilst implementing repairs through tentative
+value changes since this is a non-monotonic operation: conflicting repairs
+may lead to cycles and the computation may not terminate.  
+
+<P>
+
+<H3><A NAME="SECTION001040200000000000000"></A>
+<A NAME="5263"></A>
+<A NAME="5264"></A>
+<BR>
+conflict_constraints(+ConflictSet, -Constraints)
+</H3>
+When a repair constraint goes into conflict (i.e. when it does not satisfy
+the tentative assignment of its variables), it appears in a conflict set,
+once it satisfies the tentative assignment, it disappears.
+This primitive returns the list of all current conflict constraints
+in the given conflict set.
+<B>ConflictSet</B> is the conflict set name (or handle) which has
+been used in the corresponding constraint annotation.  For example<PRE>
+conflict_constraints(cap_cstr, Conflicts)
+</PRE>
+would retrieve all constraints that were annotated with <code>cap_cstr</code>
+and are currently in conflict.
+
+<P>
+At least one variable within a conflict constraint must be reassigned
+to get a repaired solution.
+Variable reassignment can be achieved
+by changing the variable's tentative value with tent_set/2,
+or by instantiating the variable.
+Care should be taken whilst implementing repairs through tentative
+value changes since this is a non-monotonic operation: conflicting repairs
+may lead to cycles and the computation may not terminate.  
+
+<P>
+Note that any repair action can change the conflict set,
+therefore <A NAME="tex2html606"
+ HREF="../bips/lib/repair/conflict_constraints-2.html">conflict_constraints/2</A><A NAME="5342"></A> should be called again after
+a change has been made, in order to obtain an up-to-date conflict set.
+
+<P>
+
+<H3><A NAME="SECTION001040300000000000000"></A>
+<A NAME="5273"></A>
+<BR>
+poss_conflict_vars(+ConflictSet, -Vars)
+</H3>
+The set of variables within the conflict constraints.
+This is generally a mixture of tenable and untenable variables.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1961"
+ HREF="node69.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1957"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1951"
+ HREF="node67.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1959"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1962"
+ HREF="node69.html">Invariants</A>
+<B> Up:</B> <A NAME="tex2html1958"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1952"
+ HREF="node67.html">Repair Constraints</A>
+ &nbsp <B>  <A NAME="tex2html1960"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

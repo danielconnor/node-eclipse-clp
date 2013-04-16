@@ -1,0 +1,38 @@
+
+?SetVariable `:: ?Domain
+
+   Set variable declaration
+
+Arguments
+   SetVariable         A variable.
+   Domain              A set domain with optional cardinality declaration.
+
+Type
+   library(cardinal)
+
+Description
+Declare or constrain a set domain variable to have Domain as domain.
+		Domain may assume 3 forms: Glb..Lub, Glb+Poss or Glb+Poss:Cardinality.
+		Glb is a ground set denoting the SetVariable's glb. Lub is a ground set
+		denoting the SetVariable's lub. Poss is a ground set denoting the SetVariable's
+		poss (lub\glb). Cardinality is the SetVariable's cardinality, which may be
+		an integer, an FD variable, or an integer domain (list or range).
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if SetVariable can not be constrained accordingly.
+
+Examples
+   
+?- S `:: []..[a,b].
+?- S `:: []+[a,b].
+?- S `:: []+[a,b]:1.
+?- S `:: [x]+[a,b]:C.
+?- S `:: []+[a,b]:[0,2].
+?- S `:: [c]+[a,b,d,e,f,g,h,i,j,k]:[2,4..7].
+
+
+See Also
+   set / 4, sets / 4, cardinality / 2, union_var / 2, minimum / 2, maximum / 2, set_labeling / 1

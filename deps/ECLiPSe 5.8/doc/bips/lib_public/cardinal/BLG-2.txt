@@ -1,0 +1,19 @@
+
+?SetVar1 `<> ?SetVar2
+
+   Set disjointness constraint (obsolete)
+
+Arguments
+   SetVar1             A set variable.
+   SetVar2             A set variable.
+
+Type
+   library(cardinal)
+
+Description
+Constrain sets SetVar1 and SetVar2 to be disjoint.
+		Obsolete: `/2 is available only for compatibility with conjunto library syntax.
+		It is equivalent to the preferred `$/2. See its description for details.
+
+See Also
+   `$ / 2, all_disjoint / 1, complement / 2, complement / 3, `/= / 2, `>= / 2

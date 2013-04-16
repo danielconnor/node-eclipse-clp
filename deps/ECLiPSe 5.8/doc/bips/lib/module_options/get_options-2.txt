@@ -1,0 +1,33 @@
+
+get_options(+OptionList, -OptionStruct)
+
+   Create a structure OptionStruct from OptionList and the context module's default settings
+
+Arguments
+   OptionList          List of Name:Value pairs
+   OptionStruct        Variable, will be bound to a structure
+
+Type
+   library(module_options)
+
+Description
+
+    The exact behaviour of this predicate depends on the module from where
+    it is invoked: It returns a structure OptionStruct, whose skeleton and
+    default field values are defined by the predicate default_options/1 in
+    the context module. Moreover, OptionList is analysed, and any option
+    values specified there will show up in the corresponding fields of the
+    returned structure OptionStruct, instead of the default values defined
+    by default_options/1.
+
+    The option names in OptionList must be valid according to the predicate
+    valid_option_field/2 in the context module, and the corresponding values
+    must be valid according to valid_option_value/2.
+
+    
+
+Fail Conditions
+   OptionList contains illegal names or values
+
+See Also
+   library(module_options), set_default_option / 2, print_default_options / 1

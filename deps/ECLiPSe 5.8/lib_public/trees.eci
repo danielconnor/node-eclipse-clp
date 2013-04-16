@@ -1,0 +1,9 @@
+:- module(trees).
+:- export map_tree / 4.
+:- export tree_to_list / 2.
+:- export tree_size / 2.
+:- export put_label / 4.
+:- export map_tree / 3.
+:- export list_to_tree / 2.
+:- export get_label / 3.
+:- comment(map_tree / 4, hidden).

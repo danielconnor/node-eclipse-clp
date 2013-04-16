@@ -1,0 +1,24 @@
+lib(lips)
+
+
+    Measure the system's speed in logical inferences per second, using
+    the infamous naive reverse program. This test does not say very much
+    about the quality of a system. All it gives is an indication about
+    the speed of list processing.
+    
+    The executed program is:
+    
+    nreverse([], []).
+    nreverse([X|L0],L) :-
+	    nreverse(L0, L1),
+	    concatenate(L1, [X], L).
+
+    concatenate([], L, L).
+    concatenate([X|L1], L2, [X|L3]) :-
+	    concatenate(L1, L2, L3).
+    
+    and the standard benchmark is to call nreverse/2 with a 30-element
+    list as the first and a variable as the second argument.  This
+    instance is assumed to have 496 logical inferences.
+    
+

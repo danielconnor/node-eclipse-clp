@@ -1,0 +1,83 @@
+<HTML><HEAD><TITLE>^(+Number1, +Number2, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>^(+Number1, +Number2, ?Result)</H1>
+Evaluates the expression Number1 "to the power of" Number2 and unifies the
+resulting value with Result.
+
+
+<DL>
+<DT><EM>+Number1</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>+Number2</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or a number.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to ^(Number1, Number2, Result) is
+   equivalent to
+<PRE>
+    Result is Number1 ^ Number2
+</PRE>
+    which should be preferred for portability.
+<P>
+   The result is of type float if any of the arguments is a float. 
+   When an integer is raised to the power of a negative integer, the
+   result type depends on the value of the global flag prefer_rationals.
+   If it is on, it is a rational, otherwise a float.  When the exponent
+   is not an integer, the result is of type float.
+
+<P>
+   In coroutining mode, if Number1 or Number2 are free variables, the call
+   to ^/3 is delayed until these variables are instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number1 or Number2 is not instantiated (non-coroutining mode    only).
+<DT><EM>(5) type error </EM>
+<DD>Result is of a different type than the evaluation result.
+<DT><EM>(24) number expected </EM>
+<DD>Number1 or Number2 is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+<DT><EM>(20) arithmetic exception </EM>
+<DD>Illegal arithmetic operation:  Number1 is negative and    Number2 is no integral number.
+<DT><EM>(20) arithmetic exception </EM>
+<DD>Illegal arithmetic operation:  Number1 and Number2 are both    zero.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      ^(5, 3, 125).
+      ^(-5, 3, -125).
+      ^(5, -2, 0.04).
+      ^(5, 2.2, 34.493244).
+      ^(5.0, 2, 25.0).
+Fail:
+      ^(1, 2, 3).
+Error:
+      ^(A, 2, 6).             (Error 4).
+      ^(1, 2, 3.0).           (Error 5).
+      ^(-5, 0.5, X).          (Error 20).
+      ^(2 + 3, 2, 25).        (Error 24).
+      ^(5, 2, r).             (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>
+</BODY></HTML>

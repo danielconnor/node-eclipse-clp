@@ -1,0 +1,54 @@
+
+writeq(?Term)
+
+   The term Term is written on the current output in a form that can be read
+in.
+
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+
+   Used to write the term Term on the current output according to the
+   current operator declarations.  Atoms and strings are quoted,
+   operator expressions parenthesised (whenever necessary) and the
+   (stream-specific or global) print_depth flag is not taken into
+   account.  The output of writeq/1 can be read back, provided that
+   the same operator declarations are in effect at write and read
+   time.  writeq(Term) is equivalent to printf("%QDvw", Term).
+
+
+   Note that as usual, the output is buffered, so it may need to be flushed
+   either by closing the stream, by writing again or by using flush/1.
+
+
+   Note also that although it is possible to print suspensions and external
+   handles, these are printed in their printed representation as Prolog
+   terms with functors such as 'BAG' (for bag objects). They will be read
+   back in as such Prolog terms, rather than as their original type. 
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+      Equivalent to writeq(output, Term).  (see writeq/2 for details).
+
+
+
+
+
+See Also
+   printf / 2, write / 1, write / 2, writeq / 2

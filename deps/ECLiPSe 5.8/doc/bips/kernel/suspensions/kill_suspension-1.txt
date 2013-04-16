@@ -1,0 +1,62 @@
+
+kill_suspension(+Susp)
+
+   Kill the suspended goal represented by Susp, i.e. treat it as if it had
+been woken.
+
+
+
+Arguments
+   +Susp               A suspension or variable.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   The suspended goal represented by Susp is killed, and the suspension is
+   marked as now representing a woken goal.  If the suspension was already
+   marked as woken, kill_suspension/1 just succeeds. If called with a
+   variable, it succeeds as well which is useful when writing demon
+   predicates that might not have a suspension the first time they are
+   invoked.
+
+
+   Note that a suspension is not a standard Prolog data structure and can
+   only be manipulated in a restricted way.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Susp is not a suspension.
+
+Examples
+   
+[eclipse 1]: suspend(writeln(hello), 3, X->inst, Susp),
+	X=1.	% wakes
+hello
+
+Susp = 'SUSP-_299-dead'
+X = 1
+Yes (0.00s cpu)
+
+
+[eclipse 2]: suspend(writeln(hello), 3, X->inst, Susp),
+        kill_suspension(Susp),
+	X=1.	% no effect
+
+Susp = 'SUSP-_308-dead'
+X = 1
+Yes (0.00s cpu)
+
+
+See Also
+   demon / 1, make_suspension / 3, get_suspension_data / 3, attach_suspensions / 2, insert_suspension / 3, insert_suspension / 4

@@ -1,0 +1,25 @@
+
+<(?Expr1, ?Expr2, ?Bool)
+
+   Reified arithmetic comparison
+
+Arguments
+   Expr1               An arithmetic expression
+   Expr2               An arithmetic expression
+   Bool                Variable, 0 or 1
+
+Type
+   library(suspend)
+
+Description
+    Reified version of 
+    This constraint suspends until its first two arguments are ground.
+    It then unifies Bool according to the truth value of the corresponding
+    </2 constraint.
+
+
+Exceptions
+    24 --- Expr1 or Expr2 is not an arithmetic expression.
+
+See Also
+   < / 2, $< / 3

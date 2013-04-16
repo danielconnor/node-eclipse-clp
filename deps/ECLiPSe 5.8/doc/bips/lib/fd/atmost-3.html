@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>atmost(+N, ?List, +V)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>atmost(+N, ?List, +V)</H1>
+At most N elements of the list List have the value V.
+
+
+<DL>
+<DT><EM>+N</EM></DT>
+<DD>An integer
+</DD>
+<DT><EM>?List</EM></DT>
+<DD>A list of domain variables or integers
+</DD>
+<DT><EM>+V</EM></DT>
+<DD>An integer
+</DD>
+</DL>
+<H2>Description</H2>
+   If List is a list of domain variables and/or integers, this constraint
+   takes care that at most N element of this list have the value V. As soon
+   as some domain variable from the list is updated, this constraint is
+   woken and it checks if the constraint is still satisfiable and if so, if
+   it is already satisfied or not.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if more than N elements of List are instantiated to V.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/NN-2.html">:: / 2</A>, <A HREF="../../lib/fd/HNN-2.html">#:: / 2</A>, <A HREF="../../lib/fd/HH-2.html">## / 2</A>, <A HREF="../../lib/fd/element-3.html">element / 3</A>
+</BODY></HTML>

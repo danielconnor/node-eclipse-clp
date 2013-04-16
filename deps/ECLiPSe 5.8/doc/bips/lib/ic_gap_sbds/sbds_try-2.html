@@ -1,0 +1,26 @@
+<HTML><HEAD><TITLE>sbds_try(+Var, ++Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_gap_sbds)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>sbds_try(+Var, ++Value)</H1>
+Try assigning a value to an SBDS search variable
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>The variable to use
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value to try
+</DD>
+</DL>
+<H2>Description</H2>
+   Make an SBDS search choice.  Specifically, try assigning the (integer)
+   value Value to the variable Var; on backtracking exclude the value Value
+   from the domain of Var.<P>
+
+   Var should be an element of an array previously initialised using
+   sbds_initialise/5.<P>
+
+   Use sbds_try/3 if you wish to know which is the currently successful
+   branch (Var #= Value or Var #\= Value).
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic_gap_sbds/sbds_initialise-5.html">sbds_initialise / 5</A>, <A HREF="../../lib/ic_gap_sbds/sbds_try-3.html">sbds_try / 3</A>
+</BODY></HTML>

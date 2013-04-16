@@ -1,0 +1,87 @@
+
+remote_connect_accept(++Peer, ++Socket, ++TimeOut, ?InitGoal, +PassTerm, -InitRes)
+
+   Second half of initiating a remote interface connection.
+
+Arguments
+   Peer                Remote peer name (atom)
+   Socket              Server socket stream number (integer)
+   TimeOut             Time out interval (atomic)
+   InitGoal            Initialisation Goal (goal or variable)
+   PassTerm            `PassTerm' for authenticating connection (term)
+   InitRes             Result of executing the InitGoal (variable)
+
+Type
+   External Interface
+
+Description
+
+    
+    This predicate completes the remote interface connection started by
+    remote_connect_setup/3, which must be called before. The Peer and
+    Socket arguments should be the same as those in the call to
+    remote_connect_setup/3. 
+
+    
+    This predicate will accept the remote socket stream connections
+    according to the remote interface protocol described in the embedding
+    and interfacing manual. Peer is the name of the new remote peer.
+    TimeOut is used to specify the amount of time, in seconds, that the
+    predicate will wait for the remote connection. If TimeOut is the atom
+    block, then it will wait indefinitely for the connection from the
+    remote process. The predicate will fail if the interval specified in
+    TimeOut has elapsed while waiting for any of the connections with the
+    remote side (including any subsequent peer queue connections).
+    PassTerm is used for a simple authentication of the remote process:
+    once the control connection is established, but before the rest of the
+    creation of the ec_rpc link, the remote process must send a ECLiPSe
+    term that matches (the comparison is performed using ==/2) PassTerm. If
+    the terms fail to match, then the connection is closed and an out of
+    range exception raised. The term is specified in EXDR format on the
+    remote side. With the Tcl remote interface, the command to establish
+    the connection sends a default PassTerm that is the empty string. This
+    can be overridden by the programmer with a more complicated term.
+    After establishing the connection, InitGoal will be executed to perform
+    any user-defined initialisation on the ECLiPSe side, before any further
+    interactions between the two sides. The result of executing the goal is
+    passed back in InitRes; InitRes is set to fail and throw respectively
+    if the goal fails or throws an exception.
+
+    
+    The socket server Socket will be closed upon successful completion of
+    the connection. It will also be closed if the predicate times out.
+
+    
+    Once the connection is established, the optional user initialisation is
+    performed on the ECLiPSe side before any further interactions. This is
+    specified by InitGoal: If InitGoal is not a variable, it gives the
+    goal that will be executed for the initialisation. If
+    InitGoal is a variable, then no user initialisation is done before the
+    two sides can interact. The result of executing the goal is returned in
+    InitRes: the goal with its bindings if it was successful, the atom fail
+    if the goal failed, and the atom throw if an exception occurred. 
+    InitRes should be uninstantiated initially; otherwise, InitGoal will
+    not be executed. 
+
+    
+    After the optional initialisation, the remote interface is
+    established. Initially, the remote side has control, and the predicate
+    will block, and returns when the remote side hands over control.
+ 
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+        TimeOut second has elapsed without a connection request;
+     Peer is not a remote peer name which is waiting to complete a remote connection.
+
+Exceptions
+     1 --- PassTerm fails to match the term sent by the remote side.
+     6 --- Handshaking timed-out after 100 seconds.
+   141 --- The remote protocols of the remote and ECLiPSe sides are incompatible.
+   193 --- Socket is not a valid server socket.
+
+See Also
+   remote_connect_setup / 3, remote_disconnect / 1, remote_yield / 1, remote_connect / 3

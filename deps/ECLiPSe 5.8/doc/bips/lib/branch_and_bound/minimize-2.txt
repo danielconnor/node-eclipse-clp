@@ -1,0 +1,17 @@
+
+minimize(+Goal, ?Cost)
+
+   Find a minimal solution using the branch-and-bound method
+
+Type
+   library(branch_and_bound)
+
+Description
+This is a shorthand for
+    	
+	bb_min(+Goal, ?Cost, _DefaultOptions)
+	
+	See bb_min/3 for details.
+
+See Also
+   bb_min / 3

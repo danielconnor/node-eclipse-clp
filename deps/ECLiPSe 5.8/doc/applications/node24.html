@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Programming Concepts</TITLE>
+<META NAME="description" CONTENT="Programming Concepts">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node42.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="tutorial.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html708"
+ HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html702"
+ HREF="tutorial.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html696"
+ HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html704"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html706"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html709"
+ HREF="node25.html">Overview</A>
+<B> Up:</B> <A NAME="tex2html703"
+ HREF="tutorial.html">Developing Applications with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html697"
+ HREF="node23.html">Keep it working</A>
+ &nbsp <B>  <A NAME="tex2html705"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html707"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00600000000000000000"></A>
+<A NAME="programmingconcepts"></A>
+<BR>
+Programming Concepts
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html710"
+ HREF="node25.html">Overview</A>
+<LI><A NAME="tex2html711"
+ HREF="node26.html">Alternatives</A>
+<UL>
+<LI><A NAME="tex2html712"
+ HREF="node26.html#SECTION00620010000000000000">Description</A>
+<LI><A NAME="tex2html713"
+ HREF="node26.html#SECTION00620020000000000000">Parameters</A>
+<LI><A NAME="tex2html714"
+ HREF="node26.html#SECTION00620030000000000000">Schema</A>
+<LI><A NAME="tex2html715"
+ HREF="node26.html#SECTION00620040000000000000">Comments</A>
+<LI><A NAME="tex2html716"
+ HREF="node26.html#SECTION00620050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html717"
+ HREF="node27.html">Iteration on lists</A>
+<UL>
+<LI><A NAME="tex2html718"
+ HREF="node27.html#SECTION00630010000000000000">Description</A>
+<LI><A NAME="tex2html719"
+ HREF="node27.html#SECTION00630020000000000000">Parameters</A>
+<LI><A NAME="tex2html720"
+ HREF="node27.html#SECTION00630030000000000000">Schema</A>
+<LI><A NAME="tex2html721"
+ HREF="node27.html#SECTION00630040000000000000">Comments</A>
+<LI><A NAME="tex2html722"
+ HREF="node27.html#SECTION00630050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html723"
+ HREF="node28.html">Iteration on terms</A>
+<UL>
+<LI><A NAME="tex2html724"
+ HREF="node28.html#SECTION00640010000000000000">Description</A>
+<LI><A NAME="tex2html725"
+ HREF="node28.html#SECTION00640020000000000000">Parameters</A>
+<LI><A NAME="tex2html726"
+ HREF="node28.html#SECTION00640030000000000000">Schema</A>
+<LI><A NAME="tex2html727"
+ HREF="node28.html#SECTION00640040000000000000">Comments</A>
+<LI><A NAME="tex2html728"
+ HREF="node28.html#SECTION00640050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html729"
+ HREF="node29.html">Iteration on array</A>
+<UL>
+<LI><A NAME="tex2html730"
+ HREF="node29.html#SECTION00650010000000000000">Description</A>
+<LI><A NAME="tex2html731"
+ HREF="node29.html#SECTION00650020000000000000">Parameters</A>
+<LI><A NAME="tex2html732"
+ HREF="node29.html#SECTION00650030000000000000">Schema</A>
+<LI><A NAME="tex2html733"
+ HREF="node29.html#SECTION00650040000000000000">Comments</A>
+<LI><A NAME="tex2html734"
+ HREF="node29.html#SECTION00650050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html735"
+ HREF="node30.html">Transformation</A>
+<UL>
+<LI><A NAME="tex2html736"
+ HREF="node30.html#SECTION00660010000000000000">Description</A>
+<LI><A NAME="tex2html737"
+ HREF="node30.html#SECTION00660020000000000000">Parameters</A>
+<LI><A NAME="tex2html738"
+ HREF="node30.html#SECTION00660030000000000000">Schema</A>
+<LI><A NAME="tex2html739"
+ HREF="node30.html#SECTION00660040000000000000">Comments</A>
+<LI><A NAME="tex2html740"
+ HREF="node30.html#SECTION00660050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html741"
+ HREF="node31.html">Filter</A>
+<UL>
+<LI><A NAME="tex2html742"
+ HREF="node31.html#SECTION00670010000000000000">Description</A>
+<LI><A NAME="tex2html743"
+ HREF="node31.html#SECTION00670020000000000000">Parameters</A>
+<LI><A NAME="tex2html744"
+ HREF="node31.html#SECTION00670030000000000000">Schema</A>
+<LI><A NAME="tex2html745"
+ HREF="node31.html#SECTION00670040000000000000">Comments</A>
+<LI><A NAME="tex2html746"
+ HREF="node31.html#SECTION00670050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html747"
+ HREF="node32.html">Combine</A>
+<UL>
+<LI><A NAME="tex2html748"
+ HREF="node32.html#SECTION00680010000000000000">Description</A>
+<LI><A NAME="tex2html749"
+ HREF="node32.html#SECTION00680020000000000000">Parameters</A>
+<LI><A NAME="tex2html750"
+ HREF="node32.html#SECTION00680030000000000000">Schema</A>
+<LI><A NAME="tex2html751"
+ HREF="node32.html#SECTION00680040000000000000">Comments</A>
+<LI><A NAME="tex2html752"
+ HREF="node32.html#SECTION00680050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html753"
+ HREF="node33.html">Minimum</A>
+<UL>
+<LI><A NAME="tex2html754"
+ HREF="node33.html#SECTION00690010000000000000">Description</A>
+<LI><A NAME="tex2html755"
+ HREF="node33.html#SECTION00690020000000000000">Parameters</A>
+<LI><A NAME="tex2html756"
+ HREF="node33.html#SECTION00690030000000000000">Schema</A>
+<LI><A NAME="tex2html757"
+ HREF="node33.html#SECTION00690040000000000000">Comments</A>
+</UL>
+<LI><A NAME="tex2html758"
+ HREF="node34.html">Best and rest</A>
+<UL>
+<LI><A NAME="tex2html759"
+ HREF="node34.html#SECTION006100010000000000000">Description</A>
+<LI><A NAME="tex2html760"
+ HREF="node34.html#SECTION006100020000000000000">Parameters</A>
+<LI><A NAME="tex2html761"
+ HREF="node34.html#SECTION006100030000000000000">Schema</A>
+<LI><A NAME="tex2html762"
+ HREF="node34.html#SECTION006100040000000000000">Comments</A>
+</UL>
+<LI><A NAME="tex2html763"
+ HREF="node35.html">Sum</A>
+<UL>
+<LI><A NAME="tex2html764"
+ HREF="node35.html#SECTION006110010000000000000">Description</A>
+<LI><A NAME="tex2html765"
+ HREF="node35.html#SECTION006110020000000000000">Parameters</A>
+<LI><A NAME="tex2html766"
+ HREF="node35.html#SECTION006110030000000000000">Schema</A>
+<LI><A NAME="tex2html767"
+ HREF="node35.html#SECTION006110040000000000000">Comments</A>
+<LI><A NAME="tex2html768"
+ HREF="node35.html#SECTION006110050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html769"
+ HREF="node36.html">Merge</A>
+<UL>
+<LI><A NAME="tex2html770"
+ HREF="node36.html#SECTION006120010000000000000">Description</A>
+<LI><A NAME="tex2html771"
+ HREF="node36.html#SECTION006120020000000000000">Parameters</A>
+<LI><A NAME="tex2html772"
+ HREF="node36.html#SECTION006120030000000000000">Schema</A>
+<LI><A NAME="tex2html773"
+ HREF="node36.html#SECTION006120040000000000000">Comments</A>
+<LI><A NAME="tex2html774"
+ HREF="node36.html#SECTION006120050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html775"
+ HREF="node37.html">Group</A>
+<UL>
+<LI><A NAME="tex2html776"
+ HREF="node37.html#SECTION006130010000000000000">Description</A>
+<LI><A NAME="tex2html777"
+ HREF="node37.html#SECTION006130020000000000000">Parameters</A>
+<LI><A NAME="tex2html778"
+ HREF="node37.html#SECTION006130030000000000000">Schema</A>
+<LI><A NAME="tex2html779"
+ HREF="node37.html#SECTION006130040000000000000">Comments</A>
+<LI><A NAME="tex2html780"
+ HREF="node37.html#SECTION006130050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html781"
+ HREF="node38.html">Lookup</A>
+<UL>
+<LI><A NAME="tex2html782"
+ HREF="node38.html#SECTION006140010000000000000">Description</A>
+<LI><A NAME="tex2html783"
+ HREF="node38.html#SECTION006140020000000000000">Parameters</A>
+<LI><A NAME="tex2html784"
+ HREF="node38.html#SECTION006140030000000000000">Schema</A>
+<LI><A NAME="tex2html785"
+ HREF="node38.html#SECTION006140040000000000000">Comments</A>
+<LI><A NAME="tex2html786"
+ HREF="node38.html#SECTION006140050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html787"
+ HREF="node39.html">Fill matrix</A>
+<UL>
+<LI><A NAME="tex2html788"
+ HREF="node39.html#SECTION006150010000000000000">Description</A>
+<LI><A NAME="tex2html789"
+ HREF="node39.html#SECTION006150020000000000000">Parameters</A>
+<LI><A NAME="tex2html790"
+ HREF="node39.html#SECTION006150030000000000000">Schema</A>
+<LI><A NAME="tex2html791"
+ HREF="node39.html#SECTION006150040000000000000">Comments</A>
+<LI><A NAME="tex2html792"
+ HREF="node39.html#SECTION006150050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html793"
+ HREF="node40.html">Cartesian</A>
+<UL>
+<LI><A NAME="tex2html794"
+ HREF="node40.html#SECTION006160010000000000000">Description</A>
+<LI><A NAME="tex2html795"
+ HREF="node40.html#SECTION006160020000000000000">Parameters</A>
+<LI><A NAME="tex2html796"
+ HREF="node40.html#SECTION006160030000000000000">Schema</A>
+<LI><A NAME="tex2html797"
+ HREF="node40.html#SECTION006160040000000000000">Comments</A>
+<LI><A NAME="tex2html798"
+ HREF="node40.html#SECTION006160050000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html799"
+ HREF="node41.html">Ordered pairs</A>
+<UL>
+<LI><A NAME="tex2html800"
+ HREF="node41.html#SECTION006170010000000000000">Description</A>
+<LI><A NAME="tex2html801"
+ HREF="node41.html#SECTION006170020000000000000">Parameters</A>
+<LI><A NAME="tex2html802"
+ HREF="node41.html#SECTION006170030000000000000">Schema</A>
+<LI><A NAME="tex2html803"
+ HREF="node41.html#SECTION006170040000000000000">Comments</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

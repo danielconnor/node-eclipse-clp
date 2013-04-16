@@ -1,0 +1,56 @@
+
+plot(++Data, +Options, +Format, +OutputFile)
+
+   Plots the given data to a file in the given format.
+
+Arguments
+   Data                The data to be plotted, array or list.
+   Options             Options list
+   Format              Output file format
+   OutputFile          Name fo file to store plot in
+
+Type
+   library(gnuplot)
+
+Description
+
+ Plots the data to a file in the specified format.
+
+ The Data can either be a list or a nested list of a 1D or 2D array
+ of y values or x-y points.
+
+ The output format is defined as being the 'terminal' setting for
+ gnuplot.
+
+
+Resatisfiable
+   false
+
+Fail Conditions
+   Options are malformed, or data is not in a valid format.
+
+Examples
+   
+% multiple t-r pairs, in polar coordinates with a grid and lines, into
+% a postscript file
+?- A=[[1-3,5-2,9-2,8-2,5-7], [1-2,5-4,8-6,9-1,12-4]],
+   plot(A,[set:[polar, grid=polar], with:lines], postscript, "polar.ps").
+
+% multiple t-r pairs, in polar coordinates with a grid and lines, into
+% a postscript file with color
+?- A=[[1-3,5-2,9-2,8-2,5-7], [1-2,5-4,8-6,9-1,12-4]],
+   plot(A,[set:[polar, grid=polar], with:lines], "postscript color", "polar.ps").
+
+% multiple t-r pairs, in polar coordinates with a grid and lines, into
+% a PNG file
+?- A=[[1-3,5-2,9-2,8-2,5-7], [1-2,5-4,8-6,9-1,12-4]],
+   plot(A,[set:[polar, grid=polar], with:lines], png, "polar.png").
+
+% multiple t-r pairs, in polar coordinates with a grid and lines, into
+% a XFIG file
+?- A=[[1-3,5-2,9-2,8-2,5-7], [1-2,5-4,8-6,9-1,12-4]],
+   plot(A,[set:[polar, grid=polar], with:lines], fig, "polar.fig").
+
+
+See Also
+   plot / 1, plot / 2, plot / 3

@@ -1,0 +1,53 @@
+
+?E in ?Sterm
+
+   E belongs to the set term Sterm.
+
+
+
+Arguments
+   ?E                  A Prolog term.
+   ?Sterm              A set term.
+
+Type
+   library(conjunto)
+
+Description
+   This constraint states that E belongs to the set term Sterm.  If E is
+   not a known value the constraint is delayed.  It is activated as soon as
+   E becomes a known value.  If Sterm is a ground set and E is known it
+   checks if E belongs to Sterm.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if E cannot belong to Sterm.
+
+
+
+Examples
+   
+[eclipse 4]: S `:: {}.. {1,2,3}, E in S.
+
+E = E
+S = S{{} .. {1, 2, 3}}
+
+Delayed goals:
+        E in_s S{{} .. {1, 2, 3}}
+yes.
+
+[eclipse 5]: S `:: {}.. {1,2,3}, 1 in S.
+
+S = S{{1} .. {1, 2, 3}}
+yes.
+
+
+
+
+
+See Also
+   `:: / 2, notin / 2

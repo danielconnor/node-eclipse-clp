@@ -1,0 +1,21 @@
+
+is_solver_var(?Term)
+
+   Succeeds iff Term is an IC variable.
+
+Arguments
+   Term                A Term
+
+Type
+   library(ic)
+
+Description
+
+   Test if the term Term is an IC variable.  Succeed if it is, fail
+   otherwise.
+
+
+Fail Conditions
+   Var is not an IC variable.
+
+

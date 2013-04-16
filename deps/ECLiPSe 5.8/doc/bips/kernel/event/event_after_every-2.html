@@ -1,0 +1,102 @@
+<HTML><HEAD><TITLE>event_after_every(+Event, +Time)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>event_after_every(+Event, +Time)</H1>
+   Set up an event Event which is triggered after every Time seconds have
+   elapsed.
+
+
+<DL>
+<DT><EM>+Event</EM></DT>
+<DD>Atom or Handle
+</DD>
+<DT><EM>+Time</EM></DT>
+<DD>Positive number
+</DD>
+</DL>
+<H2>Description</H2>
+   The event Event is raised after every Time seconds of elapsed time from when
+   the predicate is executed.  The difference from event_after/2 and event_after/3
+   is that event_after_every/2 raises the event Event at regular Time intervals 
+   once it is initiated, whereas event_after/2 and event_after/3 
+   raise the event once (per event_after/2 and event_after/3) only.  The time
+   for the next event starts counting from the moment the previous event is
+   raised. This means that the time between the raising of two events will
+   never fall below the Time interval, even if there is a delay in raising
+   one of the events.  The event mechanism is safe with respect to
+   backtracking: once an after-event has been requested, it will be raised,
+   even when execution fails across the point where it was requested.
+   The only way to stop further after-every-events being raised is to cancel
+   them using cancel_after_event/2.
+<P>
+   Time can be a real number, but the actual granularity of how fine
+   the elapsed time is measured is operating system dependent, and the
+   triggering condition is actually that at least Time seconds have
+   elapsed.
+<P>
+   In addition, the processing of an event may not happen immediately
+   upon the raising the event, as events are processed synchronously:
+   An event can only be handled at a point where an ECLiPSe goal can
+   be executed. This can delay the handling of an event when ECLiPSe is
+   performing some uninterruptible task, e.g. waiting for I/O, or executing
+   external code.
+<P>
+   The use of after-events requires some thought because after-events can
+   be raised at unpredictable (even though well-defined) points during
+   program execution. As long as the handlers succeed, this poses no
+   particular problem, because execution is allowed to continue after the
+   handler succeeds. By design, the possibilities of an event handler to
+   interact with the interrupted execution are limited (the handler can
+   access global data structures, use a symbolic trigger, etc).
+<P>
+   More problematic are applications where the handler is allowed to
+   abort using exit_block/1.  Due to the timed execution, the exact
+   program point where the abort happens is unpredictable.  It must be
+   made sure that the abort is safely caught in all cases, and that
+   nonlogical data is not left in an inconsistent state.  In such cases,
+   it is possible to use events_defer/0 and events_nodefer/0 to protect
+   critical code sequences from being interrupted by event handling.
+   Note that it never makes sense to let after-event handlers fail.
+<P>
+   Another problem that may occur with timed events is that a new
+   event may be raised while another one is still being handled.  To
+   stop event handlers from being interrupted by others, it is possible
+   to give events the defer-property.  This means that event handling
+   is automatically deferred on entering the event's handler, thus
+   preventing other events from interrupting the handler.  Such handlers
+   must always explicitly invoke events_nodefer/0 before exiting in order
+   to reenable event handling.
+<P>
+   The timer used by measuring elapsed time is specified by the environment
+   flag after_event_timer: virtual means that elapsed user cpu time is
+   used, real means elapsed real time. The default is real. On
+   systems that cannot support CPU time measurement, such as Microsoft
+   Windows, one may not set the timer to virtual: an error is raised
+   if this is attempted.  The time relevant for event handling can be
+   obtained by calling statistics(event_time, Now).
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Event is neither an atom nor a handle or Time is not a positive number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- event_create((statistics(event_time,T),writeln(now(T))), [], E),
+	event_after_every(E, 1),
+	repeat,fail.
+    now(4.61)	% after 1 second
+    now(5.62)	% after 2 seconds
+    now(6.63)
+    now(7.64)
+    now(8.65)
+    ...
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_after-2.html">event_after / 2</A>, <A HREF="../../kernel/event/event_after-3.html">event_after / 3</A>, <A HREF="../../kernel/event/events_after-1.html">events_after / 1</A>, <A HREF="../../kernel/event/cancel_after_event-2.html">cancel_after_event / 2</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/current_after_events-1.html">current_after_events / 1</A>, <A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>, <A HREF="../../kernel/event/event_retrieve-3.html">event_retrieve / 3</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>
+</BODY></HTML>

@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents</TITLE>
+<META NAME="description" CONTENT="Contents">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node2.html">
+<LINK REL="previous" HREF="tutorial.html">
+<LINK REL="up" HREF="tutorial.html">
+<LINK REL="next" HREF="node2.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html226"
+ HREF="node2.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html222"
+ HREF="tutorial.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html216"
+ HREF="tutorial.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html224"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html227"
+ HREF="node2.html">Introduction</A>
+<B> Up:</B> <A NAME="tex2html223"
+ HREF="tutorial.html">Developing Applications with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html217"
+ HREF="tutorial.html">Developing Applications with ECLiPSe</A>
+ &nbsp <B>  <A NAME="tex2html225"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<BR>
+
+<H2><A NAME="SECTION00100000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL>
+<LI><A NAME="tex2html228"
+ HREF="node1.html">Contents</A>
+<LI><A NAME="tex2html229"
+ HREF="node2.html">Introduction</A>
+<UL>
+<LI><A NAME="tex2html230"
+ HREF="node3.html">Intended audience</A>
+<LI><A NAME="tex2html231"
+ HREF="node4.html">Related work</A>
+<LI><A NAME="tex2html232"
+ HREF="node5.html">Structure of tutorial</A>
+</UL>
+<LI><A NAME="tex2html233"
+ HREF="node6.html">High Level Design</A>
+<UL>
+<LI><A NAME="tex2html234"
+ HREF="node7.html">Application structure</A>
+<LI><A NAME="tex2html235"
+ HREF="node8.html">Queries</A>
+<LI><A NAME="tex2html236"
+ HREF="node9.html">API</A>
+<LI><A NAME="tex2html237"
+ HREF="node10.html">High level structure</A>
+<UL>
+<LI><A NAME="tex2html238"
+ HREF="node10.html#SECTION00341000000000000000">Classical LSCO structure</A>
+<LI><A NAME="tex2html239"
+ HREF="node10.html#SECTION00342000000000000000">Data transformation structure</A>
+<LI><A NAME="tex2html240"
+ HREF="node10.html#SECTION00343000000000000000">Data flow considerations</A>
+</UL>
+<LI><A NAME="tex2html241"
+ HREF="node11.html">Modules</A>
+<UL>
+<LI><A NAME="tex2html242"
+ HREF="node11.html#SECTION00351000000000000000">Making predicates available</A>
+<LI><A NAME="tex2html243"
+ HREF="node11.html#SECTION00352000000000000000">Using packaged functionality</A>
+</UL>
+<LI><A NAME="tex2html244"
+ HREF="node12.html">Naming schemes</A>
+<UL>
+<LI><A NAME="tex2html245"
+ HREF="node12.html#SECTION00361000000000000000">Modules and files</A>
+<LI><A NAME="tex2html246"
+ HREF="node12.html#SECTION00362000000000000000">Predicates</A>
+<LI><A NAME="tex2html247"
+ HREF="node12.html#SECTION00363000000000000000">Variables</A>
+</UL>
+<LI><A NAME="tex2html248"
+ HREF="node13.html">Documentation</A>
+<UL>
+<LI><A NAME="tex2html249"
+ HREF="node13.html#SECTION00371000000000000000">Comment directive</A>
+<LI><A NAME="tex2html250"
+ HREF="node13.html#SECTION00372000000000000000">Documenting all interfaces</A>
+<LI><A NAME="tex2html251"
+ HREF="node13.html#SECTION00373000000000000000">Mode declaration</A>
+<LI><A NAME="tex2html252"
+ HREF="node13.html#SECTION00374000000000000000">Documentation query</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html253"
+ HREF="node14.html">Data Structures</A>
+<UL>
+<LI><A NAME="tex2html254"
+ HREF="node15.html">External data representation</A>
+<LI><A NAME="tex2html255"
+ HREF="node16.html">Internal data representation</A>
+<UL>
+<LI><A NAME="tex2html256"
+ HREF="node16.html#SECTION00421000000000000000">Named structures</A>
+<LI><A NAME="tex2html257"
+ HREF="node16.html#SECTION00422000000000000000">Placeholder variables</A>
+<LI><A NAME="tex2html258"
+ HREF="node16.html#SECTION00423000000000000000">Nested structures vs. key lookup</A>
+<LI><A NAME="tex2html259"
+ HREF="node16.html#SECTION00424000000000000000">Lists</A>
+<LI><A NAME="tex2html260"
+ HREF="node16.html#SECTION00425000000000000000">Hash tables</A>
+<LI><A NAME="tex2html261"
+ HREF="node16.html#SECTION00426000000000000000">Vectors and arrays</A>
+<LI><A NAME="tex2html262"
+ HREF="node16.html#SECTION00427000000000000000">Multi-representation structures</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html263"
+ HREF="node17.html">Getting it to Work</A>
+<UL>
+<LI><A NAME="tex2html264"
+ HREF="node18.html">Stubs</A>
+<LI><A NAME="tex2html265"
+ HREF="node19.html">Argument checking</A>
+<LI><A NAME="tex2html266"
+ HREF="node20.html">Early testing</A>
+<LI><A NAME="tex2html267"
+ HREF="node21.html">Line Coverage</A>
+<LI><A NAME="tex2html268"
+ HREF="node22.html">Heeding warnings</A>
+<LI><A NAME="tex2html269"
+ HREF="node23.html">Keep it working</A>
+</UL>
+<LI><A NAME="tex2html270"
+ HREF="node24.html">Programming Concepts</A>
+<UL>
+<LI><A NAME="tex2html271"
+ HREF="node25.html">Overview</A>
+<LI><A NAME="tex2html272"
+ HREF="node26.html">Alternatives</A>
+<LI><A NAME="tex2html273"
+ HREF="node27.html">Iteration on lists</A>
+<LI><A NAME="tex2html274"
+ HREF="node28.html">Iteration on terms</A>
+<LI><A NAME="tex2html275"
+ HREF="node29.html">Iteration on array</A>
+<LI><A NAME="tex2html276"
+ HREF="node30.html">Transformation</A>
+<LI><A NAME="tex2html277"
+ HREF="node31.html">Filter</A>
+<LI><A NAME="tex2html278"
+ HREF="node32.html">Combine</A>
+<LI><A NAME="tex2html279"
+ HREF="node33.html">Minimum</A>
+<LI><A NAME="tex2html280"
+ HREF="node34.html">Best and rest</A>
+<LI><A NAME="tex2html281"
+ HREF="node35.html">Sum</A>
+<LI><A NAME="tex2html282"
+ HREF="node36.html">Merge</A>
+<LI><A NAME="tex2html283"
+ HREF="node37.html">Group</A>
+<LI><A NAME="tex2html284"
+ HREF="node38.html">Lookup</A>
+<LI><A NAME="tex2html285"
+ HREF="node39.html">Fill matrix</A>
+<LI><A NAME="tex2html286"
+ HREF="node40.html">Cartesian</A>
+<LI><A NAME="tex2html287"
+ HREF="node41.html">Ordered pairs</A>
+</UL>
+<LI><A NAME="tex2html288"
+ HREF="node42.html">Input/Output</A>
+<UL>
+<LI><A NAME="tex2html289"
+ HREF="node43.html">Reading input data into data structures</A>
+<LI><A NAME="tex2html290"
+ HREF="node44.html">How to use DCGs</A>
+<LI><A NAME="tex2html291"
+ HREF="node45.html">Creating output data files</A>
+<UL>
+<LI><A NAME="tex2html292"
+ HREF="node45.html#SECTION00731000000000000000">Creating Prolog data</A>
+<LI><A NAME="tex2html293"
+ HREF="node45.html#SECTION00732000000000000000">Simple tabular format</A>
+<LI><A NAME="tex2html294"
+ HREF="node45.html#SECTION00733000000000000000">Using printf</A>
+</UL>
+<LI><A NAME="tex2html295"
+ HREF="node46.html">Good and bad data formats</A>
+<LI><A NAME="tex2html296"
+ HREF="node47.html">Report generation</A>
+</UL>
+<LI><A NAME="tex2html297"
+ HREF="node48.html">If it doesn't Work</A>
+<UL>
+<LI><A NAME="tex2html298"
+ HREF="node49.html">Understanding failure</A>
+<UL>
+<LI><A NAME="tex2html299"
+ HREF="node49.html#SECTION00811000000000000000">Run-time errors</A>
+<LI><A NAME="tex2html300"
+ HREF="node49.html#SECTION00812000000000000000">Environment limits</A>
+<LI><A NAME="tex2html301"
+ HREF="node49.html#SECTION00813000000000000000">Failure</A>
+<LI><A NAME="tex2html302"
+ HREF="node49.html#SECTION00814000000000000000">Wrong answer</A>
+<LI><A NAME="tex2html303"
+ HREF="node49.html#SECTION00815000000000000000">Missing answer</A>
+</UL>
+<LI><A NAME="tex2html304"
+ HREF="node50.html">Checking program points</A>
+<LI><A NAME="tex2html305"
+ HREF="node51.html">Debugger</A>
+<UL>
+<LI><A NAME="tex2html306"
+ HREF="node51.html#SECTION00831000000000000000">Tracing</A>
+<LI><A NAME="tex2html307"
+ HREF="node51.html#SECTION00832000000000000000">Jumping to a program point</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html308"
+ HREF="node52.html">Correctness and Performance</A>
+<UL>
+<LI><A NAME="tex2html309"
+ HREF="node53.html">Testing</A>
+<LI><A NAME="tex2html310"
+ HREF="node54.html">Profiling</A>
+<LI><A NAME="tex2html311"
+ HREF="node55.html">Reviewing</A>
+<LI><A NAME="tex2html312"
+ HREF="node56.html">Issues to check for</A>
+<UL>
+<LI><A NAME="tex2html313"
+ HREF="node56.html#SECTION00941000000000000000">Unwanted choicepoints</A>
+<LI><A NAME="tex2html314"
+ HREF="node56.html#SECTION00942000000000000000">Open streams</A>
+<LI><A NAME="tex2html315"
+ HREF="node56.html#SECTION00943000000000000000">Modified global state</A>
+<LI><A NAME="tex2html316"
+ HREF="node56.html#SECTION00944000000000000000">Delayed goals</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html317"
+ HREF="node57.html">Style Guide</A>
+<UL>
+<LI><A NAME="tex2html318"
+ HREF="node58.html">Style rules</A>
+<LI><A NAME="tex2html319"
+ HREF="node59.html">Module structure</A>
+<LI><A NAME="tex2html320"
+ HREF="node60.html">Predicate definition</A>
+</UL>
+<LI><A NAME="tex2html321"
+ HREF="node61.html">Layout Rules</A>
+<UL>
+<LI><A NAME="tex2html322"
+ HREF="node62.html">General guidelines</A>
+<LI><A NAME="tex2html323"
+ HREF="node63.html">Predicates and clauses</A>
+<LI><A NAME="tex2html324"
+ HREF="node64.html">If-then-elses</A>
+<LI><A NAME="tex2html325"
+ HREF="node65.html">Disjunctions</A>
+<LI><A NAME="tex2html326"
+ HREF="node66.html">Do loops</A>
+<LI><A NAME="tex2html327"
+ HREF="node67.html">Comments</A>
+</UL>
+<LI><A NAME="tex2html328"
+ HREF="node68.html">Core Predicates</A>
+<UL>
+<LI><A NAME="tex2html329"
+ HREF="node69.html">Modules</A>
+<LI><A NAME="tex2html330"
+ HREF="node70.html">Predicate definition</A>
+<LI><A NAME="tex2html331"
+ HREF="node71.html">Control</A>
+<UL>
+<LI><A NAME="tex2html332"
+ HREF="node71.html#SECTION001231000000000000000">Do Loops</A>
+</UL>
+<LI><A NAME="tex2html333"
+ HREF="node72.html">I/O</A>
+<LI><A NAME="tex2html334"
+ HREF="node73.html">Arrays</A>
+<LI><A NAME="tex2html335"
+ HREF="node74.html">Hash Tables</A>
+<LI><A NAME="tex2html336"
+ HREF="node75.html">Arithmetic</A>
+<LI><A NAME="tex2html337"
+ HREF="node76.html">Terms and structures</A>
+<LI><A NAME="tex2html338"
+ HREF="node77.html">List Handling</A>
+</UL>
+<LI><A NAME="tex2html339"
+ HREF="node78.html">Index</A>
+</UL>
+<!--End of Table of Contents-->
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Invariants</TITLE>
+<META NAME="description" CONTENT="Invariants">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node70.html">
+<LINK REL="previous" HREF="node68.html">
+<LINK REL="up" HREF="node64.html">
+<LINK REL="next" HREF="node70.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1976"
+ HREF="node70.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1972"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1966"
+ HREF="node68.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1974"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1977"
+ HREF="node70.html">Examples</A>
+<B> Up:</B> <A NAME="tex2html1973"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1967"
+ HREF="node68.html">Conflict Sets</A>
+ &nbsp <B>  <A NAME="tex2html1975"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1978"
+ HREF="node69.html#SECTION001050100000000000000">-Result tent_is +Expression</A>
+<LI><A NAME="tex2html1979"
+ HREF="node69.html#SECTION001050200000000000000">tent_call(In, Out, Goal)</A>
+<LI><A NAME="tex2html1980"
+ HREF="node69.html#SECTION001050300000000000000">Waking on Tentative Assignment Change</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001050000000000000000">
+Invariants</A>
+</H1>
+
+<P>
+For writing sophisticated search algorithms it is useful to be able
+not only to detect conflicts caused by tentative value changes,
+but also to compute consequences of these changes.
+For example, it is possible to repair certain constraints automatically
+by (re)computing one or more of their variable's tentative values
+based on the others (e.g. a sum constraint can be repaired by updating
+the tentative value of the sum variable whenever the tentative value of one of
+the other variables changes).
+We provide two predicates for this purpose: 
+
+<P>
+
+<H3><A NAME="SECTION001050100000000000000"></A>
+<A NAME="5276"></A>
+<BR>
+-Result tent_is +Expression
+</H3>
+This is similar to the normal arithmetic
+<A NAME="tex2html610"
+ HREF="../bips/kernel/arithmetic/is-2.html">is/2</A><A NAME="5345"></A>
+predicate, but evaluates the expression based on the tentative
+assignment of its variables. The result is delivered as (an update to)
+the tentative value of the Result variable.
+Once initiated, <B>tent_is</B> will stay active and keep updating Result's
+tentative value eagerly whenever the tentative assignment of any
+variable in Expression changes.
+
+<P>
+
+<H3><A NAME="SECTION001050200000000000000"></A>
+<A NAME="5281"></A>
+<BR>
+tent_call(In, Out, Goal)
+</H3>
+This is a completely general meta-predicate to support computations
+with tentative values. Goal is a general goal, and In and Out are
+lists (or other terms) containing subsets of Goal's variables.
+A copy of Goal is called, with the In-variables replaced by their
+tentative values and the Out-variables replaced by fresh variables.
+Goal is expected to return values for the Out variables. These values
+are then used to update the tentative values of the original Out variables.
+This process repeats whenever the tentative value of any In-variable
+changes.
+
+<P>
+
+<H3><A NAME="SECTION001050300000000000000">
+Waking on Tentative Assignment Change</A>
+</H3>
+The predicates <A NAME="tex2html613"
+ HREF="../bips/lib/repair/tent_is-2.html">tent_is/2</A><A NAME="5348"></A> and <A NAME="tex2html615"
+ HREF="../bips/lib/repair/tent_call-3.html">tent_call/3</A><A NAME="5351"></A> are implemented
+<A NAME="5287"></A>
+using the <B>ga_chg</B> suspension list which is attached to every
+repair variable. The programmer has therefore all the tools to write
+specialised, efficient versions of tent_call/3.
+Follow the following pattern:<PRE>
+my_invariant(In, Out) :-
+        In tent_get TentIn,
+        ... compute TentOut from TentIn ...
+        suspend(my_invariant(In,Out,Susp), 3, [In-&gt;ga_chg]),
+        Out tent_set TentOut.
+</PRE>
+This can be made more efficient by using a demon (<A NAME="tex2html618"
+ HREF="../bips/kernel/database/demon-1.html">demon/1</A><A NAME="5354"></A>).
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1976"
+ HREF="node70.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1972"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1966"
+ HREF="node68.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1974"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1977"
+ HREF="node70.html">Examples</A>
+<B> Up:</B> <A NAME="tex2html1973"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1967"
+ HREF="node68.html">Conflict Sets</A>
+ &nbsp <B>  <A NAME="tex2html1975"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

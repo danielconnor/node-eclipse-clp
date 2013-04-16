@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>?Vars :: ?Range</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(suspend)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Vars :: ?Range</H1>
+Range constraint with optional integrality constraint
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>Variable or number, or a list of variables or numbers
+</DD>
+<DT><EM>Range</EM></DT>
+<DD>Variable or Lo..Hi, where Lo and Hi are variables or numeric expressions
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint suspends until its arguments are ground. It then succeeds
+   iff all the elements of the list Vars are numbers within the range
+   specified by Range.
+<P>
+   The range must eventually be in the form Lo..Hi, where Lo and Hi are 
+   expressions evaluating to numbers. If both are integers, then Vars must
+   also be integers (integer or list of integers).
+<H3>Fail Conditions</H3>
+Vars contains numbers that do not fall within Range, or violate the optional integrality constraint.
+<H2>Examples</H2>
+<PRE>
+    % with integrality constraint
+    ?- X :: 1 .. 5, X = 3.
+    X = 3
+    Yes (0.00s cpu)
+
+    ?- X :: 1 .. 5, X = 6.
+    No (0.00s cpu)
+
+    ?- X :: 1 .. 5, X = 3.0.
+    No (0.00s cpu)
+
+    % without integrality constraint
+    ?- X :: 1.0 .. 5.0, X = 3.
+    X = 3
+    Yes (0.00s cpu)
+
+    ?- X :: 1.0 .. 5.0, X = 3.0.
+    X = 3.0
+    Yes (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/SNN-2.html">$:: / 2</A>, <A HREF="../../lib/suspend/HNN-2.html">#:: / 2</A>, <A HREF="../../lib/suspend/NN-3.html">:: / 3</A>, <A HREF="../../lib/suspend/integers-1.html">integers / 1</A>, <A HREF="../../lib/suspend/reals-1.html">reals / 1</A>
+</BODY></HTML>

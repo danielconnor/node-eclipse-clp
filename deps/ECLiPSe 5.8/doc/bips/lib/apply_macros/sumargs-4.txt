@@ -1,0 +1,12 @@
+
+sumargs(+Pred, +Term, ?AccIn, ?AccOut)
+
+   Call Pred on all arguments of Term and collect a result in Accumulator
+
+Type
+   library(apply_macros)
+
+Description
+The traversal order is unspecified!
+
+

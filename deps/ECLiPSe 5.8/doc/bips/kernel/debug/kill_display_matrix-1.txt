@@ -1,0 +1,55 @@
+
+kill_display_matrix(+Name)
+
+      Destroys an existing display matrix. 
+
+
+
+Arguments
+   Name                An atomic term.
+
+Type
+   Debugging
+
+Description
+   Destroys an existing display matrix. The display matrix is removed
+   from being displayed. This command can only kill a display matrix within
+   the `logical scope' of the display matrix, i.e. within the part of the
+   search-tree rooted at the node where the display matrix was created.
+   The display matrix window may persist beyond the logical scope, and in
+   such cases the window can only be killed on the GUI side. Normally, 
+   the matrix is removed on backtracking pass its point of creation, but
+   this may not occur due to cuts.
+
+
+   Name is mapped into a string internally, so a name that is a atom or
+   number is the same name as its equivalent string (i.e. 'matrix' and
+   "matrix" are the same name).  Note that display matrix names are local
+   to a module, so it should be killed in the module in which it was
+   created (perhaps with @/2 wrapper around the call).
+
+
+
+
+Resatisfiable
+      No.	
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Name is not an atomic term.
+     6 --- Name is not an existing display matrix.
+
+Examples
+   
+   kill_display_matrix(queens).
+
+
+
+
+
+See Also
+   make_display_matrix / 5, make_display_matrix / 2, @ / 2

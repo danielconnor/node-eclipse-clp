@@ -1,0 +1,166 @@
+<HTML><HEAD><TITLE>[import +Module, import +PredSpecs from +Module]</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Modules</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>import +Module</H1>
+<H1>import +PredSpecs from +Module</H1>
+Import a module, or import certain procedures from a module.
+<DL>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>+PredSpecs</EM></DT>
+<DD>One or more comma-separated terms of the form Name/Arity
+</DD>
+</DL>
+<H2>Description</H2>
+   Importing is the way to make definitions from another module visible
+   as if they were local definitions. Only items that have been exported
+   from another module can be imported. Imports should usually be done
+   at the beginning of module texts.
+<P>
+   <BIG>Importing a Module as a Whole</BIG>
+<P>
+   If the first form of import is used, e.g.
+<PRE>
+   	:- import amodule.
+</PRE>
+   then all of the specified module's interface (i.e. everything that
+   is exported or reexported there) gets imported.
+<P>
+   Note that the module to import must already have been loaded, e.g. 
+   via compile/1 or ensure_loaded/1.  To simplify this, you can use
+   use_module/1 which is simply a combination of ensure_loaded/1 and
+   import/1.  If an attempt is make to import a module that does not
+   exist yet, the system tries to create it by trying to load a
+   library of that name. 
+<P>
+   Note that procedure imports a treated slightly differently from
+   other (e.g.  structure declaration) imports:  While other imports
+   have an immediate effect (e.g.  making the structure declaration
+   available), procedures are actually imported lazily:  they are only
+   made visible when they are referred to (e.g.  called) subsequently
+   in the importing module.  This has the advantage that import
+   ambiguities (i.e.  the same procedure is exported from multiple
+   imported modules) do not pose any problem as long as the ambiguous
+   procedure is not actually used.  When it is used, however, the
+   system will report the conflict.  The conflict can then either be
+   resolved by using the <CODE>import ... from ...</CODE> construct,
+   or it can be avoided by using explicit module qualification via :/2
+   everywhere.
+<P>
+   When a local procedure is defined while a procedure with the same
+   name could be lazily imported from an imported module, the system
+   issues a warning (or even an error in the case of built-ins).  If
+   that was the intention, the warning should be suppressed by using
+   an explicit local-declaration.
+<P>
+   <BIG>Importing Specific Procedures from a Module</BIG>
+<P>
+   An example of the second form of the import declaration is
+<PRE>
+   	:- import p/3,q/1 from amodule.
+</PRE>
+   This causes only the specified procedures to be imported from the
+   given module.  Unlike above, this import has an immediate effect,
+   and any attempt to import the same name from elsewhere, or to declare
+   a local procedure of the same name will raise an error 94.
+   Only procedures can be imported using this form of import/1.
+<P>
+   Another difference compared to the first form of import/1 is that
+   the module from which we import does not have to exist yet, and no
+   attempt is made to load the module. This is therefore a way to overcome
+   the otherwise enforced export-before-import rule and it allows a
+   certain degree of circularity in the export-import relationship
+   between modules. However, it is usually considered better programming
+   style to have a strictly hierarchical module structure rather than
+   circular dependencies, and to always build a new module on top of
+   a self-contained set of more basic modules.
+<P>
+   Note that when the compiler compiles a call to an imported procedure
+   whose export is not yet known, it may use the wrong calling convention.
+   This will lead to an incompatibility error later when the export
+   becomes known. Forward declarations like tool/2 and external/1 can
+   sometimes be used to prevent this problem.
+<P>
+   <BIG>Implicit Imports</BIG>
+<P>
+   Modules are implicitly imported by the module/3 and create_module/3
+   primitives, which import the modules given in their third argument. 
+   Modules created with module/1 or create_module/1 implicitly import
+   the module <CODE>eclipse_language</CODE>.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Module is instantiated, but not to an atom.
+<DT><EM>(80) not a module </EM>
+<DD>Library file does not define Module.
+<DT><EM>(171) File does not exist :  </EM>
+<DD>Library file does not exist.
+<DT><EM>(92) trying to redefine an existing local procedure </EM>
+<DD>Conflict with local definition.
+<DT><EM>(93) trying to redefine an existing exported procedure </EM>
+<DD>Conflict with exported definition.
+<DT><EM>(94) trying to redefine an existing imported procedure </EM>
+<DD>Conflict with another imported procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+% A module that exports a predicate and an operator:
+
+    :- module(m1).
+
+    :- export
+    	before/2,
+	op(700, xfx, before).
+
+    A before B :-
+    	A &lt; B.
+
+% Importing this module elsewhere:
+
+    :- module(m2).
+
+    :- import m1.    % or :- use_module(".../m1...").
+
+    main :-
+    	3 before 7.  % operator and procedure definition are visible!
+
+
+% Importing a procedure:
+
+    :- module(m3).
+
+    :- import before/2 from m1.
+
+    main :-
+    	before(3,7).  % only procedure definition is visible!
+
+
+% Error cases:
+
+     :- import L.                                     (Error 4).
+     :- import 1.                                     (Error 5).
+     :- import a,b.                                   (Error 5).
+     :- import op(X,Y,before) from eclipse_language.  (Error 5).
+     :- import xxxx.                                  (Error 171).
+
+     :- import p/1 from a.
+     :- import p/1 from b.                            (Error 94).
+
+     :- export p/1.
+     :- import p/1 from b.                            (Error 93).
+
+     p(99).
+     :- import p/1 from b.                            (Error 92).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/export-1.html">export / 1</A>, <A HREF="../../kernel/modules/reexport-1.html">reexport / 1</A>, <A HREF="../../kernel/modules/local-1.html">local / 1</A>, <A HREF="../../kernel/modules/get_module_info-3.html">get_module_info / 3</A>, <A HREF="../../kernel/modules/module-1.html">module / 1</A>, <A HREF="../../kernel/modules/create_module-3.html">create_module / 3</A>
+</BODY></HTML>

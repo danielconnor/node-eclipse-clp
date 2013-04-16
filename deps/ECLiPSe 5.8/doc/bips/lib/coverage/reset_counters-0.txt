@@ -1,0 +1,20 @@
+
+reset_counters
+
+   Reset all the coverage counters to zero
+
+Arguments
+
+Type
+   library(coverage)
+
+Description
+
+    The system maintains code coverage counters for all code compiled
+    with coverage:ccompile/1. These counters get incremented when this
+    code is run, and get reset implicitly when the results are output
+    using coverage:result/1.
+    
+
+See Also
+   ccompile / 1, result / 1

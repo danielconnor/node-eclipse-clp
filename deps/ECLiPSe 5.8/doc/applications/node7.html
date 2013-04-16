@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Application structure</TITLE>
+<META NAME="description" CONTENT="Application structure">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html442"
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html436"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html430"
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html438"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html440"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html443"
+ HREF="node8.html">Queries</A>
+<B> Up:</B> <A NAME="tex2html437"
+ HREF="node6.html">High Level Design</A>
+<B> Previous:</B> <A NAME="tex2html431"
+ HREF="node6.html">High Level Design</A>
+ &nbsp <B>  <A NAME="tex2html439"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html441"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00310000000000000000">
+Application structure</A>
+</H1>
+We first review the overall application structure<A NAME="147"></A> found in systems developed at Parc Technologies (at least those using ECLiPSe for part of their development). We distinguish between two application types, one a full application with user-interface, database, reporting, etc, and the other a much smaller system, typically reading data from and to files and performing a single, batch type operation.
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fullapplication"></A><A NAME="168"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 2.1:</STRONG>
+Full application</CAPTION>
+<TR><TD></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="batchtypeapplication"></A><A NAME="185"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 2.2:</STRONG>
+Batch type application</CAPTION>
+<TR><TD></TD></TR>
+</TABLE>
+</DIV><P></P>
+Examples of the first type (see figure&nbsp;<A HREF="node7.html#fullapplication">2.1</A>) are Parc Technologies applications (http://www.parc-technologies.com) like AirPlanner<A NAME="189"></A> and RiskWise<A NAME="190"></A><A NAME="tex2html3"
+ HREF="footnode.html#foot191"><SUP>2.1</SUP></A>, where everything except the problem solver is developed in Java<A NAME="192"></A> or related tools. The interface between the main application and the problem solver written in ECLiPSe is via a Java-ECLiPSe interface. In this interface, the main application poses queries for the ECLiPSe solver, passing data and arguments into ECLiPSe. The problem solver then runs the query and returns results as variable bindings in the given query. The Java side only knows about these queries, their data format and the expected results. The internals of the solver, how the queries are resolved, is completely hidden. This defines a nice interface between the application parts, as long as the queries are well defined and documented. Once that design is frozen, the developers for the different parts can continue development independently from each other, using stubs or dummy routines to simulate the other application parts. 
+
+<P>
+The NDI-Mapper<A NAME="193"></A> in RiskWise is an example of the second application type (see figure&nbsp;<A HREF="node7.html#batchtypeapplication">2.2</A>). The application reads some data files (defined in a clear specification), performs some operation on the data and produces results in another set of data files. The top-level query typically just states where the data should be found and where the results should be written to. This batch command <A NAME="195"></A>then internally calls more detailed routines to load data, etc.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html442"
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html436"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html430"
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html438"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html440"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html443"
+ HREF="node8.html">Queries</A>
+<B> Up:</B> <A NAME="tex2html437"
+ HREF="node6.html">High Level Design</A>
+<B> Previous:</B> <A NAME="tex2html431"
+ HREF="node6.html">High Level Design</A>
+ &nbsp <B>  <A NAME="tex2html439"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html441"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

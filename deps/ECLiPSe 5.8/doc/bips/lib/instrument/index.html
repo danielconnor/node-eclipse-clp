@@ -1,0 +1,229 @@
+<HTML><HEAD><TITLE>library(instrument)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(instrument)</H1>
+Generic tool for code instrumentation
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="defined_modules-2.html"><STRONG>defined_modules(+File, -Modules)</STRONG></A></DT>
+<DD>Retrieve the modules defined by a file.</DD>
+<DT><A HREF="erase_all_templates-0.html"><STRONG>erase_all_templates</STRONG></A></DT>
+<DD>Erase all instrument template stores.</DD>
+<DT><A HREF="erase_file_templates-1.html"><STRONG>erase_file_templates(+File)</STRONG></A></DT>
+<DD>Erase the file local instrument template store for a
+   specific file.</DD>
+<DT><A HREF="erase_module_templates-0.html"><STRONG>erase_module_templates</STRONG></A></DT>
+<DD>Erase all instrument template stores for a specific module.</DD>
+<DT><A HREF="file_callsites-3.html"><STRONG>file_callsites(+File, ?StartId, ?EndId)</STRONG></A></DT>
+<DD>Retrieve start and end callsite identifiers for named file.</DD>
+<DT><A HREF="file_result-1.html"><STRONG>file_result(+File)</STRONG></A></DT>
+<DD>Pretty-print a file, including any instrumentation results</DD>
+<DT><A HREF="file_result-2.html"><STRONG>file_result(+File, +OptionList)</STRONG></A></DT>
+<DD>Pretty-print a file, including any instrumentation results</DD>
+<DT><A HREF="get_callsite_data-2.html"><STRONG>get_callsite_data(+SiteId, ?UserData)</STRONG></A></DT>
+<DD>Retrieve data associated with an instrumentation callsite 
+   from its non-logical store.</DD>
+<DT><A HREF="instrument-2.html"><STRONG>instrument(+File, +ITemplates)</STRONG></A></DT>
+<DD>Compile a file, inserting predicate instrumentation</DD>
+<DT><A HREF="instrument-3.html"><STRONG>instrument(+File, +ITemplates, +OptionList)</STRONG></A></DT>
+<DD>Compile a file, inserting predicate instrumentation</DD>
+<DT><A HREF="instrument_control-2.html"><STRONG>instrument_control(+Mode, +InstrumentPredSpec)</STRONG></A></DT>
+<DD>Insert or remove instrumentation predicates dynamically 
+   at runtime.</DD>
+<DT><A HREF="module_callsites-2.html"><STRONG>module_callsites(?StartId, ?EndId)</STRONG></A></DT>
+<DD>Retrieve module start and end callsite identifiers.</DD>
+<DT><A HREF="module_result-0.html"><STRONG>module_result</STRONG></A></DT>
+<DD>Pretty-print all files in a module, including any 
+    instrumentation results</DD>
+<DT><A HREF="module_result-1.html"><STRONG>module_result(+OptionList)</STRONG></A></DT>
+<DD>Pretty-print all files in a module, including any 
+   instrumentation results</DD>
+<DT><A HREF="set_callsite_data-2.html"><STRONG>set_callsite_data(+SiteId, ?UserData)</STRONG></A></DT>
+<DD>Associate arbitrary data with an instrumentation callsite 
+   in a non-logical store.</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Structures</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="itemplate-s.html"><STRONG>struct itemplate(clause_start, clause_end, clause_fail, clause_redo, block_start, block_end, block_fail, block_redo, subgoal_start, subgoal_end, subgoal_fail, subgoal_redo, call_start, call_end, call_fail, call_redo, fact, inbetween, result, meta_args, exclude, code_weaver, asserted, module_scope, file_local, goal_expansion)</STRONG></A></DT>
+<DD> The template used to guide predicate instrumentation</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+   The instrument library is a tool that enables predicate definitions or all
+   calls to a specific predicate to be annotated with user-defined predicates.
+   These instrumentation predicates are free to perform such actions as collect
+   program statistics or write debugging data to a stream during program
+   execution.  Additionally, the instrumentation can be inserted and removed
+   dynamically as the program executes.
+</P><P>
+The usage is as follows:
+   <OL>
+   <LI>Load the instrument library
+   <PRE>
+   ?- lib(instrument).
+   </PRE>
+   <LI>Compile your program with the instrument compiler
+   <PRE>
+   ?- instrument:instrument(my_program, Templates).
+   </PRE>
+   <LI>Run the query for which you wish to generate instrumentation data
+   <PRE>
+   ?- my_query(X,Y,Z).
+   </PRE>
+   <LI>Generate an html file containing the results. E.g. the following
+   will create the result file instrument/my_program.html:
+   <PRE>
+   ?- instrument:results(my_program).
+   </PRE>
+   <LI>View the result file using any browser. The result file
+   contains a pretty-printed form of the source, annotated with
+   the instrumentation results.
+   </OL>
+   <P>
+   The following is an example of very basic use of the tool.
+   Consider instrumenting a simple path finding program saved in a
+   file called 'instrument_example.ecl.
+   <PRE>
+   list_member(X, [X | _Tail]).
+   list_member(X, [_ | Tail]):-
+   list_member(X, Tail).
+ 
+   all_edges(Graph, Source, Outgoing):-
+       findall((Source-Next),list_member((Source-Next), Graph), Outgoing).
+ 
+   path(_Graph, Source, Source, []).
+   path(Graph, Source, Sink, [(Source-Next) | Path]):-
+       all_edges(Graph, Source, Outgoing),
+       list_member((Source-Next), Outgoing),
+       path(Graph, Next, Sink, Path).
+ 
+   test(Path):-
+       path([1-2, 1-3, 2-4, 3-4, 4-5, 4-6, 5-7, 5-8, 6-7,
+             1-8, 8-9, 8-10, 9-10, 9-11, 10-11],
+             1,
+             7,
+             Path).
+   </PRE>
+   The simplest way to instrument your code is to insert predicates around
+   every call in the source. The following code demonstrates how to
+   print the CPU time before and after every predicate call:
+   <PRE>
+   get_time(Cpu):-
+       statistics(times, [Cpu, _Sys, _Real]).
+ 
+   time_point:-
+       get_time(T),
+       writeln(error, T).
+ 
+   go:-
+       File = instrument_example,
+       GlobalTemplate = itemplate{subgoal_start:time_point/0,
+                                         subgoal_end:time_point/0},
+       instrument(File, GlobalTemplate),
+       test(Path).
+   </PRE>
+   Note the same predicate <TT>time_point/0</TT> is specified before and
+   after goal calls. If we wished to instrument all calls except those
+   to <TT>list_member/2</TT>, the following call to <TT>instrument/2</TT> is
+   made:
+   <PRE>
+        instrument(File, GlobalTemplate - [list_member/2])
+   </PRE>
+   In general any number of goals may be specified in this 'exclusion list'.
+   <P> 
+   The following code demonstrates alternative instrumentation
+   for this excluded predicate:
+   <PRE>
+   :-lib(instrument).
+
+   :-export time_point/0, special_point/0.
+
+   get_time(Cpu):-
+       statistics(times,[Cpu, _Sys, _Real]).        
+
+   time_point:-
+       get_time(T),
+       writeln(error, T).
+
+   special_point:-
+       writeln(error, 'start, end, redo or fail').
+
+   go:-
+       File = instrument_example,
+       GlobalTemplate = itemplate{subgoal_start:time_point/0,
+                                        subgoal_end:time_point/0},
+       SpecialTemplate = itemplate{call_start:special_point/0,
+                                         call_end:special_point/0,
+                                         call_fail:special_point/0
+                                         call_redo:special_point/0},
+       instrument(File,[GlobalTemplate - [list_member/2],
+                        (list_member/2) = SpecialTemplate]),
+       test(Path).
+   </PRE>
+   Notice how the <TT>special_point/0</TT> predicate is assigned to the
+   <TT>call_start</TT>, <TT>call_end</TT>, <TT>call_fail</TT> and 
+   <TT>call_redo</TT> points in this example. This ensures that the 
+   <TT>special_point</TT> predicate is called if <TT>list_member/2</TT> 
+   fails, or if resatisfiable, executed at the redo.
+   <P>
+   Using arity-1 predicates (i.e. one argument predicates)
+   unique identification of the callsite can be obtained:
+   <PRE>
+   :-lib(instrument).
+
+   get_time(Cpu):-
+       statistics(times, [Cpu, _Sys, _Real]).        
+
+   time_point(CallSite):-
+       get_time(T),
+       writeln(error,['Time', T, 'at callsite', CallSite]).
+
+   go:-
+       File = instrument_example,
+       GlobalTemplate = itemplate{subgoal_start:time_point/1,
+                                        subgoal_end:time_point/1},
+       instrument(File, GlobalTemplate),
+       test(Path).
+   </PRE>
+   <P>
+   By supplying a predicate to the <TT>result</TT> field of a template 
+   one can specify terms to be printed within a copy of the source code.
+   Using this feature along with the utility predicates 
+   <TT>get_callsite_data/2</TT> and <TT>set_callsite_data/2</TT> 
+   one can create quite varied and useful output.
+   <PRE>
+   :-lib(instrument).
+
+   get_time(Cpu):-
+       statistics(times, [Cpu, _Sys, _Real]).        
+
+   time_point(CallSite):-
+       get_time(T),
+       set_callsite_data(CallSite, T).
+
+   result(CallSite, _Type, _Module, Goal, NewGoal):-
+       get_callsite_data(CallSite, Time),
+       NewGoal='instrument:point_before'(Time, Goal).
+   go:-
+       File = instrument_example,
+       GlobalTemplate = itemplate{subgoal_start:time_point/1,
+                                        result:result/5},
+       instrument(File, GlobalTemplate),
+       test(Path),
+       file_result(File).
+   </PRE>
+   No data is printed during the running of the <TT>test(Path)</TT> call, 
+   but the <TT>file_result(File)</TT> call causes the source code to be 
+   emitted (color coded) with the given callsite data embedded.
+</P>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>prototype
+<LI><STRONG>Author: </STRONG>Andrew Cheadle, based on ideas by Joachim Schimpf
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies Ltd
+<LI><STRONG>Date: </STRONG>$Date: 2004/12/03 15:32:41 $
+</UL>
+<HR>Generated from instrument.eci on Tue Jan 25 01:58:51 2005
+
+</BODY></HTML>

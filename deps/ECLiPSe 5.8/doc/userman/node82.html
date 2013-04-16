@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Extending the Debugger</TITLE>
+<META NAME="description" CONTENT="Extending the Debugger">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node83.html">
+<LINK REL="previous" HREF="node81.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node83.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3505"
+ HREF="node83.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3501"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3495"
+ HREF="node81.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3503"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3506"
+ HREF="node83.html">Switching To Creep Mode</A>
+<B> Up:</B> <A NAME="tex2html3502"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3496"
+ HREF="node81.html">Using the Debugger via</A>
+ &nbsp <B>  <A NAME="tex2html3504"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3507"
+ HREF="node82.html#SECTION001471000000000000000">User-defined Ports</A>
+<LI><A NAME="tex2html3508"
+ HREF="node82.html#SECTION001472000000000000000">Attaching a Different User Interface</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001470000000000000000">
+Extending the Debugger</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION001471000000000000000">
+User-defined Ports</A>
+</H2>
+
+<P>
+The standard set of ports in the debugger's box model can be extended by
+the programmer. This facility is not so much intended for applications,
+but rather for libraries that want to allow debugging in terms of
+concepts of the library. Specific ports can be used to identify the
+interesting events during execution of the library code (while the standard
+tracing of the library internals can be suppressed by compiling the
+library in nodebug-mode).
+
+<P>
+The system provides 4 primitives that can generate 4 kinds of box model ports.
+When inserted into the code, and when the debugger is on,
+they will cause execution to stop and enter the debugger,
+displaying a trace line with the user-defined port and data:
+
+<UL><LI><A NAME="tex2html1239"
+ HREF="../bips/kernel/debug/trace_call_port-3.html">trace_call_port(+Port, ?Invoc, ?Term)</A><A NAME="8320"></A>
+
+is used to create new ports similar to CALL ports, but the port name
+	can be chosen freely. Such a port creates a new box. There must be
+	a corresponding trace_exit_port/0 to exit the box on success.
+
+<LI><A NAME="tex2html1241"
+ HREF="../bips/kernel/debug/trace_exit_port-0.html">trace_exit_port</A><A NAME="8323"></A>
+
+is used in conjunction with trace_call_port/3 to exit a box
+	on success.
+
+<LI><A NAME="tex2html1243"
+ HREF="../bips/kernel/debug/trace_point_port-3.html">trace_point_port(+Port, ?Invoc, ?Term)</A><A NAME="8326"></A>
+
+is used to create a standalone port, i.e. a port that causes the
+	tracer to create a trace line, but does not create, enter or leave
+	any box.
+
+<LI><A NAME="tex2html1245"
+ HREF="../bips/kernel/debug/trace_parent_port-1.html">trace_parent_port(+Port)</A><A NAME="8329"></A>
+
+is used to create an additional port for the parent box, but does
+	not enter or leave the box.
+
+</UL>
+For example, trace_call_port/3 and trace_exit_port/0 can be used to
+create a more readable trace in the presence of source
+transformations.  Imagine that the goal <TT>Y is X*X-1</TT>
+has been flattened into the goal sequence <TT>*(X,X,T),-(T,1,Y)</TT>. 
+By inserting the trace primitives the debugger can still show the
+original source before transformation:<PRE>
+p(X,Y) :- 
+        trace_call_port(call,_, Y is X*X-1),
+        *(X,X,T),
+        -(T,1,Y),
+        trace_exit_port.
+</PRE>
+The trace then looks like this:<PRE>
+[eclipse 8]: p(3,Y).
+(1) 1 CALL  p(3, Y) %&gt; creep
+(2) 2 CALL  Y is 3 * 3 - 1 %&gt; skip
+(2) 2 EXIT  8 is 3 * 3 - 1 %&gt; creep
+(1) 1 EXIT  p(3, 8) %&gt; creep
+Y = 8
+</PRE>
+Another example is the insertion of additional ports for existing boxes,
+in particular the current parent box:<PRE>
+p :-
+        trace_parent_port(clause1),  
+        writeln(hello),
+        fail.
+p :-
+        trace_parent_port(clause2),  
+        writeln(world).
+</PRE>
+This gives rise to the following trace:<PRE>
+?- p.
+  (1) 1 CALL  p %&gt; creep
+(1) 1 CLAUSE1  p %&gt; creep
+S (2) 2 CALL  writeln(hello) %&gt; creep
+hello
+S (2) 2 EXIT  writeln(hello) %&gt; creep
+(3) 2 CALL  fail %&gt; creep
+(3) 2 FAIL  fail %&gt; creep
+(1) 1 NEXT  p %&gt; creep
+(1) 1 CLAUSE2  p %&gt; creep
+S (4) 2 CALL  writeln(world) %&gt; creep
+world
+S (4) 2 EXIT  writeln(world) %&gt; creep
+(1) 1 EXIT  p %&gt; creep
+Yes (0.00s cpu)
+</PRE>
+Note that the additional ports share the parent's invocation number,
+so the <B>i</B> command can be used to skip from one to the other.
+
+<P>
+
+<H2><A NAME="SECTION001472000000000000000">
+Attaching a Different User Interface</A>
+</H2>
+
+<P>
+The tracer consists of a <B>trace generation</B> component (which is part of the
+ECLiPSe runtime kernel), and a <B>user interface</B> (which is part of the
+development system).  The standard ECLiPSe distribution contains two
+user interfaces, a console-based one, and a graphical one which is part
+of <B>tkeclipse</B>.  A programmable tracer interface (OPIUM/LSD) is under
+development in the group of Mireille Ducasse at IRISA/Rennes.
+Connecting new interfaces is relatively easy, for more detailed
+information contact the ECLiPSe development team.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3505"
+ HREF="node83.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3501"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3495"
+ HREF="node81.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3503"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3506"
+ HREF="node83.html">Switching To Creep Mode</A>
+<B> Up:</B> <A NAME="tex2html3502"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3496"
+ HREF="node81.html">Using the Debugger via</A>
+ &nbsp <B>  <A NAME="tex2html3504"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

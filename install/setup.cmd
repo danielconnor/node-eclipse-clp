@@ -1,0 +1,1 @@
+node-gyp clean configure build

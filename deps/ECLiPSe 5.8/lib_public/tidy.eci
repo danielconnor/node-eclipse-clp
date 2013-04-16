@@ -1,0 +1,5 @@
+:- module(tidy).
+:- export tidy_stmt / 2.
+:- export tidy_expr / 2.
+:- export tidy_withvars / 2.
+:- export tidy / 2.

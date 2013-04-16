@@ -1,0 +1,119 @@
+<HTML><HEAD><TITLE>set_interrupt_handler(+IntId, +PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_interrupt_handler(+IntId, +PredSpec)</H1>
+Sets an interrupt handler PredSpec for the interrupt IntId
+<DL>
+<DT><EM>+IntId</EM></DT>
+<DD>Integer or atom.
+</DD>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Term of the form Atom/Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+
+   Assigns the procedure specified by PredSpec as the interrupt handler for
+   the interrupt whose name or number is given by IntId.
+<P>
+   See the ECLiPSe User Manual for details on the operation of
+   interrupt handlers.
+<P>
+   The interrupt handlers of the following interrupts cannot be modified,
+   since they cannot be caught by ECLiPSe .
+<PRE>
+    No. Code     Description  Example
+    9   SIGKILL  kill         kill process from keyboard
+    17  SIGSTOP  stop         cannot be caught, blocked, ignored
+</PRE>
+   The interrupts which can be caught or trapped are implementation
+   defined.
+<P>
+   The following interrupt handlers have a special meaning and can be
+   used even with the embedded library version of Eclipse:
+<PRE>
+    Handler     Meaning
+    -------     -------
+    true/0      ignore the interrupt (SIG_IGN).
+    default/0   take the default operating system action when the
+                interrupt occurs (SIG_DFL).
+    event/1     handle the signal by posting a (synchronous) event. The
+                symbolic name of the interrupt will be used as the event name.
+    throw/1     invoke exit_block/1 with the interrupt's symbolic name.
+    abort/0     invoke exit_block(abort)
+    halt/0      halt Eclipse and terminate the process
+    internal/0  the signal is used by Eclipse to implement internal
+                functionality (e.g. profiler)
+</PRE>
+    All other handler specifications cause the specified predicate to
+    be called in a nested invocation of the Eclipse engine. This is
+    not supported on some hardware/OS platforms, e.g. Windows.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either IntId or PredSpec is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>IntId is not an atom or integer.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is neither a variable nor of the form Atom/Integer.
+<DT><EM>(6) out of range </EM>
+<DD>IntId is not a valid interrupt name or number.
+<DT><EM>(6) out of range </EM>
+<DD>PredSpec is of the form Atom/Integer, but the integer is greater than 3.
+<DT><EM>(60) referring to an undefined procedure </EM>
+<DD>PredSpec is of the form Atom/Integer, but no such predicate has been defined.
+<DT><EM>(170) system interface error </EM>
+<DD>The interrupt cannot be caught.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    ?- get_interrupt_handler(alrm,M,N).
+    M = event / 1
+    N = sepia_kernel
+    yes.
+
+    ?- set_interrupt_handler(alrm,true/0), interrupt(alrm).
+    yes.
+
+    ?- kill(0, alrm).
+    yes.
+
+    ?- get_interrupt_handler(alrm,M,N).
+    M = true / 0
+    N = sepia_kernel
+    yes.
+
+    ?- [user].
+     a :- write(log_output, "interrupt 16"), fail.
+     user compiled 136 bytes in 0.00 seconds
+
+    ?- set_interrupt_handler(16,a/0).
+    yes.
+
+    ?- kill(0, 16).
+    interrupt 16
+    yes.
+
+Error:
+    set_interrupt_handler(N,true/0).    (Error 4).
+    set_interrupt_handler(15,P).        (Error 4).
+    set_interrupt_handler(15.0,true/0). (Error 5).
+    set_interrupt_handler(1000,X).      (Error 6).
+    set_interrupt_handler(-1,X).        (Error 6).
+    set_interrupt_handler(6,a/4).       (Error 6).  % arity &gt; 3.
+    set_interrupt_handler(6,t/2).       (Error 60). % no t/2.
+    set_interrupt_handler(9,true/0).    (Error 170).
+    set_interrupt_handler(17,true/0).   (Error 170).
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/current_interrupt-2.html">current_interrupt / 2</A>, <A HREF="../../kernel/event/get_interrupt_handler-3.html">get_interrupt_handler / 3</A>
+</BODY></HTML>

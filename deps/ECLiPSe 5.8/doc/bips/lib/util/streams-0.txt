@@ -1,0 +1,9 @@
+
+streams
+
+   List information about the currently opened I/O streams
+
+Type
+   library(util)
+
+

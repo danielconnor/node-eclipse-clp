@@ -1,0 +1,79 @@
+
+current_module_predicate(+Property, ?PredSpec)
+
+   Used to enumerate all predicates with given property in the caller module
+
+Arguments
+   +Property           An atom.
+   ?PredSpec           A variable or an expression of the form Atom/Integer.
+
+Type
+   Predicate Database and Compiler
+
+Description
+    This predicate is mainly used to enumerate all predicates in the caller
+    module with one of the following properties (for testing, use get_flag/3):
+
+undeclared
+    predicates that have been referenced but are neither
+    declared nor defined in this module.
+no_module
+    predicates whose module of origin is known (through import or qualified
+    reference), but that module does not exist.
+no_export
+    predicates whose module of origin exists, but the predicate is not
+    exported from there.
+local
+    defined predicates that are local
+exported
+    defined predicates that are exported
+reexported
+    defined predicates that are reexported
+exported_reexported
+    defined predicates that are exported or reexported
+defined
+    predicates defined in this module (local or exported)
+undefined
+    local or exported predicates that have not been defined (no clauses)
+deprecated
+    predicates that are imported or referenced via qualification, but have
+    their deprecated-flag set.
+
+    This predicate is more efficient than current_predicate/1 and
+    current_built_in/1 when one is not interested in imported predicates.
+    In particular, it does not complain about ambiguous imports.
+
+
+Resatisfiable
+   Yes.
+
+Fail Conditions
+   Fails if there is no (further) predicate with the given property
+
+Exceptions
+     4 --- Property is not instantiated
+     5 --- Property is not an atom
+     5 --- PredSpec is instantiated, but not to the form Atom/Integer.
+
+Examples
+   
+    [eclipse 1]: [user].
+     :- local r/0.
+     p :- q, r.
+    yes.
+
+    [eclipse 2]: current_module_predicate(defined,P).
+    P = p / 0
+    yes.
+
+    [eclipse 3]: current_module_predicate(undefined,P).
+    P = r / 0
+    yes.
+
+    [eclipse 4]: current_module_predicate(undeclared,P).
+    P = q / 0
+    yes.
+
+
+See Also
+   current_built_in / 1, current_predicate / 1, get_flag / 3

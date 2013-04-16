@@ -1,0 +1,9 @@
+
+transpose(+Matrix, -Transposed)
+
+   Transpose a matrix (list of rows or list of columns)
+
+Type
+   library(matrix_util)
+
+

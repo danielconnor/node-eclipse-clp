@@ -1,0 +1,66 @@
+
+argv(+N, ?Argument)
+
+   Succeeds if the Nth argument given on the command line when invoking
+ECLiPSe is the string Argument.
+
+
+
+Arguments
+   +N                  Integer or the atom all.
+   ?Argument           String, List or variable.
+
+Type
+   Operating System
+
+Description
+   Used to find any argument used when invoking ECLiPSe at the operating
+   system prompt.  The zero'th argument is the name of the eclipse binary.
+   When N is the atom all, then a list of all arguments is returned instead
+   of a single argument.  When the command line contains the special
+   argument --, then all arguments before and including that one are
+   suppressed.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the Nth argument given on the command line when invoking
+   ECLiPSe is not the string Argument.
+
+
+
+Exceptions
+     4 --- N is not instantiated.
+     5 --- N is not an integer or an atom.
+     6 --- N is an atom different from all.
+     6 --- There was not N arguments when calling ECLiPSe .
+
+Examples
+   
+Success:
+   % eclipse hello world
+   [eclipse]: argv(0,A0), argv(1,A1), argv(2,A2).
+   A0 = "/usr/local/eclipse/bin/sun4/eclipse.exe"
+   A1 = "hello"
+   A2 = "world"
+   yes.
+   [eclipse]: argv(all, [_A0|Args]).
+   Args = ["hello", "world"]
+   yes.
+   % eclipse -e "argv(all,[_|A]),writeq(A),nl" -- hello world
+   ["hello", "world"]
+Error:
+   argv(N,A).                     (Error 4).
+   argv(1.0,A).                   (Error 5).
+   argv(-1,A).                    (Error 6).
+
+
+
+
+
+See Also
+   argc / 1

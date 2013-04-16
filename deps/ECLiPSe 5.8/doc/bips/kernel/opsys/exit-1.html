@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>exit(+Status)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>exit(+Status)</H1>
+The Prolog session is ended and the specified status returned to the
+operating system.
+
+
+<DL>
+<DT><EM>+Status</EM></DT>
+<DD>Integer
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to exit from the Prolog session.  If user_end/0 is defined and
+   global, it is called.  All buffers are flushed, streams are closed and
+   ECLiPSe exits.  The specified status code is returned to the operating
+   system.  exit(0) is identical with halt.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Status is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Status is instantiated to a non-integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: exit(5).
+      csh% echo $status
+      5
+      csh%
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/halt-0.html">halt / 0</A>, <A HREF="../../lib/toplevel/break-0.html">toplevel : break / 0</A>, <A HREF="../../kernel/opsys/pause-0.html">pause / 0</A>
+</BODY></HTML>

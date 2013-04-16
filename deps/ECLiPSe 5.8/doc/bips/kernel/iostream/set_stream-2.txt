@@ -1,0 +1,88 @@
+
+set_stream(+StreamId, +Stream)
+
+   The symbolic stream name StreamId is associated with the stream Stream.
+
+
+
+Arguments
+   +StreamId           Atom.
+   +Stream             Integer (stream number) or Atom (reserved or user-defined symbolic stream name).
+
+Type
+   Stream I/O
+
+Description
+   This predicate is used to create new symbolic alias names for physical
+   streams, or to redirect existing symbolic stream names to other physical
+   streams.
+
+   If StreamId is a new user-defined stream name, then that new name is
+   associated with the physical stream denoted by the Stream.  Stream can be
+   in the form of a physical stream number, a name of a physical stream
+   (stdin, stdout, stderr, null), or any existing symbolic stream name.
+
+   If StreamId is an already existing stream name (including one of the
+   symbolic system stream names like input, output, error, warning_output,
+   log_output), then that stream is redirected to Stream. Any previously
+   existing association of the name StreamId is forgotten. Note that other
+   alias names for the same physical stream are not affected by redirection.
+
+   When a user-defined symbolic stream is closed, the associated physical
+   stream is closed and the association forgotten.
+   Note that it is not enough to close the physical stream alone because
+   the association of symbolic an physical stream remains (even though the
+   physical stream is closed) until the symbolic stream is closed as well.
+   A system-defined symbolic stream will be redirected to its default when
+   the associated physical stream is closed.
+
+   The physical stream associated with a symbolic stream name can be
+   queried using get_stream/2.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Either StreamId or Stream is uninstantiated.
+     5 --- Either StreamId is not an atom or Stream is not a stream    number or symbolic stream name.
+   193 --- Stream is an illegal stream specification.
+   194 --- A physical stream has more than 255 logical stream names    assigned to it.
+
+Examples
+   
+        % suppress standard output temporarily:
+	[eclipse]: set_stream(output, null).
+	Yes (0.00s cpu)
+	[eclipse]: writeln(hello).
+	Yes (0.00s cpu)
+
+        % set standard output back to default:
+	[eclipse]: set_stream(output, stdout).
+	Yes (0.00s cpu)
+	[eclipse]: writeln(hello).
+	hello
+	Yes (0.00s cpu)
+
+        % alias the names s and output:
+        [eclipse]: open(file1,update,s), set_stream(output,s),
+		   writeln(output,hi), flush(output).
+	yes.
+	[eclipse]: seek(s,0), read(s,X).
+	X = hi
+	yes.
+
+Error:
+        set_stream(a, S).        (Error 4).
+        set_stream(1.0, S).      (Error 5).
+        set_stream(a, nonex).    (Error 193).
+
+
+See Also
+   open / 4, get_stream / 2

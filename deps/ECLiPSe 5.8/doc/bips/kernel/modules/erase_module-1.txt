@@ -1,0 +1,66 @@
+
+erase_module(+Module)
+
+   Erase the given module Module.  
+
+Arguments
+   +Module             Atom.
+
+Type
+   Modules
+
+Description
+    erase_module/1 erases the given module.  This means that the module
+    will not exists any more.  All predicates and data (non-logical variables,
+    records, etc) defined in the module will be destroyed.  Subsequent calls
+    to the module's exported predicates will raise 'undefined procedure'
+    errors.
+
+    If the Module does not exist, erase_module/1 simply succeeds.
+
+    An error (101) is raised when trying to erase a module from within itself.
+
+    Note that a module gets erased (and re-created) implicitly when the
+    compiler encounters a module/1 directive and that module already exists.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is not an atom.
+   101 --- Trying to erase Module from itself.
+
+Examples
+   
+Success:
+[eclipse]:  [user].
+ :- module(m).
+ :- export a/0.
+ a :- writeln(hello).
+ user        compiled 60 bytes in 0.00 seconds
+yes.
+[eclipse]: import a/0 from m.
+yes.
+[eclipse]: a.
+hello
+yes.
+[eclipse]: erase_module(m).
+yes.
+[eclipse]: a.
+calling an undefined procedure a in module eclipse
+
+Error:
+    erase_module(M).                   (Error 4).
+    erase_module(1).                   (Error 5).
+    erase_module(mod)@mod.             (Error 101).
+
+
+See Also
+   module / 1, create_module / 1, create_module / 3, current_module / 1, get_module_info / 3

@@ -1,0 +1,24 @@
+
+erase_all_templates
+
+   Erase all instrument template stores.
+
+Arguments
+
+Type
+   library(instrument)
+
+Description
+
+   This predicate erases all itemplate that are persisted in 
+   the global and file local template stores between successive calls 
+   to instrument/2 and instrument/3.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   no
+
+See Also
+   erase_module_templates / 0, erase_file_templates / 1, instrument / 2, instrument / 3, library(instrument), struct(itemplate), defined_modules / 2

@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>term_to_bytes(?Term, -String)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>term_to_bytes(?Term, -String)</H1>
+String is a ground encoding of Term, suitable for writing to a file,
+transmitting over a network etc.
+
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>-String</EM></DT>
+<DD>A variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate produces a string which contains an encoded representation
+   of the term Term. This representation is machine-independent, can be stored
+   in files, sent over networks etc. Note however that the string can contain
+   arbitrary bytes, including NUL and control characters.
+
+<P>
+   The predicate attempts to convert the term with all its attached
+   variable attributes and delayed goals. If this is not wanted,
+   you can strip those by first copying the term using copy_term/2 or
+   copy_term/3.
+
+<P>
+   The term_to_bytes/bytes_to_term predicates differ from term_string/2
+   in that they do not create a human-readable representation, but are
+   significantly faster and convert the term with all its attributes.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>String is neither variable nor string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse]: term_to_bytes(s(X),String), bytes_to_term(String, Term).
+String = "\000\000\000\b\001\002\013\001\001s\000\377\006\376\006\001X\000"
+Term = s(X)
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/bytes_to_term-2.html">bytes_to_term / 2</A>, <A HREF="../../kernel/termmanip/copy_term-2.html">copy_term / 2</A>, <A HREF="../../kernel/termmanip/copy_term-3.html">copy_term / 3</A>, <A HREF="../../kernel/ioterm/writeq-1.html">writeq / 1</A>, <A HREF="../../kernel/ioterm/writeq-2.html">writeq / 2</A>, <A HREF="../../kernel/ioterm/write_canonical-1.html">write_canonical / 1</A>, <A HREF="../../kernel/ioterm/write_canonical-2.html">write_canonical / 2</A>
+</BODY></HTML>

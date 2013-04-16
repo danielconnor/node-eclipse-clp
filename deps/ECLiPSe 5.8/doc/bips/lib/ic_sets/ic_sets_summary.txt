@@ -1,0 +1,4 @@
+lib(ic_sets)
+
+   Solver over sets of integers (cooperates with lib(ic))
+

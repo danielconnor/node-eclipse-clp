@@ -1,0 +1,59 @@
+<HTML><HEAD><TITLE>+Expr1 =\= +Expr2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>+Expr1 =\= +Expr2</H1>
+Succeed if the value of Expr1 is not equal to the value of Expr2.
+
+
+<DL>
+<DT><EM>+Expr1</EM></DT>
+<DD>An arithmetic expression
+</DD>
+<DT><EM>+Expr2</EM></DT>
+<DD>An arithmetic expression
+</DD>
+</DL>
+<H2>Description</H2>
+   Both arguments are evaluated and their types adjusted.  Then the
+   resulting numbers are compared.  The predicate succeeds if the values of
+   Expr1 and Expr2 are not equal (beware of rounding errors when comparing
+   reals).  If the system is in coroutining mode and the arguments are not
+   ground, this predicate delays until the expressions are fully
+   instantiated.
+<P>
+   The predicate also delays when the comparison involves bounded reals,
+   and the compared values overlap such that the result is undecidable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   fails if the value of Expr1 is equal to the value of Expr2
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Expr1 or Expr2 is a variable (non-coroutining mode only).
+<DT><EM>(5) type error </EM>
+<DD>Expr1 or Expr2 is not an arithmetic expression.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      5 - 1 =\= 6 / 2.
+      1 =\= sin(pi/4).      % 1 converted to 1.0
+
+Fail:
+      2 + 4 =\= 2 * 3.
+
+Error:
+      _ =\= 10.              (Error 4)
+      "s" =\= 10.            (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/ERE-2.html">suspend : =\= / 2</A>, <A HREF="../../lib/ic/ERE-2.html">ic : =\= / 2</A>, <A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>, <A HREF="../../kernel/arithmetic/ENE-2.html">=:= / 2</A>, <A HREF="../../kernel/arithmetic/GE-2.html">>= / 2</A>, <A HREF="../../kernel/arithmetic/L-2.html">< / 2</A>, <A HREF="../../kernel/arithmetic/G-2.html">> / 2</A>, <A HREF="../../kernel/arithmetic/EL-2.html">=< / 2</A>
+</BODY></HTML>

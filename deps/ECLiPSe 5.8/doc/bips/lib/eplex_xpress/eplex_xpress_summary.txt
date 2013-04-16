@@ -1,0 +1,4 @@
+lib(eplex_xpress)
+
+   Load lib(eplex) with the XPRESS-MP solver
+

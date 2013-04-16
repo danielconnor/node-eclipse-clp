@@ -1,0 +1,32 @@
+
+set_default_option(+OptionName, +OptionValue)
+
+   Permanently set the default value for the given option in the context module
+
+Arguments
+   OptionName          An atom
+   OptionValue         A valid option term
+
+Type
+   library(module_options)
+
+Description
+
+    The exact behaviour of this predicate depends on the module from where
+    it is invoked: It changes the default value for a named option in the
+    context module. The initial default values are defined by the predicate
+    default_options/1 in the context module.
+
+    The option name OptionName must be valid according to the predicate
+    valid_option_field/2 in the context module, and OptionValue
+    must be valid according to valid_option_value/2.
+
+    
+
+Exceptions
+     4 --- OptionName or OptionValue are uninstantiated
+     5 --- OptionName is not an atom
+     6 --- OptionName is not a valid option, or OptionValue is not a valid value in the context module
+
+See Also
+   library(module_options), get_options / 2, print_default_options / 1

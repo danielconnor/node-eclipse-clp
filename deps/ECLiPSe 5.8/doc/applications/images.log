@@ -1,0 +1,354 @@
+This is TeX, Version 3.14159 (Web2C 7.3.1) (format=latex 2001.8.20)  25 JAN 2005 01:58
+**./images.tex
+(./images.tex
+LaTeX2e <1998/12/01> patch level 1
+Babel <v3.6x> and hyphenation patterns for american, french, german, ngerman, i
+talian, nohyphenation, loaded.
+
+(/usr/share/texmf/tex/latex/base/report.cls
+Document Class: report 1999/01/07 v1.4a Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 1999/01/07 v1.4a Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/share/texmf/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+) (/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 1999/02/16 v1.0l Standard LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+) (/usr/share/texmf/tex/latex/config/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 80.
+(/usr/share/texmf/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+\epsfxsize=\dimen105
+\epsfysize=\dimen106
+) (/usr/share/texmf/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+) (/usr/share/texmf/tex/latex/base/makeidx.sty
+Package: makeidx 1998/08/17 v1.0k Standard LaTeX package
+) (/homes/wh/eclipse_home/tools/i386_linux/lib/latex2html/texinputs/html.sty
+Package: html 1998/06/21 v1.31 hypertext commands for latex2html (nd, hws, rrm)
+
+\c@lpart=\count88
+\c@lchapter=\count89
+\c@lsection=\count90
+\c@lsubsection=\count91
+\c@lsubsubsection=\count92
+\c@lparagraph=\count93
+\c@lsubparagraph=\count94
+\c@lsubsubparagraph=\count95
+\ptrfile=\write3
+) (/usr/share/texmf/tex/generic/pstricks/pstricks.sty
+Package: pstricks 1997/03/25 package wrapper for PSTricks pstricks.tex
+(/usr/share/texmf/tex/generic/pstricks/pstricks.tex
+`PSTricks' v97 patch 10  <1999/03/24> (tvz)
+\pst@dima=\dimen107
+\pst@dimb=\dimen108
+\pst@dimc=\dimen109
+\pst@dimd=\dimen110
+\pst@dimg=\dimen111
+\pst@dimh=\dimen112
+\pst@hbox=\box26
+\pst@boxg=\box27
+\pst@cnta=\count96
+\pst@cntb=\count97
+\pst@cntc=\count98
+\pst@cntd=\count99
+\pst@cntg=\count100
+\pst@cnth=\count101
+\pst@toks=\toks15
+(/usr/share/texmf/tex/generic/pstricks/pstricks.con)
+\psunit=\dimen113
+\psxunit=\dimen114
+\psyunit=\dimen115
+\pslinewidth=\dimen116
+\pst@customdefs=\toks16
+\pslinearc=\dimen117
+\everypsbox=\toks17
+\psframesep=\dimen118
+\pslabelsep=\dimen119
+\theoverlaybox=\box28
+))
+We are in html mode
+\@indexfile=\write4
+\openout4 = `images.idx'.
+
+Writing index file images.idx
+(/usr/share/texmf/tex/latex/graphics/pstcol.sty
+Package: pstcol 1999/02/16 v1.0a PSTricks color colompatibility (DPC)
+(/usr/share/texmf/tex/latex/graphics/color.sty
+Package: color 1999/02/16 v1.0i Standard LaTeX Color (DPC)
+(/usr/share/texmf/tex/latex/config/color.cfg)
+Package color Info: Driver file: dvips.def on input line 125.
+(/usr/share/texmf/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+)
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.159   \definecolor{black}{gray}{0}
+                                    
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+)
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `white' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.41 \psset@bordercolor{white}
+                              
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `white' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.42 \psset@doublecolor{white}
+                              
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `black' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.43 \psset@linecolor{black}
+                            
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `white' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.44 \psset@fillcolor{white}
+                            
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `black' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.45 \psset@hatchcolor{black}
+                             
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `black' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.46 \psset@gridcolor{black}
+                            
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `black' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.47 \psset@gridlabelcolor{black}
+                                 
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `darkgray' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.48 \psset@shadowcolor{darkgray}
+                                 
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+PSTricks error.  See User's Guide for further information.
+                 Type  H <return>  for immediate help.
+! Color `gray' not defined.
+\@pstrickserr ... immediate help.}\errmessage {#1}
+                                                  \endgroup 
+l.49 \psset@subgridcolor{gray}
+                              
+Your command was ignored.\MessageBreak Type  I <command> <return>  to replace i
+t with another command,\MessageBreak or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--61
+
+ []
+
+)
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 \pagecolor[gray]{.7}
+                         
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\sizebox=\box29
+\lthtmlwrite=\write5
+(images.aux)
+\openout1 = `images.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+
+latex2htmlLength hsize=349.0pt
+
+latex2htmlLength vsize=679.0pt
+
+latex2htmlLength hoffset=0.0pt
+
+latex2htmlLength voffset=0.0pt
+
+latex2htmlLength topmargin=0.0pt
+
+latex2htmlLength topskip=0.00003pt
+
+latex2htmlLength headheight=0.0pt
+
+latex2htmlLength headsep=0.0pt
+
+latex2htmlLength parskip=0.0pt plus 1.0pt
+
+latex2htmlLength oddsidemargin=31.0pt
+
+latex2htmlLength evensidemargin=31.0pt
+
+[1
+
+]
+l2hSize :tex2html\_wrap1530:13.23999pt::3.4pt::349.0pt.
+[2
+
+
+]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 161.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 161.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 161.
+l2hSize :pspicture1315:170.71646pt::0.0pt::349.0pt.
+[3
+
+
+]
+l2hSize :figure148:141.03728pt::0.0pt::349.0pt.
+[4
+
+
+]
+l2hSize :figure171:112.58455pt::0.0pt::349.0pt.
+[5
+
+
+]
+l2hSize :figure217:226.39546pt::0.0pt::349.0pt.
+[6
+
+
+]
+l2hSize :figure241:141.03728pt::0.0pt::349.0pt.
+[7
+
+
+]
+l2hSize :tex2html\_wrap\_inline1350:12.08664pt::12.08664pt::58.47327pt.
+[8
+
+
+]
+File: htmlreport.eps Graphic file (type eps)
+<htmlreport.eps>
+Overfull \hbox (40.80266pt too wide) in paragraph at lines 401--401
+[][] 
+ []
+
+l2hSize :figure919:273.55388pt::0.0pt::349.0pt.
+[9
+
+
+]
+File: tracer.eps Graphic file (type eps)
+<tracer.eps>
+Overfull \hbox (40.80266pt too wide) in paragraph at lines 417--417
+[][] 
+ []
+
+l2hSize :figure995:504.11563pt::0.0pt::349.0pt.
+[10
+
+
+]
+File: profile.eps Graphic file (type eps)
+<profile.eps>
+Overfull \hbox (40.80266pt too wide) in paragraph at lines 429--429
+[][] 
+ []
+
+l2hSize :figure1034:334.55678pt::0.0pt::349.0pt.
+[11
+
+
+] (images.aux) ) 
+Here is how much of TeX's memory you used:
+ 1888 strings out of 10898
+ 21832 string characters out of 96881
+ 77969 words of memory out of 263001
+ 4844 multiletter control sequences out of 10000+0
+ 6674 words of font info for 24 fonts, out of 400000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 32i,10n,21p,615b,360s stack positions out of 300i,100n,500p,50000b,4000s
+
+Output written on images.dvi (11 pages, 5380 bytes).

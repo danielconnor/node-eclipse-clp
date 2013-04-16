@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Compiler Input</TITLE>
+<META NAME="description" CONTENT="Compiler Input">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node32.html">
+<LINK REL="previous" HREF="node30.html">
+<LINK REL="up" HREF="node27.html">
+<LINK REL="next" HREF="node32.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2704"
+ HREF="node32.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2700"
+ HREF="node27.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2694"
+ HREF="node30.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2702"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2705"
+ HREF="node32.html">Module Compilation</A>
+<B> Up:</B> <A NAME="tex2html2701"
+ HREF="node27.html">The Compiler</A>
+<B> Previous:</B> <A NAME="tex2html2695"
+ HREF="node30.html">Compiler Modes</A>
+ &nbsp <B>  <A NAME="tex2html2703"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00640000000000000000">
+Compiler Input</A>
+</H1>
+The compiler normally reads a file up to its end.
+The file end can also be simulated with a clause
+<PRE>
+end_of_file.
+</PRE>
+The file is normally read consecutively, however
+the compiler uses the normal ECLiPSe I/O streams,
+and so if during the compilation the stream pointer is modified
+(e.g. by <A NAME="tex2html253"
+ HREF="../bips/kernel/iostream/seek-2.html">seek/2</A><A NAME="3148"></A> or <A NAME="tex2html255"
+ HREF="../bips/kernel/ioterm/read-2.html">read/2</A><A NAME="3151"></A>), the compiler continues
+at the specified place<A NAME="tex2html248"
+
+HREF="footnode.html#foot3113"><SUP>6.1</SUP></A>.
+
+<P>
+There are several built-in predicates which invoke the compiler:
+
+<P>
+<DL>
+<DT>
+<DD><A NAME="tex2html257"
+ HREF="../bips/kernel/database/compile-1.html">compile(File)</A><A NAME="3154"></A>
+<A NAME="2756"></A>
+This is the standard compiler predicate.
+The contents of the file is compiled according to the current
+state of the global flags.
+
+<P>
+<DT>
+<DD><A NAME="tex2html260"
+ HREF="../bips/kernel/database/compile-2.html">compile(File, Module)</A><A NAME="3157"></A>
+<A NAME="2760"></A>
+This predicate is used to compile the contents of a file into
+a specified module, without having to use the module declaration
+in the file itself.
+
+<P>
+<DT>
+<DD><A NAME="tex2html263"
+ HREF="../bips/kernel/directives/include-1.html">include(File)</A><A NAME="3160"></A>
+<A NAME="2764"></A>
+This predicate is similar to the <B>compile</B> predicate, except that it is
+treated as an in place inclusion of <B>File</B> by <A NAME="tex2html266"
+ HREF="../bips/lib/fcompile/fcompile-1.html">fcompile/1</A><A NAME="3163"></A> (see 
+section&nbsp;<A HREF="node37.html#fcompile">6.10</A>). Like <B>compile</B>, <B>File</B> can be a single
+file, or a list of files.
+
+<P>
+<DT>
+<DD><A NAME="tex2html268"
+ HREF="../bips/kernel/database/compile_stream-1.html">compile_stream(Stream)</A><A NAME="3166"></A>
+<A NAME="2775"></A>
+This predicate compiles a given stream up to its end
+or to the <TT>end_of_file</TT> clause.
+It can be used when the input file is already open,
+e.g. when the beginning of the file does not contain
+compiler input, or when the input has to be processed
+in a non-consecutive way.
+
+<P>
+<DT>
+<DD><A NAME="tex2html271"
+ HREF="../bips/kernel/database/compile_term-1.html">compile_term(Clauses)</A><A NAME="3169"></A>
+<A NAME="2780"></A>
+This predicate is used to compile a given term,
+usually a list of clauses and directives.
+Unlike <A NAME="tex2html274"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert/1</A><A NAME="3172"></A> it compiles a static procedure,
+and so it can be used to compile a procedure which is dynamically
+created and then used as a static one.
+For more information please refer to [<A
+ HREF="node159.html#sepcustom">10</A>].
+
+<P>
+<DT>
+<DD><A NAME="tex2html276"
+ HREF="../bips/kernel/database/ensure_loaded-1.html">ensure_loaded(File)</A><A NAME="3175"></A>
+<A NAME="2787"></A>
+This predicate compiles the specified file if it has not been compiled
+yet or if it has been modified since the last compilation.
+
+<P>
+<DT>
+<DD><A NAME="tex2html279"
+ HREF="../bips/kernel/env/make-0.html">make</A><A NAME="3178"></A>
+<A NAME="2791"></A>
+This predicate recompiles all files that have been modified since their
+last compilation.
+
+<P>
+<DT>
+<DD><A NAME="tex2html282"
+ HREF="../bips/kernel/database/lib-1.html">lib(File)</A><A NAME="3181"></A>
+<A NAME="2795"></A>
+This predicate is used to ensure that a specified library
+file is loaded.
+If this library is not yet compiled, the system will look
+in all directories in the <TT>library_path</TT> flag for
+a file with this name.
+When the file is found, it is compiled and the system remembers it.
+
+<P>
+<DT>
+<DD><A NAME="tex2html285"
+ HREF="../bips/kernel/database/current_compiled_file-3.html">current_compiled_file(File, Time, Module)</A><A NAME="3184"></A>
+<A NAME="2800"></A>
+This predicate returns on backtracking all files that have been compiled
+in this session, together with the module from where the compilation was
+done and the modification time stamp of the file at the time it was compiled.
+
+<P>
+<DT>
+<DD><A NAME="tex2html288"
+ HREF="../bips/lib/sepia/index.html">compiled_file(File, Line)</A><A NAME="3187"></A>
+<A NAME="2804"></A>
+This predicate allows to access the compiled file during the compilation.
+If it is called during the compilation, it returns the name
+of the file being compiled and the current line in it<A NAME="tex2html250"
+
+HREF="footnode.html#foot3114"><SUP>6.2</SUP></A>.
+If some I/O operations are performed on the compiler stream,
+it influences the compiler, e.g. some procedures can be omitted
+and some compiled several times.
+An example of its use is the library <B>ifdef</B>
+which implements a C-like conditional compilation.
+
+<P>
+<DT>
+<DD><A NAME="tex2html291"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert(Clause)</A><A NAME="3193"></A>
+<A NAME="2812"></A>
+This predicate compiles the given clause of a dynamic predicate.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2704"
+ HREF="node32.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2700"
+ HREF="node27.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2694"
+ HREF="node30.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2702"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2705"
+ HREF="node32.html">Module Compilation</A>
+<B> Up:</B> <A NAME="tex2html2701"
+ HREF="node27.html">The Compiler</A>
+<B> Previous:</B> <A NAME="tex2html2695"
+ HREF="node30.html">Compiler Modes</A>
+ &nbsp <B>  <A NAME="tex2html2703"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,44 @@
+
+make_graph_symbolic(+NodeNameArray, ++SymbolicEdgeList, -Graph)
+
+   Creates a graph using node names
+
+Arguments
+   NodeNameArray       array of ground data, usually node names
+   SymbolicEdgeList    (possibly empty) list of edge/3 structures in no particular order
+   Graph               will be bound to a graph structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    This predicate is similar to make_graph/3 in that it creates a
+    graph data structure according to the given information.
+    If the nodes have names, then make_graph_symbolic/3 allows to
+    specify the graph in a more readable way by using the node names
+    rather than node numbers in the edge specifications.
+    The node names are given as the array NodeNameArray, and the
+    symbolic edges are written in the form
+
+	edge(SourceName, TargetName, EdgeData)
+
+    where SourceName and TargetName should match an entry (usually the
+    node name) in NodeNameArray.  Note the use of the functor edge/3 for
+    the symbolic edge representation as opposed to e/3 for the internal
+    edge representation.
+    
+
+Examples
+   
+    % the 13-node undirected graph from Sedgewick:Algorithms
+    make_graph_symbolic(
+	[](a,b,c,d,e,f,g,h,i,j,k,l,m),
+	[ edge(a,f,1),edge(a,b,1),edge(a,g,1),edge(c,a,1),edge(d,f,1),edge(e,d,1),
+	  edge(f,e,1),edge(g,e,1),edge(g,j,1),edge(g,c,1),edge(h,g,1),edge(h,i,1),edge(i,h,1),
+	  edge(j,k,1),edge(j,l,1),edge(j,m,1),edge(l,g,1),edge(l,m,1),edge(m,l,1) ],
+	Graph).
+    
+
+See Also
+   make_graph / 3, library(graphviz)

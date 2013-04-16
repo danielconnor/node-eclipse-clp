@@ -1,0 +1,161 @@
+
+import +Module
+import +PredSpecs from +Module
+
+   Import a module, or import certain procedures from a module.
+
+Arguments
+   +Module             Atom.
+   +PredSpecs          One or more comma-separated terms of the form Name/Arity
+
+Type
+   Modules
+
+Description
+   Importing is the way to make definitions from another module visible
+   as if they were local definitions. Only items that have been exported
+   from another module can be imported. Imports should usually be done
+   at the beginning of module texts.
+
+   Importing a Module as a Whole
+
+   If the first form of import is used, e.g.
+
+   	:- import amodule.
+
+   then all of the specified module's interface (i.e. everything that
+   is exported or reexported there) gets imported.
+
+   Note that the module to import must already have been loaded, e.g. 
+   via compile/1 or ensure_loaded/1.  To simplify this, you can use
+   use_module/1 which is simply a combination of ensure_loaded/1 and
+   import/1.  If an attempt is make to import a module that does not
+   exist yet, the system tries to create it by trying to load a
+   library of that name. 
+
+   Note that procedure imports a treated slightly differently from
+   other (e.g.  structure declaration) imports:  While other imports
+   have an immediate effect (e.g.  making the structure declaration
+   available), procedures are actually imported lazily:  they are only
+   made visible when they are referred to (e.g.  called) subsequently
+   in the importing module.  This has the advantage that import
+   ambiguities (i.e.  the same procedure is exported from multiple
+   imported modules) do not pose any problem as long as the ambiguous
+   procedure is not actually used.  When it is used, however, the
+   system will report the conflict.  The conflict can then either be
+   resolved by using the import ... from ... construct,
+   or it can be avoided by using explicit module qualification via :/2
+   everywhere.
+
+   When a local procedure is defined while a procedure with the same
+   name could be lazily imported from an imported module, the system
+   issues a warning (or even an error in the case of built-ins).  If
+   that was the intention, the warning should be suppressed by using
+   an explicit local-declaration.
+
+   Importing Specific Procedures from a Module
+
+   An example of the second form of the import declaration is
+
+   	:- import p/3,q/1 from amodule.
+
+   This causes only the specified procedures to be imported from the
+   given module.  Unlike above, this import has an immediate effect,
+   and any attempt to import the same name from elsewhere, or to declare
+   a local procedure of the same name will raise an error 94.
+   Only procedures can be imported using this form of import/1.
+
+   Another difference compared to the first form of import/1 is that
+   the module from which we import does not have to exist yet, and no
+   attempt is made to load the module. This is therefore a way to overcome
+   the otherwise enforced export-before-import rule and it allows a
+   certain degree of circularity in the export-import relationship
+   between modules. However, it is usually considered better programming
+   style to have a strictly hierarchical module structure rather than
+   circular dependencies, and to always build a new module on top of
+   a self-contained set of more basic modules.
+
+   Note that when the compiler compiles a call to an imported procedure
+   whose export is not yet known, it may use the wrong calling convention.
+   This will lead to an incompatibility error later when the export
+   becomes known. Forward declarations like tool/2 and external/1 can
+   sometimes be used to prevent this problem.
+
+   Implicit Imports
+
+   Modules are implicitly imported by the module/3 and create_module/3
+   primitives, which import the modules given in their third argument. 
+   Modules created with module/1 or create_module/1 implicitly import
+   the module eclipse_language.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is instantiated, but not to an atom.
+    80 --- Library file does not define Module.
+   171 --- Library file does not exist.
+    92 --- Conflict with local definition.
+    93 --- Conflict with exported definition.
+    94 --- Conflict with another imported procedure.
+
+Examples
+   
+% A module that exports a predicate and an operator:
+
+    :- module(m1).
+
+    :- export
+    	before/2,
+	op(700, xfx, before).
+
+    A before B :-
+    	A < B.
+
+% Importing this module elsewhere:
+
+    :- module(m2).
+
+    :- import m1.    % or :- use_module(".../m1...").
+
+    main :-
+    	3 before 7.  % operator and procedure definition are visible!
+
+
+% Importing a procedure:
+
+    :- module(m3).
+
+    :- import before/2 from m1.
+
+    main :-
+    	before(3,7).  % only procedure definition is visible!
+
+
+% Error cases:
+
+     :- import L.                                     (Error 4).
+     :- import 1.                                     (Error 5).
+     :- import a,b.                                   (Error 5).
+     :- import op(X,Y,before) from eclipse_language.  (Error 5).
+     :- import xxxx.                                  (Error 171).
+
+     :- import p/1 from a.
+     :- import p/1 from b.                            (Error 94).
+
+     :- export p/1.
+     :- import p/1 from b.                            (Error 93).
+
+     p(99).
+     :- import p/1 from b.                            (Error 92).
+
+
+See Also
+   export / 1, reexport / 1, local / 1, get_module_info / 3, module / 1, create_module / 3

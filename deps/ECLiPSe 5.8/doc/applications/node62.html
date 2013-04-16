@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>General guidelines</TITLE>
+<META NAME="description" CONTENT="General guidelines">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node63.html">
+<LINK REL="previous" HREF="node61.html">
+<LINK REL="up" HREF="node61.html">
+<LINK REL="next" HREF="node63.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1450"
+ HREF="node63.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1444"
+ HREF="node61.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1438"
+ HREF="node61.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1446"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1448"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1451"
+ HREF="node63.html">Predicates and clauses</A>
+<B> Up:</B> <A NAME="tex2html1445"
+ HREF="node61.html">Layout Rules</A>
+<B> Previous:</B> <A NAME="tex2html1439"
+ HREF="node61.html">Layout Rules</A>
+ &nbsp <B>  <A NAME="tex2html1447"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1449"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001110000000000000000">
+General guidelines</A>
+</H1>
+Code should be indented consistently.  Tabs should be every 8 spaces.
+Indentation should be one tab per level of indentation<A NAME="1088"></A>, except for
+highly indented code which may be indented at 4 spaces per level of
+indentation after the first.
+
+<P>
+Each line should not extend beyond 79 characters, unless this is necessary
+due to the use of long string literals.  If a statement or predicate call
+is too long, continue it on the next line indented two levels deeper.
+If the statement or call extends over more than two lines, then make sure
+the subsequent lines are indented to the same depth as the second line.
+For example:
+
+<P>
+<PRE>
+Here is A_really_long_statement_that_does_not_fit +
+           On_one_line + In_fact_it_doesnt_even_fit +
+           On_two_lines.
+</PRE>
+Don't put more than one statement or call on a line.
+
+<P>
+Put spaces after commas in comma-separated lists.  Put spaces either
+side of infix operators.  In both cases, this makes them easier to read,
+particularly in expressions containing long names or names with underscores.
+(There are some exceptions, such as module qualification<A NAME="1091"></A> <code>foo:bar</code> and
+functor/arity pairings <code>foo/3</code>.  But not unification <code>X = Y</code> or list consing
+<code>[Head | Tail]</code>.)
+
+<P>
+Make judicious use of single blank lines in clause bodies to separate logical
+components.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1450"
+ HREF="node63.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1444"
+ HREF="node61.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1438"
+ HREF="node61.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1446"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1448"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1451"
+ HREF="node63.html">Predicates and clauses</A>
+<B> Up:</B> <A NAME="tex2html1445"
+ HREF="node61.html">Layout Rules</A>
+<B> Previous:</B> <A NAME="tex2html1439"
+ HREF="node61.html">Layout Rules</A>
+ &nbsp <B>  <A NAME="tex2html1447"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1449"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

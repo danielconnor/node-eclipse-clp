@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Example of defining a new constraint</TITLE>
+<META NAME="description" CONTENT="Example of defining a new constraint">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node30.html">
+<LINK REL="previous" HREF="node28.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node30.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html777"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html773"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html767"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html775"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html778"
+ HREF="node30.html">Set Domain output</A>
+<B> Up:</B> <A NAME="tex2html774"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html768"
+ HREF="node28.html">User-defined constraints</A>
+ &nbsp <B>  <A NAME="tex2html776"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00380000000000000000">
+Example of defining a new constraint</A>
+</H1>
+
+<P>
+The following example demonstrates how to create a new set constraint. To
+show that set inclusion is not restricted to ground herbrand terms we
+can take the following constraint which defines lattice inclusion over
+lattice domains:<PRE>
+S_1 incl S
+</PRE>
+Assuming that <EM>S</EM> and <I>S</I><SUB>1</SUB> are specific set variables of the form<PRE>
+S `:: {} ..{{a,b,c},{d,e,f}}, ..., S_1 `:: {} ..{{c},{d,f},{g,f}}
+</PRE>
+we would like to define such a predicate
+that will be woken as soon as one or both set variables' domains are
+updated in such a way that would require updating the other variable's
+domain by propagating the constraint. This constraint definition also
+shows that if one wants to iterate over a ground set (set of known
+elements) the transformation to a list is convenient. In fact
+iterations do not suit sets and benefit much more from a list
+structure. We define the predicate <code>incl(S,S1)</code> which corresponds
+to this constraint:
+
+<P>
+<PRE>
+:- use_module(library(conjunto)).
+incl(S,S1) :-
+          set(S),set(S1),
+          !,
+          check_incl(S, S1).
+incl(S, S1) :-
+          set(S),
+          set_range(S1, Glb1, Lub1),
+          !,
+          check_incl(S, Lub1),
+          S + Glb1 `= S1NewGlb,
+          modify_bound(glb, S1, S1NewGlb).
+incl(S, S1) :-
+          set(S1),
+          set_range(S, Glb, Lub),
+          !,
+          check_incl(Glb, S1),
+          large_inter(S1, Lub, SNewLub),
+          modify_bound(lub, S, SNewLub).
+incl(S,S1) :-
+          set_range(S, Glb, Lub),
+          set_range(S1, Glb1, Lub1),
+          check_incl(Glb, Lub1),
+          Glb \/ Glb1 `= S1NewGlb,
+          large_inter(Lub, Lub1, SNewLub),
+          modify_bound(glb, S1, S1NewGlb),
+          modify_bound(lub, S, SNewLub),
+          ( (set(S) ; set(S1)) -&gt;
+               true
+         ;
+               make_suspension(incl(S, S1),2, Susp),
+               insert_suspension([S,S1], Susp, del_any of set, set)
+          ),
+          wake.
+
+large_inter(Lub, Lub1, NewLub) :-
+          set2list(Lub, Llub),
+          set2list(Lub1, Llub1),
+          largeinter(Llub, Llub1, LNewLub),
+          list2set(LNewLub, NewLub).
+
+largeinter([], _, []).
+largeinter([S | List_set], Lub1, Snew) :-
+          largeinter(List_set, Lub1, Snew1),
+          ( contained(S, Lub1) -&gt;
+                Snew = [S | Snew1]
+          ;
+                Snew = Snew1
+          ).
+
+check_incl({}, _S) :-!.
+check_incl(Glb, Lub1) :-
+          set2list(Glb, Lsets),
+          set2list(Lub1, Lsets1),
+          all_union(Lsets, Union),
+          all_union(Lsets1, Union1),
+          Union `&lt; Union1,!,
+          checkincl(Lsets,Lsets1).
+checkincl([], _Lsets1).
+checkincl([S | Lsets],Lsets1):-
+          contained(S, Lsets1),
+          checkincl(Lsets,Lsets1).
+
+contained(_S, []) :- fail,!.
+contained(S, [Ss | Lsets1]) :-
+          (S `&lt; Ss -&gt;
+                true
+          ;
+                contained(S, Lsets1)
+          ).
+</PRE>
+
+<P>
+The execution of  this constraint is dynamic, <EM>i.e.</EM>, the
+predicate <code>incl</code>/<code>2</code> is called and woken following the
+following steps:
+
+<UL><LI>We check if the two set variables are ground <code>set</code>. If so
+we just check deterministically if the first one is included (lattice
+inclusion) in the second one <code>check_incl</code>. This
+predicate checks that any element of a ground set (which is a set
+itself in this case) is a subset of at least one element of the second
+set. If not it fails.
+
+<LI>We check if the first set is ground and the second is a set
+domain variable. If so, <code>check_incl</code> is called over the first
+ground set and the upper bound of the second set. If it succeeds then
+the lower bound of the set variable might not be consistent any more,
+we compute the new lower bound (<EM>i.e.</EM>, adding elements from the
+ground set in it (by using the union predicate) and we modify the bound
+<code>modify_bound</code>. This predicate also wakes all concerned
+suspension lists and instantiates the set variable if its domain is
+reduced to a single set (upper bound = lower bound).
+
+<LI>We check if the second set is ground and the first one is a set
+variable. If so, <code>check_incl</code> is called over the lower bound of
+the first set and the second ground set. If it succeeds then the upper
+bound of the set variable might not be consistent any more. The new
+upper bound is computed by intersecting the first set with the upper
+bound of the set variable in the lattice acceptation <code>large_inter</code> and
+is updated <code>modify_bound</code>.
+
+<LI>we check if both set variables are domain variables. If so the
+lower bound of the first set should be included in the lattice sense
+in the upper bound of the second one <code>check</code>/<code>incl</code>. If it
+succeeds, then if the lower bound the second set is no more consistent
+we compute the new one by making the union with first sec lower bound.
+In the same way, the upper bound of the first set might not be
+consistent any more. If so, we compute the new one by intersecting (in
+the lattice acceptation) the both upper bounds to compute the new
+upper bound of the first set <code>large_inter</code>. The upper bound of
+the first set variable is updated as well as the lower bound of the
+second set <code>modify_bound</code>.
+
+<LI>After checking all these updates, we test if the constraint
+implies an instanciation of one of the two sets. If this is not the
+case, we have to suspend the predicate so that it is woken as soon as
+any bound of either set domain is changed. The predicate
+<code>make_suspension</code>/<code>3</code> can be used for any ECLiPSe module
+based on a meta-term structure. It creates a suspension, and then the
+predicate <code>insert_suspension</code>/<code>4</code>, puts this suspension into
+the appropriate lists (woken when any bound is updated) of both set
+variables.
+
+<LI>the last action <code>wake</code> triggers the execution of all goals that are
+waiting for the updates we have made. These goals should be woken
+after inserting the new suspension, otherwise the new updates coming
+from these woken goals won't be propagated on this constraint !
+
+</UL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html777"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html773"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html767"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html775"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html778"
+ HREF="node30.html">Set Domain output</A>
+<B> Up:</B> <A NAME="tex2html774"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html768"
+ HREF="node28.html">User-defined constraints</A>
+ &nbsp <B>  <A NAME="tex2html776"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Repair Constraints</TITLE>
+<META NAME="description" CONTENT="Repair Constraints">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node68.html">
+<LINK REL="previous" HREF="node66.html">
+<LINK REL="up" HREF="node64.html">
+<LINK REL="next" HREF="node68.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1947"
+ HREF="node68.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1943"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1937"
+ HREF="node66.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1945"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1948"
+ HREF="node68.html">Conflict Sets</A>
+<B> Up:</B> <A NAME="tex2html1944"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1938"
+ HREF="node66.html">Tentative Values</A>
+ &nbsp <B>  <A NAME="tex2html1946"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1949"
+ HREF="node67.html#SECTION001030100000000000000">Constraint r_conflict ConflictSet</A>
+<LI><A NAME="tex2html1950"
+ HREF="node67.html#SECTION001030200000000000000">Constraint r_conflict_prop ConflictSet</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001030000000000000000">
+Repair Constraints</A>
+</H1>
+
+<P>
+Once a constraint has been declared to be a repair constraint it
+is monitored for violation.   Whether a repair 
+<A NAME="5220"></A>
+constraint is considered to be violated depends on the states of 
+its variables.  A temporary assignment of the variables is used 
+for checking constraints.  This assignment is called the
+<EM>tentative assignment</EM> and is described above.
+A constraint which is violated in this way is called a
+<A NAME="5222"></A>
+<EM>conflict constraint</EM>.
+
+<P>
+<A NAME="5224"></A>
+<A NAME="5225"></A>
+Normal constraints are turned into repair constraints by giving them
+one of the following annotations:
+
+<P>
+
+<H3><A NAME="SECTION001030100000000000000"></A>
+<A NAME="5227"></A>
+<BR>
+Constraint r_conflict ConflictSet
+</H3>
+This is the simplest form of annotation.
+<A NAME="tex2html589"
+ HREF="../bips/lib/repair/r_conflict-2.html">r_conflict/2</A><A NAME="5324"></A>
+makes a constraint known
+to the repair library, i.e. it will initiate monitoring of
+<B>Constraint</B> for conflicts.
+When the constraint goes into conflict, it will show up in the
+conflict set denoted by <B>ConflictSet</B>, from where it can be
+retrieved using <A NAME="tex2html591"
+ HREF="../bips/lib/repair/conflict_constraints-2.html">conflict_constraints/2</A><A NAME="5327"></A>.
+<B>Constraint</B> can be any goal that works logically, it should be useable
+as a ground check, and work on any instantiation pattern. Typically,
+it will be a constraint from some solver library.
+<B>ConflictSet</B> can be a user-defined name (an atom) or it can be
+a variable in which case the system returns a conflict set handle that can
+later be passed to <A NAME="tex2html593"
+ HREF="../bips/lib/repair/conflict_constraints-2.html">conflict_constraints/2</A><A NAME="5330"></A>. Example constraint with
+annotation:<PRE>
+fd:(Capacity &gt;= sum(Weights))  r_conflict  cap_cstr
+</PRE>
+Note that using different conflict sets for different groups of constraints
+will often make the search algorithm easier and more efficient.
+A second allowed form of the
+<A NAME="tex2html595"
+ HREF="../bips/lib/repair/r_conflict-2.html">r_conflict/2</A><A NAME="5333"></A>
+annotation is
+<B>Constraint r_conflict ConflictSet-ConflictData</B>.
+If this is used, <B>ConflictData</B> will appear in the conflict
+set instead of the <B>Constraint</B> itself.
+This feature can be used to pass additional information to the
+search algorithm.
+
+<P>
+
+<H3><A NAME="SECTION001030200000000000000"></A>
+<A NAME="5248"></A>
+<BR>
+Constraint r_conflict_prop ConflictSet
+</H3>
+In addition to what
+<A NAME="tex2html598"
+ HREF="../bips/lib/repair/r_conflict-2.html">r_conflict/2</A><A NAME="5336"></A>
+does, the
+<A NAME="tex2html600"
+ HREF="../bips/lib/repair/r_conflict_prop-2.html">r_conflict_prop/2</A><A NAME="5339"></A>
+annotation causes the
+<B>Constraint</B> to be activated as a goal as soon as it goes into
+conflict for the first time. If <B>Constraint</B> is a finite-domain
+constraint for example, this means that domain-based propagation on
+<B>Constraint</B> will start at that point in time.
+
+<P>
+Note that if you want constraint propagation from the very beginning,
+you should simply write the constraint twice, once without and once
+with annotation.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1947"
+ HREF="node68.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1943"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1937"
+ HREF="node66.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1945"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1948"
+ HREF="node68.html">Conflict Sets</A>
+<B> Up:</B> <A NAME="tex2html1944"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1938"
+ HREF="node66.html">Tentative Values</A>
+ &nbsp <B>  <A NAME="tex2html1946"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

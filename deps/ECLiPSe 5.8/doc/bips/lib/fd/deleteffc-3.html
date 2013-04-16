@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>deleteffc(?Var, +List, -Rest)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>deleteffc(?Var, +List, -Rest)</H1>
+Select from List the variable Var which has the smallest domain and most
+constraints and return the rest of the list.
+
+
+<DL>
+<DT><EM>-Var</EM></DT>
+<DD>A variable.
+</DD>
+<DT><EM>-Rest</EM></DT>
+<DD>A term unifying with a list of domain variables or integers.
+</DD>
+<DT><EM>+List</EM></DT>
+<DD>A list of domain variables or integers.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used in the labeling procedures.  When we look for the
+   instantiation of a list of domain variables which is consistent with a
+   set of constraints, it is better to start with instantiations which are
+   most likely to fail, because this will cut down the size of the search
+   space considerably.  The predicate deleteffc/3 selects among the
+   variables with the smallest domain that one which has most constraints
+   attached to it.  This choice is based on the heuristics that variables
+   with more constraints are more likely to fail when instantiated.
+
+<P>
+   If several variables are equally eligible, the leftmost one in the
+   list is taken.  Constants are treated like variables of domain size
+   one with no constraints attached.  The list Rest is the same as
+   List except that the selected element is missing.  In particular,
+   any existing list order is preserved.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if List is nil.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/constraints_number-2.html">constraints_number / 2</A>, <A HREF="../../lib/fd/deleteff-3.html">deleteff / 3</A>, <A HREF="../../lib/fd/indomain-1.html">indomain / 1</A>, <A HREF="../../lib/fd_search/search-6.html">fd_search : search / 6</A>
+</BODY></HTML>

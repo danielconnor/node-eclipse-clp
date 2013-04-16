@@ -1,0 +1,45 @@
+
+event_enable(+EventHandle)
+
+   Enable the given event
+
+Arguments
+   EventHandle         An event handle
+
+Type
+   Event Handling
+
+Description
+	The given event is (re-)enabled.  Since events are enabled by default,
+	this only makes sense if the event had been previously disabled.
+    
+	A disabled events behaves as if its handler was the goal 'true':
+	
+	Retrieving the goal using event_retrieve/3 returns 'true'
+	When the event is raised (e.g. posted via event/1), nothing happens
+	If the event gets disabled after it was raised, but before its handler
+	    execution has started, handler execution will be suppressed.
+	
+    
+	Note that disabling and enabling events are nonlogical operations
+	which are not undone on backtracking.
+    
+    
+
+Exceptions
+     4 --- EventHandle is un-instantiated
+     5 --- EventHandle is not a handle
+
+Examples
+       ?- event_create(writeln(hello), [], E),
+       event_disable(E), writeln(disabled),
+       event(E),	% does nothing
+       event_enable(E), writeln(enabled),
+       event(E).
+    disabled
+    enabled
+    hello
+    
+
+See Also
+   event_create / 3, event / 1, event_disable / 1, event_retrieve / 3

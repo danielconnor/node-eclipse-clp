@@ -1,0 +1,4 @@
+lib(cardinal)
+
+   Finite Set Constraints Library
+

@@ -1,0 +1,126 @@
+<HTML><HEAD><TITLE>[local portray(+TermClass, +TransPred, +Options), export portray(+TermClass, +TransPred, +Options)]</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Syntax Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>local portray(+TermClass, +TransPred, +Options)</H1>
+<H1>export portray(+TermClass, +TransPred, +Options)</H1>
+Defines a portray transformation for the functor or type specified by TermClass.
+<DL>
+<DT><EM>+TermClass</EM></DT>
+<DD>Term in the form Atom, Atom/Integer or type(Type).
+</DD>
+<DT><EM>+TransPred</EM></DT>
+<DD>Term in the form Atom/Integer.
+</DD>
+<DT><EM>+Options</EM></DT>
+<DD>Possibly empty list of option flags.
+</DD>
+</DL>
+<H2>Description</H2>
+   This declaration is used to define a portray transformation on a class of
+   terms.  Portray transformations are performed when a term is written by
+   one of the predicates write/1,2, writeln/1,2, print/1,2, display/1,2,
+   printf/2,3 without the 'T' output option, or write_term/2,3 unless the
+   transform(false) option is used.  Alternatively, portray transformations
+   can be invoked explicitly via portray_term/3.
+<P>
+   The TermClass specifies to which terms the transformation will be
+   applied:
+<DL>
+    <DT><STRONG>Name/Arity</STRONG><DD>
+	transform all terms with the specified functor
+    <DT><STRONG>type(Type)</STRONG><DD>
+	transform all terms of the specified type, where Type is one of
+	compound, string, integer, rational, float, breal, goal, atom, meta.
+</DL>
+   The +TransPred argument specifies the predicate that will perform the
+   transformation.  TransPred must be of arity 2 or 3 and be in the form:
+<PRE>
+	trans_function(OldTerm, NewTerm [, Module]) :- ... .
+</PRE>
+   At transformation time, the system will call TransPred in the module
+   where <CODE>local portray/3</CODE> was invoked.  The term to transform is passed
+   as the first argument, the second is a free variable which the
+   transformation should bind to the transformed term, and the optional
+   third argument is the module where the term is going to be printed.
+<P>
+   Options is a list which may be empty or contain one of the following
+   type specification atoms:
+<DL>
+    <DT><STRONG>term</STRONG> (default)<DD>
+	Transform all terms (this is the default)
+    <DT><STRONG>clause</STRONG><DD>
+	Transform only if the term is printed as a program clause,
+	i.e. by printf/2,3 with the 'C' output option, or write_term/2,3
+	with the as(clause) option.
+    <DT><STRONG>goal</STRONG><DD>
+	Transform only if the term is printed as a goal,
+	i.e. by printf/2,3 with the 'G' output option, or write_term/2,3
+	with the as(goal) option.
+</DL>
+   and possibly the following option:
+<DL>
+    <DT><STRONG>protect_arg</STRONG> (optional)<DD>
+	Disable transformation of subterms. If this option is used, the
+	transformation predicate itself should take care of transforming
+	those subterms that should be transformed (portray_term/3).
+	This option is only useful for term-transformation because only
+	those perform automatic subterm transformation.
+</DL>
+   The visibility of portray declarations is controlled by the module
+   system.  Transformations only take place when the portray
+   declarations is visible in the module where the term is being
+   printed.  The visibility is local or exported, depending on the
+   declaration.
+<P>
+   Portray declarations are being treated as 'write'-macros in
+   current_macro/4 and erase_macro/2.
+<P>
+   Term-transformations (but not clause/goal transformation) automatically
+   transform all subterms of a term in a top-down fashion. This means that
+   the transformation predicate will see a term with untransformed subterms.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>One or more arguments not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>TermClass not of form Atom, Atom/Integer or type(Type).
+<DT><EM>(5) type error </EM>
+<DD>TransPred not of form Atom/Integer.
+<DT><EM>(5) type error </EM>
+<DD>Options not a list or contains invalid flags.
+<DT><EM>(6) out of range </EM>
+<DD>Arity of TransPred is not 2 or 3.
+<DT><EM>(6) out of range </EM>
+<DD>Illegal flag in Options.
+<DT><EM>(161) macro transformation already defined in this module </EM>
+<DD>Transformation already defined in the current module for TermClass
+</DL>
+<H2>Examples</H2>
+<PRE>
+% Example showing use of write macros
+
+    [eclipse 1]: [user].
+
+     :- local portray(s/1, tr_s/2, []).
+     tr_s(0, 0).
+     tr_s(s(S), N) :- tr_s(S, N1), N is N1+1.
+
+    yes.
+    [eclipse 2]: write(s(s(s(0)))).
+    3
+    yes.
+
+
+Error:
+   local portray(X, trx/2, []).              (Error 4).
+   local portray(a/1, tra/2, [c]).           (Error 6).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/portray_term-3.html">portray_term / 3</A>, <A HREF="../../kernel/syntax/macro-3.html">macro / 3</A>, <A HREF="../../kernel/ioterm/printf-2.html">printf / 2</A>, <A HREF="../../kernel/ioterm/printf-3.html">printf / 3</A>, <A HREF="../../kernel/syntax/current_macro-4.html">current_macro / 4</A>, <A HREF="../../kernel/syntax/erase_macro-2.html">erase_macro / 2</A>
+</BODY></HTML>

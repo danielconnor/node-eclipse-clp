@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>User-Defined Constraints</TITLE>
+<META NAME="description" CONTENT="User-Defined Constraints">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node1.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html927"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html923"
+ HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html917"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html925"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html928"
+ HREF="node7.html">Repair</A>
+<B> Up:</B> <A NAME="tex2html924"
+ HREF="node1.html">Introduction</A>
+<B> Previous:</B> <A NAME="tex2html918"
+ HREF="node5.html">Intervals</A>
+ &nbsp <B>  <A NAME="tex2html926"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html929"
+ HREF="node6.html#SECTION00151000000000000000">Generalised Propagation: <EM>propia</EM></A>
+<LI><A NAME="tex2html930"
+ HREF="node6.html#SECTION00152000000000000000">Constraint Handling Rules</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00150000000000000000">
+User-Defined Constraints</A>
+</H1>
+
+<H2><A NAME="SECTION00151000000000000000">
+Generalised Propagation: <EM>propia</EM></A>
+</H2>
+The predicate <EM>infers</EM> takes as one argument
+any user-defined predicate, and as a second argument a form of
+propagation to be applied to that predicate.
+
+<P>
+This functionality enables the user to turn any predicate into a
+constraint [<A
+ HREF="node72.html#LeProvost93b">16</A>]. The forms of propagation include finite
+domains and intervals.
+
+<P>
+
+<H2><A NAME="SECTION00152000000000000000">
+Constraint Handling Rules</A>
+</H2>
+The user can also specify predicates using rules with guards
+[<A
+ HREF="node72.html#Fruehwirth">9</A>].  
+They delay until the guard is entailed or disentailed, and then
+execute or terminate accordingly. 
+
+<P>
+This functionality enables the user to implement constraints in a way
+that is clearer than directly using the underlying <EM>suspend</EM>
+library.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

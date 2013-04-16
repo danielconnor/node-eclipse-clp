@@ -1,0 +1,5 @@
+:- module(order).
+:- export ordered / 3.
+:- export ordered / 2.
+:- export ordered / 1.
+:- comment(ordered / 3, hidden).

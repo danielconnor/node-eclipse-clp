@@ -1,0 +1,29 @@
+
+source_close(+SourcePos, +OptionList)
+
+   Close an open ECLiPSe source file.
+
+Arguments
+   SourcePos           Source position handle
+   OptionList          List of options, possibly empty
+
+Type
+   library(source_processor)
+
+Description
+This is used to close an ECLiPSe source file that was
+    previously opened with source_open/3.  It is possible to close
+    before the end of the source is reached. Nesting of included
+    files is properly handled.
+    
+    OptionList can contain the following:
+    
+    keep_modules
+    	keep the modules that have been created implicitly during
+	source processing (by default they are erased to restore the
+	original state)
+    
+    
+
+See Also
+   source_open / 3

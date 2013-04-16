@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Usage</TITLE>
+<META NAME="description" CONTENT="Usage">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node55.html">
+<LINK REL="previous" HREF="node53.html">
+<LINK REL="up" HREF="node53.html">
+<LINK REL="next" HREF="node55.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1701"
+ HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1697"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1691"
+ HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1699"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1702"
+ HREF="node55.html">Eplex Instances</A>
+<B> Up:</B> <A NAME="tex2html1698"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1692"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+ &nbsp <B>  <A NAME="tex2html1700"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00910000000000000000">
+Usage</A>
+</H1>
+This library allows the use of an external mathematical programming 
+(LP, MIP or quadratic) solver 
+from within ECLiPSe. It provides a largely solver-independent API
+to the programmer, so many programs will run with any supported external
+solver.
+
+<P>
+See section&nbsp;<A HREF="node63.html#specificsolver">9.10</A> for more details on the supported solvers.
+
+<P>
+The most generic way to load the library is:
+<PRE>
+:- lib(eplex).
+</PRE>
+<A NAME="4047"></A>
+This will try to load an appropriate external solver available on
+the computer.
+
+<P>
+It is also possible to request a specific solver explicitly,
+see section&nbsp;<A HREF="node63.html#specificsolver">9.10</A> for details.
+
+<P>
+Note that the ECLiPSe library described here is just an interface
+to an external solver. In order to be able to use it, you need to have
+access to a solver supported by the library. For commercial solvers, this
+requires a licence for the solver on your machine. For more details,
+see section <A HREF="node63.html#specificsolver">9.10</A>.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

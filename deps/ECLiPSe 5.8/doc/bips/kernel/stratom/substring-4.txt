@@ -1,0 +1,103 @@
+
+substring(+String1, ?Position, ?Length, ?String2)
+
+   Succeeds if String2 is the substring of String1 starting at position
+Position and of length Length.
+
+
+
+Arguments
+   +String1            String.
+   ?Position           Integer (from 1 upwards) or variable.
+   ?Length             Integer (from 0 upwards) or variable.
+   ?String2            String or variable.
+
+Type
+   Strings and Atoms
+
+Description
+   Succeeds if String2 is a substring of String1 starting at position
+   Position and of length Length.
+
+
+   On backtracking, all such substrings are found.
+
+
+   The first character of a string is at position 1.
+
+
+Note
+   If String1 and String2 are instantiated, it is more efficient to use the
+   predicates substring/3 and/or string_length/2.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if String2 is not a substring of String1, or if Length is not the
+   length of String2, or if String2 does not begin at position Position.
+
+
+
+Exceptions
+     5 --- String1 is instantiated, but not to a string.
+     5 --- String2 is neither a string nor a variable.
+     5 --- Either (or both) of Position or Length are neither integers    nor variables.
+     4 --- String1 is not instantiated.
+
+Examples
+   
+Success:
+  substring("abcabc",3,1,"c").
+  substring("abcabc",6,1,"c").
+  substring("abcabc",P,1,"c"). (gives P=3; P=6).
+  substring("abcabc",3,3,S).   (gives S="cab").
+  substring("abc",P,L,"b").    (gives P=2, L=1).
+
+  [eclipse]: substring("ab",P,1,S).
+  P=1
+  S="a"     More? (;)
+  P=2
+  S="b"
+  yes.
+
+  [eclipse]: substring("ab",1,L,S).
+  L=0
+  S=""      More? (;)
+  L=1
+  S="a"     More? (;)
+  L=2
+  S="ab"
+  yes,
+
+  [eclipse]: substring("ab",P,L,S), writeq((P,L,S)), nl, fail.
+  1 , 0 , ""            % on backtracking, returns all
+  1 , 1 , "a"           %   substrings of String1.
+  1 , 2 , "ab"
+  2 , 0 , ""
+  2 , 1 , "b"
+  3 , 0 , ""
+  no (more) solution.
+
+Fail:
+  substring("joey",P,L,"joy").
+  substring("joey",P,2,"joe").
+
+Error:
+  substring(S1,P,L,S2).                (Error 4).
+  substring(S1,1,2,"bc").              (Error 4).
+  substring(S1,1,2,'str').             (Error 4).
+  substring('string',2,3,S2).          (Error 5).
+  substring("string",2,3,'str').       (Error 5).
+  substring("string",0,L,S2).          (Error 6).
+  substring("string",1,-1,S2).         (Error 6).
+
+
+
+
+
+See Also
+   substring / 3, substring / 5, string_length / 2, split_string / 4

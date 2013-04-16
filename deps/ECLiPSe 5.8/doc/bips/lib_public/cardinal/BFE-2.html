@@ -1,0 +1,43 @@
+<HTML><HEAD><TITLE>?SetVar1 `/= ?SetVar2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?SetVar1 `/= ?SetVar2</H1>
+Set inequality constraint
+<DL>
+<DT><EM>SetVar1</EM></DT>
+<DD>A set variable.
+</DD>
+<DT><EM>SetVar2</EM></DT>
+<DD>A set variable.
+</DD>
+</DL>
+<H2>Description</H2>
+Constrain sets SetVar1 and SetVar2 to be different.<P>
+		This constraint is suspended until one of the two sets is bound
+		to another set (variable or ground).
+<H3>Fail Conditions</H3>
+Fails if SetVar1 and SetVar2 must be the same set.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- [] `/= [8], [7] `/= [8], [7,8] `/= [8], [7] `/= [7,8].
+yes
+
+?- [] `/= [] ; [a] `/= [a] ; [a,b] `/= [b,a].
+no
+
+?- sets([X,Y], [],[8,9], [cardinality:1]), X `/= Y, set_labeling([X,Y]).
+X = [8], Y = [9] ;
+X = [9], Y = [8] ;
+no
+
+?- sets([X,Y], [],[8,9], []), X `/= Y, X=Y.
+no
+
+?- X `:: [8]+[8,9], [8,9] `/= X, card_labeling([X]).
+X = [8] ;
+no
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/BS-2.html">`$ / 2</A>, <A HREF="../../lib_public/cardinal/complement-2.html">complement / 2</A>, <A HREF="../../lib_public/cardinal/complement-3.html">complement / 3</A>, <A HREF="../../lib_public/cardinal/BE-2.html">`= / 2</A>
+</BODY></HTML>

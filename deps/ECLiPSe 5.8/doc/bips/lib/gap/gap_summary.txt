@@ -1,0 +1,4 @@
+lib(gap)
+
+   Library for interfacing with the GAP computational algebra system
+

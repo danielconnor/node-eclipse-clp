@@ -1,0 +1,39 @@
+% math-inequalities.chr =====================================================
+% thom fruehwirth 1991-93, 930518, 931223, 940308 'free var' case added
+% for use in *math* constraint handlers
+
+handler ineq.
+
+option(already_in_store, off). 
+option(already_in_heads, off).
+option(check_guard_bindings, off).
+
+:- local    (<)/2,(>)/2,(=\=)/2,(>=)/2,(=<)/2,(=:=)/2.
+constraints (<)/2,(>)/2,(=\=)/2,(>=)/2,(=<)/2,(=:=)/2.
+
+A =< B  <=> ground(A),ground(B) | call_kernel(A=<B).
+A >= B  <=> ground(A),ground(B) | call_kernel(A>=B).
+A < B   <=> ground(A),ground(B) | call_kernel(A<B).
+A > B   <=> ground(A),ground(B) | call_kernel(A>B).
+A =\= B <=> ground(A),ground(B) | call_kernel(A=\=B).
+
+% introduce slack variables
+A =< B  <=> A+slack(X) =:= B, call_kernel(X>=0).
+A >= B  <=> B+slack(X) =:= A, call_kernel(X>=0).
+A < B   <=> A+slack(X) =:= B, call_kernel(X>0).
+A > B   <=> B+slack(X) =:= A, call_kernel(X>0).
+A =\= B <=> A+      X  =:= B, call_kernel(X=\=0).  
+
+A =:= B <=> ground(A),ground(B) | X is A-B, zero(X).  % handle imprecision
+A =:= B <=> var(A),   ground(B) | A is B.
+B =:= A <=> var(A),   ground(B) | A is B.
+A =:= B <=> free(A),var(B) | A=B.   % variable A is not meta i.e. unconstrained
+B =:= A <=> free(A),var(B) | A=B.   % variable A is not meta i.e. unconstrained
+A =:= B <=> normalize(A,B,P,C), equals(P,C).
+
+
+% load auxiliary file
+:- ['math-utilities'].
+
+
+% ineq.chr ------------------------------------------------------

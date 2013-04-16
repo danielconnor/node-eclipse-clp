@@ -1,0 +1,68 @@
+
+suspension_to_goal(+Susp, ?Goal, ?Module)
+
+   Succeeds for an unwoken suspension and returns the corresponding Goal
+structure and caller module.
+
+
+
+Arguments
+   +Susp               A suspension.
+   ?Goal               A variable or a callable term.
+   ?Module             A variable or a module.
+
+Type
+   Obsolete
+
+Description
+   This built-in is used to access the contents of the abstract suspension
+   data type.  It is complementary to make_suspension/2 as it returns the
+   original goal structure and the module where make_suspension/2 was
+   executed.  If applied to an already woken suspension it fails.
+
+
+   Note that a suspension is not a standard Prolog data structure and can
+   only be manipulated in a restricted way.  In particular, a suspension is
+   not a term with functor 'GOAL' or 'WOKEN GOAL' although it is printed
+   this way by default.  suspension_to_goal/3 is the only way to access the
+   contents of a suspension.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the suspension is already woken.
+
+
+
+Exceptions
+     4 --- Susp is not instantiated.
+     5 --- Susp is not a suspension.
+     5 --- Goal is neither variable nor a callable term.
+     5 --- Module is neither variable nor atom.
+
+Examples
+   
+[eclipse 1]: make_suspension(writeln(hello),S),
+        suspension_to_goal(S, Goal, Module).
+S = 'GOAL'(writeln(hello), eclipse)
+Goal = writeln(hello)
+Module = eclipse
+Delayed goals:
+        writeln(hello)
+yes.
+[eclipse 2]: make_suspension(writeln(hello),S),
+        call_suspension(S),
+        suspension_to_goal(S, Goal, Module).
+hello
+
+no (more) solution.
+
+
+
+
+See Also
+   get_suspension_data / 3, delayed_goals / 1, kill_suspension / 1, make_suspension / 3

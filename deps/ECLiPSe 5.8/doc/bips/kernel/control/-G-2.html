@@ -1,0 +1,114 @@
+<HTML><HEAD><TITLE>+Condition -> +Then ; +Else</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>+Condition -> +Then ; +Else</H1>
+Conditional construct - succeeds if either Condition succeeds, and then Goal2
+succeeds; or else if Condition fails, and then Else succeeds.
+<DL>
+<DT><EM>+Condition</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>+Then</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>+Else</EM></DT>
+<DD>Atom or compound term.
+</DD>
+</DL>
+<H2>Description</H2>
+
+   The conditional (if-then-else) construct.  First Condition is called
+   and if this succeeds any further solutions of Condition are cut and
+   Then is called.  Else is never executed in this case regardless of the
+   outcome of Then.
+<P>
+   If Condition fails, Else is called.  In this case, Then is never executed.
+<P>
+   It is allowed, but not recommended to use -&gt;/2 without ;/2 as
+   <PRE>
+   ( Condition -&gt; Then )
+   </PRE>
+   If Condition succeeds, any further solutions of Condition are cut and Then
+   is called (as above). If Condition fails, the whole construct fails,
+   which is often considered unintuitive. If this behaviour is really
+   wanted, it can be expressed more clearly by
+   <PRE>
+   once(Condition), Then
+   </PRE>
+<P>
+   The more common idiom, where nothing is to be done in the else-case,
+   must be written like this, using true/0:
+   <PRE>
+   ( Condition -&gt; Then ; true )
+   </PRE>
+<P>
+   Also note that Condition must not contain a !/0.  If a !/0 appears in
+   Then or Else, it cuts through the whole construct.
+
+<P>
+   Since -&gt;/2 and ;/2 have a lower precedence than ,/2, call should always
+   be enclosed in parentheses:
+    <PRE>
+    ( Condition -&gt;
+        Then
+    ;
+        Else
+    )
+    </PRE>
+
+<H3>Fail Conditions</H3>
+   Fails if Condition succeeds and Then fails, or if Condition and Else fail.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>One of the arguments is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>One of the arguments is neither an atom nor a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: X = 1, (X == 1 -&gt; write(a); write(b)).
+      a
+      X = 1
+      yes.
+
+      [eclipse]: fail-&gt;write(not_me); write(me).
+      me
+      yes.
+      [eclipse]: [user].
+       p(1). p(2).
+       q(1). q(3).
+       r(2). r(3).
+       user        compiled 408 bytes in 0.00 seconds
+      yes.
+      [eclipse]: p(X)-&gt;q(Y);r(Y).
+      X = 1
+      Y = 1     More? (;)   % p/1 is cut; q/1 isn't.
+
+      X = 1
+      Y = 3
+      yes.
+      [eclipse]: p(3)-&gt;q(2);r(2).
+      yes.
+
+
+Fail:
+      [eclipse]: X = 1, (X == 2 -&gt; write(da); write(nyet)).
+      nyet
+      X = _g76      % X is not bound.
+      no.
+
+Error:
+      Goal -&gt; write(a); fail.        (Error 4).
+      "write(a)" -&gt; true; fail.      (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/O-2.html">; / 2</A>, <A HREF="../../kernel/control/I-0.html">! / 0</A>
+</BODY></HTML>

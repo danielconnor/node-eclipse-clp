@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>recorda(+Key, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>recorda(+Key, ?Value)</H1>
+Records the term Value at the beginning of key Key in the indexed database.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>An atom or compound term.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Any prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to record any prolog term Value at the beginning of the indexed
+   database entry associated with the key Key.  In the case of compound
+   terms, all keys of the same name and arity are treated as equal.
+
+<P>
+   If backtracking occurs through the call of recorda/2 the associated
+   Value is not removed from the indexed database.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is neither an atom nor a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+    recorda(a(compound,term),value1).
+    recorda([a,compound,term],value2).
+
+    [eclipse]: recorda(whiskey,jameson),
+    &gt;        recorda(whiskey,bushmills),
+    &gt;        recorda(whiskey,glenlivet).
+    yes.
+    [eclipse]: recorded(whiskey,Value).
+    Value = glenlivet     More (;)
+    Value = bushmills     More (;)
+    Value = jameson     More (;)
+    no (more) solution.
+Error:
+    recorda(Key, anything).             (Error 4)
+    recorda("key",anything).            (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/record-2.html">record / 2</A>, <A HREF="../../kernel/record/recordz-2.html">recordz / 2</A>
+</BODY></HTML>

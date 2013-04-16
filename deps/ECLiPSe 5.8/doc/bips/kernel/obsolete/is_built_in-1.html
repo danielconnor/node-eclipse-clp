@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>is_built_in(+PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>is_built_in(+PredSpec)</H1>
+Succeeds if PredSpec is a system built-in predicate.
+
+
+<DL>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Term of the form Atom/Integer.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Used to test whether PredSpec is a ECLiPSe built-in predicate.
+
+<P>
+   This predicate only succeeds for a PredSpec which is known to be a
+   built-in.  Undefined Predspec's raise an exception.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if PredSpec is not a built-in predicate.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredSpec is not fully instantiated.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not in the format Atom/Integer.
+<DT><EM>(60) referring to an undefined procedure </EM>
+<DD>PredSpec is not a defined procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   is_built_in(nl/0).
+   is_built_in(write/1).
+
+Fail:
+   is_built_in(append/3). % append/3 is a library
+                          % predicate, not a built-in.
+Error:
+   is_built_in(X).           (Error 4).
+   is_built_in(a/X).         (Error 4).
+   is_built_in(a).           (Error 5).
+   is_built_in(1).           (Error 5).
+   is_built_in(undefined/0). (Error 60).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/current_built_in-1.html">current_built_in / 1</A>, <A HREF="../../kernel/database/is_predicate-1.html">is_predicate / 1</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>
+</BODY></HTML>

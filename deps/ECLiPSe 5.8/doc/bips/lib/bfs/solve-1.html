@@ -1,0 +1,28 @@
+<HTML><HEAD><TITLE>BfsInstance:solve(-Cost)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(bfs)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>BfsInstance:solve(-Cost)</H1>
+Optimise the problem associated with BfsInstance.
+<DL>
+<DT><EM>Cost</EM></DT>
+<DD>The optimal solution cost of the problem associated with BfsInstance
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   A solver setup with solver_setup/2 or solver_setup/3 is triggered
+   using this predicate.
+</P><P>
+   The node relaxation and separation solvers are applied to the next
+   selected node of the problem represented by Handle repeatedly until
+   no more open nodes remain. The criteria for node selection order
+   depends on the options given to solver_setup/2,3.  solve/1 fails if
+   there is no solution or succeeds if an optimal solution is found,
+   returning the solution's cost in Cost.  After a success, various
+   solution information and statistics can be retrieved using get/2,
+   var_get/3 and statistics/0.
+</P>
+<H3>Fail Conditions</H3>
+No solution exists satisfying the global feasibility conditions.
+<H2>See Also</H2>
+<A HREF="../../lib/bfs/solver_setup-2.html">solver_setup / 2</A>, <A HREF="../../lib/bfs/solver_setup-3.html">solver_setup / 3</A>, <A HREF="../../lib/bfs/get-2.html">get / 2</A>, <A HREF="../../lib/bfs/var_get-3.html">var_get / 3</A>, <A HREF="../../lib/bfs/statistics-0.html">statistics / 0</A>
+</BODY></HTML>

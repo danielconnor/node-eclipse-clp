@@ -1,0 +1,35 @@
+
+asserta(+Clause)
+
+   Add specified clause for a dynamic procedure to the database before any
+existing clauses.
+
+
+
+Arguments
+   +Clause             Clause to be added to the database
+
+Type
+   Dynamic Predicates
+
+Description
+   Adds the specified clause for a dynamic procedure to the database.  This
+   is similar to the action of assert/1 except that the clause is added
+   BEFORE any existing clauses for the procedure.
+
+
+   Apart from that, its behaviour is identical to assert/1.
+
+
+
+
+Resatisfiable
+   
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dynamic / 1, assert / 1, retract / 1, compile_term / 1

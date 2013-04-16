@@ -1,0 +1,14 @@
+
+date_to_mjd(++DMY, ?MJD)
+
+   Convert a date in day/month/year form to an MJD day number
+
+Arguments
+   DMY                 A structure of the form D/M/Y where D,M and Y are integers
+   MJD                 Variable or integer
+
+Type
+   library(calendar)
+
+See Also
+   mjd_to_date / 2

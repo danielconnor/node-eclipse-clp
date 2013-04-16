@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>stream_truncate(+Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>stream_truncate(+Stream)</H1>
+Truncate Stream at the current position
+<DL>
+<DT><EM>Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined symbolic stream name).
+</DD>
+</DL>
+<H2>Description</H2>
+    Used to truncate a stream, i.e. to remove all contents beyond the
+    current (write) position.  As a consequence, immediately after this
+    operation the stream is at end of file.
+    <P>
+    This operation only makes sense on file-streams and string streams
+    which are open for writing (or updating). On all other types of streams,
+    the predicate silently succeeds.
+    <P>
+    Files will be physically truncated, i.e. their size is trimmed and extra
+    disk space returned to the operating system. String streams will free
+    any unnecessary buffer memory.
+    <P>
+    Note: When opening an existing file for writing (not updating), the
+    file is automatically truncated to size zero (see open/3,4).
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an atom or an integer.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not open in write mode.
+</DL>
+<H2>Examples</H2>
+<PRE>
+	?- open(string("hellothere"), update, s).
+	Yes (0.00s cpu)
+
+	?- seek(s, 5).
+	Yes (0.00s cpu)
+
+	?- at_eof(s).
+	No (0.00s cpu)
+
+	?- stream_truncate(s).
+	Yes (0.00s cpu)
+
+	?- at_eof(s).
+	Yes (0.00s cpu)
+
+	?- seek(s,0).
+	Yes (0.00s cpu)
+
+	?- read_string(s, end_of_file, _, S).
+	S = "hello"
+	Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/at_eof-1.html">at_eof / 1</A>, <A HREF="../../kernel/iostream/seek-2.html">seek / 2</A>, <A HREF="../../kernel/iostream/open-3.html">open / 3</A>, <A HREF="../../kernel/iostream/open-4.html">open / 4</A>
+</BODY></HTML>

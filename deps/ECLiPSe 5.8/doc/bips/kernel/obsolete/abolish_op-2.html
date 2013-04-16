@@ -1,0 +1,96 @@
+<HTML><HEAD><TITLE>abolish_op(+Name, +Associativity)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>abolish_op(+Name, +Associativity)</H1>
+Remove the declaration of the visible operator +Name of associativity
+Associativity.
+
+
+<DL>
+<DT><EM>+Name</EM></DT>
+<DD>Atom
+</DD>
+<DT><EM>+Associativity</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Used to remove the local declaration of the operator Name defined in the
+   caller module or to remove the hiding of a global operator declaration
+   (made with local_op(0, Associativity, Name)) so that the global operator
+   declaration becomes visible again.
+
+<P>
+   If no operator Name with associativity Associativity is visible from the
+   caller module, error 72 is raised.
+
+<P>
+   If Associativity is not one of following atoms, a range error is raised:
+
+<P>
+<PRE>
+----------------------------
+ xfx           infix
+ xfy           infix
+ yfx           infix
+ fx            prefix
+ fy            prefix
+ xf            postfix
+ yf            postfix
+</PRE>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Name or Associativity is uninstantiated.
+<DT><EM>(5) type error </EM>
+<DD>Name is not an atom.
+<DT><EM>(5) type error </EM>
+<DD>Associativity is not an atom.
+<DT><EM>(6) out of range </EM>
+<DD>Associativity is not a valid associativity name.
+<DT><EM>(72) accessing an undefined operator </EM>
+<DD>there is no operator Name with associativity Associativity    visible from the caller module.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: op(100, fx, -+-).
+      yes. % defined a global prefix operator
+      [eclipse]: local_op(0, fy, -+-).
+      yes. % hide any global prefix operator
+      [eclipse]: current_op(X, Y, -+-).
+      no (more) solution.
+      [eclipse]: abolish_op(-+-, fy).
+      yes. % remove the hiding
+      [eclipse]: current_op(X, Y, -+-).
+      X = 100
+      Y = fx     More? (;)  % global visible again
+      no (more) solution.
+      [eclipse]: abolish_op(-+-, fx).
+      yes. % remove the global definition
+      [eclipse]: current_op(X, Y, -+-).
+      no (more) solution.
+
+Error:
+      abolish_op(X, yfx).         (Error 4)
+      abolish_op(+, X).           (Error 4)
+      abolish_op("+", yfx).       (Error 5)
+      abolish_op(+, 12).          (Error 5)
+      abolish_op(+, fff).         (Error 6)
+      abolish_op(no_op, fx).      (Error 72)
+      local_op(100, fx, +),
+          abolish_op(+, fy).      (Error 72).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/current_op-3.html">current_op / 3</A>, <A HREF="../../kernel/obsolete/global_op-3.html">global_op / 3</A>, <A HREF="../../kernel/syntax/op-3.html">op / 3</A>
+</BODY></HTML>

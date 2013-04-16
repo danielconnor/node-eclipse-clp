@@ -1,0 +1,58 @@
+
+current_atom(?Atom)
+
+   Succeeds if Atom is an atom in the system.
+
+
+
+Arguments
+   ?Atom               Atom or variable.
+
+Type
+   Type Testing
+
+Description
+   Used to return all currently defined atoms.
+
+
+   Note that once an atom name is specified for the first time it is
+   automatically made known to the system, so calls to current_atom/1 with
+   any atom as an argument will always succeed.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Atom is not instantiated to an atom.
+
+Examples
+   
+Success:
+   current_atom(eclipse).
+   current_atom(anything).
+   current_atom('My atom').
+
+   [eclipse]: current_atom(X).
+
+   X = []    More? (;)         % RETURN pressed
+   yes.
+   [eclipse]:
+
+Error:
+   current_atom(1).           Error 5.
+   current_atom(man(1)).      Error 5.
+
+
+
+
+
+See Also
+   atom / 1, current_functor / 1

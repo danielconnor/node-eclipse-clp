@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>kill_display_matrix(+Name)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>kill_display_matrix(+Name)</H1>
+   Destroys an existing display matrix. 
+
+
+<DL>
+<DT><EM>Name</EM></DT>
+<DD>An atomic term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Destroys an existing display matrix. The display matrix is removed
+   from being displayed. This command can only kill a display matrix within
+   the `logical scope' of the display matrix, i.e. within the part of the
+   search-tree rooted at the node where the display matrix was created.
+   The display matrix window may persist beyond the logical scope, and in
+   such cases the window can only be killed on the GUI side. Normally, 
+   the matrix is removed on backtracking pass its point of creation, but
+   this may not occur due to cuts.
+
+<P>
+   Name is mapped into a string internally, so a name that is a atom or
+   number is the same name as its equivalent string (i.e. 'matrix' and
+   "matrix" are the same name).  Note that display matrix names are local
+   to a module, so it should be killed in the module in which it was
+   created (perhaps with @/2 wrapper around the call).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.	
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Name is not an atomic term.
+<DT><EM>(6) out of range </EM>
+<DD>Name is not an existing display matrix.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   kill_display_matrix(queens).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/make_display_matrix-5.html">make_display_matrix / 5</A>, <A HREF="../../kernel/debug/make_display_matrix-2.html">make_display_matrix / 2</A>, <A HREF="../../kernel/control/A-2.html">@ / 2</A>
+</BODY></HTML>

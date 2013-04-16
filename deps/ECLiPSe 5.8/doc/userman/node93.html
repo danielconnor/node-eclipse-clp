@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Mode analysis</TITLE>
+<META NAME="description" CONTENT="Mode analysis">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="previous" HREF="node92.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node94.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3648"
+ HREF="node94.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3644"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3640"
+ HREF="node92.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3646"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3649"
+ HREF="node94.html">Attributed Variables</A>
+<B> Up:</B> <A NAME="tex2html3645"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3641"
+ HREF="node92.html">Line coverage</A>
+ &nbsp <B>  <A NAME="tex2html3647"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001590000000000000000">
+Mode analysis</A>
+</H1>
+The mode_analyser library is a tool that assists in the generation 
+of the mode/1 directive for predicate definitions. This directive informs 
+the compiler that the arguments of the specified predicate will always 
+have the corresponding form when the predicate is called. The compiler 
+utilises this information during compilation of the predicate in order 
+to generate more compact and/or faster code. Specifying the mode of a 
+predicate that has already been compiled has no effect, unless it is 
+recompiled. If the specified procedure does not exist, a local undefined 
+procedure is created.
+
+The mode analyser inserts instrumentation into the clause definitions 
+of predicates during compilation in order to record mode usage of each 
+predicate argument. The code should then be run (as many times as is 
+necessary to capture the most common invocations of each predicate 
+undergoing analysis). Finally, the results of the analysis are requested
+and the suggested mode annotations for each predicate are displayed.
+
+The usage is as follows: 
+<DL COMPACT>
+<DT>1.
+<DD>Load the mode_analyser library:<PRE>
+
+?- lib(mode_analyser).
+</PRE>
+<DT>2.
+<DD>Compile your program with the mode analyser:<PRE>
+
+?- analyse(queen).
+</PRE>
+<DT>3.
+<DD>Run the query which most accurately exercises the 
+invocation modes of the defined predicates: <PRE>
+
+?- queen:queen([1,2,3,4],Out).
+</PRE>
+<DT>4.
+<DD>Generate the results for the module into which 
+the program was compiled:<PRE>
+
+?- result([verbose:on])@queen.
+</PRE></DL>
+This will print the results as follows:
+<PRE>
+
+Mode analysis for queen : qdelete / 4:
+        Results for argument 1:
+                -: 23   *: 0    +: 0    ++: 0
+        Results for argument 2:
+                -: 0    *: 0    +: 0    ++: 23
+        Results for argument 3:
+                -: 0    *: 0    +: 0    ++: 23
+        Results for argument 4:
+                -: 0    *: 0    +: 23   ++: 0
+
+        qdelete(-, ++, ++, +)
+
+Mode analysis for queen : nodiag / 3:
+        Results for argument 1:
+                -: 0    *: 0    +: 0    ++: 62
+        Results for argument 2:
+                -: 0    *: 0    +: 0    ++: 62
+        Results for argument 3:
+                -: 0    *: 0    +: 0    ++: 62
+
+        nodiag(++, ++, ++)
+
+Mode analysis for queen : qperm / 2:
+        Results for argument 1:
+                -: 0    *: 0    +: 0    ++: 41
+        Results for argument 2:
+                -: 0    *: 0    +: 41   ++: 0
+
+        qperm(++, +)
+
+Mode analysis for queen : queen / 2:
+        Results for argument 1:
+                -: 0    *: 0    +: 0    ++: 1
+        Results for argument 2:
+                -: 1    *: 0    +: 0    ++: 0
+
+        queen(++, -)
+
+Mode analysis for queen : safe / 1:
+        Results for argument 1:
+                -: 0    *: 0    +: 0    ++: 38
+
+        safe(++)
+</PRE>
+
+NOTE: It is imperative to understand that the results of mode analysis
+are merely suggestions for the invocation modes of a predicate based on
+runtime information. If there are potential predicate invocation modes
+that were not exercised during runtime, the tool is unable to account
+for them in its analysis. For the mode specifier '-' the mode analyser
+does not determine whether the variable occurs in any other argument
+(i.e. is aliased), this must be manually verified.
+In summary, the programmer must verify that the suggested modes are correct
+before using the directive in the code.  If the instantiation of the
+predicate call violates its mode declaration, no exception is raised and
+its behaviour is undefined.
+
+For more details about invocation mode analysis see 
+the <A NAME="tex2html1296"
+ HREF="../bips/lib/mode_analyser/index.html">Reference Manual</A><A NAME="9448"></A>.
+
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3648"
+ HREF="node94.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3644"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3640"
+ HREF="node92.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3646"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3649"
+ HREF="node94.html">Attributed Variables</A>
+<B> Up:</B> <A NAME="tex2html3645"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3641"
+ HREF="node92.html">Line coverage</A>
+ &nbsp <B>  <A NAME="tex2html3647"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

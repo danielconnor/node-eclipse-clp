@@ -1,0 +1,52 @@
+
+shortest_paths_bellman_ford(+Graph, +DistanceArg, +SourceNode, -Paths)
+
+   Computes one shortest path from a single source to every reachable node (allowing negative distances)
+
+Arguments
+   Graph               a graph structure
+   DistanceArg         which argument of EdgeData to use as distance: integer
+   SourceNode          source node number
+   Paths               array of Length-EdgeList structures
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes one shortest path from the single source node SourceNode
+    to every node which is reachable from it. In case of multiple
+    shortest paths with the same length, an arbitrary one is returned.
+
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. As opposed to the other
+    shortest path algorithms, the Bellman-Ford algorithm can handle
+    negative edge lengths, however, the implementation has currently
+    no check for negative cycles and will not terminate in that case.
+
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+
+    SourceNode is the common starting point for the computed paths.
+
+    The results are returned as an array ranging over all node numbers.
+    For unreachable nodes the array element is uninstantiated.
+    For reachable nodes, the element contains a Length-EdgeList structure
+    where Length is the length of the shortest path and EdgeList is that
+    path (or one of them) in reverse order, i.e. starting with the edge
+    reaching the target and ending with the edge starting from SourceNode.
+    
+
+Examples
+   
+    ?- sample_graph(G), shortest_paths_bellman_ford(G, 0, 1, P).
+    P = [](2 - [e(2, 1, 1), e(1, 2, 1)], 1 - [e(1, 2, 1)], ...)
+    
+
+See Also
+   single_pair_shortest_path_bellman_ford / 5, shortest_paths / 4

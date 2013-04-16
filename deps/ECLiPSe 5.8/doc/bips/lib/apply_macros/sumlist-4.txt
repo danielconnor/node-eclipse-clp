@@ -1,0 +1,14 @@
+
+sumlist(+Pred, +List, ?AccIn, ?AccOut)
+
+   Call Pred on all element of List and collect a result in Accumulator
+
+Type
+   library(apply_macros)
+
+Examples
+   
+	sumlist(plus, [1,2,3,4], 1, 10).
+	sumlist(times, [1,2,3,4], 1, 24).
+
+

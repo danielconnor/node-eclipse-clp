@@ -1,0 +1,25 @@
+
+struct sbdd_shared(array, depth, dec_info_list, dim_factors, val_offset, ground_points, throttle_pred, module)
+
+   Structure containing information for GAP-SBDD search
+
+Fields
+   array               Array of decision variables
+   depth               Current depth of search tree
+   dec_info_list       
+   dim_factors         
+   val_offset          
+   ground_points       
+   throttle_pred       
+   module              
+
+Type
+   library(ic_gap_sbdd)
+
+Description
+   Most of the contents of this structure are subject to change in future
+   versions of the library and thus should not be accessed by user-level
+   code.  The user should also not change the contents of this structure!
+
+
+

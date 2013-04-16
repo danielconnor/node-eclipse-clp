@@ -1,0 +1,69 @@
+
+peer_get_property(++Peer, ?Property, ?Value)
+
+   Returns the properties of the peer Peer.
+
+Arguments
+   Peer                Peer name (atom).
+   Property            Property name (atom or variable).
+   Value               Value of property Property for Peer.
+
+Type
+   External Interface
+
+Description
+   
+   If Property is a variable, this predicate will enumerate on backtracking
+   all the properties of peer Peer. If Property is instantiated to a valid
+   property name, the value of the property for Peer is unified with Value.
+
+   
+   Property is one of the following:
+
+
+
+   type     peer type (remote or embed)
+   lang     peer language (currently "tcl" or "java")
+   connect  connection information. Either:
+               remote(LocalHost,PeerHost,TimeOut) or
+               embed(Host,Host,block)
+   queues   current peer queues (list of stream ids)
+
+
+   'connect' returns the information on the connection for the peer. This
+   information is mainly relevant only for remote peers, but is provided
+   for the embedded peer for compatibility. The arguments for the remote 
+   and embedded cases are equivalent, and are:
+
+       LocalHost   Original local Host specification at peer creation
+       PeerHost    Host for the Peer
+       TimeOut     Time-out interval for creating new peer queues
+
+   For remote peers, LocalHost specifies how the local hostname will be
+   specified when setting up a connection between the peer and ECLiPSe.  It
+   is the same as how the hostname was specified initially when the peer
+   was set up: it can be either a variable, the actual hostname, or the
+   special name 'localhost'. The specification may place restrictions on how
+   the peer side client connection is specified. In particular, 'localhost'
+   would restrict the peer to be on the same host as ECLiPSe.  PeerHost is
+   either the hostname of the machine the peer is running on, or 
+   'localhost'. TimeOut is the time-out interval (in seconds) for accepting
+   peer queues, or the atom 'block' if there is no time-limit.
+
+   The LocalHost and PeerHost are identical for the embedded peer, and is
+   the hostname Host of the machine. There are no time-outs, so TimeOut
+   argument is the the atom 'block'. 
+   
+   
+
+Resatisfiable
+     Yes.
+
+Fail Conditions
+   Peer is not a current peer; Property is not a valid property.
+
+Exceptions
+     5 --- Peer or Property not of the right type.
+
+See Also
+   peer / 1

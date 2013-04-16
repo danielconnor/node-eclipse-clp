@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>viewable(?ViewableName)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(viewable)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>viewable(?ViewableName)</H1>
+Test/enumerate names of all existent viewables.
+<DL>
+<DT><EM>ViewableName</EM></DT>
+<DD>Atom or string: name of a viewable.
+</DD>
+</DL>
+<H2>Description</H2>
+
+
+        <p><B>NOTE:</B>When there are no registered visualisation clients,
+        this predicate fails with all arguments, and has no effect.</P>
+
+
+       If <em>ViewableName</em> is instantiated, tests whether
+       <em>ViewableName</em> is the name of an existent viewable. If not,
+       <em>ViewableName</em> is successively instantiated to the names of all
+       existent viewables.
+<H3>Fail Conditions</H3>
+Fails if ViewableName is not / cannot be instantiated to the name of an existent viewable.
+<H3>Resatisfiable</H3>
+yes
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>ViewableName is not an atom, string or free variable
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+[Assuming that at least one visualisation client is registered]
+
+     Success:
+
+     viewable_create(my_viewable, [X,Y,Z], array([fixed], any)), 
+       viewable(my_viewable).
+
+
+     Failure:
+
+     viewable(non_viewable)
+
+
+     Exception raised:
+
+     viewable(123).
+     [raises error 4].
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/viewable/viewable_create-2.html">viewable_create / 2</A>, <A HREF="../../lib/viewable/viewable_create-3.html">viewable_create / 3</A>
+</BODY></HTML>

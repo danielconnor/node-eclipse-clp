@@ -1,0 +1,32 @@
+
+?Vars tent_get ?Values
+
+   Query the tentative values of variables in Vars.
+
+Arguments
+   Vars                Term typically with variables with tentative values
+   Values              Term to receive tentative values of Vars.
+
+Type
+   library(repair)
+
+Description
+
+Values is a copy of the term Vars with the tentative values filled in
+place of the variables.   If a variable has no tentative value 
+a variable is returned in its place.
+
+
+CAUTION: If a variable has no tentative value, it is not possible to
+give it a tentative value by binding that returned variable.
+tent_set/2 must be used instead.
+
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Values does not unify with Vars with the tentative values filled in.
+
+See Also
+   tent_set / 2

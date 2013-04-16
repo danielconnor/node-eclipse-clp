@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>list2set(+List, ?Svar)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>list2set(+List, ?Svar)</H1>
+Transforms a ground list List into a ground set Svar.
+
+
+<DL>
+<DT><EM>+List</EM></DT>
+<DD>A ground list.
+</DD>
+<DT><EM>?Svar</EM></DT>
+<DD>A free variable or a ground set.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate forces Svar to be the ground set associated with the
+   ground list List.  Svar can be a free variable or a ground set.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if List is not ground or if Svar is ground and different from the
+   computed set.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 5]: L = [1,3,2,6,4], list2set(L, S).
+
+L = [1, 3, 2, 6, 4]
+S = {1, 2, 3, 4, 6}
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/set2list-2.html">set2list / 2</A>
+</BODY></HTML>

@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>erase(+Key, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>erase(+Key, ?Value)</H1>
+Succeeds if the term Value associated with key Key is removed as an entry
+in the indexed database.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Any Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Finds the first term associated with Key that can be unified with Value
+   and removes its entry from the indexed database.  It fails if such an
+   entry cannot be found.  If Value is uninstantiated, the first value
+   under the key Key is removed.  In the case of compound terms, all keys
+   of the same name and arity are treated as equal.  Backtracking through
+   calls of erase/2 does not undo an erasure.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Value associated with Key is not a record in the indexed
+   database.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is neither an atom nor a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   [eclipse]: record(whiskey,jameson),
+   &gt;        record(whiskey,bushmills),
+   &gt;        record(whiskey,glenfiddich),
+   &gt;        record(whiskey,dimple).
+   yes.
+   [eclipse]: erase(whiskey,dimple),erase(whiskey,Value).
+   Value = jameson
+   yes.
+   [eclipse]: recorded(whiskey,L).
+   L = bushmills     More? (;)
+   L = glenfiddich     More? (;)
+   no (more) solution.
+   Fail:
+   erase(whiskey,jameson).
+   Error:
+   erase(Key,anything).                   (Error 4)
+   erase("whiskey",anything).             (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/erase_all-1.html">erase_all / 1</A>
+</BODY></HTML>

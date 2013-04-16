@@ -1,0 +1,34 @@
+
+daVinci_edge_attribute(?Name, ++Type, ++Value)
+
+   Set an attribute for an edge in the graph
+
+Arguments
+   Name                 a Prolog term
+   Type                 an atom
+   Value                an atom
+
+Type
+   library(daVinci)
+
+Description
+
+This predicate is used to set some attribute of an edge in the graph. 
+For a list of all possible attributes and their values, please refer
+to the daVinci documentation
+Reference
+Manual.  Typical attributes are 'EDGECOLOR' or 'EDGEPATTERN' to
+set the appearance of the edge.  Note that it is currently not
+possible in daVinci to specify labels for the edges.   
+
+Resatisfiable
+   yes
+
+Fail Conditions
+   
+
+Examples
+    see daVinci_begin/0 
+
+See Also
+   daVinci_edge / 3

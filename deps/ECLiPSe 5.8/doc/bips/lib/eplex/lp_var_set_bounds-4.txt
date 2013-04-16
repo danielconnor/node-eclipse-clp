@@ -1,0 +1,38 @@
+
+lp_var_set_bounds(+Handle, ?Var, +Lo, +Hi)
+
+   Imposes new bounds for Var on the solver state of Handle.
+
+Arguments
+   Handle              Handle to a solver state
+   Var                 A solver problem variable for Handle
+   Lo                  New lower bound for Var (number)
+   Hi                  New upper bound for Var (number)
+
+Type
+   library(eplex)
+
+Description
+
+    
+    Imposes numeric bounds on the solver state of Handle for the variable
+    Var. Each bound is only updated if it is more narrow than the current
+    bound for the variable. The bounds are converted to floats before they
+    are imposed, and no typing is implied by the type of the numbers. It is
+    possible to impose incompatible bounds for the same variable on
+    different solver states. Var must be an existing problem variable for
+    Handle, i.e. it must occur in the constraints posted to the solver
+    state. 
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Lo is greater than Hi.
+
+Exceptions
+     5 --- Handle is not in the form of a solver handle.
+     6 --- Var is not a problem variable for Handle.
+
+See Also
+   lp_var_get_bounds / 4

@@ -1,0 +1,43 @@
+<HTML><HEAD><TITLE>monitor_changes(+Vars, +Templates, +Prio, +CondList, +AttrMod, -ChangeStream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(changeset)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>monitor_changes(+Vars, +Templates, +Prio, +CondList, +AttrMod, -ChangeStream)</H1>
+Monitor variables for modifications
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>A list containing variables
+</DD>
+<DT><EM>Templates</EM></DT>
+<DD>A list of terms corresponding to the variables
+</DD>
+<DT><EM>Prio</EM></DT>
+<DD>Priority for the monitoring demons
+</DD>
+<DT><EM>CondList</EM></DT>
+<DD>Suspension list spec
+</DD>
+<DT><EM>AttrMod</EM></DT>
+<DD>Suspension list attribute module
+</DD>
+<DT><EM>ChangeStream</EM></DT>
+<DD>A lazy list of lists of changes
+</DD>
+</DL>
+<H2>Description</H2>
+
+    Like monitor_changes_arr/5, but (instead of array indices) the
+    ChangeStream contains the elements of the Templates-list that
+    correspond to the modified variables, thus allowing arbitrary
+    information to be conveyed to the code that processes the changes.
+    <PRE>
+    [eclipse 10]: X1::1..9, X2::1..8,
+	    monitor_changes([X1,X2],[info(1,X1),info(2,X2)], 8,
+			    [min of fd, max of fd], fd, Stream),
+	    X1 #> X2, X2 #>= 5.
+
+    Stream = [[info(1, X1{[6..9]})], [info(2, X2{[5..8]}), info(1, X1)]|More]
+    X1 = X1{[6..9]}
+    X2 = X2{[5..8]}
+    </PRE>
+    
+
+</BODY></HTML>

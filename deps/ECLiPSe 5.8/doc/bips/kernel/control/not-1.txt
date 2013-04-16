@@ -1,0 +1,52 @@
+
+not +Goal
+
+   Succeeds if Goal cannot be satisfied (uses negation as failure).
+
+
+
+Arguments
+   +Goal               Atom or compound term.
+
+Type
+   Control
+
+Description
+   Used to fail if Goal succeeds.  Uses the standard Prolog form of
+   negation as failure.
+
+
+   To check whether a call Goal succeeds without binding variables, the
+   call not not Goal can be used.  Note that !/0 does not cut through
+   not/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Goal succeeds.
+
+
+
+Examples
+   
+Success:
+      not fail .
+      not 1 == 2 .
+      not X==1 .
+      not not X = 1.
+          % does not bind X
+Fail:
+      not(X=1).
+      not(true).
+      not(3 == 3).
+
+
+
+
+
+See Also
+   \+ / 1, ~ / 1, -> / 2

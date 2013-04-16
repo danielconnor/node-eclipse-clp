@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Interprocess Communication</TITLE>
+<META NAME="description" CONTENT="Interprocess Communication">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node136.html">
+<LINK REL="previous" HREF="node125.html">
+<LINK REL="up" HREF="umsroot.html">
+<LINK REL="next" HREF="node131.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4199"
+ HREF="node131.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4195"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4189"
+ HREF="node129.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4197"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4200"
+ HREF="node131.html">Socket Domains</A>
+<B> Up:</B> <A NAME="tex2html4196"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html4190"
+ HREF="node129.html">Creating Communicating Processes</A>
+ &nbsp <B>  <A NAME="tex2html4198"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002100000000000000000"></A>
+<A NAME="sockets"></A>
+<BR>
+Interprocess Communication
+</H1>
+ECLiPSe contains built-in predicates that support interprocess communications
+using sockets.
+Sockets implement bidirectional channels
+that can connect multiple processes on different machines
+in different networks.
+The socket predicates are directly mapped to the system calls
+and therefore detailed information can be found in the Unix manuals.
+
+<P>
+Sockets in general allow a networked communication among many processes,
+where each packet sent by one process can be sent to different address.
+In order to limit the number of necessary built-in predicates,
+ECLiPSe supports only point-to-point communication based
+on stream or datagram sockets, or many-to-one communication
+based on datagrams.
+Broadcasting as well as using one socket to send data
+to different addresses is not supported, except that
+datagram sockets can be re-connected, so that the same
+socket is directed to another address.
+Below we describe the basic communication types that are available
+in ECLiPSe.
+
+<P>
+Note that the sockets streams in ECLiPSe are buffered like
+all other streams, and so it is necessary to flush
+the buffer in order to actually send the data to the socket.
+This can be done either with the <A NAME="tex2html1728"
+ HREF="../bips/kernel/iostream/flush-1.html">flush/1</A><A NAME="12621"></A> predicate
+or with the option <B>%b</B> in <A NAME="tex2html1730"
+ HREF="../bips/kernel/ioterm/printf-2.html">printf/2, 3</A><A NAME="12624"></A>.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html4201"
+ HREF="node131.html">Socket Domains</A>
+<LI><A NAME="tex2html4202"
+ HREF="node132.html">Stream Connection (internet domain)</A>
+<LI><A NAME="tex2html4203"
+ HREF="node133.html">Datagram Connection (internet domain)</A>
+<LI><A NAME="tex2html4204"
+ HREF="node134.html">Stream Connection (unix domain)</A>
+<LI><A NAME="tex2html4205"
+ HREF="node135.html">Datagram Connection (unix domain)</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4199"
+ HREF="node131.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4195"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4189"
+ HREF="node129.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4197"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4200"
+ HREF="node131.html">Socket Domains</A>
+<B> Up:</B> <A NAME="tex2html4196"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html4190"
+ HREF="node129.html">Creating Communicating Processes</A>
+ &nbsp <B>  <A NAME="tex2html4198"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

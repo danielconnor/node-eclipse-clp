@@ -1,0 +1,42 @@
+<HTML><HEAD><TITLE>ensure_loaded(+Files)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>ensure_loaded(+Files)</H1>
+Compile the specified Files if necessary.
+
+
+<DL>
+<DT><EM>+Files</EM></DT>
+<DD>Atom, string, library(Atom) or a list thereof.
+</DD>
+</DL>
+<H2>Description</H2>
+
+	Compiles the specified files or libraries if they haven't been compiled
+	yet or if they have been modified since the last compilation.
+	The file name expansion rules are the same as for compile/1,
+	except that it tries to load a precompiled file (with the
+	eclipse_object_suffix) before looking for source files.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Files is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>File is instantiated but not to a (list of) files.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ensure_loaded(prog).
+    ensure_loaded('dir/file').
+    ensure_loaded([file1, 'file2.pl']).
+    ensure_loaded(library(lists)).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/D-2.html">. / 2</A>, <A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/compile-2.html">compile / 2</A>, <A HREF="../../kernel/database/current_compiled_file-3.html">current_compiled_file / 3</A>, <A HREF="../../lib/fcompile/fcompile-1.html">fcompile : fcompile / 1</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>
+</BODY></HTML>

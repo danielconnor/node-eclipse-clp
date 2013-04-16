@@ -1,0 +1,92 @@
+<HTML><HEAD><TITLE>library(ic_probing_for_scheduling)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(ic_probing_for_scheduling)</H1>
+Probing for Scheduling
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="fun_to_cons_var-3.html"><STRONG>fun_to_cons_var(+CostFun, -ConsList, -CostVar)</STRONG></A></DT>
+<DD>Convert a cost expression to a variable and a list of constraints, 
+suitable to pass into probe_cstr_sched/7</DD>
+<DT><A HREF="probe_cstr_sched-7.html"><STRONG>probe_cstr_sched(+Starts, +Durations, +Resources, ++MaxResource, +Constraints, -Cost, ++Options)</STRONG></A></DT>
+<DD>Find a resource-feasible schedule that minimises the
+cost, subject to the constraints</DD>
+<DT><A HREF="probe_sched-5.html"><STRONG>probe_sched(+Starts, +Durations, +Resources, ++MaxResource, ?CostFun)</STRONG></A></DT>
+<DD>Find a resource-feasible schedule that minimises the
+cost function</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+    This is a complete search method for resource-constrained scheduling 
+    problems
+    </P><P>
+    The user interface is similar to the cumulative constraint, with a 
+    list of task start times, durations and resources; and a maximum 
+    resource limit.  There is one extra argument, a cost function which 
+    is to be minimised. 
+    </P><P>
+    Probing for scheduling differs radically from the cumulative constraint
+    because it includes a search routine.  In its behaviour it is an
+    optimisation procedure and not simply a constraint which enforces 
+    consistency. 
+    </P><P>
+    The search is focussed towards an optimal vlaue of the cost function.
+    </P>
+    
+<H2>Examples</H2>
+<PRE>
+% Example program: simple schedule optimisation
+
+:- lib(ic_probing_for_scheduling).
+:- lib(ic).
+
+ex1([X,Y,Z],Cost) :-
+        [OldX,OldY,OldZ]=[1,5,5],
+        Durations=[10,5,5],
+        Resources=[1,2,1],
+        MaxResource=2,
+        NewStarts=[X,Y,Z],
+        ic:(NewStarts::1..10),
+        CostFun= abs(X-OldX) + abs(Y-OldY) + abs(Z-OldZ),
+	probe_sched(NewStarts,Durations,Resources,MaxResource,CostFun),
+	Cost is CostFun.
+
+ex2([X,Y,Z],Cost) :-
+        [OldX,OldY,OldZ]=[1,5,5],
+        Durations=[10,5,5],
+        Resources=[1,2,1],
+        MaxResource=2,
+        NewStarts=[X,Y,Z],
+        ic:(NewStarts::1..10),
+        Constraints=[
+                     XDiff &gt;= X-OldX, XDiff &gt;= OldX-X,
+                     YDiff &gt;= Y-OldY, YDiff &gt;= OldY-Y,
+		     ZDiff &gt;= Z-OldZ, ZDiff &gt;= OldZ-Z,
+		     Cost =:= XDiff+YDiff+ZDiff
+                    ],
+        Options=[granularity(1),priority(5)],
+	probe_cstr_sched(NewStarts,Durations,Resources,MaxResource,
+                         Constraints,Cost,Options).
+
+ex3(Starts,MaxResource,Cost) :-
+	Starts=[S1,S2,S3,S4],
+	ic:(S1::1..10),
+	ic:(S2::3..10),
+	ic:(S3::1..5),
+	ic:(S4::3..10),
+        [D1,D2,D3,D4]=[5,5,3,3],
+        Durations=[D1,D2,D3,D4],
+	Resources=[1,1,1,1],
+	CostFun= max([S1+D1,S2+D2,S3+D3,S4+D4]),
+	probe_sched(Starts,Durations,Resources,MaxResource,CostFun),
+	ic:(Cost =:= eval(CostFun)).
+     
+</PRE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Mark Wallace, Hani El Sakkout
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date: 2004/10/28 17:19:51 $
+</UL>
+<HR>Generated from ic_probing_for_scheduling.eci on Tue Jan 25 01:58:42 2005
+
+</BODY></HTML>

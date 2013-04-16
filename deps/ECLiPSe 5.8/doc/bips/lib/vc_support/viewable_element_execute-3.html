@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>viewable_element_execute(++ViewableName, ++ElementSpec, ?Goal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(vc_support)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>viewable_element_execute(++ViewableName, ++ElementSpec, ?Goal)</H1>
+Execute a goal for a viewable element inside a viewable.
+<DL>
+<DT><EM>ViewableName</EM></DT>
+<DD>Atom: name of an existent viewable.
+</DD>
+<DT><EM>ElementSpec</EM></DT>
+<DD>Currently, this should be element(IndexList), where IndexList is a list of integers: the coordinates of the viewable element within the viewable.
+</DD>
+<DT><EM>Goal</EM></DT>
+<DD>Goal to be executed, mentioning ElementSpec.
+</DD>
+</DL>
+<H2>Description</H2>
+Note that this predicate throws an error if there are no current visualisation clients. The purpose of this predicate is to allow visualisation clients to call arbitrary goals which take viewable elements as input, without the visualisation clients having to retrieve the viewable elements themselves. <em>Goal</em> is the goal to be executed, but <em>Goal</em> mentions <em>ElementSpec</em> wherever it wishes to use the viewable element as input. The element specified by <em>ElementSpec</em> is retrieved from the viewable. Then all occurences of <em>ElementSpec</em> within <em>Goal</em> are replaced by the element, to give <em>NewGoal</em>. Finally, <em>NewGoal</em> is executed, and the predicate succeeds if <em>NewGoal</em> succeeds.  
+<p>
+
+
+
+
+<H3>Fail Conditions</H3>
+Fails if NewGoal fails.
+<H3>Resatisfiable</H3>
+yes
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(1) general error </EM>
+<DD>There are no current visualisation clients
+<DT><EM>(4) instantiation fault </EM>
+<DD>ViewableName is not an atom or string
+<DT><EM>(5) type error </EM>
+<DD>IndexList is not a ground list of integers
+<DT><EM>(6) out of range </EM>
+<DD>A co-ordinate in Index is out of range
+<DT><EM>(8) bad argument list </EM>
+<DD>IndexList has the wrong number of elements
+</DL>
+<H2>Examples</H2>
+<PRE>
+An example, assumng there are visualisation clients running, would be:
+
+[eclipse 2]: viewable_create(v1, [[X]]), 
+             viewable_element_execute(v1, element([1, 1]), var(element([1, 1]))).
+
+X = X
+Yes (0.00s cpu)
+[eclipse 3]: 
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/viewable/viewable_create-3.html">viewable : viewable_create / 3</A>, <A HREF="../../lib/viewable/viewable_size-2.html">viewable : viewable_size / 2</A>, <A HREF="../../lib/vc_support/viewable_element_to_string-2.html">viewable_element_to_string / 2</A>, <A HREF="../../lib/vc_support/viewable_element-3.html">viewable_element / 3</A>
+</BODY></HTML>

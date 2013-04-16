@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>?Term1 \== ?Term2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Comparing and Sorting</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Term1 \== ?Term2</H1>
+Succeeds if Term1 and Term2 are not identical terms.
+
+
+<DL>
+<DT><EM>+Term1</EM></DT>
+<DD>An arbitrary term.
+</DD>
+<DT><EM>+Term2</EM></DT>
+<DD>An arbitrary term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to compare the terms Term1 with Term2.  Succeeds if Term1
+   and Term2 are not identical terms.  Two variables are considered as
+   identical only if one is bound to the other one, or if they are bound to
+   identical terms.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Term1 and Term2 are identical.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+   atom \== neutron.
+   atom \== X.
+   X \== atom.
+   1 \== 1.0.
+   X \== Y.
+   [a|b] \== [a,b].
+   [a|X] \== [a,X].
+   f(a,b) \== [f,a,b].
+   f(1,2,3) \== f(1,2,3.0).
+Fail:
+   a \== a.
+   X \== X.
+   X = Y, X \== Y.
+   [a,b|[]] \== [a,b].
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/EE-2.html">== / 2</A>, <A HREF="../../kernel/termcomp/RE-2.html">\= / 2</A>
+</BODY></HTML>

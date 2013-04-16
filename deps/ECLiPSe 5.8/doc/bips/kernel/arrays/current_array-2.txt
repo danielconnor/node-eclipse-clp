@@ -1,0 +1,65 @@
+
+current_array(?Array, ?Options)
+
+   Succeeds if there exists an array as denoted by Array and with type and
+visibility as given in the list Options.
+
+
+
+Arguments
+   ?Array              Atom or compound term.
+   ?Options            Variable or list.
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   current_array/2 is used to retrieve information about existing
+   visible arrays, non-logical variables and references.  Array is a
+   term denoting the array's name and dimensions and Options is a list
+   describing the array's type (prolog, float, integer or byte) and visibility.
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if there is no (further) array whose name unifies with ArrayName,
+   dimension list with ListOfBounds and type with Type.
+
+
+
+Exceptions
+     5 --- Array is neither variable, atom nor compound term.
+     5 --- Options is neither a list nor a variable.
+
+Examples
+   
+[eclipse 1]: local array(a(2)), array(b(2,3,4), float).
+
+yes.
+[eclipse 2]: current_array(a(Size), [Type,Vis|_]).
+
+Size = 2
+Type = prolog
+Vis = local
+yes.
+[eclipse 3]: current_array(Array, Props).
+
+Array = a(2)
+Props = [prolog, local]     More? (;)
+
+Array = b(2, 3, 4)
+Props = [float, local]     More? (;)
+
+no (more) solution.
+
+Error:
+      current_array("a", L).    (Error 5).
+      current_array(a, 9).      (Error 5).
+
+
+
+
+See Also
+   array / 1, array / 2, variable / 1

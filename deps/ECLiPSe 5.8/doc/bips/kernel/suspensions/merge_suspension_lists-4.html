@@ -1,0 +1,59 @@
+<HTML><HEAD><TITLE>merge_suspension_lists(+Pos1, +Attr1, +Pos2, +Attr2)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>merge_suspension_lists(+Pos1, +Attr1, +Pos2, +Attr2)</H1>
+Destructively merge the suspension list on Pos1 in structure Attr1
+into the suspension list on Pos2 in structure Attr2.
+
+
+<DL>
+<DT><EM>+Pos1</EM></DT>
+<DD>Integer indicating the position of the suspension list.
+</DD>
+<DT><EM>+Attr1</EM></DT>
+<DD>Compound term, typically a variable's attribute.
+</DD>
+<DT><EM>+Pos2</EM></DT>
+<DD>Integer indicating the position of the suspension list.
+</DD>
+<DT><EM>+Attr2</EM></DT>
+<DD>Compound term, typically a variable's attribute.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used to merge two suspension lists. The list
+   in Attr1 remains unaffected but the list in Attr2 is replaced
+   by the merge of the two lists.
+
+<P>
+   Suspension lists should be regarded an opaque data structure and
+   only be accessed and manipulated by the set of primitives provided
+   for this purpose.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Pos1, Pos2, Attr1 or Attr2 is not instatiated.
+<DT><EM>(5) type error </EM>
+<DD>Pos1 or Pos2 is not an integer.
+<DT><EM>(5) type error </EM>
+<DD>Attr1 or Attr2 is not a structure or has no suspension list on the indicated argument position.
+<DT><EM>(6) out of range </EM>
+<DD>Attr1 or Attr2 does not have a Position'th argument.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/insert_suspension-3.html">insert_suspension / 3</A>, <A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-2.html">schedule_suspensions / 2</A>, <A HREF="../../kernel/suspensions/init_suspension_list-2.html">init_suspension_list / 2</A>, <A HREF="../../kernel/suspensions/enter_suspension_list-3.html">enter_suspension_list / 3</A>
+</BODY></HTML>

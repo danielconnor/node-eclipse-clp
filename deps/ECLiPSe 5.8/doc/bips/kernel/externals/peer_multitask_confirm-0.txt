@@ -1,0 +1,25 @@
+
+peer_multitask_confirm
+
+   Confirm a peer multitasking phase.
+
+Type
+   External Interface
+
+Description
+
+   This predicate is intended for use only in implementing peer 
+   multitasking for an external language interface.
+
+   A multitasking phase is confirmed by this predicate. That is, when a
+   multitasking phase is initiated by a call to peer_do_multitask/1, this
+   predicate should be executed for the multitasking phase to continue. If
+   this predicate is not executed, the multitasking phase will be
+   terminated. It is intended that this predicate is executed via an ERPC
+   by a peer when the multitasking phase is initiated, if that peer is
+   interested in the phase. A multitasking phase will be ended when
+   peer_multitask_terminate/0 is called.
+   
+
+See Also
+   peer_do_multitask / 1, peer_multitask_terminate / 0

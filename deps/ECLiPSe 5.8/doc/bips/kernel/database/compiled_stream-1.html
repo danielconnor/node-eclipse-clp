@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>compiled_stream(?Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>compiled_stream(?Stream)</H1>
+Succeeds if the I/O stream currently being compiled is Stream.
+
+
+<DL>
+<DT><EM>?Stream</EM></DT>
+<DD>Atom, Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to find the stream that is currently being compiled.
+   compiled_stream/1 is meaningful mainly in queries inside a compiled
+   file, or in event handlers for compilation events.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if no compilation from a stream is currently active.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an atom or integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse]: [user].
+     a.
+     :- compiled_stream(S), get_stream_info(S, name, File),
+        printf("Compiling stream %d, file %s\n", [S, File]).
+    Compiling stream 0, file user
+    ^D
+     user       compiled traceable 28 bytes in 0.00 seconds
+
+    yes.
+    [eclipse]: exec('cat a.pl', []).
+    a.
+    :- compiled_stream(S), get_stream_info(S, name, File),
+       printf("Compiling stream %d, file %s\n", [S, File]).
+
+    yes.
+    [eclipse]: [a].
+    Compiling stream 5, file /home/joe/a.pl
+    a.pl       compiled traceable 28 bytes in 0.00 seconds
+
+    yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/compile-2.html">compile / 2</A>, <A HREF="../../kernel/database/compile_stream-1.html">compile_stream / 1</A>
+</BODY></HTML>

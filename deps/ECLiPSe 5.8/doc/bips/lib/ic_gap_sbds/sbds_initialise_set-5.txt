@@ -1,0 +1,29 @@
+
+sbds_initialise_set(+Array, ++VarDimNames, ++ValueDimSpec, +SymSpecs, +Options)
+
+   Initialises the data structures required by the SBDS algorithm (set version)
+
+Arguments
+   Array               Array of integer set decision variables
+   VarDimNames         Names for the dimensions of Array
+   ValueDimSpec        Name of the value dimension and its range
+   SymSpecs            List of symmetry specifiers
+   Options             List of extra options
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Like sbds_initialise/5, but for set models (i.e. Array should be an array
+   of integer set variables).  The "value" dimension is the values that can 
+   appear in the set, so that, for example, a range of 1..5 indicates that
+   the upper bound of the set variables is [1,2,3,4,5].
+
+   See the documentation for sbds_initialise/5 for more details.
+
+   During search, use sbds_try_set/3 or sbds_try_set/4 on variables from
+   Array when making search decisions.
+
+
+See Also
+   sbds_initialise / 5, sbds_try_set / 3, sbds_try_set / 4

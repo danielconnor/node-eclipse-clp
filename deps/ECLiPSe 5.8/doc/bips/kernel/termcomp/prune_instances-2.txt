@@ -1,0 +1,60 @@
+
+prune_instances(+List, ?PrunedList)
+
+   Succeeds if PrunedList is the smallest list that subsumes the list List.
+
+
+
+Arguments
+   +List               List of instantiated terms.
+   ?PrunedList         List or variable.
+
+Type
+   Comparing and Sorting
+
+Description
+   Used to get the smallest list PrunedList whose elements subsume elements
+   of the list List.  List must not contain variables.  If List contains
+   elements which are variants of each other, then of these, PrunedList
+   will only contain the first element found.  If List contains element(s)
+   which are instances of another element, then of these, PrunedList will
+   only contain the latter.
+
+
+   Note that if List contains only ground terms, it cannot contain proper
+   instances or variants, but only duplicates.  Therefore, it is faster to
+   use a sorting predicate to prune it.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if PrunedList does not unify with List pruned as above.
+
+
+
+Examples
+   
+Success:
+      prune_instances([5,2,3,5,4,2],L).
+          (gives L=[5,2,3,4]).
+      prune_instances([f(1,2),f(1,M),1],L).    % instance
+          (gives M=_g74,L=[f(1,_g74),1]).
+      prune_instances([f(1,2,3),f(1,M,3),f(1,2,N)],L).
+          (gives M=_g80,N=_g70, L=[f(1,_g80,3),f(1,2,_g70)]).
+      prune_instances([f(1,N),f(1,M),1],L).    % variants
+          (gives N=_g72,M=_g76, L=[f(1,_g72),1]).
+      prune_instances([f(1,X),f(1,2),g(1)],L).
+          (gives X=_g80; L=[f(1,_g80),g(1)]).
+Fail:
+      prune_instances([1,2,3,1,4,2],[2,3,4]).
+
+
+
+
+
+See Also
+   sort / 2, sort / 4

@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>bind(+Stream, ?Address)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>bind(+Stream, ?Address)</H1>
+Associates an address with a given socket stream.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Atom or integer.
+</DD>
+<DT><EM>?Address</EM></DT>
+<DD>Atom, structure or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   bind/2 is a direct link to the bind(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3.
+   If the socket was created in the unix domain, Address must be an atom
+   which identifies the file associated with the socket.  This file name
+   can then be used by other processes to connect with this socket using
+   the predicate connect/2.
+
+<P>
+   If the socket is in the internet domain, the address is in the form
+   HostName/Port, where any of Address or HostName or Port may be
+   uninstantiated.  When the port is already in use, the predicate raises
+   an event and so it is always safest to call bind/2 with Address
+   uninstantiated (this corresponds to the INADDR_ANY value for the system
+   call), and upon success it will be instantiated to the hostname and
+   selected port number.
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+   Datagram sockets require a connect/2 call from the process that wants to
+   write on the socket and bind/2 from the one that reads from it.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Address is HostName/Port and HostName does not unify with the
+   name of the host machine.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is instantiated, but not to an atom or an integer.
+<DT><EM>(5) type error </EM>
+<DD>Address is instantiated but not to the form accepted by the    socket domain.
+<DT><EM>(170) system interface error </EM>
+<DD>It was not possible to bind the socket.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+
+Error:
+      bind(s, Host/p)               (Error 5).
+      bind(s, '/usr/bin')           (Error 170).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/socket-3.html">socket / 3</A>, <A HREF="../../kernel/iostream/listen-2.html">listen / 2</A>, <A HREF="../../kernel/iostream/accept-3.html">accept / 3</A>, <A HREF="../../kernel/iostream/connect-2.html">connect / 2</A>, <A HREF="../../kernel/iostream/new_socket_server-3.html">new_socket_server / 3</A>, <A HREF="../../kernel/iostream/current_stream-1.html">current_stream / 1</A>, <A HREF="../../kernel/iostream/get_stream_info-3.html">get_stream_info / 3</A>
+</BODY></HTML>

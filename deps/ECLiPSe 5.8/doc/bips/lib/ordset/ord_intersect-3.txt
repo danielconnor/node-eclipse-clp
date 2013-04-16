@@ -1,0 +1,19 @@
+
+ord_intersect(+Set1, +Set2, ?Intersection)
+
+   Computes the intersection of two sets
+
+Arguments
+   Set1                A set
+   Set2                A set
+   Intersection        A set
+
+Type
+   library(ordset)
+
+Description
+	Succeeds when Intersection is the intersection of Set1 
+	and Set2, provided that Set1 and Set2 are ordered sets.
+    
+
+

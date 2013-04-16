@@ -1,0 +1,66 @@
+
+ln(+Number, ?Result)
+
+   Evaluates the natural logarithm ln(Number) and unifies the resulting value
+with Result.
+
+
+
+Arguments
+   +Number             A number.
+   ?Result             A variable float or breal.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to ln(Number, Result) is equivalent
+   to
+
+    Result is ln(Number)
+
+    which should be preferred for portability.
+
+   In coroutining mode, if Number is a free variable, the call to ln/2 is
+   delayed until this variable is instantiated.
+
+
+
+
+Resatisfiable
+   
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated (non-coroutining mode only).
+     5 --- Result is a number but not a float or breal.
+    24 --- Number is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+    20 --- Illegal arithmetic operation:  Number is 0 or less.
+
+Examples
+   
+Success:
+      ln(2.0, Result).          (gives Result = 0.693147)
+      ln(1, Result).            (gives Result = 0.0)
+Fail:
+      ln(1, 1.0).
+Error:
+      ln(A, 6.0).                   (Error 4).
+      ln(1, 0).                     (Error 5).
+      ln(-2, Result).               (Error 20).
+      ln(0, Result).                (Error 20).
+      ln(4 + 2, 1.79176).           (Error 24).
+      ln(1, r).                     (Error 24).
+
+
+
+
+
+See Also
+   is / 2

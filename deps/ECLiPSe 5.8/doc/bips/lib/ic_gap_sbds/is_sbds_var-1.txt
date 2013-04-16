@@ -1,0 +1,17 @@
+
+is_sbds_var(?Var)
+
+   Checks whether a variable is an SBDS variable
+
+Arguments
+   Var                 The variable to check
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Succeeds iff Var is an SBDS variable (i.e. has been initialised through
+   a call to sbds_initialise/5).
+
+
+

@@ -1,0 +1,19 @@
+
+gap_ensure_started
+
+   Make sure there is a GAP session active
+
+Type
+   library(gap)
+
+Description
+   Makes sure that there is a GAP session currently active, by starting GAP
+   if required.  It is normally not necessary to call this predicate
+   directly, since sending any GAP command or query will automatically start
+   GAP if GAP is not currently running.  However, there may be circumstances
+   where one wishes to force GAP to start, to avoid the start-up delay later
+   when the first command is sent.
+
+
+See Also
+   gap_shutdown / 0, gap_restart / 0, gap_running / 0

@@ -1,0 +1,78 @@
+
+frandom(?F)
+
+   Generates a random floating-point number F in the range <0, 1>.
+
+
+
+Arguments
+   ?F                  Floating-point number or variable.
+
+Type
+   Arithmetic
+
+Description
+   frandom/1 unifies F with a random floating-point number between 0 and 1.
+   The code is taken from random2.c by John Burton, available from the net.
+   Part of original comment:
+
+
+
+ *
+ * PMMMLCG - Prime Modulus M Multiplicative Linear Congruential Generator   *
+ *  Modified version of the Random number generator proposed by             *
+ *  Park & Miller in "Random Number Generators: Good Ones Are Hard to Find" *
+ *  CACM October 1988, Vol 31, No. 10                                       *
+ *   - Modifications proposed by Park to provide better statistical         *
+ *     properties (i.e. more "random" - less correlation between sets of    *
+ *     generated numbers                                                    *
+ *   - generator is of the form                                             *
+ *         x = ( x * A) % M                                                 *
+ *   - Choice of A & M can radically modify the properties of the generator *
+ *     the current values were chosen after followup work to the original   *
+ *     paper mentioned above.                                               *
+ *   - The generator has a period of 0x3fffffff with numbers generated in   *
+ *     the range of 0 < x < M                                               *
+ *   - The generator can run on any machine with a 32-bit integer, without  *
+ *     overflow.                                                            *
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- F is instantiated, but not to a floating-point number.
+
+Examples
+   
+Success:
+      [eclipse]: frandom(F1), frandom(F2).
+      F1 = 0.900086582
+      F2 = 0.0795856342
+      yes.
+
+      [eclipse]: seed(1), frandom(F).
+      F = 2.2477936e-05
+      yes.
+      [eclipse]: seed(1), frandom(F).
+      F = 2.2477936e-05
+      yes.
+
+Fail:
+      frandom(123.45).
+
+Error:
+      frandom(1234).          (Error 5).
+
+
+
+
+
+See Also
+   seed / 1, random / 1

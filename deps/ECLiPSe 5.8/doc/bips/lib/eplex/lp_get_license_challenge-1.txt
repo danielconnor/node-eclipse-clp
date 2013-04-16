@@ -1,0 +1,48 @@
+
+lp_get_license_challenge(-Challenge)
+
+   Get parameter for computing license key (some external solvers only)
+
+Arguments
+   Challenge           Variable
+
+Type
+   library(eplex)
+
+Description
+	This is only needed for certain OEM versions of external solvers!
+    
+    	The eplex-library interfaces to an external simplex/MIP solver
+	which might require a license to run (e.g. CPLEX, XPRESS-MP).
+	Certain versions of these external solvers use a challenge-
+	response licensing system. Only in such cases is this predicate
+	needed. lp_get_license_challenge/1 returns a value which is used to
+	compute a license key. This key is then passed into lp_get_license/2.
+	For the details of this procedure you will need to consult the
+	documentation of the solver vendor.
+    
+        Be aware that the magic formula supplied by the vendor is usually
+        designed to be performed in a language like C, and may rely on the
+        behaviour of overflowing with 32 bit integers. In ECLiPSe, no
+        overflowing will takes place because of bignums, and this has to be
+        taken into account if the magic formula is calculated in ECLiPSe.
+    
+	If you have a development license of CPLEX or XPRESS-MP, this
+	predicate does not need to be called. If called anyway, it fails.
+    
+
+Fail Conditions
+   Fails if the solver doesn't use a challenge-response licensing system
+
+Examples
+   
+     ?- ( lp_get_license_challenge(Challenge) ->
+	    magic_formula(Challenge, Response),
+	    lp_get_license(RuntimeLicenseString, Response)
+	;
+	    lp_get_license(DevelopmentLicensePath, 0)
+	).
+    
+
+See Also
+   lp_get_license / 2

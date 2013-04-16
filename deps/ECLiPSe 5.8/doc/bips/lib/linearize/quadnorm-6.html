@@ -1,0 +1,45 @@
+<HTML><HEAD><TITLE>quadnorm(?Expression, -Const, -Linear, -Quadratic, -PolyRes, -Residue)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(linearize)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>quadnorm(?Expression, -Const, -Linear, -Quadratic, -PolyRes, -Residue)</H1>
+Extracts constant, linear and quadratic part of an arithmetic expression
+<DL>
+<DT><EM>Expression</EM></DT>
+<DD>Arithmetic expression with constants and variables
+</DD>
+<DT><EM>Const</EM></DT>
+<DD>Variable or number
+</DD>
+<DT><EM>Linear</EM></DT>
+<DD>Variable or normalized linear polynomial
+</DD>
+<DT><EM>Quadratic</EM></DT>
+<DD>Variable or normalized quadratic polynomial
+</DD>
+<DT><EM>PolyRes</EM></DT>
+<DD>Variable or normalized superquadratic polynomial
+</DD>
+<DT><EM>Residue</EM></DT>
+<DD>Residual nonpolynomial components in the form AuxVar=Expr
+</DD>
+</DL>
+<H2>Description</H2>
+	This predicate is a simplified interface to polynorm/3 for the case
+	where one is only interested in linear and quadratic components.
+	See polynorm/3 for details.
+    
+<H2>Examples</H2>
+<PRE>
+    ?- quadnorm(2*5 + 3*(X+5*Y+7)*Z, Const, Lin, Quad, Poly, Res).
+    X = X
+    Y = Y
+    Z = Z
+    Const = 10
+    Lin = [[21, Z]]
+    Quad = [[3, X, Z], [15, Y, Z]]
+    Poly = []
+    Res = []
+    yes.
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/linearize/polynorm-3.html">polynorm / 3</A>, <A HREF="../../lib/linearize/linearize-3.html">linearize / 3</A>
+</BODY></HTML>

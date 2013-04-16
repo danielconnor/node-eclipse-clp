@@ -1,0 +1,73 @@
+<HTML><HEAD><TITLE>parallel +SpecList</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>parallel +SpecList</H1>
+Declares the procedure(s) specified by SpecList as parallel.
+
+
+<DL>
+<DT><EM>+SpecList</EM></DT>
+<DD>Comma-separated sequence of expressions of the form Atom/Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   The parallel annotation specifies that the system is allowed to execute
+   the clauses of the annotated predicate in parallel (Or-parallelism),
+   instead of sequentially by backtracking.  This has the following
+   consequences:
+
+<P>
+  * the predicate is a source of or-parallelism which will hopefully speed
+    up execution of the program on a parallel machine
+
+<P>
+  * calls to this predicate may return alternative solutions in
+    unpredictable order
+
+<P>
+  * side effects within the parallel execution may happen in unpredictable
+    order
+
+<P>
+   The parallel annotation has simply no effect when the predicate (or a
+   particular call to it) is deterministic or when it is used with a
+   sequential ECLiPSe system.
+
+<P>
+   A procedure can be declared parallel before it is actually defined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SpecList is instantiated, but not to a sequence of    expressions of the form Atom/Integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+  [eclipse 1]: [user].
+   :- parallel p/1.
+   p(a).  p(b).  p(c).
+  user       compiled traceable 220 bytes in 0.02 seconds
+  yes.
+  [eclipse 2]: get_flag(p/1, parallel, Flag).
+  Flag = on
+  yes.
+  [eclipse 3]: p(X), use(X).
+  % The three clauses of p/1 as well as the resulting goals
+  % use(a), use(b) and use(c) may be executed in parallel!
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>
+</BODY></HTML>

@@ -1,0 +1,36 @@
+
+?C1 #<=> ?C2
+
+   The constraint expression C1 is equivalent to the constraint expression C2.
+
+
+
+Arguments
+   ?C1                 An arithmetic constraint expression.
+   ?C2                 An arithmetic constraint expression.
+
+Type
+   library(fd)
+
+Description
+   This constraint states that the constraint expressions C1 and C2
+   evaluate to the same truth value, either both true of both false.  If
+   this is already the case, it simply succeeds.  Otherwise it is suspended
+   and after each domain change that may cause one of the constraint
+   expressions to succeed to fail, it is woken and and re-evaluated.
+   Subsequently, if one of the constraint expressions is true or false, the
+   same truth value is imposed on the other one.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if C1 and C2 are not bothe true or both false.
+
+
+
+See Also
+   #\/ / 2, #/\ / 2, #=> / 2, #\+ / 1

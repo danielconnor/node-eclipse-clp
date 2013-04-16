@@ -1,0 +1,34 @@
+
+read_term(?Term, +Options)
+
+   Read a whole term in ECLiPSe syntax from the current input stream, according to Options
+
+Arguments
+   Term                An term, usually a variable
+   Options             List of option terms
+
+Type
+   Term I/O
+
+Description
+
+    This is a generalisation of the predicates read/1 and readvar/3.
+
+    read_term(Term, Options) is equivalent to
+    read_term(output, Term, Options).
+    For details see read_term/3.
+
+    
+
+Exceptions
+     5 --- Options is not a list of compound terms.
+     6 --- Options list contains a unrecognised option.
+
+Examples
+   
+	Equivalent to read_term(output, Term, Options).
+	See read_term/3 for examples.
+
+
+See Also
+   read_term / 3, read / 1, read / 2, readvar / 3

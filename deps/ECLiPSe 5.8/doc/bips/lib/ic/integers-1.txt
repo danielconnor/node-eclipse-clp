@@ -1,0 +1,19 @@
+
+integers(?Vars)
+
+   Vars' domain is the integer numbers.
+
+Arguments
+   Vars                Variable or integer, or a list or submatrix of variables/integers
+
+Type
+   library(ic)
+
+Description
+
+   Constrain the variables to integer values.  Note that this declaration is
+   implicit when specifiying an integer interval, e.g. in Y :: 0..99.
+
+
+See Also
+   reals / 1, suspend : integers / 1, fd : integers / 1, eplex : integers / 1, ic_kernel : integers / 1, bfs : integers / 1

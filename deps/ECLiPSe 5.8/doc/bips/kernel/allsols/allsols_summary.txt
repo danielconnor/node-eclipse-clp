@@ -1,0 +1,4 @@
+lib(allsols)
+
+   Built-ins to collect all solutions to nondeterministic goals
+

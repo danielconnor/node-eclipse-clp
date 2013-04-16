@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Debugging CHR Programs</TITLE>
+<META NAME="description" CONTENT="Debugging CHR Programs">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node52.html">
+<LINK REL="previous" HREF="node50.html">
+<LINK REL="up" HREF="node43.html">
+<LINK REL="next" HREF="node52.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1591"
+ HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1587"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1581"
+ HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1589"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1592"
+ HREF="node52.html">The Extended CHR Implementation</A>
+<B> Up:</B> <A NAME="tex2html1588"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1582"
+ HREF="node50.html">Writing Good CHR Programs</A>
+ &nbsp <B>  <A NAME="tex2html1590"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1593"
+ HREF="node51.html#SECTION00881000000000000000">Using the Debugger</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00880000000000000000"></A>
+<A NAME="chrdebug"></A>
+<BR>
+Debugging CHR Programs
+</H1>
+
+<P>
+User-defined constraints including application of CHRs can be traced
+with the standard debugger. 
+Debugging of the ECLiPSe code is done
+in the standard way. See the corresponding user
+manual for more information.
+
+<P>
+
+<H2><A NAME="SECTION00881000000000000000">
+Using the Debugger</A>
+</H2>
+
+<P>
+In order to use the debugging tool, the <code>debug_compile</code> flag<A NAME="3259"></A><A NAME="3260"></A><A NAME="3261"></A>
+must have been <code>on</code> (default) during compilation (<code>chr</code> to
+<code>pl</code>) and loading of the produced ECLiPSe code.
+
+<UL><LI>The query <code>trace.</code> activates the standard debugger
+(tracing user-defined constraints like predicates).
+
+<LI>The query <code>chr_trace.</code> activates the standard debugger
+showing more information about the handling of constraints.
+(application of CHRs).
+
+<LI>The query <code>chr_notrace.</code> stops either debugger.
+
+</UL>
+
+<P>
+The debugger displays user-defined constraints and application of
+CHRs.  User-defined constraints are
+treated as predicates and the information about application of CHRs is displayed without stopping. See the
+subsection on how CHRs work for an example trace.  The additional
+ports are:
+
+<UL><LI><code>add</code>: A new constraint is added to the constraint store.
+
+<P>
+
+<LI><code>already_in</code>: A constraint to be added was already present.
+
+</UL>
+
+<P>
+The ports related to application of rules are:
+
+<UL><LI><code>try_rule</code>: A rule is tried.
+
+<P>
+
+<LI><code>delay_rule</code>: The last tried rule cannot fire because the guard did not succeed.
+
+<P>
+
+<LI><code>fire_rule</code>: The last tried rule fires.
+
+</UL>
+
+<P>
+The ports related to labeling are:
+
+<UL><LI><code>try_label</code>: A label_with declaration is checked.
+
+<P>
+
+<LI><code>delay_label</code>: The last label_with declaration delays because the guard did not succeed.
+
+<P>
+
+<LI><code>fire_label</code>: The last tried label_with declaration succeeds,
+so the clauses of the associated constraint will be used for built-in labeling.
+
+<P>
+
+</UL>
+When displayed, each constraint
+is labeled with a unique integer identifier.  Each rule is labeled
+with its name as given in the <TT>chr</TT> source using the <code>@</code>
+operator. If a rule does not have a name, it is displayed together
+with a unique integer identifier.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1591"
+ HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1587"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1581"
+ HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1589"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1592"
+ HREF="node52.html">The Extended CHR Implementation</A>
+<B> Up:</B> <A NAME="tex2html1588"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1582"
+ HREF="node50.html">Writing Good CHR Programs</A>
+ &nbsp <B>  <A NAME="tex2html1590"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

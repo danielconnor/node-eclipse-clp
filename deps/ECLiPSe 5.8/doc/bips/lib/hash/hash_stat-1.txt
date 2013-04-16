@@ -1,0 +1,10 @@
+
+hash_stat(+Hash)
+
+   Prints statistics about the hash table
+
+Type
+   library(hash)
+
+See Also
+   hash_create / 1

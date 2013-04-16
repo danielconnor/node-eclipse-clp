@@ -1,0 +1,49 @@
+
+?Vars tent_set ++Values
+
+   Assigns tentative values for the variables in a term.
+
+Arguments
+   Vars                Term with variables (non-ground term)
+   Values              Tentative values for variables in Vars (ground term)
+
+Type
+   library(repair)
+
+Description
+
+Associate tentative values with variables. Vars can be any non-ground term,
+and Values the corresponding ground term. The tentative values of the
+variables are set to the ground values in Values. Typically Var is a
+variable or a list of variables.
+
+
+A tentative value is generally used to record preferred or previous
+assigments to this variable. It does not actually bind the variable to the
+value.  It can be changed through later calls to tent_set. Together with
+other tentative values and actual values for the problem variables in a
+program, they can form a tentative assignment which may be a partial or
+inconsistent solution to the problem. Variables with inconsistent tentative
+values are known as non-tenable.
+
+
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Vars is non-unifiable with Values
+
+Examples
+   
+% lib(fd) is loaded
+
+[eclipse 3]: X::1..5, X tent_set 3.
+X = X{fd:[1..5], repair:3} % X is tenable 
+
+[eclipse 3]: X::1..5, X tent_set 7.
+X = X{fd:[1..5], repair:7} % X is non-tenable 
+
+
+See Also
+   tent_get / 2, tenable / 1

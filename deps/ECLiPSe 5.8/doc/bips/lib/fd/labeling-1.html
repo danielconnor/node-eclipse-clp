@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>labeling(+Vars)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>labeling(+Vars)</H1>
+Instantiate all variables in a list to values in their domain
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>List of variables or ground terms.
+</DD>
+</DL>
+<H2>Description</H2>
+    This predicate instantiates all variables in a list to values in their
+    domain, using the indomain/1 predicate. It is simply defined as:
+<PRE>
+        labeling([]).
+        labeling([Var|Rest]) :-
+            indomain(Var),
+            labeling(Rest).
+</PRE>
+    The list can contain ground terms, i.e. variables that are already
+    instantated. These are just skipped, in other words, they are
+    considered as variables with a single value in their domain.
+    
+<H3>Resatisfiable</H3>
+Yes
+<H2>See Also</H2>
+<A HREF="../../lib/fd/indomain-1.html">indomain / 1</A>, <A HREF="../../lib/fd_search/search-6.html">fd_search : search / 6</A>
+</BODY></HTML>

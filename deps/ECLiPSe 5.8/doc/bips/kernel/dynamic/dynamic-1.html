@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>dynamic +SpecList</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Dynamic Predicates</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dynamic +SpecList</H1>
+Declares the procedures specified by SpecList as dynamic.
+
+
+<DL>
+<DT><EM>+SpecList</EM></DT>
+<DD>Sequence of expressions of the form Atom/Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Declare the procedures specified by SpecList as dynamic procedures.
+   This has to be done before the procedure is defined.
+
+<P>
+   To change a static procedure to a dynamic one it must first be
+   abolished.
+
+<P>
+   If the procedure was already dynamic Error 64 is raised.  The default
+   error handler erases all existing clauses and succeeds.  This is useful
+   for recompiling files with dynamic declarations, but it can be redefined
+   if desired.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SpecList is instantiated, but not to a sequence of    expressions of the form Atom/Integer.
+<DT><EM>(64) procedure already dynamic </EM>
+<DD>SpecList is already dynamic.
+<DT><EM>(65) procedure already defined </EM>
+<DD>SpecList is already defined.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse]: pred(a/1).
+     no.
+     [eclipse]: dynamic a/1.
+     yes.
+     [eclipse]: pred(a/1).
+     in eclipse: dynamic prolog local debugged stopped traceable
+     yes.
+     [eclipse]: a(X).
+     no (more) solution.
+Error:
+     dynamic X.                 (Error 4).
+     dynamic a.                 (Error 5).
+     dynamic a/1, a/1.          (Error 64). % succeeds
+     get_flag(p/0,type,user),
+     dynamic p/0.               (Error 65).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/dynamic/is_dynamic-1.html">is_dynamic / 1</A>
+</BODY></HTML>

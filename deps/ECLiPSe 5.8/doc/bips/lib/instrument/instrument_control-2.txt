@@ -1,0 +1,48 @@
+
+instrument_control(+Mode, +InstrumentPredSpec)
+
+   Insert or remove instrumentation predicates dynamically 
+   at runtime.
+
+Arguments
+   Mode                Atom
+   InstrumentPredSpec  PredSpec
+
+Type
+   library(instrument)
+
+Description
+
+   If the asserted option of an itemplate 
+   is set to one of on, off or 
+   post_compile then the template's instrumentation 
+   predicates may be inserted and removed dynamically at runtime.
+   
+   When Mode is on the instrumentation predicate 
+   represented is PredSpec is inserted into the code at the 
+   positions specified during instrumentation. This is done 
+   efficiently with negligible runtime overhead. When Mode is 
+   off the instrumentation predicate is removed from 
+   the instrumented code.
+   
+   If PredSpec is module qualified, the instrumentation predicate 
+   defined in the context of the module is inserted / removed. If 
+   unqualified the predicate is assumed to be defined in the context 
+   of the calling module scope.
+   
+   The predicate is a tool and an unqualified instrumentation 
+   predicate defined in a module other than the current 
+   calling module context can be inserted / removed by invoking 
+   instrument_control(Mode, InstrumentPredSpec)@Module.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   InstrumentPredSpec is not a predicate specification.
+
+Exceptions
+    68 --- PredSpec is an undefined procedure.
+
+See Also
+   instrument / 2, instrument / 3, library(instrument), struct(itemplate)

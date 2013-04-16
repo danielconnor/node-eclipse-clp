@@ -1,0 +1,25 @@
+
+EplexInstance:(?X $>= ?Y)
+
+   Constrains X to be greater than or equal to Y.
+
+Arguments
+   X                   Linear expression
+   Y                   Linear expression
+
+Type
+   library(eplex)
+
+Description
+	Logically: Constrains X to be greater than or equal to Y.
+	X and Y are linear expressions.
+	Operationally, the constraint gets delayed until the external
+        solver state for EplexInstance is invoked.
+        
+        The $ version of the arithmetic constraints are provided to allow 
+        code to be written which does not specify the solver. They are
+        equivalent to their eplex instance counterparts without the $ prefix.
+
+
+See Also
+   >= / 2, =:= / 2, =< / 2, suspend : $>= / 2, ic : $>= / 2, colgen : $>= / 2, $= / 2, $=< / 2, eplex_solver_setup / 1, eplex_solver_setup / 4, eplex_probe / 2, eplex_solve / 1, eplex_get / 2, eplex_var_get / 3, eplex_cleanup / 0

@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>?SetVar1 `$ ?SetVar2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?SetVar1 `$ ?SetVar2</H1>
+Set disjointness constraint
+<DL>
+<DT><EM>SetVar1</EM></DT>
+<DD>A set variable.
+</DD>
+<DT><EM>SetVar2</EM></DT>
+<DD>A set variable.
+</DD>
+</DL>
+<H2>Description</H2>
+Constrain sets SetVar1 and SetVar2 to be disjoint. I.e. SetVar1 and
+		SetVar2 should have no common elements (empty intersection).
+<H3>Fail Conditions</H3>
+Fails if SetVar1 and SetVar2 can not be disjoint.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- [] `$ [8], [7] `$ [8], [] `$ [].
+yes
+
+?- [7,8] `$ [8]  ; [7] `$ [7,8] ; [a] `$ [a] ; [a,b] `$ [b,a].
+no
+
+?- sets([X,Y], [],[8,9], [cardinality:1]), X `$ Y, set_labeling([X,Y]).
+X = [8], Y = [9] ;
+X = [9], Y = [8] ;
+no
+
+?- S `:: []+[a,b], X=S, X `$ S.
+S = [], X = []
+
+?- sets([X,Y], [],[7,8,9], [cardinality:2]), X `$ Y.
+no
+
+?- sets([X,Y], [],[7,8,9], [cardinality:[1,2]]), X `$ Y, #(X,2), #(Y,C).
+C = 1
+
+?- X `:: [a]+[b,c,d], Y `:: []+[a,b,c,d,e,f], X `$ Y, c `@ Y, poss(X,PX), poss(Y,PY).
+PX = [b,d], PY = [b,d,e,f]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/all_disjoint-1.html">all_disjoint / 1</A>, <A HREF="../../lib_public/cardinal/BLG-2.html">`<> / 2</A>, <A HREF="../../lib_public/cardinal/complement-2.html">complement / 2</A>, <A HREF="../../lib_public/cardinal/complement-3.html">complement / 3</A>, <A HREF="../../lib_public/cardinal/BFE-2.html">`/= / 2</A>, <A HREF="../../lib_public/cardinal/BGE-2.html">`>= / 2</A>
+</BODY></HTML>

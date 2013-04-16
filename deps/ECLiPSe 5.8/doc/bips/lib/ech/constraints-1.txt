@@ -1,0 +1,38 @@
+
+constraints(+SpecList)
+
+   Directive for declaring SpecList to be CHR constraints
+
+Arguments
+   SpecList            Sequence of the form Atom/Integer, or Atom/Integer:PrioSpec
+
+Type
+   library(ech)
+
+Description
+   Declares the predicates specified in SpecList as CHR constraints. This 
+   allows the predicate to appear in the head of a CHR rule. A constraint
+   can be follwed by a priority specification PrioSpec, which can be one of:
+
+      1. at_lower(++N) 2. at_higher(++N) 3. at_absolute_priority(++N)
+
+   where N is an integer. This specifies the priority the CHR rules will be
+   executed at if the specified constraint is the active constraint.
+   at_lower and at_higher specifies that the priority is N lower or higher
+   than the default CHR priority, and for at_absolute_priority, it is the
+   actual priority. 
+
+   Note that a predicate declared as a CHR constraint should not appear as
+   a normal ECLiPSe predicate. Any such definition of the predicate in the
+   user's program would be replaced by the CHR definition.
+
+
+Examples
+      :- constraints leq/2.
+   :- op(700, xfx, leq).
+
+   X leq Y <=> \+nonground(X), \+nonground(Y) | X @=< Y.
+   X leq X <=> true.
+
+
+

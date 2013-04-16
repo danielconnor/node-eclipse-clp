@@ -1,0 +1,57 @@
+
+current_struct(?Name, ?Struct)
+
+   Succeeds if Name is the name of a currently visible structure and Struct is its specification
+
+Arguments
+   Name                Variable or atom
+   Struct              Variable or structure.
+
+Type
+   Syntax Settings
+
+Description
+
+	Used to retrieve the definition of a defined structure, or to
+	enumerate all visible structure definitions.
+	
+	Visible structures are those which have either been declared locally,
+	exported, or which have been imported or reexported from another module.
+	
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+   Name is not the name of a visible structure definition
+
+Exceptions
+     5 --- Name is neither variable nor atom.
+     5 --- Struct is neither variable nor structure.
+
+Examples
+   
+    :- local struct(employee(name,age,salary)).
+
+    ?- current_struct(employee, Spec).
+    Spec = employee(name, age, salary)
+    yes.
+
+    ?- current_struct(Name, Spec).
+    Name = employee
+    Spec = employee(name, age, salary)
+    More (0.00s cpu) ? ;
+
+    Name = suspend
+    Spec = suspend(inst, constrained, bound)
+    More (0.00s cpu) ? ;
+
+    No (0.00s cpu)
+
+    ?- current_struct(book, Spec).
+    No (0.00s cpu)
+
+
+See Also
+   local / 1, export / 1, struct / 1

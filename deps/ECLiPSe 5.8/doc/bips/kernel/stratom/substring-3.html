@@ -1,0 +1,74 @@
+<HTML><HEAD><TITLE>substring(+String1, +String2, ?Position)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>substring(+String1, +String2, ?Position)</H1>
+Succeeds if String2 is a substring of String1 beginning at position
+Position.
+
+
+<DL>
+<DT><EM>+String1</EM></DT>
+<DD>String.
+</DD>
+<DT><EM>+String2</EM></DT>
+<DD>String.
+</DD>
+<DT><EM>?Position</EM></DT>
+<DD>Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test that String2 is a substring of String1 beginning at
+   position Position.  In this case, String1 and String2 are strings and
+   Position is an integer.
+
+<P>
+   Also used to find the first position in String1 that its substring
+   String2 begins.  In this case, String1 and String2 are strings and
+   Position is a variable.
+
+<P>
+   String positions must be positive and start at 1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if String2 is not a substring of String1 beginning at position
+   Position.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either String1 or String2 (or both) are not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Either String1 or String2 (or both) are instantiated, but    not to strings.
+<DT><EM>(5) type error </EM>
+<DD>Position is neither an integer nor a variable.
+<DT><EM>(6) out of range </EM>
+<DD>Position is not a positive integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      substring("str","st",1).
+      substring("abcabcabc","bc",X)     (gives X=2).
+      substring("abcabcabc","bc",8).
+      substring("abc","",X).            (gives X=1).
+      substring("abc","",2).
+Fail:
+      substring("astring","strg",2).
+      substring("","a",X).
+Error:
+      substring(S,"str",1).             (Error 4).
+      substring('str',S,1).             (Error 5).
+      substring("st","s",1.0).          (Error 5).
+      substring("ab","a",-2).           (Error 6).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/stratom/substring-5.html">substring / 5</A>, <A HREF="../../kernel/stratom/split_string-4.html">split_string / 4</A>
+</BODY></HTML>

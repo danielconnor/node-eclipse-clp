@@ -1,0 +1,16 @@
+
+ecis_to_htmls
+
+   Generate the HTML documentation tree for all ECLiPSe libraries
+
+Type
+   library(document)
+
+Description
+Generate the HTML documentation tree for all ECLiPSe libraries.
+    It takes into account all .eci files in the library path and generates
+    an HTML documentation tree in /doc/bips.
+    
+
+See Also
+   ecis_to_htmls / 4

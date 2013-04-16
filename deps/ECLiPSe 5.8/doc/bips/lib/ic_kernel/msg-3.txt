@@ -1,0 +1,23 @@
+
+msg(?Var1, ?Var2, ?MSG)
+
+   Computes the most specific generalisation of the intervals in Var1 and Var2.
+
+Arguments
+   Var1                A variable or number
+   Var2                A variable or number
+   MSG                 Most specific generalisation (variable)
+
+Type
+   library(ic_kernel)
+
+Description
+
+   The most specific generalisation of two intervals is computed and
+   returned as MSG.  MSG will interval over the smallest interval enclosing
+   the input intervals, and have the more general type of the input types.
+   If either Var1 or Var2 have not been declared before, it will be turned
+   into an unrestricted real variable.
+
+
+

@@ -1,0 +1,70 @@
+
+getval(+ElemSpec, ?Value)
+
+   Retrieves the value of the visible array element, non-logical variable or reference ElemSpec
+
+Arguments
+   +ElemSpec           Atom or ground compound term with non negative integer arguments.
+   ?Value              Prolog term.
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   If ElemSpec is the name of a visible non-logical variable, it unifies
+   the copied value of the variable with Value.
+
+   If ElemSpec is a compound term, it must specify an element of a visible
+   non-logical array, all its arguments must be non negative integers smaller
+   than the bounds specified with array/1/2 or variable/1. The copied value
+   of the array element is unified with Value.
+
+   If Element is the name of a reference, Value is unified with
+   the actual term the reference refers to (no copying involved).
+
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Value does not unify with the value of ElemSpec.
+
+
+
+Exceptions
+     4 --- ElemSpec is not ground.
+     5 --- ElemSpec is neither an atom nor a structure whose arguments are integers.
+     6 --- An array index in ElemSpec is out of bounds
+    41 --- ElemSpec does not designate an existing array, variable or reference.
+
+Examples
+   
+Success:
+      local(array(a(4), float)),
+          setval(a(2), 2.0),
+          getval(a(2), 2.0).
+      setval(i, "2"),
+          getval(i, V)).   (gives V = "2").
+
+Failure:
+      local(array(a(2))),
+          setval(a(1), 8.6),
+          getval(a(1), 10.0).
+      setval(i, 3),
+          getval(i, 0)).
+
+Error:
+      getval(X, 1).                   (Error 4).
+      getval(a(X), 1).                (Error 4).
+      getval("a", V).                 (Error 5).
+      getval(a(2.0), V).              (Error 5).
+      getval(a(-1), V).               (Error 6).
+      getval(no_array(0), X).         (Error 41).
+      getval(no_var, X).              (Error 41).
+
+
+
+
+
+See Also
+   decval / 1, incval / 1, array / 1, array / 2, variable / 1, setval / 2

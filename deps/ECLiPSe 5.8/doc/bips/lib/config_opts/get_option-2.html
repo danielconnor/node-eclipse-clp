@@ -1,0 +1,24 @@
+<HTML><HEAD><TITLE>get_option(++Name, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(config_opts)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_option(++Name, ?Value)</H1>
+Retrieves the current value of an option
+<DL>
+<DT><EM>Name</EM></DT>
+<DD>Name of the option
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>Value to be given to the option
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate retrieves the current value Value of the option with name
+   Name.  The option must have already been registered with
+   register_option/3.<P>
+
+   Value is copied during retrieval, which means that if it is non-ground
+   then it will contain fresh copies of variables rather than the original
+   ones (or sharing with other retrieved copies).
+
+<H2>See Also</H2>
+<A HREF="../../lib/config_opts/register_option-3.html">register_option / 3</A>, <A HREF="../../lib/config_opts/set_option-2.html">set_option / 2</A>
+</BODY></HTML>

@@ -1,0 +1,425 @@
+<HTML><HEAD><TITLE>statistics(?Keyword, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Development Environment and Global Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>statistics(?Keyword, ?Value)</H1>
+Succeeds if the statistics item Keyword has value Value.
+
+
+<DL>
+<DT><EM>?Keyword</EM></DT>
+<DD>Atom or Variable.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to retrieve various statistical information about the running
+   ECLiPSe .  To print a list of all the current values, statistics/0 can
+   be used.
+
+<P>
+   The following list details the statistic items:
+
+<DL>
+<DT><STRONG>shared_heap_allocated</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of memory assigned to the code heap, i.e.
+        the area used for storing compiled Prolog code, atoms, records,
+        non-logical variables, descriptors, buffers etc.  This area will
+        never shrink.
+
+<DT><STRONG>shared_heap_used</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of memory currently used for compiled
+        Prolog code, atoms, records, non-logical variables, descriptors,
+        buffers etc.
+
+<DT><STRONG>control_stack_allocated</STRONG><DD>
+
+<P>
+    Unit :  bytes
+
+<P>
+    Description : The amount of control stack currently allocated. The
+        control stack is allocated in chunks, up to a maximum controlled by
+        the -l command line option. The local and control stacks share the
+        same memory area specified by the -l option, which thus gives the
+        maximum combined allocated size of these two stacks.
+
+<DT><STRONG>control_stack_peak</STRONG><DD>
+
+<P>
+    Unit : bytes
+
+<P>
+    Description :   The peak allocated size of the control stack during
+        this session. Chunks of memory can be allocated to, and
+        deallocated from, the control stack as it grows and shrinks.
+
+<DT><STRONG>control_stack_used</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of control stack currently in use.  This
+        stack holds information needed for backtracking.  
+
+<DT><STRONG>dictionary_entries</STRONG><DD>
+
+<P>
+    Unit :   count
+
+<P>
+    Description :   The number of atoms and functors that are currently
+        known to the system.  This is equal to the number of solutions
+        that current_functor/1 would return.
+
+<DT><STRONG>dict_hash_usage</STRONG><DD>
+
+<P>
+    Unit :  List of counts 
+
+<P>
+    Description :   Returns a list of two numbers: the number of slots in
+        hash table of the dictionary that are actually used, and the number
+        of slots in the dictionary hash table.
+
+<DT><STRONG>dict_hash_collisions</STRONG><DD>
+
+<P>
+    Unit :   list of counts
+
+<P>
+    Description :   Returns a list of two numbers: the length of the
+        longest list in a hash table slot (i.e. the maximum number of
+        dictionary entries that are hashed to the same slot), and the
+        number of slots in the dictionary hash table.
+
+<DT><STRONG>dict_gc_number</STRONG><DD>
+
+<P>
+    Unit :   count
+
+<P>
+    Description :   The number of dictionary garbage collections performed
+        during this session. 
+
+<DT><STRONG>dict_gc_time</STRONG><DD>
+
+<P>
+    Unit :   seconds
+
+<P>
+    Description :   The total cputime spent by all dictionary garbage
+        collections performed during this session.
+
+<DT><STRONG>event_time</STRONG><DD>
+
+<P>
+    Unit :   Seconds
+
+<P>
+    Description :   Returns the elapsed real time (session_time) or 
+        the elapsed user time (cputime) since the start of a 
+        (parallel) ECLiPSe session depending on the value of the 
+        after_event_timer flag.  
+
+<DT><STRONG>gc_area</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The average area processed by a garbage collection.
+        This number should be close to the value of gc_interval.  If it
+        is much higher, gc_interval should be increased.
+
+<DT><STRONG>gc_collected</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The total number of bytes collected in the global
+        stack during all the garbage collections in this session.
+
+<DT><STRONG>gc_number</STRONG><DD>
+
+<P>
+    Unit :   count
+
+<P>
+    Description :   The number of global/trail stack garbage
+        collections performed during this session.
+
+<DT><STRONG>gc_ratio</STRONG><DD>
+
+<P>
+    Unit :   percent
+
+<P>
+    Description :   The average percentage of garbage found and
+        collected in the garbage collections performed so far.  If this
+        number is low, gc_interval should be increased.
+
+<DT><STRONG>gc_time</STRONG><DD>
+
+<P>
+    Unit :   seconds
+
+<P>
+    Description :   The total time spent for all garbage collections in
+        this session.
+
+<DT><STRONG>private_heap_allocated</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of memory assigned to the private heap.
+        This area will never shrink.
+
+<DT><STRONG>private_heap_used</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of memory currently used for private
+        data.
+
+<DT><STRONG>global_stack_allocated</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of global stack currently allocated. The
+        global stack is allocated in chunks, up to a maximum controlled
+        by the -g command line option. The global stack and trail share the
+        same memory area specified by the -g option, which thus gives the
+        maximum possible combined allocated size of these two stacks.
+
+<DT><STRONG>global_stack_peak</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The peak allocated size of the global stack during
+        this session. Chunks of memory can be allocated to, and
+        deallocated from, the global stack as it grows and shrinks.
+
+<DT><STRONG>global_stack_used</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of global stack currently in use.  The
+        global stack holds lists and structures and is subject to
+        garbage collection.
+
+<DT><STRONG>local_stack_allocated</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description : The amount of local stack currently allocated. The local
+        stack is allocated in chunks, up to a maximum controlled by the -l
+        command line option. The local and control stacks share the same
+        memory area specified by the -l option, which thus gives the
+        maximum combined allocated size of these two stacks.
+
+<DT><STRONG>local_stack_peak</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The peak allocated size of the local stack during
+        this session. Chunks of memory can be allocated to, and
+        deallocated from, the local stack as it grows and shrinks.
+
+<DT><STRONG>local_stack_used</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of local stack currently in use.  This
+        stack holds Prolog variables and return addresses.  
+
+<DT><STRONG>memory, core</STRONG><DD>
+
+<P>
+   Unit :    List of bytes
+
+<P>
+   Description :   The second number is always zero. The first number is
+       the total amount of memory currently allocated in the various
+       stacks. This is provided mainly for compatibility.
+
+<DT><STRONG>program, heap</STRONG><DD>
+
+<P>
+    Unit :   List of bytes
+
+<P>
+    Description : Returns a list of two numbers for the allocated shared
+        heap, where, along with other items, program code is stored: the
+        number of bytes currently used, and the number of bytes currently
+        free. It is provided mainly for compatibility.
+
+<DT><STRONG>global_stack</STRONG><DD>
+
+<P>
+    Unit :   List of bytes
+
+<P>
+    Description : Returns a list of two numbers for the allocated global
+       stack: the number of bytes currently used, and the number of bytes
+       currently free. It is provided mainly for compatibility.
+
+<DT><STRONG>local_stack</STRONG><DD>
+
+<P>
+    Unit :   List of bytes
+
+<P>
+    Description : Returns a list of two numbers on the current usage of the
+       allocated local and control stacks. In the original WAM, these two
+       stacks are combined into a single stack. This is provided for
+       compatibility purposes only.
+
+<DT><STRONG>trail</STRONG><DD>
+
+<P>
+    Unit :   List of bytes
+
+<P>
+    Description : Returns a list of two numbers for the allocated trail:
+        the number of bytes currently used, and the number of bytes
+        currently free. It is provided mainly for compatibility.
+
+<DT><STRONG>garbage_collection</STRONG><DD>
+
+<P>
+    Unit :   List of numbers
+
+<P>
+    Descriptions : Returns a list that summaries garbage collections during
+        this session: the number of times it has occurred, the number of
+        bytes freed, and the total time spent (in seconds). This is
+        provided mainly for compatibility purposes.
+
+<DT><STRONG>runtime</STRONG><DD>
+
+<P>
+    Unit :   List of milliseconds
+
+<P>
+    Description :   Returns a list of two times:  user cpu time since
+        the start of the ECLiPSe session, user cpu time since the last
+        call to statistics(runtime, _). As from ECLiPSe 4.2, these times
+	exclude the time spent in garbage collection. This item is provided
+        primarily for compatibility reasons.
+
+<DT><STRONG>session_time</STRONG><DD>
+
+<P>
+    Unit :   Seconds
+
+<P>
+    Description :   Returns the real time elapsed since the start of a
+        (parallel) ECLiPSe session.  This is the only timer that can be
+        reliably used in a parallel execution, since it accesses a
+        central clock.  All other timers are local to the worker where
+        they are accessed.
+
+<DT><STRONG>times</STRONG><DD>
+
+<P>
+    Unit :   List of seconds
+
+<P>
+    Description :   Returns a list of three times:  user cpu time,
+        system cpu time and real time elapsed since the start of the
+        ECLiPSe session.
+
+<DT><STRONG>trail_stack_allocated</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description : The amount of trail stack currently allocated. The trail
+        is allocated in chunks, up to a maximum controlled by the -g
+        command line option. The global stack and trail share the same
+        memory area specified by the -g option, which thus gives the
+        maximum possible combined allocated size of these two stacks.
+
+<DT><STRONG>trail_stack_peak</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description : The peak allocated size of the trail stack during
+        this session. Chunks of memory can be allocated to, and
+        deallocated from, the trail stack as it grows and shrinks.
+
+<DT><STRONG>trail_stack_used</STRONG><DD>
+
+<P>
+    Unit :   bytes
+
+<P>
+    Description :   The amount of trail stack currently in use.  The
+        trail stack records information needed for backtracking and is
+        subject to garbage collection.
+</DL>
+
+<H3>Fail Conditions</H3>
+   Fails if the current value of Keyword does not unify with Value.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Keyword is neither an atom nor variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   [eclipse]: statistics(times, [_,_,T]).
+   T = 2848.64
+   yes.
+   [eclipse]: statistics(global_stack_used, G).
+   G = 136
+   yes.
+Fail:
+   statistics(times, [T]).
+Error:
+   statistics("time", T).    (Error 5)
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/env/env-0.html">env / 0</A>, <A HREF="../../kernel/env/statistics-0.html">statistics / 0</A>
+</BODY></HTML>

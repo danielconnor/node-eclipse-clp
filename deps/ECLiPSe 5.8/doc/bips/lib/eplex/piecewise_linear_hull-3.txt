@@ -1,0 +1,36 @@
+
+EplexInstance:piecewise_linear_hull(?X, ++Points, ?Y)
+
+   Relates X and Y according to a piecewise linear function.
+
+Arguments
+   X                   Parameter/domain of the piecewise function
+   Points              List of points defining the piecewise function
+   Y                   Result/range of piecewise the function
+
+Type
+   library(eplex)
+
+Description
+
+This predicate imposes the constraint Y = f(X), where f is a piecewise
+linear function defined by Points.  Please see the documentation for
+piecewise_linear/3 for details of how the piecewise linear function is
+specified.
+
+This predicate extends piecewise_linear/3 by also computing the convex hull
+of the portions of the constraint which are feasible with respect to the
+current bounds (stored with the IC bounds) of X and Y.  Constraints (and
+ bounds) defining this convex hull are then
+passed to the eplex solver.  These constraints are updated whenever new
+bounds on X or Y change the convex hull.
+
+This implementation of the piecewise
+constraint accepts bounded reals in its arguments, but it
+does not fully support bounded reals of non-zero width (i.e.
+those which do not correspond to a single floating point value).  As a
+result, use of such bounded reals is not recommended at this time.
+
+
+See Also
+   ic : piecewise_linear / 3

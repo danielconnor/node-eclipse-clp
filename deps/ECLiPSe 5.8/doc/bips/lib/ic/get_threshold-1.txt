@@ -1,0 +1,27 @@
+
+get_threshold(-Threshold)
+
+   Returns the current propagation threshold.
+
+Arguments
+   Threshold           Current threshold
+
+Type
+   library(ic)
+
+Description
+
+   Returns the current threshold.  For non-integer variables, bounds are
+   only changed if the absolute and relative changes of the bound exceed the
+   threshold.  This means that constraints over real variables are only
+   guaranteed to be consistent up to the current threshold (over and above
+   any normal widening which occurs).
+
+   Limiting the amount of propagation is important for efficiency.  A higher
+   threshold speeds up computations, but reduces precision and may in the
+   extreme case prevent the system from being able to locate individual
+   solutions.
+
+
+See Also
+   set_threshold / 1, set_threshold / 2

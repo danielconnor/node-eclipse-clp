@@ -1,0 +1,30 @@
+
+count(+Tree, ?Count)
+
+   Count the number of elements in a tree.
+
+Arguments
+   Tree                A 2-3-4 tree
+   Count               The number of elements in Tree
+
+Type
+   library(m_tree234)
+
+Description
+	
+	Counts the number of elements in the tree Tree, and attempts to
+	unify the result with Count.
+	
+	
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Count does not unify with the number of elements in Tree.
+
+

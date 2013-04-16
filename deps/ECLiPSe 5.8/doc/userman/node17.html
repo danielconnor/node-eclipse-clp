@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The TkECLiPSe Development Tools</TITLE>
+<META NAME="description" CONTENT="The TkECLiPSe Development Tools">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node20.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="umsroot.html">
+<LINK REL="next" HREF="node18.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2485"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2481"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2475"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2483"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2486"
+ HREF="node18.html">Display Matrix</A>
+<B> Up:</B> <A NAME="tex2html2482"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html2476"
+ HREF="node16.html">Other tips</A>
+ &nbsp <B>  <A NAME="tex2html2484"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00400000000000000000"></A>
+<A NAME="chaptkeclipse"></A>
+<BR>
+The TkECLiPSe Development Tools
+</H1>
+
+<P>
+TkECLiPSe is a graphical user interface to ECLiPSe. It is an
+alternative to the traditional textual line-based user interface, providing
+multiple windows, menus and buttons to assist the user in interacting with
+ECLiPSe. It consists of two major components:
+
+<P>
+
+<UL><LI>A graphical top-level.
+
+<LI>A suite of development tools for aiding the development of ECLiPSe
+code. 
+
+</UL>
+
+<P>
+TkECLiPSe is implemented in the Tcl/Tk scripting language/graphical toolkit
+[<A
+ HREF="node159.html#Tcl94">12</A>], using the new ECLiPSe Tcl/Tk interface
+[<A
+ HREF="node159.html#interfaceManual">11</A>]. The development tools are designed to be
+independent of the top-level, so the user can develop their own
+applications with a graphical front end written in Tcl/Tk, replacing the
+TkECLiPSe top-level, but still using the development tools.
+
+<P>
+Chapter <A HREF="node7.html#chapusing">3</A> gave an introduction to using TkECLiPSe from a
+user's point of view.
+This chapter focuses on how to use the tools from a programmer's point of
+view (i.e. how to include them in a program).
+In particular it discusses in detail the <B>display matrix</B> tool, which
+can be invoked in user's ECLiPSe code; and also how to use the
+development tools in the user's own applications.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html2487"
+ HREF="node18.html">Display Matrix</A>
+<UL>
+<LI><A NAME="tex2html2488"
+ HREF="node18.html#SECTION00411000000000000000">Invoking display matrix tool interactively</A>
+</UL>
+<LI><A NAME="tex2html2489"
+ HREF="node19.html">Using the development tools in applications</A>
+<UL>
+<LI><A NAME="tex2html2490"
+ HREF="node19.html#SECTION00421000000000000000">Using the Development tools in the Tcl/Tk Embedding Interface</A>
+<LI><A NAME="tex2html2491"
+ HREF="node19.html#SECTION00422000000000000000">Using the Remote Development Tools</A>
+<UL>
+<LI><A NAME="tex2html2492"
+ HREF="node19.html#SECTION00422100000000000000">Starting Remote Tools</A>
+</UL></UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2485"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2481"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2475"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2483"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2486"
+ HREF="node18.html">Display Matrix</A>
+<B> Up:</B> <A NAME="tex2html2482"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html2476"
+ HREF="node16.html">Other tips</A>
+ &nbsp <B>  <A NAME="tex2html2484"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

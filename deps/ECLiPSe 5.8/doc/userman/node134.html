@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Stream Connection (unix domain)</TITLE>
+<META NAME="description" CONTENT="Stream Connection (unix domain)">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node135.html">
+<LINK REL="previous" HREF="node133.html">
+<LINK REL="up" HREF="node130.html">
+<LINK REL="next" HREF="node135.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4252"
+ HREF="node135.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4248"
+ HREF="node130.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4242"
+ HREF="node133.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4250"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4253"
+ HREF="node135.html">Datagram Connection (unix domain)</A>
+<B> Up:</B> <A NAME="tex2html4249"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Previous:</B> <A NAME="tex2html4243"
+ HREF="node133.html">Datagram Connection (internet domain)</A>
+ &nbsp <B>  <A NAME="tex2html4251"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002140000000000000000">
+Stream Connection (unix domain)</A>
+</H1>
+The sequence of operations is the same as for the internet domain,
+however in the unix domain the socket addresses are
+the file names:
+
+<P><PRE>
+server:
+    [eclipse 10]: socket(unix, stream, s), bind(s, '/tmp/sock').
+
+    yes.
+    [eclipse 11]: listen(s, 1), accept(s, _, news).
+    &lt;blocks waiting for a connection&gt;
+
+client:
+    [eclipse 26]: socket(unix, stream, s), connect(s, '/tmp/sock').
+
+    yes.
+    [eclipse 27]: printf(s, "%w. %b", message(client)), read(s, Msg).
+
+server:
+    [eclipse 12]: read(news, Msg), printf(news, "%w. %b", message(server)).
+
+    Msg = message(client)
+    yes.
+
+client:
+    Msg = message(server)
+    yes.
+</PRE>
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

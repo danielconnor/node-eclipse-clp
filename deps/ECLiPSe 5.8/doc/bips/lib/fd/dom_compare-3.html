@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>dom_compare(?Res, +Dom1, +Dom2)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dom_compare(?Res, +Dom1, +Dom2)</H1>
+Res is the result of the comparison of the domains Dom1 and Dom2.
+
+
+<DL>
+<DT><EM>?Res</EM></DT>
+<DD>Atom or variable.
+</DD>
+<DT><EM>+Dom1</EM></DT>
+<DD>A finite domain.
+</DD>
+<DT><EM>+Dom2</EM></DT>
+<DD>A finite domain.
+</DD>
+</DL>
+<H2>Description</H2>
+   Works like compare/3 for terms.  Res is unified with
+
+<P>
+  * = iff Dom1 is equal to Dom2,
+
+<P>
+  * &lt; iff Dom1 is a proper subset of Dom2,
+
+<P>
+  * &gt; iff Dom2 is a proper subset of Dom1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if neither domain is a subset of the other one.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/dom_member-2.html">dom_member / 2</A>, <A HREF="../../lib/fd/dom_range-3.html">dom_range / 3</A>, <A HREF="../../lib/fd/dom_size-2.html">dom_size / 2</A>, <A HREF="../../lib/fd/dvar_domain-2.html">dvar_domain / 2</A>
+</BODY></HTML>

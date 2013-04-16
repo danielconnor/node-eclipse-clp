@@ -1,0 +1,23 @@
+
+connected_components(+Graph, -ConnectedComponents)
+
+   Computes the connected components of graph
+
+Arguments
+   Graph               a graph structure
+   ConnectedComponents a list of lists of node numbers
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes the connected components of a (bidirected) graph. Each resulting
+    connected component is represented as an (unsorted) list of nodes.
+
+    This operation is only defined on bidirected graphs.
+    The runtime complexity is O(Nnodes + Nedges).
+    
+
+See Also
+   graph_is_bidirected / 1, articulation_points / 2

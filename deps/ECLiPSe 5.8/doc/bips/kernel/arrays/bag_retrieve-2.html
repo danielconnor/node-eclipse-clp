@@ -1,0 +1,54 @@
+<HTML><HEAD><TITLE>bag_retrieve(+BagHandle, ?List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>bag_retrieve(+BagHandle, ?List)</H1>
+Retrieve a bag's contents
+<DL>
+<DT><EM>BagHandle</EM></DT>
+<DD>A bag
+</DD>
+<DT><EM>List</EM></DT>
+<DD>A variable or list of terms
+</DD>
+</DL>
+<H2>Description</H2>
+	This returns a list containing a copy of every term that has
+	been entered into the bag since it was created.  It should not
+	be assumed that the list order reflects the order in which the
+	terms were entered into the bag.  Entering and retrieving
+	terms from a bag involves copying the term each time, similar
+	to what happens in setval/getval and record/recorded.  In
+	particular, if the term contains variables, they lose their
+	identity and are replaced with fresh ones.
+    
+<H3>Fail Conditions</H3>
+None
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>BagHandle is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>BagHandle is not a bag
+<DT><EM>(5) type error </EM>
+<DD>List is instantiated but not to a list
+<DT><EM>(40) stale object handle </EM>
+<DD>BagHandle refers to an already destroyed bag
+</DL>
+<H2>Examples</H2>
+<PRE>
+    simple_findall(Goal, Solutions) :-
+    	bag_create(Bag),
+	(
+	    call(Goal),
+	    bag_enter(Bag, Goal),
+	    fail
+	;
+	    true
+	),
+	bag_retrieve(Bag, Solutions),
+	bag_abolish(Bag).
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/bag_create-1.html">bag_create / 1</A>, <A HREF="../../kernel/arrays/bag_enter-2.html">bag_enter / 2</A>, <A HREF="../../kernel/arrays/bag_count-2.html">bag_count / 2</A>, <A HREF="../../kernel/arrays/bag_erase-1.html">bag_erase / 1</A>, <A HREF="../../kernel/arrays/bag_abolish-1.html">bag_abolish / 1</A>, <A HREF="../../kernel/arrays/bag_dissolve-2.html">bag_dissolve / 2</A>
+</BODY></HTML>

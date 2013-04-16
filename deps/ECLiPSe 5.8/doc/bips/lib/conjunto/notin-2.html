@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>?E notin ?Sterm</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?E notin ?Sterm</H1>
+E does not belong to the set term Sterm.
+
+
+<DL>
+<DT><EM>?E</EM></DT>
+<DD>A Prolog term.
+</DD>
+<DT><EM>?Sterm</EM></DT>
+<DD>A set term.
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint states that E does not belong to the set term Sterm.  If
+   E is not a known value the constraint is delayed.  It is activated as
+   soon as E becomes a known value.  If Sterm is a ground set and E is
+   known it checks if E does not belong to Sterm.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if E belongs to Sterm.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/conjunto/BNN-2.html">`:: / 2</A>, <A HREF="../../lib/conjunto/in-2.html">in / 2</A>
+</BODY></HTML>

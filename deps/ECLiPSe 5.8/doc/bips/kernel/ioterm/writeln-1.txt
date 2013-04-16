@@ -1,0 +1,38 @@
+
+writeln(?Term)
+
+   The term Term is written on the current output according to the current
+operator declarations.  Equivalent to write(Term),nl.
+
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+   Used to write the term Term (followed by a newline) on the current
+   output according to the current operator declarations.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+      Equivalent to writeln(output, Term).  (see writeln/2 for details).
+
+
+
+
+
+See Also
+   writeln / 2, write / 1, nl / 0

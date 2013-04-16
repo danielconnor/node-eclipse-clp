@@ -1,0 +1,7 @@
+:- module(pretty_print).
+:- export pretty_print / 3.
+:- comment(summary, "Pretty-printing of complex terms").
+:- comment(author, "Micha Meier, ECRC Munich").
+:- comment(copyright, "Imperial College London and ICL").
+:- comment(date, "$Date: 2000/04/11 12:00:11 $").
+:- comment(pretty_print / 3, [template : "pretty_print(+Stream, +Term, +Max)", summary : "Print a term on the given stream, split it if its width exceeds Max"]).

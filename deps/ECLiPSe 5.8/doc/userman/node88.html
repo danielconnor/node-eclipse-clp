@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Cross Referencing Tool</TITLE>
+<META NAME="description" CONTENT="Cross Referencing Tool">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node89.html">
+<LINK REL="previous" HREF="node87.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node89.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3588"
+ HREF="node89.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3584"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3578"
+ HREF="node87.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3586"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3589"
+ HREF="node89.html">Pretty Printer Tool</A>
+<B> Up:</B> <A NAME="tex2html3585"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3579"
+ HREF="node87.html">Document Generation Tools</A>
+ &nbsp <B>  <A NAME="tex2html3587"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001540000000000000000">
+Cross Referencing Tool</A>
+</H1>
+
+The cross referencing library <B>xref</B> analyses an ECLiPSe source 
+module or file and builds its predicate call graph. The graph can either 
+be returned in the format of <TT>lib(graph_algorithms)</TT>, as text, or
+as a graphical display.
+
+The <A NAME="tex2html1267"
+ HREF="../bips/lib/xref/xref-2.html">xref/2</A><A NAME="9427"></A> predicate generates
+a call graph for the file <TT>File</TT> according to the <TT>Options</TT> 
+list.  The options specify the format of the graph to be generated, whether
+calls to built in predicates are displayed and whether it is a caller
+or callee graph:<PRE>
+
+?- xref:xref(queen, []).
+ 
+nodiag / 3 calls:
+        nodiag / 3
+ 
+qdelete / 4 calls:
+        qdelete / 4
+ 
+qperm / 2 calls:
+        qdelete / 4
+        qperm / 2
+ 
+queen / 2 calls:
+        qperm / 2
+        safe / 1
+ 
+safe / 1 calls:
+        nodiag / 3
+        safe / 1
+ 
+Yes (0.01s cpu)
+?- xref:xref(queen,[builtins:on,output:daVinci]).
+WARNING: module 'daVinci' does not exist, loading library...
+daVinci.ecl compiled traceable 5644 bytes in 0.01 seconds
+</PRE>
+
+The first <TT>xref</TT> predicate call generates a textual call graph
+for the <TT>queen</TT> module, while the second generates the 
+<B>daVinci</B> graph illustrated in figure&nbsp;<A HREF="node88.html#xrefdavinci">15.1</A>.
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="xrefdavinci"></A><A NAME="9268"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 15.1:</STRONG>
+Call graph for queen example with built-in predicates</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><!-- MATH: $\resizebox{0.8\textwidth}{!}{\includegraphics{xrefDavinci.eps}}$ -->
+<IMG
+ WIDTH="463" HEIGHT="350" ALIGN="BOTTOM" BORDER="0"
+ SRC="img10.gif"
+ ALT="\resizebox{0.8\textwidth}{!}{\includegraphics{xrefDavinci.eps}}">
+<DIV ALIGN="CENTER">
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

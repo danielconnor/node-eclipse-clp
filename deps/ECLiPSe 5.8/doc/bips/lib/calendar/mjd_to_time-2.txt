@@ -1,0 +1,16 @@
+
+mjd_to_time(++MJD, ?HMS)
+
+   Extracts the time in H:M:S form from a float MJD
+
+Arguments
+   MJD                 Integer or float
+   HMS                 Variable or structure
+
+Type
+   library(calendar)
+
+Description
+returns the time of day (UTC/GMT) corresponding to the given MJD as Hour:Minute:Seconds structure, where Hour and Minute are integers and Seconds is a float
+
+

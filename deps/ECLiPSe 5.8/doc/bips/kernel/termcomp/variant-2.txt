@@ -1,0 +1,51 @@
+
+variant(?Term1, ?Term2)
+
+   Succeeds if Term1 is a variant of Term2.
+
+
+
+Arguments
+   ?Term1              An arbitrary term.
+   ?Term2              An arbitrary term.
+
+Type
+   Comparing and Sorting
+
+Description
+   Succeeds if the given terms are equal in the sense that all
+   ground instantiations in Term1 are also instantiations in Term2 and vice
+   versa.  The result is undefined if Term1 and Term2 share variables.  No
+   unification is performed.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if Term1 is not a variant of Term2.
+
+
+
+Examples
+   
+   Success:
+   variant(1,1).
+   variant(X,Y).
+   variant(f(a,b),f(a,b)).
+   variant(f(a,X),f(a,Y)).
+   variant(f(X,Y),f(Y,X)).
+   variant([X,2], [Y,2]).
+   Fail:
+   variant(f(a,b),f(a,Y)).
+   variant(f(a,X),f(a,b)).
+   variant(f(X,Y),f(Z,Z)).
+
+
+
+
+
+See Also
+   instance / 2, compare_instances / 3, prune_instances / 2

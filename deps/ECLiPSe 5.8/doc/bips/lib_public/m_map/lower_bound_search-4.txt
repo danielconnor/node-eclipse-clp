@@ -1,0 +1,35 @@
+
+lower_bound_search(+Map, ++SearchKey, ?Key, ?Value)
+
+   Search a map for the smallest key no smaller than SearchKey.
+
+Arguments
+   Map                 A map
+   SearchKey           A key to search for
+   Key                 The key found
+   Value               The value corresponding to Key
+
+Type
+   library(m_map)
+
+Description
+	
+	This predicate searches the map Map for the entry with the
+	smallest key which is no smaller than SearchKey.  If such a key is
+	found, then it attempts to unify it with Key and the corresponding
+	value with Value.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if there are no keys at least as large as SearchKey in Map or if Key and Value do not unify with the key and value found.
+
+See Also
+   lower_bound_lookup / 4, upper_bound_search / 4, upper_bound_lookup / 4

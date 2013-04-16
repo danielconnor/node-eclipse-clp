@@ -1,0 +1,12 @@
+
+checklist(+Pred, +List)
+
+   Apply a predicate to all list elements
+
+Type
+   library(apply_macros)
+
+Examples
+   checklist(<(0), [1,2,3]).
+
+

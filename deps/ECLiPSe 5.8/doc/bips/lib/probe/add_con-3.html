@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE>add_con(+Constraint, ++Options, +Handle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(probe)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>add_con(+Constraint, ++Options, +Handle)</H1>
+Add a constraint to the fd and linear solvers
+<DL>
+<DT><EM>Constraint</EM></DT>
+<DD>A numerical constraint, with functor 
+                         '=:=', '&gt;=', '=&lt;', '&gt;' or '&lt;'
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>An options structure
+</DD>
+<DT><EM>Handle</EM></DT>
+<DD>A linear solver handle
+</DD>
+</DL>
+<H2>Description</H2>
+ <P>
+If the inequality is strict, <B>X>Y</B> or <B>X'<'Y</B>, then the granularity 
+ specified in the options is added to the smaller term to create a non-strict 
+ inequality, which can be passed to the linear solver.  Thus if the granularity
+ is 3, then for <B>X>Y</B> the constraint <B>X>=Y+3</B> is added to the 
+ linear  solver and  <B>X#>=Y+3</B>  is added to the fd solver.
+</P>
+
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib/probe/set_up_probe-5.html">set_up_probe / 5</A>
+</BODY></HTML>

@@ -1,0 +1,36 @@
+
+conflict_constraints(+ConflictSet, -Constraints)
+
+   Retreive the set of conflicting constraints monitored in ConflictSet.
+
+Arguments
+   ConflictSet         name or handle of a conflict set
+   Constraints         List of conflicting constraints in ConflictSet (variable)
+
+Type
+   library(repair)
+
+Description
+
+When a repair constraint goes into conflict (i.e. when it does not satisfy
+the tentative assignment of its variables), it appears in a conflict set,
+once it satisfies the tentative assignment, it disappears.
+This primitive returns the list of all current conflict constraints
+in the given conflict set.
+
+
+ConflictSet is the conflict set name (or handle) which has
+been used in the corresponding constraint annotation.  For example
+
+
+conflict_constraints(cap_cstr, Conflicts)
+
+
+would retrieve all constraints that were annotated with cap_cstr
+and are currently in conflict.
+
+
+Resatisfiable
+   no
+
+

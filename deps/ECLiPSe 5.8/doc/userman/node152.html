@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>ECLiPSe Command Line Options</TITLE>
+<META NAME="description" CONTENT="ECLiPSe Command Line Options">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node153.html">
+<LINK REL="previous" HREF="node147.html">
+<LINK REL="up" HREF="umsroot.html">
+<LINK REL="next" HREF="node153.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4516"
+ HREF="node153.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4512"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4506"
+ HREF="node151.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4514"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4517"
+ HREF="node153.html">Style Guide</A>
+<B> Up:</B> <A NAME="tex2html4513"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html4507"
+ HREF="node151.html">User-Defined Events</A>
+ &nbsp <B>  <A NAME="tex2html4515"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002600000000000000000">
+ECLiPSe Command Line Options</A>
+</H1>
+
+<P>
+The ECLiPSe system has several parameters which may be specified on the
+command line at invocation time.
+They are as follows:
+
+<P>
+<DL>
+<DT><STRONG>-b bootfile</STRONG>
+<DD><A NAME="13699"></A>
+<A NAME="13700"></A>
+<A NAME="13701"></A>
+Compile the file <I>bootfile</I> before starting the session.
+Multiple -b options are allowed.
+The file name is expected to be in the operating system's syntax.
+The file is processed by
+<A NAME="tex2html1815"
+ HREF="../bips/kernel/database/ensure_loaded-1.html">ensure_loaded/1</A><A NAME="13728"></A>,
+i.e. it can be a precompiled file or a source file, and file extensions
+are added as specified there.
+
+<P>
+<DT><STRONG>-e goal</STRONG>
+<DD><A NAME="13705"></A>
+<A NAME="13706"></A>
+Instead of starting an interactive toplevel, the system will execute the
+goal <B>goal</B>. <B>goal</B> is given in normal Prolog syntax, and has to be
+quoted if it contains any characters that would normally be interpreted by the
+shell. The -e option can be used together with the -b option and is executed
+afterwards. Only one -e option is allowed.
+
+<P>
+The exit status of the ECLiPSe process reflects success or failure of the
+<A NAME="13710"></A>
+executed Prolog goal (0 for success, 1 for failure, 2 for abort).
+
+<P>
+When you only have a runtime installation of eclipse, the -e option
+is compulsory because a runtime system does not have an interactive
+toplevel.
+
+<P>
+<DT><STRONG>-g size</STRONG>
+<DD><A NAME="13711"></A>
+This option specifies to which limit the memory consumption of the
+ECLiPSe global/trail stack can grow.
+The size is specified in kilobytes (followed by an optional K), in megabytes
+(followed by M) or in gigabytes (followed by G).
+The default is 128M, ie. 128 Megabytes.
+The amount required for this stack depends on the program's data
+structures and may need to be increased for very large applications.
+
+<P>
+<DT><STRONG>-l size</STRONG>
+<DD><A NAME="13713"></A>
+This option specifies to which limit the memory consumption of the
+ECLiPSe local/control stack can grow.
+The size is specified in kilobytes (followed by an optional K), in megabytes
+(followed by M) or in gigabytes (followed by G).
+The default is 128M, ie. 128 Megabytes.
+The local/control stack is unlikely to require more than this default.
+If it does, it is probably caused by a programming error.
+
+<P>
+<DT><STRONG>-h size</STRONG>
+<DD><A NAME="13715"></A>
+This option is largely obsolete and currently effective only on SunOS 4.
+It specifies to which limit the memory consumption of the
+ECLiPSe private heap can grow.
+The size is specified in kilobytes (followed by an optional K), in megabytes
+(followed by M) or in gigabytes (followed by G).
+The default is 32M, ie. 32 Megabytes.
+
+<P>
+<DT><STRONG>-s size</STRONG>
+<DD><A NAME="13717"></A>
+This option is largely obsolete and currently effective only on SunOS 4.
+It specifies to which limit the memory consumption of the
+ECLiPSe shared heap can grow.
+The size is specified in kilobytes (followed by an optional K), in megabytes
+(followed by M) or in gigabytes (followed by G).
+The default is 64M, ie. 64 Megabytes.
+
+<P>
+<DT><STRONG>-D directory</STRONG>
+<DD><A NAME="13719"></A>
+<A NAME="13720"></A>
+This options allows to explicitly specify the ECLiPSe installation
+directory, i.e. the directory under which the system tries to find
+the ECLiPSe runtime system and libraries.  This option overrides
+(and renders unnecessary) any setting of the ECLIPSEDIR environment
+variable (Unix) or, respectively, an ECLIPSEDIR registry entry
+(Windows) that may be in effect.
+
+<P>
+<DT><STRONG>- -</STRONG>
+<DD>The ECLiPSe system will ignore this argument and everything that follows on
+the commmand line. The Prolog program will only see the part of the
+command line that follows this argument.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4516"
+ HREF="node153.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4512"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4506"
+ HREF="node151.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4514"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4517"
+ HREF="node153.html">Style Guide</A>
+<B> Up:</B> <A NAME="tex2html4513"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html4507"
+ HREF="node151.html">User-Defined Events</A>
+ &nbsp <B>  <A NAME="tex2html4515"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>peer_queue_get_property(++Queue, ?Property, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">External Interface</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>peer_queue_get_property(++Queue, ?Property, ?Value)</H1>
+Get or enumerate properties of a peer queue Queue.
+<DL>
+<DT><EM>Queue</EM></DT>
+<DD>Peer queue (atom or integer).
+</DD>
+<DT><EM>Property</EM></DT>
+<DD>Queue property name (atom or variable).
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>Value of property Property.
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>peer_queue_get_property(++, ++, ?)
+<LI>peer_queue_get_property(++, -, -)
+</UL>
+<H2>Description</H2>
+<P>
+   Get or enumerate properties of a peer queue Queue. If Property is a
+   variable, the properties of the queue will be enumerated on
+   backtracking. Otherwise, if Property is a property name, the value for
+   that property for Queue is unified with Value. The properties are:
+
+<P>
+<PRE>
+     type       type of queue:
+                  sync(SId):  synchronous queue 
+                                 SId is Socket Id for remote peers, 
+                                        Stream Id for the embedded peer
+		  async:      asynchronous queue
+     direction  direction of queue:
+                  fromec:   from ECLiPSe to remote 
+                  toec:     to ECLiPSe from remote
+                  bidirect: bidirectional
+     peer_type  type of the peer that Queue belongs to:
+                  embed  : for embedded peer
+                  remote : for remote peer
+     peer_name  name of the peer that Queue belongs to.
+</PRE>
+   
+<H3>Fail Conditions</H3>
+Queue is not a current peer queue.
+<H3>Resatisfiable</H3>
+  Yes.
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/peer_queue_create-5.html">peer_queue_create / 5</A>, <A HREF="../../kernel/externals/peer_queue_close-1.html">peer_queue_close / 1</A>
+</BODY></HTML>

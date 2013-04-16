@@ -1,0 +1,48 @@
+
+indomain(?X)
+
+   Nondeterministically instantiate to domain values
+
+Arguments
+   X                   domain variable or value
+
+Type
+   library(ic_symbolic)
+
+Description
+
+	Instantiates a domain variable to its domain values. The order of
+	enumeration is in increasing domain order.
+    
+
+Examples
+   
+    ?- local domain(weekday(mo, tu, we, th, fr, sa, su)).
+    Yes (0.00s cpu)
+
+    ?- X &:: weekday.
+    X = X{[mo, tu, th, fr, sa, su]}
+    Yes (0.00s cpu)
+
+    ?- X &:: weekday, indomain(X).
+    X = mo
+    More (0.00s cpu)
+    X = tu
+    More (0.01s cpu)
+    X = we
+    More (0.02s cpu)
+    X = th
+    More (0.03s cpu)
+    X = fr
+    More (0.05s cpu)
+    X = sa
+    More (0.06s cpu)
+    X = su
+    Yes (0.06s cpu)
+
+    ?- indomain(we).
+    Yes (0.00s cpu)
+    
+
+See Also
+   &:: / 2, domain / 1

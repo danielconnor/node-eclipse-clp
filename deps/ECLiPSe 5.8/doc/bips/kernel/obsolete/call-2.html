@@ -1,0 +1,71 @@
+<HTML><HEAD><TITLE>call(+Goal, +Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>call(+Goal, +Module)</H1>
+Succeeds if Goal (which is visible in module Module) succeeds.
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Calls a goal Goal from the module Module.  This predicate is used to
+   call goals whose functors and visibility are known only at the time they
+   are called.  It may be used to implement tool bodies.
+
+<P>
+   Note that !/0 does not cut through call/2.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is neither an atom nor a compound term.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>Goal is an undefined procedure in Module.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: [user].
+       :-module(m).
+       p.
+       user        compiled 28 bytes in 0.00 seconds
+      yes.
+      [eclipse]: p.
+      calling an undefined procedure p in module eclipse
+      [eclipse]: call(p, m).
+      yes.
+
+Fail: call(fail, any).
+
+Error:
+      call(Var,eclipse).                (Error 4).
+      call(ls,Var).                     (Error 4).
+      call("write(a)",eclipse).         (Error 5).
+      call(foo(a),eclipse).             (Error 68).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/call-1.html">call / 1</A>, <A HREF="../../kernel/control/A-2.html">@ / 2</A>, <A HREF="../../kernel/control/N-2.html">: / 2</A>
+</BODY></HTML>

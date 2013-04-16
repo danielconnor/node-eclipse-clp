@@ -1,0 +1,66 @@
+
+tan(+Number, ?Result)
+
+   Evaluates the trigonometric function tan(Number) and unifies the resulting
+value with Result.
+
+
+
+Arguments
+   +Number             A number.
+   ?Result             A variable, float or breal.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to tan(Number, Result) is
+   equivalent to
+
+    Result is tan(Number)
+
+    which should be preferred for portability.
+
+   In coroutining mode, if Number is a free variable, the call to tan/2 is
+   delayed until this variable is instantiated.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated (non-coroutining mode only).
+     5 --- Result is a number but not a float or breal.
+    24 --- Number is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+    20 --- Illegal arithmetic operation:  Number is (2k +1) * pi/2 for    every integer k.
+
+Examples
+   
+Success:
+      tan(0, 0.0).
+      tan(12.3, Result).      (gives Result = -0.272854)
+      tan(-1, Result).        (gives Result = -1.55741)
+Fail:
+      tan(1, 0.0).
+Error:
+      tan(A, 6.0).                      (Error 4).
+      tan(0, 0).                        (Error 5).
+      X is pi/2, tan(X, Result).        (Error 20).
+      tan(10.3 + 2, -0.272854).         (Error 24).
+      tan(5, r).                        (Error 24).
+
+
+
+
+
+See Also
+   is / 2

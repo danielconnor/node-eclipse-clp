@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Format of the Tracing Messages</TITLE>
+<META NAME="description" CONTENT="Format of the Tracing Messages">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node78.html">
+<LINK REL="previous" HREF="node76.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node78.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3435"
+ HREF="node78.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3431"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3425"
+ HREF="node76.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3433"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3436"
+ HREF="node78.html">Debugging-related Predicate Properties</A>
+<B> Up:</B> <A NAME="tex2html3432"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3426"
+ HREF="node76.html">The Box Model</A>
+ &nbsp <B>  <A NAME="tex2html3434"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001420000000000000000">
+Format of the Tracing Messages</A>
+</H1>
+All trace messages are output to the
+<B>debug_output</B> stream.
+<A NAME="7510"></A>
+
+<P>
+The format of one trace line is as follows:<PRE>
+S+(4) 2 *EXIT&lt;5&gt; module:foo(one, X, two) %&gt;
+12 3  4 5 6   7    8       9              10
+</PRE>
+
+<P>
+<DL COMPACT>
+<DT>1.
+<DD>The first character shows some properties of the
+displayed procedure.
+It may be one of
+<UL><LI>C - an external procedure, not implemented in Prolog
+
+<LI>S - a <I>skipped</I> procedure, i.e. a procedure whose
+subgoals are not traced
+
+</UL>
+
+<P>
+<DT>2.
+<DD>A '+' displayed here shows that the procedure has a spy point set.
+<A NAME="7519"></A>
+
+<P>
+<DT>3.
+<DD>The number between parentheses shows the box invocation number
+of this procedure call.  Since each box has a unique invocation
+number, it can be used to identify ports that belong to the same box.
+It also shows how many procedure redos have been made since the
+beginning of the query.  Only boxes that can be traced obtain an
+invocation number, for instance subgoals of a procedure which is
+compiled in debug mode or has its skip-flag set are not numbered.
+
+<P>
+When a delayed goal is resumed, it keeps the invocation number it was
+assigned when it delayed.  This makes it easy to follow all ports of a
+specified call even in data-driven computation.
+
+<P>
+<DT>4.
+<DD>The second number shows the level or depth of the goal,
+i.e. the number of its ancestor boxes.  When a subgoal is called, the
+level increases and after exit it decreases again.  The initial level
+is 1.
+
+<P>
+Since a resumed goal is considered to be a descendant of the procedure
+that woke it, the level of a resumed goal may be different from
+the level the goal had when it delayed.
+
+<P>
+<DT>5.
+<DD>An asterisk before an EXIT means that this
+procedure is nondeterministic and that it might be resatisfied.
+
+<P>
+<DT>6.
+<DD>The next word is the name of the port.
+It might be missing if the displayed goal is not the current position
+in the execution (e.g. when examining ancestors or delayed goals).
+
+<P>
+<DL>
+<DT><STRONG>CALL</STRONG>
+<DD>a procedure is called for the first time concerning a particular
+invocation,
+
+<P>
+<DT><STRONG>DELAY</STRONG>
+<DD>a procedure delays,
+
+<P>
+<DT><STRONG>EXIT</STRONG>
+<DD>a procedure succeeds,
+
+<P>
+<DT><STRONG>FAIL</STRONG>
+<DD>a procedure fails, there is no (other) solution,
+
+<P>
+<DT><STRONG>LEAVE</STRONG>
+<DD>a procedure is left before having failed or exited because
+of a call to <A NAME="tex2html1108"
+ HREF="../bips/kernel/control/exit_block-1.html">exit_block/1</A><A NAME="8083"></A>,
+
+<P>
+<DT><STRONG>NEXT</STRONG>
+<DD>the next possibly matching clause of a procedure is tried
+because unification failed or a sub-goal failed,
+
+<P>
+<DT><STRONG>ELSE</STRONG>
+<DD>the next branch of a disjunction is tried because some goal
+in the previous branch failed.
+
+<P>
+<DT><STRONG>REDO</STRONG>
+<DD>a procedure that already gave a solution is called again for
+an alternative,
+
+<P>
+<DT><STRONG>RESUME</STRONG>
+<DD>a procedure is woken (the flow enters the procedure box as for
+a call) because of a unification of a suspending variable,
+
+<P>
+</DL>
+
+<P>
+<DT>7.
+<DD>This only appears if the goal is executing at a different priority
+  than 12, the normal priority. The number between the angled brackets
+  shows the priority (between 1 and 11) that the  goal is executed at. 
+
+<P>
+<DT>8.
+<DD>For the tty debugger, the optional module name followed by a colon.
+Printing of the module can be enabled and disabled by the debugger
+command <B>m</B>. 
+<A NAME="7525"></A>
+If it is enabled, the module from where the procedure is called is
+displayed.  By default the module printing is disabled. With tkeclipse, the
+module name is not displayed with the traceline, instead, you can get the
+information by right holding the mouse button over the trace line in the
+call stack window.
+
+<P>
+<DT>9.
+<DD>The goal is printed according to the current instantiations
+of its variables.  Arguments of the form <TT>...</TT> represent subterm
+that are not printed due to the depth limit in effect.
+The depth limit can be changed using the
+<A NAME="7527"></A>
+<B>&lt;</B> command.
+
+<P>
+The goal is printed with the current <B>output_mode</B> settings.
+which can be changed using the
+<A NAME="7530"></A>
+<B>o</B> command.
+
+<P>
+<DT>10.
+<DD>The prompt of the debugger, which means that it is waiting
+for a command from the user. Note there is no prompt when tkeclipse tracer
+is used.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3435"
+ HREF="node78.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3431"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3425"
+ HREF="node76.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3433"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3436"
+ HREF="node78.html">Debugging-related Predicate Properties</A>
+<B> Up:</B> <A NAME="tex2html3432"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3426"
+ HREF="node76.html">The Box Model</A>
+ &nbsp <B>  <A NAME="tex2html3434"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

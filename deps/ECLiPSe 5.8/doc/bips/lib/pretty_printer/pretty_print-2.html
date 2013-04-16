@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>pretty_print(++Files, ++Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(pretty_printer)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>pretty_print(++Files, ++Options)</H1>
+Print a file in one of different formats
+<DL>
+<DT><EM>Files</EM></DT>
+<DD>a filename (atom or string), or a list of filenames
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>A list of Name:Value pairs
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    The system prints the contents of the file given as the argument as an
+    output file in different formats. See pretty_print/1 for the general
+    description.
+</P><P>
+    This predicate allows the following options to modify the results:
+<DL>
+    <DT>format (default:html)<DD>
+	Possible values are 'html' or 'txt'.  The 'html' format
+	produces html output with syntax coloring and navigation
+	links.  The output file goes into a directory 'pretty' and has
+	the suffix .html.  The 'txt' format produces pure text output. 
+	The output file goes into a directory 'pretty' and has the
+	suffix .txt.
+    <DT>outdir (default:pretty)<DD>
+    	The location of the generated files. This can be an absolute or
+	a relative pathname (in Eclipse's generic pathname syntax, atom
+	or string). If it is a relative pathname, it is interpreted as
+	reative to the location of the input source file.
+    <DT>style (default:pretty)<DD>
+    	Possible values are 'pretty' or 'coverage'. Selects one of two
+	predefined styles for html output. The latter is a less colourful
+	form intended for code coverage output.
+    <DT>inline_css (default:off)<DD>
+    	Possible values are 'off' or 'on'. If 'on', the html output will
+	use an inlined style sheet instead of an external one. This is
+	provided for browsers that have problems with including style sheets.
+    <DT>css_span (default:span)<DD>
+    	Possible values are 'span' or 'font'. If 'font', the html output will
+	not emit span tags. This is provided for browsers that do not yet
+	support HTML 4.x.
+    <DT>link_back (default:"")<DD>
+    	A string in html format that gets inserted as a link to a parent
+	page into the generated pretty-printed source index.html page.
+</DL>
+</P>
+
+<H2>See Also</H2>
+<A HREF="../../lib/pretty_printer/pretty_print-1.html">pretty_print / 1</A>
+</BODY></HTML>

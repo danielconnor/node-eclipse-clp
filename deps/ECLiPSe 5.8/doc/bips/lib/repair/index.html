@@ -1,0 +1,104 @@
+<HTML><HEAD><TITLE>library(repair)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(repair)</H1>
+Repair library: support for local search via tentative assignments and repair constraints
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><STRONG>call_satisfied_constraints</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="conflict_constraints-1.html"><STRONG>conflict_constraints(?)</STRONG></A></DT>
+<DD>Obsolete: use conflict_constraints/2 instead.</DD>
+<DT><A HREF="conflict_constraints-2.html"><STRONG>conflict_constraints(+ConflictSet, -Constraints)</STRONG></A></DT>
+<DD>Retreive the set of conflicting constraints monitored in ConflictSet.</DD>
+<DT><A HREF="conflict_vars-1.html"><STRONG>conflict_vars(-Vars)</STRONG></A></DT>
+<DD>Returns the list of variables which are currently non-tenable.</DD>
+<DT><STRONG>poss_conflict_vars(?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="poss_conflict_vars-2.html"><STRONG>poss_conflict_vars(+ConflictSet, -Vars)</STRONG></A></DT>
+<DD>Returns the set of variables within the conflict constraints in ConflictSet.</DD>
+<DT><STRONG>print_repair(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="r-1.html"><STRONG>r(?)</STRONG></A></DT>
+<DD>Obsolete: use r_conflict/2 and r_conflict_prop/2 instead.</DD>
+<DT><A HREF="r_conflict-2.html"><STRONG>+Constraint r_conflict ?ConflictSet</STRONG></A></DT>
+<DD>Annotate Constraint as a repair constraint and monitor it for conflicts.</DD>
+<DT><A HREF="r_conflict_prop-2.html"><STRONG>+Constraint r_conflict_prop ?ConflictSet</STRONG></A></DT>
+<DD>Annotate Constraint as a repair constraint and monitor it for conflicts. It is propagated when it goes into conflict.</DD>
+<DT><A HREF="r_no_prop-1.html"><STRONG>r_no_prop(?)</STRONG></A></DT>
+<DD>Obsolete: use r_conflict/2 and r_conflict_prop/2 instead.</DD>
+<DT><A HREF="r_prop-1.html"><STRONG>r_prop(?)</STRONG></A></DT>
+<DD>Obsolete: use r_conflict/2 and r_conflict_prop/2 instead.</DD>
+<DT><STRONG>repair_stat(?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>repair_suspensions_handler(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>repair_unify_handler(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="tenable-1.html"><STRONG>tenable(?Var)</STRONG></A></DT>
+<DD>Check if Var is tenable.</DD>
+<DT><A HREF="tent_call-3.html"><STRONG>tent_call(+In, +Out, +Goal)</STRONG></A></DT>
+<DD>Eagerly call Goal whenever tentative values of variables in In changes.</DD>
+<DT><A HREF="tent_get-2.html"><STRONG>?Vars tent_get ?Values</STRONG></A></DT>
+<DD>Query the tentative values of variables in Vars.</DD>
+<DT><A HREF="tent_is-2.html"><STRONG>-Result tent_is +Expression</STRONG></A></DT>
+<DD>Eagerly evaulate Expression using tentative assignments.</DD>
+<DT><A HREF="tent_set-2.html"><STRONG>?Vars tent_set ++Values</STRONG></A></DT>
+<DD>Assigns tentative values for the variables in a term.</DD>
+<DT><STRONG>tentative_ground(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>tr_monitors(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Structures</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><STRONG>struct repair(tent, mon, ga_chg)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export op(900, xf, r)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(900, xf, r_no_prop)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(900, xf, r_prop)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(900, xfx, r_conflict)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(900, xfx, r_conflict_prop)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(700, xfx, [tent_set, tent_get, tent_is])</STRONG></DT><DD></DD>
+<DT><STRONG>export portray(monitor_tenable / 3, repair : tr_monitors / 2, [goal])</STRONG></DT><DD></DD>
+<DT><STRONG>export portray(monitor_conflict / 5, repair : tr_monitors / 2, [goal])</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+The repair library provides a framework for the integration of repair-based
+search with the constraint consistency checking techniques of ECLiPSe. It
+allows the implementation of classical local search methods within a CLP
+environment.
+
+It provides two facilities:
+
+<UL>
+
+<LI> The maintenance of tentative values for problem variables. These
+    tentative values may together form a partial or even inconsistent 
+    tentative assignment.  Modifications to, or extensions of this
+    assignment may be applied until a correct solution is found.
+
+<LI> The monitoring of constraints (the so called repair constraints)
+    for being either satisfied or violated under the current tentative
+    assignment.  Search algorithms can then access the set of
+    constraints that are violated at any point in the search,
+    and perform repairs by changing the tentative assignment
+    of the problem variables.
+
+</UL><P>
+Normally, the repair library communicates with another solver (such as fd or 
+ria) to check for constraint violations.</P> 
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Hani El-Sakkout, Stefano Novello, Joachim Schimpf
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2002/08/28 10:07:43 $
+</UL>
+<HR>Generated from repair.eci on Tue Jan 25 01:58:40 2005
+
+</BODY></HTML>

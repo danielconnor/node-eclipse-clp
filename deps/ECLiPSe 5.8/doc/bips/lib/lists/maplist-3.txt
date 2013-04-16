@@ -1,0 +1,63 @@
+
+maplist(+Pred, ?OldList, ?NewList)
+
+   Succeeds if Pred(Old, New) succeeds for corresponding pairs of elements
+from OldList and NewList.
+
+
+
+Arguments
+   +Pred               Atom or compound term.
+   ?OldList            List or variable.
+   ?NewList            List or variable.
+
+Type
+   library(lists)
+
+Description
+   Either OldList or NewList should be a proper list.  maplist/3 succeeds
+   if for every corresponding pair of elements Old, New of the two lists
+   OldList and NewList the invocation of Pred with two aditional arguments
+   Old and New succeeds.
+
+   The definition of this Prolog library predicate is:
+
+:- tool(maplist/3, maplist_body/4).
+
+maplist_body(_, [], [], _).
+maplist_body(Pred, [H1|T1], [H2|T2], M) :-
+    Pred =.. PL,
+    append(PL, [H1, H2], NewPred),
+    Call =.. NewPred,
+    call(Call, M),
+    maplist_body(Pred, T1, T2, M).
+
+   This predicate does not perform any type testing functions.
+	
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if at least for one pair of corresponding elements of OldList and
+   NewList the invocation of Pred with these two additional arguments
+   fails.
+
+
+
+Examples
+   
+Success:
+  maplist(integer_atom, [1, 2, 3], ['1', '2', '3']).
+  maplist(sin, [0, 1, 2], X).
+      (gives X = [0.0, 0.841471, 0.909297])
+  maplist(get_flag(var/1), [skip, type, spy], [off, built_in, off]).
+Fail:
+  maplist(type_of, [1, a, "a"], [integer, atom, atom]).
+
+
+
+
+
+See Also
+   checklist / 2

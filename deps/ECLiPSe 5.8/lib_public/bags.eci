@@ -1,0 +1,20 @@
+:- module(bags).
+:- export mapbag / 4.
+:- export checkbag / 3.
+:- export test_sub_bag / 2.
+:- export portray_bag / 1.
+:- export member / 3.
+:- export mapbag / 3.
+:- export make_sub_bag / 2.
+:- export list_to_bag / 2.
+:- export length / 3.
+:- export is_bag / 1.
+:- export checkbag / 2.
+:- export bagmin / 2.
+:- export bagmax / 2.
+:- export bag_union / 3.
+:- export bag_to_set / 2.
+:- export bag_to_list / 2.
+:- export bag_inter / 3.
+:- comment(mapbag / 4, hidden).
+:- comment(checkbag / 3, hidden).

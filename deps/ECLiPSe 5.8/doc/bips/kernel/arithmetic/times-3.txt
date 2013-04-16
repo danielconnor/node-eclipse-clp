@@ -1,0 +1,62 @@
+
+times(?Factor1, ?Factor2, ?Product)
+
+   Succeeds if Product is the result of multiplying integer arguments Factor1
+and Factor2.
+
+
+
+Arguments
+   ?Factor1            An integer or a variable.
+   ?Factor2            An integer or a variable.
+   ?Product            An integer or a variable.
+
+Type
+   Arithmetic
+
+Description
+   Defines the arithmetic relation Factor1 * Factor2 = Product.  If all
+   arguments are instantiated times/3 succeeds if this relation holds.  If
+   one of the arguments is uninstantiated, it is bound to an integer such
+   that the relation holds.  Note that this is not always possible.  If the
+   system is in coroutining mode and more than one argument is
+   uninstantiated, times/3 delays until at least two of the arguments are
+   known.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if it is impossible to find an integer instantiation such that
+   Factor1 * Factor2 = Product holds.
+
+
+
+Exceptions
+     4 --- more than one argument is uninstantiated (non-coroutining    mode only)
+     5 --- an argument is neither an integer nor a variable
+
+Examples
+   
+   Success:
+   times(2, 3, 6).
+   times(2, 3, Z).                   (gives Z=6)
+   times(X, 3, 6).                   (gives X=2)
+   times(2, Y, 6).                   (gives Y=3)
+   Fail:
+   times(3, 4, 5).
+   times(3, X, 5).
+   Error:
+   times(2.0, 3.0, 6.0).             (error 5)
+   times(1 + 4, 2, 10).              (error 5)
+   times(X, 1, Z).                   (error 4)
+
+
+
+
+
+See Also
+   plus / 3

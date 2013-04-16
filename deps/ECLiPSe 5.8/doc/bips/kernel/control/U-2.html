@@ -1,0 +1,45 @@
+<HTML><HEAD><TITLE>+Vars ^ +Goal</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>+Vars ^ +Goal</H1>
+Succeeds if Goal succeeds.
+
+
+<DL>
+<DT><EM>+Vars</EM></DT>
+<DD>Any term, but usually a variable.
+</DD>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Calls the goal Goal.  This predicate is equivalent to call(Goal) unless
+   used inside bagof/3, setof/3 or coverof/3.  In this case it is to be
+   read as "there exist instantiations for the variables in Vars such that
+   Goal is true".
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is not an atom or a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+refer to bagof/3 for examples.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/call-1.html">call / 1</A>, <A HREF="../../kernel/allsols/bagof-3.html">bagof / 3</A>, <A HREF="../../kernel/allsols/setof-3.html">setof / 3</A>, <A HREF="../../kernel/allsols/coverof-3.html">coverof / 3</A>
+</BODY></HTML>

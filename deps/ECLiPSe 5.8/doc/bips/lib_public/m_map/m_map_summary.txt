@@ -1,0 +1,4 @@
+lib(m_map)
+
+   The `map' abstract data type.
+

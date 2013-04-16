@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>remove(+Map0, ++Key, ?Value, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>remove(+Map0, ++Key, ?Value, -Map)</H1>
+Remove a key/value pair from a map, failing if the key is not present.
+<DL>
+<DT><EM>Map0</EM></DT>
+<DD>A map
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>The key to remove
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value corresponding to Key
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The map after removal
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	If the key Key appears in the map Map0, then remove it and attempt
+	to unify its corresponding value with Value.  Map is Map0 with the
+	key removed.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails is Key does not appear in Map0 or if Value does not unify with the corresponding value.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/delete-3.html">delete / 3</A>, <A HREF="../../lib_public/m_map/det_remove-4.html">det_remove / 4</A>, <A HREF="../../lib_public/m_map/remove_smallest-4.html">remove_smallest / 4</A>
+</BODY></HTML>

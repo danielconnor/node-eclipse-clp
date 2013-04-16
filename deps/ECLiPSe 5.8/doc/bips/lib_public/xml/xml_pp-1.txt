@@ -1,0 +1,13 @@
+
+xml_pp(+XMLDocument)
+
+   Pretty-prints XMLDocument on the current output stream
+
+Arguments
+   XMLDocument         Document as structured term
+
+Type
+   library(xml)
+
+See Also
+   xml_parse / 2, xml_parse / 3, xml_subterm / 2

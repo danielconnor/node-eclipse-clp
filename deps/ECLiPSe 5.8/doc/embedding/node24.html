@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Remote Tcl Interface</TITLE>
+<META NAME="description" CONTENT="Remote Tcl Interface">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node34.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="embroot.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1000"
+ HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html996"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html990"
+ HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html998"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1001"
+ HREF="node25.html">Basic Concepts of the</A>
+<B> Up:</B> <A NAME="tex2html997"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html991"
+ HREF="node23.html">Incompatible and obsolete commands</A>
+ &nbsp <B>  <A NAME="tex2html999"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00600000000000000000"></A>
+<A NAME="chapremote"></A>
+<BR>
+Remote Tcl Interface
+</H1>
+
+<P>
+This chapter describes the remote Tcl interface, which allows a separate
+external Tcl program to interact with ECLiPSe in much the same fashion as
+the embedding Tcl interface (see chapter&nbsp;<A HREF="node15.html#chaptcl">5</A>). Like the embedding
+interface, Tcl and ECLiPSe code communicates by sending and receiving 
+streams of bytes via I/O queues (the <B>ec_rpc</B> mechanism is
+implemented on top of these queues). 
+The interface can thus be
+used in similar fashion to the embedding interface, e.g. for the
+development of graphical user interfaces to an ECLiPSe application, with the
+difference that the ECLiPSe program is a separate program and not
+embedded into the Tcl program.
+
+<P>
+The main features of the interface are:
+
+<UL><LI>The connection between the Tcl and ECLiPSe processes are established
+via sockets using TCP network protocol. Thus the Tcl process can be run on
+a different machine and platform from the ECLiPSe process. 
+
+<LI>The Tcl process can be attached to any running ECLiPSe process,
+including an ECLiPSe embedded into another host language.
+
+<LI>More than one Tcl (or other remote) process can be attached to a
+single ECLiPSe via the remote interface. 
+
+<LI>For the programmer, the embedding and remote interfaces are largely
+similar, and once the connection is established in the remote interface,
+the same code on the ECLiPSe and Tcl sides can be used for both interfaces.
+
+</UL>
+
+<P>
+The remote interface thus offers more flexibility than an embedding
+interface in how the Tcl code can be connected to an ECLiPSe
+program. However, as the Tcl and ECLiPSe processes are not as tightly
+coupled as in an embedded interface, the speed of communications between
+the Tcl and ECLiPSe processes is likely to be slower.
+
+<P>
+Currently, Tcl is the only language available for connecting to ECLiPSe
+remotely. However, it is expected that remote interfaces for other
+languages will become available in future releases of ECLiPSe. 
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html1002"
+ HREF="node25.html">Basic Concepts of the Interface</A>
+<LI><A NAME="tex2html1003"
+ HREF="node26.html">Loading the Interface</A>
+<LI><A NAME="tex2html1004"
+ HREF="node27.html">Attaching and Initialising the Interface</A>
+<UL>
+<LI><A NAME="tex2html1005"
+ HREF="node27.html#SECTION00631000000000000000">A Note on Security</A>
+</UL>
+<LI><A NAME="tex2html1006"
+ HREF="node28.html">Type Conversion Between Tcl and ECLiPSe</A>
+<LI><A NAME="tex2html1007"
+ HREF="node29.html">Executing an ECLiPSe Goal From Tcl</A>
+<LI><A NAME="tex2html1008"
+ HREF="node30.html">Communication via Queues</A>
+<UL>
+<LI><A NAME="tex2html1009"
+ HREF="node30.html#SECTION00661000000000000000">Queue Data Handlers</A>
+<LI><A NAME="tex2html1010"
+ HREF="node30.html#SECTION00662000000000000000">Synchronous Queues</A>
+<UL>
+<LI><A NAME="tex2html1011"
+ HREF="node30.html#SECTION00662100000000000000">Handlers for a Synchronous From-ECLiPSe Queue</A>
+<UL>
+<LI><A NAME="tex2html1012"
+ HREF="node30.html#SECTION00662110000000000000">Tcl Handler for From-ECLiPSe Queue</A>
+<LI><A NAME="tex2html1013"
+ HREF="node30.html#SECTION00662120000000000000">An example from-ECLiPSe queue with Tcl handler</A>
+<LI><A NAME="tex2html1014"
+ HREF="node30.html#SECTION00662130000000000000">ECLiPSe Handler for From-ECLiPSe Queue</A>
+</UL>
+<LI><A NAME="tex2html1015"
+ HREF="node30.html#SECTION00662200000000000000">Handlers for a Synchronous To-ECLiPSe Queue</A>
+<UL>
+<LI><A NAME="tex2html1016"
+ HREF="node30.html#SECTION00662210000000000000">Tcl Handler for a To-ECLiPSe Queue</A>
+<LI><A NAME="tex2html1017"
+ HREF="node30.html#SECTION00662220000000000000">An example to-ECLiPSe queue with Tcl handler</A>
+<LI><A NAME="tex2html1018"
+ HREF="node30.html#SECTION00662230000000000000">ECLiPSe Handler for a To-ECLiPSe Queue</A>
+<LI><A NAME="tex2html1019"
+ HREF="node30.html#SECTION00662240000000000000">An example to-ECLiPSe queue with ECLiPSe handler</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1020"
+ HREF="node30.html#SECTION00663000000000000000">Asynchronous Queues</A>
+<UL>
+<LI><A NAME="tex2html1021"
+ HREF="node30.html#SECTION00663100000000000000">Examples for asynchronous queue</A>
+<UL>
+<LI><A NAME="tex2html1022"
+ HREF="node30.html#SECTION00663110000000000000">Using the queue asynchronously: to-ECLiPSe</A>
+<LI><A NAME="tex2html1023"
+ HREF="node30.html#SECTION00663120000000000000">Using the queue synchronously: to-ECLiPSe</A>
+<LI><A NAME="tex2html1024"
+ HREF="node30.html#SECTION00663130000000000000">Using the queue asynchronously: from-ECLiPSe</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1025"
+ HREF="node30.html#SECTION00664000000000000000">Reusable Queue Names</A>
+<LI><A NAME="tex2html1026"
+ HREF="node30.html#SECTION00665000000000000000">Translating the Queue Names</A>
+</UL>
+<LI><A NAME="tex2html1027"
+ HREF="node31.html">Additional Control and Support</A>
+<UL>
+<LI><A NAME="tex2html1028"
+ HREF="node31.html#SECTION00671000000000000000">Initialisation During Attachment</A>
+<LI><A NAME="tex2html1029"
+ HREF="node31.html#SECTION00672000000000000000">Disconnection and Control Transfer Support</A>
+<UL>
+<LI><A NAME="tex2html1030"
+ HREF="node31.html#SECTION00672100000000000000">Tcl side</A>
+<LI><A NAME="tex2html1031"
+ HREF="node31.html#SECTION00672200000000000000">ECLiPSe side</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1032"
+ HREF="node32.html">Example</A>
+<LI><A NAME="tex2html1033"
+ HREF="node33.html">Differences From the Tcl Embedding Interface</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1000"
+ HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html996"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html990"
+ HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html998"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1001"
+ HREF="node25.html">Basic Concepts of the</A>
+<B> Up:</B> <A NAME="tex2html997"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html991"
+ HREF="node23.html">Incompatible and obsolete commands</A>
+ &nbsp <B>  <A NAME="tex2html999"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

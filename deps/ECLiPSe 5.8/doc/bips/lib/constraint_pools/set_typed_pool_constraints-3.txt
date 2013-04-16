@@ -1,0 +1,25 @@
+
+set_typed_pool_constraints(+Pool, +Type, +Constraints)
+
+   Replace the stored constraints for type Type
+
+Arguments
+   Pool                Atom
+   Type                Integer
+   Constraints         List of callable Terms
+
+Type
+   library(constraint_pools)
+
+Description
+
+    The constraint store of pool Pool for type Type is forgotten and
+    replaced with the list of constraints Constraints.  This
+    modification is backtrackable.
+    
+
+Examples
+       
+
+See Also
+   collect_typed_pool_constraints / 3, get_typed_pool_constraints / 3

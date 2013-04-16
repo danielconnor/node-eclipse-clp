@@ -1,0 +1,4 @@
+lib(apply_macros)
+
+   Utilities to apply a predicate to all elements of a list resp. all subterms of a term
+

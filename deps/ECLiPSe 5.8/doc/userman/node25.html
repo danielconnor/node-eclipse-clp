@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Matching Clauses</TITLE>
+<META NAME="description" CONTENT="Matching Clauses">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node26.html">
+<LINK REL="previous" HREF="node24.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node26.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2621"
+ HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2617"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2611"
+ HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2619"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2622"
+ HREF="node26.html">Soft Cut</A>
+<B> Up:</B> <A NAME="tex2html2618"
+ HREF="node20.html">ECLiPSe-specific Language Features</A>
+<B> Previous:</B> <A NAME="tex2html2612"
+ HREF="node24.html">The String Data Type</A>
+ &nbsp <B>  <A NAME="tex2html2620"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00550000000000000000"></A>
+<A NAME="matching"></A><A NAME="2314"></A>
+<A NAME="2315"></A>
+<BR>
+Matching Clauses
+</H1>
+<A NAME="2316"></A>
+<A NAME="2317"></A>
+When Prolog systems look for clauses that match a given call,
+they use full unification of the goal with the clause head
+(but usually without the occur check).
+Sometimes it is useful or necessary to use <I>pattern matching</I>
+instead of full unification, i.e. during the matching
+only variables in the clause head can be bound, the call
+variables must not be changed.
+This means that the call must be an instance of the
+clause head.
+
+<P>
+The operator <code>-?-&gt;</code> at the beginning of the clause
+body specifies that one-way matching should be used
+instead of full unification in the clause head:<PRE>
+p(f(X)) :-
+    -?-&gt;
+    q(X).
+</PRE>
+Using the <code>?-</code> operator in the neck of the clause (instead of
+<code>:-</code>) is an alternative way of expressing the same, so the following
+is equivalent to the above:<PRE>
+p(f(X)) ?-
+    q(X).
+</PRE>
+Pattern matching can be used for several purposes:
+
+<UL><LI>Generic pattern matching when looking for clauses
+whose heads are more general than the call.
+
+<P>
+
+<LI>Decomposing <I>attributed variables</I> [<A
+ HREF="node159.html#eclipseext">4</A>].
+When an attributed variable occurs in the head of a matching clause,
+it is not unified with the call argument (which would trigger
+the unification handlers) but instead, the call argument
+is decomposed into the variable and its attribute(s):<PRE>
+get_attr(X{A}, Attr) :-
+    -?-&gt;
+    A = Attr.
+</PRE>
+This predicate can be used to return the attribute of a given
+attributed variable and fail if it is not one.
+
+<P>
+
+<LI>Replacing other metalogical operations, e.g. <A NAME="tex2html218"
+ HREF="../bips/kernel/typetest/var-1.html">var/1</A><A NAME="2405"></A>
+test. Since a nonvariable in the head of a matching clause
+matches only a nonvariable, explicit variable tests and/or cuts
+may become obsolete.
+
+</UL>
+
+<P>
+If some argument positions of a matching clause are declared
+as <B>output</B> in a mode declaration, then they are not
+unified using pattern matching but normal unification,
+in this case then the variable is normally bound.
+The above example can thus be also written as<PRE>
+:- mode get_attr(?, -).
+get_attr(X{A}, A) :-
+    -?-&gt;
+    true.
+</PRE>
+but in this case it must not be called with its second argument
+already instantiated.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2621"
+ HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2617"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2611"
+ HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2619"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2622"
+ HREF="node26.html">Soft Cut</A>
+<B> Up:</B> <A NAME="tex2html2618"
+ HREF="node20.html">ECLiPSe-specific Language Features</A>
+<B> Previous:</B> <A NAME="tex2html2612"
+ HREF="node24.html">The String Data Type</A>
+ &nbsp <B>  <A NAME="tex2html2620"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

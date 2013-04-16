@@ -1,0 +1,60 @@
+
+probe_sched(+Starts, +Durations, +Resources, ++MaxResource, ?CostFun)
+
+   Find a resource-feasible schedule that minimises the
+cost function
+
+Arguments
+   Starts               a list of (n) task start times (integers or
+finite domain variables)
+   Durations           a list of (n) task durations (integers or
+finite domain variables)
+   Resources           a list of (n) task resource needs (integers or 
+finite domain variables)
+   MaxResource         The available resource, not to be exceeded
+   CostFun             An expression involving start times and durations
+to be minimised
+
+Type
+   library(ic_probing_for_scheduling)
+
+Description
+
+	This predicate finds start times for a set of tasks, which
+minimise the value of a given cost function.
+
+The cost function is the only information the search algorithm can use to
+focus on the optimum.  It cannot guide the search if the cost is a variable, 
+only linked to the tasks start times by constraints.  For this reason the 
+cost function admits the special functions abs and maxlist.
+
+The syntax for cost functions is:
+
+CostFunction ::- PosExpr | PosExpr + PosExpr | Integer * PosExpr
+PosExpr ::- abs(LinearExpr) | maxlist([LinearExpr]) | LinearExpr.
+
+
+The algorithm is described in more detail in the documentation of 
+probe_cstr_sched/7. 
+
+
+
+Resatisfiable
+   no
+
+Examples
+   
+probe_schedule(Starts,CostFun) :-
+	Starts=[X,Y,Z],
+        ic:(Starts::1..10),
+        Durations=[10,5,5],
+        Resources=[R1,R2,R3],
+        ic:(R1::1..2), R2=2, R3=1,
+        MaxResource=2,
+        [OldX,OldY,OldZ]=[1,5,5],
+        CostFun= abs(X-OldX)+abs(Y-OldY)+abs(Z-OldZ),
+	probe_sched(Starts,Durations,Resources,MaxResource,CostFun).
+
+
+See Also
+   probe_cstr_sched / 7, fd : min_max / 2, ic_probe : set_up_probe / 5, probe : set_up_probe / 5, ic_make_overlap_bivs : make_overlap_bivs / 5, make_overlap_bivs : make_overlap_bivs / 5, ic_probe_search : probe_search / 5, probe_search : probe_search / 5, probing_for_scheduling : maxlist / 2, ic : maxlist / 2, fd_global : maxlist / 2, ic_global : maxlist / 2

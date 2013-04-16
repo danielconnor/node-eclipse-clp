@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Events</TITLE>
+<META NAME="description" CONTENT="Events">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node73.html">
+<LINK REL="previous" HREF="node71.html">
+<LINK REL="up" HREF="node71.html">
+<LINK REL="next" HREF="node73.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3338"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3334"
+ HREF="node71.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3328"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3336"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3339"
+ HREF="node73.html">Errors</A>
+<B> Up:</B> <A NAME="tex2html3335"
+ HREF="node71.html">Events and Interrupts</A>
+<B> Previous:</B> <A NAME="tex2html3329"
+ HREF="node71.html">Events and Interrupts</A>
+ &nbsp <B>  <A NAME="tex2html3337"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3340"
+ HREF="node72.html#SECTION001311000000000000000">Event Identifiers and Event Handling</A>
+<UL>
+<LI><A NAME="tex2html3341"
+ HREF="node72.html#SECTION001311100000000000000">Creating Named Events</A>
+<LI><A NAME="tex2html3342"
+ HREF="node72.html#SECTION001311200000000000000">Creating Anonymous Events</A>
+</UL>
+<LI><A NAME="tex2html3343"
+ HREF="node72.html#SECTION001312000000000000000">Raising Events</A>
+<UL>
+<LI><A NAME="tex2html3344"
+ HREF="node72.html#SECTION001312100000000000000">Raising Events Explicitly</A>
+<LI><A NAME="tex2html3345"
+ HREF="node72.html#SECTION001312200000000000000">Raising Events from Foreign Code</A>
+<LI><A NAME="tex2html3346"
+ HREF="node72.html#SECTION001312300000000000000">Timed Events (after events)</A>
+<UL>
+<LI><A NAME="tex2html3347"
+ HREF="node72.html#SECTION001312310000000000000">event_after(+EventId, +Time)</A>
+<LI><A NAME="tex2html3348"
+ HREF="node72.html#SECTION001312320000000000000">event_after_every(+EventId, +Time)</A>
+<LI><A NAME="tex2html3349"
+ HREF="node72.html#SECTION001312330000000000000">events_after(+EventList)</A>
+<LI><A NAME="tex2html3350"
+ HREF="node72.html#SECTION001312340000000000000">cancel_after_event(+EventId, -Cancelled)</A>
+<LI><A NAME="tex2html3351"
+ HREF="node72.html#SECTION001312350000000000000">current_after_events(-Events)</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html3352"
+ HREF="node72.html#SECTION001313000000000000000">Events and Waking</A>
+<LI><A NAME="tex2html3353"
+ HREF="node72.html#SECTION001314000000000000000">Aborting an Execution with Events</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001310000000000000000"></A>
+<A NAME="6914"></A>
+<BR>
+Events
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION001311000000000000000">
+Event Identifiers and Event Handling</A>
+</H2>
+
+<P>
+Events are identified by names (atoms) or by anonymous handles.
+
+<P>
+When an event is raised, a call to the appropriate handler is inserted
+into the resolvent (the sequence of executing goals).
+The handler will be executed as soon as possible, which means at the
+next synchronous point in execution, which is usually just before the
+next regular predicate is invoked. Note that there are a few
+built-in predicates that can run for a long time and will not allow
+handlers to be executed until they return (e.g. read/1, sort/4).
+
+<P>
+
+<H3><A NAME="SECTION001311100000000000000">
+Creating Named Events</A>
+</H3>
+
+<P>
+A named event is created by defining a handler for it using
+<A NAME="6917"></A>
+<A NAME="tex2html986"
+ HREF="../bips/kernel/event/set_event_handler-2.html">set_event_handler/2</A><A NAME="7175"></A>:<PRE>
+:- set_event_handler(hello, my_handler/1).
+my_handler(Event) :-
+    &lt;code to deal with Event&gt;
+</PRE>
+A handler for a named event can have zero or one arguments. When invoked,
+the first argument is the event identifier, in this case the atom 'hello'.
+It is not possible to pass other information to the handler.
+
+<P>
+The handler for a defined event can be queried using
+<A NAME="tex2html988"
+ HREF="../bips/kernel/event/get_event_handler-3.html">get_event_handler/3</A><A NAME="7178"></A>.
+<A NAME="6926"></A>
+
+<P>
+
+<H3><A NAME="SECTION001311200000000000000">
+Creating Anonymous Events</A>
+</H3>
+
+<P>
+An anonymous event is created with the builtin
+<A NAME="tex2html991"
+ HREF="../bips/kernel/event/event_create-3.html">event_create/3</A><A NAME="7181"></A>:<PRE>
+..., event_create(my_other_handler(...), [], Event), ...
+</PRE>
+The builtin takes a handler goal and creates an anonymous event handle Event.
+This handle is the only way to identify the event, and therefore must be
+passed to any program location that wants to raise the event.
+The handler goal can be of any arity and can take arbitrary arguments.
+Typically, these arguments would include the Event handle itself and other
+ground arguments (variables should not be passed because when the event
+is raised, a copy of the handler goal with fresh variables will be executed).
+
+<P>
+
+<H2><A NAME="SECTION001312000000000000000">
+Raising Events</A>
+</H2>
+Events can be raised in the following different ways:
+
+<UL><LI>Explicitly by the ECLiPSe program itself, using
+    <A NAME="tex2html993"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="7184"></A><A NAME="6939"></A>.
+
+<LI>By foreign code (C/C++) using the ec_post_event() function.
+
+<LI>Via signals/interrupts by setting the interrupt handler to
+    <A NAME="tex2html996"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="7187"></A><A NAME="6942"></A>.
+
+<LI>Via I/O streams (e.g. queues can be configured to raise an event
+    when they get written into).
+
+<LI>Via timers, so-called after-events
+
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION001312100000000000000">
+Raising Events Explicitly</A>
+</H3>
+To raise an event from within ECLiPSe code, call
+<A NAME="6946"></A>
+<A NAME="tex2html1000"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="7190"></A> with the event
+identifier as its argument. If no handler has been defined, a warning
+will be raised:<PRE>
+?- event(hello).
+WARNING: no handler for event in hello
+Yes (0.00s cpu)
+</PRE>
+The event can be an anonymous event handle, e.g.<PRE>
+?- event_create(writeln(handling(E)), [], E), event(E).
+handling('EVENT'(16'edbc0b20))
+E = 'EVENT'(16'edbc0b20)
+Yes (0.00s cpu)
+</PRE>
+Raising events explicitly is mainly useful for test purposes, since
+it is almost the same as calling the handler directly.
+
+<P>
+
+<H3><A NAME="SECTION001312200000000000000">
+Raising Events from Foreign Code</A>
+</H3>
+To raise an event from within foreign C/C++ code, call<PRE>
+ec_post_event(ec_atom(ec_did("hello",0)));
+</PRE>
+This works both when the foreign code is called from ECLiPSe or when
+ECLiPSe is embedded into a foreign code host program.
+
+<P>
+
+<H3><A NAME="SECTION001312300000000000000"></A>
+<A NAME="6965"></A>
+<A NAME="6966"></A>
+<A NAME="6967"></A>
+<BR>
+Timed Events (after events)
+</H3>
+
+<P>
+An event can be triggered after a specified amount
+of elapsed time. The event is then handled sychronously by ECLiPSe.
+These events are known as after
+events, as they are set up so that the event occurs <I>after</I> a
+certain amount of elapsed time.
+They are setup by one of the following predicates:
+
+<P>
+
+<H4><A NAME="SECTION001312310000000000000"></A><A NAME="7193"></A>
+<BR>
+<A NAME="tex2html1005"
+ HREF="../bips/kernel/event/event_after-2.html">event_after(+EventId, +Time)</A>
+</H4>
+This sets up an event EventId so that the event is raised once after Time seconds
+of elapsed time from when the predicate is executed. EventId is an event
+identifier and Time is a positive number.
+
+<P>
+
+<H4><A NAME="SECTION001312320000000000000"></A><A NAME="7196"></A>
+<BR>
+<A NAME="tex2html1007"
+ HREF="../bips/kernel/event/event_after_every-2.html">event_after_every(+EventId, +Time)</A>
+</H4> 
+This sets up an event EventId so
+that the event is raised <I>every</I> Time seconds has elapsed from when
+the predicate is executed.
+
+<P>
+
+<H4><A NAME="SECTION001312330000000000000"></A><A NAME="7199"></A>
+<BR>
+<A NAME="tex2html1009"
+ HREF="../bips/kernel/event/events_after-1.html">events_after(+EventList)</A>
+</H4>
+This sets up a series of after events specified in EventList, which is list
+of events in the form EventId-Time, or EventId-every(Time), specifying a single
+event or a repeated event respectively.
+
+<P>
+The Time parameter is actually the minimum of elapsed time before the
+event is raised. Factors constraining the actual time of raising of the
+event include the granularity of the system clock, and also that ECLiPSe
+must be in a state where it can <B>synchronously </B> process the event - 
+it needs to be where it can make a procedure call. 
+
+<P>
+Once an after event has been set up, it is pending until it is raised. In
+the case of <code>event_after_every/2</code>, the event will always be pending
+because it is rasied repeatedly. A pending event can be cancelled so that
+it will not be raised:
+
+<P>
+
+<H4><A NAME="SECTION001312340000000000000"></A><A NAME="7202"></A>
+<BR>
+<A NAME="tex2html1011"
+ HREF="../bips/kernel/event/cancel_after_event-2.html">cancel_after_event(+EventId, -Cancelled)</A>
+</H4> 
+This finds and cancels all pending after events with name EventId and returns
+the actually cancelled ones in a list.
+
+<P>
+
+<H4><A NAME="SECTION001312350000000000000"></A><A NAME="7205"></A>
+<BR>
+<A NAME="tex2html1013"
+ HREF="../bips/kernel/event/current_after_events-1.html">current_after_events(-Events)</A>
+</H4> 
+This returns a list of all pending after events.
+
+<P>
+The after event mechanism allows multiple events to make use of the timing
+mechanism independently of each other. The same event can be setup
+multiple times with multiple calls to <code>event_after/2</code> and
+<code>event_after_every/2</code>. The <code>cancel_after_event/2</code> predicate 
+will cancel all instances of an event.
+
+<P>
+By default, the after event feature uses the <TT>real</TT> timer. The
+timer can be switched to the <TT>virtual</TT> timer, in which case the
+elapsed time measured is user CPU time<A NAME="tex2html1015"
+ HREF="footnode.html#foot7170"><SUP>13.1</SUP></A> This
+setting is specified by the ECLiPSe environment flag <TT>after_event_timer</TT> (see get_flag/2, set_flag/2). Note that if the
+timer is changed while some after event is still pending, these events
+will no longer be processed. The timer should therefore not be changed
+once after events are initiated.
+
+<P>
+Currently, the <TT>virtual</TT> timer is not available on the Windows
+platform. In addition, the user should should not make use of these
+timers for their own purpose if they plan to use the after event
+mechanism.
+
+<P>
+
+<H2><A NAME="SECTION001313000000000000000">
+Events and Waking</A>
+</H2>
+
+<P>
+Using the suspension and event handling mechanisms together, a goal can be
+added to the resolvent and executed after a defined elapsed time.
+To achieve this, the goal is suspended and attached to a symbolic
+trigger, which is triggered by an afer-event handler.  The goal behaves
+`logically', in that if the execution backtracks pass the point in which
+the suspended goal is created, the goal will disappear from the resolvent
+as expected and thus not be executed. The event will still be raised, but
+there will not be a suspended goal to wake up. Note that if the execution
+finishes before the suspended goal is due to be woken up, it will also not
+enter the resolvent and is thus not executed.
+
+<P>
+The following is an example for waking a goal with a timed event.
+Once <code>monitor(X)</code> is called, the current value of X will be
+printed every second until the query finishes or is backtracked over:<PRE>
+:- set_event_handler(monvar, trigger/1).
+
+monitor(Var) :-
+     suspend(m(Var), 3, trigger(monvar)),
+     event_after_every(monvar, 1).
+
+:- demon m/1.
+m(Var) :- writeln(Var).
+
+:- monitor(Var), &lt;do_something&gt;.
+</PRE>
+Note the need to declare
+<code>m/1</code> as a demon: otherwise, once <code>m/1</code> is woken up once, it will
+disappear from the resolvent and the next <code>monvar</code> event will not have
+a suspended <code>m/1</code> to wake up.
+Note also that it is necessary to connect the event machanism to
+the waking mechanism by setting the event handler to <A NAME="tex2html1016"
+ HREF="../bips/kernel/suspensions/trigger-1.html">trigger/1</A><A NAME="7208"></A>.
+
+<P>
+
+<H2><A NAME="SECTION001314000000000000000">
+Aborting an Execution with Events</A>
+</H2>
+
+<P>
+Typically, event handlers would perform some action and then succeed,
+letting the interrupted exectuion continue unharmed. Event handlers for
+asynchronous events should never fail, because the failure will be inserted
+in a random place in resolvent, and the effect will be unpredictable.
+It is however sometimes useful to allow an asynchronous event to abort
+an execution (via 
+<A NAME="tex2html1021"
+ HREF="../bips/kernel/control/exit_block-1.html">exit_block/1</A><A NAME="7211"></A>), e.g.
+to implement timeouts<A NAME="tex2html1018"
+
+HREF="footnode.html#foot7171"><SUP>13.2</SUP></A>.
+
+<P>
+When dealing with events that occur asynchronously (in particular after-events),
+and event handlers that cause the execution to abort, it is often a problem
+that event handlers may be interrupted or preempted by other event handlers.
+This can be avoided by use of the event-defer mechanism. Events can be
+declared with the defer-property, which means that all further event handling
+is temporarily suppressed as soon as the handling of this event begins.
+In this case, the event handler is responsible for reenabling event handling
+explicitly before returning by calling
+<A NAME="tex2html1023"
+ HREF="../bips/kernel/event/events_nodefer-0.html">events_nodefer/0</A><A NAME="7217"></A>.
+For instance:<PRE>
+:- set_event_handler(my_event, defers(my_handler/0)).
+my_after_handler :- % event handling is deferred at this point
+&lt;deal with event&gt;,
+        events_nodefer. % allow other events to be handled again
+</PRE>
+In the presence of other event handlers which can cause aborts, this will
+protect the handler code from being preempted.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3338"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3334"
+ HREF="node71.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3328"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3336"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3339"
+ HREF="node73.html">Errors</A>
+<B> Up:</B> <A NAME="tex2html3335"
+ HREF="node71.html">Events and Interrupts</A>
+<B> Previous:</B> <A NAME="tex2html3329"
+ HREF="node71.html">Events and Interrupts</A>
+ &nbsp <B>  <A NAME="tex2html3337"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

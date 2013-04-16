@@ -1,0 +1,25 @@
+
+send_notification(+Pos, +Struct, +Message)
+
+   Send a notification message
+
+Arguments
+   Pos                 positive integer, the send port's field number in Struct
+   Struct              a structure whose Pos-th field is a send port
+   Message             arbitrary term
+
+Type
+   library(notify_ports)
+
+Description
+
+    Pos and Struct identify a send port. Messages is an arbitrary
+    term that gets send via this port. All receivers that have connected
+    to this send port at the time of sending will be able to receive
+    the message.
+    
+
+Fail Conditions
+   Fails if send port is closed
+
+

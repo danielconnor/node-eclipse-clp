@@ -1,0 +1,133 @@
+
+exec(++Command, +Streams, ?Pid)
+
+   A child process Command is forked, its standard streams are connected to
+Streams and its process ID is Pid.
+
+
+
+Arguments
+   Command             String, atom or list of atomic terms.
+   Streams             List of stream ids.
+   Pid                 Integer or a variable.
+
+Type
+   Operating System
+
+Description
+   This predicate is used to fork a child process and to set up pipes
+   to its standard streams.  After the process is forked, ECLiPSe
+   continues normally, without waiting for the child to terminate.
+
+
+   Command should be a list with at least one element: The first list element
+   (a path name in ECLiPSe path name syntax, atom or string) specifies the
+   program to be executed, and the subsequent list elements are its arguments.
+   The arguments can be atoms, strings or numbers.  They are passed to the
+   executed program literally (in particular, no path name syntax conversion
+   is applied).
+
+
+   For backward compatibility, Command can be a simple atom or string, in
+   which case the first word in Command specifies the program to be executed,
+   and the following words (separated by blank space) are its command-line
+   arguments.  This form is deprecated since it creates problems with argument
+   quoting and operating system dependent path name syntax.
+
+
+   By specifying the Streams argument it is possible to control which of
+   the process' standard streams are connected to ECLiPSe streams.  The
+   form of Streams is [Stdin, Stdout, Stderr].  If some of these streams
+   are specified and not null, a pipe is opened which connects the standard
+   stream of the child process with the specified ECLiPSe stream, e.g.
+   Stdin must be an output stream because it is connected to the standard
+   input of the child process.  If the list Streams is shorter, only the
+   specified streams are connected with a pipe.  The streams can be
+   specified like for open/3.  If the stream is a variable, it is bound to
+   the physical stream number, if it is an atom different from null, that
+   symbolic stream is used.  Specifying a null stream means that no pipe is
+   set up for this stream.
+
+
+   Each stream can also be specified as sigio(Stream) (UNIX systems only).
+   In this case a pipe is set up to the stream Stream and in addition the
+   pipe is instructed to send the signal io each time new data appears in
+   it.  In this way the two processes can communicate in a truly
+   asynchronous way.  When one process sends data to the other one, the
+   interrupt handler is invoked and it can read and process the data.  When
+   it finishes, it can continue where it was interrupted.
+
+
+   After forking the process, Pid is unified with its process ID, which can
+   be used e.g.  in wait/2 or kill/2.  If the exec system call in the child
+   process failed, the child exits with status 128 + errno.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Command is not instantiated.
+     5 --- Command is instantiated, but not to a string or an atom.
+     5 --- Streams is instantiated, but not to a list.
+     5 --- A stream in Streams is instantiated, but not to an atom or a    sigio structure.
+     5 --- Pid is instantiated.
+   170 --- System error, it was not possible to fork the child.
+   192 --- The specified stream is not open in the appropriate mode.
+
+Examples
+   
+% execute an ls-command
+
+    ?- exec([ls,"-C"], [null, out], Pid).
+    Pid = 10885
+    yes.
+
+    ?- read_string(out, end_of_file, _, S), write(S).
+    aux.o           coroutine.pl    kegi.pl         sepia.o
+    bsi.pl          cprolog.pl      lint.pl         sorts.pl
+    cio.pl          history.pl      lists.pl        strings.pl
+    cn.pl           k_env.pl        quintus.pl      t_all.pl
+
+    S = "..."
+
+    ?- close(out), wait(Pid, S).
+    Pid = 10885
+    S = 0
+    yes.
+
+
+% execute another eclipse
+
+    ?- argv(0,Ecl),	% get name of the eclipse executable
+       exec([Ecl,"-e","read(X),Y is X*X,printf('%w. %b',[Y])"], [in,out], P).
+
+    E = "/usr/local/eclipse/bin/sparc_sunos5/eclipse.exe"
+    P = 10741
+    yes.
+
+    [eclipse 2]: printf(in, '%w. %b', [12]), read(out, Result).
+    Result = 144
+    yes.
+
+    [eclipse 3]: close(in), close(out), wait(10741, S).
+    S = 0
+    yes.
+
+
+Error:
+      exec(S, [], Pid).          (Error 4).
+      exec([ls], null, Pid).       (Error 5).
+      exec([chipc], [1], P).       (Error 5).
+      exec([date], [input], P).    (Error 192).
+
+
+See Also
+   exec / 2, exec_group / 3, wait / 2, kill / 2, sh / 1, system / 1, open / 3

@@ -1,0 +1,51 @@
+
+garbage_collect
+
+   Request an immediate garbage collection.
+
+
+
+Arguments
+
+Type
+   Development Environment and Global Settings
+
+Description
+   Causes an immediate garbage collection of the global and trail stack,
+   provided that the garbage collector is not switched off (cf.
+   set_flag/2).  In any case the predicate succeeds.
+
+
+   Note that the garbage collector is usually triggered automatically,
+   controlled by the user-definable flag gc_interval.  Therefore, the usage
+   of garbage_collect/0 should be restricted to situations where the
+   automatic triggering performs badly.  In this case it should be inserted
+   in a place where it is known for sure that a lot of structures and lists
+   have become useless, eg.  just before a tail-recursive call as shown in
+   the example.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+cycle(OldState) :-
+    transform(OldState, NewState), /* long computation     */
+    !,
+    garbage_collect,               /* OldState is obsolete */
+    cycle(NewState).
+
+
+
+
+
+See Also
+   env / 0, set_flag / 2, get_flag / 2

@@ -1,0 +1,32 @@
+
+optimize(+Map0, -Map)
+
+   Optimize a map for many lookups but few/no modification.
+
+Arguments
+   Map0                A map to optimize
+   Map                 The optimized map
+
+Type
+   library(m_map)
+
+Description
+	
+	Declaratively, this predicate does nothing (i.e. the map Map is
+	equivalent to the map Map0).  However, operationally it suggests to
+	the implementation that the representation of the map be optimised
+	for lookups, with few or no modifications to be expected.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+

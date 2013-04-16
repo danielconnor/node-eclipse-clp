@@ -1,0 +1,23 @@
+<HTML><HEAD><TITLE>gap_command(++Format, +Args)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(gap)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>gap_command(++Format, +Args)</H1>
+Send a command to GAP
+<DL>
+<DT><EM>Format</EM></DT>
+<DD>Format string
+</DD>
+<DT><EM>Args</EM></DT>
+<DD>List of arguments
+</DD>
+</DL>
+<H2>Description</H2>
+   Sends a command to GAP.  The command is specified using Format and Args a
+   la printf/2.  It is not necessary to terminate the GAP command with a
+   semicolon.<P>
+
+   If there is no currently active GAP session, one is started before
+   sending the command.
+
+<H2>See Also</H2>
+<A HREF="../../lib/gap/gap_query-3.html">gap_query / 3</A>, <A HREF="../../lib/gap/gap_query_string-3.html">gap_query_string / 3</A>, <A HREF="../../kernel/ioterm/printf-2.html">printf / 2</A>
+</BODY></HTML>

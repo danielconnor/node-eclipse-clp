@@ -1,0 +1,26 @@
+
+-Result tent_is +Expression
+
+   Eagerly evaulate Expression using tentative assignments.
+
+Arguments
+   Result              Variable
+   Expression          Arithematic Expression
+
+Type
+   library(repair)
+
+Description
+
+This is similar to the normal arithmetic is/2 predicate, but 
+evaluates the expression based on the tentative
+assignment of its variables. The result is delivered as (an update to)
+the tentative value of the Result variable.
+Once initiated, tent_is will stay active and keep updating Result's
+tentative value eagerly whenever the tentative assignment of any
+variable in Expression changes.
+
+
+
+See Also
+   is / 2, tent_set / 2, tent_call / 3

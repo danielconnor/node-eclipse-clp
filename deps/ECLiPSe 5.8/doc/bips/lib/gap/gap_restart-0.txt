@@ -1,0 +1,19 @@
+
+gap_restart
+
+   Restart a GAP session
+
+Type
+   library(gap)
+
+Description
+   Restarts the currently active GAP session.  This is useful if one wishes
+   to discard GAP's current state and start again with a fresh session (all
+   GAP state is lost).
+
+   This predicate is simply a short-hand for calling gap_shutdown/0 and then
+   gap_ensure_started/0.
+
+
+See Also
+   gap_ensure_started / 0, gap_shutdown / 0, gap_running / 0

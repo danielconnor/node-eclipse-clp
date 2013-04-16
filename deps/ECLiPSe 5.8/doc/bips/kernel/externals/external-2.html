@@ -1,0 +1,114 @@
+<HTML><HEAD><TITLE>external(+PredSpec, +CName)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">External Interface</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>external(+PredSpec, +CName)</H1>
+Defines PredSpec to be a deterministic external predicate linked to the C
+function whose system name is CName.
+
+
+<DL>
+<DT><EM>+PredSpec</EM></DT>
+<DD>Of the form Atom/Integer (predicate name/arity).
+</DD>
+<DT><EM>+CName</EM></DT>
+<DD>Atom or string.
+</DD>
+</DL>
+<H2>Description</H2>
+   Declares PredSpec to be a deterministic external predicate (in the
+   caller module) linked to the ``C'' function whose system name is CName.
+
+<P>
+   If the visibility of PredSpec is not declared, it is set to local.
+
+<P>
+   If necessary, an underscore is prepended to CName to get its form as
+   used by the C compiler.
+
+<P>
+   If a call to PredSpec has already been compiled as a Prolog call or a
+   non-deterministic external call, error 62 is raised (``inconsistent
+   procedure redefinition'').  This can be prevented by defining the
+   external before compiling any call to it or by using the declaration
+   predicate external/1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either PredSpec or CName is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is not of the form Atom/Integer.
+<DT><EM>(5) type error </EM>
+<DD>CName is not an atom or a string.
+<DT><EM>(62) inconsistent procedure redefinition </EM>
+<DD>A call to PredSpec has already been compiled as a Prolog    call or a non-deterministic external call.
+<DT><EM>(211) External function does not exist </EM>
+<DD>External function does not exist.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Assume we have the C++ file eg_cc_external.cc:
+
+    #include "eclipseclass.h"
+    extern "C" int
+    p_sumlist()
+    {
+	int res;
+	long x, sum = 0;
+	EC_word list(EC_arg(1));
+	EC_word car,cdr;
+
+	for ( ; list.is_list(car,cdr) == EC_succeed; list = cdr)
+	{
+	    res = car.is_long(&amp;x);
+	    if (res != EC_succeed) return res;
+	    sum += x;
+	}
+	res = list.is_nil();
+	if (res != EC_succeed) return res;
+	return unify(EC_arg(2), EC_word(sum));
+    }
+
+
+Compile that into a dynamic library, e.g. using g++ on a Linux machine:
+
+    g++ -I/usr/local/eclipse/include/i386_linux -shared \
+    	-o eg_cc_external.so eg_cc_external.cc
+
+
+Load the .so file dynamically into Eclipse and declare the external:
+
+      ?- load('eg_cc_external.so').
+      yes.
+
+      ?- external(sumlist/2, p_sumlist).
+      yes.
+
+      ?- sumlist([1,2,3,4,5],S).
+      S = 15
+      yes.
+
+
+Errors:
+      external(PredSpec, "p_member"). (Error 4).
+      external(p/0, S).               (Error 4).
+      external('p/0', p_p0).          (Error 5).
+      external(p/0, 123).             (Error 5).
+      external(prmsg/1, nosuchfunc).  (Error 211).
+
+      ?- [user].
+       p :- a.
+       user   compiled 32 bytes in 0.00 seconds
+      yes.
+      ?- external(a/0, c_a).   (Error 62).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/external-1.html">external / 1</A>, <A HREF="../../kernel/externals/load-1.html">load / 1</A>
+</BODY></HTML>

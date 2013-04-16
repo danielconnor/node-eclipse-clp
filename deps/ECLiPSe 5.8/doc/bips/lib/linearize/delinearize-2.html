@@ -1,0 +1,25 @@
+<HTML><HEAD><TITLE>delinearize(?Linear, -Expression)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(linearize)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delinearize(?Linear, -Expression)</H1>
+Convert a linear form back to a standard arithmetic expression
+<DL>
+<DT><EM>Linear</EM></DT>
+<DD>Normalized lists of monomials
+</DD>
+<DT><EM>Expression</EM></DT>
+<DD>Arithmetic expression with constants and variables
+</DD>
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- linearize(3*X-7*Y+2*(X+Y), L, R), delinearize(L, E).
+    X = X
+    Y = Y
+    R = []
+    L = [0 * 1, 5 * X, -5 * Y]
+    E = 5 * X - 5 * Y
+    yes.
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/linearize/linrenorm-2.html">linrenorm / 2</A>, <A HREF="../../lib/linearize/linearize-3.html">linearize / 3</A>
+</BODY></HTML>

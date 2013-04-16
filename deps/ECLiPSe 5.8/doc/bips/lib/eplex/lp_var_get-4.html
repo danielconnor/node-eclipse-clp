@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>lp_var_get(+Handle, +Var, ++What, -Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lp_var_get(+Handle, +Var, ++What, -Value)</H1>
+Obtain information for an individual solver problem variable Var.
+<DL>
+<DT><EM>Handle</EM></DT>
+<DD>Handle to a solver state
+</DD>
+<DT><EM>Var</EM></DT>
+<DD>A solver problem variable for Handle
+</DD>
+<DT><EM>What</EM></DT>
+<DD>Specification for information wanted (atom)
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>Returned value of What
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Retrieve information about solver state and results related to a
+   particular variable or constraint, for the solver state represented by 
+   Handle. Fails if no solution has been computed yet. What can take the 
+   same values as those in eplex_var_get/3.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Handle is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Handle is not a compound term.
+<DT><EM>(6) out of range </EM>
+<DD>What is not a valid value.
+<DT><EM>(6) out of range </EM>
+<DD>Var is not a problem variable for Handle.
+<DT><EM>(6) out of range </EM>
+<DD>What is unavailable; the information was not requested at solver setup.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/eplex_var_get-3.html">eplex_var_get / 3</A>
+</BODY></HTML>

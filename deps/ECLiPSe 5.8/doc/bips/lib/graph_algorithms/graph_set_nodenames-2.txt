@@ -1,0 +1,18 @@
+
+graph_set_nodenames(+Graph, ++NodeNameArray)
+
+   Add node names to an existing graph
+
+Arguments
+   Graph               a graph structure
+   NodeNameArray       array of ground data, usually node names
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    
+
+See Also
+   make_graph_symbolic / 3, graph_get_nodenames / 2

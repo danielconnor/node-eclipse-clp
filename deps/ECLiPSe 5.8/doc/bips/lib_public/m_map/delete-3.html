@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>delete(+Map0, ++Key, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delete(+Map0, ++Key, -Map)</H1>
+Delete a key/value pair from a map.
+<DL>
+<DT><EM>Map0</EM></DT>
+<DD>A map
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>The key to delete
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The map after deletion
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	If the key Key appears in the map Map0, then remove it and its
+	corresponding value, resulting in the map Map.  If the key Key
+	does not appear, Map is simply bound to Map0.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Never fails.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/delete_list-3.html">delete_list / 3</A>, <A HREF="../../lib_public/m_map/remove-4.html">remove / 4</A>
+</BODY></HTML>

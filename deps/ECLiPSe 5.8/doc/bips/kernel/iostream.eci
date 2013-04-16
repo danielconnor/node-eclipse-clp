@@ -1,0 +1,1291 @@
+:- comment(alias, "Stream I/O").
+:- comment(summary, "Built-ins to open, manipulate and close I/O streams").
+
+:- comment(open / 4, [
+	summary:"Opens the I/O source or sink SourceSink in mode Mode and associates it
+with the stream identifier Stream.
+
+",
+	template:"open(+SourceSink, +Mode, ?Stream, +Options)",
+	desc:html("   This predicate opens an ECLiPSe I/O stream.
+
+<P>
+   The most common use is for opening files. In this case, SourceSink
+   is a file name (atom or string).
+
+<P>
+   Mode is one of the following
+
+<P>
+<PRE>
+    read         open for reading
+    write        open for writing
+    update       open for reading and writing
+    append       open for writing at the end
+</PRE>
+   A file must already exist if it is to be opened in read mode.  A file
+   opened in append mode is opened in write mode at the end of the file.
+   If an existing file is opened in write mode, it is truncated to zero
+   size, i.e. its previous content is lost.
+
+<P>
+   Stream is the identifier that is subsequently used to identify the
+   stream.  This identifier is either a name (atom) provided by the user,
+   or a system-generated identifier (when the user passes a free variable).
+
+<P>
+   If SourceSink is of the form string(InitialString), then a so-called
+   string stream is opened.  A string stream is basically an in-memory
+   file and its initial contents is the string InitialString.
+   A string stream can be used like any other stream, i.e. it is possible
+   to read, write and seek like on a true file.
+   The current contents of a string stream can at any time be retrieved
+   as a whole using get_stream_info(Stream, name, Contents).
+
+<P>
+   If SourceSink is of the form queue(InitialString), then a queue
+   stream is opened. It behaves like a string that can be written at the
+   end and read from the beginning.  Seeking is not allowed on queues.
+   The current contents of a queue can at any time be retrieved as a
+   whole using get_stream_info(Stream, name, Contents). Queues are
+   considered to be at end-of-file while they are empty. 
+   Queues can be configured to raise an event every time something
+   is written to the previously empty queue (see open/4).
+
+<P>
+   If SourceSink is of the form fd(Integer), then the stream in opened
+   onto an existing operating system file descriptor.
+
+<P>
+   Options is a list of the following stream options:
+<DL>
+<DT><STRONG>alias(Name)</STRONG><DD>
+    Make the stream known under an alternative name.
+    Name is an atom. See also set_stream/2.
+
+<DT><STRONG>compress(OnOff)</STRONG><DD>
+    a hint for output operations (e.g. write_exdr/2) to use a more
+    compact output format (output streams only). OnOff is one of the
+    atoms on or off. The default is on (for files, pipes and sockets)
+    or off (for queues and string streams).
+
+<DT><STRONG>end_of_line(CrLf)</STRONG><DD>
+    This option affects only write-streams and determines which
+    end-of-line character sequence is written by predicates like nl/1,
+    writeln/1 and printf/3.  Possible values are the atoms lf and
+    crlf.  The default for string and queue streams is lf, for other
+    streams it is operating-system dependent.
+
+<DT><STRONG>event(Name)</STRONG><DD>
+    This option is intended for queue streams in embedded applications
+    of ECLiPSe.  It configures a read-queue to raise the named event
+    whenever the host program writes something to the previously empty
+    queue.  Name must be an atom.
+
+<DT><STRONG>flush(Where)</STRONG><DD>
+    This option affects only write-streams and allows to configure a
+    stream to automatically flush after every line written.  Where is
+    one of the atoms end_of_line (flush automatically after every
+    line) or flush (require explicit flushing).  The default setting
+    is flush, except for tty streams where the default is end_of_line.
+
+<DT><STRONG>macro_expansion(OnOff)</STRONG><DD>
+    Input streams only. Specifies whether term-macros (see macro/3) will
+    be expanded when reading from this stream using read/2, read_term/3 etc.
+    OnOff is one of the atoms on or off, the default is on.
+
+<DT><STRONG>output_options(OptionList)</STRONG><DD>
+    Write-streams only. Specifies the default output options that will be
+    used when printing terms onto this stream, e.g. using write/2.
+    The format of OptionList is the same as the one accepted by the
+    write_term/2,3 predicates.
+    Note that certain output predicates can override these default
+    settings, e.g. writeq/2, write_term/3, printf/3, etc.
+
+<DT><STRONG>yield(OnOff)</STRONG><DD>
+    This option is intended for queue streams in embedded applications
+    of ECLiPSe.  It configures the stream to yield control to the host
+    program whenever a read-queue reaches end-of-file or a write-queue
+    gets flushed.  See the Embedding Manual for more details.  OnOff
+    is one of the atoms on or off.
+
+</DL>
+   Note that streams are not closed on backtracking through the call to open/3.
+
+<P>
+"),
+	args:["+SourceSink" : "Atom, string or structure.", "+Mode" : "One of the atoms read, write, update, append.", "?Stream" : "Atom or variable.", "+Options" : "List."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[4 : "File or Mode is not instantiated.", 5 : "File is not an atom, string or structure.", 5 : "Mode is not an atom.", 5 : "Stream is not an atom or a variable.", 170 : "The operating system cannot open the file.", 192 : "Mode is an atom, but is not a valid mode."],
+	eg:"
+    See open/3.
+
+
+
+",
+	see_also:[set_stream_property/3, at / 2, at_eof / 1, current_stream / 1, get_stream_info / 3, open / 3, pipe / 2, seek / 2, select / 3, stream_truncate/1, flush / 1, write_term/2, write_term/3]]).
+
+:- comment(get_stream_info / 3, [
+	summary:"Succeeds if the attribute Attr of the open stream Stream has the value
+Value.
+
+",
+	template:"get_stream_info(+Stream, ?Attr, ?Value)",
+	desc:html("   Used to retrieve information associated to an open stream.  The
+   available attributes and their meanings are:
+
+<P>
+<PRE>
+    Attr            Value         Description
+
+    aliases         integer       current number of symbolic names
+
+    compress        on, off       a hint for output operations (e.g.
+                                  write_exdr/2) to use a more compact
+                                  output format (output streams only).
+                                  Default: on (file,pipe,socket) or off.
+
+    connection      atom          identification of the connected
+                                  socket - file name for unix sockets,
+                                  host name for internet ones
+
+    device          file, null,   the device behind the stream
+                    pipe, queue,
+                    socket, tty,
+                    string
+
+    end_of_line     lf, crlf      which end-of-line sequence to write
+                                  (output streams only)
+
+    event           atom          event on writing to empty stream
+                                  (see open/4)
+
+    fd              integer       the associated OS/UNIX file descriptor
+
+    flush           flush,        explicit or implicit flushing
+                    end_of_line   (output streams only)
+
+    last_written    integer       character code of last written character
+                                  (output streams only)
+
+    line            integer       current line number
+                                  (input streams only)
+
+    mode            read, write,  the stream's direction
+                    update
+
+    name            atom or       associated filename, or contents
+                    string        (in case of a string or queue), or
+                                  pseudo file name (user, error, null)
+
+    macro_expansion on, off       expand term macros (input streams only)
+
+    offset          integer       current position in the
+                                  stream, as given by at/2
+
+    output_options  list          default output options for all term
+                                  output on this stream. The list
+                                  format is as in write_term/2,3.
+
+    physical_stream integer       associated stream number
+
+    port            integer       port number associated with an
+                                  internet socket
+
+    prompt          string        prompt string (input streams only)
+
+    prompt_stream   integer       output stream for the prompt
+                                  (input streams only)
+
+    sigio           on            SIGIO signals enabled (UNIX only)
+
+    system_use      on, off       a system stream is currently
+                                  redirected to this stream
+
+    usable          on, off       if the stream can currently be used:
+                                  flushing or reading the empty stream
+                                  may not be properly handled if `off'.
+
+    yield           on, off       yield on end-of-file (see open/4)
+</PRE>
+"),
+        args:["+Stream" : "Atom or integer denoting an open stream.", "?Attr" : "Atom or variable.", "?Value" : "Variable, atom, string or integer."],
+        resat:"   Yes.",
+        fail_if:"   Fails if Value does not unify with the current value of attribute Attr,\n   or if the requested attribute is not available.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is neither an atom nor an integer.", 5 : "Attr is instantiated, but not to an atom.", 5 : "Value is instantiated, but not to an atom, string or    integer.", 6 : "Attr is an atom, but not a valid attribute name.", 193 : "Stream does not denote an open stream."],
+        eg:"
+Success:
+    [eclipse]: get_stream_info(input,X,Y), writeln(X is Y), fail.
+    name is user
+    physical_stream is 0
+    aliases is 2
+    system_use is on
+    line is 1
+    offset is 0
+    prompt is  
+    prompt_stream is 1
+    fd is 0
+    reprompt_only is off
+    device is tty
+    mode is read
+    usable is on
+    macro_expansion is on
+
+    no (more) solution.
+    [eclipse]: get_stream_info(toplevel_input, prompt, P).
+
+    P = \"\\t\"
+    yes.
+
+Fail:
+    get_stream_info(output, prompt, P).
+    get_stream_info(output, system_use, off).
+
+Error:
+    get_stream_info(X, Y, Z).                      (Error 4)
+    get_stream_info(file(f), Y, Z).                (Error 5)
+    get_stream_info(output, 7, X).                 (Error 5)
+    get_stream_info(output, offset, 8.5).          (Error 5)
+    get_stream_info(output, length, Z).            (Error 6)
+    get_stream_info(nostream, Y, Z).               (Error 193)
+
+
+
+",
+        see_also:[set_stream_property/3, open / 3, open / 4, current_stream / 1, get_stream_info / 3, get_stream / 2, at / 2, write_term/2, write_term/3]]).
+
+:- comment(current_stream / 1, [
+        summary:"Succeeds if Stream is a currently open stream.
+
+",
+        template:"current_stream(?Stream)",
+        desc:html("   Used to test whether a given identifier denotes an open stream,
+   or enumerates all currently open streams on backtracking.
+
+<P>
+   When called with a variable argument, only the physical stream
+   numbers are returned, not the symbolic aliases.
+
+<P>
+"),
+        args:["?Stream" : "Atom, integer or variable."],
+        resat:"   Yes.",
+        fail_if:"   Fails if Stream is instantiated but does not denote an open stream.\n\n",
+        exceptions:[5 : "Name is instantiated, but not to an atom or integer."],
+        eg:"
+Success:
+    [eclipse 1]: current_stream(S).
+    S = 0     More? (;) 
+    S = 1     More? (;) 
+    S = 2     More? (;) 
+    S = 3     More? (;) 
+    S = 4     More? (;) 
+    S = 5     More? (;) 
+    no (more) solution.
+
+    [eclipse 2]: current_stream(output).
+    yes.
+
+    [eclipse 3]: current_stream(junk).
+    no (more) solution.
+
+
+
+",
+        see_also:[open / 3, open / 4, get_stream_info / 3, get_stream / 2]]).
+
+:- comment(accept / 3, [
+        summary:"Accepts a connection for a stream socket and creates a new socket which can
+be used for I/O.
+
+",
+        template:"accept(+Stream, ?From, ?NewStream)",
+        desc:html("   accept/3 is a direct link to the accept(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3
+   of the type stream, listening for connections.  accept/3 blocks until
+   there is a connection request from another process, and then it creates
+   a new socket stream NewStream with the same properties as Stream, which
+   can be then used for communication with the connecting process.  The
+   Stream socket remains open and listening for further connections.
+
+<P>
+   In the internet domain, From is unified with the address of the
+   connecting process in the form HostName/Port.  In the unix domain, From
+   is unified with an empty atom ''.
+
+<P>
+   When instantiated, NewStream must be a symbolic stream name, i.e.  an
+   atom.  The stream can also be specified as sigio(NewStream).  In this
+   case the socket is created and in addition it is instructed to send the
+   signal io each time new data appears in it.
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+"),
+        args:["+Stream" : "Atom or integer.", "?From" : "A term unifiable with a structure atom/integer.", "?NewStream" : "Atom, structure or variable."],
+        resat:"   No.",
+        fail_if:"   From does not unify with the address of the connecting socket.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is instantiated, but not to an atom or a sigio/1    structure.", 5 : "From is instantiated but not to an atom or a structure.", 170 : "It was not possible to execute the system call."],
+        eg:"
+Success:
+      socket(internet, stream, s), bind(s, Addr), listen(s, 1),
+      accept(s, From, news).
+
+Error:
+      accept(s, From, 6)            (Error 5).
+      socket(internet, datagram, s), bind(s, Addr), listen(s, 2),
+      accept(s, From, news)         (Error 170).
+
+
+
+",
+        see_also:[socket / 3, bind / 2, listen / 2, connect / 2]]).
+
+:- comment(at / 2, [
+        summary:"Succeeds if Pointer is the pointer position of the stream Stream.
+
+",
+        template:"at(+Stream, ?Pointer)",
+        desc:html("   Unifies Pointer with the file position of the file specified by Stream.
+
+<P>
+   Stream can be a symbolic stream name or a physical stream number.
+
+<P>
+"),
+        args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined symbolic stream name).", "?Pointer" : "Integer or variable."],
+        resat:"   No.",
+        fail_if:"   Fails if Pointer is not the pointer position of the stream Stream.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Pointer is instantiated to a non-integer.", 5 : "Stream is instantiated to neither an integer nor an atom.", 192 : "Stream is an illegal stream mode."],
+        eg:"
+Success:
+      [eclipse]: open(file1,write,s), at(s, P1),
+      > write(s, 1234567890), at(s, P2), close(s).
+      P1 = 0
+      P2 = 10
+      yes.
+      [eclipse]: open(file1,update,s), at(s, P1), read(s, T),
+      > at(s, P2), close(s).
+      P1 = 0
+      T = 1234567890
+      P2 = 10
+      yes.
+
+Error:
+      at(Stream, 4).      (Error 4).
+      at(\"3\", Pointer).   (Error 5).
+      at(7, 4.3).         (Error 5).
+
+
+
+",
+        see_also:[at_eof / 1, seek / 2]]).
+
+:- comment(at_eof / 1, [
+        summary:"Succeeds if the position of the pointer to stream Stream is at the end of
+file.
+
+",
+        template:"at_eof(+Stream)",
+        desc:html("   Used to test if the position of the pointer to stream Stream is at the
+   end of file.
+
+<P>
+   Stream can be a symbolic stream name or a physical stream number.
+
+<P>
+"),
+        args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined symbolic stream name)."],
+        resat:"   No.",
+        fail_if:"   Fails if Stream is a file with its pointer not at end of file.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is instantiated, but not to an atom or an integer.", 192 : "Stream is an illegal stream mode."],
+        eg:"
+Success:
+      at_eof(null).
+
+      [eclipse]: open(file1,write,s), at_eof(s),
+      > write(s,hello), at(s,5), at_eof(s), close(s).
+      yes.
+
+Fail:
+
+      [eclipse]: open(file1,write,s),write(s,hello), close(s),
+      > open(file1,read,s), at_eof(s), close(s).
+      no.
+
+Error:
+      at_eof(X).                  (Error 4).
+      at_eof(\"s\").                (Error 5).
+      at_eof(not_a_stream).       (Error 192).
+
+
+
+",
+        see_also:[at / 2, seek / 2, stream_truncate/1]]).
+
+:- comment(bind / 2, [
+        summary:"Associates an address with a given socket stream.
+
+",
+        template:"bind(+Stream, ?Address)",
+        desc:html("   bind/2 is a direct link to the bind(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3.
+   If the socket was created in the unix domain, Address must be an atom
+   which identifies the file associated with the socket.  This file name
+   can then be used by other processes to connect with this socket using
+   the predicate connect/2.
+
+<P>
+   If the socket is in the internet domain, the address is in the form
+   HostName/Port, where any of Address or HostName or Port may be
+   uninstantiated.  When the port is already in use, the predicate raises
+   an event and so it is always safest to call bind/2 with Address
+   uninstantiated (this corresponds to the INADDR_ANY value for the system
+   call), and upon success it will be instantiated to the hostname and
+   selected port number.
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+   Datagram sockets require a connect/2 call from the process that wants to
+   write on the socket and bind/2 from the one that reads from it.
+
+<P>
+"),
+        args:["+Stream" : "Atom or integer.", "?Address" : "Atom, structure or variable."],
+        resat:"   No.",
+        fail_if:"   Fails if Address is HostName/Port and HostName does not unify with the\n   name of the host machine.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is instantiated, but not to an atom or an integer.", 5 : "Address is instantiated but not to the form accepted by the    socket domain.", 170 : "It was not possible to bind the socket."],
+        eg:"
+Success:
+
+Error:
+      bind(s, Host/p)               (Error 5).
+      bind(s, '/usr/bin')           (Error 170).
+
+
+
+",
+        see_also:[socket / 3, listen / 2, accept / 3, connect / 2, new_socket_server/3, current_stream / 1, get_stream_info / 3]]).
+
+:- comment(close / 1, [
+        summary:"Closes the stream specified by Stream.
+
+",
+        template:"close(+Stream)",
+        desc:html("   Used to close a stream.  Stream can be a symbolic stream name or a
+   physical stream number.
+
+<P>
+   When Stream is a physical stream, it is closed, but all symbolic streams
+   associated to it still refer to it until they are either closed as well
+   or redirected to other physical streams.  As long as there are some
+   symbolic stream names associated to a physical stream, the physical
+   stream cannot be reused for other communication channels.
+
+<P>
+   When Stream is a symbolic stream name, it gets detached from the
+   corresponding physical stream, and the physical stream is closed
+   (unless it was already closed).
+
+<P>
+   When an attempt is made to close a system stream, event 196 is raised.
+   To close a physical stream connected with a system stream it is
+   therefore advisable to redirect the system stream to another physical
+   stream.  Note however, that the default handler for the event 196
+   first resets all system streams connected to the physical stream to
+   their defaults and then closes the physical stream.  Attempts to close
+   the default physical stream of a system stream are ignored.
+
+<P>
+"),
+        args:["+Stream" : "Integer or atom."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is instantiated, but not to an integer or an atom.", 172 : "File specified by stream number Stream is not open.", 193 : "Stream is an illegal stream specification.", 196 : "Trying to close a system stream."],
+        eg:"
+Success:
+      open(file1,write,s),write(s, a(b,c)),close(s).
+
+      [eclipse]: open(junk, write, a), set_stream(b, a),
+                get_stream(a, S).
+
+      S = 5
+      yes.
+      [eclipse]: close(a), open(junk1, write, X).
+
+      X = 6       % 5 is not reused because b still points to it
+      yes.
+      [eclipse]: close(b), open(junk2, write, Y).
+
+      Y = 5       % now 5 can be reused
+      yes.
+
+
+Error:
+      close(Stream).         (Error 4).
+      close(\"4\").            (Error 5).
+      close(10).             (Error 172).
+      close(nostream).       (Error 193).
+      close(null).           (Error 196).
+
+
+
+",
+        see_also:[open / 3, open / 4, set_stream / 2]]).
+
+:- comment(connect / 2, [
+        summary:"Connects a socket with the given address.
+
+",
+        template:"connect(+Stream, +Address)",
+        desc:html("   connect/2 is a direct link to the connect(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3.
+   If the socket was created in the unix domain, Address must be an atom
+   which identifies the file associated with the socket.  If Address is 0
+   and socket type is datagram, the socket is disconnected.
+
+<P>
+   If the socket is in the internet domain, the address is in the form
+   HostName/Port, where the atom HostName denotes the host to be connected
+   on the given integer port Port.  If Address is 0/0 and socket type is
+   datagram, the socket is disconnected.
+
+<P>
+   Every socket communication in ECLiPSe requires at least one of every two
+   communicating processes to call connect/2, because system calls to
+   perform direct datagram addressing are not available.  The socket
+   connection can be queried with get_stream_info(s, connection, C).
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+   Datagram sockets require a connect/2 call from the process that wants to
+   write on the socket and bind/2 from the one that reads from it.
+
+<P>
+   If a system interface error (170) is raised while calling connect/2, the
+   socket will be automatically closed. This is to get around a problem
+   where the connect(2) system call can leave the socket in an incorrect
+   state on some operating systems. 
+
+<P>
+"),
+        args:["+Stream" : "Atom or integer.", "+Address" : "Atom, integer or structure."],
+        resat:"   No.",
+        fail_if:"   Fails if Address is HostName/Port and HostName does not unify with the\n   name of the host machine.\n\n",
+        exceptions:[4 : "Stream or Address is not instantiated.", 5 : "Stream is instantiated, but not to an atom or an integer.", 5 : "Address is instantiated but not to the form accepted by the    socket domain.", 6 : "Address is a nonzero integer.", 170 : "It was not possible to connect the socket."],
+        eg:"Success:
+
+Error:
+      bind(s, Host/p)               (Error 5).
+      bind(s, '/usr/bin')           (Error 170).
+
+
+
+",
+        see_also:[socket / 3, listen / 2, accept / 3, connect / 2, current_stream / 1, get_stream_info / 3]]).
+
+:- comment(flush / 1, [
+        summary:"Flushes the output stream Stream.
+
+",
+        template:"flush(+Stream)",
+        desc:html("   Used to flush any data contained in the Stream buffer.
+
+<P>
+   Buffered output may need to be flushed e.g.  by writing again, by using
+   flush/1, or by closing the stream.
+
+<P>
+   Stream can be a symbolic stream name (atom) or a physical stream number
+   (integer).
+
+<P>
+"),
+        args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined symbolic stream name)."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "Stream is not instantiated.", 5 : "Stream is instantiated neither to an integer nor an atom.", 192 : "Stream is not an output stream."],
+        eg:"
+Success:
+      flush(output).
+      flush(null).
+
+      [eclipse]: pipe(in,out), write(out, 'q(a).\\n'),
+      > flush(out), read(in,T).
+      T = q(a).
+      yes.
+
+Error:
+      flush(Stream).            (Error 4).
+      flush(\"Stream\").          (Error 5).
+      flush(12).                (Error 192). % no such stream
+      flush(debug_input).       (Error 192). % input stream
+
+
+
+",
+        see_also:[set_stream_property/3, open / 3, open / 4, close / 1, tyo / 2]]).
+
+:- comment(get_stream / 2, [
+        summary:"Succeeds if Stream is the stream to which the stream StreamId is assigned.
+
+",
+        amode:get_stream(+,-),
+        amode:get_stream(+,+),
+        desc:html("   StreamId is an existing symbolic or physical stream identifier.
+   If Stream is a variable, it will get bound to the physical stream number
+   corresponding to StreamId.  If Stream is an existing symbolic or physical
+   stream identifier, then the predicate succeeds iff StreamId and Stream
+   denote the same physical stream.
+
+<P>
+   The predefined symbolic system stream names are:
+
+<P>
+   input, output, error, warning_output, log_output,
+   stdin, stdout, stderr, null
+<P>
+"),
+        args:["+StreamId" : "Atom or integer.", "?Stream" : "Integer, atom or variable."],
+        resat:"   No.",
+        fail_if:"   Fails if Stream is not a stream with the stream identifier StreamId.\n\n",
+        exceptions:[4 : "One or both of StreamId and Stream is not instantiated.", 5 : "Stream is neither an atom, an integer nor a variable.", 5 : "StreamId is neither an atom nor an integer.", 193 : "StreamId is an illegal stream specification."],
+        eg:"
+Success:
+      [eclipse]: get_stream(input,X).
+      X = 0
+      yes.
+
+      [eclipse]: set_stream(a,input), get_stream(input,a), get_stream(a,input).
+      yes.
+
+Fail:
+      set_stream(b,4), get_stream(b, 10).
+
+Error:
+      get_stream(Id, S).      (Error 4).
+      get_stream(1.0,S).      (Error 5).
+      get_stream(3, S).       (Error 5).
+      get_stream(blah,S).     (Error 193). % does not exist
+
+
+
+",
+        see_also:[set_stream / 2]]).
+
+:- comment(listen / 2, [
+        summary:"Specifies how many connections are accepted for a socket and makes
+connections available.
+
+",
+        template:"listen(+Stream, +Queue)",
+        desc:html("   listen/2 is a direct link to the listen(2) system call, available on
+   Berkeley systems.  Stream must be a socket stream created with socket/3
+   of the type stream.  Queue specifies the length of the connection queue,
+   i.e.  how many connections are allowed for this socket.  After the call
+   to listen/2, other processes can call connect/2 to connect with this
+   socket, but the I/O is possible only after the server process creates
+   the new socket using accept/3.
+
+<P>
+   Stream sockets are connected using the standard sequence, i.e.
+   socket/3, bind/2, listen/2 and accept/3 on the server and socket/3 and
+   connect/2 on the client.  After the sockets are connected, both
+   processes can use them for reading and writing.
+
+<P>
+"),
+        args:["+Stream" : "Atom or integer.", "+Queue" : "An integer."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "Stream or Queue is not instantiated.", 5 : "Stream is instantiated, but not to an atom or an integer.", 5 : "Queue is instantiated but not to an integer.", 170 : "It was not possible to execute the system call."],
+        eg:"
+Success:
+      socket(internet, stream, s), bind(s, Addr), listen(s, 1).
+
+Error:
+      listen(s, N)                  (Error 4).
+      listen(s, 1.0)                (Error 5).
+      listen(null, 2)               (Error 170).
+
+
+
+",
+        see_also:[socket / 3, bind / 2, accept / 3, connect / 2, new_socket_server/3]]).
+
+:- comment(open / 3, [
+        summary:"Opens the I/O source or sink SourceSink in mode Mode and associates it
+with the stream identifier Stream.
+
+",
+        template:"open(+SourceSink, +Mode, ?Stream)",
+        desc:html("   This predicate opens an ECLiPSe I/O stream.
+
+<P>
+   The most common use is for opening files. In this case, SourceSink
+   is a file name (atom or string).
+
+<P>
+   Mode is one of the following
+
+<P>
+<PRE>
+    read         open for reading
+    write        open for writing
+    update       open for reading and writing
+    append       open for writing at the end
+</PRE>
+   A file must already exist if it is to be opened in read mode.  A file
+   opened in append mode is opened in write mode at the end of the file.
+   If an existing file is opened in write mode, it is truncated to zero
+   size, i.e. its previous content is lost.
+
+<P>
+   Stream is the identifier that is subsequently used to identify the
+   stream.  This identifier is either a name (atom) provided by the user,
+   or a system-generated identifier (when the user passes a free variable).
+
+<P>
+   If SourceSink is of the form string(InitialString), then a so-called
+   string stream is opened.  A string stream is basically an in-memory
+   file and its initial contents is the string InitialString.
+   A string stream can be used like any other stream, i.e. it is possible
+   to read, write and seek like on a true file.
+   The current contents of a string stream can at any time be retrieved
+   as a whole using get_stream_info(Stream, name, Contents).
+
+<P>
+   If SourceSink is of the form queue(InitialString), then a queue
+   stream is opened. It behaves like a string that can be written at the
+   end and read from the beginning.  Seeking is not allowed on queues.
+   The current contents of a queue can at any time be retrieved as a
+   whole using get_stream_info(Stream, name, Contents). Queues are
+   considered to be at end-of-file while they are empty. 
+   Queues can be configured to raise an event every time something
+   is written to the previously empty queue (see open/4).
+
+<P>
+   If SourceSink is of the form fd(Integer), then the stream in opened
+   onto an existing operating system file descriptor.
+
+<P>
+   Streams are not closed on backtracking through the call to open/3.
+
+<P>
+"),
+        args:["+SourceSink" : "Atom, string or structure.", "+Mode" : "One of the atoms read, write, update, append.", "?Stream" : "Atom or variable."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "File or Mode is not instantiated.", 5 : "File is not an atom, string or structure.", 5 : "Mode is not an atom.", 5 : "Stream is not an atom or a variable.", 170 : "The operating system cannot open the file.", 192 : "Mode is an atom, but is not a valid mode."],
+        eg:"
+    [eclipse 1]: open(file1, write, S), write(S, foo), close(S).
+    S = 6
+    yes.
+    [eclipse 2]: open(file1, update, S), read(S,X), write(S,bar), close(S).
+    X = foo
+    S = 6
+    yes.
+    [eclipse 3]: open(file1, append, S), write(S, baz), close(S).
+    S = 6
+    yes.
+    [eclipse 4]: open(file1, read, mystr), read(mystr,X), close(mystr).
+    X = foobarbaz
+    yes.
+
+
+    [eclipse 1]: open(string(\"foo\"), update, S),
+                 read(S,X), write(S,bar),
+                 get_stream_info(S, name, Contents), close(S).
+    X = foo
+    Contents = \"foobar\"
+    yes.
+
+    [eclipse 1]: open(queue(\"\"), update, S),
+                 write(S, hello), read(S, X), close(S).
+    X = hello
+    yes.
+
+    [eclipse 1]: open(queue(\"\"), write, S, [event(q_event)]),
+                 write(S, hello).
+    warning: no handler for event in q_event
+    S = 6
+    yes.
+
+Error:
+       open(Var,update,s).      (Error 4).
+       open(file1,Mode,s).      (Error 4).
+       open(2,update,s).        (Error 5).
+       open(file1,\"str\",s).     (Error 5).
+       open(file1,update,9).    (Error 5).
+       open(nonex,read,s).      (Error 170). % no such file
+       open(file1,atom,s).      (Error 192). % no such mode
+
+
+
+",
+        see_also:[at / 2, at_eof / 1, current_stream / 1, get_stream_info / 3, open / 4, pipe / 2, seek / 2, select / 3, stream_truncate/1]]).
+
+:- comment(pipe / 2, [
+        summary:"Creates a pipe and two streams StreamIn and StreamOut to its read and write
+ends.
+
+",
+        template:"pipe(?StreamIn, ?StreamOut)",
+        desc:html("   Opens a pipe, i.e.  two streams, StreamIn for for reading and StreamOut
+   for writing, which are connected together.  This can be used, for
+   example, to temporarily store data instead of writing it to a file.
+
+<P>
+   Prolog data Data may be written using write( StreamOut,Data).  Note that
+   in order to read data using read/1,2, it must have been written in
+   Prolog term format (i.e.  ended with a period and a blank space
+   character).  Before reading is possible the output must be flushed with
+   the call flush(StreamOut).
+
+<P>
+   When instantiated, StreamIn and StreamOut can be symbolic stream names
+   (atom) or physical stream numbers (integer).
+
+<P>
+   Each stream can also be specified as sigio(Stream) (BSD systems only).
+   In this case a pipe is set up and in addition it is instructed to send
+   the signal io each time new data appears in it.  In this way it is
+   possible to set up an interrupt handler that reads the data from the
+   pipe and behaves as a lightweight consumer process.
+
+<P>
+   Note that when StreamIn is closed, writing to StreamOut will cause
+   signal 13.
+
+<P>
+"),
+        args:["?StreamIn" : "Atom or variable.", "?StreamOut" : "Atom or variable."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[5 : "Either StreamIn or StreamOut is instantiated, but not to an    atom or a sigio structure.", 193 : "StreamIn or StreamOut have wrong mode or are equal."],
+        eg:"
+Success:
+      pipe(a,b).
+
+      [eclipse]: pipe(in, out), printf(out, \"a. %b\", []), read(in, A).
+
+      A = a
+      yes.
+Error:
+      pipe(0,1).           (Error 5).
+      pipe(26.9,M).        (Error 5).
+      pipe(output, X).     (Error 193).
+      pipe(a, a).          (Error 193).
+
+
+
+",
+        see_also:[open / 3, open / 4, close / 1, get_stream_info / 3, select / 3]]).
+
+:- comment(seek / 2, [
+        summary:"The pointer in stream Stream is offset Offset from the start of the file.
+
+",
+        template:"seek(+Stream, +Offset)",
+        desc:html("   Moves the file pointer to offset Offset from the start of the file
+   opened.  It is an error if Stream is not a stream or if Offset is not an
+   integer or the atom end_of_file.
+
+<P>
+   seek/2 seeks to the end of the file when Offset is instantiated to
+   end_of_file.
+
+<P>
+   seek/2 has no effect on the null stream, it always succeeds.
+
+<P>
+"),
+        args:["+Stream" : "Integer (stream number) or Atom (reserved or user-defined symbolic stream name).", "+Offset" : "Integer or the atom end_of_file."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "Either Stream or Offset is uninstantiated.", 5 : "Offset is instantiated, but not to an integer or the atom    end_of_file.", 5 : "Stream is instantiated, but not to an atom or an integer.", 6 : "Offset is a negative integer or greater than the file    length.", 192 : "Stream is in an illegal stream mode.", 193 : "Stream is an illegal stream specification."],
+        eg:"
+Success:
+      seek( 0,null). % does not modify, only succeeds
+
+      [eclipse]: open(file1,update,s), write(s,hello),
+      > seek(s,3), read(s,T), close(s).
+      T = lo
+      yes.
+
+Error:
+      seek( Offset,7).      (Error 4).
+      seek(\"7\", 2).         (Error 5).
+      seek(7, -1).          (Error 6).
+      seek( 0,input).       (Error 192).
+      seek(-1, 0).          (Error 193). % does not exist
+
+
+
+",
+        see_also:[at / 2, at_eof / 1, set_stream_property/3]]).
+
+:- comment(select / 3, [
+        summary:"Returns streams from StreamList which are ready for I/O, blocking at most
+Timeout seconds.
+
+",
+        template:"select(+StreamList, +Timeout, ?ReadyStreams)",
+        desc:html("   select/3 is modelled after (and partially implemented using) the
+   select() Unix system call.  StreamList is a list of streams where
+   input or output is expected to occur.  If I/O is available on some
+   streams from the StreamList, ReadyStreams is unified with a list of
+   those. The same symbolic stream names are used in both lists.
+
+<P>
+   If Timeout is a number, it must be non-negative and less than
+   100000000. select/3 then waits for at most Timeout seconds for I/O
+   on these streams and if none is available, it unifies ReadyStreams
+   with nil.  If Timeout is zero, select/3 does not wait but it
+   immediately returns the list of streams where I/O is available.  If
+   Timeout is the atom block, select/3 waits until I/O is possible on
+   one of the streams in StreamList.
+
+<P>
+   The streams in StreamList can be sockets, queues or string streams. 
+   On Unix systems, pipes, files and ttys are also allowed.  Unlike the
+   select() system call, select/3 does not test any exceptional pending
+   conditions.
+
+<P>
+Note
+   Currently it is not possible to return sockets on which output is
+   possible.
+
+<P>
+"),
+        args:["+StreamList" : "A list of atoms or integers.", "+Timeout" : "A number or an atom.", "?ReadyStreams" : "A term unifiable with a list of integers and atoms."],
+        resat:"   No.",
+        fail_if:"   Fails if ReadyStreams does not unify with the sublist of StreamList\n   containing streams with available I/O.\n\n",
+        exceptions:[4 : "StreamList is not instantiated or it contains uninstantiated    variables.", 4 : "Timeout is not instantiated.", 5 : "StreamList is not a list of integers and atoms.", 5 : "Timeout instantiated, but not to a number or an atom.", 5 : "ReadyStreams is instantiated, but not to a list or nil", 6 : "Timeout is a negative number or an atom different from block.", 141 : "Not implemented for this stream class on this system.", 170 : "The system call was interrupted by a signal.", 192 : "A stream in StreamList is not an input stream or a pipe,    or it is a string stream or null.", 193 : "A stream in StreamList is not open or does not exist."],
+        eg:"
+     [eclipse 1]: socket(internet, datagram, s), bind(s, _/40000),
+\t\t  socket(internet, datagram, r), bind(r, _/40001),
+\t\t  select([s, r], block, Streams).
+
+     <blocks until data arrives>
+
+
+
+     [eclipse 1]: open(queue(\"\"), update, q).
+     yes.
+     [eclipse 2]: select([q],0,L).
+     L = []
+     yes.
+     [eclipse 3]: write(q,hello).
+     yes.
+     [eclipse 4]: select([q],0,L).
+     L = [q]
+     yes.
+
+
+
+
+",
+        see_also:[open / 3, open / 4, pipe / 2, socket / 3, get_stream_info / 3]]).
+
+:- comment(set_stream / 2, [
+        summary:"The symbolic stream name StreamId is associated with the stream Stream.
+
+",
+        template:"set_stream(+StreamId, +Stream)",
+	index:["stream redirection"],
+        desc:html("\
+   This predicate is used to create new symbolic alias names for physical
+   streams, or to redirect existing symbolic stream names to other physical
+   streams.
+<P>
+   If StreamId is a new user-defined stream name, then that new name is
+   associated with the physical stream denoted by the Stream.  Stream can be
+   in the form of a physical stream number, a name of a physical stream
+   (stdin, stdout, stderr, null), or any existing symbolic stream name.
+<P>
+   If StreamId is an already existing stream name (including one of the
+   symbolic system stream names like input, output, error, warning_output,
+   log_output), then that stream is redirected to Stream. Any previously
+   existing association of the name StreamId is forgotten. Note that other
+   alias names for the same physical stream are not affected by redirection.
+<P>
+   When a user-defined symbolic stream is closed, the associated physical
+   stream is closed and the association forgotten.
+   Note that it is not enough to close the physical stream alone because
+   the association of symbolic an physical stream remains (even though the
+   physical stream is closed) until the symbolic stream is closed as well.
+   A system-defined symbolic stream will be redirected to its default when
+   the associated physical stream is closed.
+<P>
+   The physical stream associated with a symbolic stream name can be
+   queried using get_stream/2.
+<P>
+"),
+        args:["+StreamId" : "Atom.", "+Stream" : "Integer (stream number) or Atom (reserved or user-defined symbolic stream name)."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "Either StreamId or Stream is uninstantiated.", 5 : "Either StreamId is not an atom or Stream is not a stream    number or symbolic stream name.", 193 : "Stream is an illegal stream specification.", 194 : "A physical stream has more than 255 logical stream names    assigned to it."],
+        eg:"
+        % suppress standard output temporarily:
+	[eclipse]: set_stream(output, null).
+	Yes (0.00s cpu)
+	[eclipse]: writeln(hello).
+	Yes (0.00s cpu)
+
+        % set standard output back to default:
+	[eclipse]: set_stream(output, stdout).
+	Yes (0.00s cpu)
+	[eclipse]: writeln(hello).
+	hello
+	Yes (0.00s cpu)
+
+        % alias the names s and output:
+        [eclipse]: open(file1,update,s), set_stream(output,s),
+		   writeln(output,hi), flush(output).
+	yes.
+	[eclipse]: seek(s,0), read(s,X).
+	X = hi
+	yes.
+
+Error:
+        set_stream(a, S).        (Error 4).
+        set_stream(1.0, S).      (Error 5).
+        set_stream(a, nonex).    (Error 193).
+",
+        see_also:[open / 4, get_stream / 2]]).
+
+:- comment(socket / 3, [
+        summary:"Creates a socket of a given type and domain and associates a stream with
+it.
+
+",
+        template:"socket(+Domain, +Type, ?Stream)",
+        desc:html("   socket/3 is a direct link to the socket(2) system call, available on
+   Berkeley systems.  Domain is either unix or internet, type is stream or
+   datagram.  It creates a socket of the given type in the given domain and
+   creates a stream associated with it.  After the connection is
+   established using bind/2, connect/2, listen/2 and/or accept/3, the
+   stream can be used for input and output to communicate with other
+   processes.
+
+<P>
+   The unix domain can be used for communication between processes on the
+   same machine, whereas the internet domain can connect any two machines.
+   The stream type supports point-to-point reliable communication, whereas
+   the datagram communication is a network-type communication with clear
+   message boundaries, which, however, are not visible in ECLiPSe .
+
+<P>
+   Note that in order to read data using read/1,2, it must have been
+   written in Prolog term format (i.e.  ended with a period and a blank
+   space character).  The output to sockets is buffered, so that data might
+   be actually written only after a call to flush(Stream).
+
+<P>
+   When instantiated, Stream must be the symbolic stream name (atom).  The
+   stream can also be specified as sigio(Stream).  In this case the socket
+   is created and in addition it is instructed to send the signal io each
+   time new data appears in it.
+
+<P>
+"),
+        args:["+Domain" : "Atom", "+Type" : "Atom", "?Stream" : "Atom, structure or variable."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[5 : "Stream is instantiated, but not to an atom or a sigio    structure.", 5 : "Domain or Type are instantiated but not to atoms.", 6 : "Domain or Type are atoms, but different from the accepted    ones.", 170 : "It was not possible to create the socket."],
+        eg:"
+Success:
+      socket(unix, stream, s).
+      socket(internet, datagram, socket).
+
+Error:
+      socket(unix, stream, 1)       (Error 5).
+      socket(telnet, datagram, X)   (Error 6).
+
+
+
+",
+        see_also:[bind / 2, listen / 2, accept / 3, connect / 2, new_socket_server/3, pipe / 2, exec / 2]]).
+
+:- comment(set_stream_property / 3, [
+        summary:"Sets the property Prop of the stream Stream to the value Value.
+
+",
+        template:"set_stream_property(+Stream, +Prop, +Value)",
+        desc:html("   Used to set various stream properties:
+
+<P>
+<PRE>
+    Prop            Value         Description
+
+    compress        on, off       a hint for output operations (e.g.
+                                  write_exdr/2) to use a more compact
+                                  output format (output streams only).
+                                  Default: on (file,pipe,socket) or off.
+
+    end_of_line     lf, crlf      which end-of-line sequence to write
+
+    event           atom          event on writing to empty stream
+                                  (see open/4)
+    flush           flush,        explicit or implicit flushing
+                    end_of_line
+
+    macro_expansion on, off       expand term macros (input streams only)
+
+    offset          integer       current position in the
+                                  stream, same as seek/2
+
+    output_options  list          default output options for all term
+                                  output on this stream. The list
+                                  format is as in write_term/2,3.
+
+    prompt          string        prompt string (input streams only)
+
+    prompt_stream   integer       output stream for the prompt
+                    or atom       (input streams only)
+
+    sigio           on, off       enable/disable SIGIO signals on
+                                  this stream (UNIX only)
+
+    yield           on, off       yield on end-of-file (see open/4)
+
+</PRE>
+"),
+        args:["+Stream" : "Atom or integer denoting an open stream.", "+Prop" : "Atom.", "?Value" : "atom, string or integer."],
+        resat:"   No.",
+        fail_if:"   None.\n\n",
+        exceptions:[4 : "Stream, Prop or Value is not instantiated.", 5 : "Stream is neither an atom nor an integer.", 5 : "Prop is instantiated, but not to an atom.", 5 : "Value is of the wrong type for the given property.", 6 : "Prop is an atom, but not a settable property.", 6 : "Value is not recognised for the given property.", 193 : "Stream does not denote an open stream."],
+        eg:"
+Success:
+    set_stream_property(input, prompt, \"hello: \").
+    set_stream_property(Stream, flush, end_of_line).
+    set_stream_property(Stream, end_of_line, crlf).
+
+
+
+",
+        see_also:[open / 3, open / 4, current_stream / 1, seek / 2, get_stream_info / 3, write_term/2, write_term/3]]).
+
+
+
+:- comment(new_socket_server/3, [
+   args: ["Socket": "Socket server name (atom or variable)",
+          "Address": "Address for socket connection (Host/Port or variable)",
+          "Queue":  "Number of connections allowed (integer)"
+         ],
+   amode: new_socket_server(?,?,++),
+   see_also: [accept/3, socket/3, bind/2, listen/2],
+   summary: "Opens a new IP socket server stream with a maximum of Queue connections.",
+   resat: "   No.",
+   desc:  html("\
+   <P> Opens a new IP socket server stream Socket at host Host and port number
+   Port. It is allowed a maximum of Queue connection requests.
+
+</P><P>
+   This predicate combines the calls to socket/3, bind/2, listen/2 to
+   create a socket server. After creation of the socket server, accept/2
+   can be called to accept client socket stream connections. Socket is
+   closed if either the bind/2 or listen/2 calls throws an exception and 
+   thus a server socket cannot be made.
+
+"),
+eg:  "
+
+% Set up a socket server and accept a socket connection. The following will
+% print the Port number used for the server, and waits for a client connection
+[eclipse 26]: new_socket_server(Server, localhost/Port, 1), writeln(Port), accept(Server, _, Socket).
+27694
+....
+
+% On a different ECLiPSe process running on the same machine (as localhost
+% is used for the host name)
+
+socket(internet, stream, Client), connect(Client, localhost/27694).
+
+Client = 9
+Yes (0.00s cpu)
+[eclipse 3]: 
+...
+
+% On the original ECLiPSe process, the accept/3 call will now return
+[eclipse 26]: new_socket_server(Server, localhost/Port, 1), writeln(Port), accept(Server, _, Socket).
+27694
+
+Port = 27694
+Server = 9
+Socket = 11
+Yes (0.00s cpu)
+% The Server can now be closed while the socket stream remains connected
+[eclipse 27]: close(9).
+
+"
+]).
+
+
+
+:- comment(stream_truncate / 1, [
+        summary:"Truncate Stream at the current position",
+	amode:stream_truncate(+),
+        desc:html("\
+    Used to truncate a stream, i.e. to remove all contents beyond the
+    current (write) position.  As a consequence, immediately after this
+    operation the stream is at end of file.
+    <P>
+    This operation only makes sense on file-streams and string streams
+    which are open for writing (or updating). On all other types of streams,
+    the predicate silently succeeds.
+    <P>
+    Files will be physically truncated, i.e. their size is trimmed and extra
+    disk space returned to the operating system. String streams will free
+    any unnecessary buffer memory.
+    <P>
+    Note: When opening an existing file for writing (not updating), the
+    file is automatically truncated to size zero (see open/3,4).
+"),
+        args:["Stream" : "Integer (stream number) or Atom (reserved or user-defined symbolic stream name)."],
+        exceptions:[4 : "Stream is not instantiated.",
+		5 : "Stream is instantiated, but not to an atom or an integer.",
+		192 : "Stream is not open in write mode."],
+        eg:"
+	?- open(string(\"hellothere\"), update, s).
+	Yes (0.00s cpu)
+
+	?- seek(s, 5).
+	Yes (0.00s cpu)
+
+	?- at_eof(s).
+	No (0.00s cpu)
+
+	?- stream_truncate(s).
+	Yes (0.00s cpu)
+
+	?- at_eof(s).
+	Yes (0.00s cpu)
+
+	?- seek(s,0).
+	Yes (0.00s cpu)
+
+	?- read_string(s, end_of_file, _, S).
+	S = \"hello\"
+	Yes (0.00s cpu)
+",
+        see_also:[at_eof / 1, seek / 2, open/3, open/4]]).
+

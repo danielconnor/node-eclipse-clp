@@ -1,0 +1,23 @@
+<HTML><HEAD><TITLE>mutex_init(+MutexId)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>mutex_init(+MutexId)</H1>
+Initialise the mutual exclusion lock MutexId
+<DL>
+<DT><EM>+MutexId</EM></DT>
+<DD>Atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   This built-in is used in parallel programs in connection with mutex/2
+   to implement mutual exclusion between parallel workers.
+    
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>MutexId is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>MutexId is not an atom
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/mutex-2.html">mutex / 2</A>
+</BODY></HTML>

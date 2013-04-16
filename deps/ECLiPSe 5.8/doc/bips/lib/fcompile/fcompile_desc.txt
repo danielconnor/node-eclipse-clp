@@ -1,0 +1,11 @@
+lib(fcompile)
+
+The fcompile library is used to generate object files from 
+ECLiPSe source files.  
+
+An object file has suffix 'eco', and is a platform independent object
+format which can be loaded into other sessions of ECLiPSe, much as an
+ECLiPSe source file. The may however not be portable between different
+versions of ECLiPSe.
+
+

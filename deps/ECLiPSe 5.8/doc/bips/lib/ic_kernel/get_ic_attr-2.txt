@@ -1,0 +1,23 @@
+
+get_ic_attr(?X, -Attr)
+
+   Returns the IC attribute of a variable, creating a new attribute if necessary.
+
+Arguments
+   X                   A variable
+   Attr                The IC attribute of <TT>X</TT>
+
+Type
+   library(ic_kernel)
+
+Description
+
+   If X is a variable and does not already have an IC attribute, it is given
+   a new one.  Attr is then bound to this attribute (new or old).  Attr must
+   be a fresh variable.  Fails if X is not a variable.
+
+
+Fail Conditions
+   X is not a variable
+
+

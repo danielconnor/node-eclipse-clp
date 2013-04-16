@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>?SetVariable `:: ?Domain</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?SetVariable `:: ?Domain</H1>
+Set variable declaration
+<DL>
+<DT><EM>SetVariable</EM></DT>
+<DD>A variable.
+</DD>
+<DT><EM>Domain</EM></DT>
+<DD>A set domain with optional cardinality declaration.
+</DD>
+</DL>
+<H2>Description</H2>
+Declare or constrain a set domain variable to have Domain as domain.<P>
+		Domain may assume 3 forms: Glb..Lub, Glb+Poss or Glb+Poss:Cardinality.<P>
+		Glb is a ground set denoting the SetVariable's glb. Lub is a ground set
+		denoting the SetVariable's lub. Poss is a ground set denoting the SetVariable's
+		poss (lub\glb). Cardinality is the SetVariable's cardinality, which may be
+		an integer, an FD variable, or an integer domain (list or range).
+<H3>Fail Conditions</H3>
+Fails if SetVariable can not be constrained accordingly.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S `:: []..[a,b].
+?- S `:: []+[a,b].
+?- S `:: []+[a,b]:1.
+?- S `:: [x]+[a,b]:C.
+?- S `:: []+[a,b]:[0,2].
+?- S `:: [c]+[a,b,d,e,f,g,h,i,j,k]:[2,4..7].
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/set-4.html">set / 4</A>, <A HREF="../../lib_public/cardinal/sets-4.html">sets / 4</A>, <A HREF="../../lib_public/cardinal/cardinality-2.html">cardinality / 2</A>, <A HREF="../../lib_public/cardinal/union_var-2.html">union_var / 2</A>, <A HREF="../../lib_public/cardinal/minimum-2.html">minimum / 2</A>, <A HREF="../../lib_public/cardinal/maximum-2.html">maximum / 2</A>, <A HREF="../../lib_public/cardinal/set_labeling-1.html">set_labeling / 1</A>
+</BODY></HTML>

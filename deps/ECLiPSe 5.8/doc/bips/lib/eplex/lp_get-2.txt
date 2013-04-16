@@ -1,0 +1,58 @@
+
+lp_get(++ParamName, ?Value)
+
+   Obtain the value of a global parameter.
+
+Arguments
+   ParamName           Atom
+   Value               Variable, integer, float or atom
+
+Type
+   library(eplex)
+
+Description
+    Eplex have a number of global (i.e. not specific to a
+    particular problem) parameters. These can be queried using this 
+    predicate.
+
+    optimizer
+	Returns the name of the external solver, currently
+	'cplex' or 'xpress'.
+    optimizer_version
+	Returns an integer derived from the version of the
+	external solver.
+    presolve
+	Returns the default presolve setting for solver setup, i.e. the
+        presolve setting that a solver state would be given if it was not
+        directly specified during setup. The value is 1 if the default is
+        to have presolve on, and 0 if off. Note that this is a change from
+        previous versions of eplex, where this parameter is directly
+        connected to the external solver's own presolve parameter. However,
+        the solver may have more than one parameter for presolve settings,
+        and these may take on more values than 0 and 1. In such cases,
+        eplex will set the parameters(s) to some default value(s)
+        corresponding to presolve being off and on. These parameters can be
+        accessed directly using the optimizer_param option if required.
+    timeout
+        Returns the default time-out setting that a solver state would
+        be given if it was not directly specified during setup. Value is
+        0 if there is no time-out.
+    standalone
+        Value is `yes', as this is the stand-alone version of Eplex.
+        as the external solver is used for keeping the bounds. This option
+        allows programmer to write code that needs to distinguish between
+        the stand-alone and the non-stand-alone versions of Eplex.
+    optimizer_param(Param)
+        Get the Value of the external solver's parameter Param.
+        The exact behaviour and available parameters are dependent on the 
+        external solver: if the external solver has only problem specific 
+        parameters (e.g. XPRESS-MP 13 and later), this gets the default 
+        setting that would be used for new problems; if the external solver
+        has global parameters, this gets the global value for the parameter.
+        If Param is not a valid parameter for the solver, an out of range 
+        error is raised. See lp_get/3 for more details on the parameters. 
+
+
+
+See Also
+   lp_set / 2

@@ -1,0 +1,43 @@
+<HTML><HEAD><TITLE>library(apply)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(apply)</H1>
+The apply/2 higher-order predicate
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="apply-2.html"><STRONG>apply(?Term, ?Args)</STRONG></A></DT>
+<DD>The apply/2 higher-order predicate</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export syntax_option(var_functor_is_apply)</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+
+    This library defines the apply/2 predicate which constructs a goal
+    from a term and a list of additional arguments:
+    <PRE>
+    	?- P=plus(1), apply(P, [3,X]).
+	P = plus(1)
+	X = 4
+	Yes (0.00s cpu)
+    </PRE>
+    Loading this library also enables the syntax option var_functor_is_apply.
+    This means that it is allowed to write terms with variables functors,
+    which will be parsed as apply/2 terms which can the be executed.
+    The above example can thus be written as:
+    <PRE>
+    	?- P=plus(1), P(3,X).
+	P = plus(1)
+	X = 4
+	Yes (0.00s cpu)
+    </PRE>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, ECRC Munich
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2004/10/20 15:04:42 $
+</UL>
+<HR>Generated from apply.eci on Tue Jan 25 01:58:31 2005
+
+</BODY></HTML>

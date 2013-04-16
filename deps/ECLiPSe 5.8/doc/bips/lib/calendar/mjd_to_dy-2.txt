@@ -1,0 +1,16 @@
+
+mjd_to_dy(++MJD, ?DY)
+
+   Convert an MJD to a DayOfYear/Year representation
+
+Arguments
+   MJD                 Integer or float
+   DY                  Variable or structure of the form DayOfYear/Year
+
+Type
+   library(calendar)
+
+Description
+Convert MJD to a DayOfYear/Year representation, where DayOfYear is the relative day number starting with 1 on every January 1st
+
+

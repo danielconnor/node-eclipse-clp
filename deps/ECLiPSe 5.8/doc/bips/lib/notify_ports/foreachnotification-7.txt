@@ -1,0 +1,38 @@
+
+foreachnotification(+BaseName, -Message, +Params, +ReceivePos, +ReceiveStruct, -Status, +Goals)
+
+   A control construct to iterate over received notifications
+
+Arguments
+   BaseName            an atom used as the basename for the generated auxiliary predicate
+   Message             a variable
+   Params              a list of global variables in the iteration body (as in do/2)
+   ReceivePos          positive integer, the send port's field number in ReceiveStruct
+   ReceiveStruct       a structure
+   Status              a variable, will be bound to 'open' or 'closed'
+   Goals               the goals that will be called for each iteration
+
+Type
+   library(notify_ports)
+
+Description
+
+    This is a control construct iterating over the currently available
+    messages on the given receive port. The purpose is to process the
+    received messages one by one without the need to create an auxiliary
+    list of received messages. The iteration terminates when there are
+    (currently) no more message on the receive port.
+    
+    When the iteration terminates, the Status argument indicates whether
+    the associated sender is still open ('open') or has been closed
+    ('closed'). If closed, no more messages will arrive on this receive
+    port in the future.
+    
+
+    
+
+Examples
+   see general example for the library
+
+See Also
+   receive_notifications / 4

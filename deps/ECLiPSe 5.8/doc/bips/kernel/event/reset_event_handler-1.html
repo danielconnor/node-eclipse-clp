@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>reset_event_handler(+EventId)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>reset_event_handler(+EventId)</H1>
+Resets the handler for the event EventId to its default value
+<DL>
+<DT><EM>+EventId</EM></DT>
+<DD>Atom or Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   If EventId is an error number, the error handler is reset to
+   its default value, cancelling any previous redefinition.
+
+<P>
+   If EventId is an atom, any previously installed handler is uninstalled,
+   and future occurrences of the event will cause an error (32).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>EventId is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>EventId is neither atom nor integer.
+<DT><EM>(6) out of range </EM>
+<DD>EventId is integer, but not a valid error number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    ?- event(hello).
+    warning: no handler for event in hello
+    yes.
+
+    ?- set_event_handler(hello, writeln/1).    
+    yes.
+
+    ?- event(hello).
+    hello
+
+    ?- reset_event_handler(hello).
+    yes.
+
+    ?- event(hello).
+    warning: no handler for event in hello
+    yes.
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/current_error-1.html">current_error / 1</A>, <A HREF="../../kernel/event/get_event_handler-3.html">get_event_handler / 3</A>, <A HREF="../../kernel/event/error-2.html">error / 2</A>, <A HREF="../../kernel/event/error-3.html">error / 3</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>
+</BODY></HTML>

@@ -1,0 +1,74 @@
+<HTML><HEAD><TITLE>disjunction_choose(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>disjunction_choose(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)</H1>
+Flag indicates which of the two non-overlapping tasks is scheduled as
+first.  Either the one with starting time Start1 and duration Duration1
+(then the value of Flag is 1), or the second one with starting time Start2
+and duration Duration2 (and the Flag is 2).
+
+
+<DL>
+<DT><EM>?Start1</EM></DT>
+<DD>A finite domain variable or integer
+</DD>
+<DT><EM>+Duration1</EM></DT>
+<DD>An integer
+</DD>
+<DT><EM>?Start2</EM></DT>
+<DD>A finite domain variable or integer
+</DD>
+<DT><EM>+Duration2</EM></DT>
+<DD>An integer
+</DD>
+<DT><EM>?Flag</EM></DT>
+<DD>A variable or integer
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint can be used, if there are two tasks that have to be
+   scheduled on the same machine.  It states which of the two tasks given
+   by their starting times and durations is scheduled as first.  It is
+   activated whenever the maximum or minimum of domain variables Start1 or
+   Start2 resp.  changes or the Flag is set to an integer.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if there is no possibility to schedule given two tasks in any
+   order under given conditions.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Duration1 or Duration2 is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Duration1 or Duration2 or Flag is instantiated but not an    integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   [eclipse 5]: [X, Y]::1..10, disjunction_choose(X, 5, Y, 7, F).
+   X = X[1..10]
+   Y = Y[1..10]
+   F = F[1, 2]
+   Delayed goals:
+   disjunction_choose_1(X[1..10], 5, Y[1..10], 7, F[1, 2])
+   yes.
+   [eclipse 6]: [X, Y]::1..10, disjunction_choose(X, 5, Y, 7, 1).
+   X = X[1..5]
+   Y = Y[6..10]
+   Delayed goals:
+   Y[6..10] - X[1..5]#&gt;=5
+   disjunction_choose_1(X[1..5], 5, Y[6..10], 7, 1)
+   yes.
+   [eclipse 8]: [X, Y]::1..5, disjunction_choose(X, 5, Y, 7, 2).
+   no (more) solution.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/fd/disjunctive-3.html">disjunctive / 3</A>, <A HREF="../../lib/fd/disjunction-5.html">disjunction / 5</A>
+</BODY></HTML>

@@ -1,0 +1,108 @@
+<HTML><HEAD><TITLE>abolish +SpecList</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>abolish +SpecList</H1>
+Remove the definition of the predicates specified in SpecList.
+
+
+<DL>
+<DT><EM>+SpecList</EM></DT>
+<DD>Sequence of expressions of the form Atom/Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Removes the definition of the predicates specified in SpecList. These
+   predicates must have their definition (clauses) in the caller module.
+<P>
+   Predicates that are defined elsewhere (i.e. imported or reexported
+   predicates) cannot be abolished. They can only be abolished from their
+   definition module.
+<P>
+   After a predicate has been abolished, any attempt to invoke it will
+   give rise to an error 68 (calling an undefined procedure).
+<P>
+   Certain declarations about properties of a predicate will remain in
+   effect even after abolishing the predicate. These include declarations
+   that affect the predicate's calling convention (modes, demon, parallel,
+   tool).  Moreover, the predicate's visibility (local, exported) is not
+   affected, i.e. if the predicate was exported, it will remain exported.
+<P>
+   Predicates can be abolished, no matter whether they are static or
+   dynamic. For dynamic predicates, the difference between retract_all/1
+   and abolish/1 is that retract_all/1 leaves the predicates with no
+   clauses (call of the predicate will fail) and the predicate retains
+   its dynamic-property.  In contrast, abolish/1 makes the predicates
+   undefined (calls will raise and error) and the predicate loses its
+   dynamic-property.
+<P>
+   Error 60 (``referring to an undefined procedure'') is raised when no
+   predicate of name SpecList is visible.  Error 100 (``accessing a
+   procedure defined in another module'') is raised if the visible
+   predicate is defined or declared in a different module than the
+   caller module.
+<P>
+   abolish/1 satisfies the logical update semantics.  Abolishing a
+   predicate will not, in any way, affect previous calls to it (when
+   backtracking).
+<P>
+
+<H3>Fail Conditions</H3>
+   None
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>SpecList is instantiated, but not to a sequence of expressions of the form Atom/Integer
+<DT><EM>(60) referring to an undefined procedure </EM>
+<DD>SpecList is undefined in the caller module
+<DT><EM>(100) accessing a procedure defined in another module </EM>
+<DD>SpecList is not defined in the caller module
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: [user].
+ p :- writeln(hello).
+Yes (0.00s cpu)
+
+[eclipse 2]: p.
+hello
+Yes (0.00s cpu)
+
+[eclipse 3]: abolish p/0.
+Yes (0.00s cpu)
+
+[eclipse 4]: p.
+calling an undefined procedure p in module eclipse
+Abort
+
+[eclipse 5]: abolish writeln/1.
+accessing a procedure defined in another module in abolish writeln / 1
+Abort
+
+[eclipse 6]: abolish foo/33.
+referring to an undefined procedure in abolish foo / 33 in module eclipse
+Abort
+
+
+
+Logical semantics :
+
+If the following clauses are in the database :
+    p(1) :- abolish(p/1).
+    p(2).
+
+The call p(X). will produce all the solutions visible when it started
+executing :
+
+    [eclipse]: p(X).
+    X = 1     More? (;)
+    X = 2
+    yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/dynamic/retract_all-1.html">retract_all / 1</A>
+</BODY></HTML>

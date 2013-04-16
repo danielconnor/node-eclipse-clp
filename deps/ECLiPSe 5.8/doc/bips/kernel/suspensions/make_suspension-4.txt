@@ -1,0 +1,65 @@
+
+make_suspension(+Goal, +Prio, -Susp, +Module)
+
+   Make Goal from module Module a suspended goal with waking priority Prio and
+return the corresponding suspension object in Susp.
+
+
+
+Arguments
+   +Goal               A Prolog Goal.
+   +Prio               A small integer.
+   -Susp               A variable.
+   +Module             An atom.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   The goal Goal from module Module is made a suspended goal, i.e. it
+   enters the suspended part of the resolvent and shows up as a delayed
+   goal.  When the debugger is on, a DELAY port is generated.
+
+   A suspension can be in three states:
+
+	State		Printed as
+	---------------------------------
+	sleeping	'SUSP-_123-susp'
+	scheduled	'SUSP-_123-sched'
+	dead		'SUSP-_123-dead'
+
+
+   The Prio argument determines the priority with which the Goal will be
+   scheduled when woken. It can be a positive number between 1 and 12,
+   or zero, in which case the priority defaults to the priority setting
+   of the predicate which is called in Goal.
+
+   Note that a suspension is not a standard Prolog data structure and can
+   only be manipulated in a restricted way.  In particular, a suspension is
+   not an atom although it gets printed by default in the form
+   'SUSP-_123-susp'.   The only way to create a suspension is with
+   make_suspension/3,4, suspend/3,4 or by copying an existing suspension.
+   The contents of a suspension can only be retrieved using get_suspension_data/3.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Goal is not instantiated.
+     4 --- Module is not instantiated.
+     5 --- Goal is not a callable term.
+     5 --- Susp is not a variable.
+     5 --- Prio is not an integer.
+     5 --- Module is not an atom.
+     6 --- Prio is not a valid priority.
+    60 --- Goal refers to an undefined precedure.
+
+See Also
+   suspend / 3, insert_suspension / 4, is_suspension / 1, make_suspension / 3, schedule_suspensions / 1, schedule_suspensions / 2, get_suspension_data / 3, wake / 0

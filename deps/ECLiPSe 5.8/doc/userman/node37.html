@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Compiling and loading object code</TITLE>
+<META NAME="description" CONTENT="Compiling and loading object code">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node27.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2776"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2772"
+ HREF="node27.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2766"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2774"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2777"
+ HREF="node38.html">Abstract Code Listing</A>
+<B> Up:</B> <A NAME="tex2html2773"
+ HREF="node27.html">The Compiler</A>
+<B> Previous:</B> <A NAME="tex2html2767"
+ HREF="node36.html">Writing Efficient Code</A>
+ &nbsp <B>  <A NAME="tex2html2775"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html2778"
+ HREF="node37.html#SECTION006101000000000000000">Restrictions</A>
+<UL>
+<LI><A NAME="tex2html2779"
+ HREF="node37.html#SECTION006101100000000000000">Object file portability</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION006100000000000000000"></A>
+<A NAME="3051"></A>
+<A NAME="3052"></A>
+<A NAME="fcompile"></A>
+<BR>
+Compiling and loading object code
+</H1>
+
+<P>
+Traditionally when an ECLiPSe file is compiled, it is loaded immediately
+into the system. Sometime it is useful to generate `object code' which can
+then be loaded later, perhaps even in a different session of ECLiPSe,
+maybe on a different platform. This functionality is provided by the
+fcompile library.
+
+<P>
+In order to use this facility, the fcompile library should be loaded first:
+
+<P>
+<PRE>
+:- lib(fcompile).
+</PRE>
+
+<P>
+
+<A NAME="tex2html393"
+ HREF="../bips/lib/fcompile/fcompile-1.html">fcompile(+File)</A><A NAME="3328"></A> can then be used to generate an object file from an
+ECLiPSe source file. The object file has the same base name as the source
+file <B>File</B>, but with the suffix <B>.eco</B> attached. 
+
+<P>
+<B>fcompile</B> generates an object file by compiling an ECLiPSe source
+file normally, and then disassembling the compiled code into an object
+form, which is written to the object file. This object form is platform
+independent and can be loaded into ECLiPSe running on a different
+platform from the one that generated it (see section&nbsp;<A HREF="node37.html#objectport">6.10.1</A> for 
+restrictions). 
+
+<P>
+The object file is generated in the current working directory.
+
+<P>
+Options can be specified for fcompile by using <A NAME="tex2html395"
+ HREF="../bips/lib/fcompile/fcompile-2.html">fcompile/2</A><A NAME="3331"></A>. 
+
+<P>
+<B>fcompile</B> is designed mainly for generating an object file for a whole
+module. 
+The <A NAME="tex2html397"
+ HREF="../bips/kernel/directives/include-1.html">include</A><A NAME="3334"></A> directive allows multiple source files to be compiled
+into one object file. When <B>fcompile</B> encounters an include directive
+in the source file:
+
+<P>
+<PRE>
+:- include(File).
+</PRE>
+
+<P>
+it will generate the object code for the file(s) in <B>File</B> in place of
+the directive. The effect is as if the actual source code for file(s) was
+written at the point of the <B>include</B> directive. Note that this can
+have a different semantics from recursively compiling files using the <B>compile</B> directive, because any new module in a recursively compiled file
+ends with the end of that file. With <B>include</B>, any new modules defined
+in that file will not end with the file. Thus, a <B>compile</B>
+directive should not be changed to an <B>include</B> directive if the
+target file contains definitions for a separate module.
+
+<P>
+The object code file (with <B>.eco</B> suffix) will be loaded in preference
+to the Prolog source file by <A NAME="tex2html399"
+ HREF="../bips/kernel/modules/use_module-1.html">use_module/1</A><A NAME="3337"></A> and <A NAME="tex2html401"
+ HREF="../bips/kernel/database/lib-1.html">lib/1,2</A><A NAME="3340"></A> if both
+files are present. On the other hand, the compile predicates expect a
+source file and will normally not load an object code file. 
+
+<P>
+The compiler generates different object code depending on the settings of
+various pragmas. It is the settings of the pragmas at the time the object
+code is generated that determines what codes are generated, rather than at
+load time. The load time pragma settings have no effect on the object code
+that is loaded in, so for example, if the code was generated while the
+debug pragma is on, but loaded while the nodebug pragma is on, the loaded
+code is still the debuggable, non-optimised code.
+ 
+Note that in addition to generating the object code for predicates found in
+the source file, <B>fcompile</B> also generates the object code of any 
+auxiliary predicates that are called in the source file.
+These are the
+predicates that are generated by the compiler (such as the <A NAME="tex2html403"
+ HREF="../bips/kernel/control/do-2.html">do/2</A><A NAME="3343"></A>
+iterator). A warning is 
+generated if a file contains more than one module. These warnings often
+indicates that files have been incorrectly omitted or included in the
+include directive. 
+
+<P>
+fcompile/1,2 can be used to
+generate non-source versions of programs for delivery. 
+
+<P>
+
+<H2><A NAME="SECTION006101000000000000000">
+Restrictions</A>
+</H2>
+
+<P>
+Currently, the compiler generates the auxiliary predicates for the do
+iterator using a global counter to name the predicates. Unfortunately this
+means that if an object file with auxiliary predicates is loaded into a
+module that already has existing code that contains auxiliary predicates, 
+naming conflict can occur and the old auxiliaries may be replaced. It is
+thus strongly recommended that object files should not be loaded into an
+existing module. This will only be a problem if the file does not contain
+any module declarations that redefines the module (i.e. <A NAME="tex2html405"
+ HREF="../bips/kernel/modules/module-1.html">module/1</A><A NAME="3346"></A>),
+as these redefinition will erase the old copy of
+the module.
+
+<P>
+The predicate generates the object code by first compiling the program and
+then outputting the object code. Directives, which are executed in a normal
+compilation process, will not be executed during the output of the object
+code (but the directives themselves will be added to the object code so
+that they will be executed when the code is loaded). This can lead to
+differences between loading the object code and compiling the program if
+the directive affects the compiled code during the compilation
+(e.g. determining which files to load by a conditional in a
+directive). 
+
+<P>
+If macro transformation is defined (via <A NAME="tex2html407"
+ HREF="../bips/kernel/syntax/macro-3.html">macro/3</A><A NAME="3349"></A>
+declarations) in the module that is fcompiled, then
+the ``protecting functor'' <TT>no_macro_expansion</TT>
+<A NAME="3096"></A> <A NAME="3097"></A> (see
+section&nbsp;<A HREF="node69.html#usingmacros">12.2</A>) should be used to prevent the macro definition
+itself from being transformed when the definition is generated by
+fcompile. For example:
+
+<P><PRE>
+:- local macro(no_marco_transformation(foo/1), trans_foo/2, []).
+</PRE>
+
+<P>
+the <TT>no_macro_transformation/1</TT> wrapper prevents this instance of <TT>foo/1</TT> from being transformed when the directive is generated by fcompile.
+Note that this is only needed if all terms are transformed, and not for
+goals or clause transformation.
+
+<P>
+
+<H3><A NAME="SECTION006101100000000000000"></A>
+<A NAME="objectport"></A>
+<BR>
+Object file portability
+</H3>
+
+<P>
+One restriction does apply between platforms of different
+word sizes: integers which fit in the word size of one platform
+but not the other are represented differently internally in ECLiPSe. 
+Specifically, integers which takes between 32 and 64
+bits to represent are treated as normal integers on a 64 bit machine,
+but as bignums (see section&nbsp;<A HREF="node46.html#intrep">8.2.1</A>) on 32 bit machines. This
+difference is normally invisible, but if
+such numbers occur as constants in the program code (i.e. their values appear
+textually), they can lead to different low-level compiled abstract code on
+the different platforms. Avoid using such constants if you want
+the object code to be portable across different word sizes (they can always
+be computed at run-time, e.g. writing <code>2^34</code> instead of <TT>17179869184</TT>).
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2776"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2772"
+ HREF="node27.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2766"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2774"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2777"
+ HREF="node38.html">Abstract Code Listing</A>
+<B> Up:</B> <A NAME="tex2html2773"
+ HREF="node27.html">The Compiler</A>
+<B> Previous:</B> <A NAME="tex2html2767"
+ HREF="node36.html">Writing Efficient Code</A>
+ &nbsp <B>  <A NAME="tex2html2775"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

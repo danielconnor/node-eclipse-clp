@@ -1,0 +1,95 @@
+
+http_server(+Port)
+
+   Start an http server
+
+Arguments
+   Method              An integer port number
+
+Type
+   library(http_server)
+
+Description
+
+    The server does: 
+    
+     creation of a socket, bind it to current Host and given Port and listen 
+     accept a connection on the socket 
+     reception of a request 
+     decoding of the request (method + url + http param init) 
+     call the predicate http_method in module http_method 
+     encoding of the response (depending on server function) 
+     send the response on the socket 
+    
+    NOTE:  The predicate http_server/1 requires that a module http_method
+    is defined that contains a predicate http_method/6.  This predicate is
+    used by the programmer to customize the server.  For instance the
+    method GET can be simply implemented.  The programmer can define its
+    own methods. 
+    
+    A simple example of server is the implementation of the method
+    GET.  A module is created that contains the predicate
+    http_method/6 that implements the method GET:  a read on the file
+    identified by its URL.  The file is returned if it is found,
+    otherwise an error parameter is returned. 
+    
+    This simple program can be used to test HTML pages.  Viewers such
+    as Netscape provide a view code option that signalizes syntax
+    errors in the HTML code.  This simple program can be used as a
+    light weight testing tool, possibly launched from the directory
+    where the HTML page resides. 
+    
+
+Examples
+   
+    [eclipse 1]: [user].
+     
+    /********************************************************************
+     *  test (server)
+     *******************************************************************/
+
+    :- module(http_method).
+
+    :- set_error_handler(170, fail/0).
+    :- set_error_handler(171, fail/0).
+
+    /* 
+    http_method(+Method, +Url, +ObjectBody, -Output, -StatusCode, -Parameter)
+    executes the method on the object and returns:
+    - the output of the method (possibly empty)
+    - a status code for the response status line
+    - a list of http parameters (in particular the length of the object body).
+
+    */
+
+
+    http_method("GET", Url, _, Contents, 200, [contentLength(CL)]):-
+	    append_strings("/", FileName, Url),
+	    getContents(FileName, Contents), !,
+	    string_length(Contents, CL).
+    http_method("GET", _, _, "", 404, []).
+	    
+
+    getContents(Url, Contents):-
+	    open(Url, read, s),
+	    read_string(s, "", _, Contents),
+	    close(s).
+
+    ^D
+
+    yes.
+
+    [eclipse 2]: use_module(http).
+    http_grammar.pl compiled traceable 25048 bytes in 0.27 seconds
+    http_client.pl compiled traceable 6052 bytes in 0.28 seconds
+    http_server.pl compiled traceable 5564 bytes in 0.03 seconds
+    http.pl    compiled traceable 0 bytes in 0.35 seconds
+
+    yes.
+    [eclipse 3]: use_module(http_method).
+
+    yes.
+    [eclipse 4]: http_server(8000).
+    
+
+

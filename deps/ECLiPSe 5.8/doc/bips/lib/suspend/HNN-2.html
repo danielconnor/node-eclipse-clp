@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>?Vars #:: ?Range</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(suspend)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Vars #:: ?Range</H1>
+Range constraint combined with integrality constraint
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>Variable or integer, or a list of variables or integers
+</DD>
+<DT><EM>Range</EM></DT>
+<DD>Variable or Lo..Hi, where Lo and Hi are variables or integer expressions
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint suspends until its arguments are ground. It then succeeds
+   iff all the elements of the list Vars are integers within the range
+   specified by Range.
+<P>
+   The range must eventually be in the form Lo..Hi, where Lo and Hi are 
+   expressions evaluating to integers.
+<H3>Fail Conditions</H3>
+Vars contains non-integers or integers that do not fall within Range.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Range contains non-integers.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- X #:: 1 .. 5, X = 3.
+    X = 3
+    Yes (0.00s cpu)
+
+    ?- X #:: 1 .. 5, X = 6.
+    No (0.00s cpu)
+
+    ?- X #:: 1 .. 5, X = 3.0.
+    No (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/SNN-2.html">$:: / 2</A>, <A HREF="../../lib/suspend/NN-2.html">:: / 2</A>, <A HREF="../../lib/suspend/HNN-3.html">#:: / 3</A>, <A HREF="../../lib/suspend/integers-1.html">integers / 1</A>, <A HREF="../../lib/suspend/reals-1.html">reals / 1</A>
+</BODY></HTML>

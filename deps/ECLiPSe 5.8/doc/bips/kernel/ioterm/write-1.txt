@@ -1,0 +1,45 @@
+
+write(?Term)
+
+   The term Term is written on output stream according to the current operator
+declarations.
+
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+   Used to write the term Term on the current output according to the
+   current operator declarations.  Lists and compound terms are only
+   printed up to the nesting depth specified by the (stream-specific
+   or global) print_depth setting (cf. set_stream_property/3, set_flag/2).
+
+
+Note
+   The output of write/1 is not necessarily in a form acceptable to
+   read/1/2.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+      Equivalent to write(output, Term).  (see write/2 for details).
+
+
+
+
+
+See Also
+   display / 1, display / 2, get_flag / 2, set_flag / 2, write / 2, writeq / 1, writeq / 2

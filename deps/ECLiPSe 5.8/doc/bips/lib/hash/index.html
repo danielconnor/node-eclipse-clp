@@ -1,0 +1,60 @@
+<HTML><HEAD><TITLE>library(hash)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(hash)</H1>
+Hash table library
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="hash_add-3.html"><STRONG>hash_add(+Table, +Key, +Value)</STRONG></A></DT>
+<DD>A synonym for hash_set/3</DD>
+<DT><STRONG>hash_clone(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="hash_contains-2.html"><STRONG>hash_contains(+Table, +Key)</STRONG></A></DT>
+<DD>Succeeds if there is an entry stored under key Key</DD>
+<DT><A HREF="hash_count-2.html"><STRONG>hash_count(+Table, ?Count)</STRONG></A></DT>
+<DD>Returns the number of entries in the table</DD>
+<DT><A HREF="hash_create-1.html"><STRONG>hash_create(-Table)</STRONG></A></DT>
+<DD>Creates a new hash table</DD>
+<DT><A HREF="hash_delete-2.html"><STRONG>hash_delete(+Table, +Key)</STRONG></A></DT>
+<DD>Remove the entry with key Key (if any)</DD>
+<DT><STRONG>hash_display(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="hash_entry-3.html"><STRONG>hash_entry(+Table, ?Key, ?Value)</STRONG></A></DT>
+<DD>Succeeds if Key and Value are an entry in table</DD>
+<DT><A HREF="hash_erase-1.html"><STRONG>hash_erase(+Table)</STRONG></A></DT>
+<DD>Remove all entries in the hash table</DD>
+<DT><A HREF="hash_find-3.html"><STRONG>hash_find(+Table, +Key, -Value)</STRONG></A></DT>
+<DD>A synonym for hash_get/3</DD>
+<DT><A HREF="hash_get-3.html"><STRONG>hash_get(+Table, +Key, -Value)</STRONG></A></DT>
+<DD>Find the entry stored under key Key and return its value</DD>
+<DT><A HREF="hash_insert_suspension-3.html"><STRONG>hash_insert_suspension(+Table, +Susp, -Notifications)</STRONG></A></DT>
+<DD>Attach a suspension to be woken on hash table modifications</DD>
+<DT><A HREF="hash_iter-2.html"><STRONG>hash_iter(+Hash,-Iter)</STRONG></A></DT>
+<DD>Create an iterator to traverse the hash table</DD>
+<DT><A HREF="hash_last-1.html"><STRONG>hash_last(+Iter)</STRONG></A></DT>
+<DD>Succeeds if the iterator has reached the end of the table</DD>
+<DT><A HREF="hash_list-3.html"><STRONG>hash_list(+Table, -Keys, -Values)</STRONG></A></DT>
+<DD>Retrieve the hash table contents</DD>
+<DT><A HREF="hash_next-4.html"><STRONG>hash_next(+Iter0,-Key,-Value,-Iter1)</STRONG></A></DT>
+<DD>Get the next Key - Value pair according to the iterator</DD>
+<DT><A HREF="hash_remove-3.html"><STRONG>hash_remove(+Table, +Key, -Value)</STRONG></A></DT>
+<DD>Remove the entry with key Key and retrieve its value Value</DD>
+<DT><A HREF="hash_set-3.html"><STRONG>hash_set(+Table, +Key, +Value)</STRONG></A></DT>
+<DD>Add an (or modify the existing) entry with key Key and value Value to the hash table</DD>
+<DT><A HREF="hash_stat-1.html"><STRONG>hash_stat(+Hash)</STRONG></A></DT>
+<DD>Prints statistics about the hash table</DD>
+<DT><A HREF="hash_terminate_suspensions-1.html"><STRONG>hash_terminate_suspensions(+Table)</STRONG></A></DT>
+<DD>Wake and terminate all suspensions attached to the hash table</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export portray(hash_table / 7, hash : hash_display / 2, [])</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Stefano Novello, IC-Parc
+<LI><STRONG>Copyright &copy; </STRONG>Parc Technologies Ltd
+<LI><STRONG>Date: </STRONG>$Date: 2004/12/07 23:31:15 $
+</UL>
+<HR>Generated from hash.eci on Tue Jan 25 01:58:37 2005
+
+</BODY></HTML>

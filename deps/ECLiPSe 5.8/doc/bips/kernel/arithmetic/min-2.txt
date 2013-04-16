@@ -1,0 +1,50 @@
+
+min(+ExprList, ?Result)
+
+   Evaluates the the arithmetic expressions in ExprList and unifies their minimum
+with Result.
+
+
+
+Arguments
+   +ExprList           A list of arithmetic expressions.
+   ?Result             A variable or number.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+    arithmetic expressions.  So the call to min(ExprList, Result) is
+    equivalent to
+
+    Result is min(ExprList)
+
+    which should be preferred.
+
+   In coroutining mode, if the list is only partly instantiated, the
+   predicate delays until the list is complete.
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- ExprList is a partial list (non-coroutining mode only).
+     5 --- ExprList is not a proper list.
+     5 --- Result is not a number.
+
+Examples
+   
+Success:
+      X is min([1,2,3]).    % gives X = 1
+      X is min([1,2.0,3]).  % gives X = 1.0
+
+
+See Also
+   is / 2, min / 3, max / 2

@@ -1,0 +1,49 @@
+<HTML><HEAD><TITLE>init_suspension_list(+Position, +Attribute)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>init_suspension_list(+Position, +Attribute)</H1>
+Initialise the argument position Position within the structure
+Attribute with an empty suspension list.
+
+
+<DL>
+<DT><EM>+Position</EM></DT>
+<DD>Integer indicating the position of the suspension list.
+</DD>
+<DT><EM>+Attribute</EM></DT>
+<DD>Compound term, typically a variable's attribute.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used to initialise a suspension list within
+   an attribute structure. Suspension lists should be regarded an
+   opaque data structure and only be accessed and manipulated
+   by the set of primitives provided for this purpose.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Position or Attribute is not instatiated.
+<DT><EM>(5) type error </EM>
+<DD>Position is not an integer.
+<DT><EM>(5) type error </EM>
+<DD>Attribute is not a structure.
+<DT><EM>(6) out of range </EM>
+<DD>Attribute does not have a Position'th argument.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/insert_suspension-3.html">insert_suspension / 3</A>, <A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-2.html">schedule_suspensions / 2</A>, <A HREF="../../kernel/suspensions/merge_suspension_lists-4.html">merge_suspension_lists / 4</A>, <A HREF="../../kernel/suspensions/enter_suspension_list-3.html">enter_suspension_list / 3</A>
+</BODY></HTML>

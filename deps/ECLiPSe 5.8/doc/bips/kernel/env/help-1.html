@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>help(+PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Development Environment and Global Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>help(+PredSpec)</H1>
+Prints help information on the specified predicate in PredSpec on the
+current output.
+
+
+<DL>
+<DT><EM>PredSpec</EM></DT>
+<DD>Predicate/Library specification in form Name/Arity or Module:Name/Arity, lib(Name), or an atom Name
+</DD>
+</DL>
+<H2>Description</H2>
+   Prints help information about the specified predicates to the current
+   output.  The information displayed is a text version of the reference
+   manual.  If only Name is specified, the system looks for all predicates
+   that have this atom in their name.  If there are more than one predicate
+   matching, a short description for each one is printed, rather than the
+   whole page.  For instance, help var prints the short description of
+   get_var_info/3, nonvar/1, readvar/3, var/1 and variant/2, whereas help
+   dv prints the whole reference manual page for readvar/3.
+
+<P>
+   Help information is available for both built-ins (those predicates
+   defined in eclipse_language) and library predicates. If a particular
+   predicate is available in more than one library, the user can specify
+   Module:Name/Arity for PredSpec where Module is the name of the library 
+   to select a specific predicate description. If a predicate is available
+   both as a built-in and library predicate(s), then the built-in will be
+   printed in full, while short descriptions are given for the library
+   predicates.
+<P>
+   In addition, if information on library is available, help
+   lib(LibraryName) can be used to obtain this information.
+
+
+<H3>Fail Conditions</H3>
+   Fails if no help is available for PredSpec.
+
+
+<H3>Resatisfiable</H3>
+   no
+<H2>Examples</H2>
+<PRE>
+Success:
+      help(nl/0).         % Displays reference page on nl/0
+
+      help(write/X).      % Displays short description of
+  % write/1 and write/2
+
+      help(fd:(::)/2).    % Displays the reference page for fd's ::/2.
+
+      help((=:=)/2).      % Displays reference page for the built-in =:=/2,
+  % and short description of the other instances of =:=/2.
+
+      help(lib(eplex)).   % Displays the reference page for the library eplex.
+      help(X).            % Displays short description of
+  % all built-ins
+
+Fail:
+      help(nobip/1).
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/current_built_in-1.html">current_built_in / 1</A>
+</BODY></HTML>

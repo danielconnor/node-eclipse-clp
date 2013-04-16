@@ -1,0 +1,39 @@
+<HTML><HEAD><TITLE>maximum(?SetVariable, ?Max)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>maximum(?SetVariable, ?Max)</H1>
+Maximum of a set of integers
+<DL>
+<DT><EM>SetVariable</EM></DT>
+<DD>A Set (variable or ground) of integers.
+</DD>
+<DT><EM>Max</EM></DT>
+<DD>An integer or an FD variable.
+</DD>
+</DL>
+<H2>Description</H2>
+Max is the maximum (i.e. the highest element) of SetVariable.<P>
+		If Max is given (as an integer or FD variable) then SetVariable is
+		constrained to have such maximum.
+		If Max is a free variable, then it is unified with the set's maximum as
+		an FD variable or an integer (if it is already known).<P>
+		maximum/2 can thus be used either to declare (or constrain) a maximum
+		function or to retrieve it.
+<H3>Fail Conditions</H3>
+Fails if Max can not be the maximum of SetVariable.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- S`::[]..[1,2], maximum(S,M).
+?- set(S,[],[1,2],[maximum:2], maximum(S,M).
+M = 2
+
+?- S`::[]+[1,2], maximum(S,1).
+S = [1]
+
+?- set(S,[],[1,2],[maximum:1], maximum(S,M).
+S = [1]
+M = 1</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/minimum-2.html">minimum / 2</A>, <A HREF="../../lib_public/cardinal/set-4.html">set / 4</A>, <A HREF="../../lib_public/cardinal/sets-4.html">sets / 4</A>, <A HREF="../../lib_public/cardinal/cardinality-2.html">cardinality / 2</A>
+</BODY></HTML>

@@ -1,0 +1,56 @@
+<HTML><HEAD><TITLE>possible_path(+DistanceArg, +SourceNode, +SinkNode, +Tolerance, +Lengths, +Predecessors, -Path)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>possible_path(+DistanceArg, +SourceNode, +SinkNode, +Tolerance, +Lengths, +Predecessors, -Path)</H1>
+Computes an actual path from a predecessors array
+<DL>
+<DT><EM>DistanceArg</EM></DT>
+<DD>which argument of EdgeData to use as distance (integer)
+</DD>
+<DT><EM>SourceNode</EM></DT>
+<DD>source node number
+</DD>
+<DT><EM>SinkNode</EM></DT>
+<DD>sink node number
+</DD>
+<DT><EM>Tolerance</EM></DT>
+<DD>tolerable deviation from minimal length (non-negative number)
+</DD>
+<DT><EM>Lengths</EM></DT>
+<DD>array of numbers
+</DD>
+<DT><EM>Predecessors</EM></DT>
+<DD>array of edge lists
+</DD>
+<DT><EM>Path</EM></DT>
+<DD>Length-EdgeList structure
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    This predicate complements the all_short_paths_as_edges/6 predicate.
+    The intended usage is that all_short_paths_as_edges/6 is used to
+    precompute shortest path information from a single source node
+    to all possible sink nodes, and possible_path/7 uses this
+    information to enumerate actual paths to a specific sink node.
+    If paths from one source to several sinks are needed, it is more
+    efficient to use one call to all_short_paths_as_edges/6 and several
+    calls to possible_path/7, than to use several calls to
+    single_pair_all_short_paths/7.
+    </P><P>
+    Note that the Lengths and Predecessors arrays must have been computed
+    with the same settings for DistanceArg, SourceNode and Tolerance that are
+    given to possible_path/7, otherwise errors or missing paths will occur.
+    </P>
+<H3>Fail Conditions</H3>
+There is no path to SinkNode
+<H3>Resatisfiable</H3>
+yes
+<H2>Examples</H2>
+<PRE>
+    single_pair_shortest_path(Graph, Source, Sink, Path) :-
+    	all_short_paths_as_edges(Graph, 0, Source, 0, Lengths, Preds),
+    	possible_path(0, Source, Sink, 0, Lengths, Preds, Path).
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/all_short_paths_as_edges-6.html">all_short_paths_as_edges / 6</A>
+</BODY></HTML>

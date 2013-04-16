@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Passing Goals and Control to ECLiPSe</TITLE>
+<META NAME="description" CONTENT="Passing Goals and Control to ECLiPSe">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html924"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html920"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html914"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html922"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html925"
+ HREF="node19.html">Communication via Queues</A>
+<B> Up:</B> <A NAME="tex2html921"
+ HREF="node15.html">Embedding into Tcl/Tk</A>
+<B> Previous:</B> <A NAME="tex2html915"
+ HREF="node17.html">Initialising the ECLiPSe Subsystem</A>
+ &nbsp <B>  <A NAME="tex2html923"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00530000000000000000">
+Passing Goals and Control to ECLiPSe</A>
+</H1>
+The control flow between Tcl and ECLiPSe is conceptually thread-based.
+An ECLiPSe goal is executed by using the <B>ec_rpc</B> mechanism. The
+goal is posted from Tcl, and control is transferred automatically to
+ECLiPSe to allow the goal to be executed. Control can also be explicitly
+transferred to ECLiPSe using <B>ec_resume</B>. Furthermore, handler goals
+can be implicitly invoked on I/O operations on queues (this is described in
+more detail in section&nbsp;<A HREF="node19.html#tclembedqueues">5.4</A>, with implicit
+transfer of control.
+
+<P>
+The related commands are the following:
+<DL>
+<DT><STRONG><A NAME="988"></A>ec_rpc <I>goal ?format?</I></STRONG>
+<DD> 
+<BR>
+Remote ECLiPSe predicate call.
+        It calls goal in the default module. The goal should be simple
+	in the sense that it can only succeed, fail or throw.
+	It must not call
+	<A NAME="tex2html102"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="1337"></A>.
+
+Any choicepoints the goal leaves will be discarded.
+
+<P>
+Unlike <B>ec_resume</B>, calls to <B>ec_rpc</B> can be nested
+	and can be used from within Tcl queue event handlers.
+
+<P>
+If no format argument is given, the goal is assumed to be in
+	ECLiPSe syntax. If a <I>format</I> argument is provided,
+	the ECLiPSe goal is constructed from <I>goal</I> and <I>format</I>,
+	according to the conversion rules explained in section <A HREF="node22.html#secexdrtcl">5.7</A>.
+
+<P>
+On success, <B>ec_rpc</B> returns the (possibly more instantiated)
+	goal as a Tcl data structure, otherwise "fail" or "throw" respectively.
+
+<P>
+This is the recommended way of executing ECLiPSe code from Tcl,
+	and passing the results back (via output arguments) to Tcl.
+
+<P>
+<DT><STRONG><A NAME="1003"></A>ec_running</STRONG>
+<DD> 
+<BR>
+checks whether an asynchronous ECLiPSe thread is still running.
+	If that is the case, the only interface function that can be
+	invoked reliably is <B>ec_post_event</B>.
+
+<P>
+<DT><STRONG><A NAME="1006"></A>ec_resume <I>?async?</I></STRONG>
+<DD> 
+<BR>
+resume execution of the ECLiPSe engine:  All posted events
+        and goals will be executed.  The return value will be "success"
+        if the posted goals succeed, "fail" if the goals fail, and
+	"yield" if control was transferred because of a
+        <A NAME="tex2html104"
+ HREF="../bips/kernel/externals/yield-2.html">yield/2</A><A NAME="1340"></A>
+
+predicate call in the ECLiPSe code. No parameters can be passed.
+
+<P>
+If the <I>async</I> parameter is 1 (default 0), the ECLiPSe
+	execution is resumed in a separate thread, provided this is
+	supported by the operating system.  The effect of this is that
+	Tcl/Tk events can still be handled while ECLiPSe is
+	running, so the GUI does not freeze during computation. 
+	However, only one ECLiPSe thread can be running at any
+	time, so before doing another call to <B>ec_resume</B>, <B>	ec_handle_events</B> or <B>ec_rpc</B> one should use <B>	ec_running</B> to check whether there is not a thread still running. 
+
+<P>
+<DT><STRONG><A NAME="1020"></A>ec_flush <I>?stream_nr?
+	?nbytes?</I></STRONG>
+<DD> 
+<BR>
+flushes the Tcl end of a to-ECLiPSe queue (see
+        section&nbsp;<A HREF="node19.html#tclembedqueues">5.4</A>) that has the
+        ECLiPSe stream number <I>stream_nr</I>. Control is then
+        briefly transferred to ECLiPSe so that any events that are raised
+        can be handled. Afterwards the control is passed back to Tcl.
+        <I>nbytes</I> is a dummy argument
+        and is provided for compatibility with the Tcl remote interface
+        only.
+
+<P>
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html924"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html920"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html914"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html922"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html925"
+ HREF="node19.html">Communication via Queues</A>
+<B> Up:</B> <A NAME="tex2html921"
+ HREF="node15.html">Embedding into Tcl/Tk</A>
+<B> Previous:</B> <A NAME="tex2html915"
+ HREF="node17.html">Initialising the ECLiPSe Subsystem</A>
+ &nbsp <B>  <A NAME="tex2html923"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

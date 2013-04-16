@@ -1,0 +1,51 @@
+<HTML><HEAD><TITLE>?Term1 @>= ?Term2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Comparing and Sorting</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?Term1 @>= ?Term2</H1>
+Succeeds if term Term1 is after or equal to Term2 in the standard ordering.
+
+
+<DL>
+<DT><EM>?Term1</EM></DT>
+<DD>An arbitrary term.
+</DD>
+<DT><EM>?Term2</EM></DT>
+<DD>An arbitrary term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Succeeds if term Term1 is after or equal to term Term2 in the standard
+   order of terms (defined under compare/3).
+
+<P>
+   See compare/3 for the definition of this standard ordering.
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Term1 comes before Term2.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   Success:
+   1.0 @&gt;= X.              (gives X = _g70)
+   0 @&gt;= 1.0.
+   0 @&gt;= 0.
+   "ab" @&gt;= "aa".
+   atomb @&gt;= atoma.
+   [a,b] @&gt;= [a|b].
+   f(1,2,3) @&gt;= f(4,5).
+   longe(1) @&gt;= long(1).
+   a(2) @&gt;= a(1).
+   Fail:
+   X @&gt;= 1.
+   atoma @&gt;= atomb.
+   a(1,2,3) @&gt;= a(1,2,4).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/compare-3.html">compare / 3</A>, <A HREF="../../kernel/termcomp/AEL-2.html">@=< / 2</A>, <A HREF="../../kernel/termcomp/AL-2.html">@< / 2</A>, <A HREF="../../kernel/termcomp/AG-2.html">@> / 2</A>
+</BODY></HTML>

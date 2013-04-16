@@ -1,0 +1,58 @@
+
+sets(+SetVariables, ++Glb, ++Poss, +Functions)
+
+   Set variables declaration with optional functions
+
+Arguments
+   SetVariables        A list of variables.
+   Glb                 A ground set.
+   Poss                A ground set.
+   Functions           A list.
+
+Type
+   library(cardinal)
+
+Description
+Declare or constrain set domain variables to have Glb as assured
+		elements and Poss as the possible additional elements.
+		Functions is a list of functions over each SetVariable in SetVariables in the form
+		FunctionName:FunctionValue, where FunctionName can be 'cardinality',
+		'minimum', 'maximum' or 'union':
+
+  cardinality: FunctionValue can be an integer, an FD variable or an integer domain (list or range)
+  union: (SetVariable must be a set of sets.) FunctionValue can be a set, a set variable
+	or a set domain in the form GlbUnion+PossUnion, representing the glb and poss of
+	the union of SetVariable
+  minimum and maximum: (SetVariable must be a nonempty set of integers.)
+	FunctionValue can be an integer, an FD variable or an integer domain
+
+		Cardinal inferences over SetVariable and its union, minimum and maximum
+		functions will be performed only if these functions are explicitly
+		declared, whereas the cardinality function and respective inferences
+		will always be present even if this (cardinality) function is not
+		explicitly declared. Note that a simple function declaration such as
+		minimum:_ is sufficient to make it 'active'.
+		If a FunctionValue is given as a variable or as a fixed (integer or set)
+		value, then it will be the same for all of SetVariables. If it is given
+		as a domain, then function values for SetVariables may be different
+		(a different domain variable is created for each SetVariable).
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if SetVariables can not be constrained accordingly.
+
+Examples
+   
+?- sets([S],[],[a,b],[]).
+?- sets([S,T],[],[a,b],[cardinality:1]).
+?- sets([X,Y,Z],[],[a,b],[cardinality:C]).
+?- sets([X,Y,Z],[],[a,b],[cardinality:[0,2]]).
+?- sets([X,Y,Z],[c],[a,b,d,e,f,g,h,i,j,k],[cardinality:[2,4..7]]).
+?- sets([X,Y,Z],[],[1,3,4,5,7],[minimum:Min,maximum:1..9]), fd:(Max #> Min+2).
+?- sets([X,Y,Z], [], [[1,2,5],[2,4],[3,5],[1,3,4]], [union:[1]+[2,4,5]]).
+
+
+See Also
+   set / 4, `:: / 2, cardinality / 2, union_var / 2, minimum / 2, maximum / 2, set_labeling / 1

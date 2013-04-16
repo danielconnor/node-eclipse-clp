@@ -1,0 +1,55 @@
+
+get_var_bounds(?Var, ?Lower, ?Upper)
+
+   Retrieve bounds of a numeric variable in a generic way
+
+Arguments
+   ?Var                Variable or number.
+   ?Lower              Float or variable.
+   ?Upper              Float or variable.
+
+Type
+   Term Manipulation
+
+Description
+    This predicate is intended to be used on attributed variables that
+    have a numeric domain.  The bound information is collected from the
+    variable's attributes via their get_bounds-handlers. If several
+    attributes contain bound information, the results are intersected
+    to produce the tightest bound information available.
+
+    The bounds are always returned as floating point numbers, regardless
+    of any integrality constraint on the variable.
+
+
+Exceptions
+     5 --- Var is not a variable or number
+
+Examples
+   
+    [eclipse 1]: lib(fd), lib(ic).
+    yes.
+
+    [eclipse 2]: ic:(X::3.0..9.0), fd:(X::1..7), get_var_bounds(X,L,U).
+    X = X{ic : 3.0..9.0, fd:[1..7]}
+    L = 3.0
+    U = 7.0
+    Yes (0.00s cpu)
+
+    [eclipse 3]: get_var_bounds(X,L,U).
+    X = X
+    L = -1.0Inf
+    U = 1.0Inf
+    yes.
+
+    [eclipse 4]: get_var_bounds(5,L,U).
+    L = 5.0
+    U = 5.0
+    yes.
+
+    [eclipse 5]: get_var_bounds(a,L,U).
+    type error in get_var_bounds(a, L, U)
+
+
+See Also
+   set_var_bounds / 3

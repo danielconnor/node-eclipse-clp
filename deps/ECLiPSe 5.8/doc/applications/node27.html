@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Iteration on lists</TITLE>
+<META NAME="description" CONTENT="Iteration on lists">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node28.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html849"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html843"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html837"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html845"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html847"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html850"
+ HREF="node28.html">Iteration on terms</A>
+<B> Up:</B> <A NAME="tex2html844"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html838"
+ HREF="node26.html">Alternatives</A>
+ &nbsp <B>  <A NAME="tex2html846"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html848"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html851"
+ HREF="node27.html#SECTION00630010000000000000">Description</A>
+<LI><A NAME="tex2html852"
+ HREF="node27.html#SECTION00630020000000000000">Parameters</A>
+<LI><A NAME="tex2html853"
+ HREF="node27.html#SECTION00630030000000000000">Schema</A>
+<LI><A NAME="tex2html854"
+ HREF="node27.html#SECTION00630040000000000000">Comments</A>
+<LI><A NAME="tex2html855"
+ HREF="node27.html#SECTION00630050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00630000000000000000">
+Iteration on lists</A>
+</H1>
+
+<H4><A NAME="SECTION00630010000000000000"></A>
+<A NAME="474"></A><A NAME="475"></A>
+<BR>
+Description
+</H4>This concept is used to perform some action on each element of a list. There are two implementations given here. The first uses the <I>do</I><A NAME="477"></A><A NAME="478"></A> loop of ECLiPSe, the second uses recursion<A NAME="479"></A> to achieve the same purpose. In the <I>do</I> loop, the <I>foreach</I><A NAME="482"></A> keyword describes an action for each element of a list. The first argument (here <I>X</I>) is a formal parameter<A NAME="483"></A> of the loop. At each iteration, it will be bound to one element of the list. The second argument is the list over which we iterate.
+
+<P>
+It is a matter of style whether to use the first or second variant. For simple iterations, the <I>do</I> loop is usually more elegant. We can also often use it <I>inline</I><A NAME="486"></A>, and avoid introducing a new predicate name just to perform some iteration.
+
+<H4><A NAME="SECTION00630020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>L</STRONG>
+<DD>a list
+</DL>
+<H4><A NAME="SECTION00630030000000000000">
+Schema</A>
+</H4>
+<PRE>
+/* version 1 */
+
+:-mode iteration(+).
+iteration(L):-
+        (foreach(X,L) do
+            q(X)
+        ).
+
+/* version 2 */
+
+:-mode iteration(+).
+iteration([]).
+iteration([H|T]):-
+        q(H),
+        iteration(T).
+</PRE>
+<H4><A NAME="SECTION00630040000000000000">
+Comments</A>
+</H4>
+If we want to scan several lists in parallel, we can use multiple <I>foreach</I> statements<A NAME="495"></A> in the same <I>do</I> loop. The following code fragment calls predicate <I>q</I> for the first elements of list <I>L</I> and <I>K</I>, then for the second elements, etc.
+<PRE>
+:-mode iteration(+,+).
+iteration(L,K):-
+        (foreach(X,L),
+         foreach(Y,K) do
+            q(X,Y)
+        ).
+</PRE>
+This requires that the lists are of the same length, otherwise this <I>do</I> loop will fail. 
+
+<P>
+Note that we can put as many parallel operations into a <I>do</I> loop as we want, they are all executed inside one big loop. We can of course also nest <I>do</I> loops so that one loop is executed inside another loop.
+
+<P>
+The <I>foreach</I> operator can also be used to create a list in a <I>do</I> loop. This is shown in the transformation concept.
+
+<P>
+Very often, we have to pass additional parameters into the <I>do</I> loop. We do this with the <I>param</I><A NAME="507"></A> parameter, which lists all variables from outside the loop that we want to use inside the loop. A variable which is not mentioned as a <I>param</I> argument, is unbound inside the loop. Normally, this will create a warning about a singleton variable<A NAME="509"></A> inside a <I>do</I> loop. The following code fragment shows the use of <I>param</I> to pass variables <I>A</I>, <I>B</I> and <I>C</I> to the call of predicate <I>q</I>.
+<PRE>
+:-mode iteration(+,+,+,+).
+iteration(L,A,B,C):-
+        (foreach(X,L),
+         param(A,B,C) do
+            q(X,A,B,C)
+        ).
+</PRE>
+<H4><A NAME="SECTION00630050000000000000"></A>
+<A NAME="516"></A>
+<BR>
+Example
+</H4>
+<PRE>
+% set the group fields inside the interfaces for each interface
+:-mode set_group_of_interfaces(+,+).
+set_group_of_interfaces(L,Interfaces):-
+        (foreach(group with [type:Type,
+                             name:Name,
+                             interface:I],L),
+         param(Interfaces) do
+            find_interface(I,Interfaces,Interface),
+            set_group_of_interface(Type,Name,Interface)
+        ).
+</PRE>
+Here we use the information that each member of the list <I>L</I> is a term <I>group/4</I> <A NAME="520"></A>to replace the formal parameter with a term structure where we access individual fields directly. Also note that the body of the loop may contain more than one predicate call.
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html849"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html843"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html837"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html845"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html847"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html850"
+ HREF="node28.html">Iteration on terms</A>
+<B> Up:</B> <A NAME="tex2html844"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html838"
+ HREF="node26.html">Alternatives</A>
+ &nbsp <B>  <A NAME="tex2html846"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html848"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

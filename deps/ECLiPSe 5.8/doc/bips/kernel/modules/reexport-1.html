@@ -1,0 +1,171 @@
+<HTML><HEAD><TITLE>[reexport +Module, reexport +SpecList from +Module, reexport +Module except +SpecList]</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Modules</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>reexport +Module</H1>
+<H1>reexport +SpecList from +Module</H1>
+<H1>reexport +Module except +SpecList</H1>
+Reexports a module's interface or a subset of it.
+<DL>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>+SpecList</EM></DT>
+<DD>One or a comma-separated sequence of valid export specifications
+</DD>
+</DL>
+<H2>Description</H2>
+    A reexport is conceptually an import combined with an export.  That
+    means that a reexported definition becomes visible inside the
+    reexporting module and is at the same time exported again.  A user
+    of a module's interface sees virtually no difference between
+    exported and reexported definitions.  Reexporting is a flexible
+    way to create tailored module interfaces, e.g. extend the interface
+    of an existing module, restrict it, combine features from several
+    modules, or create specific modifications of existing modules.
+<P>
+    The reexport declaration comes in three flavours. To reexport the
+    complete interface of another module, use
+<PRE>
+	:- reexport amodule.
+</PRE>
+    However, often it is desirable or necessary to restrict the set of
+    reexported items.  This can be done in two ways, either by
+    explicitly listing the items to reexport, e.g.
+<PRE>
+	:- reexport useful/3, good/1 from amodule.
+</PRE>
+    or else by listing the exception that should not be reexported, e.g.
+<PRE>
+	:- reexport amodule except useless/3, unwanted/1.
+</PRE>
+   SpecList can contain any valid export specification, i.e.
+<DL>
+<DT><STRONG>Name/Arity</STRONG><DD>
+        procedure  specification
+
+<DT><STRONG>domain(Spec)</STRONG><DD>
+	domain declaration
+
+<DT><STRONG>struct(Prototype)</STRONG><DD>
+	structure declaration
+
+<DT><STRONG>op(Prec,Assoc,Name)</STRONG><DD>
+	operator declaration
+
+<DT><STRONG>chtab(Char,Class)</STRONG><DD>
+	character class declaration
+
+<DT><STRONG>syntax_option(Option)</STRONG><DD>
+	syntax option setting
+
+<DT><STRONG>macro(Functor,Transformation,Options)</STRONG><DD>
+	macro (input transformation) declaration
+
+<DT><STRONG>portray(Functor,Transformation,Options)</STRONG><DD>
+	portray (output transformation) declaration
+
+<DT><STRONG>initialization(Goal)</STRONG><DD>
+	initialization goal specification
+</DL>
+    Procedure specifications must be fully instantiated with name and
+    arity. All other specifications may contain anonymous variables
+    which serve as wildcards when matching the exports.  For example,
+    to reexport all operator declarations of another module use
+<PRE>
+	:- reexport op(_,_,_) from amodule.
+</PRE>
+    To reexport only the operator declaration for the operator 'before',
+    whatever it is defined to, use
+<PRE>
+	:- reexport op(_,_,before) from amodule.
+</PRE>
+    or to prevent a macro declaration for internal/3 from being reexported, use
+<PRE>
+	:- reexport amodule except macro(internal/3,_,_).
+</PRE>
+<P>
+   When explicitly reexporting procedures, it is required that they are
+   actually exported from the other module. In all other cases, the items
+   listed in SpecList do not have to correspond to actually exported items
+   in the other module.
+<P>
+   Reexported procedures are made accessible to other modules in the
+   same way as exported ones.  That means they can either be called by
+   explicitly qualifying them with the name of the reexporting module
+   (using :/2), or they can be imported from the reexporting module
+   and thus made visible elsewhere.
+<P>
+   All the export (and reexport) directive of a module together form
+   what is called the module's <EM>interface</EM>. The module interface
+   can be extracted from a module source file using the icompile/2
+   utility from library(document). The interface can also be retrieved
+   from a loaded module by calling get_module_info/3.
+<P>
+   Rexporting the same item twice, or reexporting something that has
+   previously been declared imported, is accepted silently.
+<P>
+   Reexporting is not compatible with a local definition of the same
+   name (because reexport always implies an import as well), it raises
+   error 92.
+<P>
+   The reexport/1 primitive can not only occur as a directive but can also
+   be called at runtime.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList or Module is insufficiently instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom.
+<DT><EM>(5) type error </EM>
+<DD>SpecList contains an invalid specification.
+<DT><EM>(92) trying to redefine an existing local procedure </EM>
+<DD>One of the reexported procedures has the same name as a local procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+% A module that is like m1 but adds something extra:
+
+    :- module(m).
+    :- reexport m1.
+    :- export extra/1.
+    extra(99).
+
+
+% A module that makes a subset of m1 available:
+
+    :- module(m).
+    :- reexport m1 except useless/3, unwanted/1.
+
+
+% A module that combines m1 and m2:
+
+    :- module(m).
+    :- reexport m1 except also_in_m2/2.
+    :- reexport m2.
+
+
+% A module that modifies m1:
+
+    :- module(m).
+    :- reexport m1 except different/1.
+    :- export different/1.
+    different(better).
+
+
+% Error cases:
+
+  :- reexport Q.                         (Error 4).
+  :- reexport p/a.                       (Error 5).
+
+  :- local p/1.
+  :- export p/1.                         (Error 92).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/import-1.html">import / 1</A>, <A HREF="../../kernel/modules/export-1.html">export / 1</A>, <A HREF="../../kernel/modules/local-1.html">local / 1</A>, <A HREF="../../kernel/modules/use_module-1.html">use_module / 1</A>, <A HREF="../../kernel/modules/module-1.html">module / 1</A>, <A HREF="../../kernel/control/N-2.html">: / 2</A>, <A HREF="../../kernel/modules/get_module_info-3.html">get_module_info / 3</A>, <A HREF="../../lib/document/icompile-1.html">document : icompile / 1</A>, <A HREF="../../lib/document/icompile-2.html">document : icompile / 2</A>, <A HREF="../../kernel/termcomp/domain-1.html">domain / 1</A>, <A HREF="../../kernel/syntax/macro-3.html">macro / 3</A>, <A HREF="../../kernel/syntax/op-3.html">op / 3</A>, <A HREF="../../kernel/syntax/portray-3.html">portray / 3</A>, <A HREF="../../kernel/syntax/struct-1.html">struct / 1</A>
+</BODY></HTML>

@@ -1,0 +1,4 @@
+lib(ic_gap_sbds)
+
+   GAP-based Symmetry Breaking During Search (SBDS)
+

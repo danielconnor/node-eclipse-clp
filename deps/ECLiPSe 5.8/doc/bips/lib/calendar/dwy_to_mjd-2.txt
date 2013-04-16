@@ -1,0 +1,19 @@
+
+dwy_to_mjd(++DWY, ?MJD)
+
+   Convert a DayOfWeek/WeekOfYear/Year representation to MJD
+
+Arguments
+   DWY                 structure of the form Day/Week/Year
+   MJD                 Variable or integer
+
+Type
+   library(calendar)
+
+Description
+Convert a DayOfWeek/WeekOfYear/Year representation to MJD,
+    	where DayOfWeek is the day number within the week (1 for monday up to
+	7 for sunday), and WeekOfYear is the week number within the year
+	(starting with 1 for the week that contains January 1st)
+
+

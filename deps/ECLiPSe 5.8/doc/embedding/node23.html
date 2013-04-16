@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Incompatible and obsolete commands</TITLE>
+<META NAME="description" CONTENT="Incompatible and obsolete commands">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node24.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html988"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html984"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html980"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html986"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html989"
+ HREF="node24.html">Remote Tcl Interface</A>
+<B> Up:</B> <A NAME="tex2html985"
+ HREF="node15.html">Embedding into Tcl/Tk</A>
+<B> Previous:</B> <A NAME="tex2html981"
+ HREF="node22.html">Type conversion between Tcl</A>
+ &nbsp <B>  <A NAME="tex2html987"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00580000000000000000">
+Incompatible and obsolete commands</A>
+</H1>
+
+<P>
+Here is a list of commands in the embedding interface that are retained for
+compatibility purposes with previous versions. They have no equivalent in
+the Tcl remote interface, and their use for new code is discouraged.
+
+<P>
+<DL>
+<DT><STRONG><A NAME="1265"></A>ec_post_goal <I>goal ?format?</I></STRONG>
+<DD> 
+<BR>
+post a goal that will be executed when ECLiPSe is resumed.
+	If no <I>format</I> argument is given, the goal is taken to be a string
+	in ECLiPSe syntax.  Note that (unlike with the C/C++
+	interface) it is not possible to retrieve any variable
+	bindings from ECLiPSe after successful execution of the
+	goal.
+	To pass information from ECLiPSe to Tcl, use queue streams
+	as described later on.  Example:
+	<PRE>
+	ec_post_goal {go("hello",27)}
+</PRE>
+
+<P>
+If a <I>format</I> argument is provided, the ECLiPSe goal is
+	constructed from <I>goal</I> data and <I>format</I>, according to
+	the conversion rules explained in section <A HREF="node22.html#secexdrtcl">5.7</A>. Example:
+	<PRE>
+	ec_post_goal {go hello 27} (SI)
+</PRE>
+
+<P>
+Posting several goals is the same as posting the conjunction
+	of these goals.  Note that simple, deterministic goals can be
+	executed independently of the posted goals using the <B>	ec_rpc</B> command (see below).
+
+<P>
+<DT><STRONG><A NAME="1282"></A>ec_post_event <I>event_name</I></STRONG>
+<DD> 
+<BR>
+Post an event to the ECLiPSe engine. This will lead to the
+        execution of the corresponding event handler once the ECLiPSe
+        execution is resumed. See also <A NAME="tex2html144"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="1364"></A> and the User Manual
+
+chapter on event handling for more information.
+        This mechanism is mainly recommended for asynchronous posting
+        of events, e.g. from within signal handlers or to abort execution.
+        Otherwise it is more convenient to raise an event by writing into
+        an event-raising queue stream (see section <A HREF="node20.html#secqevent">5.5.2</A>).
+
+<P>
+<DT><STRONG><A NAME="1289"></A>ec_handle_events</STRONG>
+<DD> 
+<BR>
+resume execution of the ECLiPSe engine for the purpose of
+	event handling only. All events that have been posted via
+	ec_post_event or raised by writing into event-raising queues
+	will be handled (in an unspecified order).
+	The return value will always be "success", except when an
+	asynchronous ECLiPSe thread is still running, in which case
+	the return value is "running" and it is undefined whether the
+	events may have been handled by that thread or not.
+
+<P>
+first create an ECLiPSe queue stream using ECLiPSe's
+<A NAME="tex2html146"
+ HREF="../bips/kernel/iostream/open-3.html">open/3</A><A NAME="1367"></A>
+or
+<A NAME="tex2html148"
+ HREF="../bips/kernel/iostream/open-4.html">open/4</A><A NAME="1370"></A>
+predicate, then connect that stream to a Tcl channel by invoking
+the <B>ec_queue_connect</B> command from within Tcl code.
+
+<P>
+<DT><STRONG><A NAME="1299"></A>ec_queue_connect <I>eclipse_stream_name mode ?command?</I></STRONG>
+<DD> 
+<BR>
+Creates a Tcl channel and connects it to the given ECLiPSe
+        stream (<I>eclipse_stream_name</I> can be a symbolic name or the
+        ECLiPSe stream number).
+        The <I>mode</I> argument is either r or w, indicating a read or write channel.
+        The procedure returns a channel identifier for use in commands
+        like <B>puts</B>, <B>read</B>, <B>ec_read_exdr</B>,
+        <B>ec_write_exdr</B> or <B>close</B>.
+        The channel identifier is of the form <TT>ec_queueX</TT>, where <TT>X</TT>
+        is the ECLiPSe stream number of the queue.
+        This identifier can either be stored in a variable or reconstructed
+        using the Tcl expression
+        <PRE>
+        ec_queue[ec_stream_nr eclipse_stream_name]
+</PRE>
+	If a <I>command</I> argument is provided, this command is set as the
+	handler to be called when data needs to be flushed or read from
+	the channel (see <B>ec_set_queue_handler</B>).
+
+<P>
+<DT><STRONG><A NAME="1317"></A>ec_set_queue_handler <I>eclipse_stream_name mode command</I></STRONG>
+<DD> 
+<BR>
+Sets <I>command</I> as the Tcl-handler to be called when the
+	specified queue needs to be serviced from the Tcl side.
+	Unlike <B>ec_queue_connect</B>, this command does not create
+	a Tcl channel.
+	The <I>mode</I> argument is either r or w, indicating whether
+	the Tcl end of the queue is readable or writable.
+	For readable queues, the handler is invoked when the
+	ECLiPSe side flushes the queue.  The Tcl-handler is
+	expected to read and empty the queue.
+	For writable queues, the handler is invoked when the
+	ECLiPSe side reads from the empty queue. The Tcl-handler is
+	expected to write data into the queue.
+	In any case, the handler <I>command</I> will be invoked with
+	the ECLiPSe stream number appended as an extra argument.
+
+<P>
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html988"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html984"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html980"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html986"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html989"
+ HREF="node24.html">Remote Tcl Interface</A>
+<B> Up:</B> <A NAME="tex2html985"
+ HREF="node15.html">Embedding into Tcl/Tk</A>
+<B> Previous:</B> <A NAME="tex2html981"
+ HREF="node22.html">Type conversion between Tcl</A>
+ &nbsp <B>  <A NAME="tex2html987"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

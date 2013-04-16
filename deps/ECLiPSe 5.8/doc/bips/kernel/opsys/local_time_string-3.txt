@@ -1,0 +1,97 @@
+
+local_time_string(+UnixTime, +Format, -TimeString)
+
+   Create a string representation of the local time
+
+Arguments
+   UnixTime            Integer (seconds since 1/1/1970)
+   Format              String or Atom
+   TimeString          Variable or string
+
+Type
+   Operating System
+
+Description
+	This predicate converts UTC (Universal Coordinated Time, represented
+	as 'Unix time', i.e. in seconds since 1970-01-01, 00:00) into a
+	textual representation of the local time (taking into account time
+	zone and daylight savings time settings), according to the given
+	format string.
+	
+	The format string is similar to the format string in the printf/2,3
+	predicate, but accepts different format specifiers. The exact set of
+	format specifiers available depends on the underlying operating
+	system (refer to the description of strftime()), but the following
+	are generally available:
+	
+	%a  Abbreviated weekday name for current locale
+
+	%A  Full weekday name for current locale
+
+	%b  Abbreviated month name for current locale
+
+	%B  Full month name for current locale
+
+	%c  Prederred date and time representation for current locale
+
+	%d  Day of month as decimal number (01-31)
+
+	%H  Hour in 24-hour format (00-23)
+
+	%I  Hour in 12-hour format (01-12)
+
+	%j  Day of year as decimal number (001-366)
+
+	%m  Month as decimal number (01-12)
+
+	%M  Minute as decimal number (00-59)
+
+	%p  Current locale's A.M./P.M. indicator for 12-hour clock
+
+	%S  Second as decimal number (00 – 59)
+
+	%U  Week of year (00-53), with first Sunday first day of week 01
+
+	%w  Weekday as decimal number (0-6, Sunday is 0)
+
+	%W  Week of year (00-53), with first Monday first day of week 01
+
+	%x  Date representation for current locale
+
+	%X  Time representation for current locale
+
+	%y  Year without century, as decimal number (00-99)
+
+	%Y  Year with century, as decimal number
+
+	%Z  Time-zone name or abbreviation, empty if time zone is unknown
+
+	%%  Percent sign
+	
+	
+	This predicate is based on POSIX strftime().
+
+
+Resatisfiable
+   No
+
+Exceptions
+     4 --- UnixTime or Format are uninstantiated
+     5 --- UnixTime, Format or TimeString are instantiated, but not strings
+
+Examples
+   
+    ?- get_flag(unix_time, T), local_time_string(T, "%c", S).
+    T = 1049564174
+    S = "Sat Apr 05 18:36:14 2003"
+    Yes (0.00s cpu)
+
+    ?- get_flag(unix_time, T),
+	     local_time_string(T, "We write the year %Y in time zone %Z", S).
+    T = 1049564247
+    S = "We write the year 2003 in time zone BST"
+    Yes (0.00s cpu)
+
+
+See Also
+   date / 1, local_time / 8, library(calendar)

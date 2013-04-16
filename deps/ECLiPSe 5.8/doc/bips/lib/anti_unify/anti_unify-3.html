@@ -1,0 +1,25 @@
+<HTML><HEAD><TITLE>anti_unify(Term1, Term2, General)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(anti_unify)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>anti_unify(Term1, Term2, General)</H1>
+Computes the most specific generalization of two terms in
+    N*log(N) time, where N is the size of the smaller term.
+<H2>Examples</H2>
+<PRE>
+    [eclipse 10]: anti_unify(a, b, X).
+    X = _65
+    yes.
+
+    [eclipse 11]: anti_unify(a, a, X).
+    X = a
+    yes.
+
+    [eclipse 9]: anti_unify(foo(a,b,c), foo(b,b,b), X).
+    X = foo(_115, b, _98)
+    yes.
+
+    [eclipse 8]: anti_unify(foo(a,a,a), foo(b,b,b), X).
+    X = foo(_98, _98, _98)
+    yes.
+    </PRE>
+
+</BODY></HTML>

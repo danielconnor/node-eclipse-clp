@@ -1,0 +1,53 @@
+
+nl(+Stream)
+
+   A newline is printed on the output stream Stream.
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+
+Type
+   Character I/O
+
+Description
+	Used to print a newline sequence on the output stream Stream.
+	The exact character sequence emitted depends on the setting of
+	the stream's end_of_line flag (lf or crlf).
+	In addition, if the stream's flush flag is set to
+	end_of_line, the stream is also flushed.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is neither an atom nor a number.
+   192 --- Stream is not an output stream.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+   Success:
+      open(file1,update,s), nl(s), close(s).
+      nl(output).
+Error:
+      nl(Stream).               (Error 4).
+      nl(7.0).                  (Error 5).
+      open(file1,read,s),nl(s). (Error 192). % read mode
+      nl(29).                   (Error 192). % stream not open
+      nl(-1).                   (Error 193). % out of range
+      nl(30).                   (Error 193). % out of range
+      nl(atom).                 (Error 193). % no such stream
+
+
+
+
+
+See Also
+   nl / 0, flush / 1, open / 4, set_stream_property / 3, get_stream_info / 3

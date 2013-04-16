@@ -1,0 +1,112 @@
+
+sbds_initialise(+VarMatrix, ++NDims, +SymPreds, ++FixPred, +Options)
+
+   Initialises the data needed for sbds
+
+Arguments
+   VarMatrix           Matrix of Search Variables
+   NDims               The Dimenson of VarMatrix
+   SymPreds            List of symmetry predicates
+   FixPred             Predicate to assign a variable to a value
+   Options             List of Options to use during search
+
+Type
+   library(ic_sbds)
+
+Description
+ Symmetry Predicates 
+	VarMatrix, is the matrix of variables, which are searched over to allocate 		values to.
+	
+	
+	NDims is the dimenson of VarMatrix
+	
+	
+	The symmetry predicates should transform a variable and value to there 
+	symmetrical equivalent. The last four arguments of these predicates should 
+	therefore be the original variable, the original value (which are input) then 		the symmetrical variable and the symmetrical value (which are output). Before 		these parameters you can give any other parameters which are useful in your 		implementation i.e. the matrix of variables. So my symmetry predicate might be:
+	symmetry_predicate(Matrix, Var, Val, SymVar, SymVal).
+	
+	
+	When creating the list of symmetry predicates (the parameter given to 			sbds_initalise), you only need to specify the parameters that you have added. 		So for the above predicate, the entry to the list would 				be: symmetry_predicate(Matrix).
+	This is shown below in the N-Queens model.
+	
+	
+	The FixPred is the predicate which will fix and exclude a variable to a value 		at decision points in the search tree, it must have three parameters the first 		two will be the variable and the value, and the third will be a boolean which 		specifies whether the variable is being fixed or excluded i.e. is this 			constraint true or false. #= / 3, is usually used for thse purposes.
+	
+	
+	The Options list, will be a list of options which can be used during search 		i.e. whether SBDS should be used at every node of the search tree. None of 		these options are implemented as yet, so it should always be an empty list.
+	 What SBDS initialise does: 
+	Called before search commences. Sets up the symmetries to indicate that 		
+	they are all unbroken initally and initalises all the variables etc. that will 		be utilised during search.
+
+Exceptions
+   abort --- Options is not an empty list
+
+Examples
+Nqueens using a boolean encoding on a 2 dimensonal array
+	 The Symmetry Predicates for Nqueens Symmetries:
+	
+	r90(Matrix, N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is Y,
+    		SymY is (N + 1 - X),
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+	
+	
+	r180(Matrix, N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is (N + 1 - X),
+    		SymY is (N + 1 - Y),
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+	
+	
+	r270(Matrix, N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is (N + 1 - Y),
+    		SymY is X,
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+		
+	
+	rx(Matrix, N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is (N + 1 - X),
+    		SymY is Y,
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+	
+	
+	ry(Matrix, N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is X,
+    		SymY is (N + 1 - Y),
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+	
+	
+	rd1(Matrix, _N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is Y,
+    		SymY is x,
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+	
+	
+	rd2(Matrix, N, [X,Y], Value, SymVar, SymValue) :-
+    		SymX is (N + 1 - Y),
+    		SymY is (N + 1 - X),
+    		SymVar is Matrix[SymX, SymY],
+    		SymValue is Value.
+	
+	 Then to initialise SBDS
+	%The list of symmetry predicates,
+	Syms = [
+		r90(Matrix, N),
+		r180(Matrix, N),
+		r270(Matrix, N),
+		x(Matrix, N),
+		y(Matrix, N),
+		d1(Matrix, N),
+		d2(Matrix, N)
+	],
+	%the call to sbds_initalise,
+	sbds_initialise(Matrix, 2, Syms, #=, []). 
+
+See Also
+   sbds_initialise / 4, sbds_try / 2

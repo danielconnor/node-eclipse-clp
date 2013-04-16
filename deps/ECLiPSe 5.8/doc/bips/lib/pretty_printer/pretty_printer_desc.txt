@@ -1,0 +1,11 @@
+lib(pretty_printer)
+
+This library prints a file in different formats. It can either produce 
+
+txt
+	text only format, reformatting the input
+html
+	html format with syntax coloring and navigation
+
+
+

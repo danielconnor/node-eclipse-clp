@@ -1,0 +1,9 @@
+
+add_path(+Directory)
+
+   The directory will be added at the beginning of the library path.
+
+Type
+   library(util)
+
+

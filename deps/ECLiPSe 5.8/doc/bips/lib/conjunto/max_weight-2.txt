@@ -1,0 +1,49 @@
+
+max_weight(?Svar, ?Var)
+
+   Svar is a weighted set domain variable whose maximal possible weight
+attached to an element is Var.
+
+
+
+Arguments
+   ?Svar               A weighted set domain variable or a weighted set.
+   ?Var                Term unifying with a term of the form e(_,_).
+
+Type
+   library(conjunto)
+
+Description
+   If Svar is a weighted set domain variable, it returns the element of its
+   domain which belongs to the set resulting from the difference of the
+   upper bound and the lower bound and which has the greatest weight.  If
+   Svar is a ground set, it just returns the element with the geratest
+   weight.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Svar is not a weighted set term, or if Var can not be unified
+   with the extracted element.
+
+
+
+Examples
+   
+[eclipse 4]: S `:: {e(a,10), e(b,15)} ..{e(a,10), e(b,15),
+ e(c,20)},  max_weight(S,W).
+
+S = S{{e(a, 10), e(b, 15)} .. {e(a, 10), e(b, 15), e(c, 20)}}
+W = e(c, 20)
+yes.
+
+
+
+
+
+See Also
+   `:: / 2

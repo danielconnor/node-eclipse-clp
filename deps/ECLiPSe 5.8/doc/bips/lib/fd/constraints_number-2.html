@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>constraints_number(?Var, ?N)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>constraints_number(?Var, ?N)</H1>
+The number of constraints and suspended goals associated with the variable
+Var is N.
+
+
+<DL>
+<DT><EM>?Var</EM></DT>
+<DD>Prolog term
+</DD>
+<DT><EM>?N</EM></DT>
+<DD>Variable or integer
+</DD>
+</DL>
+<H2>Description</H2>
+   N is the number of constraints and suspended goals currently attached to
+   the variable Var.  Note that this number may not correspond to the exact
+   number of different constraints attached to Var, as goals in different
+   suspending lists are counted separately.  This predicate is often used
+   when looking for the most or least constrained variable from a set of
+   domain variables.  If Var is instantiated, N is bound to a very large
+   integer, if Var is a free variable, N is zero.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/NN-2.html">:: / 2</A>, <A HREF="../../lib/fd/HNN-2.html">#:: / 2</A>, <A HREF="../../lib/fd/deleteff-3.html">deleteff / 3</A>, <A HREF="../../lib/fd/deleteffc-3.html">deleteffc / 3</A>
+</BODY></HTML>

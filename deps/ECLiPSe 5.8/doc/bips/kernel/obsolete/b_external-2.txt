@@ -1,0 +1,134 @@
+
+b_external(+PredSpec, +CName)
+
+   Defines PredSpec to be a nondeterministic external predicate linked to the
+C function whose system name is CName.
+
+
+
+Arguments
+   +PredSpec           Of the form Atom/Integer (predicate name/arity).
+   +CName              Atom or a string.
+
+Type
+   Obsolete
+
+Description
+   Declares the PredSpec to be a non-deterministic Prolog predicate (in the
+   caller module) linked to the ``C'' function whose system name is CName.
+
+
+   If the visibility of PredSpec is not declared, it is set to local.
+
+
+   If necessary, an underscore is prepended to CName to get its form as
+   used by the C compiler.
+
+
+   If a call to PredSpec has already been compiled as a deterministic
+   external call, error 62 is raised (``inconsistent procedure
+   redefinition'').  This can be prevented by defining the external before
+   compiling any call to it or by using the declaration predicate
+   b_external/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Either PredSpec or CName is not instantiated.
+     5 --- PredSpec is not of the form Atom/Integer.
+     5 --- CName is not an atom or a string.
+    62 --- A call to PredSpec has already been compiled as a    deterministic external call.
+   211 --- External function does not exist.
+
+Examples
+   
+
+   % file to create an external predicate.
+      % cat sin.c
+
+   % external.h contains the macros for the external interface.
+      #include        "external.h"
+      #include        <math.h>
+
+      p_sines(vel, tel, vlist, tlist)
+      value           vel, vlist;
+      type            tel, tlist;
+      {
+              pword *p;
+
+              Error_If_Ref(tlist);
+              if (IsNil(tlist))
+              {
+                           Fail;
+              }
+              Check_List(tlist);
+              p = vlist.ptr + 1;
+              Dereference(p);
+              Remember(2, p->val, p->tag);
+              Dereference(vlist.ptr);
+              Check_Float(vlist.ptr->tag);
+              Return_Unify_Float(vel, tel,
+      (float)sin(((vlist.ptr->val.real)*3.1415926535)/180.0));
+      }
+
+   % compile with ECLiPSe include files.
+      % cc -c -I/usr/local/ECLIPSE/include sin.c
+      % eclipse
+
+   % load the .o file dynamically into the system with math option.
+      [eclipse]: load('sin.o',"-lm").
+      yes.
+
+   % link the object file with a predicate definition.
+      [eclipse]: b_external(sines/2,p_sines).
+      yes.
+
+   % check on existence and flags of sines/2.
+      [eclipse]: get_flag(sines/2, type, T),
+              get_flag(sines/2, call_type, C_type),
+              get_flag(sines/2, visibility, Vis).
+      T = user
+      C_type = b_external
+      Vis = local     More? (;)
+      yes.
+
+   % use sines/2.
+      [eclipse]: sines(E,[0.0,45.0,90.0,270.0]).
+      E = 0.0     More? (;)
+      E = 0.707107     More? (;)
+      E = 1.0     More? (;)
+      E = -1.0     More? (;)
+      no (more) solution.
+
+Error:
+      b_external(p/0, S).             (Error 4).
+      b_external(PredSpec, p_pred).   (Error 4).
+      b_external("p/0", p_p0).        (Error 5).
+      b_external(p/0, 123).           (Error 5).
+
+      [eclipse]: [user].
+       :- external(a/0, c_a). % should use b_external/1.
+       p :- a.
+       user   compiled 60 bytes in 0.00 seconds
+      yes.
+      [eclipse]: b_external(a/0, c_a).  (Error 62).
+
+
+      b_external(mess/1,"p_messg").   (Error 211).
+% call load/1,2 first.
+
+
+
+
+
+See Also
+   external / 1, external / 2, b_external / 1, load / 1

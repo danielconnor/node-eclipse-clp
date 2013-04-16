@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>current_suspension(-Susp)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_suspension(-Susp)</H1>
+Susp is a live (sleeping or scheduled) suspension.
+
+
+<DL>
+<DT><EM>-Susp</EM></DT>
+<DD>A variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Suspensions in ECLiPSe go through several stages: They are created,
+   attached to variables or symbolic triggers, later scheduled for
+   execution, and finally executed.
+
+<P>
+   current_suspension/1 nondeterministically enumerates all current
+   suspensions. They may be either sleeping or already scheduled
+   for execution. It does not return any dead suspensions.
+
+<P>
+   Note: Please do not use this predicate if you need all suspensions.
+   Use suspensions/1 instead.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>
+[eclipse 6]: suspend(writeln(a), 3, X-&gt;inst),
+        suspend(writeln(b), 5, Y-&gt;inst),
+        current_suspension(S),
+	get_suspension_data(S, goal, G).
+
+X = X
+Y = Y
+S = 'SUSP-_393-susp'
+G = writeln(b)
+
+
+Delayed goals:
+        writeln(a)
+        writeln(b)
+More (0.00s cpu) ? ;
+
+X = X
+Y = Y
+S = 'SUSP-_374-susp'
+G = writeln(a)
+
+
+Delayed goals:
+        writeln(a)
+        writeln(b)
+More (0.00s cpu) ? ;
+
+No (0.01s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/delayed_goals-1.html">delayed_goals / 1</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/suspensions/kill_suspension-1.html">kill_suspension / 1</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-1.html">schedule_suspensions / 1</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-2.html">schedule_suspensions / 2</A>, <A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/suspensions/suspend-4.html">suspend / 4</A>, <A HREF="../../kernel/suspensions/suspensions-1.html">suspensions / 1</A>, <A HREF="../../kernel/suspensions/get_suspension_data-3.html">get_suspension_data / 3</A>
+</BODY></HTML>

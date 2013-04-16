@@ -1,0 +1,34 @@
+<HTML><HEAD><TITLE>library(probe)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(probe)</H1>
+Probing
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="add_con-3.html"><STRONG>add_con(+Constraint, ++Options, +Handle)</STRONG></A></DT>
+<DD>Add a constraint to the fd and linear solvers</DD>
+<DT><STRONG>get_probect(?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>set_probect(?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="set_up_probe-5.html"><STRONG>set_up_probe(+Tasks, +Constraints, -Cost, ++Options, -Handle)</STRONG></A></DT>
+<DD>Sets up a linear probe for a set of constraints</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+    This implementation of probing is a call to an external linear solver, 
+    whose optimal solution is assigned to the problem variables as tentative 
+    variables.
+</P><P>
+A counter is created an initialised to zero.  At every probe it is incremented.
+The counter can be set using <B>set_probect(N)</B>, and can be read using 
+<B>get_probect(N)</B>
+</P>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Mark Wallace, Hani El Sakkout
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date: 2004/12/03 16:33:38 $
+</UL>
+<HR>Generated from probe.eci on Tue Jan 25 01:58:42 2005
+
+</BODY></HTML>

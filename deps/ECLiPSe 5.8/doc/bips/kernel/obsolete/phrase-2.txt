@@ -1,0 +1,87 @@
+
+phrase(+Grammar, ?List)
+
+   Succeeds if List unifies with a list from the specified grammar Grammar.
+
+
+
+Arguments
+   +Grammar            Compound term or Atom.
+   ?List               List of grammar terminals (prolog terms).
+
+Type
+   Obsolete
+
+Description
+   phrase/2 can be use as a recognizer or as a generator of grammars.  As a
+   recognizer, it succeeds or fails if term belongs or not to the specified
+   grammar Grammar.  As a generator, it generates on backtracking all the
+   elements of the grammar.
+
+
+   A grammar is specified by setting the flag macro_expansion to on and by
+   compiling clauses using the DCG operator -->.
+
+
+
+
+Resatisfiable
+      Depends on the particular grammar.
+
+Fail Conditions
+      List does not belong to Grammar.
+
+
+
+Exceptions
+     4 --- Grammar is not instantiated.
+     5 --- Grammar is a number or a string (i.e.  not a valid DCG    head).
+
+Examples
+   
+   [eclipse]: sh('cat gram.pl').
+   sentence --> noun_phrase, verb_phrase.
+   noun_phrase --> article, noun.
+   verb_phrase --> verb | verb, noun_phrase.
+   article --> [the].
+   noun --> [compiler].
+   noun --> [program].
+   verb --> [compiles].
+   yes.
+   [eclipse]: [gram].
+   /home/user/gram.pl        compiled 732 bytes in 0.37 seconds
+   yes.
+   [eclipse]: phrase(sentence,[the,compiler,compiles]).
+   yes.
+   [eclipse]: phrase(sentence,[the,compiler,compiles,the,program]).
+   yes.
+   [eclipse]: phrase(sentence, X).
+
+   X = [the, compiler, compiles]     More? (;)
+
+   X = [the, compiler, compiles, the, compiler]     More? (;)
+
+   X = [the, compiler, compiles, the, program]     More? (;)
+
+   X = [the, program, compiles]     More? (;)
+
+   X = [the, program, compiles, the, compiler]     More? (;)
+
+   X = [the, program, compiles, the, program]
+   yes.
+   [eclipse]:
+
+Fail:
+   phrase(sentence, [not, a, sentence]).
+
+Error:
+   phrase(X, [what, time, is, it]).    (Error 4).
+   phrase("sentence", X).              (Error 5).
+   phrase(123, X).                     (Error 5).
+
+
+
+
+
+See Also
+   phrase / 3, current_macro / 4, define_macro / 3, erase_macro / 1

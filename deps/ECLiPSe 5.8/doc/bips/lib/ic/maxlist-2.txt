@@ -1,0 +1,19 @@
+
+maxlist(+Vars, ?Max)
+
+   Constrains Max to be the largest element in Vars.
+
+Arguments
+   Vars                List of variables or numbers (NOT arbitrary expressions)
+   Max                 Maximum element of Vars
+
+Type
+   library(ic)
+
+Description
+
+   This predicate is obsolete.  Use max/2 instead.
+
+
+See Also
+   max / 2, min / 2

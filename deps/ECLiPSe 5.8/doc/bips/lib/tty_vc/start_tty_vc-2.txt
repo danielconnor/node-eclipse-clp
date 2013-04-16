@@ -1,0 +1,22 @@
+
+start_tty_vc(++VCName, ++InitialViewGranularity)
+
+   Start a TTY visualisation client, specifying the view granularity.
+
+Arguments
+   VCName              An atom; the name of the TTY VC.
+   InitialViewGranularityAn atom: 'coarse' or 'fine'
+
+Type
+   library(tty_vc)
+
+Description
+
+
+	     This predicate starts a TTY visualisation client (VC), but allows the user to specify the initial view granularity. With 'fine', each propagation step is seen individually. With 'coarse' successful sequences of propagation are seen together in chunks and unsuccessful sequences are skipped. The view granularity for a particular viewable can be changed during search. Otherwise the predicate behaves exactly like start_tty_vc/1.
+
+Resatisfiable
+   no
+
+See Also
+   stop_tty_vc / 0, start_tty_vc / 1, start_tty_vc / 3

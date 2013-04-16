@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>get_max(?Var, -Hi)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_max(?Var, -Hi)</H1>
+Retrieve the current upper bound of Var.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>A variable or a number
+</DD>
+<DT><EM>Hi</EM></DT>
+<DD>Upper bound
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>get_max(-, -)
+<LI>get_max(?, -)
+<LI>get_max(++, -)
+</UL>
+<H2>Description</H2>
+<P>
+   Primitive for retrieving the upper bound of Var.  Hi returns the maximum
+   of the variable's interval.  If the variable is integer and the bound is
+   finite, then the bound will be returned as an integer; in all other cases
+   it will be returned as a float.  If Var has not been declared before, it
+   will be turned into an unrestricted real variable.  If Var is a ground
+   number, Hi will give an appropriate bound based on the type and value of
+   Var: an exact bound for floats, bounded reals and integers, and a best
+   safe approximation for rationals.</P>
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic/get_bounds-3.html">get_bounds / 3</A>, <A HREF="../../lib/ic/get_float_bounds-3.html">get_float_bounds / 3</A>, <A HREF="../../lib/ic/get_integer_bounds-3.html">get_integer_bounds / 3</A>, <A HREF="../../lib/ic/get_finite_integer_bounds-3.html">get_finite_integer_bounds / 3</A>
+</BODY></HTML>

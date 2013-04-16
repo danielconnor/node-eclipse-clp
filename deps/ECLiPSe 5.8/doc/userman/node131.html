@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Socket Domains</TITLE>
+<META NAME="description" CONTENT="Socket Domains">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node132.html">
+<LINK REL="previous" HREF="node130.html">
+<LINK REL="up" HREF="node130.html">
+<LINK REL="next" HREF="node132.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4216"
+ HREF="node132.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4212"
+ HREF="node130.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4206"
+ HREF="node130.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4214"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4217"
+ HREF="node132.html">Stream Connection (internet domain)</A>
+<B> Up:</B> <A NAME="tex2html4213"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Previous:</B> <A NAME="tex2html4207"
+ HREF="node130.html">Interprocess Communication</A>
+ &nbsp <B>  <A NAME="tex2html4215"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002110000000000000000">
+Socket Domains</A>
+</H1>
+Currently there are two available domains, <TT>unix</TT> and
+<TT>internet</TT>.
+The communication in the <TT>unix</TT> domain is limited
+to a single machine running under an Unix operating system, and the sockets 
+are associated
+to files in this machine's file system.
+
+<P>
+The <TT>internet</TT> domain can be used to connect any two machines
+which are connected through the network. It can also connect two processes
+on the same machine.
+The address of a socket is then identified
+by the host name and the port number.
+The host name is the same as obtained e.g. with the
+<B>get_flag(hostname, Host)</B>.
+The port identifies the channel on the host which is used
+for the communication. This is available under both Unix and Windows
+operating systems.
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

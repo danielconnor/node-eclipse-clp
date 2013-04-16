@@ -1,0 +1,83 @@
+<HTML><HEAD><TITLE>viewable_size(++ViewableName, ?SizeList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(viewable)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>viewable_size(++ViewableName, ?SizeList)</H1>
+Query the sizes of the dimensions of an existent viewable.
+<DL>
+<DT><EM>ViewableName</EM></DT>
+<DD>A string or atom: the name of an existent viewable
+</DD>
+<DT><EM>SizeList</EM></DT>
+<DD>A list of integers: each is the current size of a dimension
+</DD>
+</DL>
+<H2>Description</H2>
+ <p><B>NOTE:</B>When there are no registered visualisation clients, this
+        predicate fails with all arguments, and has no effect.</P>
+
+            <p>If <em>ViewableName</em> is the name of an existent viewable,
+	    <em>SizeList</em> is unified with a list of integers, each
+	    integer being the number of elements in one of the viewable's
+	    dimensions.
+<H3>Fail Conditions</H3>
+Fails if ViewableName is not
+	    instantiated to the name of an existent viewable, or if
+	    SizeList fails to unify with the list of dimension sizes.
+
+
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>ViewableName is not a string or an atom
+<DT><EM>(5) type error </EM>
+<DD>SizeList is not a free variable or list or contains one or more elements which is not a free variable or an integer
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+[Assuming that at least one visualisation client is registered]
+
+	Success:
+
+	viewable_create(v1, [], 
+			array([flexible, flexible, flexible], any)), 
+	viewable_size(v1, X).
+        [gives X = [0,0,0]]
+
+	viewable_create(v1, []([](R,S), [](Q,W)), 
+			array([fixed, fixed], any)), 
+	viewable_size(v1, X).
+        [gives X = [2,2]]
+
+
+	Failure:
+
+	viewable_size(no, X).
+
+	viewable_create(v1, []([](R,S), [](Q,W)), 
+			array([fixed, fixed], any)), 
+	viewable_size(v1, [1,2]).
+
+
+
+        Exceptions raised:
+
+	viewable_size(_, X).
+        [gives error 4]
+
+	viewable_size(123, X).
+        [gives error 4]
+
+	viewable_create(v1, [X, Y, Z]), 
+	viewable_size(v1, q).
+        [gives error 5]
+
+	viewable_create(v1, [X, Y, Z]), 
+	viewable_size(v1, [a]).
+        [gives error 5]
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/viewable/viewable_create-3.html">viewable_create / 3</A>, <A HREF="../../lib/viewable/viewable_expand-3.html">viewable_expand / 3</A>, <A HREF="../../lib/viewable/viewable_type-2.html">viewable_type / 2</A>
+</BODY></HTML>

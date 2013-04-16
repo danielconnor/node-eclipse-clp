@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Porting Programs to plain ECLiPSe</TITLE>
+<META NAME="description" CONTENT="Porting Programs to plain ECLiPSe">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node139.html">
+<LINK REL="previous" HREF="node137.html">
+<LINK REL="up" HREF="node136.html">
+<LINK REL="next" HREF="node139.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4303"
+ HREF="node139.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4299"
+ HREF="node136.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4293"
+ HREF="node137.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4301"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4304"
+ HREF="node139.html">Exploiting ECLiPSe Features</A>
+<B> Up:</B> <A NAME="tex2html4300"
+ HREF="node136.html">Porting Applications to ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html4294"
+ HREF="node137.html">Using the compatibility language</A>
+ &nbsp <B>  <A NAME="tex2html4302"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002220000000000000000">
+Porting Programs to plain ECLiPSe</A>
+</H1>
+If you want to use ECLiPSe to do further development of your application,
+it is probably advantageous to modify it such that it runs under plain
+ECLiPSe.
+In the following we summarise the main aspects that have to be considered
+when doing so.
+
+<P>
+
+<UL><LI>In general, it is almost always possible to add to your program
+a small routine that fixes the problem, rather than to modify
+the source of the application in many places.
+E.g. name clashes are easier fixed
+by using the <A NAME="tex2html1753"
+ HREF="../bips/kernel/modules/local-1.html">local/1</A><A NAME="12804"></A> declaration rather than to rename
+the clashing predicate in the whole application program.
+
+<P>
+
+<LI>Due to lack of standardisation, some subtle differences in the
+syntax exist between Prolog systems. See <A HREF="node144.html#syntaxdiff">A.4</A>
+for details. ECLiPSe has a number of options that make it possible
+to configure its behaviour as desired.
+
+<P>
+
+<LI>ECLiPSe has the <TT>string</TT> data type which is not present in Prolog
+of the Edinburgh family.
+Double-quoted items are parsed as strings in ECLiPSe, while they are
+lists of integers in other systems and when the compatibility
+packages are used (cf. chapter <A HREF="node24.html#chapstring">5.4</A>).
+
+<P>
+
+<LI>I/O predicates of the <B>see</B> and <B>tell</B> group are not builtins
+in ECLiPSe, but they are provided in the <B>cio</B> library.
+Call <TT>lib(cio)</TT> in order to have them available (cf. appendix A).
+Similarly for <A NAME="tex2html1755"
+ HREF="../bips/lib/numbervars/index.html">numbervars/3</A><A NAME="12807"></A>.
+
+<P>
+
+<LI>In ECLiPSe, some builtins raise events in cases where they just fail
+in other systems, e.g. <TT>arg(1,2,X)</TT> fails in C-Prolog, but
+raises a type error in ECLiPSe.
+If some code relies on such behaviour, it is best to modify it by
+adding an explicit check like
+<PRE>
+        ..., compound(T), arg(N, T, X), ...
+</PRE>
+
+<P>
+Another alternative is to redefine the arg/3 builtin, using
+:/2 to access the original version:
+<PRE>
+:- local arg/3.
+arg(N, T, X) :-
+        compound(X),
+	eclipse_language:arg(N, T, X).
+</PRE>
+
+<P>
+A third alternative
+is to define an error handler which will fail the predicate
+whenever the event is raised. In this case:
+<PRE>
+my_type_error(_, arg(_, _, _)) :- !, fail.
+my_type_error(E, Goal) :- error(default(E), Goal).
+:- set_error_handler(5, my_type_error/2).
+</PRE>
+
+<P>
+
+<LI>As the ECLiPSe compiler does not accept procedures whose clauses
+are not consecutive in a file, you have to load the library <B>scattered.pl</B>
+if you want to compile such procedures.
+
+<P>
+
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4303"
+ HREF="node139.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4299"
+ HREF="node136.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4293"
+ HREF="node137.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4301"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4304"
+ HREF="node139.html">Exploiting ECLiPSe Features</A>
+<B> Up:</B> <A NAME="tex2html4300"
+ HREF="node136.html">Porting Applications to ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html4294"
+ HREF="node137.html">Using the compatibility language</A>
+ &nbsp <B>  <A NAME="tex2html4302"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

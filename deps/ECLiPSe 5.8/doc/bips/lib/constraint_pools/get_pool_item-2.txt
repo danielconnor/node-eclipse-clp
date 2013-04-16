@@ -1,0 +1,21 @@
+
+get_pool_item(+Pool, -Item)
+
+   Associate a term Item with the pool Pool
+
+Arguments
+   Pool                Atom
+   Item                Variable, returns term
+
+Type
+   library(constraint_pools)
+
+Description
+
+    Retrieve the 'pool item', i.e. the term associated with the
+    pool using set_pool_item/2. This could for example be a solver
+    handle.  The pool is not modified.
+    
+
+See Also
+   create_constraint_pool / 3, set_pool_item / 2

@@ -1,0 +1,101 @@
+
+compare(?Ordering, ?Term1, ?Term2)
+
+   Succeeds if Ordering is a special atom which describes the ordering between
+Term1 and Term2.
+
+
+
+Arguments
+   ?Ordering           Unifiable to a special atom describing the ordering between                Term1 and Term2.
+   ?Term1              An arbitrary term.
+   ?Term2              An arbitrary term.
+
+Type
+   Comparing and Sorting
+
+Description
+   Succeeds if Ordering is one of the special atoms ('<', '>' or '=')
+   describing the standard ordering between the terms Term1 and Term2:
+
+
+   Ordering is the atom '<' iff Term1 comes before Term2 in the standard
+   ordering.
+
+
+   Ordering is the atom '>' iff Term1 comes after Term2 in the standard
+   ordering.
+
+
+   Ordering is the atom '=' iff Term1 is identical to Term2.
+
+
+   The standard ordering of ECLiPSe terms is defined as the following
+   increasing order:
+
+variables
+    (comparing two free variables yields an implementation-dependent
+    and not necessarily reproducible result).
+
+bounded reals
+    in ascending order (if bounds overlap, the order is by increasing lower
+    bounds, then increasing upper bounds; if both bounds are the same, the
+    two terms are considered equal).
+
+floats
+    in ascending order, with negative zeros (-0.0) being different and
+    before positive zeros (0.0).
+
+rationals
+    in ascending order.
+
+integers
+    in ascending order.
+
+strings
+    lexicographical (ASCII) order
+
+atoms
+    lexicographical (ASCII) order
+
+compound terms
+    first by arity, then by functor name, then by the
+    arguments in left to right order.
+
+
+   Note in particular that numbers are first ordered by their type (integer,
+   float, etc) and only then by their magnitude, i.e. when comparing numbers
+   of different types, the result is not necessarily their numerical order.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Ordering does not match the standard ordering between Term1 and
+   Term2.
+
+
+
+Examples
+   
+   Success:
+   compare(X, A, a), X = '<'.
+   compare(X, a, A), X = '>'.
+   compare('<', a(1,2), b(1,2)).
+   compare(X, 1, 1), X = '='.
+   compare(X, f(1), f(1)), X = '='.
+   compare('<', 3.0, 2).              % not arithmetic order!
+   compare('>', [a,b], [a|b]).
+   compare('>', [a,b], [a|X]).
+   Fail:
+   compare('<', atomb, atoma).
+   compare('=', 0, 1).
+   compare('>',1.0,1).
+
+
+
+
+
+See Also
+   @> / 2, @< / 2, @=< / 2, @>= / 2

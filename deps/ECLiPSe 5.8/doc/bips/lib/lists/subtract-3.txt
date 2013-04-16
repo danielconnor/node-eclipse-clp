@@ -1,0 +1,61 @@
+
+subtract(+List1, +List2, ?Remainder)
+
+   Succeeds if Remainder is the list which contains those elements of List1
+which are not in List2.
+
+
+
+Arguments
+   +List1              List.
+   +List2              List.
+   ?Remainder          List or variable.
+
+Type
+   library(lists)
+
+Description
+   Unifies Remainder with a list containing those elements of List1 which
+   are not in List2.
+
+   The definition of this Prolog library Predicate is:
+
+subtract([], _, []).
+subtract([Head|Tail], L2, L3) :-
+        memberchk(Head, L2),
+        !,
+        subtract(Tail, L2, L3).
+subtract([Head|Tail1], L2, [Head|Tail3]) :-
+        subtract(Tail1, L2, Tail3).
+
+   This predicate does not perform any type testing functions.
+
+   This predicate works properly for set operations only, so repeated
+   elements and variable elements should not be used.
+	
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if if Remainder does not unify with the list which contains those
+   elements of List1 which are not in List2.
+
+
+
+Examples
+   
+Success:
+   subtract([1,2,3,4],[1],R).     (gives R=[2,3,4]).
+   subtract([1,2,3],[3,4],R).     (gives R=[1,2]).
+   subtract([1,1,2,3],[2],[1,1,3]).
+Fail:
+   subtract([1,1,2,3],[1],[1,2,3]). % Fails - List2 and
+                                    % Remainder share elements
+
+
+
+
+
+See Also
+   intersection / 3, union / 3

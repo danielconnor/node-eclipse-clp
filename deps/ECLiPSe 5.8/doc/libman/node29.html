@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Set Expressions</TITLE>
+<META NAME="description" CONTENT="Set Expressions">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node30.html">
+<LINK REL="previous" HREF="node28.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node30.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1289"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1285"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1279"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1287"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1290"
+ HREF="node30.html">Search Support</A>
+<B> Up:</B> <A NAME="tex2html1286"
+ HREF="node24.html">The Integer Sets Library</A>
+<B> Previous:</B> <A NAME="tex2html1280"
+ HREF="node28.html">Constraints</A>
+ &nbsp <B>  <A NAME="tex2html1288"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00550000000000000000">
+Set Expressions</A>
+</H1>
+
+<P>
+In most positions where a set or set variable is expected one can also
+use a set expression. A set expression is composed from ground sets
+(integer lists), set variables, and the following set operators:
+<PRE>
+    Set1 /\ Set2 % intersection
+Set1 \/ Set2 % union
+Set1 \ Set2 % difference
+</PRE>
+When such set expressions occur, they are translated into auxiliary
+<A NAME="tex2html323"
+ HREF="../bips/lib/fd_sets/intersection-3.html">intersection/3</A><A NAME="2433"></A>,
+<A NAME="tex2html325"
+ HREF="../bips/lib/fd_sets/union-3.html">union/3</A><A NAME="2436"></A> and
+<A NAME="tex2html327"
+ HREF="../bips/lib/fd_sets/difference-3.html">difference/3</A><A NAME="2439"></A>
+constraints, respectively.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

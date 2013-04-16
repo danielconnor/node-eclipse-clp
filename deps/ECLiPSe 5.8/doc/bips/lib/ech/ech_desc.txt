@@ -1,0 +1,22 @@
+lib(ech)
+
+   This library allows the user to write constraint handling rules (CHR) in 
+   their ECLiPSe programs. CHR is a high-level language extension for writing
+   user-defined constraints, allowing for rapid prototyping of constraints.
+
+   This library provides some extensions over the older chr library: 
+
+     support for multi (>2) headed simplification and simpagation rules
+
+     cleanup of semantics and syntax of CHRs
+
+     faster execution
+
+     more convenient compilation and mixing with ECLiPSe code
+
+   CHRs are compiled by source-to-source transformation into ECLiPSe code that
+   make calls to many ech library predicates that implements the CHR 
+   functionality. Thus, most exported predicates predicates  are not intended
+   to be used by the user directly, and are not documented.
+
+

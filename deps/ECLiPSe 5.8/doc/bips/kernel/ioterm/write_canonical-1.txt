@@ -1,0 +1,52 @@
+
+write_canonical(?Term)
+
+   The term Term is written on the stream output in a form that ignores
+operator declarations and can be read in.
+
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+   Used to write the term Term in a form that can be read back independent
+   of the current operator declarations.  Atoms and strings are quoted,
+   operator declarations are ignored, lists are printed as ./2 structures,
+   the (stream-specific or global) print_depth flag is not taken into account,
+   variable attributes are printed, and variables are printed with unique
+   identifiers.
+
+
+   write_canonical(S, Term) is equivalent to printf(S, "%MOQ.vDw", Term).
+
+
+   Note that as usual, the output is buffered, so it may need to be flushed
+   either by closing the output stream, by writing again or by using
+   flush/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+   Equivalent to write_canonical(output, Term).
+   (see write_canonical/2 for details).
+
+
+
+
+
+See Also
+   write / 1, write / 2, writeq / 1, writeq / 2, write_canonical / 2

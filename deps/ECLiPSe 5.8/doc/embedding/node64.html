@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Passing Control and Data to ECLiPSe from C++</TITLE>
+<META NAME="description" CONTENT="Passing Control and Data to ECLiPSe from C++">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="previous" HREF="node63.html">
+<LINK REL="up" HREF="node57.html">
+<LINK REL="next" HREF="node65.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1672"
+ HREF="node65.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1668"
+ HREF="node57.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1664"
+ HREF="node63.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1670"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1673"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Up:</B> <A NAME="tex2html1669"
+ HREF="node57.html">Summary of C++ Interface</A>
+<B> Previous:</B> <A NAME="tex2html1665"
+ HREF="node63.html">Initialising and Shutting Down</A>
+ &nbsp <B>  <A NAME="tex2html1671"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001270000000000000000">
+Passing Control and Data to ECLiPSe from C++</A>
+</H1>
+These are the functions needed to embed ECLiPSe into C++ code.
+<DL>
+<DT><STRONG>void post_goal(const EC_word)</STRONG>
+<DD> 
+<BR>
+<DT><STRONG>void post_goal(const char *)</STRONG>
+<DD> 
+<BR>
+post a goal (constraint) that will be executed when ECLiPSe
+	is resumed.
+
+<P>
+<DT><STRONG>int EC_resume(EC_word FromC, EC_ref&amp; ToC)</STRONG>
+<DD> 
+<BR>
+<DT><STRONG>int EC_resume(EC_word FromC)</STRONG>
+<DD> 
+<BR>
+<DT><STRONG>int EC_resume()</STRONG>
+<DD> 
+<BR>
+resume execution of the ECLiPSe engine: All posted goals will
+	be executed. The return value will be EC_succeed if the goals succeed
+	(in this case the ToC argument returns a cut value that can be
+	used to discard alternative solutions). EC_fail is returned if the
+	goals fail, and EC_yield if control was yielded because of a
+	yield/2 predicate call in the ECLiPSe code (in this case, ToC
+	contains the data passed by the first argument of yield/2).
+	If a writable queue stream with yield-option
+	(see <A NAME="tex2html444"
+ HREF="../bips/kernel/iostream/open-4.html">open/4</A><A NAME="8226"></A>)
+
+was flushed, the return value is PFLUSHIO and ToC contains the
+	associated stream number.
+	If there was an attempt to read from an empty queue stream with
+	yield-option, the return value is PWAITIO and ToC contains the
+	associated stream number.
+	Moreover, if the previous EC_resume yielded
+	due to a yield/2 predicate call, The term FromC is passed
+	as input into the second argument of yield/2 on resuming.
+
+<P>
+<DT><STRONG>void EC_ref::cut_to()</STRONG>
+<DD> 
+<BR>
+Should be applied to the ToC cut return value of an EC_resume().
+	Cut all choicepoints created by the batch of goals whose execution
+	succeeded.
+
+<P>
+<DT><STRONG>int post_event(EC_word Name)</STRONG>
+<DD> 
+<BR>
+Post an event to the ECLiPSe engine. This will lead to the
+	execution of the corresponding event handler once the ECLiPSe
+	execution is resumed. See also <A NAME="tex2html446"
+ HREF="../bips/kernel/event/event-1.html">event/1</A><A NAME="8229"></A> and the User Manual
+
+chapter on event handling for more information. Name should be 
+	an ECLiPSe atom.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1672"
+ HREF="node65.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1668"
+ HREF="node57.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1664"
+ HREF="node63.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1670"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1673"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Up:</B> <A NAME="tex2html1669"
+ HREF="node57.html">Summary of C++ Interface</A>
+<B> Previous:</B> <A NAME="tex2html1665"
+ HREF="node63.html">Initialising and Shutting Down</A>
+ &nbsp <B>  <A NAME="tex2html1671"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

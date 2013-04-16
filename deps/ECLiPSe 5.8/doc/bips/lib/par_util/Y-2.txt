@@ -1,0 +1,14 @@
+
+Goal1 & Goal2
+
+   Parallel AND operator implemented on top of OR-parallelism
+
+Type
+   library(par_util)
+
+Description
+Parallel AND operator implemented on top of
+    OR-parallelism.  This will only pay off for sufficiently
+    coarse-grained computations in Goal1 and Goal2.
+
+

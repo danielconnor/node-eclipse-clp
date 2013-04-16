@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Referring to ECLiPSe terms</TITLE>
+<META NAME="description" CONTENT="Referring to ECLiPSe terms">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html801"
+ HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html797"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html791"
+ HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html799"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html802"
+ HREF="node10.html">Passing generic C or</A>
+<B> Up:</B> <A NAME="tex2html798"
+ HREF="node6.html">Managing Data and Memory</A>
+<B> Previous:</B> <A NAME="tex2html792"
+ HREF="node8.html">Converting ECLiPSe data to</A>
+ &nbsp <B>  <A NAME="tex2html800"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00330000000000000000">
+Referring to ECLiPSe terms</A>
+</H1>
+
+<P>
+The terms constructed so far (as EC-words) have been volatile, that is they
+do not survive an ECLiPSe execution (due to eg. garbage collection),
+<A NAME="492"></A>
+It is possible to create safe terms
+that have been registered with the ECLiPSe engine and which do
+survive execution. The <code>EC_ref</code>  and <code>EC_refs</code> classes
+are provided for this purpose. <code>EC_refs</code> are vectors of
+safe terms.
+
+<P>
+When you declare an <code>EC_ref</code> it will contain free variables.
+<PRE>
+EC_ref X; /* declare one free variable */
+EC_refs Tasks(10); /* declare 10 free variables */
+</PRE>
+
+<P>
+<A NAME="496"></A>
+<code>EC_ref</code>s work like logical variables. When ECLiPSe fails during search
+they are reset to old values. They are always guaranteed to refer to
+something i.e. they never contain dangling references.
+If ECLiPSe backtracks to a point in the execution
+older than the point at which the references were created, they
+return to being free variables, or take on their initial values.
+
+<P>
+<A NAME="499"></A>
+It is possible to declare references, giving them an initialiser
+but this must be an atomic type that fits into a single word. That
+restricts you to atoms, integers and nil.
+
+<P>
+You can freely assign between an <code>EC_ref</code> and a <code>EC_word</code>.
+
+<P>
+One point to take care of is that assigning such a variable
+is not like unification since assignment cannot fail. It
+just overwrites the old value. Assignment is very similar
+to the <A NAME="tex2html65"
+ HREF="../bips/kernel/termmanip/setarg-3.html">setarg/3</A><A NAME="583"></A> built-in in the ECLiPSe language.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html801"
+ HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html797"
+ HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html791"
+ HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html799"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html802"
+ HREF="node10.html">Passing generic C or</A>
+<B> Up:</B> <A NAME="tex2html798"
+ HREF="node6.html">Managing Data and Memory</A>
+<B> Previous:</B> <A NAME="tex2html792"
+ HREF="node8.html">Converting ECLiPSe data to</A>
+ &nbsp <B>  <A NAME="tex2html800"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,83 @@
+<HTML><HEAD><TITLE>statprofile(+File, +Statistics, +OptionsList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(instprofile)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>statprofile(+File, +Statistics, +OptionsList)</H1>
+Instrument a file with statistics profiling code.
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Atom or string
+</DD>
+<DT><EM>Statistics</EM></DT>
+<DD>List of statistic keywords
+</DD>
+<DT><EM>OptionsList</EM></DT>
+<DD>List of Name:Value pairs
+</DD>
+</DL>
+<H2>Description</H2>
+<P>    
+   The predicate inserts into the user code of File, instrumentation 
+   for the collection of the statistics (statistics/2 metric keywords) 
+   specified in Statistics. The instrumentation is inserted by default 
+   at clause entry and exit points (i.e. the start, end, fail and redo 
+   ports of the conceptual predicate box model) and aggregates the cost 
+   for each of the metrics as the program executes. The source code can 
+   be annotated with these aggregated results using the result/0 predicate. 
+   Additionally, the results may be dumped to a file in a format suitable 
+   for offline analysis and graphing.
+   </P><P>
+   OptionList may contain the following options:
+   <DL><DT>
+   <TT>instrument_style</TT>  (default:<TT>clause</TT>)
+   <DD>
+   Valid values for this option are <TT>clause</TT>, <TT>block</TT>, 
+   <TT>subgoal</TT> and <TT>call</TT>. These values correspond to the
+   instrument insertion points of instrument library. Each provides a
+   different level of granularity for the profiling of code fragments.
+   <DT>
+   <TT>delta_results</TT> (default:<TT>off</TT>)
+   <DD>
+   Specifying this option as <TT>on</TT> indicates that the instrumentation
+   results for execution of individual profiled code fragments (associated by
+   instrument's callsite identifier) should be written to the file specified 
+   using open_delta_file/1. More specifically, these are the delta results,
+   the difference for each of the statistics between the start and end of the
+   profiled code fragment's execution.
+   <DT>
+   Instrument library options
+   <DD>
+   In addition to the above options, options valid to the instrument
+   library can also be passed in OptionsList. The most useful of which are 
+   <TT>verbose</TT> and <TT>instrument_recursive</TT>. 
+   <TT>instrument_recursive</TT> is used to prevent the incorrect aggregation
+   of results accumulated during the execution of recursive predicates, by
+   default it is off, i.e. recursive predicates will not be instrumented.
+   </DL>
+   </P><P>
+   The instrumentation profiler places an overhead on the execution of the 
+   code undergoing profiling due to the insertion of the profiling code.
+   The sample based profiler is implemented using after events and is
+   therefore less intrusive in its effect on the performance of the 
+   executing code than the instrumentation profiler. However, it is used to
+   indicate the trend of resource usage over time of a running program not to
+   attribute specific costs of a statistic to a specific piece of code. The
+   instrumentation based profiler is used to do this.
+   </P>
+<H3>Fail Conditions</H3>
+Statistics is empty or contains an invalid statistic/2 keyword.
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>File is not an atom or string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   [eclipse 1]: instprofile:statprofile(queen,[global_stack_used, trail_stack_used], 
+                                        [instrument_style:block, delta_results:on]).
+
+   Yes (0.06s cpu)
+   </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/instprofile/open_delta_file-1.html">open_delta_file / 1</A>, <A HREF="../../lib/instprofile/close_delta_file-0.html">close_delta_file / 0</A>, <A HREF="../../lib/instprofile/result-0.html">result / 0</A>, <A HREF="../../lib/instprofile/aggregate_result-1.html">aggregate_result / 1</A>, <A HREF="../../lib/instprofile/reset-0.html">reset / 0</A>, <A HREF="../../lib/instprofile/statprofile-2.html">statprofile / 2</A>, <A HREF="../../kernel/env/statistics-2.html">statistics / 2</A>, <A HREF="../../lib/instprofile/index.html">library(instprofile)</A>, <A HREF="../../lib/instrument/index.html">library(instrument)</A>, <A HREF="../../lib/instrument/instrument-3.html">instrument : instrument / 3</A>
+</BODY></HTML>

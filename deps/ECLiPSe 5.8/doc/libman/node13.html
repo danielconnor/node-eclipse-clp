@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Using the constraints</TITLE>
+<META NAME="description" CONTENT="Using the constraints">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1019"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1015"
+ HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1009"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1017"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1020"
+ HREF="node14.html">The Solvers</A>
+<B> Up:</B> <A NAME="tex2html1016"
+ HREF="node10.html">Common Solver Interface</A>
+<B> Previous:</B> <A NAME="tex2html1010"
+ HREF="node12.html">Common constraints</A>
+ &nbsp <B>  <A NAME="tex2html1018"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00230000000000000000">
+Using the constraints</A>
+</H1>
+
+<P>
+To use the constraints, ECLiPSe needs to know which solver to pass a
+particular constraint to. The easiest method for doing this is to module
+qualify the constraint. For example,
+
+<P>
+<PRE>
+    ..., ic: (A #&gt;= B), ...
+</PRE>
+
+<P>
+passes the constraint <code>A #&gt;= B</code> to the ic solver. The solver must be
+loaded first (e.g. via lib/1) before any constraint can be passed to it.
+
+<P>
+A constraint can also be passed to more than one solver by specifying a
+list in the module qualification. For example,
+
+<P>
+<PRE>
+    ..., [ic, suspend]: (A #&gt;= B), ...
+</PRE>
+
+<P>
+will pass the constraint to both the ic and suspend solvers. 
+
+<P>
+Module qualification is <EM>not</EM> needed if the constraint is defined by an
+imported module, and there is no other imported module
+which defines the same constraint. For example, if ic is the only imported
+module which defines <code>#&gt;=/2</code>, then <code>#&gt;=/2</code> can be used without 
+qualification:
+
+<P>
+<PRE>
+    ..., A #&gt;= B, ...
+</PRE>
+
+<P>
+Note that for constraints that are defined for <code>eclipse_language</code>,
+such as <code>&gt;=</code> (the standard arithmetic test), the default behaviour
+when an unqualified call to such a
+constraint is made is to pass it to <code>eclipse_language</code>,
+even if another solver which defines the constraint is imported.
+Thus, for example
+<PRE>
+    ..., A &gt;= B, ...
+</PRE>
+
+<P>
+will by default have standard (i.e. non-suspending) test semantics, even
+if, e.g. the <code>ic</code> library (which also defines <code>&gt;=/2</code>) is
+imported. To access the <code>ic</code> version, module qualification should
+be added:
+<PRE>
+    ..., ic:(A &gt;= B), ...
+</PRE>
+Alternatively, the synonymous <code>$&gt;=/2</code> constraint could be used:
+<PRE>
+    ..., A $&gt;= B, ...
+</PRE>
+
+<P>
+In general, module qualifications are recommended if the programmer
+wants to ensure a particular constraint behaviour regardless of which
+other modules might be loaded.  On the other hand, if the intention is
+to switch easily between different solvers by simply loading a
+different library, module qualification is best omitted.
+
+<P>
+Finally, it is also possible to let the running program determine which
+solver to use. In this case, the program has a variable in the module
+position, which will only be bound at runtime:
+<PRE>
+    ..., Solver:(A #&gt;= B), ...
+</PRE>
+This will however prevent the solver from performing any compile-time
+preprocessing on the constraint.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1019"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1015"
+ HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1009"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1017"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1020"
+ HREF="node14.html">The Solvers</A>
+<B> Up:</B> <A NAME="tex2html1016"
+ HREF="node10.html">Common Solver Interface</A>
+<B> Previous:</B> <A NAME="tex2html1010"
+ HREF="node12.html">Common constraints</A>
+ &nbsp <B>  <A NAME="tex2html1018"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

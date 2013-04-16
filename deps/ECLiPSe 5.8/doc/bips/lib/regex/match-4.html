@@ -1,0 +1,44 @@
+<HTML><HEAD><TITLE>match(+Pattern, +String, +Options, -Match)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(regex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>match(+Pattern, +String, +Options, -Match)</H1>
+Match is the first substring of String that matches the regular expression Pattern
+<DL>
+<DT><EM>Pattern</EM></DT>
+<DD>A string (or a compiled pattern handle)
+</DD>
+<DT><EM>String</EM></DT>
+<DD>A string
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of atoms
+</DD>
+<DT><EM>Match</EM></DT>
+<DD>Output: a string
+</DD>
+</DL>
+<H2>Description</H2>
+
+	Succeeds if all or a substring of String matches the regular
+	expression Pattern. For the description of regular expressions
+	see the library(regex) page.
+	<P>
+    	Options is a (possibly empty) list of atomic option names,
+	as described in the library(regex) page.
+	<P>
+	Match is bound to the first substring of String which matches
+	Pattern.
+	<P>
+	Note that this predicate does not return any information about
+	matching (parenthesised) sub-expressions!
+    
+<H3>Fail Conditions</H3>
+String does not match Pattern
+<H2>Examples</H2>
+<PRE>
+    ?- match("&lt;[a-z]+&gt;", "Text with &lt;HTML&gt; tags", [icase], M).
+    M = "&lt;HTML&gt;"
+    Yes
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/regex/index.html">library(regex)</A>, <A HREF="../../lib/regex/match-2.html">match / 2</A>, <A HREF="../../lib/regex/match-3.html">match / 3</A>, <A HREF="../../lib/regex/matchsub-4.html">matchsub / 4</A>, <A HREF="../../lib/regex/matchall-4.html">matchall / 4</A>, <A HREF="../../lib/regex/compile_pattern-3.html">compile_pattern / 3</A>
+</BODY></HTML>

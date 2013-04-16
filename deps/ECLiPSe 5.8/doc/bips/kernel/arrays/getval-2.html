@@ -1,0 +1,72 @@
+<HTML><HEAD><TITLE>getval(+ElemSpec, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>getval(+ElemSpec, ?Value)</H1>
+Retrieves the value of the visible array element, non-logical variable or reference ElemSpec
+<DL>
+<DT><EM>+ElemSpec</EM></DT>
+<DD>Atom or ground compound term with non negative integer arguments.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   If ElemSpec is the name of a visible non-logical variable, it unifies
+   the copied value of the variable with Value.
+<P>
+   If ElemSpec is a compound term, it must specify an element of a visible
+   non-logical array, all its arguments must be non negative integers smaller
+   than the bounds specified with array/1/2 or variable/1. The copied value
+   of the array element is unified with Value.
+<P>
+   If Element is the name of a reference, Value is unified with
+   the actual term the reference refers to (no copying involved).
+
+<H3>Fail Conditions</H3>
+Fails if Value does not unify with the value of ElemSpec.
+
+
+<H3>Resatisfiable</H3>
+No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>ElemSpec is not ground.
+<DT><EM>(5) type error </EM>
+<DD>ElemSpec is neither an atom nor a structure whose arguments are integers.
+<DT><EM>(6) out of range </EM>
+<DD>An array index in ElemSpec is out of bounds
+<DT><EM>(41) array or global variable does not exist </EM>
+<DD>ElemSpec does not designate an existing array, variable or reference.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      local(array(a(4), float)),
+          setval(a(2), 2.0),
+          getval(a(2), 2.0).
+      setval(i, "2"),
+          getval(i, V)).   (gives V = "2").
+
+Failure:
+      local(array(a(2))),
+          setval(a(1), 8.6),
+          getval(a(1), 10.0).
+      setval(i, 3),
+          getval(i, 0)).
+
+Error:
+      getval(X, 1).                   (Error 4).
+      getval(a(X), 1).                (Error 4).
+      getval("a", V).                 (Error 5).
+      getval(a(2.0), V).              (Error 5).
+      getval(a(-1), V).               (Error 6).
+      getval(no_array(0), X).         (Error 41).
+      getval(no_var, X).              (Error 41).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/decval-1.html">decval / 1</A>, <A HREF="../../kernel/arrays/incval-1.html">incval / 1</A>, <A HREF="../../kernel/arrays/array-1.html">array / 1</A>, <A HREF="../../kernel/arrays/array-2.html">array / 2</A>, <A HREF="../../kernel/arrays/variable-1.html">variable / 1</A>, <A HREF="../../kernel/arrays/setval-2.html">setval / 2</A>
+</BODY></HTML>

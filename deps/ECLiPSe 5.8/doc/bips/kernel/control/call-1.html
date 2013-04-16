@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>call(+Goal)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>call(+Goal)</H1>
+Succeeds if Goal succeeds.
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Calls the goal Goal.  This predicate is used to call goals whose
+   functors are known only at the time they are called.
+
+<P>
+   Note that:
+
+<P>
+   call(Goal) is logically the same as Goal and !/0 does not cut through
+   call/1.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is not an atom or a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: [user].
+       or(A -&gt; B, C) :- call(A), !, call(B).
+       or(_ -&gt; _, C) :- call(C).
+       user compiled 412 bytes in 0.02 seconds
+      [eclipse]: or(write(a)-&gt;fail, write(k)).
+      a
+      no.
+      [eclipse]: or(fail-&gt;write(here),true).
+      yes.
+
+Fail:
+      [eclipse]: call(fail),write(here).
+      no.
+Error:
+      call(G).                  (Error 4).
+      call("write(a)").         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/subcall-2.html">subcall / 2</A>, <A HREF="../../kernel/control/A-2.html">@ / 2</A>, <A HREF="../../kernel/control/N-2.html">: / 2</A>
+</BODY></HTML>

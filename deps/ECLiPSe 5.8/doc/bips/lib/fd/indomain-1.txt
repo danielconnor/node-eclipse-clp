@@ -1,0 +1,41 @@
+
+indomain(?Var)
+
+   Instantiate Var to a value in its domain.
+
+
+
+Arguments
+   ?Var                An integer or a domain variable
+
+Type
+   library(fd)
+
+Description
+   This predicate instantiates the domain variable Var to a value from its
+   domain.  Its starts with the smallest element in the domain and on
+   backtracking successive elements are taken.  It is used mostly to find
+   an instantiation of the variable which is consistent with the current
+   set of constraints in labeling procedures.  If List is a list of all
+   domain variables occurring in the program, the simplest labeling
+   procedure is written as
+
+
+
+        labeling([]).
+        labeling([Var|Rest]) :-
+            indomain(Var),
+            labeling(Rest).
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   :: / 2, #:: / 2, par_indomain / 1, labeling / 1, fd_search : search / 6

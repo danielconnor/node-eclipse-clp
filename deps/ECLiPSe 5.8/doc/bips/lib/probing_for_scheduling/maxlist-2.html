@@ -1,0 +1,29 @@
+<HTML><HEAD><TITLE>maxlist(++List, ?Maximum)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(probing_for_scheduling)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>maxlist(++List, ?Maximum)</H1>
+Find the maximum of a list of numeric expressions
+<DL>
+<DT><EM>List</EM></DT>
+<DD> a list of (n) integer-valued expressions
+</DD>
+<DT><EM>Maximum</EM></DT>
+<DD>The maximum
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+Exporting 'maxlist' ensures that the syntax of the cost function for probe_sched
+can also be handled by 'is', thus enabling:
+<PRE>
+?- probe_sched(S,D,R,M,CostFun), Cost is CostFun
+</PRE>	</P>
+
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE>
+X is maxlist([2,3*7-20,4-1])
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/probing_for_scheduling/probe_sched-5.html">probe_sched / 5</A>
+</BODY></HTML>

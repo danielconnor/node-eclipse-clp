@@ -1,0 +1,82 @@
+<HTML><HEAD><TITLE>string_list(?String, ?List, +Format)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>string_list(?String, ?List, +Format)</H1>
+Conversion between string in different encodings and a character list
+<DL>
+<DT><EM>?String</EM></DT>
+<DD>String or variable.
+</DD>
+<DT><EM>?List</EM></DT>
+<DD>A variable or a list of integers and/or variables.
+</DD>
+<DT><EM>+Format</EM></DT>
+<DD>An atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate performs conversion between a string encoded in Format
+   and a list of the corresponding character codes.
+<P>
+   If String is instantiated, it is must be a valid string in the encoding
+   format specified by Format.  It is then decoded and List is unified with
+   a list of the corresponding character codes.
+<P>
+   If List is instantiated, it is must contain character codes that are
+   valid for the encoding format specified by Format.  These characters
+   are then encoded into a string which is unified with String.
+<P>
+   Currently supported formats are:
+<DL>
+<DT><STRONG>bytes</STRONG><DD>
+    every byte in the string corresponds to a list integer in the range 0..255.
+<DT><STRONG>utf8</STRONG><DD>
+    the string is encoded in UTF-8 format and the list can contain integers
+    in the range 0..2^31-1.
+</DL>
+<P>
+   Note that string_list/2 can be defined as:
+<PRE>
+	string_list(S, L) :- string_list(S, L, bytes).
+</PRE>
+
+<H3>Fail Conditions</H3>
+None
+<H3>Resatisfiable</H3>
+No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Format in not instantiated.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Neither String nor List are ground.
+<DT><EM>(5) type error </EM>
+<DD>String is neither a string nor a variable.
+<DT><EM>(5) type error </EM>
+<DD>List is neither a list nor a variable.
+<DT><EM>(5) type error </EM>
+<DD>Format in not an atom.
+<DT><EM>(6) out of range </EM>
+<DD>Format in not a valid format specification.
+<DT><EM>(6) out of range </EM>
+<DD>One (or more) elements of List are not integers in a valid range for Format.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: string_list(S,[65,66,67],bytes).
+    S = "ABC"
+    yes.
+
+    [eclipse 2]: string_list(S, [65,66,67], utf8).
+    S = "ABC"
+    yes.
+
+    [eclipse 3]: string_list(S, [65, 0, 700, 2147483647], bytes).
+    out of range in string_list(S, [65, 0, 700, 2147483647])
+
+    [eclipse 4]: string_list(S, [65, 0, 700, 2147483647], utf8).
+    S = "A\000\312\274\375\277\277\277\277\277"
+    yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/stratom/string_list-2.html">string_list / 2</A>, <A HREF="../../kernel/ioterm/write-2.html">write / 2</A>, <A HREF="../../kernel/iochar/read_string-4.html">read_string / 4</A>
+</BODY></HTML>

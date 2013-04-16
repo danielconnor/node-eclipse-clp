@@ -1,0 +1,51 @@
+
+erase_macro(+TransTerm, +Options)
+
+   Erases the macro definition for TransTerm done in the current module
+
+
+
+Arguments
+   +TransTerm          Term in the form Atom/Integer.
+   +Options            Possibly empty list of option flags.
+
+Type
+   Syntax Settings
+
+Description
+   The macro defined for TransTerm and matching the specified Options
+   is erased.  If there was no matching macro definition, the predicate
+   silently succeeds. See macro/3 and portray/3 for the valid options.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- TransTerm is not instantiated or Options is not fully instantiated.
+     5 --- TransTerm not of form Atom/Integer or Options is not a list of atoms.
+     6 --- Options contains an element which is not a valid option.
+
+Examples
+   
+   Success:
+   erase_macro(a/1, [read]).
+   erase_macro(a/1, [write,goal]).
+   Error:
+   erase_macro(X, []).           (Error 4).
+   erase_macro(a, [write]).      (Error 5).
+   erase_macro(a/1, [hello]).    (Error 6).
+
+
+
+
+
+See Also
+   current_macro / 4, macro / 3, portray / 3, phrase / 3

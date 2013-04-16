@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>In-memory Streams</TITLE>
+<META NAME="description" CONTENT="In-memory Streams">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node63.html">
+<LINK REL="previous" HREF="node61.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node63.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3186"
+ HREF="node63.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3182"
+ HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3176"
+ HREF="node61.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3184"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3187"
+ HREF="node63.html">Term Output Formats</A>
+<B> Up:</B> <A NAME="tex2html3183"
+ HREF="node59.html">Input and Output</A>
+<B> Previous:</B> <A NAME="tex2html3177"
+ HREF="node61.html">Communication via Streams</A>
+ &nbsp <B>  <A NAME="tex2html3185"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3188"
+ HREF="node62.html#SECTION001031000000000000000">String Streams</A>
+<LI><A NAME="tex2html3189"
+ HREF="node62.html#SECTION001032000000000000000">Queue streams</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001030000000000000000">
+In-memory Streams</A>
+</H1>
+There are two kinds of in-memory streams, string streams and queues.
+String streams behave much like files, they can be read, written,
+positioned etc, but they are implemented as buffer in memory.
+Queues are intended mainly for message-passing-style communication
+between ECLiPSeand a host language, and they are also implemented as
+memory buffers.
+
+<P>
+
+<H2><A NAME="SECTION001031000000000000000"></A>
+<A NAME="stringio"></A>
+<BR>
+String Streams
+</H2>
+In ECLiPSe it is possible to associate a stream with a Prolog string
+in its memory, and this string is then used in the same way as a file
+for the input and output operations.
+A string stream is opened like a file by the <A NAME="tex2html853"
+ HREF="../bips/kernel/iostream/open-3.html">open/3</A><A NAME="6003"></A> predicate call<PRE>
+open(string(InitString), Mode, Stream)
+</PRE>
+where <I>InitString</I> can be a ECLiPSe string or a variable and represents
+the initial contents of the string stream.
+If a variable is supplied for <I>InitString</I>, the initial value of the string
+stream is the empty string and the variable is bound to this value:<PRE>
+[eclipse 1]: open(string(S), update, s).
+S = ""
+yes.
+</PRE> 
+Once a string stream is opened, all predicates using streams
+can take it as argument and perform I/O on it.
+In particular the predicates
+<A NAME="tex2html855"
+ HREF="../bips/kernel/iostream/seek-2.html">seek/2</A><A NAME="6006"></A> and
+<A NAME="tex2html857"
+ HREF="../bips/kernel/iostream/at-2.html">at/2</A><A NAME="6009"></A>
+can be used with them.
+
+<P>
+While writing into a stream changes the stream contents destructively,
+the initial string that has been opened will never be affected.
+The new stream contents can be retrieved either by reading from the string
+stream, or as a whole by using
+<A NAME="tex2html859"
+ HREF="../bips/kernel/iostream/get_stream_info-3.html">get_stream_info/3</A><A NAME="6012"></A>:<PRE>
+[eclipse 1]: S = "abcdef", open(string(S), write, s), write(s, ---).
+
+S = "abcdef"
+yes.
+[eclipse 2]: get_stream_info(s, name, S).
+
+S = "---def"
+yes.
+[eclipse 3]: seek(s, 1), write(s, .), get_stream_info(s, name, S).
+
+S = "-.-def"
+yes.
+[eclipse 4]: seek(s, end_of_file), write(s, ine),
+             get_stream_info(s, name, S).
+
+S = "-.-define"
+yes.
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION001032000000000000000"></A>
+<A NAME="queueio"></A>
+<BR>
+Queue streams
+</H2>
+A queue stream is opened by the <A NAME="tex2html861"
+ HREF="../bips/kernel/iostream/open-3.html">open/3</A><A NAME="6015"></A> predicate<PRE>
+open(queue(InitString), Mode, Stream)
+</PRE>
+The initial queue contents is <I>InitString</I>.
+It can be seen as a string which gets extended at its end on writing
+and consumed at its beginning on reading.<PRE>
+[eclipse 11]: open(queue(""), update, q), write(q, hello), write(q, " wo").
+yes.
+[eclipse 12]: read_string(q, " ", _, X).
+S = "hello"
+yes.
+[eclipse 13]: write(q, "rld"), read(q, X).
+S = world
+yes.
+[eclipse 14]: at_eof(q).
+yes.
+</PRE> 
+It is not allowed to seek on a queue. Therefore, once something is read
+from a queue, it is no longer accessible. A queue is considered to be
+at its end-of-file position when it is currently empty, however this
+is no longer the case when the queue is written again.
+
+<P>
+A useful feature of queues is that they can raise a synchronous event
+when data arrives on the empty queue. To create such an event-raising
+queue, this has to be specified as an option when opening the queue with
+<A NAME="tex2html863"
+ HREF="../bips/kernel/iostream/open-4.html">open/4</A><A NAME="6018"></A>.
+In the example we have chosen the same name for the stream and for the
+event, which is not necessary but convenient when the same handler
+is going to be used for different queues:<PRE>
+[eclipse 1]: [user].
+ handle_queue_event(Q) :-  
+        read_string(Q, "", _, Data),
+        printf("Queue %s received data: %s\n", [Q,Data]).
+yes.
+[eclipse 2]: set_event_handler(eventq, handle_queue_event/1).
+yes.
+[eclipse 3]: open(queue(""), update, eventq, [event(eventq)]).
+yes.
+[eclipse 4]: write(eventq, hello).
+Queue eventq received data: hello
+yes.
+</PRE> 
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3186"
+ HREF="node63.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3182"
+ HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3176"
+ HREF="node61.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3184"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3187"
+ HREF="node63.html">Term Output Formats</A>
+<B> Up:</B> <A NAME="tex2html3183"
+ HREF="node59.html">Input and Output</A>
+<B> Previous:</B> <A NAME="tex2html3177"
+ HREF="node61.html">Communication via Streams</A>
+ &nbsp <B>  <A NAME="tex2html3185"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,24 @@
+<HTML><HEAD><TITLE>request_notification(++Name, ++Pred)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(config_opts)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>request_notification(++Name, ++Pred)</H1>
+Requests that a predicate be called when an option changes
+<DL>
+<DT><EM>Name</EM></DT>
+<DD>Name of the option
+</DD>
+<DT><EM>Pred</EM></DT>
+<DD>Predicate to call
+</DD>
+</DL>
+<H2>Description</H2>
+   Specifies that Pred(Name, OldValue, NewValue) should be called whenever
+   the value of the option Name is changed.  OldValue is the old value of
+   the option that has just been replaced and NewValue is the new value that
+   has just been assigned.  Pred should not modify OldValue or NewValue in
+   any way, as this may interfere with other notification predicates.  Note
+   also that any choice points left by the call to Pred are pruned upon
+   success.
+
+<H2>See Also</H2>
+<A HREF="../../lib/config_opts/register_option-3.html">register_option / 3</A>, <A HREF="../../lib/config_opts/set_option-2.html">set_option / 2</A>
+</BODY></HTML>

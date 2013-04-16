@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>subcall(+Goal, ?Delayed_goals)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>subcall(+Goal, ?Delayed_goals)</H1>
+Succeeds iff Goal succeeds and unifies Delayed_goals with a list of
+remaining delayed goals.
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>?Delayed_goals</EM></DT>
+<DD>Variable or list.
+</DD>
+</DL>
+<H2>Description</H2>
+   Calls the goal Goal.  When Goal succeeds, Delayed_goals is unified with
+   a list of goals that were delayed, but not resumed during execution of
+   Goal.  These goals, together with the variable bindings in Goal, can be
+   regarded as a qualified answer to Goal.  I.e. Goal is true under the
+   condition that the conjunction of delayed goals is also true.
+
+<P>
+   Note that, after exiting from subcall/2, the goals collected in
+   Delayed_goals do no longer exist as delayed goals.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Goal fails, or if Delayed_goals does not unify with the
+   returned list of goals.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is neither an atom nor a compound term.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>Goal is an undefined procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: X &gt; 0, subcall(X &lt; 5, DG).
+
+    X = X
+    DG = [X &lt; 5]
+
+    Delayed goals:
+    X &gt; 0
+    yes.
+    [eclipse]: subcall( (X &gt; 0, Y &gt; 0, X = 3) , DG).
+
+    Y = Y
+    X = 3
+    DG = [Y &gt; 0]
+    yes.
+
+Fail:
+    subcall(fail, _).
+Error:
+    subcall(Var, D).                (Error 4).
+    subcall(3, D).                  (Error 5).
+    subcall(foo(a), D).             (Error 68).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/call-1.html">call / 1</A>, <A HREF="../../kernel/control/A-2.html">@ / 2</A>, <A HREF="../../kernel/control/N-2.html">: / 2</A>, <A HREF="../../kernel/suspensions/call_priority-2.html">call_priority / 2</A>
+</BODY></HTML>

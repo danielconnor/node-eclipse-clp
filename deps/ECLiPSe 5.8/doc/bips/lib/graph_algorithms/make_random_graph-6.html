@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>make_random_graph(+NNodes, +NEdges, +AntiParallelFree, +LoopFree, +ParallelFree, -Graph)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>make_random_graph(+NNodes, +NEdges, +AntiParallelFree, +LoopFree, +ParallelFree, -Graph)</H1>
+Creates a random graph with the given properties
+<DL>
+<DT><EM>NNodes</EM></DT>
+<DD>integer
+</DD>
+<DT><EM>NEdges</EM></DT>
+<DD>integer
+</DD>
+<DT><EM>AntiParallelFree</EM></DT>
+<DD>one of the atoms true or false
+</DD>
+<DT><EM>LoopFree</EM></DT>
+<DD>one of the atoms true or false
+</DD>
+<DT><EM>ParallelFree</EM></DT>
+<DD>one of the atoms true or false
+</DD>
+<DT><EM>Graph</EM></DT>
+<DD>will be bound to a graph structure
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Creates a random graph with NNodes nodes and NEdges edges.
+    The other 3 options mean:
+<DL>
+<DT><B>AntiParallelFree</B></DT>
+    <DD>if true, the graph will have no anti-parallel edges, i.e. if
+    there is an edge from S to T, there won't be one from T to S</DD>
+<DT><B>LoopFree</B></DT>
+    <DD>if true, the graph will have no self loops, i.e. no edges
+    that begin and end in the same node.</DD>
+<DT><B>ParallelFree</B></DT>
+    <DD>if true, the graph will have no parallel edges, i.e. there
+    will be at most one edge from S to T.</DD>
+</DL>
+    The generated graph has no node name information and no edge data.
+    Node names can be added using graph_set_nodenames/2. Edge data
+    (e.g. random weights) can be added by retrieving the edges using
+    graph_get_all_edges/2 or graph_get_adjacent_edges/3 and unifying
+    the variable EdgeData field with the required information.
+    </P>
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(6) out of range </EM>
+<DD>NEdges is too large given the chosen options and NNodes
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/graph_set_nodenames-2.html">graph_set_nodenames / 2</A>, <A HREF="../../lib/graph_algorithms/graph_get_all_edges-2.html">graph_get_all_edges / 2</A>, <A HREF="../../lib/graph_algorithms/graph_set_random_weights-3.html">graph_set_random_weights / 3</A>, <A HREF="../../lib/graph_algorithms/graph_get_adjacent_edges-3.html">graph_get_adjacent_edges / 3</A>, <A HREF="../../lib/graphviz/index.html">library(graphviz)</A>
+</BODY></HTML>

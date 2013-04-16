@@ -1,0 +1,26 @@
+<HTML><HEAD><TITLE>erase_file_templates(+File)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(instrument)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>erase_file_templates(+File)</H1>
+Erase the file local instrument template store for a
+   specific file.
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Atom or string
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   This predicate erases all templates associated with the named file 
+   that was compiled into the the calling module context and persisted 
+   by (successive) calls to <TT>instrument/2</TT> and <TT>instrument/3</TT>. 
+   The predicate is a tool and the file local templates of a module other 
+   than the current calling module context can be erased by invoking 
+   <TT>erase_file_templates(File)@Module</TT>.
+<H3>Fail Conditions</H3>
+No instrumentation templates exist for the file in 
+   the calling module context.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib/instrument/erase_all_templates-0.html">erase_all_templates / 0</A>, <A HREF="../../lib/instrument/erase_module_templates-0.html">erase_module_templates / 0</A>, <A HREF="../../lib/instrument/instrument-2.html">instrument / 2</A>, <A HREF="../../lib/instrument/instrument-3.html">instrument / 3</A>, <A HREF="../../lib/instrument/index.html">library(instrument)</A>, <A HREF="../../lib/instrument/itemplate-s.html">struct(itemplate)</A>, <A HREF="../../lib/instrument/defined_modules-2.html">defined_modules / 2</A>
+</BODY></HTML>

@@ -1,0 +1,33 @@
+
+dom_copy(+Dom1, -Dom2)
+
+   Dom2 is a copy of the domain Dom1.
+
+
+
+Arguments
+   +Dom1               A finite domain.
+   -Dom2               A variable.
+
+Type
+   library(fd)
+
+Description
+   Dom2 is a copy of the domain Dom1.  Since the updates are done in-place,
+   two domain variables must not share the same physical domain and so when
+   defining a new variable with an existing domain, the domain has to be
+   copied first.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dom_compare / 3, dom_member / 2, dom_range / 3, dom_size / 2, dvar_domain / 2

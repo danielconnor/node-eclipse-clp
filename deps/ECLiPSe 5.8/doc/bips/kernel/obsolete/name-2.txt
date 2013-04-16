@@ -1,0 +1,75 @@
+
+name(?Atomnumber, ?List)
+
+   Succeeds if List is the corresponding list of ASCII codes for the atom or
+number Atomnumber.
+
+
+
+Arguments
+   ?Atomnumber         Atom, number or variable.
+   ?List               List of integers (each in the range 1 to 127) and/or                variables, or else a variable.
+
+Type
+   Obsolete
+
+Description
+   If Atomnumber is an atom or a number, unifies List with the list of its
+   corresponding ASCII codes.  Real numbers can be any length in decimal
+   format, though fractions are evaluated to 6 decimal places.  The codes
+   are of each character of the atom, or of each digit (or decimal point)
+   of the number.
+
+
+   If List is instantiated, unifies Atomnumber with the atom or number
+   corresponding to this list of ASCII integers.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List is not the list of ASCII codes corresponding to the atom
+   or number Atomnumber.
+
+
+
+Exceptions
+     4 --- Neither Atomnumber nor List are ground.
+     5 --- Atomnumber is instantiated, but not to an atom or a number.
+     5 --- List is instantiated, but not to a list.
+     6 --- List is a list containing an integer outside the range 1 to    127.
+
+Examples
+   
+   Success:
+   name(atom,[97,116,111,109]).
+   name(atom,[X,116|T]).        (gives X=97,T=[111,109]).
+   name(/,[47]).
+   name(10,[49,48]).
+   name(20.0,[50,48,46,48]).
+   name(2,[50]).
+   name(+2,L).                  (gives L=[50]).
+   name(-2,L).                  (gives L=[45,50]).
+   name('1',[0'1]).
+   X is 1/3, name(X,Y).         % X unifies with 0.333333
+   (gives Y=[48,46,51,51,51,51,51,51]).
+   Fail:
+   name(atom,[98,116,111,109]).
+   name('1',B), name(C,B), C='1'. % 1 does not unify with '1'.
+   name(1.0,[0'1,0'.,0'0,0'0]).   % 1.0 is not 1.00
+   Error:
+   name(AN,[1,M]).     (Error 4).
+   name(AN,L).         (Error 4).
+   name(f(1,2),L).     (Error 5).
+   name(AN,[128]).     (Error 6).
+   name(AN,[0]).       (Error 6).
+
+
+
+
+
+See Also
+   number_string / 2, atom_string / 2, char_int / 2, integer_atom / 2, string_list / 2, string_list / 3, term_string / 2

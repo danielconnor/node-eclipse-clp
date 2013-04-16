@@ -1,0 +1,43 @@
+
+set_up_probe(+Tasks, +Constraints, -Cost, ++Options, -Handle)
+
+   Sets up a linear probe for a set of constraints
+
+Arguments
+   Tasks               A term containing some variables
+   Constraints         A list of numerical constraints
+   Cost                A cost variable
+   Options             An options structure
+   Handle              A variable which will record the handle of the matrix 
+used by the linear solver
+
+Type
+   library(probe)
+
+Description
+
+The constraints are passed to add_con, which adds them to both the 
+fd and linear solvers.  The cost is declared to be an integer.  All the 
+finite domain variables in the term Tasks are associated with a demon 
+which forwards their bounds to the linear solver.  (The priority of this 
+demon is one higher than that of the probe.)
+
+lp_demon_setup is then invoked to set up the linear solver, with the 
+priority specified in the Options parameter.  Solutions returned
+by the linear solver are automatically used to update the tentative values  
+of all the variables.
+
+
+
+Resatisfiable
+   no
+
+Examples
+   
+?- Options = options{granularity:3,priority:5},
+   Cost=X1,
+   set_up_probe([X1,X2,X3],[X1>X2,X2>X3],Cost,Options,H).
+
+
+See Also
+   ic_probing_for_scheduling : probe_cstr_sched / 7, probing_for_scheduling : probe_cstr_sched / 7, add_con / 3, eplex : lp_demon_setup / 5

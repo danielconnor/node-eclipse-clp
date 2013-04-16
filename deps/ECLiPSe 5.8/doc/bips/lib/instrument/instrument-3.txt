@@ -1,0 +1,108 @@
+
+instrument(+File, +ITemplates, +OptionList)
+
+   Compile a file, inserting predicate instrumentation
+
+Arguments
+   File                Atom or string
+   ITemplates          itemplate, List of itemplate or PredSpec
+   OptionList          List of Name:Value pairs
+
+Type
+   library(instrument)
+
+Description
+
+   This is a variant of the ECLiPSe compiler that inserts user specified 
+   instrumentation predicates into the compiled code. 
+   This code can then be run, and the results analysed by printing them using 
+   instrument:module_result/0 or instrument:file_result/1.
+   
+   ITemplates can be specified as:
+   
+   PredSpec of arity two
+   
+   If an arity two predicate specification is supplied, then this predicate 
+   is invoked in order to retrieve the template for the predicate being 
+   instrumented. Argument one is the predicate specification of the 
+   predicate undergoing instrumentation. Argument two is an output variable th
+   at is to be returned by this predicate as the template to use. The 
+   returned itemplate will be validated before instrumentation 
+   proceeds.
+   
+   itemplate
+   
+   A single template passed to instrument/2 or instrument/3 
+   is adopted as the global template to be used for predicate 
+   instrumentation. If a template for the predicate currently being 
+   instrumented is not found in the template stores then if a global template 
+   exists, it is used.
+   
+   PredSpec = itemplate
+   
+   A template specification for instrumentation of a single predicate. If 
+   however, PredSpec is not actually a valid predicate specification but the 
+   atom iglobal, the template is adopted as the global template 
+   (see above).
+   
+   List of itemplate
+   
+   The list is of the form: 
+   [itemplate{...} | PredSpec = itemplate{...} ... 
+   PredSpec = itemplate{...}]
+   The itemplate at the head of the list is specifies the global 
+   template and is optional. The remaining elements of the list are 
+   itemplate specifying instrumentation for the PredSpec with which 
+   they are associated.
+   
+   In addition to supplying the global template, an exclude list of PredSpec 
+   for predicates that should not be instrumented by the global template can 
+   be specified: itemplate{...} - predicate/1, 
+   my_module:my_predicate/8,...]
+   
+   OptionList may contain the following options:
+   
+   erase_templates
+   
+   Specifying this option results in the removal of instrumentation templates 
+   in file local and/or global template stores. The 'Value' portion of the 
+   option can be specified as an atom representing a specific module, the 
+   atom all or the atom every_module.
+   
+   instrument_recursive (default:off)
+   
+   Specifying this option as on indicates that instrumentation 
+   should be applied within recursive predicates. With it off the 
+   net effect is that instrumentation is placed around the recursive 
+   call-graph (unless no applicable template exists). This prevents 
+   incorrect aggregation of accounting by instrumentation predicates. 
+   
+   file_local_templates (default:off)
+   
+   Specifying this option as on indicates that all templates in 
+   ITemplates should be stored locally to the file - they are not available 
+   for use in instrumenting other files (in other modules). The 
+   file_local option of the itemplate in ITemplates are 
+   overridden by this option.
+   
+   ignore_module_templates (default:off)
+   
+   Specifying this option as on results in the use of file local 
+   templates only during instrumentation. Templates are not sought from 
+   the global store.
+   
+   verbose (default:off)
+   
+   If set to on, the instrument preprocessor will print predicate 
+   names as they are processed (to log_output). If set to debug, 
+   the instrument preprocessor prints each instrumented and/or woven 
+   predicate definition (to log_output).
+   
+   
+
+Exceptions
+     4 --- ITemplates is not instantiated.
+     5 --- ITemplates is not of the appropriate type.
+
+See Also
+   erase_all_templates / 0, file_result / 1, file_result / 2, file_callsites / 3, get_callsite_data / 2, instrument / 3, instrument_control / 2, library(instrument), module_callsites / 2, module_result / 0, module_result / 1, set_callsite_data / 2, defined_modules / 2

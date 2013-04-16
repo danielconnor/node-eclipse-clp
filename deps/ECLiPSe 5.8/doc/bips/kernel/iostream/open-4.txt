@@ -1,0 +1,152 @@
+
+open(+SourceSink, +Mode, ?Stream, +Options)
+
+   Opens the I/O source or sink SourceSink in mode Mode and associates it
+with the stream identifier Stream.
+
+
+
+Arguments
+   +SourceSink         Atom, string or structure.
+   +Mode               One of the atoms read, write, update, append.
+   ?Stream             Atom or variable.
+   +Options            List.
+
+Type
+   Stream I/O
+
+Description
+   This predicate opens an ECLiPSe I/O stream.
+
+
+   The most common use is for opening files. In this case, SourceSink
+   is a file name (atom or string).
+
+
+   Mode is one of the following
+
+
+
+    read         open for reading
+    write        open for writing
+    update       open for reading and writing
+    append       open for writing at the end
+
+   A file must already exist if it is to be opened in read mode.  A file
+   opened in append mode is opened in write mode at the end of the file.
+   If an existing file is opened in write mode, it is truncated to zero
+   size, i.e. its previous content is lost.
+
+
+   Stream is the identifier that is subsequently used to identify the
+   stream.  This identifier is either a name (atom) provided by the user,
+   or a system-generated identifier (when the user passes a free variable).
+
+
+   If SourceSink is of the form string(InitialString), then a so-called
+   string stream is opened.  A string stream is basically an in-memory
+   file and its initial contents is the string InitialString.
+   A string stream can be used like any other stream, i.e. it is possible
+   to read, write and seek like on a true file.
+   The current contents of a string stream can at any time be retrieved
+   as a whole using get_stream_info(Stream, name, Contents).
+
+
+   If SourceSink is of the form queue(InitialString), then a queue
+   stream is opened. It behaves like a string that can be written at the
+   end and read from the beginning.  Seeking is not allowed on queues.
+   The current contents of a queue can at any time be retrieved as a
+   whole using get_stream_info(Stream, name, Contents). Queues are
+   considered to be at end-of-file while they are empty. 
+   Queues can be configured to raise an event every time something
+   is written to the previously empty queue (see open/4).
+
+
+   If SourceSink is of the form fd(Integer), then the stream in opened
+   onto an existing operating system file descriptor.
+
+
+   Options is a list of the following stream options:
+
+alias(Name)
+    Make the stream known under an alternative name.
+    Name is an atom. See also set_stream/2.
+
+compress(OnOff)
+    a hint for output operations (e.g. write_exdr/2) to use a more
+    compact output format (output streams only). OnOff is one of the
+    atoms on or off. The default is on (for files, pipes and sockets)
+    or off (for queues and string streams).
+
+end_of_line(CrLf)
+    This option affects only write-streams and determines which
+    end-of-line character sequence is written by predicates like nl/1,
+    writeln/1 and printf/3.  Possible values are the atoms lf and
+    crlf.  The default for string and queue streams is lf, for other
+    streams it is operating-system dependent.
+
+event(Name)
+    This option is intended for queue streams in embedded applications
+    of ECLiPSe.  It configures a read-queue to raise the named event
+    whenever the host program writes something to the previously empty
+    queue.  Name must be an atom.
+
+flush(Where)
+    This option affects only write-streams and allows to configure a
+    stream to automatically flush after every line written.  Where is
+    one of the atoms end_of_line (flush automatically after every
+    line) or flush (require explicit flushing).  The default setting
+    is flush, except for tty streams where the default is end_of_line.
+
+macro_expansion(OnOff)
+    Input streams only. Specifies whether term-macros (see macro/3) will
+    be expanded when reading from this stream using read/2, read_term/3 etc.
+    OnOff is one of the atoms on or off, the default is on.
+
+output_options(OptionList)
+    Write-streams only. Specifies the default output options that will be
+    used when printing terms onto this stream, e.g. using write/2.
+    The format of OptionList is the same as the one accepted by the
+    write_term/2,3 predicates.
+    Note that certain output predicates can override these default
+    settings, e.g. writeq/2, write_term/3, printf/3, etc.
+
+yield(OnOff)
+    This option is intended for queue streams in embedded applications
+    of ECLiPSe.  It configures the stream to yield control to the host
+    program whenever a read-queue reaches end-of-file or a write-queue
+    gets flushed.  See the Embedding Manual for more details.  OnOff
+    is one of the atoms on or off.
+
+
+   Note that streams are not closed on backtracking through the call to open/3.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- File or Mode is not instantiated.
+     5 --- File is not an atom, string or structure.
+     5 --- Mode is not an atom.
+     5 --- Stream is not an atom or a variable.
+   170 --- The operating system cannot open the file.
+   192 --- Mode is an atom, but is not a valid mode.
+
+Examples
+   
+    See open/3.
+
+
+
+
+
+See Also
+   set_stream_property / 3, at / 2, at_eof / 1, current_stream / 1, get_stream_info / 3, open / 3, pipe / 2, seek / 2, select / 3, stream_truncate / 1, flush / 1, write_term / 2, write_term / 3

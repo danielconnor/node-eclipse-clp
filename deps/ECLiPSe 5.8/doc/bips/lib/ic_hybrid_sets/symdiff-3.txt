@@ -1,0 +1,14 @@
+
+symdiff(?Set1, ?Set2, ?Set3)
+
+   Set3 is the symmetric difference of the integer sets Set1 and Set2
+
+Arguments
+   Set1                a set, set variable or set expression
+   Set2                a set, set variable or set expression
+   Set3                a set, set variable, free variable or set expression
+
+Type
+   library(ic_hybrid_sets)
+
+

@@ -1,0 +1,59 @@
+
+term_to_bytes(?Term, -String)
+
+   String is a ground encoding of Term, suitable for writing to a file,
+transmitting over a network etc.
+
+
+
+Arguments
+   ?Term               Prolog term.
+   -String             A variable.
+
+Type
+   Term Manipulation
+
+Description
+   This predicate produces a string which contains an encoded representation
+   of the term Term. This representation is machine-independent, can be stored
+   in files, sent over networks etc. Note however that the string can contain
+   arbitrary bytes, including NUL and control characters.
+
+
+   The predicate attempts to convert the term with all its attached
+   variable attributes and delayed goals. If this is not wanted,
+   you can strip those by first copying the term using copy_term/2 or
+   copy_term/3.
+
+
+   The term_to_bytes/bytes_to_term predicates differ from term_string/2
+   in that they do not create a human-readable representation, but are
+   significantly faster and convert the term with all its attributes.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- String is neither variable nor string.
+
+Examples
+   
+[eclipse]: term_to_bytes(s(X),String), bytes_to_term(String, Term).
+String = "\000\000\000\b\001\002\013\001\001s\000\377\006\376\006\001X\000"
+Term = s(X)
+yes.
+
+
+
+
+
+See Also
+   bytes_to_term / 2, copy_term / 2, copy_term / 3, writeq / 1, writeq / 2, write_canonical / 1, write_canonical / 2

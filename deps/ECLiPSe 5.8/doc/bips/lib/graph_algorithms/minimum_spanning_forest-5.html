@@ -1,0 +1,64 @@
+<HTML><HEAD><TITLE>minimum_spanning_forest(+Graph, +DistanceArg, -Forest, -ForestSize, -ForestWeight)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>minimum_spanning_forest(+Graph, +DistanceArg, -Forest, -ForestSize, -ForestWeight)</H1>
+Computes a minimum spanning forest, its size and weight
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>DistanceArg</EM></DT>
+<DD>which argument of EdgeData to use as distance: integer
+</DD>
+<DT><EM>Forest</EM></DT>
+<DD>a list of e/3 edge structures
+</DD>
+<DT><EM>ForestSize</EM></DT>
+<DD>the number of edges in the Forest list
+</DD>
+<DT><EM>ForestWeight</EM></DT>
+<DD>sum of the forest's edge weights: number
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Computes a minimum spanning forest for the given graph. A minimum
+    spanning forest is a smallest subset of the graph's edges that still
+    connects all the graph's connected components. Such a forest is not
+    unique, but all minimum spanning forests will have the same cost.
+    As opposed to a minimum spanning tree, a forest exists also if the
+    original graph is not connnected. The forest will have the same
+    number of connected components as the original graph.
+</P><P>
+    The computed forest is returned in Forest, which is simply a list of
+    the edges that form the forest. The ForestSize is the number of
+    edges that constitute the forest. The ForestWeight is the total
+    length of the forest's edges, according to DistanceArg.
+</P><P>
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. Important: the distance
+    information in EdgeData must be a non-negative number, and the
+    numeric type (integer, float, etc) must be the same in all edges.
+</P><P>
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+</P><P>
+    The direction of the graph's edges is ignored by this predicate.
+</P><P>
+    The implementation uses Kruskal's algorithm which has a complexity
+    of O(Nedges*log(Nedges)).
+    </P>
+<H2>Examples</H2>
+<PRE>
+    ?- sample_graph(G), minimum_spanning_forest(G, 0, T, S, W).
+    T = [e(2, 10, 1), e(4, 8, 1), e(9, 2, 1), e(7, 3, 2), ...]
+    S = 8
+    W = 16
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/minimum_spanning_tree-4.html">minimum_spanning_tree / 4</A>
+</BODY></HTML>

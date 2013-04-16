@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Compiling Procedures as Dynamic or Static</TITLE>
+<META NAME="description" CONTENT="Compiling Procedures as Dynamic or Static">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node66.html">
+<LINK REL="previous" HREF="node64.html">
+<LINK REL="up" HREF="node64.html">
+<LINK REL="next" HREF="node66.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3227"
+ HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3223"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3217"
+ HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3225"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3228"
+ HREF="node66.html">Altering programs at run</A>
+<B> Up:</B> <A NAME="tex2html3224"
+ HREF="node64.html">Dynamic Code</A>
+<B> Previous:</B> <A NAME="tex2html3218"
+ HREF="node64.html">Dynamic Code</A>
+ &nbsp <B>  <A NAME="tex2html3226"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001110000000000000000"></A>
+<A NAME="compdynamic"></A>
+<BR>
+Compiling Procedures as Dynamic or Static
+</H1>
+
+<P>
+If it is intended that
+a procedure be altered through the use of <A NAME="tex2html891"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert/1</A><A NAME="6420"></A> and <A NAME="tex2html893"
+ HREF="../bips/kernel/dynamic/retract-1.html">retract/1</A><A NAME="6423"></A>,
+<A NAME="6317"></A>
+<A NAME="6318"></A>
+the system should be informed that the procedure will be dynamic,
+since these predicates are
+designed to work on dynamic procedures. 
+If <A NAME="tex2html897"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert/1</A><A NAME="6426"></A> is applied on a non-existing procedure, an error
+is raised, however the default error handler for this error
+only declares the procedure as dynamic and then makes the assertion.
+
+<P>
+A procedure is by default static unless it has been specifically declared as
+dynamic.
+Clauses of static procedures must always be consecutive,
+they may not
+be separated in one or more source files or by the user from the top level.
+If the static procedure clauses are not consecutive, each of the
+consecutive parts is taken as a separate procedure which redefines
+the previous occurrence of that procedure, and so only the last one will
+remain.
+However, whenever the compiler encounters nonconsecutive clauses of a static
+procedure in one file, it raises an exception whose default handler
+prints a warning but it continues to compile the rest of the file.
+
+<P>
+If a procedure is to be dynamic the ECLiPSe system should be
+given a specific <I>dynamic declaration</I>
+A dynamic declaration takes the form<PRE>
+:- dynamic SpecList.
+</PRE>
+<A NAME="6327"></A>
+The predicate <A NAME="tex2html900"
+ HREF="../bips/kernel/dynamic/is_dynamic-1.html">is_dynamic/1</A><A NAME="6429"></A> may be used to check if a procedure
+is dynamic:<PRE>
+is_dynamic(Name/Arity).
+</PRE>
+<A NAME="6334"></A>
+When the goal <PRE>
+compile(Somefile)
+</PRE>
+is executed
+and <TT>Somefile</TT> contains clauses for procedures that have
+already been defined
+in the Prolog database, those procedures are treated in one of two ways:
+If such a procedure is dynamic, its clauses compiled from <TT>Somefile</TT>
+are added to the database (just as would happen if they were asserted),
+and the existing clauses are not affected.
+For example, if the following
+clauses have already been compiled:<PRE>
+:- dynamic city/1.
+
+city(london).
+city(paris).
+</PRE>
+and the file <TT>Somefile</TT> contains the
+following Prolog code:<PRE>
+city(munich).
+city(tokyo).
+</PRE>
+then compiling <TT>Somefile</TT> will cause adding
+the clauses for <B>city/1</B> to those
+already compiled, as <B>city/1</B> has been declared dynamic.
+Thus the query  <B>city(X</B>) will give:<PRE>
+[eclipse 5]: city(X).
+X = london    More? (;)
+
+X = paris    More? (;)
+
+X = munich    More? (;)
+
+X = tokyo
+yes.
+</PRE>
+
+<P>
+If, however, the compiled procedure is static,
+the new clauses in <TT>Somefile</TT> replace the old procedure.
+Thus, if
+the following clauses have been compiled:<PRE>
+city(london).
+city(paris).
+</PRE>
+and the file <TT>Somefile</TT> contains the following Prolog code:<PRE>
+city(munich).
+city(tokyo).
+</PRE>
+when <TT>Somefile</TT> is compiled, then the procedure <B>city/1</B> is redefined.
+Thus the query <TT>city(X</TT>) will give:<PRE>
+[eclipse 5]: city(X).
+X = munich    More? (;)
+
+X = tokyo
+yes.
+</PRE>
+
+<P>
+When the <A NAME="tex2html903"
+ HREF="../bips/kernel/dynamic/dynamic-1.html">dynamic/1</A><A NAME="6432"></A> declaration is used on a procedure that is
+already dynamic, which may happen for instance by recompiling a file
+with this declaration inside, the system raises the error 64,
+'procedure already dynamic'.
+The default handler for this error, however, will only erase
+all existing clauses for the specified procedure, so that
+when such a file is recompiled several times during its debugging,
+the system behaves as expected, the existing clauses
+are always replaced.
+The handler for this error can of course be changed if required.
+If it is set to <A NAME="tex2html905"
+ HREF="../bips/kernel/control/true-0.html">true/0</A><A NAME="6435"></A>, for instance,
+the <A NAME="tex2html907"
+ HREF="../bips/kernel/dynamic/dynamic-1.html">dynamic/1</A><A NAME="6438"></A> declaration is be just silently
+accepted without erasing any clauses and without printing an error message.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3227"
+ HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3223"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3217"
+ HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3225"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3228"
+ HREF="node66.html">Altering programs at run</A>
+<B> Up:</B> <A NAME="tex2html3224"
+ HREF="node64.html">Dynamic Code</A>
+<B> Previous:</B> <A NAME="tex2html3218"
+ HREF="node64.html">Dynamic Code</A>
+ &nbsp <B>  <A NAME="tex2html3226"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

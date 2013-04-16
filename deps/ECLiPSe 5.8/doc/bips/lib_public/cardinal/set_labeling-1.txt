@@ -1,0 +1,50 @@
+
+set_labeling(?SetVars)
+
+   Label set variable(s)
+
+Arguments
+   SetVars             A variable or a list of set variables.
+
+Type
+   library(cardinal)
+
+Description
+Instantiate all variables in SetVars from first to last, with
+		consecutive refinements of their domains until they are ground.
+		For each set variable, for each element in its poss (lub\glb), inclusion
+		is tried first.
+		SetVars can be a set variable instead of a list. Labeling a single set
+		variable S can thus be done both with set_labeling([S]) or with
+		set_labeling(S).
+
+Resatisfiable
+   Yes.
+
+Fail Conditions
+   Fails if SetVars can not be labeled (there is no solution to the CSP).
+
+Examples
+   
+?- S `:: [a] + [b, c], T `:: [1] + [2], set_labeling([S, T]).
+S = [a, b, c], T = [1, 2] ;
+S = [a, b, c], T = [1] ;
+S = [a, b], T = [1, 2] ;
+S = [a, b], T = [1] ;
+S = [a, c], T = [1, 2] ;
+S = [a, c], T = [1] ;
+S = [a], T = [1, 2] ;
+S = [a], T = [1] ;
+no
+
+?- S `:: [a] + [b, c], T `:: [1] + [2], set_labeling(S).
+S = [a, b, c] ;
+S = [a, b] ;
+S = [a, c] ;
+S = [a] ;
+no
+
+
+
+See Also
+   set_labeling / 2, refine / 2

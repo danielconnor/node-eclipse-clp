@@ -1,0 +1,28 @@
+
+sbds_try_set(+Var, ++Value, ++Bool)
+
+   Try adding/excluding a value to/from an SBDS set search variable
+
+Arguments
+   Var                 The set variable to use
+   Value               The value to try
+   Bool                Whether to add or exclude the value first
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Make an SBDS (set) search choice.  Specifically, if Bool is 1, try adding
+   the (integer) value Value to the (set) variable Var; on backtracking
+   exclude it.  If Bool is 0, try excluding Value first and try adding it on
+   backtracking.
+
+   Var should be an element of an array previously initialised using
+   sbds_initialise_set/5.
+
+   Use sbds_try_set/4 if you wish to know which is the currently successful
+   branch (Value in Var or Value notin Var).
+
+
+See Also
+   sbds_initialise_set / 5, sbds_try_set / 4, sbds_try / 2

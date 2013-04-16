@@ -1,0 +1,67 @@
+
+nonground(+N, ?Term, ?VarList)
+
+   Succeeds if Term contains at least N different variables, and returns N of
+them in the list VarList.
+
+
+
+Arguments
+   +N                  Integer.
+   ?Term               Prolog term.
+   ?VarList            List or variable.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Term contains at least N different variables.  The
+   argument VarList is unified with a list of exactly N of those variables.
+   If Term contains more than N variables, it is not further specified
+   which ones will be in the list and in which order.  As usual, attributed
+   variables are also considered variables.
+
+
+   Note that this predicate is a generalisation of nonground/1 and
+   nonground/2 which could be written as:
+
+
+
+    nonground(Term) :- nonground(1, Term, _).
+    nonground(Term, Var) :- nonground(1, Term, [Var]).
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Term contains less than N variables.
+
+
+
+Exceptions
+     4 --- N is not instantiated.
+     5 --- VarList instantiated but not to a list.
+     6 --- N is not positive.
+
+Examples
+   
+Success:
+    nonground(1, Term, L).       % gives L = [Term]
+    nonground(1, f(a,B,c), L).   % gives L = [B]
+    nonground(2, [X,Y,Z], L).    % gives L = [Y,X]
+    nonground(2, [X,Y,Z], L).    % gives L = [Y,X]
+    nonground(1, s(X{a}), L).    % gives L = [X{a}]
+
+Fail:
+    nonground(1, atom, L).
+    nonground(2, f(a,B,c), L).
+    nonground(2, [X,X,X], L).
+
+
+
+
+
+See Also
+   nonground / 1, nonground / 2, nonvar / 1, var / 1

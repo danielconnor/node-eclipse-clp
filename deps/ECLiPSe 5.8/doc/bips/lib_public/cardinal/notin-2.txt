@@ -1,0 +1,25 @@
+
+?Element notin ?SetVariable
+
+   Set non-membership constraint
+
+Arguments
+   SetVariable         A set variable.
+   Element             A ground term or a variable.
+
+Type
+   library(cardinal)
+
+Description
+Constrain SetVariable to not include Element.
+		notin/2 is available for compatibility with conjunto library syntax.
+		It is equivalent to the preferred `-@/2. See its description for details.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Element must be a member of SetVariable.
+
+See Also
+   `-@ / 2, `@ / 2, in / 2, `:: / 2

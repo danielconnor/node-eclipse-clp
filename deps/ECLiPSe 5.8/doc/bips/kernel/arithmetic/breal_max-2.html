@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>breal_max(+Number, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>breal_max(+Number, ?Result)</H1>
+Extracts the upper floating point bound of Number
+<DL>
+<DT><EM>Number</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>Result</EM></DT>
+<DD>A variable or float.
+</DD>
+</DL>
+<H2>Description</H2>
+    This predicate is used by the ECLiPSe compiler to expand evaluable
+    arithmetic expressions.  So a call to breal_max(Number, Result) is
+    equivalent to
+<PRE>
+    Result is breal_max(Number).
+</PRE>
+    A bounded real is a real number represented by a lower and upper
+    bound in floating point format. This predicate extracts the upper
+    bound and unifies it with Result. If Number is not a bounded real,
+    the result returned is equivalent to converting it to a bounded real
+    first.
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>Number is a not a number.
+<DT><EM>(5) type error </EM>
+<DD>Result is neither a variable nor a float.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      ?- breal_max(0.99__1.01, X).
+      X = 1.01
+
+      ?- breal_max(1, X).
+      X = 1.0
+
+      ?- breal_max(1.0, X).
+      X = 1.0
+
+      ?- breal_max(1_10, X).
+      X = 0.10000000000000002
+
+Error:
+      ?- breal_max("a", Z).
+      type error in breal_max("a", Z)
+
+      ?- breal_max(2 + 4, Z).
+      type error in breal_max(2 + 4, Z)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/breal_min-2.html">breal_min / 2</A>, <A HREF="../../kernel/typetest/breal-1.html">breal / 1</A>, <A HREF="../../kernel/arithmetic/breal-2.html">breal / 2</A>, <A HREF="../../kernel/arithmetic/breal_bounds-3.html">breal_bounds / 3</A>, <A HREF="../../kernel/arithmetic/breal_from_bounds-3.html">breal_from_bounds / 3</A>, <A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

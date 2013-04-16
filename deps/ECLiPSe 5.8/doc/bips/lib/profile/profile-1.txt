@@ -1,0 +1,9 @@
+
+profile(+Goal)
+
+   Execute Goal (once) and print profiling information
+
+Type
+   library(profile)
+
+

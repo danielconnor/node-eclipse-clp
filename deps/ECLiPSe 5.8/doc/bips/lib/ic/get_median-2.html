@@ -1,0 +1,42 @@
+<HTML><HEAD><TITLE>get_median(?Var, -Median)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_median(?Var, -Median)</H1>
+Returns the median of the interval of the IC variable Var.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>A variable or a number
+</DD>
+<DT><EM>Median</EM></DT>
+<DD>The median of the interval
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>get_median(-, -)
+<LI>get_median(?, -)
+<LI>get_median(++, -)
+</UL>
+<H2>Description</H2>
+<P>
+   Returns the median of the interval of Var (usually so that the interval
+   can be split).  If Var has not been declared before, it will be turned
+   into an unrestricted real variable.  If Var is a ground number, the
+   median will be calculated appropriately based on its type.</P><P>
+
+   If the interval crosses 0, then the median is 0.  Otherwise, the median
+   splits the interval logarithmically so that the two subintervals have the
+   same number of representable floats.</P>
+
+<H2>Examples</H2>
+<PRE>[eclipse 2]: X :: 10..1000, get_median(X, M).
+X = X{10 .. 1000}
+M = 100.0
+Yes (0.00s cpu)
+
+[eclipse 3]: X :: -1..1000, get_median(X, M).
+X = X{-1 .. 1000}
+M = 0.0
+Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/ic/get_delta-2.html">get_delta / 2</A>, <A HREF="../../lib/ic/get_bounds-3.html">get_bounds / 3</A>
+</BODY></HTML>

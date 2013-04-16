@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>lp_read(+File, ++Format, -Handle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lp_read(+File, ++Format, -Handle)</H1>
+Read a problem from a file and setup a solver for it.
+<DL>
+<DT><EM>File</EM></DT>
+<DD>File name
+</DD>
+<DT><EM>Format</EM></DT>
+<DD>lp or mps
+</DD>
+<DT><EM>Handle</EM></DT>
+<DD>Returns a handle to the new solver state
+</DD>
+</DL>
+<H2>Description</H2>
+
+   Read a problem from a file and setup a solver for it.  Format is
+   lp or mps. The result is a handle similar to the one obtained by 
+   lp_setup/4. Note that minimisation of the objective is assumed 
+   for mps format, as the sense of the objective is not included in 
+   the mps format. Minimisation is also assumed for external solvers
+   that ignore the optimisation direction of the lp file (e.g. Xpress).
+   Note also that although quadratic problems can be read in correctly if
+   supported by the external solver, the quadratic objective coefficients
+   are not extracted from the problem by eplex. These coefficients are
+   used to set/reset the objective when a problem is probed with a
+   different objective in eplex_probe/2 or lp_probe/3, so the objective
+   will not be changed or restored correctly in this case.
+
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/lp_write-3.html">lp_write / 3</A>, <A HREF="../../lib/eplex/lp_setup-4.html">lp_setup / 4</A>, <A HREF="../../lib/eplex/eplex_read-2.html">eplex_read / 2</A>, <A HREF="../../lib/eplex/eplex_write-2.html">eplex_write / 2</A>, <A HREF="../../lib/eplex/lp_probe-3.html">lp_probe / 3</A>
+</BODY></HTML>

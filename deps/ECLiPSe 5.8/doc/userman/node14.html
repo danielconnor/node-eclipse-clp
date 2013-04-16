@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>How do I use ECLiPSe libraries in my programs?</TITLE>
+<META NAME="description" CONTENT="How do I use ECLiPSe libraries in my programs?">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node15.html">
+<LINK REL="previous" HREF="node13.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node15.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2449"
+ HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2445"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2439"
+ HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2447"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2450"
+ HREF="node15.html">How do I make</A>
+<B> Up:</B> <A NAME="tex2html2446"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html2440"
+ HREF="node13.html">How do I make</A>
+ &nbsp <B>  <A NAME="tex2html2448"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00370000000000000000"></A>
+<A NAME="1060"></A>
+<BR>
+How do I use ECLiPSe libraries in my programs?
+</H1>
+
+<P>
+A number of files containing library predicates are supplied with
+the ECLiPSe system.
+These predicates provide utility functions for general use.
+They are usually installed in an ECLiPSe library directory (or
+directories).
+These predicates are either loaded automatically by ECLiPSe or may be
+loaded ``by hand''.
+
+<P>
+During the execution of an ECLiPSe program, the system may dynamically
+load files containing library predicates. When this happens, the user is
+informed by a compilation or loading message.
+It is possible to explicitly force this loading to occur by use
+of the <A NAME="tex2html109"
+ HREF="../bips/kernel/database/lib-1.html">lib/1</A><A NAME="1278"></A> or
+<A NAME="tex2html111"
+ HREF="../bips/kernel/modules/use_module-1.html">use_module/1</A><A NAME="1281"></A> predicates.
+E.g. to load the library
+called <TT>lists</TT>, use one of the following goals:<PRE>
+lib(lists)
+use_module(library(lists))
+</PRE>
+This will load the library file unless it has been already loaded.
+In particular, a program can ensure that a given library is loaded when it
+is compiled, by including an appropriate directive in the source, e.g. <TT>:- lib(lists).</TT>
+
+<P>
+Library files are found by searching the library path and by appending
+a suffix to the library name.
+<A NAME="1075"></A>
+<A NAME="1076"></A>
+The search path used when loading libraries is
+specified by the global flag <B>library_path</B> using the
+<A NAME="tex2html115"
+ HREF="../bips/kernel/env/get_flag-2.html">get_flag/2</A><A NAME="1284"></A> and
+<A NAME="tex2html117"
+ HREF="../bips/kernel/env/set_flag-2.html">set_flag/2</A><A NAME="1287"></A> predicates.
+This flag contains a list of strings containing the pathnames of the
+directories to be searched when loading a library file.
+User libraries may be be added to the system simply by copying the
+desired file into the ECLiPSe library directory.
+Alternatively the <B>library_path</B> flag may be updated to point
+at a number of user specific directories. The following example illustrates
+how a directive may be added to a file to add a user-defined library in front
+of any existing system libraries. <PRE>
+?- get_flag(library_path,Path),
+   set_flag(library_path, ["/home/myuser/mylibs" | Path]).
+</PRE>
+The UNIX environment variable <TT>ECLIPSELIBRARYPATH</TT> may also be used to
+<A NAME="1089"></A>
+specify the initial setting of the library path.
+The syntax is similar to the syntax of the UNIX PATH variable, i.e. a list of directory names separated by colons.
+The directories will be prepended to the standard library path in the
+given order.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2449"
+ HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2445"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2439"
+ HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2447"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2450"
+ HREF="node15.html">How do I make</A>
+<B> Up:</B> <A NAME="tex2html2446"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Previous:</B> <A NAME="tex2html2440"
+ HREF="node13.html">How do I make</A>
+ &nbsp <B>  <A NAME="tex2html2448"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

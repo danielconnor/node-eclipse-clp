@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>nonmember(+Element, +List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>nonmember(+Element, +List)</H1>
+Succeeds if Element is not an element of the list List.
+
+
+<DL>
+<DT><EM>+Element</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>+List</EM></DT>
+<DD>List.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to check that Element is not a member of the list List.
+<P>
+   The definition of this Prolog library predicate is:
+<PRE>
+nonmember(Arg,[Arg|_]) :-
+        !,
+        fail.
+nonmember(Arg,[_|Tail]) :-
+        !,
+        nonmember(Arg,Tail).
+nonmember(_,[]).
+</PRE>
+   This predicate does not perform any type testing functions.
+	
+<H3>Fail Conditions</H3>
+   Fails if Element is an element of the list List.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+  nonmember(q,[1,2,3,4,5,6,7]).
+
+Fail:
+  nonmember(1,[1,2,3]).
+  nonmember(q,[1,2,2,X]). % X and q are unifiable
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/lists/member-2.html">member / 2</A>, <A HREF="../../lib/lists/memberchk-2.html">memberchk / 2</A>
+</BODY></HTML>

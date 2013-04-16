@@ -1,0 +1,9 @@
+
+list_error(+String, -ErrNo, -ErrMsg)
+
+   Find the event number whose message contains the specified substring
+
+Type
+   library(util)
+
+

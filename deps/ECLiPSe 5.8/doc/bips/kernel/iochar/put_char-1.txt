@@ -1,0 +1,40 @@
+
+put_char(+Char)
+
+   Puts the single character string Char onto the buffered current output.
+
+
+
+Arguments
+   +Char               Single character string.
+
+Type
+   Character I/O
+
+Description
+   Puts the single-character string Char onto the current output.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Char is not instantiated.
+     5 --- Char is instantiated, but not to a single character string.
+
+Examples
+      Equivalent to put_char(output, Char).  (see put_char/2 for details).
+
+
+
+
+
+See Also
+   get_char / 1, get_char / 2, put_char / 2

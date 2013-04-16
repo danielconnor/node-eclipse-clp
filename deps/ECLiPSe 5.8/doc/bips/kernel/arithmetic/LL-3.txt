@@ -1,0 +1,65 @@
+
+<<(+Number1, +Number2, ?Result)
+
+   Shifts Number1 left arithmetically by Number2 bits and unifies the
+resulting value with Result.
+
+
+
+Arguments
+   +Number1            Integer.
+   +Number2            Integer.
+   ?Result             A variable or integer.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to <<(Number1, Number2, Result) is
+   equivalent to
+
+    Result is Number1 << Number2
+
+    which should be preferred for portability.  The effect of negative
+   shift counts and shift counts greater than 31 is machine dependent.
+
+   In coroutining mode, if Number1 or Number2 are free variables, the call
+   to <</3 is delayed until these variables are instantiated.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number1 or Number2 is not instantiated (non-coroutining mode    only).
+     5 --- Result is a number but not an integer.
+     5 --- Number1 or Number2 is a number but not an integer.
+    24 --- Number1 or Number2 is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+
+Examples
+   
+Success:
+      <<(1, 3, 8).
+Fail:
+      <<(1, 2, 3).
+Error:
+      <<(A, 2, 6).              (Error 4).
+      <<(6, 2.0, 24.0).         (Error 5).
+      <<(4 + 2, 2, 24).         (Error 24).
+      <<(5, 2, r).              (Error 24).
+
+
+
+
+
+See Also
+   is / 2

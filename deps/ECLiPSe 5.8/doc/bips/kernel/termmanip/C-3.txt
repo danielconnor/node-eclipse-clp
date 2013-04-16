@@ -1,0 +1,72 @@
+
+'C'(?Input, ?Token, ?Rest)
+
+   Specifies how DCG grammar rules get a token from their input.
+
+
+
+Arguments
+   ?Input              A List or a variable.
+   ?Token              A term or a variable.
+   ?Rest               A List or a variable.
+
+Type
+   Term Manipulation
+
+Description
+   This predicate is only useful in connection with definite clause grammar
+   rules (DCG). There is a global default definition of 'C'/3 which
+   consists of the single clause 'C'([Token|Rest], Token, Rest).  The Input
+   argument represents the parsing input before consuming Token and Rest is
+   the input after consuming Token.
+
+
+   DCGs normally operate on lists of tokens.  However, by redefining 'C'/3,
+   it is possible to let them manipulate other data structures.  The
+   example shows how to parse directly from an I/O stream.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Input is not a non-empty list.
+
+
+
+Examples
+   
+[eclipse 1]: [user].
+ sentence --> noun, [is], adjective.
+ noun --> [prolog] ; [lisp].
+ adjective --> [boring] ; [great].
+user       compiled traceable 560 bytes in 0.05 seconds
+
+yes.
+[eclipse 2]: phrase(sentence, [prolog,is,great], []).
+
+yes.
+[eclipse 3]: [user].
+:- local 'C'/3.       % to avoid a redefinition warning
+'C'(Stream-Pos0, Token, Stream-Pos1) :-
+        seek(Stream, Pos0),
+        read_string(Stream, " ", _, TokenString),
+        atom_string(Token, TokenString),
+        at(Stream, Pos1).
+user       compiled traceable 308 bytes in 0.00 seconds
+
+yes.
+[eclipse 4]: open(string("prolog is great"), read, S),
+             phrase(sentence, S-0, S-End).
+S = 9
+End = 15     More? (;)
+yes.
+
+
+
+
+
+See Also
+   phrase / 3

@@ -1,0 +1,59 @@
+
+bytes_to_term(+String, -Term)
+
+   Converts String, which is supposed to be an encoding of a term, into Term.
+
+
+
+Arguments
+   +String             A string produced by term_to_bytes/2.
+   -Term               A variable.
+
+Type
+   Term Manipulation
+
+Description
+   This predicate decodes strings produced by term_to_bytes/2 and
+   reconstructs the encoded term.  The string representation is
+   machine-independent, can be stored in files, sent over networks etc.
+   Note however that the string can contain arbitrary bytes,
+   including NUL and control characters.
+
+
+   The predicate attempts to reconstruct the term with all its attached
+   variable attributes and delayed goals. For this to be possible, the
+   variable attributes and the predicates corresponding to delayed goals
+   must all be defined in the environment where the term is reconstructed.
+
+
+   The term_to_bytes/bytes_to_term predicates differ from term_string/2
+   in that they do not create a human-readable representation, but are
+   significantly faster and convert the term with all its attributes.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- String is not a string.
+
+Examples
+   
+[eclipse]: term_to_bytes(s(X),String), bytes_to_term(String, Term).
+String = "\000\000\000\b\001\002\013\001\001s\000\377\006\376\006\001X\000"
+Term = s(X)
+yes.
+
+
+
+
+
+See Also
+   term_to_bytes / 2, copy_term / 2, copy_term / 3, writeq / 1, writeq / 2, write_canonical / 1, write_canonical / 2

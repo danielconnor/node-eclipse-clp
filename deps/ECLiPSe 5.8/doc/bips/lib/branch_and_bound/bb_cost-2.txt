@@ -1,0 +1,10 @@
+
+bb_cost(++Handle, -Cost)
+
+   Low-level primitive for building branch-and-bound-style search procedures
+
+Type
+   library(branch_and_bound)
+
+See Also
+   bb_probe / 7

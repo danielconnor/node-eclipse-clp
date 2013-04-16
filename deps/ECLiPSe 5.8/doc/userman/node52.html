@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node53.html">
+<LINK REL="previous" HREF="node51.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3031"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3027"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3021"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3029"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3032"
+ HREF="node53.html">Bags</A>
+<B> Up:</B> <A NAME="tex2html3028"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3022"
+ HREF="node51.html">Non-logical Storage and References</A>
+ &nbsp <B>  <A NAME="tex2html3030"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00910000000000000000">
+Introduction</A>
+</H1>
+
+<P>
+This chapter describes primitives that allow to break the normal logic
+programming rules in two ways:
+
+<UL><LI>information can be <B>saved across logical failures</B> and backtracking
+
+<LI>information can be accessed by <B>naming</B> rather than by argument passing
+
+</UL>
+Obviously, these facilities must be used with care and should always
+be encapsulated in an interface that provides logical semantics.
+
+<P>
+ECLiPSe provides several facilities to store information across
+backtracking.  The following table gives an overview.  If at all
+possible, the handle-based facilities (bags, shelves and stores) should be
+preferred because they lead to cleaner, reentrant code (without global
+state) and reduce the risk of memory leaks. 
+
+<P>
+<BR>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Facility</TD>
+<TD ALIGN="LEFT">Type</TD>
+<TD ALIGN="LEFT">Access</TD>
+<TD ALIGN="LEFT">See</TD>
+</TR>
+<TR><TD ALIGN="LEFT">shelves</TD>
+<TD ALIGN="LEFT">array</TD>
+<TD ALIGN="LEFT">by handle</TD>
+<TD ALIGN="LEFT">shelf_create/2,3</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bags</TD>
+<TD ALIGN="LEFT">unordered bag</TD>
+<TD ALIGN="LEFT">by handle</TD>
+<TD ALIGN="LEFT">bag_create/1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stores</TD>
+<TD ALIGN="LEFT">hash table</TD>
+<TD ALIGN="LEFT">by handle</TD>
+<TD ALIGN="LEFT">store_create/1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">named shelves</TD>
+<TD ALIGN="LEFT">array</TD>
+<TD ALIGN="LEFT">by name</TD>
+<TD ALIGN="LEFT">shelf/2</TD>
+</TR>
+<TR><TD ALIGN="LEFT">named stores</TD>
+<TD ALIGN="LEFT">hash table</TD>
+<TD ALIGN="LEFT">by name</TD>
+<TD ALIGN="LEFT">store/1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">non-logical variables</TD>
+<TD ALIGN="LEFT">single cell</TD>
+<TD ALIGN="LEFT">by name</TD>
+<TD ALIGN="LEFT">variable/1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">non-logical arrays</TD>
+<TD ALIGN="LEFT">array</TD>
+<TD ALIGN="LEFT">by name</TD>
+<TD ALIGN="LEFT">array/1,2</TD>
+</TR>
+<TR><TD ALIGN="LEFT">records</TD>
+<TD ALIGN="LEFT">ordered list</TD>
+<TD ALIGN="LEFT">by name</TD>
+<TD ALIGN="LEFT">record/1,2</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dynamic predicates</TD>
+<TD ALIGN="LEFT">ordered list</TD>
+<TD ALIGN="LEFT">by name</TD>
+<TD ALIGN="LEFT">dynamic/1,assert/1</TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+
+<P>
+<A NAME="4878"></A>
+<A NAME="4879"></A>
+The other facility described here, <B>Global References</B>, does not store
+information across failure, but provides a means to give a name to
+an otherwise logical data structure. See section <A HREF="node58.html#globrefs">9.7</A>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3031"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3027"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3021"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3029"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3032"
+ HREF="node53.html">Bags</A>
+<B> Up:</B> <A NAME="tex2html3028"
+ HREF="node51.html">Non-logical Storage and References</A>
+<B> Previous:</B> <A NAME="tex2html3022"
+ HREF="node51.html">Non-logical Storage and References</A>
+ &nbsp <B>  <A NAME="tex2html3030"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

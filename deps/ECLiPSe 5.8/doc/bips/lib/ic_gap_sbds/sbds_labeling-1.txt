@@ -1,0 +1,18 @@
+
+sbds_labeling(?List)
+
+   Instantiate all integer SBDS variables in a list to elements of their domains
+
+Arguments
+   List                A list of integer SBDS variables or integers
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Like labeling/1, but uses sbds_indomain/1 to do the instantiation so that
+   the SBDS algorithms are invoked appropriately.
+
+
+See Also
+   fd : labeling / 1, ic : labeling / 1, sbds_indomain / 1

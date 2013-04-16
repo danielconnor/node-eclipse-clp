@@ -1,0 +1,60 @@
+
+use_module(+ModuleFile)
+
+   Load and import the module from the given ModuleFile.
+
+Arguments
+   +ModuleFile         Atom, String, compound term library(Name), or a list of such.
+
+Type
+   Modules
+
+Description
+   This is a combination of ensure_loaded/1 and import/1, i.e. it
+   loads a module file and imports everything the module exports.
+
+   ModuleFile is a module name, a source file name, a library
+   specification (e.g. library(util)) or a list of such items. 
+   First, ModuleFile is converted to a file name and that file is
+   loaded, compiled or recompiled as with ensure_loaded/1.
+   Then, a module name is extracted from the base name of ModuleFile
+   (the loading is expected to create that module, i.e. the file is
+   expected to follow the naming convention for module files).
+   That module is then imported as with import/1.
+
+   The rules for finding the source file from the ModuleFile specification
+   are the same as for ensure_loaded/1 and compile/1, i.e. object or
+   source file suffixes are appended, and the library path is searched
+   if the name is specified as library(FileName).
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is instantiated, but not to an atom.
+    80 --- Module is not defined in the compiled file.
+   171 --- The file does not exist or is not readable.
+
+Examples
+   
+Success:
+    :- use_module(library(util)).
+    :- use_module("/usr/local/eclipse/lib/util").
+    :- use_module(util).
+    :- use_module("util.pl").
+
+
+Error:
+    :- use_module(M).                      (Error 4).
+    :- use_module(file(f)).                (Error 5).
+
+
+See Also
+   module / 1, module / 3, compile / 1, ensure_loaded / 1, import / 1, lib / 1, existing_file / 4

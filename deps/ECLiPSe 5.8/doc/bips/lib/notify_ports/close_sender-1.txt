@@ -1,0 +1,12 @@
+
+close_sender(+SendPort)
+
+   Close a send port
+
+Arguments
+   SendPort            a send port structure
+
+Type
+   library(notify_ports)
+
+

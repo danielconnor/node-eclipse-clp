@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>EPLEX: The ECLiPSe/LP/MIP Interface</TITLE>
+<META NAME="description" CONTENT="EPLEX: The ECLiPSe/LP/MIP Interface">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node64.html">
+<LINK REL="previous" HREF="node43.html">
+<LINK REL="up" HREF="libman.html">
+<LINK REL="next" HREF="node54.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1623"
+ HREF="node54.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1619"
+ HREF="libman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1613"
+ HREF="node52.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1621"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1624"
+ HREF="node54.html">Usage</A>
+<B> Up:</B> <A NAME="tex2html1620"
+ HREF="libman.html">ECLiPSe Constraint Library Manual</A>
+<B> Previous:</B> <A NAME="tex2html1614"
+ HREF="node52.html">The Extended CHR Implementation</A>
+ &nbsp <B>  <A NAME="tex2html1622"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00900000000000000000"></A>
+<A NAME="chapeplex"></A><A NAME="4038"></A>
+<A NAME="4039"></A>
+<A NAME="4040"></A>
+<A NAME="4041"></A>
+<BR>
+EPLEX: The ECLiPSe/LP/MIP Interface
+</H1>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html1625"
+ HREF="node54.html">Usage</A>
+<LI><A NAME="tex2html1626"
+ HREF="node55.html">Eplex Instances</A>
+<UL>
+<LI><A NAME="tex2html1627"
+ HREF="node55.html#SECTION00920100000000000000">eplex_instance(+Name)</A>
+<LI><A NAME="tex2html1628"
+ HREF="node55.html#SECTION00921000000000000000">Linear Constraints</A>
+<UL>
+<LI><A NAME="tex2html1629"
+ HREF="node55.html#SECTION00921100000000000000">EplexInstance: (X $= Y)</A>
+<LI><A NAME="tex2html1630"
+ HREF="node55.html#SECTION00921200000000000000">EplexInstance: (X $&gt;= Y)</A>
+<LI><A NAME="tex2html1631"
+ HREF="node55.html#SECTION00921300000000000000">EplexInstance: (X  $=&lt; Y)</A>
+</UL>
+<LI><A NAME="tex2html1632"
+ HREF="node55.html#SECTION00922000000000000000">Linear Expressions</A>
+<LI><A NAME="tex2html1633"
+ HREF="node55.html#SECTION00923000000000000000">Bounds</A>
+<LI><A NAME="tex2html1634"
+ HREF="node55.html#SECTION00924000000000000000">Integrality</A>
+<LI><A NAME="tex2html1635"
+ HREF="node55.html#SECTION00925000000000000000">Solving Simple Eplex Problems</A>
+<LI><A NAME="tex2html1636"
+ HREF="node55.html#SECTION00926000000000000000">Examples</A>
+</UL>
+<LI><A NAME="tex2html1637"
+ HREF="node56.html">Advanced Use of Eplex Instances</A>
+<UL>
+<LI><A NAME="tex2html1638"
+ HREF="node56.html#SECTION00931000000000000000">Obtaining Solver State Information</A>
+<LI><A NAME="tex2html1639"
+ HREF="node56.html#SECTION00932000000000000000">Creating Eplex Instances Dynamically</A>
+<LI><A NAME="tex2html1640"
+ HREF="node56.html#SECTION00933000000000000000">Interface for CLP-Integration: Solver Demons</A>
+<UL>
+<LI><A NAME="tex2html1641"
+ HREF="node56.html#SECTION00933100000000000000">EplexInstance:eplex_solver_setup(+Objective, -Cost, +ListOfOptions, +TriggerModes)</A>
+<LI><A NAME="tex2html1642"
+ HREF="node56.html#SECTION00933200000000000000">Example</A>
+</UL>
+<LI><A NAME="tex2html1643"
+ HREF="node56.html#SECTION00934000000000000000">Probing Using a Different Objective</A>
+<UL>
+<LI><A NAME="tex2html1644"
+ HREF="node56.html#SECTION00934100000000000000">EplexInstance:eplex_probe(+Probes, -Cost)</A>
+</UL>
+<LI><A NAME="tex2html1645"
+ HREF="node56.html#SECTION00935000000000000000">Destroying the Solver State</A>
+<UL>
+<LI><A NAME="tex2html1646"
+ HREF="node56.html#SECTION00935100000000000000">EplexInstance:eplex_cleanup</A>
+</UL>
+<LI><A NAME="tex2html1647"
+ HREF="node56.html#SECTION00936000000000000000">Eplex Instance Interface Example: definition of optimize/2:</A>
+</UL>
+<LI><A NAME="tex2html1648"
+ HREF="node57.html">Low-Level Solver Interface</A>
+<UL>
+<LI><A NAME="tex2html1649"
+ HREF="node57.html#SECTION00941000000000000000">Setting Up a Solver State</A>
+<UL>
+<LI><A NAME="tex2html1650"
+ HREF="node57.html#SECTION00941100000000000000">lp_demon_setup(+Objective, -Cost, +ListOfOptions, 
++TriggerModes, -Handle)</A>
+<LI><A NAME="tex2html1651"
+ HREF="node57.html#SECTION00941200000000000000">lp_setup(+NormConstraints, +Objective, +ListOfOptions, -Handle)</A>
+</UL>
+<LI><A NAME="tex2html1652"
+ HREF="node57.html#SECTION00942000000000000000">Adding Constraints to a Solver State</A>
+<UL>
+<LI><A NAME="tex2html1653"
+ HREF="node57.html#SECTION00942100000000000000">lp_add_constraints(+Handle, +Constraints, +NewIntegers)</A>
+<LI><A NAME="tex2html1654"
+ HREF="node57.html#SECTION00942200000000000000">lp_add(+Handle, +NewNormConstraints, +NewIntegers)</A>
+<LI><A NAME="tex2html1655"
+ HREF="node57.html#SECTION00942300000000000000">lp_add_vars(+Handle, +Vars)</A>
+<LI><A NAME="tex2html1656"
+ HREF="node57.html#SECTION00942400000000000000">lp_var_set_bounds(+Handle, +Var, ++Lo,++Hi)</A>
+</UL>
+<LI><A NAME="tex2html1657"
+ HREF="node57.html#SECTION00943000000000000000">Running a Solver State Explicitly</A>
+<UL>
+<LI><A NAME="tex2html1658"
+ HREF="node57.html#SECTION00943100000000000000">lp_solve(+Handle,
+-Cost)</A>
+<LI><A NAME="tex2html1659"
+ HREF="node57.html#SECTION00943200000000000000">lp_probe(+Handle, +Probes, -Cost)</A>
+</UL>
+<LI><A NAME="tex2html1660"
+ HREF="node57.html#SECTION00944000000000000000">Accessing the Solver State</A>
+<UL>
+<LI><A NAME="tex2html1661"
+ HREF="node57.html#SECTION00944100000000000000">lp_get(+Handle, +What, -Value)</A>
+<LI><A NAME="tex2html1662"
+ HREF="node57.html#SECTION00944200000000000000">lp_var_get(+Handle,+Var, +What, -Value)</A>
+<LI><A NAME="tex2html1663"
+ HREF="node57.html#SECTION00944300000000000000">lp_var_get_bounds(+Handle, +Var, -Lo, -Hi)</A>
+<LI><A NAME="tex2html1664"
+ HREF="node57.html#SECTION00944400000000000000">reduced_cost_pruning(+Handle,?GlobalCost)</A>
+</UL>
+<LI><A NAME="tex2html1665"
+ HREF="node57.html#SECTION00945000000000000000">Expandable Problem and Constraints</A>
+<UL>
+<LI><A NAME="tex2html1666"
+ HREF="node57.html#SECTION00945100000000000000">lp_add_constraints(+Handle, +Constraints, +Ints, -Idxs)</A>
+<LI><A NAME="tex2html1667"
+ HREF="node57.html#SECTION00945200000000000000">lp_add_columns(+Handle, +Columns)</A>
+</UL>
+<LI><A NAME="tex2html1668"
+ HREF="node57.html#SECTION00946000000000000000">Changing Solver State Settings</A>
+<UL>
+<LI><A NAME="tex2html1669"
+ HREF="node57.html#SECTION00946100000000000000">lp_set(+Handle, +What, +Value)</A>
+</UL>
+<LI><A NAME="tex2html1670"
+ HREF="node57.html#SECTION00947000000000000000">Destroying a Solver State</A>
+<UL>
+<LI><A NAME="tex2html1671"
+ HREF="node57.html#SECTION00947100000000000000">lp_cleanup(+Handle)</A>
+</UL>
+<LI><A NAME="tex2html1672"
+ HREF="node57.html#SECTION00948000000000000000">Miscellaneous Predicates</A>
+<UL>
+<LI><A NAME="tex2html1673"
+ HREF="node57.html#SECTION00948100000000000000">lp_read(+File, +Format, -Handle)</A>
+<LI><A NAME="tex2html1674"
+ HREF="node57.html#SECTION00948200000000000000">lp_write(+Handle, +Format, +File)</A>
+<LI><A NAME="tex2html1675"
+ HREF="node57.html#SECTION00948300000000000000">normalise_cstrs(+Constraints, -NormConstraints, -NonlinConstr)</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1676"
+ HREF="node58.html">Multiple Solver States</A>
+<LI><A NAME="tex2html1677"
+ HREF="node59.html">External Solver Output and Log</A>
+<LI><A NAME="tex2html1678"
+ HREF="node60.html">Dealing with Large and Other Non-standard Numbers</A>
+<LI><A NAME="tex2html1679"
+ HREF="node61.html">Error Handling</A>
+<LI><A NAME="tex2html1680"
+ HREF="node62.html">Solver Behaviour Differences</A>
+<LI><A NAME="tex2html1681"
+ HREF="node63.html">Solver Specific Information</A>
+<UL>
+<LI><A NAME="tex2html1682"
+ HREF="node63.html#SECTION009101000000000000000">Versions and Licences</A>
+<LI><A NAME="tex2html1683"
+ HREF="node63.html#SECTION009102000000000000000">Access to External Solver's Control Parameters</A>
+<UL>
+<LI><A NAME="tex2html1684"
+ HREF="node63.html#SECTION009102100000000000000">lp_get(+Handle, optimizer_param(+ParamName), -Value)</A>
+<LI><A NAME="tex2html1685"
+ HREF="node63.html#SECTION009102200000000000000">EplexInstance:eplex_get(optimizer_param(+ParamName), -Value)</A>
+<LI><A NAME="tex2html1686"
+ HREF="node63.html#SECTION009102300000000000000">lp_get(optimizer_param(+ParamName), -Value)</A>
+<LI><A NAME="tex2html1687"
+ HREF="node63.html#SECTION009102400000000000000">lp_set(+Handle, optimizer_param(+ParamName), +Value)</A>
+<LI><A NAME="tex2html1688"
+ HREF="node63.html#SECTION009102500000000000000">EplexInstance:eplex_set(optimizer_param(+ParamName), +Value)</A>
+<LI><A NAME="tex2html1689"
+ HREF="node63.html#SECTION009102600000000000000">lp_set(optimizer_param(+ParamName), +Value)</A>
+<LI><A NAME="tex2html1690"
+ HREF="node63.html#SECTION009102700000000000000">lp_get(optimizer, -Value)
+and lp_get(optimizer_version, -Value)</A>
+</UL></UL></UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

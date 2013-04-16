@@ -1,0 +1,59 @@
+
+dom_to_list(+Dom, ?List)
+
+   List is the list of elements in the domain Dom.
+
+
+
+Arguments
+   +Dom                A finite domain.
+   ?List               Term unifying with a list of integers.
+
+Type
+   library(fd)
+
+Description
+   List is unified with a sorted list of all elements in the domain Dom.
+
+
+   The predicates ::/2 and #::/2 can also be used to query the domain of a domain
+   variable, however they yield a list of integer intervals, which is the
+   direct domain representation (it is therefore also more efficient
+   because no new structures have to be created).
+
+
+   Use this predicate with care, because it might expand a compact
+   representation of large intervals into an explicit list of their
+   elements.  Unless an explicit list representation of the domain is
+   really required, the predicates working on domains should be preferred.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Var is not a domain variable.
+
+Examples
+   
+   [eclipse 9]: X::[1..3, 100..102], dvar_domain(X, D), dom_to_list(D,
+   List), X::I.
+   D = [1..3, 100..102]
+   List = [1, 2, 3, 100, 101, 102]
+   X = X :: [1 .. 3, 100 .. 102]
+   I = [1 .. 3, 100 .. 102]
+   yes.
+
+
+
+
+
+See Also
+   :: / 2, #:: / 2, maxdomain / 2, mindomain / 2

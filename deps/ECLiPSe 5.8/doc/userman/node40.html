@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Basics</TITLE>
+<META NAME="description" CONTENT="Basics">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node41.html">
+<LINK REL="previous" HREF="node39.html">
+<LINK REL="up" HREF="node39.html">
+<LINK REL="next" HREF="node41.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2837"
+ HREF="node41.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2833"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2827"
+ HREF="node39.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2835"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2838"
+ HREF="node41.html">Getting Started</A>
+<B> Up:</B> <A NAME="tex2html2834"
+ HREF="node39.html">Module System</A>
+<B> Previous:</B> <A NAME="tex2html2828"
+ HREF="node39.html">Module System</A>
+ &nbsp <B>  <A NAME="tex2html2836"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html2839"
+ HREF="node40.html#SECTION00711000000000000000">Purpose of Modules</A>
+<LI><A NAME="tex2html2840"
+ HREF="node40.html#SECTION00712000000000000000">What is under Visibility Control?</A>
+<LI><A NAME="tex2html2841"
+ HREF="node40.html#SECTION00713000000000000000">What Modules are There?</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00710000000000000000">
+Basics</A>
+</H1>
+
+<H2><A NAME="SECTION00711000000000000000">
+Purpose of Modules</A>
+</H2>
+
+<P>
+The purpose of the module system is to provide a way to package
+a piece of code in such a way that
+
+<UL><LI>internals are hidden
+
+<LI>it has a clearly defined interface
+
+<LI>naming conflicts are avoided
+
+</UL>
+In particular, this helps with
+
+<UL><LI>Structuring of large applications:
+    Modules should be used to break application programs into
+    natural components and to define the interfaces between them.
+
+<LI>Provision of libraries:
+    All ECLiPSe libraries are modules. Their interfaces are
+    defined in terms of what the module makes visible to the world.
+
+<LI>Different implementations of the same predicate:
+    In constraint programming it is quite common to have different
+    implementations of a constraint, which all have the same declarative
+    meaning but different operational behaviour (e.g. different amount of
+    propagation, using different algorithms, exhibiting different
+    performance characteristics). The module system supports that by
+    allowing to specify easily which version(s) of a predicate should
+    be used in a particular context.
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION00712000000000000000">
+What is under Visibility Control?</A>
+</H2>
+
+<P>
+The ECLiPSe module system governs the visibility of the following
+entities:
+<DL>
+<DT><STRONG>Predicate names</STRONG>
+<DD>Predicates can always be used in the module where they are defined
+    and optionally in other modules when they are made available.
+<DT><STRONG>Structure names</STRONG>
+<DD><A NAME="3785"></A>
+    Structure declarations can be valid only local to a module or
+    shared between several modules.
+<DT><STRONG>Syntax settings</STRONG>
+<DD><A NAME="3786"></A>
+    These include operator declarations
+    <A NAME="tex2html416"
+ HREF="../bips/kernel/syntax/op-3.html">op/3</A><A NAME="4160"></A>,
+
+syntax options and
+    character classes.
+    This means in particular that different modules can use different
+    language dialects (e.g. ECLiPSe vs. ISO-Prolog).
+<DT><STRONG>Container names</STRONG>
+<DD><A NAME="3790"></A>
+    These include the names of record keys, nonlogical variables and references.
+    They are always local to the module where they are declared.
+<DT><STRONG>Initialization and Finalization goals</STRONG>
+<DD>Modules can have initialization and finalization goals attached,
+    see section <A HREF="node43.html#initfini">7.4.3</A>.
+</DL>
+
+<P>
+Note that every definition (predicate, structure etc) is in some module,
+<A NAME="3793"></A>
+there is no space outside the modules. When you don't explicitly
+specify a module, you inherit the module from the context in which
+you do an operation. When you are using an interactive ECLiPSe
+toplevel, a prompt will tell you in which module your input is
+read and interpreted.
+
+<P>
+
+<H2><A NAME="SECTION00713000000000000000">
+What Modules are There?</A>
+</H2>
+
+<P>
+The module system is flat, i.e. no module is part of another module, 
+and module names must be unique. There are
+
+<UL><LI>a few basic modules that are part of the ECLiPSe runtime
+    <A NAME="3798"></A>
+	system and are always there. The most important one is
+	called <TT>eclipse_language</TT> and is by default imported
+	into all other modules.
+
+<LI>the library modules: every library consists of at least one
+    <A NAME="3800"></A>
+	module. By convention, that module name is the library name
+	and same as the base part of the library filename.
+
+<LI>the application-defined modules: these are created by the
+	application programmer.
+
+<LI>in an interactive ECLiPSe toplevel there is one module
+    <A NAME="3802"></A>
+	in which queries entered by the user are read and executed.
+	That module name is displayed in a prompt.
+
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2837"
+ HREF="node41.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2833"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2827"
+ HREF="node39.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2835"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2838"
+ HREF="node41.html">Getting Started</A>
+<B> Up:</B> <A NAME="tex2html2834"
+ HREF="node39.html">Module System</A>
+<B> Previous:</B> <A NAME="tex2html2828"
+ HREF="node39.html">Module System</A>
+ &nbsp <B>  <A NAME="tex2html2836"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

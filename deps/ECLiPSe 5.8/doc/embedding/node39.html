@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Using the Java-ECLiPSe Interface</TITLE>
+<META NAME="description" CONTENT="Using the Java-ECLiPSe Interface">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node46.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="embroot.html">
+<LINK REL="next" HREF="node40.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1237"
+ HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1233"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1227"
+ HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1235"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1238"
+ HREF="node40.html">Getting Started</A>
+<B> Up:</B> <A NAME="tex2html1234"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html1228"
+ HREF="node38.html">Example</A>
+ &nbsp <B>  <A NAME="tex2html1236"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00800000000000000000"></A>
+<A NAME="chapjava"></A>
+<BR>
+Using the Java-ECLiPSe Interface
+</H1>
+The Java-ECLiPSe Interface is a general-purpose tool for
+interfacing ECLiPSe with Java, Sun's popular object-oriented
+platform-independent programming language. It could be used for
+example to write a Java graphical front-end to an ECLiPSe optimisation
+program or to interface ECLiPSe with a commercial application
+written in Java. This document assumes a moderate level of programming
+in Java (e.g. how to use classes, packages, interfaces etc. and some
+knowledge of the <I>java.util</I>, <I>java.io</I> and <I>java.net</I>
+libraries) and a basic knowledge of how to interact with ECLiPSe
+(e.g. how to execute a goal, nondeterminism, what lists are
+etc.). There are also some diagrams in UML notation, but these are not
+crucial to the reader's understanding.
+
+<P>
+Section <A HREF="node40.html#sec:ji-getting-started">8.1</A> is intended to get you started
+quickly by running the example program <TT>QuickTest.java</TT>. Section
+<A HREF="node41.html#sec:ji-closer-look">8.2</A> gives a brief overview of the functionality
+of the Java-ECLiPSe interface by taking a closer look at how <TT>QuickTest.java</TT> works. In the other sections of the document you will
+learn how to write Java programs which can:
+
+<UL><LI>Manipulate ECLiPSe terms and other data in Java (Section
+<A HREF="node42.html#sec:ji-terms-in-java">8.3</A>).
+
+<LI>Execute goals in ECLiPSe and use the results of this
+computation in Java (Section <A HREF="node43.html#sec:ji-calling-goals">8.4</A>).
+
+<LI>Transfer data between Java and ECLiPSe using queues<A NAME="3627"></A>.
+(Section <A HREF="node44.html#sec:ji-using-queue-streams">8.5</A>).
+
+<LI>Initialise and terminate different kinds of connections between ECLiPSe and Java. (Section <A HREF="node45.html#sec:ji-managing-eclipse-connections">8.6</A>).
+
+</UL>
+
+<P>
+Throughout this document, <TT>&lt;eclipse_dir&gt;</TT> stands for the root
+location of your ECLiPSe installation. Detailed <TT>javadoc</TT>-generated HTML descriptions of the API provided by the <TT>com.parctechnologies.eclipse</TT> package can be found at:
+<BLOCKQUOTE>
+<A NAME="tex2html210"
+ HREF="../javadoc/JavaEclipseInterface/index.html"><TT>&lt;eclipse_dir&gt;/doc/javadoc/JavaEclipseInterface/index.html</TT></A>
+
+</BLOCKQUOTE>
+You may wish to browse the API documentation after reading this
+document to obtain more detailed descriptions of classes and
+interfaces in the package.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html1239"
+ HREF="node40.html">Getting Started</A>
+<UL>
+<LI><A NAME="tex2html1240"
+ HREF="node40.html#SECTION00811000000000000000">Check your Java SDK version</A>
+<LI><A NAME="tex2html1241"
+ HREF="node40.html#SECTION00812000000000000000">Make the <TT>com.parctechnologies.eclipse</TT> package available in your class path</A>
+<LI><A NAME="tex2html1242"
+ HREF="node40.html#SECTION00813000000000000000">Compile and run <TT>QuickTest.java</TT></A>
+</UL>
+<LI><A NAME="tex2html1243"
+ HREF="node41.html">Functionality overview: A closer look at <TT>QuickTest.java</TT></A>
+<UL>
+<LI><A NAME="tex2html1244"
+ HREF="node41.html#SECTION00820100000000000000">Always import the <TT>com.parctechnologies.eclipse</TT> package</A>
+<LI><A NAME="tex2html1245"
+ HREF="node41.html#SECTION00820200000000000000">Declare a reference to an <I>EclipseConnection</I> or an <I>EclipseEngine</I></A>
+<LI><A NAME="tex2html1246"
+ HREF="node41.html#SECTION00820300000000000000">Create an object which implements <I>EclipseConnection</I> or <I>EclipseEngine</I></A>
+<LI><A NAME="tex2html1247"
+ HREF="node41.html#SECTION00820400000000000000">Interact with ECLiPSe using methods in the <I>EclipseConnection</I> or <I>EclipseEngine</I> interface</A>
+<LI><A NAME="tex2html1248"
+ HREF="node41.html#SECTION00820500000000000000">Terminate interaction with the ECLiPSe</A>
+</UL>
+<LI><A NAME="tex2html1249"
+ HREF="node42.html">Java representation of ECLiPSe data</A>
+<UL>
+<LI><A NAME="tex2html1250"
+ HREF="node42.html#SECTION00831000000000000000">General correspondence between ECLiPSe and Java data types</A>
+<LI><A NAME="tex2html1251"
+ HREF="node42.html#SECTION00832000000000000000">Atoms and compound terms</A>
+<LI><A NAME="tex2html1252"
+ HREF="node42.html#SECTION00833000000000000000">Lists</A>
+<LI><A NAME="tex2html1253"
+ HREF="node42.html#SECTION00834000000000000000">Floats and Doubles</A>
+<LI><A NAME="tex2html1254"
+ HREF="node42.html#SECTION00835000000000000000">Integers</A>
+<LI><A NAME="tex2html1255"
+ HREF="node42.html#SECTION00836000000000000000">Variables</A>
+<LI><A NAME="tex2html1256"
+ HREF="node42.html#SECTION00837000000000000000">The <TT>equals()</TT> method</A>
+</UL>
+<LI><A NAME="tex2html1257"
+ HREF="node43.html">Executing an ECLiPSe goal from Java and processing the result</A>
+<UL>
+<LI><A NAME="tex2html1258"
+ HREF="node43.html#SECTION00841000000000000000">Passing the goal parameter to <TT>rpc</TT></A>
+<LI><A NAME="tex2html1259"
+ HREF="node43.html#SECTION00842000000000000000">Note: yield/2, remote_yield/1 and <TT>rpc</TT></A>
+<LI><A NAME="tex2html1260"
+ HREF="node43.html#SECTION00843000000000000000">Retrieving the results of an <TT>rpc</TT> goal execution</A>
+<UL>
+<LI><A NAME="tex2html1261"
+ HREF="node43.html#SECTION00843100000000000000">Other ways an <TT>rpc</TT> invocation can terminate</A>
+</UL>
+<LI><A NAME="tex2html1262"
+ HREF="node43.html#SECTION00844000000000000000">More details about <TT>rpc</TT> goal execution</A>
+<UL>
+<LI><A NAME="tex2html1263"
+ HREF="node43.html#SECTION00844100000000000000">Variables</A>
+<LI><A NAME="tex2html1264"
+ HREF="node43.html#SECTION00844200000000000000">Nondeterminism</A>
+<LI><A NAME="tex2html1265"
+ HREF="node43.html#SECTION00844300000000000000">Concurrent invocations of <TT>rpc</TT></A>
+<LI><A NAME="tex2html1266"
+ HREF="node43.html#SECTION00844400000000000000">Nested invocations of <TT>rpc</TT></A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1267"
+ HREF="node44.html">Communicating between Java and ECLiPSe using queues</A>
+<UL>
+<LI><A NAME="tex2html1268"
+ HREF="node44.html#SECTION00851000000000000000">Opening, using and closing queues</A>
+<UL>
+<LI><A NAME="tex2html1269"
+ HREF="node44.html#SECTION00851100000000000000">Opening a queue using Java methods</A>
+</UL>
+<LI><A NAME="tex2html1270"
+ HREF="node44.html#SECTION00852000000000000000">Opening a queue using ECLiPSe predicates</A>
+<UL>
+<LI><A NAME="tex2html1271"
+ HREF="node44.html#SECTION00852100000000000000">Transferring data using Java methods</A>
+<LI><A NAME="tex2html1272"
+ HREF="node44.html#SECTION00852200000000000000">Transferring data using ECLiPSe predicates</A>
+<LI><A NAME="tex2html1273"
+ HREF="node44.html#SECTION00852300000000000000">Note: <B>always</B> flush</A>
+<LI><A NAME="tex2html1274"
+ HREF="node44.html#SECTION00852400000000000000">Closing a queue using Java methods</A>
+<LI><A NAME="tex2html1275"
+ HREF="node44.html#SECTION00852500000000000000">Closing a queue using ECLiPSe predicates</A>
+</UL>
+<LI><A NAME="tex2html1276"
+ HREF="node44.html#SECTION00853000000000000000">Writing and reading ECLiPSe terms on queues</A>
+<UL>
+<LI><A NAME="tex2html1277"
+ HREF="node44.html#SECTION00853100000000000000">Initialising <I>EXDRInputStream</I> and <I>EXDROutputStream</I></A>
+<LI><A NAME="tex2html1278"
+ HREF="node44.html#SECTION00853200000000000000"><I>EXDRInputStream</I> and <I>EXDROutputStream</I> at work</A>
+</UL>
+<LI><A NAME="tex2html1279"
+ HREF="node44.html#SECTION00854000000000000000">Using the <I>QueueListener</I> interface</A>
+<LI><A NAME="tex2html1280"
+ HREF="node44.html#SECTION00855000000000000000">Access to ECLiPSe's standard streams</A>
+</UL>
+<LI><A NAME="tex2html1281"
+ HREF="node45.html">Managing connections to ECLiPSe</A>
+<UL>
+<LI><A NAME="tex2html1282"
+ HREF="node45.html#SECTION00861000000000000000">A unified ECLiPSe-side interface to Java : the `peer' concept</A>
+<LI><A NAME="tex2html1283"
+ HREF="node45.html#SECTION00862000000000000000">Creating and managing ECLiPSe engines from Java</A>
+<UL>
+<LI><A NAME="tex2html1284"
+ HREF="node45.html#SECTION00862100000000000000">Configuring an <I>EclipseEngineOptions</I> object</A>
+<LI><A NAME="tex2html1285"
+ HREF="node45.html#SECTION00862200000000000000">Using <I>EmbeddedEclipse</I></A>
+<UL>
+<LI><A NAME="tex2html1286"
+ HREF="node45.html#SECTION00862210000000000000">Initialising an <I>EmbeddedEclipse</I></A>
+<LI><A NAME="tex2html1287"
+ HREF="node45.html#SECTION00862220000000000000">Termination of an <I>EmbeddedEclipse</I></A>
+</UL>
+<LI><A NAME="tex2html1288"
+ HREF="node45.html#SECTION00862300000000000000">Using <I>OutOfProcessEclipse</I></A>
+<UL>
+<LI><A NAME="tex2html1289"
+ HREF="node45.html#SECTION00862310000000000000">Initialisation of an <I>OutOfProcessEclipse</I></A>
+<LI><A NAME="tex2html1290"
+ HREF="node45.html#SECTION00862320000000000000">Termination of an <I>OutOfProcessEclipse</I></A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1291"
+ HREF="node45.html#SECTION00863000000000000000">Connecting to an existing ECLiPSe engine using <I>RemoteEclipse</I></A>
+<UL>
+<LI><A NAME="tex2html1292"
+ HREF="node45.html#SECTION00863100000000000000">Initialisation of a <I>RemoteEclipse</I> connection</A>
+<UL>
+<LI><A NAME="tex2html1293"
+ HREF="node45.html#SECTION00863110000000000000">Basic connection sequence</A>
+<LI><A NAME="tex2html1294"
+ HREF="node45.html#SECTION00863120000000000000">Advanced connection sequence</A>
+</UL>
+<LI><A NAME="tex2html1295"
+ HREF="node45.html#SECTION00863200000000000000">Explicit transfer of control between ECLiPSe and Java</A>
+<LI><A NAME="tex2html1296"
+ HREF="node45.html#SECTION00863300000000000000">Termination of a <I>RemoteEclipse</I> connection</A>
+</UL>
+<LI><A NAME="tex2html1297"
+ HREF="node45.html#SECTION00864000000000000000">Comparison of different Java-ECLiPSe connection techniques</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1237"
+ HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1233"
+ HREF="embroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1227"
+ HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1235"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1238"
+ HREF="node40.html">Getting Started</A>
+<B> Up:</B> <A NAME="tex2html1234"
+ HREF="embroot.html">ECLiPSe Embedding and Interfacing</A>
+<B> Previous:</B> <A NAME="tex2html1228"
+ HREF="node38.html">Example</A>
+ &nbsp <B>  <A NAME="tex2html1236"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

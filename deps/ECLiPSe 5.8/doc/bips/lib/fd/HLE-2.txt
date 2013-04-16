@@ -1,0 +1,39 @@
+
+?X #<= ?Y
+
+   The linear term X is less than or equal to the linear term Y.
+
+
+
+Arguments
+   ?X                  A linear term.
+   ?Y                  A linear term.
+
+Type
+   library(fd)
+
+Description
+   This constraint states that the linear term X is less than or equal to
+   the linear term Y. It is activated whenever the maximum or minimum of a
+   domain variable is updated that might require updating other domains.
+   When propagating domain updates, the system takes into account only
+   maximum and minimum values of the whole domain and makes sure that these
+   values are consistent with those of other domain variables.
+
+
+   If one of the arguments is a non-linear polynomial, this predicate
+   delays until it becomes linear.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if X is greater than Y.
+
+
+
+See Also
+   #> / 2, #< / 2, #>= / 2, #= / 2, ## / 2

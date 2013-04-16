@@ -1,0 +1,38 @@
+
+ground(?Term)
+
+   Succeeds if Term is ground.
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Type Testing
+
+Description
+
+	Used to test whether Term is ground, i.e. contains no variables.
+
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Term is not ground.
+
+
+
+Examples
+   
+   Success:
+   ground(atom).
+   ground(likes(mouse,cheese)).
+   Fail:
+   ground(VarTerm).
+   ground(f(a,B,c)).
+   ground([x,y|Z]).
+
+
+See Also
+   nonvar / 1, nonground / 1, type_of / 2, var / 1

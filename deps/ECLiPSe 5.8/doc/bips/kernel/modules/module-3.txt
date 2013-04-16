@@ -1,0 +1,68 @@
+
+module(+Module, +Exports, +Language)
+
+   Begin the definition of module Module, define some of its exports and the language it is written in.
+
+Arguments
+   +Module             Atom.
+   +Exports            A list of export specifications.
+   +Language           An atom or a list of atoms.
+
+Type
+   Modules
+
+Description
+   This is a directive that can occur only in a compiled file.  If Module
+   is an existing module, it is first erased.  Then a new module is created
+   and all subsequent definitions, declarations and directives are taken
+   in the context of that new module.
+
+   The list Exports must contain valid export specifications as
+   described in export/1.  It defines the first part of the module's
+   interface, subsequent export and reexport directives can add to that.
+
+   Unlike with module/1, the new module does not implicitly import anything.
+   In particular, no built-in predicates are available inside the module
+   unless a language-module is specified in the Language argument.
+   This module (or a list of them) is imported just after the new module
+   is created.
+
+   The main use of this feature is to write different parts of a program
+   in different language dialects. For example, a module that contains code
+   written in ISO-Prolog should be encapsulated in a module starting with:
+
+	:- module(mymodule, [], iso).
+
+   In this module, ISO language features can be used, but not (all)
+   Eclipse features.
+
+   The system does not allow the atom [] to be used as a module name!
+   If [] is given as the Language argument, it indicates the empty list,
+   rather than a module with name [].
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is not an atom, or Module is the atom [].
+    68 --- When called from Prolog.
+    82 --- Module is locked.
+
+Examples
+   
+% A module in C-Prolog syntax:
+
+     :- module(m, [p/1], cprolog).
+
+     p("this is a list not a string").
+
+
+See Also
+   module / 1, create_module / 1, create_module / 3, erase_module / 1, current_module / 1, export / 1

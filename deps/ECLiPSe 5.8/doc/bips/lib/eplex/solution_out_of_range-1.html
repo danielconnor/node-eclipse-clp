@@ -1,0 +1,21 @@
+<HTML><HEAD><TITLE>solution_out_of_range(+Handle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>solution_out_of_range(+Handle)</H1>
+A trigger goal for lp_demon_setup/5.
+<DL>
+<DT><EM>Handle</EM></DT>
+<DD>Handle to a solver state
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+  This is intended as a useful pre(Goal) for lp_demon_setup/5 in connection
+  with the <TT>bounds</TT> trigger mode.  It succeeds if any of the
+  solutions (computed by the most recent successful solving) of Handle are
+  more than a tolerance outside the range of the corresponding variables,
+  ie. couldn't be instantiated to this value.  The admissible tolerances
+  can be specified in lp_setup/4 or lp_set/3 as <TT>demon_tolerance</TT>.
+</P>
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/lp_demon_setup-5.html">lp_demon_setup / 5</A>
+</BODY></HTML>

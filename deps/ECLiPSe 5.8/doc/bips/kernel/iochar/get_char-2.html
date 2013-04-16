@@ -1,0 +1,82 @@
+<HTML><HEAD><TITLE>get_char(+Stream, ?Char)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_char(+Stream, ?Char)</H1>
+Reads the next character from the input stream Stream and unifies it with a
+single character string Char.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+<DT><EM>?Char</EM></DT>
+<DD>Single character string or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Takes a single character string from the input stream Stream.  and
+   unifies it with Char.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Char does not unify with the next character from the buffered
+   input stream Stream.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is neither an integer nor an atom.
+<DT><EM>(5) type error </EM>
+<DD>Char is instantiated, but not to a single character string.
+<DT><EM>(190) end of file reached </EM>
+<DD>End of file has been reached.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not open for reading.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is not a valid stream number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+      [eclipse]: get_char(input,Char).
+      &gt; a
+      Char = "a"
+      yes.
+
+      [eclipse]: get_char(input, "b").
+      &gt; b
+      yes.
+
+      [eclipse]: sh('cat file1').
+      p
+      yes.
+      [eclipse]: open(file1, update,s),
+      &gt; get_char(s,X).
+      X = "p"
+      yes.
+Fail:
+      [eclipse]: get_char(input, "b").
+      &gt; a
+      no.
+
+Error:
+      get_char(Stream, "b").             (Error 4).
+      get_char(input, 'b').              (Error 5).
+      get_char(input, 98.0).             (Error 5).
+      get_char("string", Char).          (Error 5).
+      get_char(null,Char).              (Error 190).
+      get_char(9,Char).                 (Error 192).
+      get_char(atom,Char).              (Error 193).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/get-1.html">get / 1</A>, <A HREF="../../kernel/iochar/get-2.html">get / 2</A>, <A HREF="../../kernel/iochar/get_char-1.html">get_char / 1</A>, <A HREF="../../kernel/iochar/put-1.html">put / 1</A>, <A HREF="../../kernel/iochar/put-2.html">put / 2</A>, <A HREF="../../kernel/iochar/put_char-1.html">put_char / 1</A>, <A HREF="../../kernel/iochar/put_char-2.html">put_char / 2</A>
+</BODY></HTML>

@@ -1,0 +1,93 @@
+<HTML><HEAD><TITLE>canonical_path_name(++Path, ?CanonicalPath)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>canonical_path_name(++Path, ?CanonicalPath)</H1>
+Expand a path name into the full `canonical' form.
+<DL>
+<DT><EM>Path</EM></DT>
+<DD>A pathname (atom or string)
+</DD>
+<DT><EM>CanonicalPath</EM></DT>
+<DD>Canonical pathname for Path
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate expands a given pathname, and converts it into the
+   `canonical' form of the pathname. The following are done to the path:
+
+<UL>
+   <LI> A full path is returned. If a relative path is supplied, the
+   path is prefixed with the current working directory
+
+   <LI> leading '~' and environment variables (such as '$HOME') are
+      substituted by the appropriate value.
+
+   <LI> special sequences such as '.', '..', extra '/' are appropriately
+      removed/replaced. 
+
+   <LI> the non-aliased path is returned, i.e. any symbolic links are
+   replaced by the non-symbolic linked version of the path.
+
+   <LI> if the path is a directory, a terminating '/' is always returned.
+</UL>
+
+<P>
+   Path does not need to exist, and only the removal of aliasing is 
+   performed on the part of the path that does exist. 
+
+<P>
+   CanonicalPath is always the same type as Path (string or atom). If Path
+   is empty, it is replaced by the current working directory. 
+
+<P>
+    The predicates canonical_path_name/2 and existing_file/4 are intended
+    as replacement for absolute_file_name/2 in previous releases. The
+    functionality of completing an incomplete name and returning an
+    absolute path of absolute_file_name/2 has been separated. The following
+    approximately implements the old absolute_file_name/2:
+
+<PRE>
+    absolute_file_name(Rel, Abs) :-
+	(Rel == user ->
+	    Abs == user  % treat user specially
+	; get_flag(prolog_suffix, Sufs),
+	  (existing_file(Rel, Sufs, [], ExtRel) -> true ; ExtRel = Rel),
+	  canonical_path_name(ExtRel, Abs)
+        ).
+</PRE>
+
+
+
+<H3>Fail Conditions</H3>
+  None.
+
+
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Path is not a string or atom.
+</DL>
+<H2>Examples</H2>
+<PRE>      [eclipse]: canonical_path_name("file", Full).  %cwd is /homes/tom
+      Full = "/homes/tom/file"
+      yes
+
+      [eclipse]: canonical_path_name(file, Full).
+      Full = '/homes/tom/file'
+      yes
+
+      [eclipse]: canonical_path_name("~/file", Full).
+      Full = "/homes/tom/file"
+      yes
+
+      [eclipse]: canonical_path_name('file/..', Full).
+      Full = '/homes/tom/'
+
+      [eclipse]: canonical_path_name('/users/tom', Full). 
+      % /users/tom is a symbolic link for /homes/tom
+      Full = '/homes/tom/'
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/existing_file-4.html">existing_file / 4</A>, <A HREF="../../kernel/opsys/os_file_name-2.html">os_file_name / 2</A>, <A HREF="../../kernel/opsys/pathname-4.html">pathname / 4</A>
+</BODY></HTML>

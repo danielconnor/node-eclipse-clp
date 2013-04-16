@@ -1,0 +1,60 @@
+<HTML><HEAD><TITLE>current_after_events(?Events)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_after_events(?Events)</H1>
+   Check or find currently pending after events.
+
+
+<DL>
+<DT><EM>Events</EM></DT>
+<DD>List of due / 2 structures or variable
+</DD>
+</DL>
+<H2>Description</H2>
+
+   If Events is a variable, then all the currently pending
+   events are returned as a list. The list elements are of the 
+   form due(EventName - PostTime, DueTime) for an event raised with
+   event_after/2 and event_after/3 and of the form
+   due(EventName - every(Interval), NextDueTime) for an event raised 
+   with event_after_every/2. An event will appear as many times as it
+   has been setup.   EventName is the name of the after event. PostTime is
+   the time at which the event was posted, and DueTime the time at which it 
+   is to be raised. For a repeating after event, Interval is the period
+   between events, and NextDueTime is the next time at which it is to be raised.
+
+<P>
+   Note that this predicate simply returns a snapshot of the current pending
+   after events. It is therefore possible that an after event returned in Events
+   has already been raised.
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if an element of Events is not a pending after event.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   setup :-
+      set_event_handler(hi, hi/0),
+      event_after_every(hi, 3.2).
+
+   hi :-
+      current_after_events(Es),
+      writeln(hi),
+      writeln('Pending events'-Es).
+
+   % just spinning after the setup for events to be raised.
+   ?- setup, repeat, fail.  
+    hi
+    Pending events - [due(hi - every(3.2), 30.51)]
+    hi
+    Pending events - [due(hi - every(3.2), 33.72)]
+    hi
+    Pending events - [due(hi - every(3.2), 36.93)]
+    ...
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_after-2.html">event_after / 2</A>, <A HREF="../../kernel/event/event_after-3.html">event_after / 3</A>, <A HREF="../../kernel/event/event_after_every-2.html">event_after_every / 2</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>, <A HREF="../../kernel/event/event_retrieve-3.html">event_retrieve / 3</A>
+</BODY></HTML>

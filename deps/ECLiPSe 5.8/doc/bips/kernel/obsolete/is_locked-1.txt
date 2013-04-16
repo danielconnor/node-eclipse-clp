@@ -1,0 +1,58 @@
+
+is_locked(+Module)
+
+   Succeeds if the module Module is locked.
+
+
+
+Arguments
+   +Module             Atom.
+
+Type
+   Obsolete
+
+Description
+   Used to test whether the module Module is locked.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the module Module is not locked.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is instantiated, but not to an atom.
+    80 --- Module is not a module.
+
+Examples
+   
+Success:
+      [eclipse]: create_module(m).
+      yes.
+      [eclipse]: lock(m, "pass").
+      yes.
+      [eclipse]: module(m).
+      trying to access a locked module in module(m)
+      [eclipse]: is_locked(m), unlock(m, "pass").
+      yes.
+      [eclipse]: is_locked(m).
+      no.
+      [eclipse]: module(m).
+      [m]:
+Error:
+      is_locked(M).                  (Error 4).
+      is_locked(1).                  (Error 5).
+      is_locked(not_a_module).       (Error 80).
+
+
+
+
+
+See Also
+   lock / 1, lock / 2, unlock / 2, get_module_info / 3

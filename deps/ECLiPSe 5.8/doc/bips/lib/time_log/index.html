@@ -1,0 +1,32 @@
+<HTML><HEAD><TITLE>library(time_log)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(time_log)</H1>
+Module for logging and collating test times
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="collate_time_logs-4.html"><STRONG>collate_time_logs(++Directory, ++Package, ++Embedding, ++MasterLogFile)</STRONG></A></DT>
+<DD>Collate local time logs into master log</DD>
+<DT><A HREF="initialise_time_logging-1.html"><STRONG>initialise_time_logging(++Directory)</STRONG></A></DT>
+<DD>Prepare for time logging</DD>
+<DT><A HREF="log_time_local-2.html"><STRONG>log_time_local(++Name, ++Time)</STRONG></A></DT>
+<DD>Log a time in the local directory</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+	This module is used for logging and collating the times taken to run
+	tests (but could be used for other similar purposes).  Before
+	running any tests, call initialise_time_logging/1.  This deletes any
+	old administrative files from a previous test run.  Then, within the
+	test harness for an individual test, call log_time_local/2 to log
+	the time taken for the test to a temporary local file.  Finally,
+	once all the tests have completed successfully, call
+	collate_time_logs/4 to collect all the local administrative files
+	and add all the data to the master log file.
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Copyright &copy; </STRONG>Parc Technologies Ltd
+<LI><STRONG>Date: </STRONG>$Date: 2004/11/19 14:54:48 $
+</UL>
+<HR>Generated from time_log.eci on Tue Jan 25 01:58:38 2005
+
+</BODY></HTML>

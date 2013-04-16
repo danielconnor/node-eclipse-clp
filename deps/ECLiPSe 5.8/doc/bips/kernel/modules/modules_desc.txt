@@ -1,0 +1,4 @@
+lib(modules)
+
+See also the User Manual chapter about the module system.
+

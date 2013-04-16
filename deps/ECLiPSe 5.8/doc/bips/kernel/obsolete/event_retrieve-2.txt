@@ -1,0 +1,44 @@
+
+event_retrieve(+EventHandle, ?Goal)
+
+   Given the handle with which an event is associated, retrieve the event goal.
+
+Arguments
+   EventHandle         An event handle
+   Goal                A free variable or goal to unify
+
+Type
+   Obsolete
+
+Description
+	The goal associated with an event handle, created using event_create / 3, is
+	retrieved using this predicate.
+    
+	Like event creation, retrieval of the goal produces a copy of the
+	goal. As a result, if the goal contains variables, they lose their identity 
+	and are replaced with fresh ones.
+    
+        If the event was disabled, the goal 'true' is retrieved instead of the
+	original goal.
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   Goal does not unify with the event goal of EventHandle
+
+Exceptions
+     4 --- EventHandle is un-instantiated
+     5 --- EventHandle is not a handle
+
+Examples
+       ?- event_create(writeln('Hello world!'), [], Event), event_retrieve(Event, EventGoal).
+
+	Event = 'EVENT'(16'50421bd0)
+	EventGoal = writeln('Hello world!')
+	Yes (0.00s cpu)
+    
+
+See Also
+   event_retrieve / 3

@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>trace_point_port(+Port, ?Invoc, ?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>trace_point_port(+Port, ?Invoc, ?Term)</H1>
+Create a user-defined debugger port.
+
+
+<DL>
+<DT><EM>Port</EM></DT>
+<DD>An atom.
+</DD>
+<DT><EM>Invoc</EM></DT>
+<DD>An integer or variable.
+</DD>
+<DT><EM>Term</EM></DT>
+<DD>Any term.
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>trace_point_port(+, +, ?)
+<LI>trace_point_port(+, -, ?)
+</UL>
+<H2>Description</H2>
+
+    This predicate allows to generate user-defined debugger ports,
+    thus enhancing the debugger's basic box model with application-
+    specific checkpoints.
+<P>
+    When the debugger is on, this predicate causes a trace line to
+    be displayed with Port being the name of the debugger port,
+    invocation number Invoc and Term in the goal position.
+<P>
+    If Invoc is left uninstantiated, it will be instantiated to a
+    unique invocation number by the system, if it is an integer, it
+    will be used. This way, several ports can be made to share the
+    same invocation number, which makes it possible to easily i-skip
+    from one to the other.
+<P>
+
+<H2>Examples</H2>
+<PRE>
+    :- pragma(nodebug).
+    bool(B) :-
+	trace_point_port(try_zero, Invoc, B=0),  
+	(
+	    B=0
+	;
+	    trace_point_port(try_one, Invoc, B=1),
+	    B=1
+	).
+    :- untraceable bool/1.
+
+[eclipse 9]: bool(B).
+  (3) 3 TRY_ZERO  B = 0   %&gt; creep
+
+B = 0     More? (;) 
+  (3) 3 TRY_ONE  B = 1   %&gt; creep
+
+B = 1
+yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/trace_call_port-3.html">trace_call_port / 3</A>, <A HREF="../../kernel/debug/trace_parent_port-1.html">trace_parent_port / 1</A>, <A HREF="../../kernel/debug/trace_exit_port-0.html">trace_exit_port / 0</A>, <A HREF="../../kernel/debug/spy_term-2.html">spy_term / 2</A>, <A HREF="../../kernel/debug/spy_var-1.html">spy_var / 1</A>, <A HREF="../../kernel/debug/trace-1.html">trace / 1</A>
+</BODY></HTML>

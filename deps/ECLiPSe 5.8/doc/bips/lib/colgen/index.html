@@ -1,0 +1,64 @@
+<HTML><HEAD><TITLE>library(colgen)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(colgen)</H1>
+Column generation library
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="SE-2.html"><STRONG>ColgenInstance:(?X $= ?Y)</STRONG></A></DT>
+<DD>Constrains X to be equal to Y.</DD>
+<DT><A HREF="SEL-2.html"><STRONG>ColgenInstance:(?X $=< ?Y)</STRONG></A></DT>
+<DD>Constrains X to be less than or equal to Y.</DD>
+<DT><A HREF="SGE-2.html"><STRONG>ColgenInstance:(?X $>= ?Y)</STRONG></A></DT>
+<DD>Constrains X to be greater than or equal to Y.</DD>
+<DT><A HREF="ENE-2.html"><STRONG>ColgenInstance:(?X =:= ?Y)</STRONG></A></DT>
+<DD>Constrains X to be equal to Y.</DD>
+<DT><A HREF="EL-2.html"><STRONG>ColgenInstance:(?X =< ?Y)</STRONG></A></DT>
+<DD>Constrains X to be less than or equal to Y.</DD>
+<DT><A HREF="GE-2.html"><STRONG>ColgenInstance:(?X >= ?Y)</STRONG></A></DT>
+<DD>Constrains X to be greater than or equal to Y.</DD>
+<DT><A HREF="cg_subproblem_solution-1.html"><STRONG>ColgenInstance:cg_subproblem_solution(++Value)</STRONG></A></DT>
+<DD>Posts new subproblem solution(s) to the colgen instance ColgenInstance.</DD>
+<DT><A HREF="colgen_instance-1.html"><STRONG>colgen_instance(++ColgenInstance)</STRONG></A></DT>
+<DD>Initialises the colgen instance ColgenInstance.</DD>
+<DT><A HREF="get-2.html"><STRONG>ColgenInstance:get(++What, -Value)</STRONG></A></DT>
+<DD>Obtain global problem information.</DD>
+<DT><A HREF="identified_constraint-2.html"><STRONG>ColgenInstance:identified_constraint(+Cstr, ?Id)</STRONG></A></DT>
+<DD>Post an identified constraint to the colgen instance ColgenInstance.</DD>
+<DT><A HREF="minimize-3.html"><STRONG>ColgenInstance:minimize(+SolveSubProblem, +Obj, -ObjVal)</STRONG></A></DT>
+<DD>Minimizes the problem associated with the colgen instance ColgenInstance.</DD>
+<DT><A HREF="var_get-3.html"><STRONG>ColgenInstance:var_get(+Var, ++What, -Value)</STRONG></A></DT>
+<DD>Obtain information for an individual solver problem variable Var.</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Reexports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>reexport colgen_</STRONG></DT><DD>except var_dual / 6, get_dual / 3, get_idx / 3, get_rhs / 3, set_dual / 3, bp_solve / 2, cg_solver_setup / 3, cg_solver_setup / 4, cg_integers / 2, add_cg_pool_constraint / 3, cg_eq / 3, cg_ge / 3, cg_le / 3, cg_sp_count / 2, cg_sp_sol / 2, cg_sp_rc_sum / 2, cg_minimize / 4, cg_minimize / 5, cg_var_get / 4, cg_get / 3</DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+
+   This library lets you use hybrid column generation. Partial linear
+   constraints are posted to a solver and further variables added to
+   them during search as they become profitable. The generated
+   variables will have a column of coefficients in the constraints of
+   the colgen instance associated with them corresponding to
+   particular instantiations of the variables of a subproblem. The
+   predicate to find profitable subproblem variable instantiations is
+   supplied by the user. When a user-defined branching predicate is
+   provided the library can also be sued for hybrid branch-and-price.
+</P><P>
+   The library uses the eplex library to solve LP master
+   problems, from which dual values are used to create cost functions
+   for the user-defined subproblem. Solution of master and subproblems
+   will iterate until no further subproblem solutions are posted to
+   the colgen instance.
+</P> 
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>prototype
+<LI><STRONG>Author: </STRONG>Andrew Eremin
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date: 2003/12/11 21:09:57 $
+</UL>
+<HR>Generated from colgen.eci on Tue Jan 25 01:58:49 2005
+
+</BODY></HTML>

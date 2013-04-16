@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>complement(?SetVar, ++Universe, ?Complement)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>complement(?SetVar, ++Universe, ?Complement)</H1>
+Set complement constraint
+<DL>
+<DT><EM>SetVar</EM></DT>
+<DD>A variable.
+</DD>
+<DT><EM>Universe</EM></DT>
+<DD>A ground set.
+</DD>
+<DT><EM>Complement</EM></DT>
+<DD>A variable
+</DD>
+</DL>
+<H2>Description</H2>
+Constrain sets so that Complement is the complement set of SetVar,
+		with respect to the given Universe. I.e. Complement is Universe \ SetVar.<P>
+		If a variable (SetVar or Complement) is not yet a set domain variable,
+		it is declared as such, limited by the Universe.<P>
+		This constraint is usually more efficient (stronger) than posting an
+		equivalent set difference constraint, due to specific inferences.
+<H3>Fail Conditions</H3>
+Fails if Complement can not be the set complement of SetVar in set universe Universe.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+?- complement([7,8], [1,7,8,9], N).
+N = [1,9]
+
+?- complement(N, [1,7,8,9], [7,8]).
+N = [1,9]
+
+?- X `:: [a]+[b,c,d], Y `:: []+[a,b,c,d,e,f], complement(X, [a,b,c,d,e,f,g], Y).
+no
+
+?- X `:: [a]+[b,c,d], Y `:: []+[a,b,c,d,e,f], complement(X,[a,b,f],Y), domain(X,DX),domain(Y,DY).
+DX = [[a]:1,[b]:2], DY = [[f]:1,[b]:2]
+
+?- X `:: [a]+[b,c,d], Y `:: []+[a,b,c,d,e,f], complement(X, [a,b,c,d,e,f], Y), domain(Y,DY).
+DY = [[e,f]:2,[b,c,d]:5]
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/complement-2.html">complement / 2</A>, <A HREF="../../lib_public/cardinal/BS-2.html">`$ / 2</A>, <A HREF="../../lib_public/cardinal/BE-2.html">`= / 2</A>
+</BODY></HTML>

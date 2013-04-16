@@ -1,0 +1,52 @@
+
+set_labeling(++UpDown, +SetVars)
+
+   Label set variables
+
+Arguments
+   UpDown              Atom: 'up' or 'down'.
+   SetVars             List of set variables.
+
+Type
+   library(cardinal)
+
+Description
+Instantiate all variables in SetVars from first to last, with
+		consecutive refinements of their domains until they are ground.
+		If heuristic UpDown is 'up' then, for each set variable, for each element
+		in its poss (lub\glb), inclusion is tried first; otherwise (down)
+		exclusion is tried first.
+
+Resatisfiable
+   Yes.
+
+Fail Conditions
+   Fails if SetVars can not be labeled (there is no solution to the CSP).
+
+Examples
+   
+?- S `:: [a] + [b, c], T `:: [1] + [2], set_labeling(up, [S, T]).
+S = [a, b, c], T = [1, 2] ;
+S = [a, b, c], T = [1] ;
+S = [a, b], T = [1, 2] ;
+S = [a, b], T = [1] ;
+S = [a, c], T = [1, 2] ;
+S = [a, c], T = [1] ;
+S = [a], T = [1, 2] ;
+S = [a], T = [1] ;
+no
+
+?- S `:: [a] + [b, c], T `:: [1] + [2], set_labeling(down, [S, T]).
+S = [a], T = [1] ;
+S = [a], T = [1, 2] ;
+S = [a, c], T = [1] ;
+S = [a, c], T = [1, 2] ;
+S = [a, b], T = [1] ;
+S = [a, b], T = [1, 2] ;
+S = [a, b, c], T = [1] ;
+S = [a, b, c], T = [1, 2] ;
+no
+
+
+See Also
+   set_labeling / 1, refine / 2

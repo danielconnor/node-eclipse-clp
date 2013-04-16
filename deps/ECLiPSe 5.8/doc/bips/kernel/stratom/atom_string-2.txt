@@ -1,0 +1,56 @@
+
+atom_string(?Atom, ?String)
+
+   Conversion between an atom and a string.
+
+
+
+Arguments
+   ?Atom               Atom or variable.
+   ?String             String or variable.
+
+Type
+   Strings and Atoms
+
+Description
+   If Atom is instantiated, converts it to a string String.
+
+
+   If String is instantiated, converts it to an atom Atom.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the string String does not unify with the string version of the
+   atom Atom.
+
+
+
+Exceptions
+     5 --- Atom is instantiated, but not to an atom.
+     5 --- String is instantiated, but not to a string.
+     4 --- Neither Atom nor String are instantiated (non-coroutine mode    only).
+
+Examples
+   
+   Success:
+   atom_string('Tom',"Tom").
+   atom_string(tom,X).                 (gives X="tom").
+   atom_string(X,"4").                 (gives X='4').
+   Fail:
+   atom_string('jo',"joe").
+   Error:
+   atom_string(X,Y).                   (Error 4).
+   atom_string(4,"4").                 (Error 5).
+   atom_string(tom,'tom').             (Error 5).
+
+
+
+
+
+See Also
+   append_strings / 3, integer_atom / 2, term_string / 2

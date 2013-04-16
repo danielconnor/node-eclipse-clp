@@ -1,0 +1,21 @@
+
+sbds_get_index(?Var, -Idx)
+
+   get the index of an SBDS attributed variable
+
+Arguments
+   Var                 SBDS variable
+   Idx                 The index of Var
+
+Type
+   library(ic_sbds)
+
+Description
+	Unifies Idx with the index of the SBDS variable Var.  The index of
+	the variable is its position in the matrix provided in the
+	corresponding call to sbds_initialise/4 or sbds_initialise/5
+
+Fail Conditions
+   Var is not an SBDS variable.
+
+

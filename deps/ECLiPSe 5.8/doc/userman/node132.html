@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Stream Connection (internet domain)</TITLE>
+<META NAME="description" CONTENT="Stream Connection (internet domain)">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node133.html">
+<LINK REL="previous" HREF="node131.html">
+<LINK REL="up" HREF="node130.html">
+<LINK REL="next" HREF="node133.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4228"
+ HREF="node133.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4224"
+ HREF="node130.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4218"
+ HREF="node131.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4226"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4229"
+ HREF="node133.html">Datagram Connection (internet domain)</A>
+<B> Up:</B> <A NAME="tex2html4225"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Previous:</B> <A NAME="tex2html4219"
+ HREF="node131.html">Socket Domains</A>
+ &nbsp <B>  <A NAME="tex2html4227"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002120000000000000000">
+Stream Connection (internet domain)</A>
+</H1>
+This type of communication is very similar to pipes,
+the stream communication is reliable and there are no boundaries
+between the messages.
+Stream sockets always require explicit connection from both
+communicating processes.
+
+<P>
+After a socket is created with the <A NAME="tex2html1732"
+ HREF="../bips/kernel/iostream/socket-3.html">socket/3</A><A NAME="12627"></A> predicate,
+one of the processes, the server, gives it a name
+and waits for a connection.
+The other process uses the same name when connecting to
+the former process.
+After the connection is established, both processes can read and write
+on the socket and so the difference between the server and the
+client disappears.
+The socket addresses contain the host name and the port number.
+Since one port number identifies the socket on a given host,
+the process cannot itself specify the port number it wants to use
+because it can be already in use by another process.
+Therefore, the safe approach is to use the default and let the system
+specify the port number, which is achieved by leaving the port
+uninstantiated.
+Since the host is always known,
+it can also be left uninstantiated.
+The client, however, has to specify both the host name and the port number:<PRE>
+server:
+    [eclipse 10]: socket(internet, stream, s), bind(s, X).
+
+    X = acrab5 / 3789
+    yes.
+    [eclipse 11]: listen(s, 1), accept(s, From, news).
+    &lt;blocks waiting for a connection&gt;
+
+client:
+    [eclipse 26]: socket(internet, stream, s), connect(s, acrab5/3789).
+
+    yes.
+    [eclipse 27]: printf(s, "%w. %b", message(client)), read(s, Msg).
+
+server:
+    From = acrab4 / 1627 
+    yes.
+    [eclipse 12]: read(news, Msg), printf(news, "%w. %b", message(server)).
+
+    Msg = message(client)
+    yes.
+
+client:
+    Msg = message(server)
+    yes.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4228"
+ HREF="node133.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4224"
+ HREF="node130.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4218"
+ HREF="node131.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4226"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4229"
+ HREF="node133.html">Datagram Connection (internet domain)</A>
+<B> Up:</B> <A NAME="tex2html4225"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Previous:</B> <A NAME="tex2html4219"
+ HREF="node131.html">Socket Domains</A>
+ &nbsp <B>  <A NAME="tex2html4227"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

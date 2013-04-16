@@ -1,0 +1,24 @@
+
+or(+ConX,+ConY,Bool)
+
+   Bool is the reified truth of at least one of the constraints ConX or ConY being true.
+
+Arguments
+   ConX                Constraint
+   ConY                Constraint
+   Bool                Reified truth value of the constraint
+
+Type
+   library(ic)
+
+Description
+
+   Equivalent to BX $= (ConX), BY $= (ConY), Bool #= (BX + BY #>= 1)
+   
+   The two constraints are reified in such a way that Bool reflects the
+   truth of at least one being true.  ConX and ConY must be constraints that
+   have a corresponding reified form.
+
+
+See Also
+   or / 2, neg / 1, neg / 2, and / 2, and / 3, => / 2, => / 3, =:= / 3, =< / 3, =\= / 3, >= / 3, > / 3, < / 3

@@ -1,0 +1,48 @@
+
+viewable_element_execute(++ViewableName, ++ElementSpec, ?Goal)
+
+   Execute a goal for a viewable element inside a viewable.
+
+Arguments
+   ViewableName        Atom: name of an existent viewable.
+   ElementSpec         Currently, this should be element(IndexList), where IndexList is a list of integers: the coordinates of the viewable element within the viewable.
+   Goal                Goal to be executed, mentioning ElementSpec.
+
+Type
+   library(vc_support)
+
+Description
+Note that this predicate throws an error if there are no current visualisation clients. The purpose of this predicate is to allow visualisation clients to call arbitrary goals which take viewable elements as input, without the visualisation clients having to retrieve the viewable elements themselves. Goal is the goal to be executed, but Goal mentions ElementSpec wherever it wishes to use the viewable element as input. The element specified by ElementSpec is retrieved from the viewable. Then all occurences of ElementSpec within Goal are replaced by the element, to give NewGoal. Finally, NewGoal is executed, and the predicate succeeds if NewGoal succeeds.  
+
+
+
+
+
+
+Resatisfiable
+   yes
+
+Fail Conditions
+   Fails if NewGoal fails.
+
+Exceptions
+     1 --- There are no current visualisation clients
+     4 --- ViewableName is not an atom or string
+     5 --- IndexList is not a ground list of integers
+     6 --- A co-ordinate in Index is out of range
+     8 --- IndexList has the wrong number of elements
+
+Examples
+   
+An example, assumng there are visualisation clients running, would be:
+
+[eclipse 2]: viewable_create(v1, [[X]]), 
+             viewable_element_execute(v1, element([1, 1]), var(element([1, 1]))).
+
+X = X
+Yes (0.00s cpu)
+[eclipse 3]: 
+
+
+See Also
+   viewable : viewable_create / 3, viewable : viewable_size / 2, viewable_element_to_string / 2, viewable_element / 3

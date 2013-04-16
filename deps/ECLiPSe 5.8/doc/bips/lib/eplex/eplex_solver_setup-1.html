@@ -1,0 +1,37 @@
+<HTML><HEAD><TITLE>EplexInstance:eplex_solver_setup(+Objective)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>EplexInstance:eplex_solver_setup(+Objective)</H1>
+Setup an external solver state for eplex instance EplexInstance
+<DL>
+<DT><EM>Objective</EM></DT>
+<DD>Objective function: min(CostExpr) or max(CostExpr)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+  Setup a new external solver state for the eplex instance EplexInstance. 
+  The solver state will be associated with EplexInstance;
+  EplexInstance must not already have a solver state associated with it.
+  Once the solver state is setup, it can be invoked (e.g. via eplex_solve/1 
+  or eplex_probe/2) to optimise the Objective function. 
+</P><P>
+    CostExpr is a linear expression
+    (or quadratic if supported by the external solver).
+</P><P>
+  Declaratively, this can be seen as a compound constraint representing all
+  the individual linear constraints that have been set so far and are going
+  to be set up later for <TT>EplexInstance</TT>. The invoking of this 
+  constraint is done explicitly by the user, usually via eplex_solve/1.
+  Operationally, when the external solver is invoked, the delayed 
+  constraints posted to <TT>EplexInstance</TT> are collected and taken into
+  account.
+</P><P>
+  This is a simplified version of eplex_solver_setup/4, it is equivalent to
+  calling eplex_solver_setup/4 with the following defaults:
+<PRE>
+       eplex_solver_setup(Objective, _, [], 0, [])
+</PRE>
+
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/SE-2.html">$= / 2</A>, <A HREF="../../lib/eplex/SEL-2.html">$=< / 2</A>, <A HREF="../../lib/eplex/SGE-2.html">$>= / 2</A>, <A HREF="../../lib/eplex/ENE-2.html">=:= / 2</A>, <A HREF="../../lib/eplex/GE-2.html">>= / 2</A>, <A HREF="../../lib/eplex/EL-2.html">=< / 2</A>, <A HREF="../../lib/eplex/SNN-2.html">$:: / 2</A>, <A HREF="../../lib/eplex/NN-2.html">:: / 2</A>, <A HREF="../../lib/eplex/integers-1.html">integers / 1</A>, <A HREF="../../lib/eplex/reals-1.html">reals / 1</A>, <A HREF="../../lib/eplex/eplex_solver_setup-4.html">eplex_solver_setup / 4</A>, <A HREF="../../lib/eplex/eplex_probe-2.html">eplex_probe / 2</A>, <A HREF="../../lib/eplex/eplex_solve-1.html">eplex_solve / 1</A>, <A HREF="../../lib/eplex/eplex_get-2.html">eplex_get / 2</A>, <A HREF="../../lib/eplex/eplex_var_get-3.html">eplex_var_get / 3</A>
+</BODY></HTML>

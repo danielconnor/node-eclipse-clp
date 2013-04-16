@@ -1,0 +1,23 @@
+
+gap_command(++Format, +Args)
+
+   Send a command to GAP
+
+Arguments
+   Format              Format string
+   Args                List of arguments
+
+Type
+   library(gap)
+
+Description
+   Sends a command to GAP.  The command is specified using Format and Args a
+   la printf/2.  It is not necessary to terminate the GAP command with a
+   semicolon.
+
+   If there is no currently active GAP session, one is started before
+   sending the command.
+
+
+See Also
+   gap_query / 3, gap_query_string / 3, printf / 2

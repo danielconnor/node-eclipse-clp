@@ -1,0 +1,100 @@
+<HTML><HEAD><TITLE>local_time_string(+UnixTime, +Format, -TimeString)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>local_time_string(+UnixTime, +Format, -TimeString)</H1>
+Create a string representation of the local time
+<DL>
+<DT><EM>UnixTime</EM></DT>
+<DD>Integer (seconds since 1/1/1970)
+</DD>
+<DT><EM>Format</EM></DT>
+<DD>String or Atom
+</DD>
+<DT><EM>TimeString</EM></DT>
+<DD>Variable or string
+</DD>
+</DL>
+<H2>Description</H2>
+	This predicate converts UTC (Universal Coordinated Time, represented
+	as 'Unix time', i.e. in seconds since 1970-01-01, 00:00) into a
+	textual representation of the local time (taking into account time
+	zone and daylight savings time settings), according to the given
+	format string.
+	<P>
+	The format string is similar to the format string in the printf/2,3
+	predicate, but accepts different format specifiers. The exact set of
+	format specifiers available depends on the underlying operating
+	system (refer to the description of strftime()), but the following
+	are generally available:
+	<DL>
+	<DT><STRONG>%a</STRONG></DT>  <DD>Abbreviated weekday name for current locale
+
+	<DT><STRONG>%A</STRONG></DT>  <DD>Full weekday name for current locale
+
+	<DT><STRONG>%b</STRONG></DT>  <DD>Abbreviated month name for current locale
+
+	<DT><STRONG>%B</STRONG></DT>  <DD>Full month name for current locale
+
+	<DT><STRONG>%c</STRONG></DT>  <DD>Prederred date and time representation for current locale
+
+	<DT><STRONG>%d</STRONG></DT>  <DD>Day of month as decimal number (01-31)
+
+	<DT><STRONG>%H</STRONG></DT>  <DD>Hour in 24-hour format (00-23)
+
+	<DT><STRONG>%I</STRONG></DT>  <DD>Hour in 12-hour format (01-12)
+
+	<DT><STRONG>%j</STRONG></DT>  <DD>Day of year as decimal number (001-366)
+
+	<DT><STRONG>%m</STRONG></DT>  <DD>Month as decimal number (01-12)
+
+	<DT><STRONG>%M</STRONG></DT>  <DD>Minute as decimal number (00-59)
+
+	<DT><STRONG>%p</STRONG></DT>  <DD>Current locale's A.M./P.M. indicator for 12-hour clock
+
+	<DT><STRONG>%S</STRONG></DT>  <DD>Second as decimal number (00 – 59)
+
+	<DT><STRONG>%U</STRONG></DT>  <DD>Week of year (00-53), with first Sunday first day of week 01
+
+	<DT><STRONG>%w</STRONG></DT>  <DD>Weekday as decimal number (0-6, Sunday is 0)
+
+	<DT><STRONG>%W</STRONG></DT>  <DD>Week of year (00-53), with first Monday first day of week 01
+
+	<DT><STRONG>%x</STRONG></DT>  <DD>Date representation for current locale
+
+	<DT><STRONG>%X</STRONG></DT>  <DD>Time representation for current locale
+
+	<DT><STRONG>%y</STRONG></DT>  <DD>Year without century, as decimal number (00-99)
+
+	<DT><STRONG>%Y</STRONG></DT>  <DD>Year with century, as decimal number
+
+	<DT><STRONG>%Z</STRONG></DT>  <DD>Time-zone name or abbreviation, empty if time zone is unknown
+
+	<DT><STRONG>%%</STRONG></DT>  <DD>Percent sign
+	</DL>
+	<P>
+	This predicate is based on POSIX strftime().
+
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>UnixTime or Format are uninstantiated
+<DT><EM>(5) type error </EM>
+<DD>UnixTime, Format or TimeString are instantiated, but not strings
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- get_flag(unix_time, T), local_time_string(T, "%c", S).
+    T = 1049564174
+    S = "Sat Apr 05 18:36:14 2003"
+    Yes (0.00s cpu)
+
+    ?- get_flag(unix_time, T),
+	     local_time_string(T, "We write the year %Y in time zone %Z", S).
+    T = 1049564247
+    S = "We write the year 2003 in time zone BST"
+    Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/date-1.html">date / 1</A>, <A HREF="../../kernel/opsys/local_time-8.html">local_time / 8</A>, <A HREF="../../lib/calendar/index.html">library(calendar)</A>
+</BODY></HTML>

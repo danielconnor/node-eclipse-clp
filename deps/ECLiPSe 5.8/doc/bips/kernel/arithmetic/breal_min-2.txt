@@ -1,0 +1,65 @@
+
+breal_min(+Number, ?Result)
+
+   Extracts the lower floating point bound of Number
+
+Arguments
+   Number              A number.
+   Result              A variable or float.
+
+Type
+   Arithmetic
+
+Description
+    This predicate is used by the ECLiPSe compiler to expand evaluable
+    arithmetic expressions.  So a call to breal_min(Number, Result) is
+    equivalent to
+
+    Result is breal_min(Number).
+
+    A bounded real is a real number represented by a lower and upper
+    bound in floating point format. This predicate extracts the lower
+    bound and unifies it with Result. If Number is not a bounded real,
+    the result returned is equivalent to converting it to a bounded real
+    first.
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated
+     5 --- Number is a not a number.
+     5 --- Result is neither a variable nor a float.
+
+Examples
+   
+Success:
+      ?- breal_min(0.99__1.01, X).
+      X = 0.99
+
+      ?- breal_min(1, X).
+      X = 1.0
+
+      ?- breal_min(1.0, X).
+      X = 1.0
+
+      ?- breal_min(1_10, X).
+      X = 0.099999999999999992
+
+Error:
+      ?- breal_min("a", Z).
+      type error in breal_min("a", Z)
+
+      ?- breal_min(2 + 4, Z).
+      type error in breal_min(2 + 4, Z)
+
+
+See Also
+   breal_max / 2, breal / 1, breal / 2, breal_bounds / 3, breal_from_bounds / 3, is / 2

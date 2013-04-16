@@ -1,0 +1,79 @@
+<HTML><HEAD><TITLE>create_module(+Module, +Exports, +Imports)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Modules</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>create_module(+Module, +Exports, +Imports)</H1>
+Create a module at runtime, with given exports and imports.
+<DL>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>+Exports</EM></DT>
+<DD>A list of export specifications as in export/1
+</DD>
+<DT><EM>+Imports</EM></DT>
+<DD>An atom or a list of atoms
+</DD>
+</DL>
+<H2>Description</H2>
+   create_module/3 creates the given module if it does not exist yet.
+   If the module already exists, an exception is raised (error 97).
+<P>
+   Once the module is created, the module (or list of modules) given as
+   Imports is imported.
+<P>
+   The list Exports must contain valid export specifications as
+   described in export/1.  It defines the initial part of the module's
+   interface, subsequent export and reexport directives can add to that.
+<P>
+   Note that modules are normally created by the compiler when it
+   encounters a module/1 or module/3 directive.  The create_module/3
+   predicate however creates modules dynamically at runtime.  The
+   intended applications are therefore mainly source processing tools,
+   e.g. compilers and loaders, or programs that need a clean name
+   space to store code and data.
+<P>
+   The system does not allow the atom [] to be used as a module name!
+   If [] is given as the Imports argument, it indicates the empty list,
+   rather than a module with name [].
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module, Imports or Exports is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Module is not an atom, or Module is the atom [].
+<DT><EM>(5) type error </EM>
+<DD>Imports is not an atom or list of atoms.
+<DT><EM>(5) type error </EM>
+<DD>Exports is not a list of exportable items.
+<DT><EM>(97) module already exists </EM>
+<DD>Module already exists.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse 1]: create_module(m, [data/1], []).
+    yes.
+    [eclipse 2]: compile_term(data(99))@m.
+    yes.
+    [eclipse 3]: m:data(X).
+
+    X = 99
+    yes.
+    [eclipse 4]: erase_module(m).
+    yes.
+
+Error:
+    create_module(M, [], []).                (Error 4).
+    create_module(m, _, _).                  (Error 4).
+    create_module(m, [], library(iso)).      (Error 5).
+    create_module(m,[],[]), create_module(m,[],[]). (Error 97).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/module-1.html">module / 1</A>, <A HREF="../../kernel/modules/module-3.html">module / 3</A>, <A HREF="../../kernel/modules/create_module-1.html">create_module / 1</A>, <A HREF="../../kernel/modules/erase_module-1.html">erase_module / 1</A>, <A HREF="../../kernel/modules/get_module_info-3.html">get_module_info / 3</A>, <A HREF="../../kernel/modules/current_module-1.html">current_module / 1</A>
+</BODY></HTML>

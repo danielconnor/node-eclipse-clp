@@ -1,0 +1,14 @@
+
+between(+From, +To, ?I)
+
+   Generates integers between From and To
+
+Type
+   library(util)
+
+Description
+Succeeds if From and To are integers and I unifies with a
+	  number between the two.  On backtracking it generates all
+	  values for I starting from From onwards.
+
+

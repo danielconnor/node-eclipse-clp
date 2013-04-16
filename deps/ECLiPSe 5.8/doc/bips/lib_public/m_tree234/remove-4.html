@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>remove(+Tree0, ++Key, ?Value, -Tree)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_tree234)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>remove(+Tree0, ++Key, ?Value, -Tree)</H1>
+Remove a key/value pair from a tree, failing if the key is not present.
+<DL>
+<DT><EM>Tree0</EM></DT>
+<DD>A 2-3-4 tree
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>The key to remove
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value corresponding to Key
+</DD>
+<DT><EM>Tree</EM></DT>
+<DD>The tree after removal
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	If the key Key appears in the tree Tree0, then remove it and attempt
+	to unify its corresponding value with Value.  Tree is Tree0 with the
+	key removed.
+	</P>
+	<P>
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails is Key does not appear in Tree0 or if Value does not unify with the corresponding value.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_tree234/delete-3.html">delete / 3</A>, <A HREF="../../lib_public/m_tree234/remove_smallest-4.html">remove_smallest / 4</A>
+</BODY></HTML>

@@ -1,0 +1,56 @@
+
++Expr1 > +Expr2
+
+   Succeed if the value of Expr1 is greater than the value of Expr2.
+
+
+
+Arguments
+   +Expr1              An arithmetic expression
+   +Expr2              An arithmetic expression
+
+Type
+   Arithmetic
+
+Description
+   Both arguments are evaluated and their types adjusted.  Then the
+   resulting numbers are compared.  The predicate succeeds if the value of
+   Expr1 is greater than the value of Expr2.  If the system is in
+   coroutining mode and the arguments are not ground, this predicate delays
+   until the expressions are fully instantiated.
+
+   The predicate also delays when the comparison involves bounded reals,
+   and the compared values overlap such that the result is undecidable.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      fails if the value of Expr1 is less or equal to the value of Expr2
+
+
+
+Exceptions
+     4 --- Expr1 or Expr2 is a variable (non-coroutining mode only).
+     5 --- Expr1 or Expr2 is not an arithmetic expression.
+
+Examples
+   
+   Success:
+   5 - 1 > 6 / 2.
+   1 > sin(pi/4).            % 1 converted to 1.0
+   Fail:
+   2 + 3 > 2 * 3.
+   Error:
+   _ > 0.                   (Error 4)
+   "s" > 0.                 (Error 5)
+
+
+
+
+
+See Also
+   suspend : > / 2, ic : > / 2, is / 2, =:= / 2, =\= / 2, >= / 2, < / 2, =< / 2

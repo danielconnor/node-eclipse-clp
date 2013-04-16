@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node66.html">
+<LINK REL="previous" HREF="node64.html">
+<LINK REL="up" HREF="node64.html">
+<LINK REL="next" HREF="node66.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1913"
+ HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1909"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1903"
+ HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1911"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1914"
+ HREF="node66.html">Tentative Values</A>
+<B> Up:</B> <A NAME="tex2html1910"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1904"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+ &nbsp <B>  <A NAME="tex2html1912"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1915"
+ HREF="node65.html#SECTION001011000000000000000">Using the Library</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001010000000000000000">
+Introduction</A>
+</H1>
+
+<P>
+<A NAME="5157"></A>
+The Repair library provides two simple, fundamental features which are
+the basis for the development of repair algorithms and non-monotonic
+search methods in ECLiPSe:
+
+<UL><LI>The maintenance of <EM>tentative values</EM> for the problem variables.
+    These tentative values may together form a partial
+    or even inconsistent <EM>tentative assignment</EM>. 
+    Modifications to, or extensions of this assignment may be
+    applied until a correct solution is found.
+
+<P>
+
+<LI>The monitoring of constraints (the so called <EM>repair constraints</EM>)
+    for being either satisfied or violated under the current tentative
+    assignment.  Search algorithms can then access the set of
+    constraints that are violated at any point in the search,
+    and perform repairs by changing the tentative assignment
+    of the problem variables.
+
+</UL>
+This functionality allows the implementation of classical local search
+<A NAME="5164"></A>
+methods within a CLP environment (see <EM>Tutorial on Search Methods</EM>).
+However, the central aim of the Repair library is to provide a framework
+for the integration of repair-based search with the consistency techniques
+available in ECLiPSe, such as the domains and constraints of the FD library.
+
+<P>
+A more detailed description of the theory and methods that are the basis of 
+the Repair library is available [<A
+ HREF="node72.html#HaniThesis">5</A>].
+
+<P>
+
+<H2><A NAME="SECTION001011000000000000000">
+Using the Library</A>
+</H2>
+To use the repair library you need to load it using<PRE>
+:- lib(repair).
+</PRE>
+Normally, you will also want to load one more of the
+'fd', 'ic', 'fd_sets' or 'conjunto' solvers. This is
+because of the notion of tenability, i.e. whether a tentative value is
+in a domain is checked by communicating with a different solver that
+keeps that domain.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1913"
+ HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1909"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1903"
+ HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1911"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1914"
+ HREF="node66.html">Tentative Values</A>
+<B> Up:</B> <A NAME="tex2html1910"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+<B> Previous:</B> <A NAME="tex2html1904"
+ HREF="node64.html">REPAIR: Constraint-Based Repair</A>
+ &nbsp <B>  <A NAME="tex2html1912"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

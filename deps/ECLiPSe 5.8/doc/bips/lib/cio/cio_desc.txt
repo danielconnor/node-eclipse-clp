@@ -1,0 +1,7 @@
+lib(cio)
+
+
+    This library provides C-Prolog compatible I/O predicates. It is included
+    in the C-Prolog compatibility package, but can be used independently.
+    The predicates change ECLiPSe's input or output stream, respectively.
+

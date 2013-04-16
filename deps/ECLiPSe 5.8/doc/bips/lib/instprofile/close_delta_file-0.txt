@@ -1,0 +1,32 @@
+
+close_delta_file
+
+   Close the instrumentation profiler's delta results file.
+
+Arguments
+
+Type
+   library(instprofile)
+
+Description
+    
+   Close the file that the instrumentation profiler writes delta values to.
+   The file must previously have been opened using open_delta_file/1. 
+   
+   Delta values are the instrumentation profiling results for the single
+   execution (as opposed to aggregated) of a profiled code fragment.
+   
+   For performance reasons, the results are written to the file using 
+   buffered I/O - each result is not flushed to the file as it is emitted. 
+   As a result to ensure all results are flushed to the disk file,
+   close_delta_file must be executed.
+   
+
+Resatisfiable
+   no
+
+Fail Conditions
+   no
+
+See Also
+   open_delta_file / 1, statprofile / 3, statistics / 2, library(instprofile)

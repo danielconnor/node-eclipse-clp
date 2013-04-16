@@ -1,0 +1,86 @@
+
+put(+Stream, +Ascii)
+
+   The character represented by the ascii integer code Ascii is put onto the
+buffered output stream Stream.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   +Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the buffered output stream Stream.
+
+
+   The output from put/2 is buffered first, and is only output to the
+   stream when the output is flushed (e.g.  using flush/1).
+
+
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     4 --- Ascii is not instantiated.
+     5 --- Stream is neither an integer nor an atom.
+     5 --- Ascii is instantiated, but not to an integer.
+   192 --- Stream is not an output stream.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+Success:
+      [eclipse]: put(output, 0'a).
+      a
+      yes.
+
+      [eclipse]: sh('cat file1').
+      a
+      yes.
+      [eclipse]: open(file1,read,s1),
+      >        open(file2,write,s2),repeat,
+      > (at_eof(s1)->!,
+      >             flush(s2),
+      >             close(s1),close(s2)
+      >            ;
+      >             get(s1,Char),
+      >             put(s2,Char),
+      >             fail).
+      Char = _g72
+      yes.
+      [eclipse]: sh('cat file2').
+      a
+      yes.
+
+Error:
+      put(output,A).             (Error 4).
+      put(Stream,98).            (Error 4).
+      put(output, '98').         (Error 5).
+      put(output, 98.0).         (Error 5).
+      put("string" A).           (Error 5).
+      put(11,97).                (Error 192). % stream not open
+      put(atom,97).              (Error 193).
+
+
+
+
+
+See Also
+   get / 1, get / 2, put / 1

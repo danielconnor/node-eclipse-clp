@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>remove_smallest(+Tree0, ?Key, ?Value, -Tree)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_tree234)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>remove_smallest(+Tree0, ?Key, ?Value, -Tree)</H1>
+Remove the smallest key and its corresponding value from a tree.
+<DL>
+<DT><EM>Tree0</EM></DT>
+<DD>A 2-3-4 tree
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>The key removed
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value corresponding to Key
+</DD>
+<DT><EM>Tree</EM></DT>
+<DD>The tree after removal
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	Removes the smallest key in the tree Tree0 (resulting in the
+	tree Tree), and attempts to unify the removed key with Key and 
+	its corresponding value with Value.
+	</P>
+	<P>
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails if Tree0 is empty or if Key and Value do not unify with the key and value removed.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_tree234/remove-4.html">remove / 4</A>
+</BODY></HTML>

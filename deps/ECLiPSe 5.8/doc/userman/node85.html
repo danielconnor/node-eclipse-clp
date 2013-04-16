@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Available Tools and Libraries</TITLE>
+<META NAME="description" CONTENT="Available Tools and Libraries">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node86.html">
+<LINK REL="previous" HREF="node84.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node86.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3552"
+ HREF="node86.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3548"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3542"
+ HREF="node84.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3550"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3553"
+ HREF="node86.html">Heuristic Program Checker</A>
+<B> Up:</B> <A NAME="tex2html3549"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3543"
+ HREF="node84.html">Development Support Tools</A>
+ &nbsp <B>  <A NAME="tex2html3551"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001510000000000000000">
+Available Tools and Libraries</A>
+</H1>
+
+ECLiPSe provides a number of different tools and libraries to assist 
+the programmer with program development:
+
+<DL>
+<DT><STRONG>Document</STRONG>
+<DD>Tools for generating documentation from ECLiPSe
+sources.
+<A NAME="9179"></A>
+<DT><STRONG>Lint</STRONG>
+<DD>Generates warning messages for dubious programming 
+constructs and violation of naming conventions for an ECLiPSe source 
+module or file.
+<A NAME="9180"></A>
+<DT><STRONG>Pretty_printer</STRONG>
+<DD>Tools for pretty-printing a file in 
+different formats.
+<A NAME="9181"></A>
+<DT><STRONG>Xref</STRONG>
+<DD>Enables the analysis of an ECLiPSe source module or
+file for the construction of a predicate call graph.
+<A NAME="9182"></A>
+</DL>
+
+In addition, ECLiPSe provides several tools that aid in the
+understanding of a programs runtime behaviour:
+
+<DL>
+<DT><STRONG>Coverage</STRONG>
+<DD>Records the frequency at which various parts of the
+program are executed.
+<DT><STRONG>Debugger</STRONG>
+<DD>Provides a low level view of program
+activity. Chapter&nbsp;<A HREF="node75.html#chapdebug">14</A> presents a comprehensive 
+look at debugging of ECLiPSe programs.
+<DT><STRONG>Display matrix</STRONG>
+<DD>Shows the values of given terms in a graphical
+window. Chapter&nbsp;<A HREF="node17.html#chaptkeclipse">4</A> discusses the use of this tool.
+<DT><STRONG>Mode Analyser</STRONG>
+<DD>Collects statistics about the invocation modes of
+predicates within a running program in order to assist in the generation of
+compiler invocation mode directives.
+<DT><STRONG>Port Profiler</STRONG>
+<DD>Collects statistics about the running program in terms
+of box model port counters.
+<DT><STRONG>Timing Profiler</STRONG>
+<DD>Samples the running program at regular intervals to
+give a statistical summary of where the execution time is spent.
+<DT><STRONG>Visualisation framework</STRONG>
+<DD>A graphical environment for the
+visualisation of search and propagation in constraint programs.
+The <I>Visualisation Tools Manual</I> discusses the use of this 
+environment.
+</DL>
+
+This section focuses on the program development libraries and two 
+complementary runtime analysis tools, the <I>profiler</I> and the
+<I>coverage</I> library.
+Throughout this chapter, the use of each of the tools is demonstrated 
+on the following <B>n-queens</B> code:<PRE>
+
+:- module(queen).
+:- export queen/2.
+
+queen(Data, Out) :-
+        qperm(Data, Out),
+        safe(Out).
+
+qperm([], []).
+qperm([X|Y], [U|V]) :-
+        qdelete(U, X, Y, Z),
+        qperm(Z, V).
+
+qdelete(A, A, L, L).
+qdelete(X, A, [H|T], [A|R]) :-
+        qdelete(X, H, T, R).
+
+safe([]).
+safe([N|L]) :-
+        nodiag(L, N, 1),
+        safe(L).
+
+nodiag([], _, _).
+nodiag([N|L], B, D) :-
+        D =\= N - B,
+        D =\= B - N,
+        D1 is D + 1,
+        nodiag(L, B, D1).
+</PRE><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3552"
+ HREF="node86.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3548"
+ HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3542"
+ HREF="node84.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3550"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3553"
+ HREF="node86.html">Heuristic Program Checker</A>
+<B> Up:</B> <A NAME="tex2html3549"
+ HREF="node84.html">Development Support Tools</A>
+<B> Previous:</B> <A NAME="tex2html3543"
+ HREF="node84.html">Development Support Tools</A>
+ &nbsp <B>  <A NAME="tex2html3551"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

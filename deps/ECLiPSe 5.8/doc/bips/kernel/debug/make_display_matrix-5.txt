@@ -1,0 +1,105 @@
+
+make_display_matrix(+Terms, +Prio, +Type, +CondList, +Name)
+
+      Creates a display matrix of terms that can be monitored with the 
+   graphical ECLiPSe (the predicate will succeed silently in tty ECLiPSe).
+
+
+
+Arguments
+   Terms               One or two dimensional array, or list or list/integer.
+   Prio                An integer.
+   Type                An atom.
+   CondList            An atom.
+   Name                An atomic term.
+
+Type
+   Debugging
+
+Description
+   Set up a one or two dimensional matrix of terms that can then be
+   monitored for changes in their values. The terms are either provided in
+   the form of an array (the nested structure type, compatible with dim/2),
+   or in the form +List/+Spec, where List is a list of the terms, and Spec
+   is an integer specifying the number of cells per row of the matrix, 0
+   means that the matrix is to have only one row (except if the members of
+   the list are matricies of the same size, in which case a two dimensional
+   matrix will be created).  If List is supplied without a Spec, this is
+   treated as Spec = 0.  Name specifies the name that is associated with
+   this display matrix, and cannot be used for another display matrix that
+   is active at the same time in the same module. The name is mapped into a
+   string internally, so a name that is a atom or number is the same name
+   as its equivalent string (i.e. 'matrix' and "matrix" are the same name).
+
+
+
+   The terms are monitored by placing a demon suspension on the variables
+   in each term. When a demon wakes, the new value of the term it is
+   associated with is sent to the display matrix (and possibly updated,
+   depending on the interactive settings on the matrix). When the new 
+   value is backtracked, the old value is sent to the display matrix.
+   The other arguments in this predicate is used to control when the
+   demon wakes, and what sort of information is monitored. Prio is the
+   priority that the demon should be suspended at, Type is designed to
+   specify the attributes that is being monitored (currently all 
+   attributes are monitored, and Type is a dummy argument), CondList is 
+   the suspension list that the demon should be added to. Depending on
+   these arguments, the level of monitoring can be controlled. Note that
+   it is possible for the display matrix to show values that are out of
+   date because the change was not monitored. 
+
+
+   The display matrix will be removed on backtracking. However, it will 
+   not be removed if make_display_matrix has been cut. It is possible to
+   explicitly remove a matrix with kill_display_matrix/1.
+
+
+   Each cell of the display matrix represents one term. The value of the
+   term is displayed in the cell, and break-points can be set from a pop-up
+   menu so that execution suspends when an update occurs in a cell. The
+   term can also be inspected by the inspector. The actual current value of
+   the term will be examined, which may be different from the value shown
+   in the cell depending on how often the cell is updated. With breaks, the
+   changes due to forward execution (further constraining of a variable's
+   value) and backtracking are shown in different colours. Inspection is
+   not allowed on a term that has just been backtracked, because the actual
+   backtracking of the value have not yet occurred (the demon sends the old
+   value just before the actual backtracking). It can be examined at the
+   next break-point. The pop-up menu also shows the current displayed
+   value, and the previous displayed value for the cell.
+
+
+
+
+Resatisfiable
+      No (but display matrix removed on backtracking).		
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Type errors in the various arguments.
+     6 --- Name has already been given to another display matrix that                is still active.
+
+Examples
+   
+   queens(N, List) :-
+       length(List, N),
+       List :: 1..N,
+       make_display_matrix(List/3, 1, any, constrained, queens),
+       % sets up a matrix with rows of 3 elements. This is the only
+       % extra goal that has to be added to enable monitoring
+       alldistinct(List),
+       constrain_queens(List),
+       % Label the variables
+       labeling(List).
+
+
+
+
+
+
+See Also
+   make_display_matrix / 2, kill_display_matrix / 1, dim / 2

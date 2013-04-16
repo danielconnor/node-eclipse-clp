@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>recordz(+Key, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>recordz(+Key, ?Value)</H1>
+Records the term Value at the end of key Key in the indexed database.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>An atom or compound term.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>Any prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to record any prolog term Value at the end of the indexed database
+   entry associated with the key Key.  A synonym for record/2.  In the case
+   of compound terms, all keys of the same name and arity are treated as
+   equal.
+
+<P>
+   If backtracking occurs through the call of recordz/2 the associated
+   Value is not removed from the indexed database.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is neither an atom nor a compound term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+    [eclipse]: recordz(whiskey,jameson),
+    &gt; recordz(whiskey,[scotch,irish,canadian,american]),
+    &gt; recordz(whiskey,bushmills).
+    yes.
+    [eclipse]: recorded(whiskey,Value).
+    Value = jameson     More (;)
+    Value = [scotch,irish,canadian,american]     More (;)
+    Value = bushmills     More (;)
+    no (more) solution.
+
+    recordz(a(compound,term),value1).
+    recordz([a,compound,term],value2).
+Error:
+    recordz(Key, anything).             (Error 4)
+    recordz("key",anything).            (Error 5)
+    recordz(1,anything).                (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/record-2.html">record / 2</A>, <A HREF="../../kernel/record/recorda-2.html">recorda / 2</A>
+</BODY></HTML>

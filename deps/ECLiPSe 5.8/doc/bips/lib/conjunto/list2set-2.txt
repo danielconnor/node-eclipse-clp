@@ -1,0 +1,44 @@
+
+list2set(+List, ?Svar)
+
+   Transforms a ground list List into a ground set Svar.
+
+
+
+Arguments
+   +List               A ground list.
+   ?Svar               A free variable or a ground set.
+
+Type
+   library(conjunto)
+
+Description
+   This predicate forces Svar to be the ground set associated with the
+   ground list List.  Svar can be a free variable or a ground set.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List is not ground or if Svar is ground and different from the
+   computed set.
+
+
+
+Examples
+   
+[eclipse 5]: L = [1,3,2,6,4], list2set(L, S).
+
+L = [1, 3, 2, 6, 4]
+S = {1, 2, 3, 4, 6}
+yes.
+
+
+
+
+
+See Also
+   set2list / 2

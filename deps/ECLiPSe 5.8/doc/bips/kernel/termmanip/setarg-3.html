@@ -1,0 +1,80 @@
+<HTML><HEAD><TITLE>setarg(+N, +Term, ?Arg)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>setarg(+N, +Term, ?Arg)</H1>
+Destructively replaces the Nth argument of the compound term Term with the
+term Arg.
+
+
+<DL>
+<DT><EM>+N</EM></DT>
+<DD>Integer not greater than the arity of Term, or a list
+ of integers.
+</DD>
+<DT><EM>+Term</EM></DT>
+<DD>Compound term or external data handle.
+</DD>
+<DT><EM>?Arg</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Destructively replaces the Nth argument of the compound term Term with
+   the term Arg.  The assignment is undone on backtracking.
+
+<P>
+   The use of this built-in is strongly discouraged, due to its non-logical
+   behaviour!  It is provided only to enable the implementation of certain
+   low-level operations that could otherwise not be provided with the same
+   efficiency.  Surprising side effects can occur when you don't know
+   exactly what you are doing.  In particular, it must be assured by the
+   programmer that the old argument value is not needed any longer and that
+   the old argument was not aliased to some other location.  The old value
+   should also not be a variable.
+
+<P>
+   If N is a list of integers and Term is a nested structure, then Arg
+   is the subterm of Term described by this list of integers.
+   E.g. setarg([2,1,3], Term, Arg) is the same as arg(2, Term, T1),
+   arg(1, T1, T2), setarg(3, T2, Arg).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either N or Term (or both) is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>N is instantiated, but not to an integer.
+<DT><EM>(5) type error </EM>
+<DD>Term is instantiated, but not to a compound term.
+<DT><EM>(6) out of range </EM>
+<DD>N is an integer less than 1 or greater than the arity of    Term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: T = s(a, b, c), setarg(2, T, hello).
+      T = s(a, hello, c)
+      yes.
+      [eclipse]: T = s(a, b, c), ( setarg(2, T, hello) ; true ).
+      T = s(a, hello, c)     More? (;)
+      T = s(a, b, c)
+      yes.
+Unpredictable result:
+    [eclipse 10]: S=s(A), T=t(A), setarg(1, T, b).
+    S = s(A)  or  S = s(b)
+    A = b     or  A = A
+    T = t(b)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/arg-3.html">arg / 3</A>, <A HREF="../../kernel/externals/xset-3.html">xset / 3</A>
+</BODY></HTML>

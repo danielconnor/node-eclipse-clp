@@ -1,0 +1,20 @@
+:- module(intervals).
+:- export iset_contains / 2.
+:- export iset_includes / 2.
+:- export canonical_iset / 2.
+:- export iset_complement / 3.
+:- export iset_difference / 3.
+:- export iset_intersection / 3.
+:- export iset_union / 3.
+:- export interval_contains / 2.
+:- export interval_includes / 2.
+:- export interval_ends_first / 2.
+:- export intervals_are_coalescable / 2.
+:- export intervals_are_not_coalescable / 2.
+:- export interval_is_less / 2.
+:- export interval_is_less_and_not_coalescable / 2.
+:- export interval_difference / 3.
+:- export interval_intersection / 3.
+:- export interval_union / 3.
+:- export intervals_meet / 2.
+:- export intervals_are_disjoint / 2.

@@ -1,0 +1,101 @@
+
+tool(+PredSpec)
+
+   Declares PredSpec as a tool interface procedure.
+
+
+
+Arguments
+   +PredSpec           Expression of the form Atom/Integer.
+
+Type
+   Obsolete
+
+Description
+   Informs the system that the (may be not yet visible) procedure PredSpec
+   is a tool interface procedure.  Normally, tool(PredSpecI, PredSpecB) is
+   used to define a tool interface procedure and declare its body.
+   However, if PredSpecI is not yet declared as a tool and if the system
+   has already compiled some calls to it, the tool/2 declaration will cause
+   an error since the system cannot provide the caller's home module for
+   calls which are already compiled.
+
+
+   Therefore, when there are modules which are compiled before the tool/2
+   declaration but which call PredSpecI, tool/1 should be used before the
+   first call to inform the system that this is a tool interface procedure.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- PredSpec is not instantiated.
+     5 --- PredSpec is instantiated, but not to an expression of the    form Atom/Integer.
+    62 --- A call to PredSpec has already been compiled before the    tool declaration (``inconsistent procedure redefinition'').
+
+Examples
+   
+Success:
+      [eclipse]: tool(list_name/1). % declare as tool
+                                  % procedure before
+      yes.                        % compiling calls to it.
+      [eclipse]: [user].
+       p :- list_name(p).
+       user compiled 52 bytes in 0.00 seconds
+      yes.
+      [eclipse]: tool_body(current_predicate/1,P,M),
+              (import P from M).
+      P = current_predicate_body / 2
+      M = sepia_kernel
+      yes.
+      [eclipse]: tool(list_name/1,list_name_body/2).
+      yes.
+      [eclipse]: [user].
+       :- export list_name/1.
+       list_name_body(Name, Module) :-
+               current_predicate_body(Name/A, Module),
+               writeln(Name/A),
+               fail.
+       list_name_body(_, _).
+       user compiled 260 bytes in 0.03 seconds
+      yes.
+      [eclipse]: module(m).
+      [m]: [user].
+       p(a,b,c,d,e).
+       user compiled 84 bytes in 0.00 seconds
+      yes.
+      [m]: import list_name/1 from eclipse.
+      yes.
+      [m]: list_name(p).
+      p / 5
+      yes.
+      [m]: module(eclipse).
+      [eclipse]: list_name(p).
+      p / 0
+      yes.
+
+Error:
+      tool(L).            (Error 4).
+      tool(list_name).    (Error 5).
+      tool(list_name/n).  (Error 5).
+
+      [eclipse]: [user].
+       p :- t. % call compiled before tool declaration
+       user compiled 32 bytes in 0.00 seconds
+      yes.
+      [eclipse]: tool(t/0). (Error 62).
+
+
+
+
+
+See Also
+   tool / 2, tool_body / 3

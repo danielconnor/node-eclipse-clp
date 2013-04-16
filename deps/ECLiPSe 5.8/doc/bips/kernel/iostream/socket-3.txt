@@ -1,0 +1,77 @@
+
+socket(+Domain, +Type, ?Stream)
+
+   Creates a socket of a given type and domain and associates a stream with
+it.
+
+
+
+Arguments
+   +Domain             Atom
+   +Type               Atom
+   ?Stream             Atom, structure or variable.
+
+Type
+   Stream I/O
+
+Description
+   socket/3 is a direct link to the socket(2) system call, available on
+   Berkeley systems.  Domain is either unix or internet, type is stream or
+   datagram.  It creates a socket of the given type in the given domain and
+   creates a stream associated with it.  After the connection is
+   established using bind/2, connect/2, listen/2 and/or accept/3, the
+   stream can be used for input and output to communicate with other
+   processes.
+
+
+   The unix domain can be used for communication between processes on the
+   same machine, whereas the internet domain can connect any two machines.
+   The stream type supports point-to-point reliable communication, whereas
+   the datagram communication is a network-type communication with clear
+   message boundaries, which, however, are not visible in ECLiPSe .
+
+
+   Note that in order to read data using read/1,2, it must have been
+   written in Prolog term format (i.e.  ended with a period and a blank
+   space character).  The output to sockets is buffered, so that data might
+   be actually written only after a call to flush(Stream).
+
+
+   When instantiated, Stream must be the symbolic stream name (atom).  The
+   stream can also be specified as sigio(Stream).  In this case the socket
+   is created and in addition it is instructed to send the signal io each
+   time new data appears in it.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Stream is instantiated, but not to an atom or a sigio    structure.
+     5 --- Domain or Type are instantiated but not to atoms.
+     6 --- Domain or Type are atoms, but different from the accepted    ones.
+   170 --- It was not possible to create the socket.
+
+Examples
+   
+Success:
+      socket(unix, stream, s).
+      socket(internet, datagram, socket).
+
+Error:
+      socket(unix, stream, 1)       (Error 5).
+      socket(telnet, datagram, X)   (Error 6).
+
+
+
+
+
+See Also
+   bind / 2, listen / 2, accept / 3, connect / 2, new_socket_server / 3, pipe / 2, exec / 2

@@ -1,0 +1,33 @@
+
+dom_range(+Dom, ?Min, ?Max)
+
+   Return the minimum and maximum value in the integer domain Dom.
+
+
+
+Arguments
+   +Dom                A finite domain.
+   ?Min                An integer or a variable.
+   ?Max                An integer or a variable.
+
+Type
+   library(fd)
+
+Description
+   Return the minimum and maximum value in the integer domain Dom.  This
+   predicate can also be used to test if a given domain is an integer one
+   or not.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Dom is a domain containing non-integer atomic elements.
+
+
+
+See Also
+   dom_check_in / 2, is_integer_domain / 1

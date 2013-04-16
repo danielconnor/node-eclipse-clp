@@ -1,0 +1,63 @@
+<HTML><HEAD><TITLE>get_priority(-Priority)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_priority(-Priority)</H1>
+Get the priority of the currently executing goal.
+
+
+<DL>
+<DT><EM>-Priority</EM></DT>
+<DD>A variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   All goals in ECLiPSe execute under a certain priority. An execution
+   can only be interrupted by the waking of a goal with a higher
+   priority. Priorities are most relevant in data-driven algorithms,
+   to specify that certain goals must do their work before others
+   can meaningfully execute.
+
+<P>
+   Priorities range from 1 (most urgent) to 12 (least urgent). The
+   toplevel goal of an execution always runs at the lowest priority (12).
+
+<P>
+   Warning: Although it is possible to write programs that only work
+   correctly under a particular priority ordering, such practice is
+   strongly discouraged. Priorities should only affect efficiency,
+   never correctness.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(24) number expected </EM>
+<DD>Priority is neither variable nor number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: get_priority(P).
+    P = 12
+    yes.
+
+    [eclipse 2]: [user].
+     p :- get_priority(P), writeln(prio=P).
+
+    user       compiled traceable 120 bytes in 0.00 seconds
+    yes.
+    [eclipse 3]: suspend(p, 5, X-&gt;inst), X=1.
+    prio = 5
+    X = 1
+    yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/call_priority-2.html">call_priority / 2</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/suspensions/make_suspension-4.html">make_suspension / 4</A>, <A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/suspensions/suspend-4.html">suspend / 4</A>, <A HREF="../../kernel/suspensions/set_suspension_data-3.html">set_suspension_data / 3</A>
+</BODY></HTML>

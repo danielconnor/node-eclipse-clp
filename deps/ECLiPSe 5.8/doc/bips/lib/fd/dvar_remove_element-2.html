@@ -1,0 +1,32 @@
+<HTML><HEAD><TITLE>dvar_remove_element(+DVar, +El)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dvar_remove_element(+DVar, +El)</H1>
+The element El is removed from the domain of DVar and all concerned lists
+are woken.
+
+
+<DL>
+<DT><EM>+DVar</EM></DT>
+<DD>A domain variable.
+</DD>
+<DT><EM>+El</EM></DT>
+<DD>An atomic term.
+</DD>
+</DL>
+<H2>Description</H2>
+   The element El is removed from the domain of DVar and all concerned
+   lists are woken.  If the resulting domain is empty, this predicate
+   fails.  If it is a singleton, DVar is instantiated.  If the domain does
+   not contain the element, no updates are made.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/dvar_attribute-2.html">dvar_attribute / 2</A>, <A HREF="../../lib/fd/NN-2.html">:: / 2</A>, <A HREF="../../lib/fd/HNN-2.html">#:: / 2</A>
+</BODY></HTML>

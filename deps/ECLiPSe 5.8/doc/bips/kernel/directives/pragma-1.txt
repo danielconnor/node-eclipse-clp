@@ -1,0 +1,60 @@
+
+pragma(Option)
+
+   Enable or disable compiler options.  Can only be used as a directive in
+source files.
+
+
+
+Arguments
+   +Option             An atom.
+
+Type
+   Directives
+
+Description
+   The pragma/1 directive allows to control various compiler options.  The
+   effect of a pragma is local to a source file (unlike set_flag/2).
+   Settings are in effect until the next pragma that overrides it or until
+   the end of the file.
+
+    Option     Effect
+   ---------------------------------------------------------------
+    debug      debuggable code, no inline compilation
+    nodebug    non-debuggable code, inline compilation done
+    skip       set the skipped flag for all compiled predicates
+    noskip     don't (default)
+    expand     do inline compilation
+    noexpand   don't
+    system     set the type of all compiled predicates to built_in
+
+   The default for debug/nodebug depends on the global flag debug_compile.
+   The default for expand/noexpand depends on the global flag goal_expansion.
+   The global flags are set with set_flag/2 and tested with get_flag/2.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+   148 --- An unknown Option was given.
+
+Examples
+   
+:- pragma(debug).
+:- pragma(expand).
+twice(X, Y) :-      % this is compiled into debuggable
+    Y is 2*X.       % code with expanded arithmetic
+
+
+
+
+
+See Also
+   compile / 1, env / 0, get_flag / 2, get_flag / 3, pred / 1, set_flag / 3, set_flag / 2, skipped / 1, unskipped / 1

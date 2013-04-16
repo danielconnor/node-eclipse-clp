@@ -1,0 +1,57 @@
+
+make
+
+   Recompile all files that have been modified since their last compilation.
+
+
+
+Arguments
+
+Type
+   Development Environment and Global Settings
+
+Description
+   This is a simple utility which uses file modification times to determine
+   if a file needs recompilation.  All compiled files in the system are
+   examined and recompiled if they have been modified since the previous
+   compilation.  make/0 can be defined as follows:
+
+
+
+make :- current_compiled_file(File, Time, Module),
+        get_file_info(File, mtime) =\= Time,
+        compile(File, Module),
+        fail.
+make.
+
+
+
+Resatisfiable
+      no
+
+Fail Conditions
+      none
+
+
+
+Examples
+   
+[eclipse 1]: [file1,file2].
+file1.pl   compiled traceable 40 bytes in 0.00 seconds
+file2.pl   compiled traceable 40 bytes in 0.00 seconds
+
+yes.
+[eclipse 2]: sh("touch file1.pl").
+
+yes.
+[eclipse 3]: make.
+file1.pl   compiled traceable 40 bytes in 0.00 seconds
+
+yes.
+
+
+
+
+
+See Also
+   . / 2, compile / 1, compile / 2, current_compiled_file / 3, ensure_loaded / 1

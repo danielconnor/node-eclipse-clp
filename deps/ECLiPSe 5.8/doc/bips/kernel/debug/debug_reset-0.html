@@ -1,0 +1,35 @@
+<HTML><HEAD><TITLE>debug_reset</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>debug_reset</H1>
+Reset the debugger
+<H2>Description</H2>
+
+    Reset the debugger. In particular, this includes:
+    <UL>
+	<LI>reset invocation numbers so they start from 0 again
+	<LI>reset all filter conditions
+	<LI>raise the debug-init event (250) at the next trace/1, debug/1
+	    or any predicate that has the start_tracing flag set.
+    </UL>
+    Note that debug_reset/0 just sets some parameters, it does not
+    activate the debugger immediately. This only happens when a trace/1,
+    debug/1, or predicate with the start_tracing flag is executed.
+    <P>
+    The debugger cannot be reset while it is active. The predicate will
+    fail in this case.
+
+<H3>Fail Conditions</H3>
+Debugger is active and cannot be reset at this time
+<H2>Examples</H2>
+<PRE>
+[eclipse]: trace(true), trace(true), debug_reset, trace(true). 
+  (1) 1 CALL  true   %&gt; creep
+  (1) 1 EXIT  true   %&gt; creep
+  (3) 1 CALL  true   %&gt; creep
+  (3) 1 EXIT  true   %&gt; creep
+  (1) 1 CALL  true   %&gt; creep
+  (1) 1 EXIT  true   %&gt; creep
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/trace-1.html">trace / 1</A>, <A HREF="../../kernel/debug/debug-1.html">debug / 1</A>
+</BODY></HTML>

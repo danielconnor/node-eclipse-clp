@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Issues to check for</TITLE>
+<META NAME="description" CONTENT="Issues to check for">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="previous" HREF="node55.html">
+<LINK REL="up" HREF="node52.html">
+<LINK REL="next" HREF="node57.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1355"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1349"
+ HREF="node52.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1345"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1351"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1353"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1356"
+ HREF="node57.html">Style Guide</A>
+<B> Up:</B> <A NAME="tex2html1350"
+ HREF="node52.html">Correctness and Performance</A>
+<B> Previous:</B> <A NAME="tex2html1346"
+ HREF="node55.html">Reviewing</A>
+ &nbsp <B>  <A NAME="tex2html1352"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1354"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1357"
+ HREF="node56.html#SECTION00941000000000000000">Unwanted choicepoints</A>
+<LI><A NAME="tex2html1358"
+ HREF="node56.html#SECTION00942000000000000000">Open streams</A>
+<LI><A NAME="tex2html1359"
+ HREF="node56.html#SECTION00943000000000000000">Modified global state</A>
+<LI><A NAME="tex2html1360"
+ HREF="node56.html#SECTION00944000000000000000">Delayed goals</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00940000000000000000">
+Issues to check for</A>
+</H1>
+
+<H2><A NAME="SECTION00941000000000000000">
+Unwanted choicepoints</A>
+</H2>
+It is important to remove all unwanted choicepoints<A NAME="1048"></A><A NAME="1049"></A> in an application, since they are a common source of errors. In addition, a choicepoint requires a significant amount of memory, so that leaving unwanted choicepoints is also a performance problem.
+
+<P>
+For most predicates, in particular those following one of the programming concepts in chapter <A HREF="node24.html#programmingconcepts">5</A>, it is quite simple to avoid unwanted choicepoints. Other predicates may need more effort. We can use the ECLiPSe debugger to detect if there are any unwanted choicepoints. In the trace output for the <I>EXIT</I> <A NAME="1052"></A>port ECLiPSe will print a <code>*</code> if the predicate leaves a choicepoint. We can easily check a complete query by skipping over its execution and checking the exit port. If a choicepoint is indicated, we can re-run the query to locate the missed choicepoint. 
+
+<P>
+
+<H2><A NAME="SECTION00942000000000000000">
+Open streams</A>
+</H2>
+A common error is to open some file without closing it before leaving. This typically happens if it is opened in one part of the program and closed in another part. Normally everything works fine, but under some exceptional circumstances the second part is not executed, leaving the file open. This can consume system resources quite quickly, leading to follow-on problems. It is a good idea to verify that every call to <I>open/3</I> is followed by a <I>close/1</I>, even if some other part of the program unexpectedly fails.
+
+<P>
+
+<H2><A NAME="SECTION00943000000000000000">
+Modified global state</A>
+</H2>
+We have already stated that changing global state should be used as a last resort, not as a common practice. But if the program modifies dynamic predicates, creates global variables or uses <I>record</I>, then we must be very careful to restore the state properly, i.e. remove dynamic predicates after use, reset global variables etc.
+
+<P>
+
+<H2><A NAME="SECTION00944000000000000000">
+Delayed goals</A>
+</H2>
+Normally, a solver should not leave delayed goals after it is finished. For some solvers, we can enforce this by instantiating all solver variables in a solution, others require more complex actions. If a query returns with delayed goals, this should be seen as an error message that needs to be investigated.
+
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1355"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1349"
+ HREF="node52.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1345"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1351"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1353"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1356"
+ HREF="node57.html">Style Guide</A>
+<B> Up:</B> <A NAME="tex2html1350"
+ HREF="node52.html">Correctness and Performance</A>
+<B> Previous:</B> <A NAME="tex2html1346"
+ HREF="node55.html">Reviewing</A>
+ &nbsp <B>  <A NAME="tex2html1352"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1354"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

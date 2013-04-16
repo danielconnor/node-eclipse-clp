@@ -1,0 +1,49 @@
+
+deletemin(?Var, +List, -Rest)
+
+   Select from List the variable Var which has the smallest lower domain bound,
+and return the rest of the list.
+
+
+
+Arguments
+   -Var                A variable.
+   -Rest               A term unifying with a list of domain variables or integers.
+   +List               A list of domain variables or integers.
+
+Type
+   library(fd)
+
+Description
+   This predicate is used in labeling procedures.  Especially when labeling
+   start times in scheduling problems, it is often a good strategy to start
+   with the earliest possible tasks, because fixing those will cause useful
+   bounds propagation on the start times of the other tasks. This predicate
+   selects from a list the variable with the smallest lower bound. Numbers
+   are treated as if they were variables with singleton domains.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List is empty.
+
+
+
+Examples
+   
+   start_time_labeling([]) :- !.
+   start_time_labeling(Vars) :-
+        deletemin(X, Vars, Rest),
+	indomain(X),
+	start_time_labeling(Rest).
+
+
+
+
+
+See Also
+   deleteff / 3, deleteffc / 3, indomain / 1, labeling / 1

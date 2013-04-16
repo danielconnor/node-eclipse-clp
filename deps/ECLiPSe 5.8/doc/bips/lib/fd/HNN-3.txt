@@ -1,0 +1,25 @@
+
+#::(?X, ?Y, ?B)
+
+   The constraint X #::  Y has the truth value B. The predicate is an alias for ::/3.
+
+
+
+Arguments
+   ?X                  A domain variable
+   ?Y                  A linear term.
+   ?B                  A variable with domain 0..1.
+
+Type
+   library(fd)
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if B is not the truth value of the associated constraint.
+
+
+
+See Also
+   :: / 3, #>= / 3, #< / 3, #<= / 3, #= / 3, #\= / 3

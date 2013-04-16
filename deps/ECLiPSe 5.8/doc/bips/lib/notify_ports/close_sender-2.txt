@@ -1,0 +1,13 @@
+
+close_sender(+Pos, +Struct)
+
+   Close a send port on a structure field
+
+Arguments
+   Pos                 positive integer, the send port's field number in Struct
+   Struct              a structure whose Pos-th field is a send port
+
+Type
+   library(notify_ports)
+
+

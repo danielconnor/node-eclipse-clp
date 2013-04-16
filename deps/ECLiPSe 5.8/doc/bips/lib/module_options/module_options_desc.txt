@@ -1,0 +1,105 @@
+lib(module_options)
+
+
+	This library provides utilities to manage option settings on behalf
+	of other library modules. The basic idea is that each client module
+	can define what it considers to be valid option names and values, plus
+	the structure in terms of which the set of all options will be stored
+	and returned.
+
+	For each client library, global default option settings are maintained
+	which can be modified (in a non-backtrackable fashion) using
+	set_default_option/2. Whenever the settings are retrieved, the
+	defaults can be individually overridden using a user-supplied option
+	list.
+
+	Every client module has to define 3 local predicates:
+
+	valid_option_field(?Name, -FieldIndex)
+	    defines the option names (atoms) and the position (integer)
+	    of the option value within an option structure.
+	valid_option_value(+Name, +Value)
+	    defines what constitues a valid option value, by
+	    provides a type/range check for Value. The predicate should
+	    fail if Value is not a valid value for option Name.
+	default_options(-OptionStructure)
+	    this should be a single fact which should return a structure.
+	    The structure arguments define the initial default settings
+	    for each option field. The structure's functor defines the
+	    skeleton in terms of which option settings will be returned
+	    by get_options/2.
+	    Note that the structure can have extra fields which are
+	    not defined as valid options, are not user-modifiable, and
+	    will therefore always be returned unchanged by get_options/2.
+
+	A typical application would in addition define a toplevel predicate
+	that accepts a user-supplied option list per invocation, and possibly
+	a predicate to modify the global default settings.  Sample usage:
+
+	:- module(my_module).
+
+	:- lib(module_options).
+
+	valid_option_field(a, 1).
+	valid_option_field(b, 2).
+	valid_option_field(c, 3).
+
+	valid_option_value(a, Value) :- integer(Value).
+	valid_option_value(b, Value) :- atom(Value).
+	valid_option_value(c, Value) :- atom(Value).
+
+	default_options(options(23,hello,world,there)).
+
+	:- export my_set_default_option/2.
+	my_set_default_option(Name, Value) :-
+	    set_default_option(Name, Value).
+
+	:- export my_predicate/2.
+	my_predicate(Arguments, OptionList) :-
+	    ( get_options(OptionList, OptionStruct) ->
+		...
+	    ;
+		printf(error, "Invalid option list: %w%n", [OptionList]),
+		print_default_options(error),
+		abort
+	    ).
+
+	In practice, it is recommended to use structure notation for the
+	option structure for better readability and maintainability, i.e.
+
+	:- module(my_module).
+
+	:- lib(module_options).
+
+	:- local struct(options(a,b,c,d)).
+
+	valid_option_field(a, a of options).
+	valid_option_field(b, b of options).
+	valid_option_field(c, c of options).
+
+	valid_option_value(a, Value) :- integer(Value).
+	valid_option_value(b, Value) :- atom(Value).
+	valid_option_value(c, Value) :- atom(Value).
+
+	default_options(options{a:23,b:hello,c:world,d:there}).
+
+	:- export my_set_default_option/2.
+	my_set_default_option(Name, Value) :-
+	    set_default_option(Name, Value).
+
+	:- export my_predicate/2.
+	my_predicate(Arguments, OptionList) :-
+	    ( get_options(OptionList, OptionStruct) ->
+		...
+	    ;
+		printf(error, "Invalid option list: %w%n", [OptionList]),
+		print_default_options(error),
+		abort
+	    ).
+
+	It is not absulotely necessary to define a predicate like
+	my_set_default_option/2 since my_set_default_option(opt,val)
+	is equivalent to set_default_option(opt,val)@my_module.
+
+
+

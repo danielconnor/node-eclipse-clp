@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>create_constraint_pool(+PoolName, +NTypes, ++SpecList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(constraint_pools)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>create_constraint_pool(+PoolName, +NTypes, ++SpecList)</H1>
+Create a "constraint pool" module
+<DL>
+<DT><EM>PoolName</EM></DT>
+<DD>Atom - the name of the pool to create
+</DD>
+<DT><EM>NTypes</EM></DT>
+<DD>Integer - the number of constraint types
+</DD>
+<DT><EM>SpecList</EM></DT>
+<DD>List of terms of the form Atom/Integer-&gt;Spec
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+	Create a special type of module, called a "constraint pool".
+</P><P>
+	The module will contain:
+	<UL>
+	<LI>simple definitions for the predicates listed in SpecList.
+	    These definitions will just store or forward every call.
+	<LI>a logical store which can be used to store and retrieve
+	    constraints, indexed by pool name and type. NTypes is the number
+	    of different constraint types that this pool will support.
+	<LI>a logical store for one additional data item, for example
+	    a solver handle.
+	</UL>
+</P><P>
+	The possible specifications in SpecList are:
+	<DL>
+	<DT>N/A -&gt; store_as(Type)</DT><DD>
+	    will generate a definition for the predicate N/A such that every
+	    call to N/A will be stored in the pool for the given Type.
+	    </DD>
+	<DT>N/A -&gt; ImplN/ImplA</DT><DD>
+	    will generate a definition for the predicate N/A such that every
+	    call to N/A gets augmented with an additional argument (the pool
+	    name), and mapped into a call to the implementation predicate
+	    ImplN/ImplA. The implementation predicate must be visible from
+	    where create_constraint_pool/3 is invoked.  The implementation
+	    predicate's arity ImplA must be one higher than the the arity A
+	    of the newly defined predicate.
+	    </DD>
+	</DL>
+</P><P>
+	Since a pool is a module, the pool name should normally not refer
+	to an existing module. If it does, the existing module gets augmented
+	with the pool predicates and pool stores.
+</P>
+    
+<H2>Examples</H2>
+<PRE>    % We assume the implementation predicate:
+    d(Data, Pool) :- writeln(d(Data, Pool)).
+
+    % Create the pool:
+    ?- create_constraint_pool(pool, 1, [c/2-&gt;store_as(1),d/1-&gt;d/2]).
+    Yes (0.00s cpu)
+
+    % Call the just created pool constraint d/1,
+    % which leads to d/2 being invoked:
+    ?- pool:d(hello).
+    d(hello, pool)
+    Yes (0.00s cpu)
+
+    % Call the just created pool constraint c/2,
+    % which will be stored. Then retrieve the store:
+    ?- pool:c(a,b), collect_all_pool_constraints(pool, C).
+    C = [c(a, b)]
+    Yes (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/constraint_pools/is_constraint_pool-1.html">is_constraint_pool / 1</A>, <A HREF="../../lib/constraint_pools/pool_is_empty-1.html">pool_is_empty / 1</A>, <A HREF="../../lib/constraint_pools/post_typed_pool_constraint-3.html">post_typed_pool_constraint / 3</A>, <A HREF="../../lib/constraint_pools/collect_typed_pool_constraints-3.html">collect_typed_pool_constraints / 3</A>, <A HREF="../../lib/constraint_pools/collect_all_pool_constraints-2.html">collect_all_pool_constraints / 2</A>, <A HREF="../../lib/constraint_pools/set_pool_item-2.html">set_pool_item / 2</A>, <A HREF="../../lib/constraint_pools/get_pool_item-2.html">get_pool_item / 2</A>
+</BODY></HTML>

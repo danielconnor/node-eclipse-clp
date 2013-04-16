@@ -1,0 +1,100 @@
+
+write_exdr(+Stream, +Term)
+
+   The term Term is written onto the output stream Stream in EXDR-format
+(a format for communication with agents in other programming languages).
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (symbolic stream name).
+   +Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+    The predicates write_exdr/2 and read_exdr/2 can be used for letting
+    ECLiPSe programs exchange data with the host language in an embedded
+    environment (e.g.  Java, Tcl).  More generally, they allow exchanging
+    data with agents written in programming languages that define a
+    mapping from EXDR format to the language's data structures.
+
+
+    EXDR defines the abstract data types Integer, Double, String, List,
+    Nil, Struct and Anonymous Variable. Their mapping to ECLiPSe data
+    types is as follows:
+
+
+
+        EXDR type       ECLiPSe type        e.g.
+        ----------------------------------------------
+        Integer         integer             123
+        Double          float               12.3
+        String          string              "abc"
+        List            ./2                 [a,b,c]
+        Nil             []/0                []
+        Struct          compound or atom    foo(bar,3)
+        Anon.Variable   var                 _
+
+    The type of the generated EXDR-term is the type resulting from the
+    "natural" mapping of the Eclipse terms.  Atoms are written as
+    structures of arity 0 (not as strings).
+
+    Not all ECLiPSe terms have an EXDR representation, e.g. big integers,
+    rationals, suspensions or improper lists. The predicate fails in this
+    case, nevertheless writing a complete but simplified term to the stream.
+    All information about variable sharing and variable attributes in the
+    ECLiPSe term is silently lost (no failure).
+
+    Note that as with all output predicates, the output may be buffered,
+    so it may be necessary to flush either by closing the stream or by
+    using flush/1.
+
+    If the output Stream has the compress-flag set, write_exdr/2 will use a
+    more compact variant of EXDR encoding, at the expense of encoding speed.
+
+    More information about EXDR format, including the specification of the
+    serialised encoding, can be found in the Embedding and Interfacing Manual.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the Term cannot be represented in EXDR format.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is not an atom or an integer.
+   192 --- Stream is not an output stream.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+Success:
+    [eclipse 4]: open(queue(""),update,q),
+                 write_exdr(q, foo(12.3,123,["hello",_])),
+                 read_exdr(q, Term),
+                 close(q).
+
+    Term = foo(12.3, 123, ["hello", _131])
+    yes.
+
+Failure:
+    write_exdr(q, 617236126172).
+    write_exdr(q, 3_4).
+
+Error:
+    write_exdr(S, a(b,c)).        (Error 4).
+    write_exdr(input, X + 2).     (Error 192).
+    write_exdr(atom, X + 2).      (Error 193).
+
+
+
+
+
+See Also
+   read_exdr / 2, flush / 1, set_stream_property / 3, open / 4

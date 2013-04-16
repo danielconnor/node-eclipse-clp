@@ -1,0 +1,40 @@
+lib(notify_ports)
+
+
+    This library implements a nonlogical feature, called notification
+    ports. It is a one-to-many form of messaging, i.e. there
+    is one send port and possibly many attached receive ports.
+    Both send and receive ports have unique handles, which is the
+    nonlogical bit. Apart from that, the message stream is just an
+    infinite list, with the sender extending the list at the tail and
+    the receivers each individually progressing through the list.
+    
+    Straightforward interface:
+    
+	open_sender(-Sender)
+	close_sender(+Sender)
+	send_notification(+Sender, +Message)
+	open_receiver(+Sender, -Receiver)
+	open_receiver_init(+Sender, +InitMsgs, -InitMsgsTail, -Receiver)
+	receive_notifications(+Receiver, -Messages, -Status)
+	foreachnotification(+BaseName, -Message, +Params, +Receiver, -Status, +Goals)
+    
+    There is also a slightly more memory efficient API where sender and
+    receiver can be fields of larger structures rather than separate
+    substructures. These  larger structures must always be created
+    by the caller (in the case of the sender this is often an attribute
+    structure, in the case of the receiver it is sometimes advantageous
+    to package a suspension together with the receiver in order to kill
+    it at the end of all messages):
+    
+	open_sender(+SendPos, +SendStruct)
+	close_sender(+SendPos, +SendStruct)
+	send_notification(+SendPos, +SendStruct, +Message)
+	open_receiver(+SendPos, +SendStruct, +ReceivePos, +ReceiveStruct)
+	open_receiver_init(+SendPos, +SendStruct, +InitMsgs, -InitMsgsTail,
+				+ReceivePos, +ReceiveStruct)
+	receive_notifications(+ReceivePos, +ReceiveStruct, -Messages, -Status)
+	foreachnotification(+BaseName, -Message, +Params, +ReceivePos, +ReceiveStruct, -Status, +Goals)
+    
+    
+

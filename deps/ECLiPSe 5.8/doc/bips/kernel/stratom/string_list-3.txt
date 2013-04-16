@@ -1,0 +1,75 @@
+
+string_list(?String, ?List, +Format)
+
+   Conversion between string in different encodings and a character list
+
+Arguments
+   ?String             String or variable.
+   ?List               A variable or a list of integers and/or variables.
+   +Format             An atom.
+
+Type
+   Strings and Atoms
+
+Description
+   This predicate performs conversion between a string encoded in Format
+   and a list of the corresponding character codes.
+
+   If String is instantiated, it is must be a valid string in the encoding
+   format specified by Format.  It is then decoded and List is unified with
+   a list of the corresponding character codes.
+
+   If List is instantiated, it is must contain character codes that are
+   valid for the encoding format specified by Format.  These characters
+   are then encoded into a string which is unified with String.
+
+   Currently supported formats are:
+
+bytes
+    every byte in the string corresponds to a list integer in the range 0..255.
+utf8
+    the string is encoded in UTF-8 format and the list can contain integers
+    in the range 0..2^31-1.
+
+
+   Note that string_list/2 can be defined as:
+
+	string_list(S, L) :- string_list(S, L, bytes).
+
+
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- Format in not instantiated.
+     4 --- Neither String nor List are ground.
+     5 --- String is neither a string nor a variable.
+     5 --- List is neither a list nor a variable.
+     5 --- Format in not an atom.
+     6 --- Format in not a valid format specification.
+     6 --- One (or more) elements of List are not integers in a valid range for Format.
+
+Examples
+   
+    [eclipse 1]: string_list(S,[65,66,67],bytes).
+    S = "ABC"
+    yes.
+
+    [eclipse 2]: string_list(S, [65,66,67], utf8).
+    S = "ABC"
+    yes.
+
+    [eclipse 3]: string_list(S, [65, 0, 700, 2147483647], bytes).
+    out of range in string_list(S, [65, 0, 700, 2147483647])
+
+    [eclipse 4]: string_list(S, [65, 0, 700, 2147483647], utf8).
+    S = "A\000\312\274\375\277\277\277\277\277"
+    yes.
+
+
+See Also
+   string_list / 2, write / 2, read_string / 4

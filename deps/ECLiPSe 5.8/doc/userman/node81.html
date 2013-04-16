@@ -1,0 +1,1195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Using the Debugger via the Command Line Interface</TITLE>
+<META NAME="description" CONTENT="Using the Debugger via the Command Line Interface">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node82.html">
+<LINK REL="previous" HREF="node80.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node82.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3484"
+ HREF="node82.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3480"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3474"
+ HREF="node80.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3482"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3485"
+ HREF="node82.html">Extending the Debugger</A>
+<B> Up:</B> <A NAME="tex2html3481"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3475"
+ HREF="node80.html">Debugging Parts of Programs</A>
+ &nbsp <B>  <A NAME="tex2html3483"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3486"
+ HREF="node81.html#SECTION001461000000000000000">Counters and Command Arguments</A>
+<LI><A NAME="tex2html3487"
+ HREF="node81.html#SECTION001462000000000000000">Commands to Continue Execution</A>
+<LI><A NAME="tex2html3488"
+ HREF="node81.html#SECTION001463000000000000000">Commands to Modify Execution</A>
+<LI><A NAME="tex2html3489"
+ HREF="node81.html#SECTION001464000000000000000">Display Commands</A>
+<LI><A NAME="tex2html3490"
+ HREF="node81.html#SECTION001465000000000000000">Navigating among Goals</A>
+<LI><A NAME="tex2html3491"
+ HREF="node81.html#SECTION001466000000000000000">Inspecting Goals and Data</A>
+<UL>
+<LI><A NAME="tex2html3492"
+ HREF="node81.html#SECTION001466100000000000000">Interaction between inspect subterm and output modes</A>
+</UL>
+<LI><A NAME="tex2html3493"
+ HREF="node81.html#SECTION001467000000000000000">Changing the Settings</A>
+<LI><A NAME="tex2html3494"
+ HREF="node81.html#SECTION001468000000000000000">Environment Commands</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001460000000000000000"></A>
+<A NAME="7663"></A>
+<BR>
+Using the Debugger via the Command Line Interface
+</H1>
+This section describe the commands available at the debugger prompt
+in the debugger's command line interface (for the graphical user
+interface, please refer to the online documentation).
+
+<P>
+Commands are entered by typing the corresponding key
+(without newline), the case of the letters is significant.  The action
+of some of them is immediate, others require additional parameters to
+be typed afterwards.  Since the ECLiPSe debugger has the possibility to
+display not only the goal that is currently being executed (the <I>current</I> goal or procedure), but also its ancestors, some of the
+commands may work on the <I>displayed</I> procedure whatever it is, and
+others on the <I>current</I> one.
+
+<P>
+
+<H2><A NAME="SECTION001461000000000000000">
+Counters and Command Arguments</A>
+</H2>
+Some debugger commands accept a counter (a small integer number)
+before the command letter (e.g. <B>c</B> creep).
+The number is just prefixed to the command and terminated by the
+command letter itself. If a counter is given for a command that
+doesn't accept a counter, it is ignored.
+
+<P>
+When a counter is used and is valid for the command,
+the command is repeated, decrementing the counter until zero.
+When repeating the command, the command and the remaining counter
+value is printed after the debugger prompt instead of waiting for user input.
+
+<P>
+Some commands prompt for a parameter, e.g. the <B>j</B> (<I>jump)</I>
+command asks for the number of the level to which to jump.
+Usually the parameter has a sensible default value (which is printed
+in square backets). If just a newline is typed, then the default value
+is taken. If a valid parameter value is typed, followed by newline,
+this value is taken. If an illegal letter is typed, the command is aborted.
+
+<P>
+
+<H2><A NAME="SECTION001462000000000000000">
+Commands to Continue Execution</A>
+</H2>
+All commands in this section continue program execution.
+They difference between them is the condition under which execution
+will stop the next time.  When execution stops again, the next trace
+line is printed and a new command is accepted.
+
+<P>
+
+<DT><I>n<B>c</B></I> 
+
+<DL COMPACT><DD><B>creep</B>
+<BR>
+<A NAME="8179"></A>
+This command allows exhaustive tracing: the execution stops at the
+next port of any leashed procedure.  No further parameters are
+required, a counter <I>n</I> will repeat the command <I>n</I> times.
+It always applies on the current procedure, even when the displayed
+procedure is not the current one (e.g. during term inspection).
+An alias for the <B>c</B> command is to just type newline (Return-key).
+
+<P>
+<DT><I>n<B>s</B></I> 
+<DD><B>skip</B>
+<BR>
+<A NAME="8182"></A>
+If given at an entry port of a box (CALL, RESUME, REDO), this command skips
+the execution until an exit port of this box (EXIT, FAIL, LEAVE).
+If given in an exit port it works like <I>creep</I>.
+(Note that sometimes the <B>i</B> command is more appropriate, since it
+skips to the next port of the current box, no matter which).
+A counter, if specified, repeats this command.
+
+<P>
+<DT><I>n<B>l</B></I> 
+<DD><B>leap</B>
+<BR>
+<A NAME="8185"></A>
+Continues to the next spy point (any port of a procedure
+which has its spy flag set).
+<A NAME="7686"></A>
+A counter, if specified, repeats this command.
+
+<P>
+<DT><B>i <I>par</I></B> 
+<DD><B>invocation skip</B>
+<BR>
+<A NAME="8188"></A>
+Continue to the next port of the box with the invocation number
+specified. The default invocation number is the one of the current box.
+Common uses for this command are to skip from CALL to NEXT, from NEXT
+to NEXT/EXIT/FAIL, from *EXIT to REDO, or from DELAY to RESUME.
+
+<P>
+<DT><B>j <I>par</I></B> 
+<DD><B>jump to level</B>
+<BR>
+<A NAME="8192"></A>
+Continue to the next port with the specified nesting level (which can
+be higher or lower than the current one).
+The default is the parent's level, i.e. to continue until the current
+box is exited, ignoring all the remaining subgoals of the current clause.
+This is particularly useful when a <B>c</B> (<I>creep</I>) has been
+typed where a <B>s</B> (<I>skip</I>) was wanted.
+
+<P>
+<DT><B>n</B> 
+<DD><B>nodebug</B>
+<BR>
+<A NAME="8196"></A>
+This command switches tracing off for the remainder of the execution.
+However, the next top-level query will be traced again.
+Use <B>N</B> to switch tracing off permanently.
+
+<P>
+<DT><B>q</B> 
+<DD><B>query the failure culprit</B>
+<BR>
+<A NAME="8199"></A>
+The purpose of this command is to find out why a goal has failed (FAIL)
+or was aborted with an exit_block (LEAVE).  It prints the invocation
+number of the goal which caused the failure.  You can then re-run the
+program in creep mode and type q at the first command prompt.  This will
+then offer you to jump to the CALL port of the culprit goal.<PRE>
+[eclipse 3]: p.
+  (1) 1 CALL  p %&gt; skip
+(1) 1 FAIL  p %&gt; query culprit
+failure culprit was (3) - rerun and type q to jump there %&gt; nodebug? [y] 
+No (0.00s cpu)
+
+[eclipse 4]: p.
+  (1) 1 CALL  p %&gt; query culprit
+failure culprit was (3) - jump to invoc: [3]? 
+  (3) 3 CALL  r(1) %&gt; creep
+(3) 3 FAIL  r(...) %&gt; creep
+(2) 2 FAIL  q %&gt; creep
+(1) 1 FAIL  p %&gt; creep
+No (0.01s cpu)
+</PRE>
+
+<P>
+<DT><B>v</B> 
+<DD><B>var/term modification skip</B>
+<BR>
+<A NAME="8202"></A>
+This command sets up a monitor on the currently displayed term,
+which will cause a MODIFY-port to be raised on each modification to
+any variable in the term. These ports will all have a unique invocation
+number which is assigned and printed at the time the command is issued.
+This number can then be used with the <B>i</B> command to skip to where
+the modifications happen.<PRE>
+[eclipse 4]: [X, Y] :: 1..9, X #&gt;= Y, Y#&gt;1.
+  (1) 1 CALL  [X, Y] :: 1..9 %&gt; var/term spy? [y] 
+Var/term spy set up with invocation number (2) %&gt; jump to invoc: [1]? 2
+(2) 3 MODIFY  [X{[1..9]}, Y{[2..9]}] :: 1..9 %&gt; jump to invoc: [2]? 
+(2) 4 MODIFY  [X{[2..9]}, Y{[2..9]}] :: 1..9 %&gt; jump to invoc: [2]? 
+</PRE>
+Note that these monitors can also be set
+up from within the program code using one of the built-ins
+<A NAME="tex2html1192"
+ HREF="../bips/kernel/debug/spy_var-1.html">spy_var/1</A><A NAME="8205"></A> or
+<A NAME="tex2html1194"
+ HREF="../bips/kernel/debug/spy_term-2.html">spy_term/2</A><A NAME="8208"></A>.
+
+<P>
+<DT><B>z <I>par</I></B> 
+<DD><B>zap</B>
+<BR>
+<A NAME="8211"></A>
+This command allows to skip over, or to a specified port.  When this
+command is executed, the debugger prompts for a port name (e.g. <B>fail</B>)
+or a negated port name (e.g. <code>~</code><B>exit</B>).
+Execution then continues until the specified port appears or,
+in the negated case, until a port other than the specified one appears.
+The default is the negation of the current port, which is useful
+when exiting from a deep recursion (a long sequence of EXIT or FAIL ports).
+
+<P>
+
+</DL>
+<P>
+
+<H2><A NAME="SECTION001463000000000000000">
+Commands to Modify Execution</A>
+</H2>
+
+<DT><B>f <I>par</I></B> 
+
+<DL COMPACT><DD><B>fail</B>
+<BR>
+<A NAME="8215"></A>
+Force a failure of the procedure with the specified invocation number.
+The default is to force failure of the current procedure.
+
+<P>
+<DT><B>a</B> 
+<DD><B>abort</B>
+<BR>
+<A NAME="8219"></A>
+Abort the execution of the current query and return to the top-level.
+The command prompts for confirmation.
+</DL>
+<P>
+
+<H2><A NAME="SECTION001464000000000000000">
+Display Commands</A>
+</H2>
+This group of commands cause some useful information to be displayed.
+
+<P>
+
+<DT><B>d <I>par</I></B> 
+
+<DL COMPACT><DD><B>delayed goals</B>
+<BR>
+<A NAME="8222"></A>
+Display the currently delayed goals. The optional argument allows
+to restrict the display to goal of a certain priority only.
+The goals are displayed in a format similar to the trace lines,
+except that there is no depth level and no port name.
+Instead, the goal priority is displayed in angular brackets:<PRE>
+[eclipse 5]: [X, Y] :: 1..9, X #&gt;= Y, Y #&gt;= X.
+  (1) 1 CALL  [X, Y] :: 1..9 %&gt; creep
+(1) 1 EXIT  [X{[1..9]}, Y{[1..9]}] :: 1..9 %&gt; creep
+(2) 1 CALL  X{[1..9]} - Y{[1..9]}#&gt;=0 %&gt; creep
+(3) 2 DELAY  X{[1..9]} - Y{[1..9]}#&gt;=0 %&gt; creep
+(2) 1 EXIT  X{[1..9]} - Y{[1..9]}#&gt;=0 %&gt; creep
+(4) 1 CALL  Y{[1..9]} - X{[1..9]}#&gt;=0 %&gt; creep
+(5) 2 DELAY  Y{[1..9]} - X{[1..9]}#&gt;=0 %&gt; delayed goals
+with prio: [all]? 
+------- delayed goals -------
+  (3) &lt;2&gt;  X{[1..9]} - Y{[1..9]}#&gt;=0
+  (5) &lt;2&gt;  Y{[1..9]} - X{[1..9]}#&gt;=0
+------------ end ------------
+  (5) 2 DELAY  Y{[1..9]} - X{[1..9]}#&gt;=0 %&gt; 
+</PRE>
+
+<P>
+<DT><B>u <I>par</I></B> 
+<DD><B>scheduled goals</B>
+<BR>
+<A NAME="8226"></A>
+Similar to the <B>d</B> command, but displays only those delayed goals
+that are already scheduled for execution.
+The optional argument allows
+to restrict the display to goal of a certain priority only. Example:<PRE>
+[eclipse 13]: [X,Y,Z]::1..9, X#&gt;Z, Y#&gt;Z, Z#&gt;1.
+  (1) 1 CALL  [X, Y, Z] :: 1..9 %&gt; creep
+(1) 1 EXIT  [X{[1..9]}, Y{[1..9]}, Z{[1..9]}] :: 1..9 %&gt; creep
+(2) 1 CALL  X{[1..9]} - Z{[1..9]}+-1#&gt;=0 %&gt; creep
+(3) 2 DELAY  X{[2..9]} - Z{[1..8]}#&gt;=1 %&gt; creep
+(2) 1 EXIT  X{[2..9]} - Z{[1..8]}+-1#&gt;=0 %&gt; creep
+(4) 1 CALL  Y{[1..9]} - Z{[1..8]}+-1#&gt;=0 %&gt; creep
+(5) 2 DELAY  Y{[2..9]} - Z{[1..8]}#&gt;=1 %&gt; creep
+(4) 1 EXIT  Y{[2..9]} - Z{[1..8]}+-1#&gt;=0 %&gt; creep
+(6) 1 CALL  0 + Z{[1..8]}+-2#&gt;=0 %&gt; creep
+(3) 2 RESUME  X{[2..9]} - Z{[2..8]}#&gt;=1 %&gt; scheduled goals
+with prio: [all]? 
+------ scheduled goals ------
+  (5) &lt;2&gt;  Y{[2..9]} - Z{[2..8]}#&gt;=1
+------------ end ------------
+  (3) 2 RESUME  X{[2..9]} - Z{[2..8]}#&gt;=1 %&gt; 
+</PRE>
+
+<P>
+<DT><B>G</B> 
+<DD><B>all ancestors</B>
+<BR>
+<A NAME="8230"></A>
+Prints all the current goal's ancestors from the oldest to the newest.
+The display format is similar to trace lines,
+except that <TT>....</TT> is displayed in the port field.
+
+<P>
+<DT><B>.</B> 
+<DD><B>print definition</B>
+<BR>
+<A NAME="8233"></A>
+If given at a trace line, the command displays the source code of the
+current predicate.
+If the predicate is not written in Prolog, or has not been compiled from
+a file, or the source file is inaccessible, no information can be displayed.
+
+<P>
+<DT><B>h</B> 
+<DD><B>help</B>
+<BR>
+<A NAME="8236"></A>
+Print a summary of the debugger commands.
+
+<P>
+<DT><B>?</B> 
+<DD><B>help</B>
+<BR>
+<A NAME="8239"></A>
+Identical to the <B>h</B> command.
+
+<P>
+
+</DL>
+<P>
+
+<H2><A NAME="SECTION001465000000000000000">
+Navigating among Goals</A>
+</H2>
+
+<P>
+While the debugger waits for commands, program execution is always
+stopped at some port of some predicate invocation box, or goal.
+Apart from this current goal, two types of other goals are also active.
+These are the ancestors of the current goal (the enclosing, not yet
+exited boxes in the box model) and the delayed goals.
+The debugger allows to navigate among these goals and inspect them.
+
+<P>
+
+<DT><B>g</B> 
+
+<DL COMPACT><DD><B>ancestor</B>
+<BR>
+<A NAME="8242"></A>
+Move to and display the ancestor goal (or parent) of the displayed goal.
+Repeated application of this command allows to go up the call stack.
+
+<P>
+<DT><B>x <I>par</I></B> 
+<DD><B>examine goal</B>
+<BR>
+<A NAME="8245"></A>
+Move to and display the goal with the specified invocation number.
+This must be one of the active goals, i.e. either an ancestor of the
+current goal or one of the currently delayed goals. 
+The default is to return to the current goal, i.e. to the goal at
+whose port the execution is currently stopped.
+</DL>
+<P>
+
+<H2><A NAME="SECTION001466000000000000000">
+Inspecting Goals and Data</A>
+</H2>
+
+<P>
+This family of commands allow the subterms in the goal displayed at the
+port to be inspected<A NAME="tex2html1207"
+ HREF="footnode.html#foot7764"><SUP>14.2</SUP></A>.
+<A NAME="7765"></A>
+The ability to inspect subterms is designed to help overcome two problems
+when examining a large goal with the normal display of the goal at a debug
+port: 
+<DL COMPACT>
+<DT>1.
+<DD>Some of the subterms may be omitted from the printed goal because
+of the print-depth; 
+<P>
+<DT>2.
+<DD>If the user is interested in particular subterms, it
+may be difficult to precisely locate them from the surrounding arguments,
+even if it is printed.
+</DL>
+
+<P>
+With inspect subterm commands, the user is able to issue commands to
+navigate through the subterms of the current goal and examine them. 
+A <I>current subterm</I> of the goal is maintained, and this is
+printed after each inspect subterm command, instead of the entire goal. 
+Initially, the current subterm is set to the goal, but this can then be
+moved to the subterms of the goal with navigation commands.
+
+<P>
+Once inspect subterm is initiated by an inspect subterm command, the
+debugger enters into the inspect subterm mode. This is indicated in the
+trace line by 'INSPECT' instead of the name of the port, and in addition,
+the goal is not shown on the trace line:
+
+<P><PRE>
+        INSPECT  (length/2) %&gt; 
+</PRE>
+
+<P>
+Instead of showing the goal, a summary of the current subterm - generally its
+functor and arity if the subterm is a structure - is shown in brackets. 
+
+<P>
+
+<DT><B>#</B> <I>par</I> 
+
+<DL COMPACT><DD><B>move down to <I>par</I>th argument</B>
+<BR>
+
+<P>
+The most basic command of inspect subterm is to move the current subterm to
+an argument of the existing current subterm. This is done by typing a
+number followed by carriage return, or by typing  <code>#</code>, which causes the
+debugger to prompt for a number. In both cases, the number specifies the
+argument number to move down to.
+In the following example, the <code>#</code> style of the command is used to move
+to the first argument, and the number style of the command to move to the
+third argument:
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), X) %&gt; inspect arg #: 1&lt;NL&gt;
+a
+        INSPECT  (atom) %&gt; 
+</PRE>
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), X) %&gt;  3&lt;NL&gt;
+X
+        INSPECT  (var) %&gt; 
+</PRE>
+
+<P>
+The new current subterm is printed, followed by the INSPECT
+trace line. Notice that the summary shows the type of the current
+subterm, instead of Name/Arity, since in both cases the subterms are not
+structures. 
+
+<P>
+If the current subterm itself is a compound term, then it is possible to
+recursively navigate into the subterm:
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), X) %&gt; 2&lt;NL&gt;
+g(b, [1, 2])
+        INSPECT  (g/2) %&gt; 2&lt;NL&gt;
+[1, 2]
+        INSPECT  (list  1-head 2-tail) %&gt; 2&lt;NL&gt;
+[2]
+        INSPECT  (list  1-head 2-tail) %&gt; 
+</PRE>
+
+<P>
+Notice that lists are treated as a structure with arity 2, although the
+functor (<code>./2</code>) is not printed.
+
+<P>
+In addition to compound terms, it is also possible to navigate into the
+attributes of attributed variables:
+
+<P><PRE>
+[eclipse 21]: suspend(foo(X), 3, X-&gt;inst), foo(X).&lt;NL&gt;
+  (1) 1 DELAY  foo(X) %&gt; &lt;NL&gt;
+creep
+  (2) 1 CALL  foo(X) %&gt; 1&lt;NL&gt;
+X
+        INSPECT  (attributes  1-suspend 2-fd ) %&gt;1&lt;NL&gt; 
+suspend(['SUSP-1-susp'|_218] - _218, [], [])
+        INSPECT  (struct suspend/3) %&gt; 
+</PRE>
+
+<P>
+The variable X is an attributed variable in this case, and when it is the
+current subterm, this is indicated in the trace line. The debugger also
+shows the user the currently available attributes, and the user can then
+select one to navigate into (<code>fd</code> is available in
+this case because the finite domain library was loaded earlier in the
+session. Otherwise, it would not be available as a choice here). 
+
+<P>
+Note that the <code>suspend/3</code> summary contains a <code>struct</code> before
+it. This is because the <code>suspend/3</code> is a predefined structure with
+field names (see section&nbsp;<A HREF="#chapstruct_._It_is_possible_to_view_the_field_names_of_such_structures_using_the_58_command_in_inspect_mode.___If_the_number_specified_is_larger_than_the_number_of_the_arguments_of_the_current_subterm__then_an_error_is_reported_and_no_movement_is_made:____verbatim1622_____nuparrow_key__Move_current_subterm_up_by_N_levels_____indexuparrow_key_--_Move_current_subterm_up_by_N_levels__debugger_cmd____nA__Move_current_subterm_up_by_N_levels_____indexA_--_Move_current_subterm_up_by_N_levels__debugger_cmd____In_addition_to_moving_the_current_subterm_down__it_can_also_be_moved_up_from_its_current_position._This_is_done_by_typing_the_uparrow_key._This_key_is_mapped_to_59_by_the_debugger__so_one_can_also_type_60._Typing_61_may_be_necessary_for_some_configurations__combination_of_keyboards_and_operating_systems__because_the_uparrow_key_is_not_correctly_mapped_to_62.___An_optional_argument_can_preceded_the_uparrow_keystroke__which_indicates_the_number_of_levels_to_move_up._The_default_is_1:____verbatim1623_____The_debugger_prints_63_when_the_uparrow_key_is_typed._The_current_subterm_moves_back_up_the_structure_to_its_parent_for_each_level_it_moves_up__and_the_above_move_can_be_done_directly_by_specifying_2_as_the_levels_to_move_up:____verbatim1624_____If_the_number_of_levels_specified_is_more_than_the_number_of_levels_that_can_be_traversed_up__the_current_subterm_stops_at_the_toplevel:____verbatim1625_____0__Move_current_subterm_to_toplevel_____index0_--_Move_current_subterm_to_toplevel__debugger_cmd____It_is_possible_to_quickly_move_back_to_the_top_of_a_goal_that_is_being_inspected_by_specifying_0__zero__as_the_command:____verbatim1626_____Moving_to_the_top_can_also_be_done_by_the_64_command__and_not_giving_any_argument__or_65__when_prompted_for_the_argument.___nleftarrow_key__Move_current_subterm_left_by_N_positions_____indexleftarrow_key_--_Move_current_subterm_left_by_N_positions__debugger_cmd____nD__Move_current_subterm_left_by_N_positions_____indexD_--_Move_current_subterm_left_by_N_positions__debugger_cmd____The_leftarrow_key__or_the_equivalent_66__moves_the_current_subterm_to_a_sibling_subterm__i.e._fellow_argument_of_the_parent_structure__that_is_to_the_left_of_it._Consider_the_structure_67__then_for_the_second_argument__68__69_is_its__only__left_sibling__and_70_its__only__right_sibling._For_the_third_argument__71__both_72__distance_of_2__and_73__distance_of_1__are_its_left_siblings._The_optional_numeric_argument_for_the_command_specifies_the_distance_to_the_left_that_the_current_subterm_should_be_moved._It_defaults_to_1.____verbatim1627_____If_the_leftward_movement_specified_would_move_the_argument_position_before_the_first_argument_of_the_parent_term__then_the_movement_will_stop_at_the_first_argument:____verbatim1628_____In_the_above_example__the_current_subterm_was_at_the_third_argument__thus_trying_to_move_left_by_5_argument_positions_is_not_possible__and_the_current_subterm_stopped_at_leftmost_position_-_the_first_argument.___nrightarrow_key__Move_current_subterm_right_by_N_positions_____indexrightarrow_key_--_Move_current_subterm_right_by_N_positions__debugger_cmd____nC__Move_current_subterm_right_by_N_positions_____indexC_--_Move_current_subterm_right_by_N_positions__debugger_cmd____The_rightarrow_key__or_the_equivalent_74__moves_the_current_subterm_to_a_sibling_subterm__i.e._fellow_argument_of_the_parent_structure__that_is_to_the_right_of_it._Consider_the_structure_75__then_for_the_first_argument__76__77_is_a_right_sibling_with_distance_of_1__and_78_is_a_right_sibling_with_distance_of_2._The_optional_numeric_argument_for_the_command_specifies_the_distance_to_the_left_that_the_current_subterm_should_be_moved._It_defaults_to_1.____verbatim1629_____If_the_rightward_movement_specified_would_move_the_argument_position_beyond_the_last_argument_of_the_parent_term__then_the_movement_will_stop_at_the_last_argument:____verbatim1630_____In_the_above_example__the_current_subterm_was_at_the_third__and_last__argument__thus_trying_to_move_to_the_right__by_the_default_1_position_in_this_case__is_not_possible__and_the_current_subterm_remains_at_the_third_argument.____ndownarrow_key__Move_current_subterm_down_by_N_levels_____indexdownarrow_key_--_Move_current_subterm_down_by_N_levels__debugger_cmd____nB__Move_current_subterm_down_by_N_levels_____indexB_--_Move_current_subterm_down_by_N_levels__debugger_cmd____The_down-arrow_key_moves_the_current_subterm_down_from_its_current_position._This_command_is_only_valid_if_the_current_subterm_is_a_compound_term_and_so_has_subterms_itself._A_structure_has_in_general_more_than_one_argument__so_there_is_a_choice_of_which_argument_position_to_move_down_to.__This_argument_is_not_directly_specified_by_the_user_as_part_of_the_command__but_is_implicitly_specified:_the_argument_position_selected_is_the_argument_position_of_the_current_subterm_within_its_parent:___verbatim1631_____In_the_above_example__the_user_moves_down_into_the_second_argument__and_then_use_the_down-arrow_key_to_move_down_into_the_second_argument_for_2_levels_-_the_numeric_argument_typed_before_the_arrow_key_specified_the_number_of_levels_that_the_current_subterm_was_moved_down_by._The_command_moves_into_the_second_argument_because_it_was_at_the_second_argument_position_when_the_command_was_issue.____However__there_is_not_always_an_argument_position_for_the_current_sub-term._For_example__when_the_current_sub-term_is_at_the_toplevel_of_the_goal_or_if_it_is_at_an_attribute._In_these_cases__the_default_for_the_argument_position_to_move_down_into_is_the_first_argument:___verbatim1632_____In_the_above_example__the_down-arrow_key_is_typed_at_the_top-level__and_thus_the_argument_position_chosen_for_moving_down_is_first_argument__with_the_default_numeric_argument_for_the____If_the_argument_position_to_move_into_is_beyond_the_range_of_the_current_subterm_s_number_of_arguments__then_no_move_is_performed:____verbatim1633___In_this_case__the_down-arrow_key_was_typed_in_the_second_trace_line__which_had_the_current_subterm_at_the_third_argument_of_its_parent_term__and_thus_the_command_tries_to_move_the_new_current_subterm_to_the_third_argument_of_the_current_sub-term__but_the_structure_does_not_have_a_third_argument_and_so_no_move_was_made._In_the_case_of_moving_down_multiple_levels__then_the_movement_will_stop_as_soon_as_the_argument_position_to_move_down_to_goes_out_of_range.___Moving_down_is_particularly_useful_for_traversing_lists._As_discussed__lists_are_really_structures_with_arity_two__so_the__N_space_command_would_not_move_to_the_Nth_space_element_of_the_list._With_the_down-arrow_command___it_is_possible_to_move_into_the_Nth_space_position_in_one_command:____verbatim1634_____In_order_to_move_down_a_list__we_repeatedly_move_into_the_tail_of_the_list_-_the_second_argument_position._In_order_to_do_this_with_the_down-arrow_command__we_need_to_be_at_the_second_argument_position_first__and_this_is_done_in_the_second_trace_line._Once_this_is_done__then_it_is_possible_to_move_arbitrarily_far_down_the_list_in_one_go__as_is_shown_in_the_example.___.__Print_structure_definition_____index._--_Print_structure_definition__debugger_cmd____In_ECLiPSe__it_is_possible_to_define_field_names_for_structures__see_section__refchapstruct_._If_the_inspector_encounters_such_structures__then_the_user_can_get_the_debugger_to_print_out_the_field_names._Note_that_this_functionality_only_applies_within_the_inspect_subterm_mode__as_the_debugger_command__79__normally_prints_the_source_for_the_predicate.__The_fact_that_a_structure_has_defined_field_names_are_indicated_by_a___struct___in_the_summary:_____verbatim1635_____In_this_example__a_structure_definition_was_made_for_80._When_this_structure_is_the_current_subterm_in_the_inspect_mode__the_81_in_the_summary_for_the_structure_indicates_that_it_has_a_structure_definition._For_such_structures__the_field_names_are_printed_by_the_structure_definition_command.____If_the_command_is_issued_for_a_term_that_does_not_have_a_structure_definition__an_error_would_be_reported:____verbatim1636_____p__Show_subterm_path_____indexp_--_Show_subterm_path__debugger_cmd____As_the_user_navigates_into_a_term__then_at_each_level__a_particular_argument_position__or_attribute__in_the_case_of_attributed_variables__is_selected_at_each_level._The_user_can_view_the_position_the_current_subterm_is_at_by_the_82_command._For_example_____verbatim1637_____The_subterm_path_shows_the_argument_positions_taken_at_each_level_of_the_toplevel_term_to_reach_the_current_subterm__starting_from_the_top.____Extra_information__in_addition_to_the_numeric_argument_position__will_be_printed_if_the_subterm_at_a_particular_level_is_either_a_structure_with_field_names_or_an_attributed_variable._For_example:____verbatim1638_____In_this_example__except_for_the_toplevel_argument__all_the_other_positions_are_either_have_field_names_or_are_attributes._This_is_reflected_in_the_path__for_example__country_of_capital__2__shows_that_the_field_name_for_the_selected_argument_position__2__shown_in_brackets__is_83__and_the_structure_name_is_84._For_the__position__of_the_selected_attribute__85__of_the_attributed_variable_86__the_path_position_is_shown_as_attr:_suspend.________item___par__hfill_move_down_to_parth_argument______The_most_basic_command_of_inspect_subterm_is_to_move_the_current_subterm_to_an_argument_of_the_existing_current_subterm._This_is_done_by_typing_a_number_followed_by_carriage_return__or_by_typing__51__which_causes_the_debugger_to_prompt_for_a_number._In_both_cases__the_number_specifies_the_argument_number_to_move_down_to._In_the_following_example__the_52_style_of_the_command_is_used_to_move_to_the_first_argument__and_the_number_style_of_the_command_to_move_to_the_third_argument:____verbatim1618______verbatim1619_____The_new_current_subterm_is_printed__followed_by_the_INSPECT_trace_line._Notice_that_the_summary_shows_the_type_of_the_current_subterm__instead_of_Name_Arity__since_in_both_cases_the_subterms_are_not_structures.____If_the_current_subterm_itself_is_a_compound_term__then_it_is_possible_to_recursively_navigate_into_the_subterm:____verbatim1620_____Notice_that_lists_are_treated_as_a_structure_with_arity_2__although_the_functor__53__is_not_printed.___In_addition_to_compound_terms__it_is_also_possible_to_navigate_into_the_attributes_of_attributed_variables:____verbatim1621_____The_variable_X_is_an_attributed_variable_in_this_case__and_when_it_is_the_current_subterm__this_is_indicated_in_the_trace_line._The_debugger_also_shows_the_user_the_currently_available_attributes__and_the_user_can_then_select_one_to_navigate_into__54_is_available_in_this_case_because_the_finite_domain_library_was_loaded_earlier_in_the_session._Otherwise__it_would_not_be_available_as_a_choice_here_.____Note_that_the_55_summary_contains_a_56_before_it._This_is_because_the_57_is_a_predefined_structure_with_field_names__see_section__refchapstruct"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]" SRC="cross_ref_motif.gif"></A>). It is possible to view the
+field names of such structures using the <code>.</code> command in inspect mode.
+
+<P>
+If the number specified is larger than the number of the arguments of the
+current subterm, then an error is reported and no movement is made:
+
+<P><PRE>
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 4&lt;NL&gt;
+
+Out of range.....
+
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 
+</PRE>
+
+<P>
+[<I>n<B>uparrow key</B></I> ] <B>Move current subterm up by N levels</B>
+<BR>
+<A NAME="8249"></A>
+
+<P>
+[<I>n<B>A</B></I> ] <B>Move current subterm up by N levels</B>
+<BR>
+<A NAME="8252"></A>
+
+<P>
+In addition to moving the current subterm down, it can also be moved up
+from its current position. This is done by typing the uparrow key. This key
+is mapped to <code>A</code> by the debugger, so one can also type
+<code>A</code>. Typing <code>A</code> may be necessary for some configurations
+(combination of keyboards and operating systems) because the uparrow key is
+not correctly mapped to <code>A</code>.
+
+<P>
+An optional argument can preceded the uparrow keystroke, which indicates
+the number of levels to move up. The default is 1:
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), 3) %&gt; 2&lt;NL&gt;
+g(b, [1, 2])
+        INSPECT  (g/2) %&gt; 1&lt;NL&gt;
+b
+        INSPECT  (atom) %&gt; up subterm
+g(b, [1, 2])
+        INSPECT  (g/2) %&gt; 1up subterm
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 
+</PRE>
+
+<P>
+The debugger prints <code>up subterm</code> when the uparrow key is typed. The
+current subterm moves back up the structure to its parent for each level it
+moves up, and the above move can be done directly by specifying 2 as the
+levels to move up:
+
+<P><PRE>
+b
+        INSPECT  (atom) %&gt; 2up subterm
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 
+</PRE>
+
+<P>
+If the number of levels specified is more than the number of levels that
+can be traversed up, the current subterm stops at the toplevel:
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), 3) %&gt; 2&lt;NL&gt;
+g(b, [1, 2])
+        INSPECT  (g/2) %&gt; 2&lt;NL&gt;
+[1, 2]
+        INSPECT  (list  1-head 2-tail) %&gt; 5up subterm
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 
+</PRE>
+
+<P>
+[<B>0</B> ] <B>Move current subterm to toplevel</B>
+<BR>
+<A NAME="8255"></A>
+
+<P>
+It is possible to quickly move back to the top of a goal that is being
+inspected by specifying 0 (zero) as the command:
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), 3) %&gt; 2&lt;NL&gt;
+g(b, [1, 2])
+        INSPECT  (g/2) %&gt; 2&lt;NL&gt;
+[1, 2]
+        INSPECT  (list  1-head 2-tail) %&gt; 2&lt;NL&gt;
+[2]
+        INSPECT  (list  1-head 2-tail) %&gt; 2&lt;NL&gt;
+[]
+        INSPECT  (atom) %&gt; 0&lt;NL&gt;
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 
+</PRE>
+
+<P>
+Moving to the top can also be done by the <code>#</code> command, and not giving
+any argument (or <code>0</code>) when prompted for the argument.
+
+<P>
+[<I>n<B>leftarrow key</B></I> ] <B>Move current subterm left by N positions</B>
+<BR>
+<A NAME="8258"></A>
+
+<P>
+[<I>n<B>D</B></I> ] <B>Move current subterm left by N positions</B>
+<BR>
+<A NAME="8261"></A>
+
+<P>
+The leftarrow key (or the equivalent <code>D</code>) moves the current subterm to
+a sibling subterm (i.e. fellow argument of the parent structure) that is to
+the left of it. Consider the structure <code>foo(a, g(b, [1, 2]), 3)</code>, then
+for the second argument, <code>g(b, [1, 2])</code>, <code>a</code> is its (only) left
+sibling, and <code>3</code> its (only) right sibling. For the third argument,
+<code>3</code>, both <code>a</code> (distance of 2) and
+<code>g(b, [1, 2])</code> (distance of 1) are its left siblings. The optional
+numeric argument for the command specifies the distance to the left that
+the current subterm should be moved. It defaults to 1.
+
+<P><PRE>
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 3&lt;NL&gt;
+3
+        INSPECT  (integer) %&gt; 2left subterm
+a
+        INSPECT  (atom) %&gt; 
+</PRE>
+
+<P>
+If the leftward movement specified would move the argument position before the
+first argument of the parent term, then the movement will stop at the first
+argument:
+
+<P><PRE>
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 3&lt;NL&gt;
+3
+        INSPECT  (integer) %&gt; 5left subterm
+a
+        INSPECT  (atom) %&gt; 
+</PRE>
+
+<P>
+In the above example, the current subterm was at the third argument, thus
+trying to move left by 5 argument positions is not possible, and
+the current subterm stopped at leftmost position - the first argument.
+
+<P>
+[<I>n<B>rightarrow key</B></I> ] <B>Move current subterm right by N positions</B>
+<BR>
+<A NAME="8264"></A>
+
+<P>
+[<I>n<B>C</B></I> ] <B>Move current subterm right by N positions</B>
+<BR>
+<A NAME="8267"></A>
+
+<P>
+The rightarrow key (or the equivalent <code>C</code>) moves the current subterm
+to a sibling subterm (i.e. fellow argument of the parent structure) that is
+to the right of it. Consider the structure <code>foo(a, g(b, [1, 2]), 3)</code>,
+then for the first argument, <code>a</code>, <code>g(b, [1, 2])</code> is a right
+sibling with distance of 1, and <code>3</code> is a right sibling with distance
+of 2. The optional numeric argument for the command specifies the distance
+to the left that the current subterm should be moved. It defaults to 1.
+
+<P><PRE>
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (integer) %&gt; 2left subterm
+a
+        INSPECT  (atom) %&gt; 
+</PRE>
+
+<P>
+If the rightward movement specified would move the argument position beyond
+the last argument of the parent term, then the movement will stop at the
+last argument:
+
+<P><PRE>
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 3&lt;NL&gt;
+3
+        INSPECT  (integer) %&gt; right subterm
+3
+        INSPECT  (integer) %&gt; 
+</PRE>
+
+<P>
+In the above example, the current subterm was at the third (and last)
+argument, thus trying to move to the right (by the default 1 position in
+this case) is not possible, and the current subterm remains at the third
+argument. 
+
+<P>
+[<I>n<B>downarrow key</B></I> ] <B>Move current subterm down by N levels</B>
+<BR>
+<A NAME="8270"></A>
+
+<P>
+[<I>n<B>B</B></I> ] <B>Move current subterm down by N levels</B>
+<BR>
+<A NAME="8273"></A>
+
+<P>
+The down-arrow key moves the current subterm down from its current
+position. This command is only valid if the current subterm is a compound
+term and so has subterms itself. A structure has in general more than one
+argument, so there is a choice of which argument position to move down to. 
+This argument is not directly specified by the user as part of the command,
+but is implicitly specified:
+the argument position selected is the argument position of the current
+subterm within its parent: <PRE>
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; 2&lt;NL&gt;
+g(b, [1, 2])
+        INSPECT  (list  1-head 2-tail) %&gt; 3down subterm 2 for 3 levels
+[]
+        INSPECT  (atom) %&gt; 
+</PRE>
+
+<P>
+In the above example, the user moves down into the second argument, and
+then use the down-arrow key to move down into the second argument for 2
+levels - the numeric argument typed before the arrow key specified the
+number of levels that the current subterm was moved down by.
+The command moves into the second argument because it was at the
+second argument position when the command was issue. 
+
+<P>
+However, there is not always an argument position for the current
+sub-term. For example, when the current sub-term is at the toplevel of the goal
+or if it is at an attribute. In these cases, the default for the argument
+position to move down into is the first argument: <PRE>
+        INSPECT  (atom) %&gt; 0&lt;NL&gt;
+foo(a, g(b, [1, 2]), 3)
+        INSPECT  (foo/3) %&gt; down subterm 1 for 1 levels
+a
+        INSPECT  (atom) %&gt; 
+</PRE>
+
+<P>
+In the above example, the down-arrow key is typed at the top-level, and
+thus the argument position chosen for moving down is first argument, with
+the default numeric argument for the 
+
+<P>
+If the argument position to move into is beyond the range of the current
+subterm's number of arguments, then no move is performed:
+
+<P><PRE>
+  (1) 1 CALL  foo(a, b, c(d, e)) %&gt; 3&lt;NL&gt;
+c(d, e)
+        INSPECT  (c/2) %&gt; Out of range after traversing down arg...
+c(d, e)
+        INSPECT  (c/2) %&gt; 
+</PRE>
+In this case, the down-arrow key was typed in the second trace line, which
+had the current subterm at the third argument of its parent term, and thus
+the command tries to move the new current subterm to the third argument of
+the current sub-term, but the structure does not have a third argument and
+so no move was made. In the case of moving down multiple levels, then the
+movement will stop as soon as the argument position to move down to goes
+out of range.
+
+<P>
+Moving down is particularly useful for traversing lists. As discussed,
+lists are really structures with arity two, so the #N command would
+not move to the <I>N</I><SUP><I>th</I></SUP> element of the list. With the down-arrow command ,
+it is possible to move into the <I>N</I><SUP><I>th</I></SUP> position in one command:
+
+<P><PRE>
+[eclipse 30]: foo([1,2,3,4,5,6,7,8,9]).
+  (1) 1 CALL  foo([1, 2, 3, ...]) %&gt; 1&lt;NL&gt;
+[1, 2, 3, 4, ...]
+        INSPECT  (list  1-head 2-tail) %&gt; 2&lt;NL&gt;
+[2, 3, 4, 5, ...]
+        INSPECT  (list  1-head 2-tail) %&gt; 6down subterm 2 for 6 levels
+[8, 9]
+        INSPECT  (list  1-head 2-tail) %&gt; 
+</PRE>
+
+<P>
+In order to move down a list, we repeatedly move into the tail of the list
+- the second argument position. In order to do this with the down-arrow
+command, we need to be at the second argument position first, and this is
+done in the second trace line. Once this is done, then it is possible to
+move arbitrarily far down the list in one go, as is shown in the example.
+
+<P>
+[<B>.</B> ] <B>Print structure definition</B>
+<BR>
+<A NAME="8276"></A>
+
+<P>
+In ECLiPSe, it is possible to define field names for structures (see
+section&nbsp;<A HREF="node21.html#chapstruct">5.1</A>). If the inspector encounters such structures,
+then the user can get the debugger to print out the field names. Note that
+this functionality only applies within the inspect subterm mode, as the
+debugger command `<code>.</code>' normally prints the source for the predicate. 
+The fact that a structure has defined field names are indicated by a
+``struct'' in the summary: 
+
+<P><PRE>
+:- local struct(capital(city,country)).
+
+.....
+
+  (1) 1 CALL  f(capital(london, C)) %&gt; 1&lt;NL&gt;
+capital(london, C)
+        INSPECT  (struct capital/2) %&gt; structure definition:
+1=city 2=country
+ %&gt; 
+</PRE>
+
+<P>
+In this example, a structure definition was made for <code>captial/2</code>. When
+this structure is the current subterm in the inspect mode, the
+<code>struct</code> in the summary for the structure indicates that it has
+a structure definition. For such structures, the field names are printed by
+the structure definition command. 
+
+<P>
+If the command is issued for a term that does not have a structure
+definition, an error would be reported:
+
+<P><PRE>
+        INSPECT  (f/1) %&gt; structure definition:
+No struct definition for term f/1@eclipse.
+ %&gt; 
+</PRE>
+
+<P>
+[<B>p</B> ] <B>Show subterm path</B>
+<BR>
+<A NAME="8279"></A>
+
+<P>
+As the user navigates into a term, then at each level, a particular
+argument position (or attribute, in the case of attributed variables) is
+selected at each level. The user can view the position the current subterm
+is at by the <code>p</code> command. For example,
+
+<P><PRE>
+  (1) 1 CALL  foo(a, g(b, [1, 2]), 3) %&gt; 2&lt;NL&gt;
+g(b, [1, 2])
+        INSPECT  (g/2) %&gt; 2&lt;NL&gt;
+[1, 2]
+        INSPECT  (list  1-head 2-tail) %&gt; 1&lt;NL&gt;
+1
+        INSPECT  (integer) %&gt; p
+Subterm path:  2, 2, 1
+ %&gt; 
+</PRE>
+
+<P>
+The subterm path shows the argument positions taken at each level of the
+toplevel term to reach the current subterm, starting from the top. 
+
+<P>
+Extra information (in addition to the numeric argument position) will be
+printed if the subterm at a particular level is either a structure with
+field names or an attributed variable. For example:
+
+<P><PRE>
+:- local struct(capital(city,country)).
+
+.....
+
+[eclipse 8]: suspend(capital(london, C), 3, C -&gt; inst), f(capital(london, C)).
+
+....
+
+  (2) 1 CALL  f(capital(london, C)) %&gt; 1&lt;NL&gt;
+capital(london, C)
+        INSPECT  (struct capital/2) %&gt; 2&lt;NL&gt;
+C
+        INSPECT  (attributes  1-suspend ) %&gt; 1&lt;NL&gt;
+suspend(['SUSP-1-susp'|_244] - _244, [], [])
+        INSPECT  (struct suspend/3) %&gt; 1&lt;NL&gt;
+['SUSP-1-susp'|_244] - _244
+        INSPECT  (-/2) %&gt; 
+Subterm path:  1, country of capital (2), attr: suspend, inst of suspend (1)
+ %&gt;
+</PRE>
+
+<P>
+In this example, except for the toplevel argument, all the other positions are
+either have field names or are attributes. This is reflected in the path,
+for example, <TT>country of capital (2)</TT> shows that the field name for
+the selected argument position (2, shown in brackets) is <code>country</code>,
+and the structure name is <code>capital</code>. For the `position' of the
+selected attribute (<code>suspend</code>) of the attributed variable <code>C</code>,
+the path position is shown as <TT>attr: suspend</TT>.
+
+<P>
+
+<H3><A NAME="SECTION001466100000000000000"></A>
+<A NAME="7891"></A>
+<BR>
+Interaction between inspect subterm and output modes
+</H3>
+
+<P>
+The debugger commands that affect the print formats in the debugger also
+affects the printed current subterm. Thus, both the print depth and output
+mode of the printed subterm can be changed.
+
+<P>
+The changing of the output modes can have a significant impact on the
+inspect mode. This is because for  terms which are 
+transformed by write macros before they are printed (see
+chapter&nbsp;<A HREF="node67.html#chapmacros">12</A>), different terms can be printed depending on the
+settings of the output modes. In particular, output transformation is used
+to hide many of the implementation related extra fields and even term names
+of many ECLiPSe data structures (such as those used in the finite domain
+library). For the purposes of inspect subterms, the term that is inspected
+is always the printed form of the term, and thus changing the output mode
+can change the term that is being inspected.
+
+<P>
+Consider the example of looking at the attribute of a finite domain variable:<PRE>
+A{[4..10000000]}
+        INSPECT  (attributes  1-suspend 2-fd ) %&gt; 2&lt;NL&gt;
+[4..10000000]
+        INSPECT  (list  1-head 2-tail) %&gt; 1&lt;NL&gt;
+4..10000000
+        INSPECT  (../2) %&gt; 2up subterm
+A{[4..10000000]}
+        INSPECT  (attributes  1-suspend 2-fd ) %&gt; &lt;o&gt;
+current output mode is "QPm", toggle char: T
+new output mode is "TQPm".
+A{[4..10000000]}
+        INSPECT  (attributes  1-suspend 2-fd ) %&gt; 2&lt;NL&gt;
+fd(dom([4..10000000], 9999997), [], [], [])
+        INSPECT  (struct fd/4) %&gt; 1&lt;NL&gt;
+dom([4..10000000], 9999997)
+        INSPECT  (dom/2) %&gt;
+</PRE>
+
+<P>
+After selecting the output mode <code>T</code>, which turns off any output
+macros, the internal form of the attribute is shown. This allows previously
+hidden fields of the attribute to be examined by the subterm navigation.
+Note that if the current subterm is inside a structure which will be
+changed by a changed output mode (such as inside the fd attribute), and the
+output mode is changed, then until the current subterm is moved out of the
+structure, the existing subterm path is still applicable.
+
+<P>
+Also, after a change in output modes, the current subterm will still be
+examining the structure that it obtained from the parent subterm. Consider
+the finite domain variable example again:
+
+<P><PRE>
+4..10000000
+        INSPECT  (../2) %&gt; up subterm    
+[4..10000000]        ***** printed structure 1
+        INSPECT  (list  1-head 2-tail) %&gt; &lt;o&gt;
+current output mode is "QPm", toggle char: T
+new output mode is "TQPm".
+[4..10000000]
+        INSPECT  (list  1-head 2-tail) %&gt; up subterm
+A{[4..10000000]}
+        INSPECT  (attributes  1-suspend 2-fd ) %&gt; 2
+fd(dom([4..10000000], 9999997), [], [], [])
+        INSPECT  (struct fd/4) %&gt; &lt;o&gt;
+current output mode is "QPmT", toggle char: T
+new output mode is "QPm".
+fd(4..10000000, [], [], [])    ***** printed structure 2
+        INSPECT  (struct fd/4) %&gt;      
+</PRE>
+
+<P>
+Printed structures 1 and 2 in the above example are at the same position
+(toplevel of the finite domain structure), and printed with the same output
+mode (<code>QPm</code>), but are different because the structure obtained from
+the parent subterm is different - in printed structure 2, the output mode
+was not changed until after the <code>fd/4</code> structure was the current
+subterm. 
+
+<P>
+<P>
+
+<H2><A NAME="SECTION001467000000000000000">
+Changing the Settings</A>
+</H2>
+The following commands allow to change the parameters which
+influence the way the tracing information is displayed or processed.
+
+<P>
+
+<DT><B>&lt; <I>par</I></B> 
+
+<DL COMPACT><DD><B>set print depth</B>
+<BR>
+<A NAME="8282"></A>
+Allows to modify the <I>print_depth</I>, i.e. the depth up to which
+nested argument terms are printed. Everything nested deeper than the
+specified depth is abbreviated as <code>...</code>.
+Note that the debugger has a private <I>print_depth</I> setting with
+default 5, which is different from the global setting obtained from
+<A NAME="tex2html1222"
+ HREF="../bips/kernel/env/get_flag-2.html">get_flag/2</A><A NAME="8286"></A>.
+
+<P>
+<DT><B>&gt; <I>par</I></B> 
+<DD><B>set indentation step width</B>
+<BR>
+<A NAME="8289"></A>
+Allows to specify the number of spaces used to indent trace lines according
+to their depth level. The default is 0.
+
+<P>
+<DT><B>m</B> 
+<DD><B>module</B>
+<BR>
+<A NAME="8293"></A>
+Toggles the module printing in the trace line.
+If enabled, the module from where the procedure is called
+is printed in the trace line:<PRE>
+  (1) 1 CALL  true %&gt; show module
+(1) 1 CALL  eclipse : true %&gt; 
+</PRE>
+
+<P>
+<DT><B>o</B> 
+<DD><B>output mode</B>
+<BR>
+<A NAME="8296"></A>
+This command allows to modify the options used when printing trace lines.
+It first prints the current <TT>output_mode</TT> string, as obtained by
+<A NAME="tex2html1227"
+ HREF="../bips/kernel/env/get_flag-2.html">get_flag/2</A><A NAME="8299"></A>,
+then it prompts for a sequence of characters.
+If it contains valid output mode flags, the value
+of these flags is then inverted.
+Typing an invalid character will display a list describing the different
+options.
+Note that this command affects the global setting of <TT>output_mode</TT>.
+
+<P><PRE>
+  (1) 1 CALL  X is length([1, 2, ...]) %&gt; current output mode
+is "QPm", toggle char: V
+new output mode is "VQPm".
+  (1) 1 CALL  X_72 is length([1, 2, ...]) %&gt; current output mode
+is "QVPm", toggle char: O
+new output mode is "OQVPm".
+  (1) 1 CALL  is(X_72, length([1, 2, ...])) %&gt; current output mode
+is "OQVPm", toggle char: .
+new output mode is ".OQVPm".
+  (1) 1 CALL  is(X_72, length(.(1, .(2, .(...))))) %&gt; 
+</PRE>
+
+<P>
+<DT><B>+</B> 
+<DD><B>set a spy point</B>
+<BR>
+<A NAME="8302"></A>
+<A NAME="7931"></A>
+Set a spy point on the displayed procedure, the same as using the
+<A NAME="tex2html1231"
+ HREF="../bips/kernel/debug/spy-1.html">spy/1</A><A NAME="8305"></A> predicate.
+It is possible to set a spy point on any existing procedure,
+even on a built-in on external one.
+If the procedure already has a spy point, an error message is printed
+and any counter is ignored.
+
+<P>
+Note that the debugger does not check for spy points that occur inside
+skipped procedures or during the execution of any other skip command
+than the <I>leap</I> command <B>l</B>.
+
+<P>
+<DT><B>-</B> 
+<DD><B>remove a spy point</B>
+<BR>
+<A NAME="8308"></A>
+<A NAME="7938"></A>
+Similarly to the previous command, this one removes a spy point
+from a procedure, if it has one.
+
+<P>
+
+</DL>
+<P>
+
+<H2><A NAME="SECTION001468000000000000000">
+Environment Commands</A>
+</H2>
+
+<DT><B>b</B> 
+
+<DL COMPACT><DD><B>break</B>
+<BR>
+<A NAME="8311"></A>
+This command is identical to the
+<A NAME="tex2html1236"
+ HREF="../bips/lib/toplevel/break-0.html">break/0</A><A NAME="8314"></A> call.
+A new top-level loop is started with the debugger switched off.
+The state of the database and the global settings is the same as
+in the previous top-level loop.
+After exiting the break level with <code>^</code>D, or <TT>end_of_file</TT>
+the execution returns to the debugger and the last trace line is redisplayed.
+
+<P>
+<DT><B>N</B> 
+<DD><B>nodebug permanently</B>
+<BR>
+<A NAME="8317"></A>
+This command switches tracing off for the remainder of the execution
+as well as for subsequent top-level queries. It affects the global
+flag <B>debugging</B>, setting it to <I>nodebug</I>.
+
+<P>
+
+</DL>
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3484"
+ HREF="node82.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3480"
+ HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3474"
+ HREF="node80.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3482"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3485"
+ HREF="node82.html">Extending the Debugger</A>
+<B> Up:</B> <A NAME="tex2html3481"
+ HREF="node75.html">Debugging</A>
+<B> Previous:</B> <A NAME="tex2html3475"
+ HREF="node80.html">Debugging Parts of Programs</A>
+ &nbsp <B>  <A NAME="tex2html3483"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

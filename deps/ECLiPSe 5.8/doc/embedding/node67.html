@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Decomposing ECLiPSe terms in C</TITLE>
+<META NAME="description" CONTENT="Decomposing ECLiPSe terms in C">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node68.html">
+<LINK REL="previous" HREF="node66.html">
+<LINK REL="up" HREF="node65.html">
+<LINK REL="next" HREF="node68.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1717"
+ HREF="node68.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1713"
+ HREF="node65.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1707"
+ HREF="node66.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1715"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1718"
+ HREF="node68.html">Referring to ECLiPSe terms</A>
+<B> Up:</B> <A NAME="tex2html1714"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Previous:</B> <A NAME="tex2html1708"
+ HREF="node66.html">Constructing ECLiPSe terms in</A>
+ &nbsp <B>  <A NAME="tex2html1716"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001320000000000000000">
+Decomposing ECLiPSe terms in C</A>
+</H1>
+The following group of functions type-check an ECLiPSe term and
+retrieve its contents if it is of the correct type.
+The return code is PSUCCEED for successful conversion.
+If a variable was encountered instead INSTANTIATION_FAULT is returned.
+Other unexpected types yield a TYPE_ERROR. Special cases are explained below.
+<DL>
+<DT><STRONG>int		ec_get_string(const pword,char**)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a string (or atom) and converts
+	it to a C string. This string is volatile, ie. it should be copied
+	when it is required to survive resuming of ECLiPSe.
+
+<P>
+<DT><STRONG>int		ec_get_string_length(const pword,char**,long*)</STRONG>
+<DD> 
+<BR>
+the same as ec_get_string(), but returns also the string's length.
+	Note that ECLiPSe strings may contain null characters!
+
+<P>
+<DT><STRONG>int		ec_get_atom(const pword,dident*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is an atom, and if so,
+	return its dictionary identifier.
+
+<P>
+<DT><STRONG>int		ec_get_long(const pword,long*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a word-sized integer,
+	and if so, returns it as a C long.
+
+<P>
+<DT><STRONG>int		ec_get_double(const pword,double*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a floating point number,
+	and if so, returns it as an C double.
+
+<P>
+<DT><STRONG>int		ec_get_nil(const pword)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is nil, the empty list.
+
+<P>
+<DT><STRONG>int		ec_get_list(const pword,pword*,pword*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a list, and if so,
+	returns its head and tail. If it is nil, the return code is PFAIL.
+
+<P>
+<DT><STRONG>int		ec_get_functor(pword,dident*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a structure, and if so,
+	returns the functor.
+
+<P>
+<DT><STRONG>int		ec_get_arg(const int n,pword,pword*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a structure, and if so,
+	returns the n'th argument. The return code is RANGE_ERROR
+	if the argument index is out of range.
+
+<P>
+<DT><STRONG>int		ec_arity(pword)</STRONG>
+<DD> 
+<BR>
+returns the arity (number of arguments) of an ECLiPSe pword
+	if it is a structure, otherwise zero.
+
+<P>
+<DT><STRONG>int		ec_get_handle(const pword,const t_ext_type*,t_ext_ptr*)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a handle whose method table
+	matches the given one, and if so, the data pointer is returned.
+
+<P>
+<DT><STRONG>int		ec_is_var(const pword)</STRONG>
+<DD> 
+<BR>
+checks whether the ECLiPSe pword is a variable.
+	Note that the return values are PSUCCEED are PFAIL
+	rather than standard C truth values.
+
+<P>
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1717"
+ HREF="node68.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1713"
+ HREF="node65.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1707"
+ HREF="node66.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1715"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1718"
+ HREF="node68.html">Referring to ECLiPSe terms</A>
+<B> Up:</B> <A NAME="tex2html1714"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Previous:</B> <A NAME="tex2html1708"
+ HREF="node66.html">Constructing ECLiPSe terms in</A>
+ &nbsp <B>  <A NAME="tex2html1716"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

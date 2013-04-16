@@ -1,0 +1,13 @@
+
+should_give(+Goal,+CheckGoal,+TestName)
+
+   Run the goal Goal and print a message if the result doesn't satisfy CheckGoal
+
+Type
+   library(test_util)
+
+Examples
+   should_give(X is 3.0+4, X=7.0, test_float_plus_integer_equals_float).
+
+See Also
+   should_fail / 1, should_throw / 2, should_raise / 2, should_give / 2, should_fail / 2, should_throw / 3, should_raise / 3

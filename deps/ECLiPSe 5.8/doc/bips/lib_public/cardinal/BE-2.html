@@ -1,0 +1,114 @@
+<HTML><HEAD><TITLE>?SetExp1 `= ?SetExp2</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?SetExp1 `= ?SetExp2</H1>
+Set equality constraint
+<DL>
+<DT><EM>SetExp1</EM></DT>
+<DD>A set expression.
+</DD>
+<DT><EM>SetExp2</EM></DT>
+<DD>A set expression.
+</DD>
+</DL>
+<H2>Description</H2>
+Constrain sets in both hand sides of equation so that SetExp1 and
+		SetExp2 represent the same set.<P>
+		A set expression is a set (variable or ground) or a set operation between
+		two set expressions. Possible set operations are set union, set intersection
+		and set difference, and the respective operators are `\/, `/\ and `\.
+		These operators are defined as:
+<PRE>
+:- op(500, yfx, `\/).   %set union
+:- op(400, yfx, `/\).   %set intersection
+:- op(300, yfx, `\ ).   %set difference
+</PRE>
+<H3>Fail Conditions</H3>
+Fails if SetExp1 can not be the same set as SetExp2.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+/*
+Examples of equalities between set expressions, being S,T,U,V,W,X,Y,Z set variables:
+
+X `= Y
+S `\/ Y `\ Z `= T `/\ S `\/ U `/\ W
+V `\ ([a,b,d] `\/ W) `\/ (S `\ W) `= ((T `/\ [3,9]) `\/ W) `\ U
+*/
+
+% just union:
+?- [8,a,9] `\/ [i,8,o] `\/ [] `\/ [a,8,5] `= U.
+U = [5,8,9,a,i,o]
+
+?- X `\/ Y `= [8,9], glb_poss(X,GX,PX), glb_poss(Y,GY,PY).
+GX = [], PX = [8,9], GY = [], PY = [8,9]
+
+?- X `:: [a]+[b,c], X `\/ [b,n] `= U, glb_poss(X,GX,PX), glb_poss(U,GU,PU).
+GX = [a], PX = [b,c], GU = [a,b,n], PU = [c]
+
+?- sets([A,B],[a,b],[d,g,h,j],[cardinality:4]), A`\/B`=U, #(U,C), fd:dom(C,DomC).
+DomC = [4,5,6]
+
+?- sets([X,Y],[a,b],[d,g,h,j],[]), X`\/Y`=U, #(U,4), #(Y,C), fd:dom(C,DomC).
+DomC = [2,3,4]
+
+?- sets([S,X], [],[a,b], [cardinality:[0,2]]), U `= X `\/ S, #(U,C), fd:dom(C,DomC).
+DomC = [0,2]
+
+?- S `:: [a,c]+[b,g,h,j,l]:3, X`::[a]+[b,h,t,u,y]:2, U `= X `\/ S, #(U,C), fd:dom(C,DomC).
+DomC = [3,4]
+
+?- S `:: [a,c]+[b,g,h,j,l], X`::[a]+[b,h,t,u,y], U `= X `\/ S, #(U,C), fd:(C::0..3), #(X,CX), fd:dom(CX,DomCX).
+DomCX = [1,2]
+
+
+% just intersection:
+?- I `= [4,6] `/\ [3,6,8].
+I = [6]
+
+?- [a,b,c,d,e] `/\ [a,b,c,e,f,g] `/\ [b,d,e,f,x,y] `= I.
+I = [b,e]
+
+?- X `:: [a]+[b,c], X `/\ [b,n] `= I, glb_poss(X,GX,PX), glb_poss(I,GI,PI).
+GX = [a], PX = [b,c], GI = [], PI = [b]
+
+?- S `:: [a]+[b,c], X`::[]+[7,8,9], I`::[]+[a,b,c,7,z,99], I `= X `/\ S.
+I = []
+
+?- sets([A,B],[a,b],[d,g,h,j],[cardinality:5]), A`/\B`=I, #(I,C), fd:dom(C,DomC).
+DomC = [4,5]
+
+?- S `:: [a,c]+[g,h,j,l], X`::[a]+[b,h,t,u,y], I `= X `/\ S, #(I,C), fd:dom(C,DomC).
+DomC = [1,2]
+
+
+% just difference:
+?- D `= [4,6] `\ [3,6,8].
+D = [4]
+
+?- [a,b,c,d,e] `\ [a,e,f,g] `\ [b,d,e,f,x,y] `= D.
+D = [c]
+
+?- [a,b,c,d,e] `\ ([a,e,f,g] `\ [b,d,e,f,x,y]) `= D.
+D = [b,c,d,e]
+
+?- X `:: [a]+[b,c], X `\ [b,n] `= D, glb_poss(X,GX,PX), glb_poss(D,GD,PD).
+GX = [a], PX = [b,c], GD = [a], PD = [c]
+
+?- S `:: [a]+[b,c], X`::[]+[7,8,9], D`::[]+[a,b,c,7,z,99], D `= X `\ S, glb_poss(D,GD,PD).
+GD = [], PD = [7]
+
+?- sets([A,B],[a,b],[d,g,h,j],[cardinality:5]), A`\B`=D, #(D,C), fd:dom(C,DomC).
+DomC = [0,1]
+
+?- sets([X,Y],[a,b],[d,g,h,j],[]), X`\Y`=D, #(D,4).
+X = [a,b,d,g,h,j], Y = [a,b]
+
+?- S `:: [a,c,z]+[g,h], X`::[a]+[b,c,h,t], D `= S `\ X, #(D,C), fd:dom(C,DomC).
+DomC = [1,2,3,4].
+
+?- S `:: []+[a,b], X=S, #(S `\ X, C).
+C = 0</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib_public/cardinal/BFE-2.html">`/= / 2</A>, <A HREF="../../lib_public/cardinal/set_labeling-1.html">set_labeling / 1</A>, <A HREF="../../lib_public/cardinal/set_labeling-2.html">set_labeling / 2</A>
+</BODY></HTML>

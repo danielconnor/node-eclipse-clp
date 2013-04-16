@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Display Matrix</TITLE>
+<META NAME="description" CONTENT="Display Matrix">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node17.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2503"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2499"
+ HREF="node17.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2493"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2501"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2504"
+ HREF="node19.html">Using the development tools</A>
+<B> Up:</B> <A NAME="tex2html2500"
+ HREF="node17.html">The TkECLiPSe Development Tools</A>
+<B> Previous:</B> <A NAME="tex2html2494"
+ HREF="node17.html">The TkECLiPSe Development Tools</A>
+ &nbsp <B>  <A NAME="tex2html2502"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html2505"
+ HREF="node18.html#SECTION00411000000000000000">Invoking display matrix tool interactively</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00410000000000000000"></A>
+<A NAME="displaymat"></A>
+<BR>
+Display Matrix
+</H1>
+
+<P>
+This tool provides a method to display the values of terms in a matrix
+form. It is particularly useful because it can display the attributes of an
+attributed variable.<A NAME="tex2html132"
+ HREF="footnode.html#foot1796"><SUP>4.1</SUP></A>The predicate which invokes the display matrix is considered a no-op
+in the tty-based ECLiPSe<A NAME="tex2html133"
+ HREF="footnode.html#foot1671"><SUP>4.2</SUP></A>, and so the same code can be run without
+modification from either <TT>eclipse</TT> or <TT>tkeclipse</TT>, though
+the matrix display is only presented to the user in the latter.
+
+<P>
+This tool is invoked using either the
+<A NAME="tex2html134"
+ HREF="../bips/kernel/debug/make_display_matrix-2.html">make_display_matrix/2</A><A NAME="1804"></A>
+predicate or the
+<A NAME="tex2html136"
+ HREF="../bips/kernel/debug/make_display_matrix-5.html">make_display_matrix/5</A><A NAME="1807"></A>
+predicate.
+Adding a call to one of these predicates should be the only change you need
+to make to your code.
+For example, in the following fragment of a N-queens program, only one
+extra line has been added to invoke a display matrix:
+
+
+<P>
+<PRE>
+   queens(N, List) :-
+       length(List, N),
+       List :: 1..N,
+       make_display_matrix(List/0, queens),
+ % sets up a matrix with all variables in 1 row. This is the only
+% extra goal that has to be added to enable monitoring
+       alldistinct(List),
+       constrain_queens(List),
+       labeling(List).
+</PRE>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="dismat"></A><A NAME="1684"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 4.1:</STRONG>
+Display Matrix Tool for 4-Queens (Initial)</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+</DIV><!-- MATH: $\includegraphics{dismat.eps}$ -->
+<IMG
+ WIDTH="626" HEIGHT="125" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="\includegraphics{dismat.eps}">
+<DIV ALIGN="CENTER">
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="dismat2"></A><A NAME="1691"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 4.2:</STRONG>
+Display Matrix Tool for 4-Queens (During execution)</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+</DIV><!-- MATH: $\includegraphics{dismat2.eps}$ -->
+<IMG
+ WIDTH="626" HEIGHT="125" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.gif"
+ ALT="\includegraphics{dismat2.eps}">
+<DIV ALIGN="CENTER">
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+Figures&nbsp;<A HREF="node18.html#dismat">4.1</A> and <A HREF="node18.html#dismat2">4.2</A> show the tool
+invoked with the example N-Queens programs for 4 Queens, at the start
+initially and during the execution of the program. The name of the display
+window is specified by the second argument of
+<A NAME="tex2html140"
+ HREF="../bips/kernel/debug/make_display_matrix-2.html">make_display_matrix/2</A><A NAME="1810"></A>,
+along with the module it is in. The values of the terms are shown in the
+matrix, which can be one dimensional (as in this case), or two
+dimensional. Spy points can be set on each individual cell of the matrix
+so that execution will stop when the cell is updated. The matrix can be
+killed using the `Kill display' button. Left-clicking on a cell will bring
+up a menu which shows the current and previous value of the term in the
+cell (the current value is shown because the space available in the cell
+may be too small to fully display the term), and allows the user to inspect
+the term using the inspector. 
+
+<P>
+Note that the display matrix can be used independently of, or in conjunction
+with, the tracer. Multiple display matrices can be created to view
+different terms.
+
+<P>
+The following predicates are available in conjunction with the display
+matrix:
+
+<P>
+
+<P>
+<BR>
+<B>make_display_matrix(+Terms, +Name)</B> 
+<BR>
+<B>make_display_matrix(+Terms, +Prio, +Type, +CondList, +Name)</B>
+<A NAME="1700"></A>
+<A NAME="1701"></A>
+
+<P>
+These
+predicates create a display matrix of terms that can be monitored under
+TkECLiPSe. The two argument form is a simplification of the five argument
+form, with defaults settings for the extra arguments. Terms is a list or
+array of terms to be displayed. A List can be specified in the form List/N,
+where N is the number of elements per row of the matrix. If N is 0, then
+the list will be displayed in one row (it could also be omitted in this
+case). The extra arguments are used to control how the display is updated.
+
+<P>
+The terms are monitored by placing a demon suspension on the variables
+   in each term. When a demon wakes, the new value of the term it is
+   associated with is sent to the display matrix (and possibly updated,
+   depending on the interactive settings on the matrix). When the new 
+   value is backtracked, the old value is sent to the display matrix.
+   The other arguments in this predicate is used to control when the
+   demon wakes, and what sort of information is monitored. Prio is the
+   priority that the demon should be suspended at, Type is designed to
+   specify the attributes that is being monitored (currently all 
+   attributes are monitored, and Type is a dummy argument), CondList is 
+   the suspension list that the demon should be added to. Depending on
+   these arguments, the level of monitoring can be controlled. Note that
+   it is possible for the display matrix to show values that are out of
+   date because the change was not monitored. 
+
+<P>
+The display matrix will be removed on backtracking. However, it will 
+   not be removed if make_display_matrix has been
+   cut - <code>kill_display_matrix/1</code> can be used to explicitly remove the
+   matrix in this case.
+
+<P>
+
+<P>
+<BR>
+<B>kill_display_matrix(+Name)</B>
+<A NAME="1704"></A>
+
+<P>
+This predicate destroys an existing
+   display matrix. Name is an atomic term which identifies the matrix.
+
+<P>
+Destroys an existing display matrix. The display matrix is removed
+   from being displayed.
+
+<P>
+
+<H2><A NAME="SECTION00411000000000000000">
+Invoking display matrix tool interactively</A>
+</H2>
+
+<P>
+Display matricies can be created interactively when a program is
+executing, if the program is being debugged with the tracer tool. The user
+can select terms that are to be observed by a display matrix while at a
+debug port. This can be done from the inspector, the tracer, and the delay
+goal tools. See the online help files (available from the help menu of
+TkECLiPSe) for more details.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2503"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2499"
+ HREF="node17.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2493"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2501"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2504"
+ HREF="node19.html">Using the development tools</A>
+<B> Up:</B> <A NAME="tex2html2500"
+ HREF="node17.html">The TkECLiPSe Development Tools</A>
+<B> Previous:</B> <A NAME="tex2html2494"
+ HREF="node17.html">The TkECLiPSe Development Tools</A>
+ &nbsp <B>  <A NAME="tex2html2502"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

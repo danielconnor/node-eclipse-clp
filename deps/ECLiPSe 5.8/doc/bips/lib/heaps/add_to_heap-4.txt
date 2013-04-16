@@ -1,0 +1,25 @@
+
+add_to_heap(+OldHeap, +Key, +Datum, -NewHeap)
+
+   inserts the new Key-Datum pair into the heap
+
+Type
+   library(heaps)
+
+Description
+
+    inserts the new Key-Datum pair into the heap.  The insertion is
+    not stable, that is, if you insert several pairs with the same
+    Key it is not defined which of them will come out first, and it
+    is possible for any of them to come out first depending on the 
+    history of the heap.  If you need a stable heap, you could add
+    a counter to the heap and include the counter at the time of
+    insertion in the key.  If the free list is empty, the tree will
+    be grown, otherwise one of the empty slots will be re-used.  (I
+    use imperative programming language, but the heap code is as 
+    pure as the trees code, you can create any number of variants
+    starting from the same heap, and they will share what common
+    structure they can without interfering with each other.)
+    
+
+

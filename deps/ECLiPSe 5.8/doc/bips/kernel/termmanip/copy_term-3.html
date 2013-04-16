@@ -1,0 +1,71 @@
+<HTML><HEAD><TITLE>copy_term(+OldTerm, ?NewTerm, ?MetaTerms)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>copy_term(+OldTerm, ?NewTerm, ?MetaTerms)</H1>
+A copy of OldTerm with new variables is created and unified with NewTerm.
+MetaTerms is a list mapping the attributed variables in OldTerm to the corresponding
+variables in NewTerm.
+
+
+<DL>
+<DT><EM>+OldTerm</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>?NewTerm</EM></DT>
+<DD>Prolog term, normally a variable.
+</DD>
+<DT><EM>?MetaTerms</EM></DT>
+<DD>List of Pairs or a variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   A copy of OldTerm is created, ie.  a term that is similar to OldTerm but
+   the free variables of OldTerm have been replaced by new variables which
+   do not occur elsewhere.  In other words, the new term is a most general
+   variant of the old one in the sense of variant/2.
+
+<P>
+   This predicate is a more primitive version of copy_term/2 and does
+   not imply a particular handling of attributed variables. Instead it copies the
+   attributed variables as normal variables, and returns the MetaTerms list as
+   a means to define the copying of attributed variables separately.  MetaTerms is a
+   list of pairs [&lt;attributed variable&gt;|&lt;variable&gt;] which maps the
+   attributed variables in OldTerm to the corresponding fresh variables in
+   NewTerm.  By processing this list, the variables can be instantiated to
+   whatever the user defines as the copy of the attributed variable.
+
+<P>
+   Note that copy_term/2 is implemented as
+
+<P>
+<PRE>
+    copy_term(X, Y) :-
+        copy_term(X, Y, Metas),
+        apply_copy_term_handlers(Metas).
+</PRE>
+
+<H3>Fail Conditions</H3>
+   Fails if NewTerm does not unify with the copy of OldTerm.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: set_flag(output_mode, "QPMV").
+
+yes.
+[eclipse 3]: copy_term(s(a,X{a},Y, Z{b}), Copy, Metas).
+
+X = X_m234{a}
+Y = Y_g224
+Z = Z_m212{b}
+Copy = s(a, _g282, Y_g288, _g292)
+Metas = [[Z_m212{b}|_g292], [X_m234{a}|_g282]]
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/copy_term-2.html">copy_term / 2</A>, <A HREF="../../kernel/termmanip/copy_term_vars-3.html">copy_term_vars / 3</A>, <A HREF="../../kernel/termcomp/variant-2.html">variant / 2</A>, <A HREF="../../kernel/termmanip/term_variables-2.html">term_variables / 2</A>
+</BODY></HTML>

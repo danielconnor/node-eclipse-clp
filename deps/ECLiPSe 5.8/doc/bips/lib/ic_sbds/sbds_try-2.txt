@@ -1,0 +1,48 @@
+
+sbds_try(?Var, ++Val)
+
+   tries to assign a variable to a value
+
+Arguments
+   Var                 SBDS Variable
+   Val                 Value to try and assign to Value
+
+Type
+   library(ic_sbds)
+
+Description
+Called for each variable, value pair tried at a decision point 		during search.
+	
+	
+	Initally tries to assign a variable to a value, if this is succesful then it 		updates the symmetry functions to take account of any symmetries which have 		been broken by this assignment.
+	
+	
+	If this assignment is unsuccesful then it stipulates that the variable cannot 		be assigned to this value, before placing constraints to eliminate the 			symmetrical equivalent of this assgnment. If these symmetries are not already 		broken
+
+Exceptions
+   abort --- Var is not an sbds attributed variable
+
+Examples
+ Replacement for labeling/1 which takes SBDS into account 		
+	
+	sbds_labeling(AllVars) :-
+        ( foreach(Var, AllVars) do
+	  count_backtracks,
+            sbds_indomain(Var)                       
+        ).
+        
+	Replacement for indomain/1 which takes SBDS into account.
+	
+	% value ordering is input order
+	sbds_indomain(X) :-
+		nonvar(X).
+	sbds_indomain(X) :-
+		var(X),
+		mindomain(X, LWB),
+		%sbds_try called here
+		sbds_try(X, LWB),
+		sbds_indomain(X).
+	
+
+See Also
+   sbds_initialise / 4, sbds_initialise / 5

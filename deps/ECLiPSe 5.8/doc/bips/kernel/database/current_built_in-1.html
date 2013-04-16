@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>current_built_in(?PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_built_in(?PredSpec)</H1>
+Succeeds if the predicate defined by PredSpec is a visible built-in
+predicate.
+
+
+<DL>
+<DT><EM>?PredSpec</EM></DT>
+<DD>Expression of the form Atom/Integer or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to check that PredSpec is a built-in predicate visible from the
+   caller module, or else to return on backtracking all the visible
+   built-in predicates.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the predicate defined by PredSpec is not a visible built-in
+   predicate.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is instantiated, but not to the form Atom/Integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse]: current_built_in(X/Y),!.
+     X = findall
+     Y = 3
+     yes.
+
+     [eclipse]: current_built_in(X).
+     X = findall / 3     More? (;)
+     X = ! / 0     More? (;)
+     X = delayed_goals / 1     More? (;)
+     X = delayed_goals / 2     More? (;)   % type &lt;cr&gt;
+     yes.
+Fail:
+     current_built_in(assertz/1).
+     current_built_in(reverse/2).
+
+     [eclipse]: [user].
+      p.
+      user compiled 28 bytes in 0.00 seconds
+     yes.
+     [eclipse]: get_flag(p/0, type, T).
+     T = user
+     yes.
+     [eclipse]: current_built_in(p/0).
+     no.
+Error:
+     current_built_in(a/a).         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/current_predicate-1.html">current_predicate / 1</A>, <A HREF="../../kernel/database/current_module_predicate-2.html">current_module_predicate / 2</A>, <A HREF="../../kernel/database/is_predicate-1.html">is_predicate / 1</A>
+</BODY></HTML>

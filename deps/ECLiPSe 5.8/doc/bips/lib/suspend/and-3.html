@@ -1,0 +1,31 @@
+<HTML><HEAD><TITLE>and(?Expr1, ?Expr2, ?Bool)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(suspend)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>and(?Expr1, ?Expr2, ?Bool)</H1>
+Reified boolean operation
+<DL>
+<DT><EM>Expr1</EM></DT>
+<DD>An arithmetic expression
+</DD>
+<DT><EM>Expr2</EM></DT>
+<DD>An arithmetic expression
+</DD>
+<DT><EM>Bool</EM></DT>
+<DD>Variable, 0 or 1
+</DD>
+</DL>
+<H2>Description</H2>
+    Reified version of and/2, i.e. the truth value of the boolean operation
+    is reflected in the value of the 0/1 variable Bool.
+<P>
+    This constraint suspends until its first two arguments are ground.
+    It then unifies Bool according to the truth value of the corresponding
+    and/2 constraint.
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(24) number expected </EM>
+<DD>Expr1 or Expr2 is not an arithmetic expression.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/and-2.html">and / 2</A>
+</BODY></HTML>

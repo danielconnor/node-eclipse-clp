@@ -1,0 +1,10 @@
+
+socket_connect(+Socket, +Address, -Stream)
+
+   Connect a socket to an address
+
+Type
+   library(sockets)
+
+See Also
+   connect / 2

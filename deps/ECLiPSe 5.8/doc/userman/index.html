@@ -1,0 +1,1055 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>ECLiPSe User Manual Release 5.8</TITLE>
+<META NAME="description" CONTENT="ECLiPSe User Manual Release 5.8">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1857"
+ HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif_gr.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif_gr.gif">  
+<A NAME="tex2html1855"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1858"
+ HREF="node1.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html1856"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<P>
+
+<P>
+
+<P>
+
+<P>
+<H1 ALIGN="CENTER">
+    <FONT SIZE="+2"><B>ECLiPSe</B></FONT>
+<BR>
+    <BR>
+<BR>
+<BR>
+    <FONT SIZE="+4"><B>User Manual</B></FONT>
+<BR>
+    <BR>
+<BR>
+<BR>
+Release 5.8</H1>
+<P ALIGN="CENTER"><STRONG>Abderrahamane Aggoun (ECRC) 
+<BR>
+David Chan (ECRC) 
+<BR>
+Pierre Dufresne (ECRC) 
+<BR>
+Eamon Falvey (ICL-ITC) 
+<BR>
+Hugh Grant (ICL-ITC) 
+<BR>
+Warwick Harvey (IC-Parc) 
+<BR>
+Alexander Herold (ECRC) 
+<BR>
+Geoffrey Macartney (ECRC) 
+<BR>
+Micha Meier (ECRC) 
+<BR>
+David Miller (ICL-ITC) 
+<BR>
+Shyam Mudambi (ECRC) 
+<BR>
+Stefano Novello (ECRC and IC-Parc) 
+<BR>
+Bruno Perez (ECRC) 
+<BR>
+Emmanuel van Rossum (ECRC) 
+<BR>
+Joachim Schimpf (ECRC and IC-Parc) 
+<BR>
+Kish Shen (IC-Parc)
+<BR>
+Periklis Andreas Tsahageas (ECRC) 
+<BR>
+Dominique Henry de Villeneuve (ECRC) 
+<BR>
+</STRONG></P>
+
+<P>
+
+<P>
+
+<FONT SIZE="+2"><B>Trademarks</B></FONT>
+
+<P>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+UNIX is a trademark of AT&amp;T Bell Laboratories.
+
+<P>
+Quintus and Quintus Prolog are trademarks of
+Quintus Computer Systems, Incorporated.
+
+<P>
+VAX is a trademark of Digital Equipment Corporation
+
+<P>
+SUN-3 and SUN-4 are trademarks of Sun Microsystems, Inc.
+
+<P>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P>
+&#169; International Computers Limited and ECRC GmbH 1992-1995
+
+<BR>
+&#169; International Computers Limited and Imperial College London 1996-2000
+
+<P>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P><P>
+<BR>
+
+<P>
+
+<P>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html1859"
+ HREF="node1.html">Introduction</A>
+<UL>
+<LI><A NAME="tex2html1860"
+ HREF="node2.html">What is ECLiPSe ?</A>
+<LI><A NAME="tex2html1861"
+ HREF="node3.html">Overview</A>
+<LI><A NAME="tex2html1862"
+ HREF="node4.html">Further Information</A>
+<LI><A NAME="tex2html1863"
+ HREF="node5.html">Reporting Problems</A>
+</UL>
+<LI><A NAME="tex2html1864"
+ HREF="node6.html">Terminology</A>
+<LI><A NAME="tex2html1865"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<UL>
+<LI><A NAME="tex2html1866"
+ HREF="node8.html">How do I install the ECLiPSe system?</A>
+<LI><A NAME="tex2html1867"
+ HREF="node9.html">How do I run my ECLiPSe programs?</A>
+<LI><A NAME="tex2html1868"
+ HREF="node10.html">How do I use <TT>tkeclipse</TT>?</A>
+<UL>
+<LI><A NAME="tex2html1869"
+ HREF="node10.html#SECTION00331000000000000000">Getting started</A>
+</UL>
+<LI><A NAME="tex2html1870"
+ HREF="node11.html">How do I write an ECLiPSe program?</A>
+<UL>
+<LI><A NAME="tex2html1871"
+ HREF="node11.html#SECTION00341000000000000000">Compiling a program</A>
+<LI><A NAME="tex2html1872"
+ HREF="node11.html#SECTION00342000000000000000">Executing a query</A>
+<LI><A NAME="tex2html1873"
+ HREF="node11.html#SECTION00343000000000000000">Editing a file</A>
+<LI><A NAME="tex2html1874"
+ HREF="node11.html#SECTION00344000000000000000">Debugging a program</A>
+<LI><A NAME="tex2html1875"
+ HREF="node11.html#SECTION00345000000000000000">Getting help</A>
+<LI><A NAME="tex2html1876"
+ HREF="node11.html#SECTION00346000000000000000">Other tools</A>
+<UL>
+<LI><A NAME="tex2html1877"
+ HREF="node11.html#SECTION00346100000000000000">Compile scratch-pad</A>
+<LI><A NAME="tex2html1878"
+ HREF="node11.html#SECTION00346200000000000000">Source File Manager</A>
+<LI><A NAME="tex2html1879"
+ HREF="node11.html#SECTION00346300000000000000">Predicate Browser</A>
+<LI><A NAME="tex2html1880"
+ HREF="node11.html#SECTION00346400000000000000">Source Viewer</A>
+<LI><A NAME="tex2html1881"
+ HREF="node11.html#SECTION00346500000000000000">Delayed Goals</A>
+<LI><A NAME="tex2html1882"
+ HREF="node11.html#SECTION00346600000000000000">Tracer</A>
+<LI><A NAME="tex2html1883"
+ HREF="node11.html#SECTION00346700000000000000">Inspector</A>
+<LI><A NAME="tex2html1884"
+ HREF="node11.html#SECTION00346800000000000000">Global Settings</A>
+<LI><A NAME="tex2html1885"
+ HREF="node11.html#SECTION00346900000000000000">Statistics</A>
+<LI><A NAME="tex2html1886"
+ HREF="node11.html#SECTION003461000000000000000">Simple Query</A>
+<LI><A NAME="tex2html1887"
+ HREF="node11.html#SECTION003461100000000000000">Library Help</A>
+</UL>
+<LI><A NAME="tex2html1888"
+ HREF="node11.html#SECTION00347000000000000000">Preference Editor</A>
+</UL>
+<LI><A NAME="tex2html1889"
+ HREF="node12.html">How do I use <TT>eclipse</TT>?</A>
+<UL>
+<LI><A NAME="tex2html1890"
+ HREF="node12.html#SECTION00351000000000000000">Getting started</A>
+<LI><A NAME="tex2html1891"
+ HREF="node12.html#SECTION00352000000000000000">Interacting with the top level loop</A>
+<LI><A NAME="tex2html1892"
+ HREF="node12.html#SECTION00353000000000000000">Compiling a program</A>
+<LI><A NAME="tex2html1893"
+ HREF="node12.html#SECTION00354000000000000000">Entering a program from the terminal</A>
+<LI><A NAME="tex2html1894"
+ HREF="node12.html#SECTION00355000000000000000">Executing a query</A>
+<LI><A NAME="tex2html1895"
+ HREF="node12.html#SECTION00356000000000000000">Interrupting the execution</A>
+<LI><A NAME="tex2html1896"
+ HREF="node12.html#SECTION00357000000000000000">Debugging a program</A>
+<LI><A NAME="tex2html1897"
+ HREF="node12.html#SECTION00358000000000000000">The history mechanism</A>
+<LI><A NAME="tex2html1898"
+ HREF="node12.html#SECTION00359000000000000000">Getting help</A>
+</UL>
+<LI><A NAME="tex2html1899"
+ HREF="node13.html">How do I make things happen at compile time?</A>
+<LI><A NAME="tex2html1900"
+ HREF="node14.html">How do I use ECLiPSe libraries in my programs?</A>
+<LI><A NAME="tex2html1901"
+ HREF="node15.html">How do I make my programs run faster?</A>
+<LI><A NAME="tex2html1902"
+ HREF="node16.html">Other tips</A>
+<UL>
+<LI><A NAME="tex2html1903"
+ HREF="node16.html#SECTION00391000000000000000">Initialisation at start-up</A>
+<LI><A NAME="tex2html1904"
+ HREF="node16.html#SECTION00392000000000000000">Recommended file names</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1905"
+ HREF="node17.html">The TkECLiPSe Development Tools</A>
+<UL>
+<LI><A NAME="tex2html1906"
+ HREF="node18.html">Display Matrix</A>
+<UL>
+<LI><A NAME="tex2html1907"
+ HREF="node18.html#SECTION00411000000000000000">Invoking display matrix tool interactively</A>
+</UL>
+<LI><A NAME="tex2html1908"
+ HREF="node19.html">Using the development tools in applications</A>
+<UL>
+<LI><A NAME="tex2html1909"
+ HREF="node19.html#SECTION00421000000000000000">Using the Development tools in the Tcl/Tk Embedding Interface</A>
+<LI><A NAME="tex2html1910"
+ HREF="node19.html#SECTION00422000000000000000">Using the Remote Development Tools</A>
+<UL>
+<LI><A NAME="tex2html1911"
+ HREF="node19.html#SECTION00422100000000000000">Starting Remote Tools</A>
+</UL>
+</UL>
+</UL>
+<LI><A NAME="tex2html1912"
+ HREF="node20.html">ECLiPSe-specific Language Features</A>
+<UL>
+<LI><A NAME="tex2html1913"
+ HREF="node21.html">Structure Notation</A>
+<UL>
+<LI><A NAME="tex2html1914"
+ HREF="node21.html#SECTION00511000000000000000">Updating Structures</A>
+<LI><A NAME="tex2html1915"
+ HREF="node21.html#SECTION00512000000000000000">Arity and Functor of Structures</A>
+<LI><A NAME="tex2html1916"
+ HREF="node21.html#SECTION00513000000000000000">Printing Structures</A>
+<LI><A NAME="tex2html1917"
+ HREF="node21.html#SECTION00514000000000000000">Inheritance</A>
+<LI><A NAME="tex2html1918"
+ HREF="node21.html#SECTION00515000000000000000">Visibility</A>
+</UL>
+<LI><A NAME="tex2html1919"
+ HREF="node22.html">Loop/Iterator Constructs</A>
+<UL>
+<LI><A NAME="tex2html1920"
+ HREF="node22.html#SECTION00521000000000000000">Examples</A>
+</UL>
+<LI><A NAME="tex2html1921"
+ HREF="node23.html">Array Notation</A>
+<UL>
+<LI><A NAME="tex2html1922"
+ HREF="node23.html#SECTION00531000000000000000">Implementation Note</A>
+</UL>
+<LI><A NAME="tex2html1923"
+ HREF="node24.html">The String Data Type</A>
+<UL>
+<LI><A NAME="tex2html1924"
+ HREF="node24.html#SECTION00541000000000000000">Choosing The Appropriate Data Type</A>
+<UL>
+<LI><A NAME="tex2html1925"
+ HREF="node24.html#SECTION00541100000000000000">Strings vs. Character Lists</A>
+<LI><A NAME="tex2html1926"
+ HREF="node24.html#SECTION00541200000000000000">Strings vs. Atoms</A>
+<LI><A NAME="tex2html1927"
+ HREF="node24.html#SECTION00541300000000000000">Conclusion</A>
+</UL>
+<LI><A NAME="tex2html1928"
+ HREF="node24.html#SECTION00542000000000000000">Builtin Support for Strings</A>
+<LI><A NAME="tex2html1929"
+ HREF="node24.html#SECTION00543000000000000000">Quoted lists</A>
+</UL>
+<LI><A NAME="tex2html1930"
+ HREF="node25.html">Matching Clauses</A>
+<LI><A NAME="tex2html1931"
+ HREF="node26.html">Soft Cut</A>
+</UL>
+<LI><A NAME="tex2html1932"
+ HREF="node27.html">The Compiler</A>
+<UL>
+<LI><A NAME="tex2html1933"
+ HREF="node28.html">Program Source</A>
+<LI><A NAME="tex2html1934"
+ HREF="node29.html">Procedure Types</A>
+<LI><A NAME="tex2html1935"
+ HREF="node30.html">Compiler Modes</A>
+<LI><A NAME="tex2html1936"
+ HREF="node31.html">Compiler Input</A>
+<LI><A NAME="tex2html1937"
+ HREF="node32.html">Module Compilation</A>
+<LI><A NAME="tex2html1938"
+ HREF="node33.html">Mode Declarations</A>
+<LI><A NAME="tex2html1939"
+ HREF="node34.html">Inlining</A>
+<LI><A NAME="tex2html1940"
+ HREF="node35.html">Compiler Pragmas</A>
+<LI><A NAME="tex2html1941"
+ HREF="node36.html">Writing Efficient Code</A>
+<LI><A NAME="tex2html1942"
+ HREF="node37.html">Compiling and loading object code</A>
+<UL>
+<LI><A NAME="tex2html1943"
+ HREF="node37.html#SECTION006101000000000000000">Restrictions</A>
+<UL>
+<LI><A NAME="tex2html1944"
+ HREF="node37.html#SECTION006101100000000000000">Object file portability</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1945"
+ HREF="node38.html">Abstract Code Listing</A>
+</UL>
+<LI><A NAME="tex2html1946"
+ HREF="node39.html">Module System</A>
+<UL>
+<LI><A NAME="tex2html1947"
+ HREF="node40.html">Basics</A>
+<UL>
+<LI><A NAME="tex2html1948"
+ HREF="node40.html#SECTION00711000000000000000">Purpose of Modules</A>
+<LI><A NAME="tex2html1949"
+ HREF="node40.html#SECTION00712000000000000000">What is under Visibility Control?</A>
+<LI><A NAME="tex2html1950"
+ HREF="node40.html#SECTION00713000000000000000">What Modules are There?</A>
+</UL>
+<LI><A NAME="tex2html1951"
+ HREF="node41.html">Getting Started</A>
+<UL>
+<LI><A NAME="tex2html1952"
+ HREF="node41.html#SECTION00721000000000000000">Creating a Module</A>
+<LI><A NAME="tex2html1953"
+ HREF="node41.html#SECTION00722000000000000000">Exporting</A>
+<LI><A NAME="tex2html1954"
+ HREF="node41.html#SECTION00723000000000000000">Importing</A>
+<LI><A NAME="tex2html1955"
+ HREF="node41.html#SECTION00724000000000000000">Definitions, Visibility and Accessibility</A>
+</UL>
+<LI><A NAME="tex2html1956"
+ HREF="node42.html">Advanced Topics</A>
+<UL>
+<LI><A NAME="tex2html1957"
+ HREF="node42.html#SECTION00731000000000000000">Solving Name Conflicts</A>
+<LI><A NAME="tex2html1958"
+ HREF="node42.html#SECTION00732000000000000000">Qualified Access via :/2</A>
+<LI><A NAME="tex2html1959"
+ HREF="node42.html#SECTION00733000000000000000">Reexport - Making Modules from Modules</A>
+<LI><A NAME="tex2html1960"
+ HREF="node42.html#SECTION00734000000000000000">Modules and Source Files</A>
+<LI><A NAME="tex2html1961"
+ HREF="node42.html#SECTION00735000000000000000">Tools and Caller Modules</A>
+<UL>
+<LI><A NAME="tex2html1962"
+ HREF="node42.html#SECTION00735100000000000000">Tools</A>
+<LI><A NAME="tex2html1963"
+ HREF="node42.html#SECTION00735200000000000000">System Tools</A>
+</UL>
+<LI><A NAME="tex2html1964"
+ HREF="node42.html#SECTION00736000000000000000">Lookup Module vs Caller Module</A>
+<LI><A NAME="tex2html1965"
+ HREF="node42.html#SECTION00737000000000000000">The Module Interface</A>
+<LI><A NAME="tex2html1966"
+ HREF="node42.html#SECTION00738000000000000000">Module-related Predicate Properties</A>
+</UL>
+<LI><A NAME="tex2html1967"
+ HREF="node43.html">Less Common Topics</A>
+<UL>
+<LI><A NAME="tex2html1968"
+ HREF="node43.html#SECTION00741000000000000000">Modules Using Other Languages</A>
+<LI><A NAME="tex2html1969"
+ HREF="node43.html#SECTION00742000000000000000">Creating and Erasing Modules at Runtime</A>
+<LI><A NAME="tex2html1970"
+ HREF="node43.html#SECTION00743000000000000000">Initialization and Finalization</A>
+<LI><A NAME="tex2html1971"
+ HREF="node43.html#SECTION00744000000000000000">Locking Modules</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1972"
+ HREF="node44.html">Arithmetic Evaluation</A>
+<UL>
+<LI><A NAME="tex2html1973"
+ HREF="node45.html">Built-Ins to Evaluate Arithmetic Expressions</A>
+<UL>
+<LI><A NAME="tex2html1974"
+ HREF="node45.html#SECTION00811000000000000000">Arithmetic Evaluation vs Arithmetic Constraint Solving</A>
+</UL>
+<LI><A NAME="tex2html1975"
+ HREF="node46.html">Numeric Types and Type Conversions</A>
+<UL>
+<LI><A NAME="tex2html1976"
+ HREF="node46.html#SECTION00821000000000000000">Integers</A>
+<LI><A NAME="tex2html1977"
+ HREF="node46.html#SECTION00822000000000000000">Rationals</A>
+<LI><A NAME="tex2html1978"
+ HREF="node46.html#SECTION00823000000000000000">Floating Point Numbers</A>
+<LI><A NAME="tex2html1979"
+ HREF="node46.html#SECTION00824000000000000000">Bounded Real Numbers</A>
+<LI><A NAME="tex2html1980"
+ HREF="node46.html#SECTION00825000000000000000">Type Conversions</A>
+</UL>
+<LI><A NAME="tex2html1981"
+ HREF="node47.html">Arithmetic Functions</A>
+<UL>
+<LI><A NAME="tex2html1982"
+ HREF="node47.html#SECTION00831000000000000000">Predefined Arithmetic Functions</A>
+<LI><A NAME="tex2html1983"
+ HREF="node47.html#SECTION00832000000000000000">Evaluation Mechanism</A>
+<LI><A NAME="tex2html1984"
+ HREF="node47.html#SECTION00833000000000000000">User Defined Arithmetic Functions</A>
+<LI><A NAME="tex2html1985"
+ HREF="node47.html#SECTION00834000000000000000">Runtime Expressions</A>
+</UL>
+<LI><A NAME="tex2html1986"
+ HREF="node48.html">Low Level Arithmetic Builtins</A>
+<LI><A NAME="tex2html1987"
+ HREF="node49.html">The Multi-Directional Predicates plus/3 and times/3</A>
+<LI><A NAME="tex2html1988"
+ HREF="node50.html">Arithmetic and Coroutining</A>
+</UL>
+<LI><A NAME="tex2html1989"
+ HREF="node51.html">Non-logical Storage and References</A>
+<UL>
+<LI><A NAME="tex2html1990"
+ HREF="node52.html">Introduction</A>
+<LI><A NAME="tex2html1991"
+ HREF="node53.html">Bags</A>
+<LI><A NAME="tex2html1992"
+ HREF="node54.html">Shelves</A>
+<LI><A NAME="tex2html1993"
+ HREF="node55.html">Stores</A>
+<LI><A NAME="tex2html1994"
+ HREF="node56.html">Non-logical Variables</A>
+<LI><A NAME="tex2html1995"
+ HREF="node57.html">Non-logical Arrays</A>
+<LI><A NAME="tex2html1996"
+ HREF="node58.html">Global References</A>
+</UL>
+<LI><A NAME="tex2html1997"
+ HREF="node59.html">Input and Output</A>
+<UL>
+<LI><A NAME="tex2html1998"
+ HREF="node60.html">Streams</A>
+<UL>
+<LI><A NAME="tex2html1999"
+ HREF="node60.html#SECTION001011000000000000000">Predefined Streams</A>
+<LI><A NAME="tex2html2000"
+ HREF="node60.html#SECTION001012000000000000000">Stream Identifiers and Aliases</A>
+<LI><A NAME="tex2html2001"
+ HREF="node60.html#SECTION001013000000000000000">Opening New Streams</A>
+<LI><A NAME="tex2html2002"
+ HREF="node60.html#SECTION001014000000000000000">Closing Streams</A>
+<LI><A NAME="tex2html2003"
+ HREF="node60.html#SECTION001015000000000000000">Redirecting Streams</A>
+<LI><A NAME="tex2html2004"
+ HREF="node60.html#SECTION001016000000000000000">Finding Streams</A>
+<LI><A NAME="tex2html2005"
+ HREF="node60.html#SECTION001017000000000000000">Stream Properties</A>
+</UL>
+<LI><A NAME="tex2html2006"
+ HREF="node61.html">Communication via Streams</A>
+<UL>
+<LI><A NAME="tex2html2007"
+ HREF="node61.html#SECTION001021000000000000000">Character I/O</A>
+<LI><A NAME="tex2html2008"
+ HREF="node61.html#SECTION001022000000000000000">Token I/O</A>
+<LI><A NAME="tex2html2009"
+ HREF="node61.html#SECTION001023000000000000000">Term I/O</A>
+<LI><A NAME="tex2html2010"
+ HREF="node61.html#SECTION001024000000000000000">General Parsing and Text Generation</A>
+<LI><A NAME="tex2html2011"
+ HREF="node61.html#SECTION001025000000000000000">Flushing</A>
+<LI><A NAME="tex2html2012"
+ HREF="node61.html#SECTION001026000000000000000">Prompting</A>
+<LI><A NAME="tex2html2013"
+ HREF="node61.html#SECTION001027000000000000000">Positioning</A>
+</UL>
+<LI><A NAME="tex2html2014"
+ HREF="node62.html">In-memory Streams</A>
+<UL>
+<LI><A NAME="tex2html2015"
+ HREF="node62.html#SECTION001031000000000000000">String Streams</A>
+<LI><A NAME="tex2html2016"
+ HREF="node62.html#SECTION001032000000000000000">Queue streams</A>
+</UL>
+<LI><A NAME="tex2html2017"
+ HREF="node63.html">Term Output Formats</A>
+<UL>
+<LI><A NAME="tex2html2018"
+ HREF="node63.html#SECTION001041000000000000000">Write_term and Printf</A>
+<LI><A NAME="tex2html2019"
+ HREF="node63.html#SECTION001042000000000000000">Other Term Output Predicates</A>
+<LI><A NAME="tex2html2020"
+ HREF="node63.html#SECTION001043000000000000000">Default Output Options</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html2021"
+ HREF="node64.html">Dynamic Code</A>
+<UL>
+<LI><A NAME="tex2html2022"
+ HREF="node65.html">Compiling Procedures as Dynamic or Static</A>
+<LI><A NAME="tex2html2023"
+ HREF="node66.html">Altering programs at run time</A>
+</UL>
+<LI><A NAME="tex2html2024"
+ HREF="node67.html">ECLiPSe Macros</A>
+<UL>
+<LI><A NAME="tex2html2025"
+ HREF="node68.html">Introduction</A>
+<LI><A NAME="tex2html2026"
+ HREF="node69.html">Using the macros</A>
+<LI><A NAME="tex2html2027"
+ HREF="node70.html">Definite Clause Grammars -- DCGs</A>
+<UL>
+<LI><A NAME="tex2html2028"
+ HREF="node70.html#SECTION001231000000000000000">Simple DCG example</A>
+<LI><A NAME="tex2html2029"
+ HREF="node70.html#SECTION001232000000000000000">Mapping to Prolog Clauses</A>
+<LI><A NAME="tex2html2030"
+ HREF="node70.html#SECTION001233000000000000000">Parsing other Data Structures</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html2031"
+ HREF="node71.html">Events and Interrupts</A>
+<UL>
+<LI><A NAME="tex2html2032"
+ HREF="node72.html">Events</A>
+<UL>
+<LI><A NAME="tex2html2033"
+ HREF="node72.html#SECTION001311000000000000000">Event Identifiers and Event Handling</A>
+<UL>
+<LI><A NAME="tex2html2034"
+ HREF="node72.html#SECTION001311100000000000000">Creating Named Events</A>
+<LI><A NAME="tex2html2035"
+ HREF="node72.html#SECTION001311200000000000000">Creating Anonymous Events</A>
+</UL>
+<LI><A NAME="tex2html2036"
+ HREF="node72.html#SECTION001312000000000000000">Raising Events</A>
+<UL>
+<LI><A NAME="tex2html2037"
+ HREF="node72.html#SECTION001312100000000000000">Raising Events Explicitly</A>
+<LI><A NAME="tex2html2038"
+ HREF="node72.html#SECTION001312200000000000000">Raising Events from Foreign Code</A>
+<LI><A NAME="tex2html2039"
+ HREF="node72.html#SECTION001312300000000000000">Timed Events (after events)</A>
+</UL>
+<LI><A NAME="tex2html2040"
+ HREF="node72.html#SECTION001313000000000000000">Events and Waking</A>
+<LI><A NAME="tex2html2041"
+ HREF="node72.html#SECTION001314000000000000000">Aborting an Execution with Events</A>
+</UL>
+<LI><A NAME="tex2html2042"
+ HREF="node73.html">Errors</A>
+<UL>
+<LI><A NAME="tex2html2043"
+ HREF="node73.html#SECTION001321000000000000000">Error Handlers</A>
+<LI><A NAME="tex2html2044"
+ HREF="node73.html#SECTION001322000000000000000">Arguments of Error Handlers</A>
+<LI><A NAME="tex2html2045"
+ HREF="node73.html#SECTION001323000000000000000">User Defined Errors</A>
+</UL>
+<LI><A NAME="tex2html2046"
+ HREF="node74.html">Interrupts</A>
+<UL>
+<LI><A NAME="tex2html2047"
+ HREF="node74.html#SECTION001331000000000000000">Interrupt Identifiers</A>
+<LI><A NAME="tex2html2048"
+ HREF="node74.html#SECTION001332000000000000000">Asynchronous handling</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html2049"
+ HREF="node75.html">Debugging</A>
+<UL>
+<LI><A NAME="tex2html2050"
+ HREF="node76.html">The Box Model</A>
+<LI><A NAME="tex2html2051"
+ HREF="node77.html">Format of the Tracing Messages</A>
+<LI><A NAME="tex2html2052"
+ HREF="node78.html">Debugging-related Predicate Properties</A>
+<LI><A NAME="tex2html2053"
+ HREF="node79.html">Starting the Debugger</A>
+<LI><A NAME="tex2html2054"
+ HREF="node80.html">Debugging Parts of Programs</A>
+<UL>
+<LI><A NAME="tex2html2055"
+ HREF="node80.html#SECTION001451000000000000000">Mixing debuggable and non-debuggable code</A>
+</UL>
+<LI><A NAME="tex2html2056"
+ HREF="node81.html">Using the Debugger via the Command Line Interface</A>
+<UL>
+<LI><A NAME="tex2html2057"
+ HREF="node81.html#SECTION001461000000000000000">Counters and Command Arguments</A>
+<LI><A NAME="tex2html2058"
+ HREF="node81.html#SECTION001462000000000000000">Commands to Continue Execution</A>
+<LI><A NAME="tex2html2059"
+ HREF="node81.html#SECTION001463000000000000000">Commands to Modify Execution</A>
+<LI><A NAME="tex2html2060"
+ HREF="node81.html#SECTION001464000000000000000">Display Commands</A>
+<LI><A NAME="tex2html2061"
+ HREF="node81.html#SECTION001465000000000000000">Navigating among Goals</A>
+<LI><A NAME="tex2html2062"
+ HREF="node81.html#SECTION001466000000000000000">Inspecting Goals and Data</A>
+<UL>
+<LI><A NAME="tex2html2063"
+ HREF="node81.html#SECTION001466100000000000000">Interaction between inspect subterm and output modes</A>
+</UL>
+<LI><A NAME="tex2html2064"
+ HREF="node81.html#SECTION001467000000000000000">Changing the Settings</A>
+<LI><A NAME="tex2html2065"
+ HREF="node81.html#SECTION001468000000000000000">Environment Commands</A>
+</UL>
+<LI><A NAME="tex2html2066"
+ HREF="node82.html">Extending the Debugger</A>
+<UL>
+<LI><A NAME="tex2html2067"
+ HREF="node82.html#SECTION001471000000000000000">User-defined Ports</A>
+<LI><A NAME="tex2html2068"
+ HREF="node82.html#SECTION001472000000000000000">Attaching a Different User Interface</A>
+</UL>
+<LI><A NAME="tex2html2069"
+ HREF="node83.html">Switching To Creep Mode With CTRL-C</A>
+</UL>
+<LI><A NAME="tex2html2070"
+ HREF="node84.html">Development Support Tools</A>
+<UL>
+<LI><A NAME="tex2html2071"
+ HREF="node85.html">Available Tools and Libraries</A>
+<LI><A NAME="tex2html2072"
+ HREF="node86.html">Heuristic Program Checker</A>
+<LI><A NAME="tex2html2073"
+ HREF="node87.html">Document Generation Tools</A>
+<LI><A NAME="tex2html2074"
+ HREF="node88.html">Cross Referencing Tool</A>
+<LI><A NAME="tex2html2075"
+ HREF="node89.html">Pretty Printer Tool</A>
+<LI><A NAME="tex2html2076"
+ HREF="node90.html">Timing Profiler</A>
+<LI><A NAME="tex2html2077"
+ HREF="node91.html">Port Profiler</A>
+<LI><A NAME="tex2html2078"
+ HREF="node92.html">Line coverage</A>
+<UL>
+<LI><A NAME="tex2html2079"
+ HREF="node92.html#SECTION001581000000000000000">Compilation</A>
+<LI><A NAME="tex2html2080"
+ HREF="node92.html#SECTION001582000000000000000">Results</A>
+</UL>
+<LI><A NAME="tex2html2081"
+ HREF="node93.html">Mode analysis</A>
+</UL>
+<LI><A NAME="tex2html2082"
+ HREF="node94.html">Attributed Variables</A>
+<UL>
+<LI><A NAME="tex2html2083"
+ HREF="node95.html">Introduction</A>
+<LI><A NAME="tex2html2084"
+ HREF="node96.html">Declaration</A>
+<LI><A NAME="tex2html2085"
+ HREF="node97.html">Syntax</A>
+<LI><A NAME="tex2html2086"
+ HREF="node98.html">Creating Attributed Variables</A>
+<LI><A NAME="tex2html2087"
+ HREF="node99.html">Decomposing Attributed Variables</A>
+<LI><A NAME="tex2html2088"
+ HREF="node100.html">Attribute Modification</A>
+<LI><A NAME="tex2html2089"
+ HREF="node101.html">Attributed Variable Handlers</A>
+<UL>
+<LI><A NAME="tex2html2090"
+ HREF="node101.html#SECTION001671000000000000000">Printing Attributed Variables</A>
+</UL>
+<LI><A NAME="tex2html2091"
+ HREF="node102.html">Built-Ins and Attributed Variables</A>
+<LI><A NAME="tex2html2092"
+ HREF="node103.html">Examples of Using Attributed Variables</A>
+<UL>
+<LI><A NAME="tex2html2093"
+ HREF="node103.html#SECTION001691000000000000000">Variables with Enumerated Domains</A>
+</UL>
+<LI><A NAME="tex2html2094"
+ HREF="node104.html">Attribute Specification</A>
+</UL>
+<LI><A NAME="tex2html2095"
+ HREF="node105.html">Advanced Control Features</A>
+<UL>
+<LI><A NAME="tex2html2096"
+ HREF="node106.html">Introduction</A>
+<LI><A NAME="tex2html2097"
+ HREF="node107.html">Concepts</A>
+<UL>
+<LI><A NAME="tex2html2098"
+ HREF="node107.html#SECTION001721000000000000000">The Structured Resolvent</A>
+<LI><A NAME="tex2html2099"
+ HREF="node107.html#SECTION001722000000000000000">Floundering</A>
+</UL>
+<LI><A NAME="tex2html2100"
+ HREF="node108.html">Suspending Built-Ins and the Suspend-Library</A>
+<LI><A NAME="tex2html2101"
+ HREF="node109.html">Development System Support</A>
+<LI><A NAME="tex2html2102"
+ HREF="node110.html">Declarative Suspension: Delay Clauses</A>
+<UL>
+<LI><A NAME="tex2html2103"
+ HREF="node110.html#SECTION001750100000000000000">More Examples</A>
+</UL>
+<LI><A NAME="tex2html2104"
+ HREF="node111.html">Explicit supension with suspend/3</A>
+<LI><A NAME="tex2html2105"
+ HREF="node112.html">Waking conditions</A>
+<UL>
+<LI><A NAME="tex2html2106"
+ HREF="node112.html#SECTION001771000000000000000">Standard Waking Conditions on Variables</A>
+<UL>
+<LI><A NAME="tex2html2107"
+ HREF="node112.html#SECTION001771100000000000000">Waking on Instantiation: inst</A>
+<LI><A NAME="tex2html2108"
+ HREF="node112.html#SECTION001771200000000000000">Waking on Binding: bound</A>
+<LI><A NAME="tex2html2109"
+ HREF="node112.html#SECTION001771300000000000000">Waking on Constraining: constrained</A>
+</UL>
+<LI><A NAME="tex2html2110"
+ HREF="node112.html#SECTION001772000000000000000">Library-defined Waking Conditions on Variables</A>
+<LI><A NAME="tex2html2111"
+ HREF="node112.html#SECTION001773000000000000000">Global Symbolic Waking Conditions: Triggers</A>
+<UL>
+<LI><A NAME="tex2html2112"
+ HREF="node112.html#SECTION001773100000000000000">Postponed Goals</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html2113"
+ HREF="node113.html">Lower-level Primitives</A>
+<UL>
+<LI><A NAME="tex2html2114"
+ HREF="node113.html#SECTION001781000000000000000">Suspensions and Suspension Lists</A>
+<LI><A NAME="tex2html2115"
+ HREF="node113.html#SECTION001782000000000000000">Creating Suspended Goals</A>
+<LI><A NAME="tex2html2116"
+ HREF="node113.html#SECTION001783000000000000000">Operations on Suspensions</A>
+<LI><A NAME="tex2html2117"
+ HREF="node113.html#SECTION001784000000000000000">Examining the Resolvent</A>
+<LI><A NAME="tex2html2118"
+ HREF="node113.html#SECTION001785000000000000000">Attaching Suspensions to Variables</A>
+<LI><A NAME="tex2html2119"
+ HREF="node113.html#SECTION001786000000000000000">User-defined Suspension Lists</A>
+<LI><A NAME="tex2html2120"
+ HREF="node113.html#SECTION001787000000000000000">Attaching Suspensions to Global Triggers</A>
+<LI><A NAME="tex2html2121"
+ HREF="node113.html#SECTION001788000000000000000">Scheduling Suspensions for Waking</A>
+</UL>
+<LI><A NAME="tex2html2122"
+ HREF="node114.html">Demon Predicates</A>
+<LI><A NAME="tex2html2123"
+ HREF="node115.html">More about Priorities</A>
+<UL>
+<LI><A NAME="tex2html2124"
+ HREF="node115.html#SECTION0017101000000000000000">Changing Priority Explicitly</A>
+<LI><A NAME="tex2html2125"
+ HREF="node115.html#SECTION0017102000000000000000">Choice of Priorities</A>
+</UL>
+<LI><A NAME="tex2html2126"
+ HREF="node116.html">Details of the Execution Mechanism</A>
+<UL>
+<LI><A NAME="tex2html2127"
+ HREF="node116.html#SECTION0017111000000000000000">Particularities of Waking by Unification</A>
+<LI><A NAME="tex2html2128"
+ HREF="node116.html#SECTION0017112000000000000000">Cuts and Suspended Goals</A>
+</UL>
+<LI><A NAME="tex2html2129"
+ HREF="node117.html">Simulating other System's Delay-Primitives</A>
+</UL>
+<LI><A NAME="tex2html2130"
+ HREF="node118.html">More About Suspension</A>
+<UL>
+<LI><A NAME="tex2html2131"
+ HREF="node119.html">Waiting for Instantiation</A>
+<LI><A NAME="tex2html2132"
+ HREF="node120.html">Waiting for Binding</A>
+<LI><A NAME="tex2html2133"
+ HREF="node121.html">Waiting for other Constraints</A>
+</UL>
+<LI><A NAME="tex2html2134"
+ HREF="node122.html">Memory Organisation And Garbage Collection</A>
+<UL>
+<LI><A NAME="tex2html2135"
+ HREF="node123.html">Introduction</A>
+<UL>
+<LI><A NAME="tex2html2136"
+ HREF="node123.html#SECTION001911000000000000000">The Shared/Private Heap</A>
+<LI><A NAME="tex2html2137"
+ HREF="node123.html#SECTION001912000000000000000">The Local Stack</A>
+<LI><A NAME="tex2html2138"
+ HREF="node123.html#SECTION001913000000000000000">The Control Stack</A>
+<LI><A NAME="tex2html2139"
+ HREF="node123.html#SECTION001914000000000000000">The Global Stack</A>
+<LI><A NAME="tex2html2140"
+ HREF="node123.html#SECTION001915000000000000000">The Trail Stack</A>
+</UL>
+<LI><A NAME="tex2html2141"
+ HREF="node124.html">Garbage collection</A>
+</UL>
+<LI><A NAME="tex2html2142"
+ HREF="node125.html">Operating System Interface</A>
+<UL>
+<LI><A NAME="tex2html2143"
+ HREF="node126.html">Introduction</A>
+<LI><A NAME="tex2html2144"
+ HREF="node127.html">Environment Access</A>
+<UL>
+<LI><A NAME="tex2html2145"
+ HREF="node127.html#SECTION002021000000000000000">Command Line Arguments</A>
+<LI><A NAME="tex2html2146"
+ HREF="node127.html#SECTION002022000000000000000">Environment Variables</A>
+<LI><A NAME="tex2html2147"
+ HREF="node127.html#SECTION002023000000000000000">Exiting ECLiPSe</A>
+<LI><A NAME="tex2html2148"
+ HREF="node127.html#SECTION002024000000000000000">Time and Date</A>
+<LI><A NAME="tex2html2149"
+ HREF="node127.html#SECTION002025000000000000000">Host Computer</A>
+<LI><A NAME="tex2html2150"
+ HREF="node127.html#SECTION002026000000000000000">Calling C Functions</A>
+</UL>
+<LI><A NAME="tex2html2151"
+ HREF="node128.html">File System</A>
+<UL>
+<LI><A NAME="tex2html2152"
+ HREF="node128.html#SECTION002031000000000000000">Current Directory</A>
+<LI><A NAME="tex2html2153"
+ HREF="node128.html#SECTION002032000000000000000">Looking at Directories</A>
+<LI><A NAME="tex2html2154"
+ HREF="node128.html#SECTION002033000000000000000">Checking Files</A>
+<LI><A NAME="tex2html2155"
+ HREF="node128.html#SECTION002034000000000000000">Renaming and Removing Files</A>
+<LI><A NAME="tex2html2156"
+ HREF="node128.html#SECTION002035000000000000000">Filenames</A>
+</UL>
+<LI><A NAME="tex2html2157"
+ HREF="node129.html">Creating Communicating Processes</A>
+<UL>
+<LI><A NAME="tex2html2158"
+ HREF="node129.html#SECTION002041000000000000000">Process creation</A>
+<LI><A NAME="tex2html2159"
+ HREF="node129.html#SECTION002042000000000000000">Process control</A>
+<LI><A NAME="tex2html2160"
+ HREF="node129.html#SECTION002043000000000000000">Interprocess Signals</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html2161"
+ HREF="node130.html">Interprocess Communication</A>
+<UL>
+<LI><A NAME="tex2html2162"
+ HREF="node131.html">Socket Domains</A>
+<LI><A NAME="tex2html2163"
+ HREF="node132.html">Stream Connection (internet domain)</A>
+<LI><A NAME="tex2html2164"
+ HREF="node133.html">Datagram Connection (internet domain)</A>
+<LI><A NAME="tex2html2165"
+ HREF="node134.html">Stream Connection (unix domain)</A>
+<LI><A NAME="tex2html2166"
+ HREF="node135.html">Datagram Connection (unix domain)</A>
+</UL>
+<LI><A NAME="tex2html2167"
+ HREF="node136.html">Porting Applications to ECLiPSe</A>
+<UL>
+<LI><A NAME="tex2html2168"
+ HREF="node137.html">Using the compatibility language dialect</A>
+<UL>
+<LI><A NAME="tex2html2169"
+ HREF="node137.html#SECTION002211000000000000000">Compiler versus Interpreter</A>
+</UL>
+<LI><A NAME="tex2html2170"
+ HREF="node138.html">Porting Programs to plain ECLiPSe</A>
+<LI><A NAME="tex2html2171"
+ HREF="node139.html">Exploiting ECLiPSe Features</A>
+</UL>
+<LI><A NAME="tex2html2172"
+ HREF="node140.html">Syntax</A>
+<UL>
+<LI><A NAME="tex2html2173"
+ HREF="node141.html">Introduction</A>
+<LI><A NAME="tex2html2174"
+ HREF="node142.html">Notation</A>
+<UL>
+<LI><A NAME="tex2html2175"
+ HREF="node142.html#SECTION002321000000000000000">Character Classes</A>
+<LI><A NAME="tex2html2176"
+ HREF="node142.html#SECTION002322000000000000000">Groups of characters</A>
+<LI><A NAME="tex2html2177"
+ HREF="node142.html#SECTION002323000000000000000">Valid Tokens</A>
+<UL>
+<LI><A NAME="tex2html2178"
+ HREF="node142.html#SECTION002323100000000000000">Constants</A>
+<LI><A NAME="tex2html2179"
+ HREF="node142.html#SECTION002323200000000000000">Variables</A>
+<LI><A NAME="tex2html2180"
+ HREF="node142.html#SECTION002323300000000000000">End of clause</A>
+</UL>
+<LI><A NAME="tex2html2181"
+ HREF="node142.html#SECTION002324000000000000000">Escape Sequences within Strings and Atoms</A>
+</UL>
+<LI><A NAME="tex2html2182"
+ HREF="node143.html">Formal definition of clause syntax</A>
+<UL>
+<LI><A NAME="tex2html2183"
+ HREF="node143.html#SECTION002331000000000000000">Comments</A>
+<LI><A NAME="tex2html2184"
+ HREF="node143.html#SECTION002332000000000000000">Operators</A>
+<LI><A NAME="tex2html2185"
+ HREF="node143.html#SECTION002333000000000000000">Operator Ambiguities</A>
+</UL>
+<LI><A NAME="tex2html2186"
+ HREF="node144.html">Syntax Differences between ECLiPSe and other Prologs</A>
+<LI><A NAME="tex2html2187"
+ HREF="node145.html">Changing the Parser behaviour</A>
+</UL>
+<LI><A NAME="tex2html2188"
+ HREF="node146.html">Operators</A>
+<LI><A NAME="tex2html2189"
+ HREF="node147.html">Events</A>
+<UL>
+<LI><A NAME="tex2html2190"
+ HREF="node148.html">Event Types</A>
+<UL>
+<LI><A NAME="tex2html2191"
+ HREF="node148.html#SECTION002511000000000000000">Argument Types and Values</A>
+<LI><A NAME="tex2html2192"
+ HREF="node148.html#SECTION002512000000000000000">Arithmetic, Environment</A>
+<LI><A NAME="tex2html2193"
+ HREF="node148.html#SECTION002513000000000000000">Data and Memory Areas, Predicates, Operators</A>
+<LI><A NAME="tex2html2194"
+ HREF="node148.html#SECTION002514000000000000000">Modules, Visibility</A>
+<LI><A NAME="tex2html2195"
+ HREF="node148.html#SECTION002515000000000000000">Syntax Errors, Parsing</A>
+<LI><A NAME="tex2html2196"
+ HREF="node148.html#SECTION002516000000000000000">Compilation, Run-Time System, Execution</A>
+<LI><A NAME="tex2html2197"
+ HREF="node148.html#SECTION002517000000000000000">Top-Level</A>
+<LI><A NAME="tex2html2198"
+ HREF="node148.html#SECTION002518000000000000000">Macro Transformation Errors, Lexical Analyser</A>
+<LI><A NAME="tex2html2199"
+ HREF="node148.html#SECTION002519000000000000000">I/O, Operating System, External Interface</A>
+<LI><A NAME="tex2html2200"
+ HREF="node148.html#SECTION0025110000000000000000">Debugging, Object Files</A>
+<LI><A NAME="tex2html2201"
+ HREF="node148.html#SECTION0025111000000000000000">Extensions</A>
+</UL>
+<LI><A NAME="tex2html2202"
+ HREF="node149.html">Stack Overflows</A>
+<LI><A NAME="tex2html2203"
+ HREF="node150.html">ECLiPSe Fatal Errors</A>
+<LI><A NAME="tex2html2204"
+ HREF="node151.html">User-Defined Events</A>
+</UL>
+<LI><A NAME="tex2html2205"
+ HREF="node152.html">ECLiPSe Command Line Options</A>
+<LI><A NAME="tex2html2206"
+ HREF="node153.html">Style Guide</A>
+<UL>
+<LI><A NAME="tex2html2207"
+ HREF="node154.html">Style rules</A>
+<LI><A NAME="tex2html2208"
+ HREF="node155.html">Module structure</A>
+<LI><A NAME="tex2html2209"
+ HREF="node156.html">Predicate definition</A>
+</UL>
+<LI><A NAME="tex2html2210"
+ HREF="node157.html">Restrictions and Limits</A>
+<LI><A NAME="tex2html2211"
+ HREF="node158.html">Index</A>
+<LI><A NAME="tex2html2212"
+ HREF="node159.html">Bibliography</A>
+<LI><A NAME="tex2html2213"
+ HREF="node160.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

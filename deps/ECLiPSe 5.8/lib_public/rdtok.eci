@@ -1,0 +1,2 @@
+:- module(rdtok).
+:- export read_tokens / 2.

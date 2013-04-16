@@ -1,0 +1,58 @@
+
+plus(?Add1, ?Add2, ?Sum)
+
+   Succeeds if Sum is the sum of integer arguments Add1 and Add2.
+
+
+
+Arguments
+   ?Add1               an integer or a variable
+   ?Add2               an integer or a variable
+   ?Sum                an integer or a variable
+
+Type
+   Arithmetic
+
+Description
+   Defines the arithmetic relation Add1 + Add2 = Sum.  If all arguments are
+   instantiated plus/3 succeeds if this relation holds.  If one of the
+   arguments is uninstantiated, it is bound to an integer such that the
+   relation holds.  If the system is in coroutining mode and more than one
+   argument is uninstantiated, plus/3 delays until at least two of the
+   arguments are known.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      fails if Sum is not the sum of Add1 and Add2.
+
+
+
+Exceptions
+     5 --- an argument is neither an integer nor a variable
+     4 --- more than one argument is uninstantiated (non-coroutining    mode only)
+
+Examples
+   
+   Success:
+   plus(1, 2, 3).
+   plus(3, 4, Z).                   (gives Z=7)
+   plus(X, 4, 7).                   (gives X=3)
+   plus(3, Y, 7).                   (gives Y=4)
+   Fail:
+   plus(3, 4, 5).
+   Error:
+   plus(3.0, 4.0, 7.0).             (error 5)
+   plus(2 + 3, 1, 6).               (error 5)
+   plus(X, 1, Z).                   (error 4)
+
+
+
+
+
+See Also
+   times / 3

@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>random(?N)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>random(?N)</H1>
+Generates a random integer N.
+
+
+<DL>
+<DT><EM>?N</EM></DT>
+<DD>Integer or Variable.
+</DD>
+</DL>
+<H2>Description</H2>
+random/1 unifies N with a random integer between 0 and 2^31-1
+   (returned by the C library function random(), whose initialization
+   has been made using the pid of the running ECLiPSe ).
+
+<P>
+   If it is required that the sequence produced by successive calls of
+   random/1 be reproducible, seed(Seed) can be called to initialise the
+   calls with the integer Seed.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>N is instantiated, but not to an integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: random(N1), random(N2).
+      N1 = 464880439
+      N2 = 285401533
+      yes.
+
+      [eclipse]: seed(1), random(N).
+      N = 2078917053
+      yes.
+      [eclipse]: seed(1), random(N).
+      N = 2078917053
+      yes.
+
+Fail:
+      random(12345).
+
+Error:
+      random(12.34).          (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/frandom-1.html">frandom / 1</A>, <A HREF="../../kernel/arithmetic/seed-1.html">seed / 1</A>
+</BODY></HTML>

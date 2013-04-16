@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>make_overlap_bivs(+Tasks, -BivLists, -BivSums, ++Resource, ++Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_make_overlap_bivs)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>make_overlap_bivs(+Tasks, -BivLists, -BivSums, ++Resource, ++Options)</H1>
+Make a set of overlap bivalued variables for a set of tasks.
+Introduce a set of 'bivalued sum' variables, equal to the sum of the binaries at
+an overlap.  The bivalued sum variables represent the total resources needed
+<DL>
+<DT><EM>Tasks</EM></DT>
+<DD>A list of task structures - see &lt;B&gt;probe_lib&lt;/B&gt;
+</DD>
+<DT><EM>BivLists</EM></DT>
+<DD>A list of lists of integer variables
+</DD>
+<DT><EM>BivSums</EM></DT>
+<DD>A list of integer variables, each one the sum of a list 
+                      of binaries
+</DD>
+<DT><EM>Resource</EM></DT>
+<DD>An integer quantity of resource available
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>An options structure
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Based on the tentative assignments, <B>probe_search</B> finds a task
+    start time where the resources are not sufficient to make the
+    tentative assignment feasible.  In case a bottleneck task has a
+    variable resource requirement, this is reduced to its minimum
+    possible value. Otherwise, <B>probe_search</B> chooses a bivalued
+    'overlap' variable at this bottleneck and using <B>add_con</B> it adds 
+    a constraint trying to eliminate the overlap.
+</P>
+
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib/ic_probing_for_scheduling/probe_cstr_sched-7.html">ic_probing_for_scheduling : probe_cstr_sched / 7</A>, <A HREF="../../lib/probing_for_scheduling/probe_cstr_sched-7.html">probing_for_scheduling : probe_cstr_sched / 7</A>, <A HREF="../../lib/ic_probe/add_con-3.html">ic_probe : add_con / 3</A>, <A HREF="../../lib/probe/add_con-3.html">probe : add_con / 3</A>
+</BODY></HTML>

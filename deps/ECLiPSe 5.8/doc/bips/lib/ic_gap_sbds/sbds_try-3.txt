@@ -1,0 +1,23 @@
+
+sbds_try(+Var, ++Value, ?Success)
+
+   Try assigning a value to an SBDS search variable
+
+Arguments
+   Var                 The variable to use
+   Value               The value to try
+   Success             Whether the assignment succeeded or not
+
+Type
+   library(ic_gap_sbds)
+
+Description
+   Like sbds_try/2, but assign 1 to Success if we have set Var #= Value, and
+   assign 0 if we have set Var #\= Value (effectively, Success reflects the
+   truth of Var #= Value when the predicate succeeds).
+
+   See the documentation for sbds_try/2 for more details.
+
+
+See Also
+   sbds_initialise / 5, sbds_try / 2

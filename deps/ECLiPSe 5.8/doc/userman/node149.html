@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Stack Overflows</TITLE>
+<META NAME="description" CONTENT="Stack Overflows">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node150.html">
+<LINK REL="previous" HREF="node148.html">
+<LINK REL="up" HREF="node147.html">
+<LINK REL="next" HREF="node150.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4482"
+ HREF="node150.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4478"
+ HREF="node147.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4472"
+ HREF="node148.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4480"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4483"
+ HREF="node150.html">ECLiPSe Fatal Errors</A>
+<B> Up:</B> <A NAME="tex2html4479"
+ HREF="node147.html">Events</A>
+<B> Previous:</B> <A NAME="tex2html4473"
+ HREF="node148.html">Event Types</A>
+ &nbsp <B>  <A NAME="tex2html4481"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002520000000000000000"></A>
+<A NAME="13637"></A>
+<A NAME="13638"></A>
+<BR>
+Stack Overflows
+</H1>
+When a stack overflows, the system performs an
+<A NAME="tex2html1805"
+ HREF="../bips/kernel/control/exit_block-1.html">exit_block/1</A><A NAME="13663"></A>
+with an appropriate exit tag, ie.
+<DL>
+<DT><STRONG>global_trail_overflow</STRONG>
+<DD>for overflows of the global/trail stack
+
+that holds all the program's data structures.
+<DT><STRONG>local_control_overflow</STRONG>
+<DD>for overflows of the local/control stack
+	that holds information related to the control flow.
+</DL>
+These exits can be caught by wrapping a goal that is likely
+to overflow the stacks into an appropriate
+<A NAME="tex2html1807"
+ HREF="../bips/kernel/control/block-3.html">block/3</A><A NAME="13666"></A>, e.g.<PRE>
+..., block(big_goal(X), global_trail_overflow, react_to_overflow), ...
+</PRE>
+In the debugger, you can locate the overflow by jumping to a LEAVE port
+(z command).
+See chapter <A HREF="node122.html#chapmemory">19</A> for more details on memory usage.
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

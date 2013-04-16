@@ -1,0 +1,4 @@
+lib(hash)
+
+   Hash table library
+

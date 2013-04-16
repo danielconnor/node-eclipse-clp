@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>write(+Stream, ?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>write(+Stream, ?Term)</H1>
+The term Term is written on the output stream Stream according to the
+current operator declarations.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to write the term Term on the output stream Stream according to the
+   current operator declarations.  Lists and compound terms are only
+   printed up to the nesting depth specified by the (stream-specific or
+   global) print_depth setting (cf. set_stream_property/3, set_flag/2).
+
+<P>
+   Note that as usual, the output is buffered, so it may need to be flushed
+   (e.g.  explicitly using flush/1).
+
+<P>
+Note
+   The output of write/1 is not necessarily in a form acceptable to
+   read/1,2.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is not an atom or an integer.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an output steam.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: open(file1,update,s), write(s, X + 2), close(s).
+      X = _72
+      yes.
+      [eclipse]: sh('cat file1').
+      _72 + 2
+      yes.
+
+Error:
+      write(S, a(b,c)).          (Error 4).
+      write("string", a(b,c)).   (Error 5).
+      write(9, X + 2).           (Error 192). % stream not open
+      write(atom, X + 2).        (Error 193).
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/display-1.html">display / 1</A>, <A HREF="../../kernel/ioterm/display-2.html">display / 2</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/ioterm/write-1.html">write / 1</A>, <A HREF="../../kernel/ioterm/writeq-1.html">writeq / 1</A>, <A HREF="../../kernel/ioterm/writeq-2.html">writeq / 2</A>
+</BODY></HTML>

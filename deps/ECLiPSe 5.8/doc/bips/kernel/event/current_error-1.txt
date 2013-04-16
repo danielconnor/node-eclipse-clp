@@ -1,0 +1,68 @@
+
+current_error(?N)
+
+   Succeeds if N unifies with a valid error number.
+
+
+
+Arguments
+   ?N                  Positive integer or variable.
+
+Type
+   Event Handling
+
+Description
+   Used to generate on backtracking all the current valid error numbers.  N
+   is a variable.
+
+
+   Also used to check that N is a valid error number.  N is an integer.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if N is not a valid error number.
+
+
+
+Exceptions
+     5 --- N is instantiated, but not to an integer.
+
+Examples
+   
+Success:
+      ?- current_error(N).
+      N = 1     More? (;)       % type `;'
+      N = 2     More? (;)
+      N = 4     More? (;)
+      N = 5     More? (;)       % carriage return typed
+      yes.
+
+      ?- [user].
+       list_error1(String, N, Message) :-
+              current_error(N),
+              error_id(N, Message),
+              substring(Message, String, _).
+       user compiled 208 bytes in 0.03 seconds
+
+      ?- list_error1("def",N,M).
+      N = 21
+      M = "undefined arithmetic expression"     More? (;)
+      yes.
+
+Fail:
+      current_error(3).
+
+Error:
+      current_error(1.0).   (Error 5).
+
+
+
+
+
+See Also
+   error_id / 2

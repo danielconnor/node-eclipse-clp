@@ -1,0 +1,37 @@
+<HTML><HEAD><TITLE>det_insert_from_corresponding_lists(+Map0, ++KeyList, ?ValueList, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>det_insert_from_corresponding_lists(+Map0, ++KeyList, ?ValueList, -Map)</H1>
+Insert key/value pairs into a map, aborting if any of the keys already exist.
+<DL>
+<DT><EM>Map0</EM></DT>
+<DD>A map
+</DD>
+<DT><EM>KeyList</EM></DT>
+<DD>A list of keys to insert
+</DD>
+<DT><EM>ValueList</EM></DT>
+<DD>A list of values corresponding to the keys in KeyList
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The map after insertion
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	This predicate takes a map Map0, and for each key Key in KeyList
+	and corresponding value Value from ValueList, calls
+	det_insert/4 to insert the Key/Value pair into the map.
+	The result after all the insertions is the map Map.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails if the lists aren't the same length.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/det_insert-4.html">det_insert / 4</A>, <A HREF="../../lib_public/m_map/det_insert_from_assoc_list-3.html">det_insert_from_assoc_list / 3</A>, <A HREF="../../lib_public/m_map/from_corresponding_lists-3.html">from_corresponding_lists / 3</A>
+</BODY></HTML>

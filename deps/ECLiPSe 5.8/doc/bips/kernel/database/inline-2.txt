@@ -1,0 +1,119 @@
+
+inline(+Pred, +TransPred)
+
+   Declares TransPred as the predicate to be used to do compile-time
+transformation (e.g. inlining) of calls to Pred.
+
+
+
+Arguments
+   +Pred               Expression of the form Atom/Integer.
+   +TransPred          Expression of the form Atom/Integer, Integer is 2 or 3.
+
+Type
+   Predicate Database and Compiler
+
+Description
+   To improve efficiency, calls to user-defined predicates can be
+   preprocessed and transformed at compile time.  The directive
+
+
+
+    :- inline(mypred/1, mytranspred/2).
+
+   arranges for mytranspred/2 to be invoked at compile time for each 
+   call to the predicate mypred/1 before it is being compiled.
+
+
+   The transformation predicate receives the original call to mypred/1
+   as its first argument, and is expected to return a replacement goal
+   in its second argument. This replacement goal replaces the original
+   call in the compiled code. Usually, the replacement goal would be
+   semantically equivalent, but more efficient than the original goal.
+   When the transformation predicate fails, the original goal is not
+   replaced.
+
+
+   If inlining is applied to an exported predicate, one must be aware that
+   the replacement goal will be textually substituted for the original
+   goal in an unknown module context.  That means that the replacement goal
+   should only contain calls to builtins or explicitly qualified calls to
+   other exported predicates, since the visibility of predicates generally
+   cannot be guaranteed in the module where the substitution takes place.
+
+
+   A transformation predicate can have an optional third argument which
+   supplies the module in which the substitution takes place.
+
+
+   The inline/2 directive must be issued from the definition module
+   of Pred, and TransPred must be visible from (and is usually defined
+   in) this same module.
+
+
+   The transformation predicate for a predicate can be queried by
+   calling get_flag(Pred, inline, TransPred).
+
+
+   Setting TransPred to =/2 will erase any previously attached
+   transformation predicate.
+
+
+   Transformation can be disabled for debugging purposes by adding
+
+
+
+    :- pragma(noexpand).
+
+   to the compiled file, or by setting the global flag
+
+
+
+    :- set_flag(goal_expansion, off).
+
+    The global flag also controls whether transformations are applied
+    to goals entered at the interactive toplevel prompt.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Pred or TransPred are not fully instantiated.
+     5 --- Pred or TransPred are not of the form Atom/Integer.
+     6 --- The arity of TransPred is not 2 or 3.
+   100 --- Pred is not defined is this module.
+
+Examples
+   
+    :- inline(double/2, trans_double/2).
+
+    double(X, Y) :-
+        Y is 2*X.
+
+    trans_double(double(X, Y), Y=Result) :-
+        ground(X),           % if X already known at compile time:
+        Result is 2*X.       % do calculation at compile time!
+
+
+    % If we now compile the following predicate involving double/2:
+
+    sample :-
+        double(12,Y),        % will be transformed into: Y=24
+        ...
+        double(Y,Z).         % will be compiled as is
+
+
+
+
+
+
+See Also
+   macro / 3, get_flag / 2, set_flag / 2, pragma / 1, compile / 1

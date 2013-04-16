@@ -1,0 +1,123 @@
+<HTML><HEAD><TITLE>mode +PredModes</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>mode +PredModes</H1>
+Specifies the mode (calling pattern) for the given predicates.
+
+
+<DL>
+<DT><EM>+PredModes</EM></DT>
+<DD>Compound term whose arguments are +, ++, - or ?  or a comma-separated list of such compound terms.
+</DD>
+</DL>
+<H2>Description</H2>
+   The call of the predicate informs the compiler that the arguments of the
+   specified predicate will always have the corresponding form when the
+   predicate is called.  The compiler takes this information into account
+   when the predicate is compiled and generates more compact and/or faster
+   code.  Specifying the mode of a predicate that has been already compiled
+   has no effect, unless it is recompiled.  If the specified procedure does
+   not exist, a local undefined procedure is created.
+
+<P>
+   The possible argument modes are:
+
+<P>
+<PRE>
++   The argument is instantiated, i.e.  it is not a variable.
+
+++  The argument is ground.
+
+-   The argument is not instantiated, it must be a free variable without
+    any constraints, especially it must not occur in any other argument and
+    it cannot be a suspending variable.
+
+?   The mode is not known or it is neither of the above ones.
+</PRE>
+   mode/1 is an operator and accepts also comma-separated list of mode
+   specifications in the form
+
+<P>
+<PRE>
+   mode p(+), q(-), r(++, ?).
+</PRE>
+   This operator binds less than comma, so the argument of mode/1 might
+   have to be parenthesised when it is followed by other goals.  Modes for
+   built-in and external predicates are ignored.  Modes are significant
+   only for the first 15 arguments, for higher arguments the mode is always
+   taken as ?.
+
+<P>
+   NOTE: If the instantiation of the predicate call violates its mode
+   declaration, no exception is raised and its behaviour is undefined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredModes is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>PredModes is not a compound term or a comma list or its    arguments are not the above specified atoms.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    % code size:
+    % no mode declarations
+    [eclipse]: [append].
+    /home/eclipse/src/append.pl compiled 212 bytes in 0.03 seconds
+
+    % mode for one argument decreases the code size
+    [eclipse]: mode(append(++, ?, ?)), [append].
+    /home/eclipse/src/append.pl compiled 120 bytes in 0.00 seconds
+
+    % modes for other arguments further decreases the size
+    [eclipse]: mode(append(++, ++, -)), [append].
+    /home/eclipse/src/append.pl compiled 92 bytes in 0.00 seconds
+
+    % size of the trail stack
+    cygnus% cat p.pl
+    p(f(1), [output]) :- !.
+    p(f(2), [another_one]).
+
+    test :-
+        p(f(1), X),
+        statistics(trail_stack_used, T1),
+        writeln(T1).
+    :- test.
+    cygnus% eclipse
+    [eclipse]: [p].
+    16
+    /home/eclipse/p.pl    compiled 540 bytes in 0.02 seconds
+
+    % With modes the code is shorter and does less trailing
+    [eclipse]: mode(p(++, -)), [p].
+    12
+    /home/eclipse/p.pl    compiled 408 bytes in 0.02 seconds
+
+    % bad mode declaration:
+    [eclipse]: mode(p(+)), [user].
+     p(a).
+     user   compiled 40 bytes in 0.00 seconds
+
+    yes.
+    [eclipse]: p(X).    % call violates the mode declaration
+
+    no (more) solution.
+Error:
+    mode p(X).                         (Error 4).
+    mode p(+), get_flag(p/1, mode, X). (Error 5).
+    % equivalent to mode((p(+), get_flag(p/1, mode, X)))
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>
+</BODY></HTML>

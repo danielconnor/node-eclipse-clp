@@ -1,0 +1,15 @@
+
+hash_set(+Table, +Key, +Value)
+
+   Add an (or modify the existing) entry with key Key and value Value to the hash table
+
+Arguments
+   Table               A hash table
+   Key                 a ground term
+   Value               Any term
+
+Type
+   library(hash)
+
+See Also
+   hash_get / 3

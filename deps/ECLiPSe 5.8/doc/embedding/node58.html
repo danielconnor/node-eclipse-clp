@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Constructing ECLiPSe terms in C++</TITLE>
+<META NAME="description" CONTENT="Constructing ECLiPSe terms in C++">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node59.html">
+<LINK REL="previous" HREF="node57.html">
+<LINK REL="up" HREF="node57.html">
+<LINK REL="next" HREF="node59.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1600"
+ HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1596"
+ HREF="node57.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1590"
+ HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1598"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1601"
+ HREF="node59.html">Decomposing ECLiPSe terms in</A>
+<B> Up:</B> <A NAME="tex2html1597"
+ HREF="node57.html">Summary of C++ Interface</A>
+<B> Previous:</B> <A NAME="tex2html1591"
+ HREF="node57.html">Summary of C++ Interface</A>
+ &nbsp <B>  <A NAME="tex2html1599"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1602"
+ HREF="node58.html#SECTION001211000000000000000">Class EC_atom and EC_functor</A>
+<LI><A NAME="tex2html1603"
+ HREF="node58.html#SECTION001212000000000000000">Class EC_word</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001210000000000000000">
+Constructing ECLiPSe terms in C++</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION001211000000000000000">
+Class EC_atom and EC_functor</A>
+</H2>
+The ECLiPSe dictionary provides unique identifiers for
+name/arity pairs. EC_atoms are dictionary identifiers with zero arity,
+EC_functors are dictionary identifiers with non-zero arity.
+<DL>
+<DT><STRONG>EC_atom(char*)</STRONG>
+<DD> 
+<BR>
+looks up or enters the given string into the ECLiPSe
+	dictionary and returns a unique atom identifier for it.
+
+<P>
+<DT><STRONG>char* EC_atom::name()</STRONG>
+<DD> 
+<BR>
+returns the name string of the given atom identifier.
+
+<P>
+<DT><STRONG>EC_functor(char*,int)</STRONG>
+<DD> 
+<BR>
+looks up or enters the given string with arity into the ECLiPSe
+	dictionary and returns a unique functor identifier for it.
+
+<P>
+<DT><STRONG>char* EC_functor::name()</STRONG>
+<DD> 
+<BR>
+returns the name string of the given functor identifier.
+
+<P>
+<DT><STRONG>int EC_functor::arity()</STRONG>
+<DD> 
+<BR>
+returns the arity of the given functor identifier.
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION001212000000000000000">
+Class EC_word</A>
+</H2>
+The EC_word is the basic type that all ECLiPSe data structures are
+built from (because within ECLiPSe typing is dynamic).
+The following are the functions for constructing ECLiPSe terms from
+the fundamental C++ types:
+<DL>
+<DT><STRONG>EC_word(const char *)</STRONG>
+<DD> 
+<BR>
+converts a C++ string to an ECLiPSe string. The string is copied.
+
+<P>
+<DT><STRONG>EC_word(const int, const char *)</STRONG>
+<DD> 
+<BR>
+converts a C++ string of given length to an ECLiPSe string.
+	The string is copied and can contain NUL bytes.
+
+<P>
+<DT><STRONG>EC_word(const EC_atom)</STRONG>
+<DD> 
+<BR>
+creates an ECLiPSe atom from an atom identifier.
+
+<P>
+<DT><STRONG>EC_word(const long)</STRONG>
+<DD> 
+<BR>
+converts a C++ long to an ECLiPSe integer.
+
+<P>
+<DT><STRONG>EC_word(const double)</STRONG>
+<DD> 
+<BR>
+converts a C++ double to an ECLiPSe double float.
+
+<P>
+<DT><STRONG>EC_word(const EC_ref&amp;)</STRONG>
+<DD> 
+<BR>
+retrieves the ECLiPSe term referenced by the EC_ref (see below).
+
+<P>
+<DT><STRONG>EC_word term(const EC_functor,const EC_word args[])</STRONG>
+<DD> 
+<BR>
+<DT><STRONG>EC_word term(const EC_functor,const EC_word arg1, ...)</STRONG>
+<DD> 
+<BR>
+creates an ECLiPSe compound term from the given components.
+
+<P>
+<DT><STRONG>EC_word list(const EC_word hd, const EC_word tl)</STRONG>
+<DD> 
+<BR>
+Construct a single ECLiPSe list cell.
+
+<P>
+<DT><STRONG>EC_word list(int n, const long*)</STRONG>
+<DD> 
+<BR>
+Construct an ECLiPSe list of length n from an array of long integers.
+
+<P>
+<DT><STRONG>EC_word list(int n, const char*)</STRONG>
+<DD> 
+<BR>
+Construct an ECLiPSe list of length n from an array of chars.
+
+<P>
+<DT><STRONG>EC_word list(int n, const double*)</STRONG>
+<DD> 
+<BR>
+Construct an ECLiPSe list of length n from an array of doubles.
+
+<P>
+<DT><STRONG>EC_word array(int, const double*)</STRONG>
+<DD> 
+<BR>
+creates an ECLiPSe array (a structure with functor []of
+	appropriate arity) of doubles from the given C++ array.
+	The data is copied.
+
+<P>
+<DT><STRONG>EC_word matrix(int rows, int cols, const double*)</STRONG>
+<DD> 
+<BR>
+creates an ECLiPSe array (size rows) of arrays (size cols) of doubles
+	from the given C++ array.  The data is copied.
+
+<P>
+<DT><STRONG>EC_word handle(const t_ext_type *cl, const t_ext_ptr data)</STRONG>
+<DD> 
+<BR>
+Construct an ECLiPSe handle for external data, attaching the
+	given method table.
+
+<P>
+<DT><STRONG>EC_word newvar()</STRONG>
+<DD> 
+<BR>
+Construct a fresh ECLiPSe variable.
+
+<P>
+<DT><STRONG>EC_word nil()</STRONG>
+<DD> 
+<BR>
+Construct the empty list [].
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1600"
+ HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1596"
+ HREF="node57.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1590"
+ HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1598"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1601"
+ HREF="node59.html">Decomposing ECLiPSe terms in</A>
+<B> Up:</B> <A NAME="tex2html1597"
+ HREF="node57.html">Summary of C++ Interface</A>
+<B> Previous:</B> <A NAME="tex2html1591"
+ HREF="node57.html">Summary of C++ Interface</A>
+ &nbsp <B>  <A NAME="tex2html1599"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

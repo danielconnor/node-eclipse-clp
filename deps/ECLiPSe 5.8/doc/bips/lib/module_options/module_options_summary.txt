@@ -1,0 +1,4 @@
+lib(module_options)
+
+   Utility library to manage options within a library module
+

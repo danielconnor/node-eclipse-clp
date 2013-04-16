@@ -1,0 +1,53 @@
+
+?Term1 @< ?Term2
+
+   Succeeds if term Term1 is before term Term2 in the standard ordering.
+
+
+
+Arguments
+   ?Term1              An arbitrary term.
+   ?Term2              An arbitrary term.
+
+Type
+   Comparing and Sorting
+
+Description
+   Succeeds if term Term1 precedes term Term2 in the standard ordering of
+   terms.
+
+
+   See compare/3 for the definition of this standard ordering.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Term1 does not precede Term2.
+
+
+
+Examples
+   
+   Success:
+   X @< 1.0.           (gives X = _g68)
+   0.0 @< 1.
+   2.0 @< 1.
+   "a" @< a.
+   atoma @< atomb.
+   [a|b] @< [a,b].
+   b(1) @< a(1,1).
+   a(1,2,3,4.0) @< a(1,2,3,0).
+   Fail:
+   1.0 @< X.
+   atomb @< atoma.
+   f(1,1) @< f(1).
+
+
+
+
+
+See Also
+   compare / 3, @> / 2, @=< / 2, @>= / 2

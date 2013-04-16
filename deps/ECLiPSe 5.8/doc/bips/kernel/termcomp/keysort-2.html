@@ -1,0 +1,73 @@
+<HTML><HEAD><TITLE>keysort(+List1, ?List2)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Comparing and Sorting</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>keysort(+List1, ?List2)</H1>
+Succeeds if List2 is a sorted list version of List1, whose elements are of
+the form Key-Value.  The sort is done according to the value of the key
+Key.
+
+
+<DL>
+<DT><EM>+List1</EM></DT>
+<DD>List of elements of the form Term-Term.
+</DD>
+<DT><EM>?List2</EM></DT>
+<DD>List or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   The elements of List1 are of the form Key-Value, where Key and Value are
+   both arbitrary terms.
+
+<P>
+   List1 is sorted according to the value of the key Key and the result is
+   unified with List2.  No sorting is carried out on Value.  The sort is
+   stable, i.e. the order of elements with the same key is preserved.
+
+<P>
+   The sort is done according to the standard ordering of terms.
+   See compare/3 for this standard ordering.
+   Note in particular that numbers are first ordered by their type (integer,
+   float, etc) and only then by their magnitude, i.e. sorting numbers of
+   different types may not give the expected result.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if List2 does not unify with the sorted list version of List1,
+   which is done according to the value of the key Key.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>List1 is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Either List1 or List2 is instantiated, but not to a list of    the form Term-Term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      keysort([n-1,4-a],L).     (gives L = [4-a,n-1]]).
+      keysort([f(1)-a,[1]-w,7.2-b,"k"-e,n-q],L).
+             (gives L = [7.2-b,"k"-e,n-q,f(1)-a,[1]-w]).
+      keysort([f(1,2),g(1)],M). (gives M = [f(1,2),g(1)]).
+      keysort([g(1,2)-a, f(1,2)-a],M).
+             (gives M = [f(1,2)-a,g(1,2)-a]).
+      keysort([f(4,3)-a, f(3,4)-b],M).
+             (gives M = [f(3,4)-b,f(4,3)-a]).
+
+Fail:
+      keysort([n-1,M-a],[n-1,M-a]).
+
+Error:
+      keysort(L1,L2).              (Error 4).
+      keysort([n-1,m],L).          (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/compare-3.html">compare / 3</A>, <A HREF="../../kernel/termcomp/merge-3.html">merge / 3</A>, <A HREF="../../kernel/termcomp/merge-5.html">merge / 5</A>, <A HREF="../../kernel/termcomp/msort-2.html">msort / 2</A>, <A HREF="../../kernel/termcomp/sort-4.html">sort / 4</A>
+</BODY></HTML>

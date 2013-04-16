@@ -1,0 +1,28 @@
+
+top_sort(+Graph, -Sorted)
+
+   Finds a topological ordering of the graph if one exists
+
+Arguments
+   Graph               a graph structure
+   Sorted              a list of integer node numbers
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Finds a topological ordering of the graph, i.e. an ordering of the
+    nodes such that all edges go from earlier to later nodes.
+    Such an ordering exists if and only if the graph is acyclic.
+    If the graph is cyclic, the predicate fails.
+    
+    In general, the ordering is not unique, an arbitrary one is computed.
+    The complexity is O(Nnodes + Nedges).
+    
+
+Fail Conditions
+   No topological ordering exists, i.e. the graph is cyclic
+
+See Also
+   graph_is_acyclic / 1, graph_cycles / 2

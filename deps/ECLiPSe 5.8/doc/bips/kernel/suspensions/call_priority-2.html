@@ -1,0 +1,82 @@
+<HTML><HEAD><TITLE>call_priority(+Goal, +Priority)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>call_priority(+Goal, +Priority)</H1>
+Execute Goal with priority Priority.
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Atom or compound term.
+</DD>
+<DT><EM>+Priority</EM></DT>
+<DD>A small integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   All goals in ECLiPSe execute under a certain priority. An execution
+   can only be interrupted by the waking of a goal with a higher
+   priority. Priorities are most relevant in data-driven algorithms,
+   to specify that certain goals must do their work before others
+   can meaningfully execute.
+
+<P>
+   Priorities range from 1 (most urgent) to 12 (least urgent). The
+   toplevel goal of an execution always runs at the lowest priority (12).
+
+<P>
+   call_priority/2 runs a goal at a given priority. If this priority
+   is higher than the one under which call_priority was invoked,
+   the goal executes immediately, but will be less interruptable
+   by woken goals. If the specified priority is lower, the execution
+   of goal will be effectively deferred until there are no more urgent
+   goal present.
+
+<P>
+   Warning: Although it is possible to write programs that only work
+   correctly under a particular priority ordering, such practice is
+   strongly discouraged. Priorities should only affect efficiency,
+   never correctness.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal or Priority is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Goal is not an atom or a compound term, 		or Priority is not an integer.
+<DT><EM>(24) number expected </EM>
+<DD>Priority is not a number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: [user].       
+     p :- call_priority(writeln(hello),8), writeln(world).
+
+    user       compiled traceable 136 bytes in 0.00 seconds
+    yes.
+    [eclipse 10]: call_priority(p,5).
+    world
+    hello
+    yes.
+    [eclipse 11]: call_priority(p,10).
+    hello
+    world
+    yes.
+    [eclipse 12]: call_priority(p,8).
+    hello
+    world
+    yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/get_priority-1.html">get_priority / 1</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/suspensions/make_suspension-4.html">make_suspension / 4</A>, <A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/suspensions/suspend-4.html">suspend / 4</A>, <A HREF="../../kernel/suspensions/set_suspension_data-3.html">set_suspension_data / 3</A>
+</BODY></HTML>

@@ -1,0 +1,25 @@
+:- module(listut).
+:- export sumlist / 2.
+:- export subseq1 / 2.
+:- export subseq0 / 2.
+:- export subseq / 3.
+:- export shorter_list / 2.
+:- export select / 4.
+:- export same_length / 2.
+:- export reverse / 2.
+:- export rev / 2.
+:- export remove_dups / 2.
+:- export perm2 / 4.
+:- export perm / 2.
+:- export numlist / 3.
+:- export nth1 / 4.
+:- export nth1 / 3.
+:- export nth0 / 4.
+:- export nth0 / 3.
+:- export nmembers / 3.
+:- export nmember / 3.
+:- export nextto / 3.
+:- export last / 2.
+:- export delete / 3.
+:- export correspond / 4.
+:- export append / 3.

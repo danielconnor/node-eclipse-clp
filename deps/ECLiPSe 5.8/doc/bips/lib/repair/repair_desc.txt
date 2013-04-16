@@ -1,0 +1,28 @@
+lib(repair)
+
+The repair library provides a framework for the integration of repair-based
+search with the constraint consistency checking techniques of ECLiPSe. It
+allows the implementation of classical local search methods within a CLP
+environment.
+
+It provides two facilities:
+
+
+
+ The maintenance of tentative values for problem variables. These
+    tentative values may together form a partial or even inconsistent 
+    tentative assignment.  Modifications to, or extensions of this
+    assignment may be applied until a correct solution is found.
+
+ The monitoring of constraints (the so called repair constraints)
+    for being either satisfied or violated under the current tentative
+    assignment.  Search algorithms can then access the set of
+    constraints that are violated at any point in the search,
+    and perform repairs by changing the tentative assignment
+    of the problem variables.
+
+
+Normally, the repair library communicates with another solver (such as fd or 
+ria) to check for constraint violations. 
+
+

@@ -1,0 +1,57 @@
+
+minimum_spanning_tree(+Graph, +DistanceArg, -Tree, -TreeWeight)
+
+   Computes a minimum spanning tree and its weight
+
+Arguments
+   Graph               a graph structure
+   DistanceArg         which argument of EdgeData to use as distance: integer
+   Tree                a list of e/3 edge structures
+   TreeWeight          sum of the tree's edge weights: number
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes a minimum spanning tree for the given graph. A minimum
+    spanning tree is a smallest subset of the graph's edges that still
+    connects all the graph's nodes. Such a tree is not unique and of
+    course exists only if the original graph is itself connected.
+    However, all minimum spanning trees will have the same cost.
+
+    The computed tree is returned in Tree, which is simply a list of
+    the edges that form the tree. The TreeWeight is the total length
+    of the tree's edges, according to DistanceArg.
+
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. Important: the distance
+    information in EdgeData must be a non-negative number, and the
+    numeric type (integer, float, etc) must be the same in all edges.
+
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+
+    The direction of the graph's edges is ignored by this predicate.
+
+    The implementation uses Kruskal's algorithm which has a complexity
+    of O(Nedges*log(Nedges)).
+    
+
+Fail Conditions
+   No spanning tree exists, i.e. the graph is not connected.
+
+Examples
+   
+    ?- sample_graph(G), minimum_spanning_tree(G, 0, T, W).
+    T = [e(2, 10, 1), e(4, 8, 1), e(9, 2, 1), e(7, 3, 2), ...]
+    W = 16
+    
+
+See Also
+   minimum_spanning_forest / 5

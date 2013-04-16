@@ -1,0 +1,39 @@
+<HTML><HEAD><TITLE>get_char(?Char)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_char(?Char)</H1>
+Reads the next character from the current input and unifies it with a
+single character string Char.
+
+
+<DL>
+<DT><EM>?Char</EM></DT>
+<DD>Single character string or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Takes a single-character string from the current input and unifies it
+   with Char.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Char does not unify with the next character from the buffered
+   current input.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Char is instantiated, but not to a string.
+</DL>
+<H2>Examples</H2>
+<PRE>   Equivalent to get_char(input, Char).  (see get_char/2 for details).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/get_char-2.html">get_char / 2</A>, <A HREF="../../kernel/iochar/put_char-1.html">put_char / 1</A>, <A HREF="../../kernel/iochar/put_char-2.html">put_char / 2</A>
+</BODY></HTML>

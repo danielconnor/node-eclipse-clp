@@ -1,0 +1,23 @@
+
+collect_typed_pool_constraints(+Pool, +Type, -Constraints)
+
+   Collect all currently stored constraints of type Type in Pool
+
+Arguments
+   Pool                Atom
+   Type                Integer
+   Constraints         Variable, returns list of callable terms
+
+Type
+   library(constraint_pools)
+
+Description
+
+    Constraints is unified with a list of all currently stored
+    constraints of type Type in Pool.  An empty list is returned if
+    the pool was already empty for this type.  The pool store for type
+    Type is emptied.  This modification is backtrackable.
+    
+
+See Also
+   pool_is_empty / 1, get_typed_pool_constraints / 3, collect_all_pool_constraints / 2

@@ -1,0 +1,45 @@
+
+integer_list_to_dom(+List, -Dom)
+
+   Convert a sorted list of integers and integer intervals into a domain Dom.
+
+
+
+Arguments
+   +List               A list of integers and integer interval.
+   -Dom                Variable.
+
+Type
+   library(fd)
+
+Description
+   Convert a sorted list of integers and integer intervals into a domain
+   Dom.  List must be sorted and integers must not overlap with intervals.
+   Note that using sort/2 on a list of integers and intervals does not
+   produce correct results because intervals are considered compound terms
+   and thus sorted after all integers.  This predicate converts a list of
+   successive integers into an interval and/or merges it with adjacent
+   intervals.  Typically, it will be used to convert a sorted list of
+   integers into a list of intervals and an appropriate domain.  If the
+   list is already known to contain the right intervals, it is quicker to
+   use sorted_list_to_dom/2.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- List is not ground.
+     5 --- List contains an element which is neither integer nor an    integer interval.
+     6 --- The size of the resulting domain is too large.
+     6 --- The list is not sorted properly.
+
+See Also
+   sorted_list_to_dom / 2, dvar_domain / 2

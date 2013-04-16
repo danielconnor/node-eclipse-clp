@@ -1,0 +1,29 @@
+<HTML><HEAD><TITLE>msg(?Var1, ?Var2, ?MSG)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_kernel)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>msg(?Var1, ?Var2, ?MSG)</H1>
+Computes the most specific generalisation of the intervals in Var1 and Var2.
+<DL>
+<DT><EM>Var1</EM></DT>
+<DD>A variable or number
+</DD>
+<DT><EM>Var2</EM></DT>
+<DD>A variable or number
+</DD>
+<DT><EM>MSG</EM></DT>
+<DD>Most specific generalisation (variable)
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>msg(-, -, ?)
+<LI>msg(++, ++, ?)
+</UL>
+<H2>Description</H2>
+<P>
+   The most specific generalisation of two intervals is computed and
+   returned as MSG.  MSG will interval over the smallest interval enclosing
+   the input intervals, and have the more general type of the input types.
+   If either Var1 or Var2 have not been declared before, it will be turned
+   into an unrestricted real variable.
+</P>
+
+</BODY></HTML>

@@ -1,0 +1,32 @@
+<HTML><HEAD><TITLE>acyclic_term(?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>acyclic_term(?Term)</H1>
+Succeeds if Term is acyclic (finite)
+<DL>
+<DT><EM>Term</EM></DT>
+<DD>Arbitrary term
+</DD>
+</DL>
+<H2>Description</H2>
+	Used to test whether Term is acyclic (a finite tree).
+	Fails if Term is cyclic (an infinite, rational tree).
+
+<H3>Fail Conditions</H3>
+Fails if Term is cyclic
+<H2>Examples</H2>
+<PRE>
+    ?- X = f(f(a)), acyclic_term(X).
+    X = f(f(a))
+    Yes (0.00s cpu)
+
+    ?- X = f(X), acyclic_term(X).
+    No (0.00s cpu)
+
+
+    % could be used to simulate occurs check
+    unify_with_occurs_check(X, X) :- acyclic_term(X).
+
+</PRE>
+<H2>See Also</H2>
+
+</BODY></HTML>

@@ -1,0 +1,55 @@
+
+ColgenInstance:get(++What, -Value)
+
+   Obtain global problem information.
+
+Arguments
+   What                Specification for information wanted (atom)
+   Value               Returned value of What
+
+Type
+   library(colgen)
+
+Description
+
+   Retrieve information about solver constraints and results, for the
+   colgen instance ColgenInstance. What can take one of the following values:
+
+
+    dual(+Id)
+      Returns the floating-point value of the
+      current dual value for the constraint having identifier Id. See
+      also sp_obj below.
+
+    sp_obj(+Id)
+      Returns the sub problem objective terms currently associated
+      associated with the constraint having identifier Id. This will
+      be a term Val*Var where Val is the current dual value
+      for the constraint as also returned by
+      ColgenInstance:get(dual(Id), Val) and Var is the
+      subproblem variable in the implicit sum term of the
+      constraint. It is the users responsibility to get all relevant
+      terms of the current cost function and ensure that subproblem
+      solutions posted to the colgen instance have a non-negative
+      cost.
+
+    vars
+      Returns a list of all variables currently
+      associated with the colgen instance ColgenInstance.
+
+    non_zero_vars
+      Returns a list of all variables currently associated with
+      the colgen instance ColgenInstance that have a non-zero
+      optimal solution. This may be more efficient than retrieving all
+      problem variables after solution, since very many variables can
+      be generated and most will have a zero value in the optimal
+      solution.
+
+    frac_vars
+      Returns a list of all variables currently associated with
+      the colgen instance ColgenInstance that have a
+      fractional optimal solution. This is intended for use primarily
+      in user-defined problem branching predicates.
+
+
+

@@ -1,0 +1,51 @@
+
+neg ?Expr
+
+   Expr arithmetically evaluates to 0
+
+Arguments
+   Expr                A boolean expression
+
+Type
+   library(suspend)
+
+Description
+    Suspends until Expr is ground, and then evaluates it. Succeeds if it
+    evaluates to 0.
+
+    Typically, the expression contains reifiable constraints, in which case
+    a corresponding reified constraint is set up, and the expression is
+    replaced by the resulting boolean variable.
+
+
+Fail Conditions
+   Expr does not evaluate to 0
+
+Exceptions
+    24 --- Expr is not an arithmetic expression.
+
+Examples
+   
+	?- neg B, B = 1.
+	No (0.00s cpu)
+
+	?- neg B, B = 0.
+	B = 0
+	Yes (0.00s cpu)
+
+	% arguments are typically reifiable expressions:
+	?- neg X > 7, X = 8.
+	No (0.00s cpu)
+
+	% the previous example is equivalent to:
+	?- >(X,7,B), neg B, X=8.
+	No (0.00s cpu)
+
+	% and/or/=>/neg are themselves reifiable:
+	?- neg(X > 7 or X < 5), X = 7.
+	X = 7
+	Yes (0.00s cpu)
+	
+
+See Also
+   neg / 2, and / 2, or / 2, => / 2, ic : neg / 1

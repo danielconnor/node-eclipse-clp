@@ -1,0 +1,29 @@
+lib(branch_and_bound)
+
+
+	This is a solver-independent library implementing branch-and-bound
+	primitives. It can be used with any nondeterministic search routine
+	that instantiates a cost variable when a solution is found. The cost
+	variable can be an arbitrary numerical domain variable or even a
+	simple domain-less variable.
+	
+	The main predicates are bb_min/3, bb_min/6 and, as a shorthand,
+	minimize/2.
+	
+	Note on the treatment of bounded reals: The library allows the cost
+	to be instantiated to a number of type breal. This is useful e.g.
+	when using lib(ic) to solve problems with continuous variables.
+	When the variable domains have been narrowed sufficiently, the
+	problem variables (in particular the cost variable) should be
+	instantiated to a bounded real, e.g. using the following idiom:
+	
+		X is breal_from_bounds(get_min(X),get_max(X))
+	
+	Bounded reals contain some uncertainty about their true value. If
+	this uncertainty is too large, the branch-and-bound procedure may
+	not be able to compare the quality of two solutions. In this case,
+	a warning is issued and the search terminated prematurely.  The
+	problem can be solved by increasing the delta-parameter, or by
+	locating the cost value more precisely.
+	
+

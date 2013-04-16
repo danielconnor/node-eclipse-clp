@@ -1,0 +1,38 @@
+<HTML><HEAD><TITLE>minimize(?Goal, ?C)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>minimize(?Goal, ?C)</H1>
+Find the solution of Goal that minimizes C.
+
+
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>A callable term.
+</DD>
+<DT><EM>?C</EM></DT>
+<DD>A linear term.
+</DD>
+</DL>
+<H2>Description</H2>
+   A solution of the goal Goal is found that minimizes the value of C. 
+   The solution is found using the branch and bound method.  Whenever
+   a better solution is found, the upper cost bound is tightened and
+   the search for a better solution continues.  Every time a new
+   better solution is found, the event 280 is raised, its default
+   handler prints the current cost.
+
+<P>
+   Note:  Operationally, the difference with min_max/2 is that, after
+   finding a solution, the search is not abandoned and restarted, but
+   continued with a tightened cost bound.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if there is no solution to Goal.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/min_max-2.html">min_max / 2</A>, <A HREF="../../lib/fd/min_max-4.html">min_max / 4</A>, <A HREF="../../lib/fd/min_max-5.html">min_max / 5</A>, <A HREF="../../lib/fd/min_max-6.html">min_max / 6</A>, <A HREF="../../lib/fd/min_max-8.html">min_max / 8</A>, <A HREF="../../lib/fd/minimize-4.html">minimize / 4</A>, <A HREF="../../lib/fd/minimize-5.html">minimize / 5</A>, <A HREF="../../lib/fd/minimize-6.html">minimize / 6</A>, <A HREF="../../lib/fd/minimize-8.html">minimize / 8</A>, <A HREF="../../lib/fd/minimize_bound_check-0.html">minimize_bound_check / 0</A>
+</BODY></HTML>

@@ -1,0 +1,57 @@
+
+atom_length(+Atom, ?Length)
+
+   Succeeds if Length is the length of Atom.
+
+
+
+Arguments
+   +Atom               Atom.
+   ?Length             Integer or variable.
+
+Type
+   Strings and Atoms
+
+Description
+   The length of an atom Atom is unified with Length.  The length of an
+   atom is the number of characters in the atom's name.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Length does not unify with the length of the atom Atom.
+
+
+
+Exceptions
+     4 --- Atom is not instantiated (non-coroutine mode only).
+     5 --- Atom is instantiated, but not to an atom.
+     5 --- Length is neither an integer nor a variable.
+
+Examples
+   
+Success:
+      atom_length(test, 4).
+      atom_length(test,L).         (gives L = 4).
+      atom_length(as, X).          (gives X = 2).
+      atom_length('4', 1).
+
+Fail:
+      atom_length(test, 5).
+
+Error:
+      atom_length(Atom, 2).        (Error 4).
+      atom_length(Atom, 2.0).      (Error 5).
+      atom_length(4, 1).           (Error 5).
+      atom_length(as, 2.0).        (Error 5).
+
+
+
+
+
+See Also
+   atom / 1, atom_string / 2, string_length / 2

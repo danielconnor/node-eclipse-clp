@@ -1,0 +1,58 @@
+
+setbit(+Number, +Index, ?Result)
+
+   Result is Number with the Index'th bit set.
+
+
+
+Arguments
+   +Number             Integer.
+   +Index              Non-negative integer.
+   ?Result             A variable or integer.
+
+Type
+   Arithmetic
+
+Description
+   Set the Index'th bit in Number giving Result. The least significant
+   bit has index zero. Two's complement representation is assumed.
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to setbit(Number, Index, Result) is
+   equivalent to
+
+    Result is setbit(Number, Index)
+
+   which should be preferred.
+
+   In coroutining mode, if Number or Index are free variables, the call
+   is delayed until these variables are instantiated.
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number or Index is not instantiated (non-coroutining mode    only).
+     5 --- Result is a number but not an integer.
+     5 --- Number or Index is a number but not an integer.
+    24 --- Number or Index is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+
+Examples
+   
+Success:
+      setbit(0, 3, 8).
+      setbit(1, 8, X).             gives X=257.
+      X is setbit(setbit(0,3),5).  gives X=40.
+
+
+
+
+
+See Also
+   is / 2, clrbit / 3, getbit / 3

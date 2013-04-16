@@ -1,0 +1,34 @@
+
+set_threshold(++Threshold, +WakeVars)
+
+   Sets the propagation threshold with recomputation.
+
+Arguments
+   Threshold           New threshold (float)
+   WakeVars            List of IC variables to "wake"
+
+Type
+   library(ic)
+
+Description
+
+   Set the threshold to Threshold, which is a small floating-point number,
+   and then if the threshold has been reduced, wake all constraints
+   suspended on the bounds of the variables in the list WakeVars.
+   Subsequent to the setting of the new threshold, bounds updates to
+   non-integer variables are only performed if the change in the bounds
+   exceeds this threshold (in both absolute and relative terms).  The waking
+   of the constraints when the threshold is reduced allows part or all of
+   the system to be re-propagated in order to ensure the higher level of
+   precision is achieved before the rest of the computation proceeds.
+
+   The default threshold is 1e-8.
+
+   Limiting the amount of propagation is important for efficiency.  A higher
+   threshold speeds up computations, but reduces precision and may in the
+   extreme case prevent the system from being able to locate individual
+   solutions.
+
+
+See Also
+   get_threshold / 1, set_threshold / 1

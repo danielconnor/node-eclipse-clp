@@ -1,0 +1,5 @@
+lib(fd_search)
+
+   This library contains a generic search routine which 
+implements a number of partial search methods (complete, credit, lds, bbs, dbs)
+

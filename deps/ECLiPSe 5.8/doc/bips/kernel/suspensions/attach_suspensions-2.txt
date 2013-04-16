@@ -1,0 +1,48 @@
+
+attach_suspensions(+Trigger, +Susps)
+
+   Insert the suspensions Susps into the suspension list of the symbolic
+trigger Trigger.
+
+
+
+Arguments
+   ?Trigger            An atom.
+   +Susps              A suspension or list of suspensions.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   This predicate is used to insert one or more suspensions into a
+   suspension list which is associated to the symbolic name Trigger.
+   This name can be an arbitrary atom.
+
+
+   The suspensions will be woken by a corresponding invocation of
+   schedule_suspensions/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Susps or Trigger is not instantiated.
+     5 --- Susps is not a suspension or list.
+     5 --- Trigger is not an atom.
+
+Examples
+   
+
+
+
+
+See Also
+   insert_suspension / 4, make_suspension / 3, suspend / 3, suspend / 4, schedule_suspensions / 1, demon / 1

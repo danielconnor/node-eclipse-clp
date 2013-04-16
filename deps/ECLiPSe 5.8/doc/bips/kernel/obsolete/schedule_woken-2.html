@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>schedule_woken(+SuspList, +Priority)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>schedule_woken(+SuspList, +Priority)</H1>
+Schedule all suspensions in the suspension list SuspList with the priority
+Priority.
+
+
+<DL>
+<DT><EM>+SuspList</EM></DT>
+<DD>Suspension list or difference list or variable
+</DD>
+<DT><EM>+Priority</EM></DT>
+<DD>Integer
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   This predicate is used to override the priority of all sleeping
+   suspensions in SuspList and to schedule them with a new priority
+   Priority.
+
+<P>
+   One possible use of this predicate is to postpone the execution of all
+   suspensions in a list when they are known to succeed, to make sure that
+   there will be no floundering goals and that the predicates are not
+   executed too soon.  This is the case e.g.  when a variable is
+   instantiated but this change should not be propagated to related
+   constraints, because it is known to be redundant.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Priority is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SuspList is not a list nor a difference list nor free.
+<DT><EM>(5) type error </EM>
+<DD>Priority is not an integer.
+<DT><EM>(6) out of range </EM>
+<DD>Priority is less than 1 or greater than 255.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: make_suspension(writeln(hello), 4, S),
+             make_suspension(writeln('hi there'), 2, T),
+             schedule_woken([S, T]), wake.
+hi there
+hello
+
+S = 'WOKEN GOAL'
+T = 'WOKEN GOAL'
+yes.
+[eclipse 2]: make_suspension(writeln(hello), 4, S),
+             make_suspension(writeln('hi there'), 2, T),
+             schedule_woken([S, T], 6), wake.
+hello
+hi there
+
+S = 'WOKEN GOAL'
+T = 'WOKEN GOAL'
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/obsolete/schedule_woken-1.html">schedule_woken / 1</A>, <A HREF="../../kernel/suspensions/insert_suspension-3.html">insert_suspension / 3</A>, <A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/obsolete/suspension_to_goal-3.html">suspension_to_goal / 3</A>, <A HREF="../../kernel/suspensions/wake-0.html">wake / 0</A>
+</BODY></HTML>

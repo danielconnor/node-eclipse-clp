@@ -1,0 +1,267 @@
+
+write_term(+Stream, ?Term, +Options)
+
+   The term Term is written to the output stream Stream in a format specified by Options
+
+Arguments
+   Stream              Integer (stream number) or Atom (reserved or user-defined symbolic stream name)
+   Term                An arbitrary term
+   Options             List of option terms
+
+Type
+   Term I/O
+
+Description
+
+    This is a generalisation of the predicates write/2, writeq/2, print/2,
+    display/2, write_canonical/2. It is used to write an arbitrary term
+    Term onto the current output stream according to the given options.
+    Options is a (possibly empty) list of the following options:
+
+
+    as(term) -- default
+	do not assume any particular meaning of the printed term.
+	
+
+    as(clause)
+	print the term as a clause, i.e. clause macros will be taken into
+	account.
+	
+
+    as(goal)
+	print the term as a goal, i.e. goal write transformations will
+	be taken into account.
+	
+
+    attributes(none) -- default
+	do not print any variable attributes, i.e. print attributed
+	variables like plain variables.
+	
+
+    attributes(pretty)
+	variable attributes are printed using the corresponding print
+	handlers. See meta_attribute/2.
+	
+
+    attributes(full)
+	print the full contents of all variable attributes.  This is
+	necessary if the term is to be written out and read back in.
+	
+
+    compact(false) -- default
+	print extra blank space (around operators, after commas, etc.)
+	for better readability.
+	
+
+    compact(true)
+	don't print blank space unless necessary.
+	
+
+    depth(0) -- default
+	print the term only up to a maximum nesting depth determined
+	by the (stream-specific or global) flag 'print_depth'. See
+	get_stream_info/3 and get_flag/2.
+	
+
+    depth(MaxDepth)
+	print the term only up to a maximum nesting depth of MaxDepth.
+	MaxDepth is a positive integer.
+	
+
+    depth(full)
+	do not observe any depth limit and print the whole term. Note that
+	this will cause looping when the term is cyclic.
+	
+
+    dotlists(false) -- default
+	write lists in the common square bracket notation, e.g. [1, 2].
+	
+
+    dotlists(true)
+	write lists in the dot functor notation rather than using the
+	square bracket notation, e.g. .(1, .(2, [])) rather than [1, 2].
+	
+
+    newlines(false) -- default
+	print newline (NL) characters as escape sequence, when they
+	occur in quoted atoms or strings.
+	
+
+    newlines(true)
+	print newline (NL) characters as newlines rather than as an
+	escape sequence, even when they occur in quoted atoms or strings.
+	This only makes sense together with the quoted(true) option.
+	
+
+    numbervars(false) -- default
+	do not treat '$VAR'/1 terms specially.
+	ISO-Prolog compatible.
+	
+
+    numbervars(true)
+	any term of the form '$VAR'(N), where N is a non-negative integer,
+	is printed as a variable name consisting of a capital letter
+	followed by a number. The capital letter is the ((N mod 26)+1)st
+	letter of the alphabet, and the integer is N//26.
+	If N is an atom, this atom gets printed instead of the term.
+	ISO-Prolog compatible.
+	
+
+    operators(true) -- default
+	obey operator declarations. All infix, prefix and postfix operators
+	are printed in infix, prefix or postfix form, respectively.
+	
+
+    operators(false)
+	ignore operator declarations.  All terms are written in the canonical
+	notation, with a functor followed by the arguments in parentheses.
+	
+
+    portrayed(false) -- default
+	do not use portray/1,2.
+	
+
+    portrayed(true)
+	call the user-defined predicate portray/1,2 in the way print/1,2
+	does.
+	
+
+    quoted(false) -- default
+	do not print quotes around strings or atoms.
+	ISO-Prolog compatible.
+	
+
+    quoted(true)
+	quote atoms and strings if necessary.
+	ISO-Prolog compatible.
+	
+
+    transform(true) -- default
+	apply portray (write) transformations before printing.
+	
+
+    transform(false)
+	do not apply any portray (write) transformations.
+	
+
+    variables(default) -- default
+	print variables using their source name, if available.
+	Otherwise print a system-generated name, which consists of
+	an underscore and a number, e.g. _123.
+	Note that this format cannot be reliably read back, because
+	different variables may have the same source name.
+	
+
+    variables(raw)
+	print all variables using a system-generated name, which
+	consists of an underscore and a number, e.g. _123.
+	This format is suitable when the term needs to be read back
+	later.  It makes sure that multiple occurrences of the same
+	variable have the same name, and different variables have
+	different names.
+	
+
+    variables(full)
+	print variables using their source name, if available, followed
+	by a unique number, e.g. Alpha_132. Variables without source
+	name are printed in the raw format. Since variables with
+	identical source names are named apart, this format is suitable
+	when the term needs to be read back later.
+	
+
+    variables(anonymous)
+	print every variable as a simple underscore. Any information about
+	multiple occurrences of a variable is lost with this format. It is
+	mainly useful to produce output that can be compared easily with
+	the output of a different Eclipse session.
+	
+
+
+
+    When an option is omitted altogether, then the corresponding option
+    settings for the output stream will come into effect (see
+    set_stream_property/3, get_stream_info/3, open/4).
+
+    The following additional options are supported for compatibility
+    with other Prolog systems:
+
+    ignore_ops(true)
+    	the same as [operators(false),dotlists(true),transform(false)].
+	ISO-Prolog compatibility.
+	
+
+    ignore_ops(false)
+    	the same as [operators(true),dotlists(false),transform(true)].
+	ISO-Prolog compatibility.
+	
+
+    max_depth(0)
+    	the same as depth(full).
+	SICStus-Prolog compatibility.
+	
+
+    max_depth(N)
+    	the same as depth(N).
+	SICStus-Prolog compatibility.
+	
+
+    The correspondence between write_term/2,3 and the other output predicates
+    is as follows:
+
+    write(T)
+	write_term(T, [])
+	
+
+    writeq(T)
+	write_term(T, [variables(raw),attributes(full),transform(false),
+	quoted(true),depth(full)])
+	
+
+    write_canonical(T)
+	write_term(T, [variables(raw),attributes(full),transform(false),
+	quoted(true),depth(full),dotlist(true),operators(false)])
+	
+
+    print(T)
+	write_term(T, [portrayed(true)])
+	
+
+    display(T)
+	write_term(T, [dotlist(true),operators(false)])
+	
+
+
+   Note that as usual, the output is buffered, so it may need to be flushed
+   either by closing the stream, by writing again or by using flush/1.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is not an atom or an integer.
+     5 --- Options is not a list of compound terms.
+     6 --- Options list contains a unrecognised option.
+   192 --- Stream is not an output stream.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+	?- write_term(*(^(1,2),+(3,4)), []).
+	1 ^ 2 * (3 + 4)
+
+	?- write_term(*(^(1,2),+(3,4)), [operators(false)]).
+	*(^(1, 2), +(3, 4))
+
+	?- write_term(['a-b',"cd"], []). 
+	[a-b, cd]
+
+	?- write_term(['a-b',"cd"], [quoted(true)]).
+	['a-b', "cd"]
+
+	?- write_term(['a-b',"cd"], [quoted(true),dotlists(true)]).
+	.('a-b', .("cd", []))
+
+
+
+See Also
+   write_term / 2, display / 2, print / 2, printf / 3, write / 2, writeq / 2, write_canonical / 2, get_stream_info / 3, get_flag / 2

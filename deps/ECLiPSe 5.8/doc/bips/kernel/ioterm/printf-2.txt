@@ -1,0 +1,285 @@
+
+printf(+Format, ?ArgList)
+
+   The arguments in the argument list ArgList are interpreted according to the
+Format string and the result is printed to the output stream.
+
+
+
+Arguments
+   +Format             String or Atom.
+   +ArgList            List or any Term.
+
+Type
+   Term I/O
+
+Description
+   Format is either an atom or a string which can contain control sequences
+   of the form
+
+
+   %AC or %NC
+
+
+   where C is a single letter format control option and A or N are optional
+   parameters.  Any characters that are not part of a control sequence are
+   written to the output stream.
+
+
+  A
+    A may consist of:
+    a minus sign, a plus sign, a space , the character '#', a digit string
+    (or a '*'), a period, a digit string (or a '*') and a length modifier 'l'.
+
+    This substring A is interpreted in the same way as in the 'C' routine
+    printf(3).
+
+  N
+    The argument N has to be a non-negative integer.
+
+
+   If the character '*' appears inside A or N it is replaced by the next
+   argument from ArgList.
+
+
+   ArgList is a list of arguments which will be interpreted and possibly
+   printed by format control options.  If there is only one argument, it
+   need not be in a list.
+
+
+   The elements from the argument list ArgList are interpreted according to
+   the following control options and printed to the output.  The arguments
+   must be of the type specified, or the corresponding event will be
+   raised.
+
+
+  %a
+    The argument has to be an atom and is passed to write/1.
+
+  %A
+    The argument has to be an atom. All its characters are converted
+    to upper case and the result is printed.
+
+  %Nc
+    The argument has to be a numeric ASCII code and is printed N times.  If
+    N is omitted, it defaults to 1.
+
+  %Ad
+    The argument has to be an integer and is printed according to the
+    substring A in signed decimal notation.
+
+  %Ao
+    The argument has to be an integer and is printed according to the
+    substring A in unsigned octal notation.
+
+  %Au
+    The argument has to be an integer and is printed according to the
+    substring A in unsigned decimal notation.
+
+  %Ax
+    The argument has to be an integer and is printed according to the
+    substring A in unsigned hexadecimal notation.  (The letters abcdef are
+    used.)
+
+  %AX
+    The argument has to be an integer and is printed according to the
+    substring A in unsigned hexadecimal notation.  (The letters ABCDEF are
+    used.)
+
+  %Ae
+    The argument has to be a floating-point number and is printed according
+    to the substring A in exponential notation.('e' is used for
+    exponentiation)
+
+  %AE
+    The argument has to be a floating-point number and is printed according
+    to the substring A in exponential notation.  ('E' is used for
+    exponentiation)
+
+  %Af
+    The argument has to be a floating-point number and is printed according
+    to the substring A in non-exponential form.
+
+  %Ag
+    The argument has to be a floating-point number and is printed according
+    to the substring A in exponential or non-exponential form, whichever
+    gives the best precision in minimum space.('e' is used for
+    exponentiation)
+
+  %As
+    The argument has to be a string or an atom and is printed according to
+    the substring A.
+
+  %Nr
+    The argument has to be an integer and it is printed as signed in radix
+    N using the digits 0-9 and letters a-z.  N must be greater than 1 and
+    less than 37.  If N is not specified, it defaults to 8.
+
+  %NR
+    The argument has to be an integer and it is printed as signed in radix
+    N using the digits 0-9 and letters A-Z. N must be greater than 1 and
+    less than 37.  If N is not specified, it defaults to 8.
+
+
+   The following control options can interpret arguments of any type.
+
+  %Ni
+    N arguments are ignored.  If N is omitted, it defaults to 1.
+
+  %k
+    The argument is passed to display/1.  It is a synonym for %O.w.
+
+  %p
+    The argument is passed to print/1.  It is a synonym for %Pw.
+
+  %q
+    %q
+
+
+    The argument is passed to writeq/1.  It is a synonym for %QDvw.
+
+  %w
+   The argument is by default passed to write/1.
+   However, the %w format recognises a number of control characters,
+   placed between the percent sign and w.  They give the user full
+   control over the various possibilities of printing Prolog terms.
+   A number immediately after the percent sign determines the depth
+   to which the term is printed, if an asterisk is used instead, the
+   depth is taken from the next argument in ArgList. The default depth
+   is determined by the setting of the (stream-specific or global)
+   print_depth flag.
+   After the optional depth, the following modifiers are recognized:
+
+
+      O
+	omit operator declarations.  All terms are written in the canonical
+	notation without operators.
+
+      Q
+	quote atoms and strings if necessary.
+
+      .
+	write lists in the dot functor notation rather than using the
+	square bracket notation, e.g. .(1, .(2, [])) rather than [1, 2].
+
+      G
+	print the term as a goal, i.e. goal write transformations will be
+	taken into account.
+
+      P
+	call the user-defined predicate portray/1, 2 in the way print/1, 2
+	does.
+
+      D
+	disregard the depth restriction of the print-depth flag and print
+	the whole term.
+
+      U
+	call portray/1, 2 even on variables.  This is to be used in
+	conjunction with the P option.  Note that attributed variables
+	are always portrayed.
+
+      V
+	print the full variable name, if available, either in the form
+	Name_Number, e.g. Alpha_132, or Name#Number, if the variable had
+        been given a name via lib(var_name). This is necessary to 
+        distinguish different variables with the same name.
+
+      v
+	print only the short variable form, i.e. even when available, the
+	variable name is not printed.  This is useful if a term should be
+	written and read back in several times.  If neither V nor v is
+	specified, variables are printed only with their name, if it is
+	available.  Variable without names are always printed in the v form.
+
+      _
+	print every variable as a simple underscore. Any information about
+	multiple occurrences of a variable is lost with this format. It is
+	mainly useful to produce output that can be compared easily with
+	the output of a different Eclipse session.
+
+      I
+	any term of the form '$VAR'(N), where N is a non-negative integer,
+	is printed as a variable name consisting of a capital letter
+	followed by a number. The capital letter is the ((N mod 26)+1)st
+	letter of the alphabet, and the integer is N//26.
+	If N is an atom, this atom gets printed instead of the term.
+
+      K
+	don't print blank space (around operators, after commas, etc.)
+	unless necessary.
+
+      M
+	print the full contents of all variable attributes.  This is
+	necessary if the term is to be written out and read back in.
+
+      m
+	variable attributes are printed using the corresponding print
+	handlers.  If neither M nor m is specified, attributed variables
+	are printed as variables, without any attribute.
+
+      N
+	print newline (NL) characters as newlines rather than as an
+	escape sequence, even when they occur in quoted atoms or strings.
+	This only makes sense together with the Q modifier.
+
+      T
+	do not apply any write transformations.
+
+      C
+	print the term as a clause, i.e.  clause macros will be taken into
+	account.
+
+
+  %W
+    Like %w, but the stream's default output options are taken into
+    account, unless overridden by the format options specified here.
+    Note in particular that a default setting may be cancelled by
+    prefixing the format character with a minus sign. E.g. if the stream
+    defaults specify that quotes should be printed (quoted(true)), this
+    can be overridden by a %-QW format string.
+
+
+   The following control options do not have a corresponding argument.
+
+  %%
+    One % is printed.
+
+  %Nn
+    N newline sequences are printed.  If N is omitted it defaults to 1.
+    Which newline characters are printed depends on the setting of the
+    stream's end_of_line property. If the stream's flush-property is set
+    to end_of_line, the stream is also flushed.
+
+  %Nt
+    N tab characters are printed.  If N is omitted it defaults to 1.
+
+  %b
+    The output buffer is flushed, the data is written into the file.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     5 --- Format is not an atom or a string.
+     5 --- ArgList contains argument whose type does not correspond to    the control sequence.
+     7 --- Format is not correct, it contains too many asterisks or a    control character is missing or there is a redundant character before    the control character.
+     8 --- ArgList has not enough arguments.
+
+Examples
+      Equivalent to printf(output, Format, ArgList).  (see printf/3 for
+   details).
+
+
+
+
+
+See Also
+   display / 1, display / 2, print / 1, print / 2, printf / 3, write / 1, write / 2, writeq / 1, writeq / 2

@@ -1,0 +1,43 @@
+
+make_random_graph(+NNodes, +NEdges, +AntiParallelFree, +LoopFree, +ParallelFree, -Graph)
+
+   Creates a random graph with the given properties
+
+Arguments
+   NNodes              integer
+   NEdges              integer
+   AntiParallelFree    one of the atoms true or false
+   LoopFree            one of the atoms true or false
+   ParallelFree        one of the atoms true or false
+   Graph               will be bound to a graph structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Creates a random graph with NNodes nodes and NEdges edges.
+    The other 3 options mean:
+
+AntiParallelFree
+    if true, the graph will have no anti-parallel edges, i.e. if
+    there is an edge from S to T, there won't be one from T to S
+LoopFree
+    if true, the graph will have no self loops, i.e. no edges
+    that begin and end in the same node.
+ParallelFree
+    if true, the graph will have no parallel edges, i.e. there
+    will be at most one edge from S to T.
+
+    The generated graph has no node name information and no edge data.
+    Node names can be added using graph_set_nodenames/2. Edge data
+    (e.g. random weights) can be added by retrieving the edges using
+    graph_get_all_edges/2 or graph_get_adjacent_edges/3 and unifying
+    the variable EdgeData field with the required information.
+    
+
+Exceptions
+     6 --- NEdges is too large given the chosen options and NNodes
+
+See Also
+   graph_set_nodenames / 2, graph_get_all_edges / 2, graph_set_random_weights / 3, graph_get_adjacent_edges / 3, library(graphviz)

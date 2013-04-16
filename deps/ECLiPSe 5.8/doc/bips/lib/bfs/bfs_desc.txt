@@ -1,0 +1,18 @@
+lib(bfs)
+
+
+   This library lets you use customisable branch-and-bound search. It
+   is primarily intended for use with the colgen library in implementing
+   branch-and-price algorithms, but can be used with arbitrary
+   user-defined node solution, separation and selection goals.
+   When application specific methods are not required for node
+   separation and/or selection the use of built-in depth-first
+   and best-first node selection, and branching on most fractional
+   variable or generalised upper bound constraint may be specified.
+   When the relaxed problem to be solved at a node involves an eplex
+   instance branching may additionally be specified by built-in
+   objective coefficient, estimate- or lower-bounding based methods,
+   and best-estimate node selection may be used.
+
+
+

@@ -1,0 +1,38 @@
+
+peer_queue_close(++Queue)
+
+   Closes the peer queue Queue from ECLiPSe side.
+
+Arguments
+   Queue               Peer queue (atom or integer)
+
+Type
+   External Interface
+
+Description
+
+   Close the peer queue Queue from ECLiPSe side. When this predicate
+   returns, the peer queue would be closed on both the ECLiPSe and remote
+   sides, and book-keeping information on both sides updated to exclude the
+   queue. As with creating a peer queue, closing a peer queue is performed
+   explicitly from one side only. 
+
+
+   The user should not close a peer queue with close/1. This will only
+   close the ECLiPSe end of the queue, and would not remove the
+   book-keeping information. Note that peer_queue_close/1 will still remove
+   the book-keeping information if some of the underlying streams
+   associated with the peer queue are already unexpectedly closed.
+   
+
+Resatisfiable
+      No.
+
+Fail Conditions
+   Queue is not a current peer queue.
+
+Exceptions
+     5 --- Queue is not an atom or integer.
+
+See Also
+   peer_queue_create / 5, peer_queue_get_property / 3

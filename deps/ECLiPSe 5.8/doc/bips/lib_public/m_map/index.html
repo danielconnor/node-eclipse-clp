@@ -1,0 +1,100 @@
+<HTML><HEAD><TITLE>library(m_map)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(m_map)</H1>
+The `map' abstract data type.
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="apply_to_list-3.html"><STRONG>apply_to_list(++KeyList, +Map, ?ValueList)</STRONG></A></DT>
+<DD>Map a list of keys to their corresponding values.</DD>
+<DT><A HREF="contains-2.html"><STRONG>contains(+Map, ++Key)</STRONG></A></DT>
+<DD>Check whether a map contains a key.</DD>
+<DT><A HREF="count-2.html"><STRONG>count(+Map, ?Count)</STRONG></A></DT>
+<DD>Count the number of elements in a map.</DD>
+<DT><A HREF="delete-3.html"><STRONG>delete(+Map0, ++Key, -Map)</STRONG></A></DT>
+<DD>Delete a key/value pair from a map.</DD>
+<DT><A HREF="delete_list-3.html"><STRONG>delete_list(+Map0, ++KeyList, -Map)</STRONG></A></DT>
+<DD>Delete a list of key/value pairs from a map.</DD>
+<DT><A HREF="det_insert-4.html"><STRONG>det_insert(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Insert a key/value pair into a map, aborting if the key already exists.</DD>
+<DT><A HREF="det_insert_from_assoc_list-3.html"><STRONG>det_insert_from_assoc_list(+Map0, +List, -Map)</STRONG></A></DT>
+<DD>Insert key/value pairs into a map, aborting if any of the keys already exist.</DD>
+<DT><A HREF="det_insert_from_corresponding_lists-4.html"><STRONG>det_insert_from_corresponding_lists(+Map0, ++KeyList, ?ValueList, -Map)</STRONG></A></DT>
+<DD>Insert key/value pairs into a map, aborting if any of the keys already exist.</DD>
+<DT><A HREF="det_remove-4.html"><STRONG>det_remove(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Remove a key/value pair from a map, aborting if the key is not present.</DD>
+<DT><A HREF="det_update-4.html"><STRONG>det_update(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Update the value corresponding to a key in a map, aborting if it doesn't exist.</DD>
+<DT><A HREF="from_assoc_list-2.html"><STRONG>from_assoc_list(+AssocList, -Map)</STRONG></A></DT>
+<DD>Converts an association list into a map.</DD>
+<DT><A HREF="from_corresponding_lists-3.html"><STRONG>from_corresponding_lists(++KeyList, ?ValueList, -Map)</STRONG></A></DT>
+<DD>Converts a corresponding pair of lists into a map.</DD>
+<DT><A HREF="from_sorted_assoc_list-2.html"><STRONG>from_sorted_assoc_list(+AssocList, -Map)</STRONG></A></DT>
+<DD>Converts a sorted association list into a map.</DD>
+<DT><A HREF="init-1.html"><STRONG>init(-Map)</STRONG></A></DT>
+<DD>Initialise a new (empty) map.</DD>
+<DT><A HREF="insert-4.html"><STRONG>insert(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Insert a key/value pair into a map, failing if the key already exists.</DD>
+<DT><A HREF="inverse_search-3.html"><STRONG>inverse_search(+Map, ?Value, ?Key)</STRONG></A></DT>
+<DD>Search a map for a value.</DD>
+<DT><A HREF="is_empty-1.html"><STRONG>is_empty(+Map)</STRONG></A></DT>
+<DD>Check whether a map is empty.</DD>
+<DT><A HREF="keys-2.html"><STRONG>keys(+Map, -KeyList)</STRONG></A></DT>
+<DD>Return all the keys from a map.</DD>
+<DT><A HREF="lookup-3.html"><STRONG>lookup(+Map, ++Key, ?Value)</STRONG></A></DT>
+<DD>Search a map for a key.</DD>
+<DT><A HREF="lower_bound_lookup-4.html"><STRONG>lower_bound_lookup(+Map, ++SearchKey, ?Key, ?Value)</STRONG></A></DT>
+<DD>Search a map for the smallest key no smaller than SearchKey.</DD>
+<DT><A HREF="lower_bound_search-4.html"><STRONG>lower_bound_search(+Map, ++SearchKey, ?Key, ?Value)</STRONG></A></DT>
+<DD>Search a map for the smallest key no smaller than SearchKey.</DD>
+<DT><A HREF="member-3.html"><STRONG>member(+Map, ?Key, ?Value)</STRONG></A></DT>
+<DD>Succeeds if Key and Value unify with a key/value pair from Map.</DD>
+<DT><A HREF="merge-3.html"><STRONG>merge(+MapA, +MapB, -Map)</STRONG></A></DT>
+<DD>Merges two maps into one.</DD>
+<DT><A HREF="optimize-2.html"><STRONG>optimize(+Map0, -Map)</STRONG></A></DT>
+<DD>Optimize a map for many lookups but few/no modification.</DD>
+<DT><A HREF="overlay-3.html"><STRONG>overlay(+MapA, +MapB, -Map)</STRONG></A></DT>
+<DD>Overlays one map over another.</DD>
+<DT><A HREF="remove-4.html"><STRONG>remove(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Remove a key/value pair from a map, failing if the key is not present.</DD>
+<DT><A HREF="remove_smallest-4.html"><STRONG>remove_smallest(+Map0, ?Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Remove the smallest key and its corresponding value from a map.</DD>
+<DT><A HREF="search-3.html"><STRONG>search(+Map, ++Key, ?Value)</STRONG></A></DT>
+<DD>Search a map for a key.</DD>
+<DT><A HREF="select-3.html"><STRONG>select(+Map0, ++KeyList, -Map)</STRONG></A></DT>
+<DD>Creates a new map containing just those entries corresponding to a given list of keys.</DD>
+<DT><A HREF="set-4.html"><STRONG>set(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Update the value corresponding to a key in a map, inserting the key if it doesn't exist already.</DD>
+<DT><A HREF="sorted_keys-2.html"><STRONG>sorted_keys(+Map, -KeyList)</STRONG></A></DT>
+<DD>Return all the keys from a map, in sorted order.</DD>
+<DT><A HREF="to_assoc_list-2.html"><STRONG>to_assoc_list(+Map, -AssocList)</STRONG></A></DT>
+<DD>Converts a map into an association list.</DD>
+<DT><A HREF="to_sorted_assoc_list-2.html"><STRONG>to_sorted_assoc_list(+Map, -AssocList)</STRONG></A></DT>
+<DD>Converts a map into a (sorted) association list.</DD>
+<DT><A HREF="update-4.html"><STRONG>update(+Map0, ++Key, ?Value, -Map)</STRONG></A></DT>
+<DD>Update the value corresponding to a key in a map.</DD>
+<DT><A HREF="upper_bound_lookup-4.html"><STRONG>upper_bound_lookup(+Map, ++SearchKey, ?Key, ?Value)</STRONG></A></DT>
+<DD>Search a map for the largest key no larger than SearchKey.</DD>
+<DT><A HREF="upper_bound_search-4.html"><STRONG>upper_bound_search(+Map, ++SearchKey, ?Key, ?Value)</STRONG></A></DT>
+<DD>Search a map for the largest key no larger than SearchKey.</DD>
+<DT><A HREF="values-2.html"><STRONG>values(+Map, -ValueList)</STRONG></A></DT>
+<DD>Return all the values from a map.</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+	<P>
+	This module provides the `map' abstract data type.  A map, also
+	known as a dictionary or an associative array, is a collection of
+	key/value pairs which allows you to look up any data item given its
+	key.
+	</P>
+	<P>
+	Note that keys must be ground, but values are allowed to be 
+	variables.
+	</P>
+	
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Fergus Henderson and Thomas Conway (Mercury) and Warwick Harvey (ECLiPSe)
+</UL>
+<HR>Generated from m_map.eci on Tue Jan 25 01:58:54 2005
+
+</BODY></HTML>

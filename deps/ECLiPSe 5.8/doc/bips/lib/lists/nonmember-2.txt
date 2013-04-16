@@ -1,0 +1,53 @@
+
+nonmember(+Element, +List)
+
+   Succeeds if Element is not an element of the list List.
+
+
+
+Arguments
+   +Element            Prolog term.
+   +List               List.
+
+Type
+   library(lists)
+
+Description
+   Used to check that Element is not a member of the list List.
+
+   The definition of this Prolog library predicate is:
+
+nonmember(Arg,[Arg|_]) :-
+        !,
+        fail.
+nonmember(Arg,[_|Tail]) :-
+        !,
+        nonmember(Arg,Tail).
+nonmember(_,[]).
+
+   This predicate does not perform any type testing functions.
+	
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Element is an element of the list List.
+
+
+
+Examples
+   
+Success:
+  nonmember(q,[1,2,3,4,5,6,7]).
+
+Fail:
+  nonmember(1,[1,2,3]).
+  nonmember(q,[1,2,2,X]). % X and q are unifiable
+
+
+
+
+
+See Also
+   member / 2, memberchk / 2

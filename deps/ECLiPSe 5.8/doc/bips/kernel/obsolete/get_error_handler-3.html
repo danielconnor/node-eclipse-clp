@@ -1,0 +1,81 @@
+<HTML><HEAD><TITLE>get_error_handler(+Number, ?PredSpec, ?Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_error_handler(+Number, ?PredSpec, ?Module)</H1>
+Returns the error_handler for error number Number and its home module
+Module.
+
+
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>Integer.
+</DD>
+<DT><EM>?PredSpec</EM></DT>
+<DD>Term which unifies with atom/integer.
+</DD>
+<DT><EM>?Module</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Given the error number Number, PredSpec is unified with the specification
+   (i.e.  a term of the form name/arity) of the current handler for error
+   with number Number; Module is unified with its home module.
+
+<P>
+   The errors which exist are implementation defined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if PredSpec or Module do not unify with the specification of the
+   current error handler with number Number.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Number is not an integer.
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is neither a variable nor of the form Atom/Integer.
+<DT><EM>(6) out of range </EM>
+<DD>Number is not a valid error number.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+   [eclipse]: string_list(S,L).
+   instantiation fault in string_list(_g50, _g52)
+   [eclipse]: get_error_handler(4,M,N).
+   M = error_handler/2
+   N = sepia_kernel
+   yes.
+   [eclipse]: set_event_handler(4,true/0), string_list(S,L).
+   &gt; get_error_handler(4,true/0,sepia_kernel).
+   S = _g56
+   L = _g58
+   yes.
+Fail:
+   get_error_handler(4, error/2, sepia_kernel).
+
+   [eclipse]: set_event_handler(4,true/0),
+   &gt; get_error_handler(4,error_handler/2,M).
+   no.
+Error:
+   get_error_handler(N,true/0,sepia_kernel).   (Error 4).
+   get_error_handler(5,1.2,sepia_kernel).      (Error 5).
+   get_error_handler(5.0,true/0,sepia_kernel). (Error 5).
+   get_error_handler(1000,X, sepia_kernel).    (Error 6).
+   get_error_handler(-1,X,sepia_kernel).       (Error 6).
+   get_error_handler(6,t/0,"sepia_kernel").    (Error 6).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>, <A HREF="../../kernel/event/error-2.html">error / 2</A>, <A HREF="../../kernel/event/error-3.html">error / 3</A>, <A HREF="../../kernel/event/error_id-2.html">error_id / 2</A>
+</BODY></HTML>

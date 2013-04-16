@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Finite Domains: ic</TITLE>
+<META NAME="description" CONTENT="Finite Domains: ic">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="node1.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html887"
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html883"
+ HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html877"
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html885"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html888"
+ HREF="node4.html">Sets</A>
+<B> Up:</B> <A NAME="tex2html884"
+ HREF="node1.html">Introduction</A>
+<B> Previous:</B> <A NAME="tex2html878"
+ HREF="node2.html">Suspended Goals: suspend</A>
+ &nbsp <B>  <A NAME="tex2html886"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html889"
+ HREF="node3.html#SECTION00121000000000000000"><EM>Integer Domain</EM></A>
+<LI><A NAME="tex2html890"
+ HREF="node3.html#SECTION00122000000000000000">Symbolic Domain: <EM>ic_symbolic</EM></A>
+<LI><A NAME="tex2html891"
+ HREF="node3.html#SECTION00123000000000000000">Global Constraints: <EM>ic_global</EM></A>
+<LI><A NAME="tex2html892"
+ HREF="node3.html#SECTION00124000000000000000">Scheduling Constraints</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00120000000000000000">
+Finite Domains: <EM>ic</EM></A>
+</H1>
+
+<H2><A NAME="SECTION00121000000000000000">
+<EM>Integer Domain</EM></A>
+</H2>
+The standard constraint solver offered by most constraint programming
+systems is the <EM>finite domain</EM> solver, which applies constraint
+propagation techniques developed in the AI community
+[<A
+ HREF="node72.html#VanHentenryck">21</A>].  
+ECLiPSe  supports finite domain constraints via the <EM>ic</EM>
+library<A NAME="tex2html2"
+ HREF="footnode.html#foot326"><SUP>1.2</SUP></A>.
+This library implements finite domains of integers, and the usual
+functions and constraints on variables over these domains.
+
+<P>
+
+<H2><A NAME="SECTION00122000000000000000">
+Symbolic Domain: <EM>ic_symbolic</EM></A>
+</H2>
+In addition to integer domains, ECLiPSe offers finite domains of
+ordered non-numeric values, for example <!-- MATH: ${red, green, blue}$ -->
+<I>red</I>, <I>green</I>, <I>blue</I>.
+These are implemented by the <EM>ic_symbolic</EM> library.
+
+<P>
+Whilst there is a standard set of constraints supported by the 
+<EM>ic</EM> library in ECLiPSe  and in 
+most constraint programming systems, many more finite domain
+constraints have been introduced which have uses in specific
+applications and do not belong in a generic constraint programming
+library.
+The behaviour of these constraints is to prune the finite domains of
+their variables, in just the same way as the standard
+constraints.
+Therefore ECLiPSe  offers several further libraries which implement more
+constraints using the <EM>ic</EM> library. 
+
+<P>
+
+<H2><A NAME="SECTION00123000000000000000">
+Global Constraints: <EM>ic_global</EM></A>
+</H2>
+One such library is <EM>ic_global</EM>.
+It supports a variety of constraints, each of which takes as an argument
+a list of finite domain variables, of unspecified length.
+Such constraints are called ``global'' constraints  [<A
+ HREF="node72.html#beldiceanu">2</A>].
+Examples of such constraints, available from the ic_global library
+are
+<code>alldifferent/1</code>, <code>maxlist/2</code>, <code>occurrences/3</code> and
+<code>sorted/2</code>.
+
+<P>
+
+<H2><A NAME="SECTION00124000000000000000">
+Scheduling Constraints</A>
+</H2>
+There are several ECLiPSe  libraries implementing global constraints for
+scheduling applications.  The constraints have the same semantics,
+but different propagation.  The constraints take a list
+of tasks (start times, durations and resource needs), and a maximum
+resource level. They reduce the finite domains of the task start times
+by reasoning on resource bottlenecks [<A
+ HREF="node72.html#lepape">13</A>].  Three ECLiPSe  libraries
+implementing scheduling constraints are
+<EM>cumulative</EM>, <EM>edge_finder</EM> and <EM>edge_finder3</EM>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html887"
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html883"
+ HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html877"
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html885"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html888"
+ HREF="node4.html">Sets</A>
+<B> Up:</B> <A NAME="tex2html884"
+ HREF="node1.html">Introduction</A>
+<B> Previous:</B> <A NAME="tex2html878"
+ HREF="node2.html">Suspended Goals: suspend</A>
+ &nbsp <B>  <A NAME="tex2html886"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

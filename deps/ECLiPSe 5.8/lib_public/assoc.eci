@@ -1,0 +1,9 @@
+:- module(assoc).
+:- export map_assoc / 4.
+:- export list_to_assoc / 4.
+:- export list_to_assoc / 2.
+:- export map_assoc / 3.
+:- export get_assoc / 3.
+:- export put_assoc / 4.
+:- export assoc_to_list / 2.
+:- comment(map_assoc / 4, hidden).

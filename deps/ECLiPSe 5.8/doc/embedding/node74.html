@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Miscellaneous</TITLE>
+<META NAME="description" CONTENT="Miscellaneous">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="previous" HREF="node73.html">
+<LINK REL="up" HREF="node65.html">
+<LINK REL="next" HREF="node75.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1799"
+ HREF="node75.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1795"
+ HREF="node65.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1791"
+ HREF="node73.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1797"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1800"
+ HREF="node75.html">Foreign C Interface</A>
+<B> Up:</B> <A NAME="tex2html1796"
+ HREF="node65.html">Summary of C Interface</A>
+<B> Previous:</B> <A NAME="tex2html1792"
+ HREF="node73.html">Communication via ECLiPSe Streams</A>
+ &nbsp <B>  <A NAME="tex2html1798"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001390000000000000000">
+Miscellaneous</A>
+</H1>
+These two functions provide an alternative method for posting goals and
+retrieving results. They are intended for applications with a simple structure
+that require only infrequent call-return style control transfers
+and little information passing between ECLiPSe and C. It is less powerful
+and less efficient that the primitives described above.
+<DL>
+<DT><STRONG>int		ec_exec_string(char*,ec_ref Vars)</STRONG>
+<DD> 
+<BR>
+let ECLiPSe execute a goal given in a string ECLiPSe syntax.
+	Return value is PSUCCEED or PFAIL, depending on the result of
+	the execution. If successful, Vars holds a list mapping the
+	variables names within the string to their values after execution.
+
+<P>
+<DT><STRONG>int		ec_var_lookup(ec_ref Vars,char*,pword* pw)</STRONG>
+<DD> 
+<BR>
+Lookup the value of the variable with the given name.
+	Vars is a list as returned by ec_exec_string().
+</DL>
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,26 @@
+
+weight(?Set, ++ElementWeights, ?Weight)
+
+   According to the array of element weights, the weight of set Set is Weight
+
+Arguments
+   Set                 a set, set variable or set expression
+   ElementWeights      an array (structure) of non-negative integers
+   Weight              an integer variable or integer
+
+Type
+   library(fd_sets)
+
+Description
+
+    Set is constrained to be a set of integers between 1 and the size of
+    the array ElementWeights. Weight is an integer domain variable which
+    is constrained to the sum of the weights of Set's elements. The weight
+    of a set element is determined by the array element in ElementWeights
+    whose index corresponds to the set element.
+
+    Changes to the set domain will affect the domain of Weight. There is currently
+    no reverse propagation. This may change in a future release.
+
+
+

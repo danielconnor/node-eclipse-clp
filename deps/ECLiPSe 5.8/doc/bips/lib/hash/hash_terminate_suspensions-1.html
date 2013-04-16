@@ -1,0 +1,21 @@
+<HTML><HEAD><TITLE>hash_terminate_suspensions(+Table)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(hash)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>hash_terminate_suspensions(+Table)</H1>
+Wake and terminate all suspensions attached to the hash table
+<DL>
+<DT><EM>Table</EM></DT>
+<DD>Hash table
+</DD>
+</DL>
+<H2>Description</H2>
+Wake all suspensions attached to the hash table and close the
+    	corresponding notification port. This informs the suspended goals that
+	there will be no further notifications, and gives them the opportunity
+	to clean themselves up.  This should normally be done once the hash
+	table will no longer be used (or modified).
+    
+<H2>Examples</H2>
+<PRE>see hash_insert_suspension/3</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/hash/hash_create-1.html">hash_create / 1</A>, <A HREF="../../lib/hash/hash_insert_suspension-3.html">hash_insert_suspension / 3</A>
+</BODY></HTML>

@@ -1,0 +1,100 @@
+<HTML><HEAD><TITLE>Term Manipulation</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Term Manipulation</H1>
+Built-ins to convert, compose, decompose and modify terms
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="EDD-2.html"><STRONG>?Term =..  ?List</STRONG></A></DT>
+<DD>Univ --- Succeeds if List is the list which has Term's functor as its first
+element and Term's arguments, if any, as its successive elements.
+
+</DD>
+<DT><A HREF="C-3.html"><STRONG>'C'(?Input, ?Token, ?Rest)</STRONG></A></DT>
+<DD>Specifies how DCG grammar rules get a token from their input.
+
+</DD>
+<DT><A HREF="add_attribute-2.html"><STRONG>add_attribute(?Var, ?Attribute)</STRONG></A></DT>
+<DD>Add dynamically an attribute to a variable.
+
+</DD>
+<DT><A HREF="add_attribute-3.html"><STRONG>add_attribute(?Var, ?Attribute, +Module)</STRONG></A></DT>
+<DD>Add dynamically an attribute to a variable.
+
+</DD>
+<DT><A HREF="arg-3.html"><STRONG>arg(+N, +Term, ?Arg)</STRONG></A></DT>
+<DD>Succeeds if Arg is the Nth argument of the compound term Term.
+
+</DD>
+<DT><A HREF="bytes_to_term-2.html"><STRONG>bytes_to_term(+String, -Term)</STRONG></A></DT>
+<DD>Converts String, which is supposed to be an encoding of a term, into Term.
+
+</DD>
+<DT><A HREF="char_code-2.html"><STRONG>char_code(?Char, ?Code)</STRONG></A></DT>
+<DD>Succeeds if Code is the numeric character code of the character Char.
+
+</DD>
+<DT><A HREF="copy_term-2.html"><STRONG>copy_term(+OldTerm, ?NewTerm)</STRONG></A></DT>
+<DD>A copy of OldTerm with new variables is created and unified with NewTerm.
+
+</DD>
+<DT><A HREF="copy_term-3.html"><STRONG>copy_term(+OldTerm, ?NewTerm, ?MetaTerms)</STRONG></A></DT>
+<DD>A copy of OldTerm with new variables is created and unified with NewTerm.
+MetaTerms is a list mapping the attributed variables in OldTerm to the corresponding
+variables in NewTerm.
+
+</DD>
+<DT><A HREF="copy_term_vars-3.html"><STRONG>copy_term_vars(+Vars, +OldTerm, ?NewTerm)</STRONG></A></DT>
+<DD>NewTerm gets unified with a variant of OldTerm where all occurrences
+of variables in Vars are replaced by fresh variables.
+
+</DD>
+<DT><A HREF="dim-2.html"><STRONG>dim(?Term, ?Dimensions)</STRONG></A></DT>
+<DD>Creates a multi-dimensional array in the form of nested structures,
+or computes the dimensions of an existing matrix.
+
+</DD>
+<DT><A HREF="functor-3.html"><STRONG>functor(?Term, ?Functor, ?Arity)</STRONG></A></DT>
+<DD>Succeeds if the compound term Term has functor Functor and arity Arity or
+if Term and Functor are atomic and equal, and Arity is 0.
+
+</DD>
+<DT><A HREF="get_var_bounds-3.html"><STRONG>get_var_bounds(?Var, ?Lower, ?Upper)</STRONG></A></DT>
+<DD>Retrieve bounds of a numeric variable in a generic way</DD>
+<DT><A HREF="meta_attribute-2.html"><STRONG>meta_attribute(+Name, +Handlers)</STRONG></A></DT>
+<DD>Declares the variable attribute Name with the corresponding handlers</DD>
+<DT><A HREF="meta_bind-2.html"><STRONG>meta_bind(-Meta, ?Term)</STRONG></A></DT>
+<DD>The attributed variable Meta is bound to the term Term without triggering the
+metaterm-unification event.
+
+</DD>
+<DT><A HREF="set_var_bounds-3.html"><STRONG>set_var_bounds(?Var, +Lower, +Upper)</STRONG></A></DT>
+<DD>Impose bounds on a numeric variable in a generic way</DD>
+<DT><A HREF="setarg-3.html"><STRONG>setarg(+N, +Term, ?Arg)</STRONG></A></DT>
+<DD>Destructively replaces the Nth argument of the compound term Term with the
+term Arg.
+
+</DD>
+<DT><A HREF="subscript-3.html"><STRONG>subscript(+Term, +Subscript, ?Elem)</STRONG></A></DT>
+<DD>Accesses the subterm Elem of Term, as specified by Subscript.
+
+</DD>
+<DT><A HREF="term_string-2.html"><STRONG>term_string(?Term, ?String)</STRONG></A></DT>
+<DD>Conversion between a Prolog term and a string.
+
+</DD>
+<DT><A HREF="term_to_bytes-2.html"><STRONG>term_to_bytes(?Term, -String)</STRONG></A></DT>
+<DD>String is a ground encoding of Term, suitable for writing to a file,
+transmitting over a network etc.
+
+</DD>
+<DT><A HREF="term_variables-2.html"><STRONG>term_variables(?Term, ?VarList)</STRONG></A></DT>
+<DD>Succeeds if VarList is the list of all variables in Term.
+
+</DD>
+<DT><A HREF="update_struct-4.html"><STRONG>update_struct(+StructName, +FieldList, ?OldStruct, ?NewStruct)</STRONG></A></DT>
+<DD>NewStruct is the same as OldStruct except that the fields in FieldList have been replaced</DD>
+</DL>
+</BLOCKQUOTE>
+<HR>Generated from termmanip.eci on Tue Jan 25 01:58:31 2005
+
+</BODY></HTML>

@@ -1,0 +1,58 @@
+
+set_suspension_priority(+Susp, +Priority)
+
+   Change the priority of the suspended goal Susp to Priority.
+
+
+
+Arguments
+   +Susp               A variable
+   +Priority           A small integer
+
+Type
+   Obsolete
+
+Description
+   Every suspended goal has an associated priority. The initial priority
+   is specified when the suspension is created with make_suspension/3.
+   The priority can be changed anytime, but when the suspension has
+   already been scheduled for execution (by schedule_suspensions/2),
+   the change has no effect on this already scheduled execution.
+
+
+   Changing priorities is most useful for demons (where the same
+   suspension is used for arbitrary many wakings) and where one might
+   like to vary its urgency. Typically, the cheaper a goal is, and
+   the more likely it is to fail or to produce useful information,
+   the higher should it priority be. However, the relative priorities
+   of other suspended goals must be kept in mind as well.
+
+
+   Note that a suspension is not a standard Prolog data structure and can
+   only be manipulated in a restricted way.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Susp or Priority are not instantiated.
+     5 --- Susp is not a live suspension or Priority is not an integer.
+     6 --- Priority is not a valid priority.
+
+Examples
+   
+
+
+
+
+
+See Also
+   set_suspension_data / 3, demon / 1, is_suspension / 1, kill_suspension / 1, make_suspension / 3, schedule_suspensions / 2, suspension_to_goal / 3

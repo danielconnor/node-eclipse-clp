@@ -1,0 +1,861 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Managing connections to ECLiPSe</TITLE>
+<META NAME="description" CONTENT="Managing connections to ECLiPSe">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="previous" HREF="node44.html">
+<LINK REL="up" HREF="node39.html">
+<LINK REL="next" HREF="node46.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1403"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1399"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1395"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1401"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1404"
+ HREF="node46.html">EXDR Data Interchange Format</A>
+<B> Up:</B> <A NAME="tex2html1400"
+ HREF="node39.html">Using the Java-ECLiPSe Interface</A>
+<B> Previous:</B> <A NAME="tex2html1396"
+ HREF="node44.html">Communicating between Java and</A>
+ &nbsp <B>  <A NAME="tex2html1402"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1405"
+ HREF="node45.html#SECTION00861000000000000000">A unified ECLiPSe-side interface to Java : the `peer' concept</A>
+<LI><A NAME="tex2html1406"
+ HREF="node45.html#SECTION00862000000000000000">Creating and managing ECLiPSe engines from Java</A>
+<UL>
+<LI><A NAME="tex2html1407"
+ HREF="node45.html#SECTION00862100000000000000">Configuring an <I>EclipseEngineOptions</I> object</A>
+<LI><A NAME="tex2html1408"
+ HREF="node45.html#SECTION00862200000000000000">Using <I>EmbeddedEclipse</I></A>
+<UL>
+<LI><A NAME="tex2html1409"
+ HREF="node45.html#SECTION00862210000000000000">Initialising an <I>EmbeddedEclipse</I></A>
+<LI><A NAME="tex2html1410"
+ HREF="node45.html#SECTION00862220000000000000">Termination of an <I>EmbeddedEclipse</I></A>
+</UL>
+<LI><A NAME="tex2html1411"
+ HREF="node45.html#SECTION00862300000000000000">Using <I>OutOfProcessEclipse</I></A>
+<UL>
+<LI><A NAME="tex2html1412"
+ HREF="node45.html#SECTION00862310000000000000">Initialisation of an <I>OutOfProcessEclipse</I></A>
+<LI><A NAME="tex2html1413"
+ HREF="node45.html#SECTION00862320000000000000">Termination of an <I>OutOfProcessEclipse</I></A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1414"
+ HREF="node45.html#SECTION00863000000000000000">Connecting to an existing ECLiPSe engine using <I>RemoteEclipse</I></A>
+<UL>
+<LI><A NAME="tex2html1415"
+ HREF="node45.html#SECTION00863100000000000000">Initialisation of a <I>RemoteEclipse</I> connection</A>
+<UL>
+<LI><A NAME="tex2html1416"
+ HREF="node45.html#SECTION00863110000000000000">Basic connection sequence</A>
+<LI><A NAME="tex2html1417"
+ HREF="node45.html#SECTION00863120000000000000">Advanced connection sequence</A>
+</UL>
+<LI><A NAME="tex2html1418"
+ HREF="node45.html#SECTION00863200000000000000">Explicit transfer of control between ECLiPSe and Java</A>
+<LI><A NAME="tex2html1419"
+ HREF="node45.html#SECTION00863300000000000000">Termination of a <I>RemoteEclipse</I> connection</A>
+</UL>
+<LI><A NAME="tex2html1420"
+ HREF="node45.html#SECTION00864000000000000000">Comparison of different Java-ECLiPSe connection techniques</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00860000000000000000"></A>
+<A NAME="sec:ji-managing-eclipse-connections"></A>
+<BR>
+Managing connections to ECLiPSe
+</H1>
+As of ECLiPSe 5.3 and later, there are three Java classes which can be
+used to provide interaction with ECLiPSe. These are <I>EmbeddedEclipse</I><A NAME="4293"></A>, <I>OutOfProcessEclipse</I><A NAME="4295"></A>
+and <I>RemoteEclipse</I><A NAME="4297"></A>. Although the three
+classes all implement the <I>EclipseConnection</I> <A NAME="4299"></A> interface, there are some important differences in
+initialisation, termination and use which are explained in this section. On
+the ECLiPSe side, as of version 5.3 and later, there is a unified
+interface for interaction with Java, based around the concept of a
+`peer'. This is explained in Section
+<A HREF="node45.html#sec:ji-peer-concept">8.6.1</A>. Section
+<A HREF="node45.html#sec:ji-creating-eclipse-engines">8.6.2</A> discusses how to create an
+ECLiPSe engine from within Java (this covers both <I>EmbeddedEclipse</I> and <I>OutOfProcessEclipse</I><A NAME="4306"></A>). Section
+<A HREF="node45.html#sec:ji-connecting-existing">8.6.3</A> discusses the <I>RemoteEclipse</I>
+class, which allows Java to connect to an existing ECLiPSe
+engine. Finally, Section <A HREF="node45.html#sec:ji-compare-connection-classes">8.6.4</A>
+compares the three connection classes, assessing the advantages and
+disadvantages of each.
+
+<P>
+
+<H2><A NAME="SECTION00861000000000000000"></A>
+<A NAME="sec:ji-peer-concept"></A>
+<BR>
+A unified ECLiPSe-side interface to Java : the `peer' concept
+</H2>
+
+<P>
+To allow ECLiPSe code to be independent of the way it is
+interfacing with Java, there is a unified technique in ECLiPSe for
+interfacing to Java and other non-ECLiPSe programs, based on the
+concept of a <I>peer</I>. A peer is a computation environment which is
+external to ECLiPSe, either in the sense of being a different
+computer language or being a different process, possibly on a
+different machine. When ECLiPSe is communicating with one or more
+Java virtual machines using the Java-ECLiPSe interface (including
+cases where ECLiPSe is embedded), it stores some global information
+to keep track of each peer.
+
+<P>
+Each peer of the ECLiPSe engine is indexed within ECLiPSe
+by a unique <I>peer name</I> which is an atom. This is set during the
+initialisation of the connection between ECLiPSe and Java; the
+details vary according to the Java class used to make the connection.
+
+<P>
+The peer name is used in those ECLiPSe predicate calls related to the
+peer connection. In particular, those related to the opening and closing of
+peer queues (see Section <A HREF="node44.html#sec:ji-open-close">8.5.1</A>). The <I>EclipseConnection</I> <A NAME="4328"></A> interface includes
+the method <TT>getPeerName()</TT> which can be used to retrieve this name on
+the Java side.
+
+<P>
+
+<H2><A NAME="SECTION00862000000000000000"></A>
+<A NAME="sec:ji-creating-eclipse-engines"></A>
+<BR>
+Creating and managing ECLiPSe engines from Java
+</H2>
+
+<P>
+There are at present two options for creating an ECLiPSe engine from
+Java. With <I>EmbeddedEclipse</I><A NAME="4334"></A>, the engine
+takes the form of a dynamically loaded shared library within the Java
+virtual machine. With <I>OutOfProcessEclipse</I><A NAME="4336"></A> it is a separate, child
+process of the Java virtual machine. These two options have in common that
+they are both initialised using an <I>EclipseEngineOptions</I> object and
+that both classes implement <I>EclipseEngine</I> <A NAME="4339"></A>.
+
+<P>
+
+<H3><A NAME="SECTION00862100000000000000"></A>
+<A NAME="sec:ji-eclipse-engine-options"></A>
+<BR>
+Configuring an <I>EclipseEngineOptions</I> object
+</H3>
+Before an ECLiPSe engine is created using either option, an <I>EclipseEngineOptions</I> object must be created and configured. An
+instance of the <I>EclipseEngineOptions</I> class represents our
+configuration choices for a new ECLiPSe engine. 
+
+<P>
+The options can be specified by either looking them up in a <I>java.util.Properties</I> instance or by calling ``set'' methods on the
+<I>EclipseEngineOptions</I> instance.
+
+<P>
+In the first case you can either specify system properties (by passing
+<TT>-D</TT> command line options to the JVM) or you can use an <I>EclipseEngineOptions</I> constructor which takes a <I>Properties</I>
+parameter. Each option has a standard property name detailed below.
+
+<P>
+Once the <I>EclipseEngineOptions</I> object is created, there are
+also ``set'' methods we can invoke on it to set the different options.
+
+<P>
+<DL>
+<DT><STRONG>The ECLiPSe installation directory (<TT>eclipse.directory</TT>)</STRONG>
+<DD>This must be the correct path of an ECLiPSe
+installation so that Java can find the files it needs to start
+ECLiPSe. If an <I>EclipseEngineOptions</I> constructor is invoked
+without a directory having been set, either using a constructor
+parameter or as a property, an exception will be thrown.
+
+<P>
+<DT><STRONG>The default module (<TT>eclipse.default-module</TT>)</STRONG>
+<DD>is the
+default ECLiPSe module where goals are executed. If no setting is
+made, then the default module will be ``eclipse''.
+
+<P>
+<DT><STRONG>Local and global size (<TT>eclipse.local-size</TT> and <TT>eclipse.global-size</TT>)</STRONG>
+<DD>are the maximum size of the local stack and the global stack
+respectively. In each case the option is an integer representing the
+required size in megabytes. If no setting is made, the sizes default
+to the ECLiPSe defaults.
+
+<P>
+<DL>
+<DT><STRONG>Local size</STRONG>
+<DD>is the maximum combined size of the local 
+  stack and the control stack. Roughly speaking, the local stack is
+  the ECLiPSe equivalent of the call/return stack in procedural
+  languages. The control stack is used to store the choicepoints which
+  occur in the execution of non-deterministic code. You may therefore
+  need to increase this limit if your search tree is exceptionally
+  deep or if there is a lot of non-determinism. You can use the ECLiPSe goal
+  <TT>get_flag(max_local_control, X)</TT> to find out the current
+  setting. For more details, see the section on ``Memory Organisation
+  and Garbage Collection'' in the ECLiPSe User Manual.
+<DT><STRONG>Global size</STRONG>
+<DD>is the maximum combined size of the global 
+  stack and the trail stack. The global stack is used to store data
+  structures. The trail stack is used to store backtracking
+  information and is therefore closely related to the control
+  stack. You may need to increase this limit if you are creating large
+  data structures in ECLiPSe, or if there is a lot of
+  non-determinism. You can use the ECLiPSe goal <TT>  get_flag(max_global_trail, X)</TT> to find out the current
+  setting. Again, see the section in the ECLiPSe User Manual for
+  more details.
+</DL>
+
+<P>
+<DT><STRONG>The ``use queues'' flag (<TT>eclipse.use-queues</TT>)</STRONG>
+<DD><A NAME="sec:ji-use-queues-flag"></A> If <TT>false</TT> (the default case), the
+ECLiPSe engine's standard streams (<TT>stdin</TT>, <TT>stdout</TT> and
+<TT>stderr</TT>) will be connected to the standard streams of the JVM. So
+for example if, as in <TT>QuickTest.java</TT>, a message is written to
+<TT>stdout</TT> from within ECLiPSe, this will appear on the <TT>stdout</TT> stream of the JVM. Similarly, if ECLiPSe requests input
+from the <TT>stdin</TT> stream, input will be requested from the <TT>stdin</TT> stream of the JVM. If the flag is set <TT>true</TT>, <I>FromEclipseQueue</I> and <I>ToEclipseQueue</I> objects are used to
+represent the ECLiPSe's standard streams.
+
+<P>
+<DT><STRONG>The peer name (<TT>eclipse.peer-name</TT>)</STRONG>
+<DD>is the peer name by
+which the Java side can be referenced within ECLiPSe, for example when
+queues are created from the ECLiPSe side. By default the peer name for
+the Java side when using an <I>EmbeddedEclipse</I><A NAME="4395"></A> or an <I>OutOfProcessEclipse</I><A NAME="4397"></A> is ``host''.
+
+<P>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00862200000000000000">
+Using <I>EmbeddedEclipse</I></A>
+</H3>
+
+<P>
+<A NAME="4400"></A>This section discusses issues specific to using the <I>EmbeddedEclipse</I> class. With <I>EmbeddedEclipse</I>, the ECLiPSe engine
+is a dynamically loaded native library in the Java virtual machine. Figure
+<A HREF="node45.html#fig:ji-embedded-deployment">8.1</A> shows this deployment model in UML
+notation. The important consequences of this deployment model are:
+
+<P>
+
+<UL><LI>The ECLiPSe engine shares memory and other resources with Java. 
+
+<LI>Only one such engine can exist in a Java virtual machine at any one time.
+
+<LI>Communication between Java and ECLiPSe is very efficient.
+
+</UL>
+
+<P>
+<DIV ALIGN="CENTER">
+  </DIV>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:ji-embedded-deployment"></A><A NAME="4813"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 8.1:</STRONG>
+UML deployment diagram for <I> EmbeddedEclipse</I></CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+	
+<BR>
+
+	<IMG
+ WIDTH="535" HEIGHT="368" ALIGN="BOTTOM" BORDER="0"
+ SRC="embjava-diagrams/embedded-deployment.gif"
+ ALT="embedded-deployment.gif">
+	
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<DIV ALIGN="CENTER">
+</DIV>
+
+<P>
+
+<H4><A NAME="SECTION00862210000000000000">
+Initialising an <I>EmbeddedEclipse</I></A>
+</H4>
+
+<P>
+The embedded ECLiPSe which runs within the JVM and shares its
+resources, can be started and ended only once during the lifetime of
+the JVM. There is no public constructor method for <I>EmbeddedEclipse</I>. Initialisation of the embedded ECLiPSe is done
+using the static <TT>getInstance</TT> method of class <I>EmbeddedEclipse</I> which takes an <I>EclipseEngineOptions</I> instance as
+a parameter. The method uses this to configure and set up ECLiPSe
+and then returns an object of type <I>EmbeddedEclipse</I>. There may
+only ever be one instance of <I>EmbeddedEclipse</I> in a JVM. If the
+embedded ECLiPSe has already been set up or if it has been set up
+and terminated, subsequent invocations of <TT>getEclipse</TT> with an
+<I>EclipseEngineOptions</I> will throw exceptions. However during the
+lifetime of the embedded ECLiPSe, a reference to the unique <I>EmbeddedEclipse</I> object can be obtained using the parameterless static
+<TT>getEclipse</TT> method.
+
+<P>
+
+<H4><A NAME="SECTION00862220000000000000">
+Termination of an <I>EmbeddedEclipse</I></A>
+</H4>
+
+<P>
+The <TT>destroy</TT> method which appears in the <I>EmbeddedEclipse</I>
+class will shut the embedded ECLiPSe down. Once the <TT>destroy</TT>
+method has been invoked, the invocation of any methods which require
+use of the ECLiPSe engine will result in an <I>EclipseTerminatedException</I> being thrown. The <TT>destroy</TT> method
+should free all the resources of the JVM process which were being used
+by the embedded ECLiPSe.
+
+<P>
+Once the <I>EmbeddedEclipse</I> has been destroyed, <TT>getEclipse</TT>
+can no longer be used during the lifetime of the JVM to initialise an
+embedded ECLiPSe engine. In other words, by invoking <TT>destroy</TT>,
+one removes the ability to use embedded ECLiPSe engines within the
+current instance of the JVM.
+
+<P>
+
+<H3><A NAME="SECTION00862300000000000000"></A><A NAME="4451"></A>
+<BR>
+Using <I>OutOfProcessEclipse</I>
+</H3>
+
+<P>
+This section discusses issues specific to the <I>OutOfProcessEclipse</I><A NAME="4453"></A> class.  With <I>OutOfProcessEclipse</I>, the
+ECLiPSe engine is a child process of the Java virtual
+machine. Figure <A HREF="node45.html#fig:ji-outOfProcess-deployment">8.2</A> shows this deployment
+model in UML notation. The important consequences of this deployment
+model are:
+
+<P>
+
+<UL><LI>The ECLiPSe engine uses separate memory and other resources, 
+depending on how the operating system allocates these between processes. 
+
+<LI>Several instances of <I>OutOfProcessEclipse</I><A NAME="4460"></A> can exist in a Java 
+virtual machine at any one time.
+
+<LI>Communication between Java and ECLiPSe is less efficient.
+
+</UL>
+
+<P>
+<DIV ALIGN="CENTER">
+  </DIV>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:ji-outOfProcess-deployment"></A><A NAME="4818"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 8.2:</STRONG>
+UML deployment
+    diagram for <I> OutOfProcessEclipse</I></CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+<BR>
+
+	<IMG
+ WIDTH="587" HEIGHT="400" ALIGN="BOTTOM" BORDER="0"
+ SRC="embjava-diagrams/outOfProcess-deployment.gif"
+ ALT="outOfProcess-deployment.gif">
+  
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<DIV ALIGN="CENTER">
+</DIV>
+
+<P>
+
+<H4><A NAME="SECTION00862310000000000000"></A><A NAME="4475"></A>
+<BR>
+Initialisation of an <I>OutOfProcessEclipse</I>
+</H4>
+
+<P>
+<I>OutOfProcessEclipse</I><A NAME="4477"></A> has a single constructor which takes an <I>EclipseEngineOptions</I> object as its only parameter. See Section
+<A HREF="node45.html#sec:ji-eclipse-engine-options">8.6.2</A> for details of how to create and
+configure this object. Unlike <I>EmbeddedEclipse</I>, multiple <I>OutOfProcessEclipse</I><A NAME="4482"></A> instances are allowed.
+
+<P>
+
+<H4><A NAME="SECTION00862320000000000000">
+Termination of an <I>OutOfProcessEclipse</I></A>
+</H4>
+
+<P>
+We invoke the instance method <TT>destroy()</TT> in <I>OutOfProcessEclipse</I><A NAME="4486"></A> to terminate both the child ECLiPSe process
+and our association with it. Once the <TT>destroy</TT> method has been
+invoked, the invocation of any methods on the destroyed <I>OutOfProcessEclipse</I> object which require use of the ECLiPSe engine will
+throw an <I>EclipseTerminatedException</I>. Unlike <I>EmbeddedEclipse</I>, invoking <TT>destroy()</TT> on an <I>OutOfProcessEclipse</I> does not affect our ability to create new <I>OutOfProcessEclipse</I> instances during the lifetime of the Java virtual
+machine.
+
+<P>
+If the child process ECLiPSe crashes or is killed while ECLiPSe
+has control, the Java thread which handed control to ECLiPSe should
+throw an <I>EclipseTerminatedException</I>. If this happens while Java
+has control, usually the next invocation of a method on the <I>OutOfProcesEclipse</I> should throw an <I>EclipseTerminatedException</I>,
+although it is possible that some operations will throw a different
+class of <I>IOException</I>. If this should happen it is worth calling
+the <TT>destroy</TT> method to do a final clean-up.
+
+<P>
+
+<H2><A NAME="SECTION00863000000000000000"></A><A NAME="4506"></A>
+<A NAME="sec:ji-connecting-existing"></A>
+<BR>
+Connecting to an existing ECLiPSe engine using <I>RemoteEclipse</I>
+</H2>
+
+<P>
+In some applications, for example where Java is used to visualise
+search in ECLiPSe, the life of the ECLiPSe engine may begin
+before the connection with Java is initialised or end after the
+connection with Java is terminated. Furthermore, it may also be useful
+for the eclipse engine and the Java virtual machine to be running on
+physically separate computers, for example if the ECLiPSe tasks are
+being executed on a compute server, but the Java program is to be run
+on a workstation. The <I>RemoteEclipse</I><A NAME="4512"></A> class can be used to connect
+Java to ECLiPSe in these two scenarios. The deployment model is
+that the <I>RemoteEclipse</I><A NAME="4515"></A> Java object is a ``Proxy'' for the
+ECLiPSe engine which is running on the remote machine, as shown in
+UML notation in Figure <A HREF="node45.html#fig:ji-remote-deployment">8.3</A>.
+
+<P>
+<DIV ALIGN="CENTER">
+  </DIV>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:ji-remote-deployment"></A><A NAME="4823"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 8.3:</STRONG>
+UML deployment diagram for <I> RemoteEclipse</I></CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+	
+<BR>
+
+	<IMG
+ WIDTH="469" HEIGHT="490" ALIGN="BOTTOM" BORDER="0"
+ SRC="embjava-diagrams/remote-deployment.gif"
+ ALT="remote-deployment.gif">
+	
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<DIV ALIGN="CENTER">
+</DIV>
+
+<P>
+The key consequences of this deployment model are:
+
+<UL><LI>ECLiPSe and Java can run on different machines and the two machines may have a different architecture/OS.  
+
+<LI>ECLiPSe can connect to multiple Java processes using this model.
+
+<LI>The lifetime of the ECLiPSe engine need not necessarily be a sub-duration of the lifetime of the JVM. 
+
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION00863100000000000000"></A><A NAME="4535"></A>
+<A NAME="sec:ji-remote-init"></A>
+<BR>
+Initialisation of a <I>RemoteEclipse</I> connection
+</H3>
+
+<P>
+Connecting Java to ECLiPSe using <I>RemoteEclipse</I> requires the
+ECLiPSe engine to be primed so that it is ready to accept the
+connection.  By the time it connects, the Java program must have the
+IP address of the machine hosting the ECLiPSe engine (the server)
+and the port number being used for the connection. The attachment
+protocol also optionally allows for a password to be used by the Java
+side and checked against one specified on the ECLiPSe side. Also
+the server must be configured to allow TCP/IP socket servers which can
+be connected to by the machine hosting Java. Initialising a connection
+using <I>RemoteEclipse</I><A NAME="4543"></A> therefore requires some coordination between
+the ECLiPSe code and the Java code. The Java code always consists
+of a single <I>RemoteEclipse</I> constructor invocation, although the
+constructor parameters may vary. 
+
+<P>
+The ECLiPSe side of the code uses certain builtins. Refer to the
+relevant documentation of these for precise details of usage. On the
+ECLiPSe side, the code can be structured in two different ways; one
+simpler and the other allowing more flexibility. We outline here the
+sequence of actions in each case.
+
+<P>
+
+<H4><A NAME="SECTION00863110000000000000">
+Basic connection sequence</A>
+</H4>
+This can be used in situations where no password is to be used and
+where the port number is specified in advance, rather than generated
+dynamically by ECLiPSe, and is known by the Java side.
+<DL COMPACT>
+<DT>1.
+<DD>The ECLiPSe side executes the builtin <A NAME="tex2html345"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="4884"></A>, specifying the port number in advance. This
+builtin will block until the connection is established.  
+
+<P>
+<DT>2.
+<DD>The Java side then invokes one of the <I>RemoteEclipse</I><A NAME="4555"></A>
+	constructors which has no password parameter. This should
+	immediately complete or throw an exception if the connection
+	is unsuccessful.
+
+<P>
+</DL>
+<H4><A NAME="SECTION00863120000000000000">
+Advanced connection sequence</A>
+</H4>
+This more complicated sequence uses a password and optionally allows
+the port number to be generated dynamically and then communicated to
+the Java side.
+<DL COMPACT>
+<DT>1.
+<DD>The ECLiPSe side executes the builtin <A NAME="tex2html348"
+ HREF="../bips/kernel/externals/remote_connect_setup-3.html">remote_connect_setup/3</A><A NAME="4887"></A>, specifying the password and either
+specifying the port number or allowing it to be generated
+
+dynamically.
+
+<P>
+<DT>2.
+<DD>The port number must be communicated to the Java side somehow,
+  	e.g. manually, or via a file.
+
+<P>
+<DT>3.
+<DD>The Java side then invokes one of the <I>RemoteEclipse</I><A NAME="4563"></A>
+	constructors with a password parameter. This either blocks
+	until the connection is successful or throws an exception.
+
+<P>
+<DT>4.
+<DD>The ECLiPSe side executes the builtin <A NAME="tex2html351"
+ HREF="../bips/kernel/externals/remote_connect_accept-6.html">remote_connect_accept/6</A><A NAME="4890"></A>, specifying the password which the
+
+Java should supply.
+
+<P>
+<DT>5.
+<DD>The Java constructor invocation then completes, or throws an
+	exception if the connection could not be made.
+</DL>
+
+<P>
+If left as a free variable, the <TT>Host</TT> argument of either the <A NAME="tex2html353"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="4893"></A> or <A NAME="tex2html355"
+ HREF="../bips/kernel/externals/remote_connect_setup-3.html">remote_connect_setup/3</A><A NAME="4896"></A> goal will become
+instantiated to the IP address of the machine hosting
+ECLiPSe. Another possibility is to call the goal with this argument
+already instantiated to the atom <TT>localhost</TT>. This will mean that
+only client connections made by processes on the same machine and
+using the loopback address will be accepted. With this usage, on the
+Java side you should use invoke <TT>InetAddress.getHostByName("localhost")</TT>. Note that <TT>InetAddress.getLocalHost()</TT> will not work in this situation.
+
+<P>
+In both connection sequences, the peer name indexing the connection is
+either specified or generated dynamically on the ECLiPSe side in
+the <A NAME="tex2html357"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="4899"></A> or <A NAME="tex2html359"
+ HREF="../bips/kernel/externals/remote_connect_setup-3.html">remote_connect_setup/3</A><A NAME="4902"></A> goal.
+
+<P>
+Once the connection has been established by one of the above
+sequences, control initially rests with the Java side. Therefore the
+ECLiPSe code which called the <A NAME="tex2html361"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="4905"></A> goal or the
+<A NAME="tex2html363"
+ HREF="../bips/kernel/externals/remote_connect_accept-6.html">remote_connect_accept/6</A><A NAME="4908"></A> goal blocks until the Java side
+explicitly transfers control to ECLiPSe or disconnects.
+
+<P>
+
+<H3><A NAME="SECTION00863200000000000000"></A>
+<A NAME="sec:ji-remote-control-transfer"></A>
+<BR>
+Explicit transfer of control between ECLiPSe and Java
+</H3>
+
+<P>
+As mentioned above, after the initial connection has been established,
+Java has control by default. However, this may not be convenient. For
+example, in the case of search visualisation, after the initialisation
+of the visualisation client, we may prefer ECLiPSe to have control
+by default, allowing control to pass to Java only on certain
+occasions. Control can be explicitly passed from Java to ECLiPSe by
+invoking the <TT>resume()</TT> method on a <I>RemoteEclipse</I><A NAME="4594"></A>. In this
+case the ECLiPSe code will resume execution after the last point where
+it passed control to Java. For example, if <TT>resume()</TT> is invoked
+immediately after the <I>RemoteEclipse</I><A NAME="4598"></A> constructor completes,
+ECLiPSe execution will resume at the point just after the call to
+the <A NAME="tex2html367"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="4911"></A> goal or the <A NAME="tex2html369"
+ HREF="../bips/kernel/externals/remote_connect_accept-6.html">remote_connect_accept/6</A><A NAME="4914"></A>
+goal.
+
+<P>
+Control can be transferred to a Java peer using the <A NAME="tex2html371"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="4917"></A>
+builtin. In this case the Java thread which passed execution to
+ECLiPSe will resume execution at the point where it blocked.
+
+<P>
+The <TT>resume()</TT> method and the <A NAME="tex2html373"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="4920"></A> builtin should be
+used with care. An invocation of <TT>resume()</TT> should be paired with
+an execution of a <A NAME="tex2html375"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="4923"></A> goal in most cases. In addition,
+<A NAME="tex2html377"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="4926"></A> should not be executed in any code executed as a
+result of an <TT>rpc</TT><A NAME="4616"></A> invocation and <TT>resume()</TT> should not be
+executed within the <I>QueueListener</I> methods <TT>dataAvailable()</TT>
+or <TT>dataRequest()</TT>.
+
+<P>
+The <TT>resume()</TT> method and the <A NAME="tex2html380"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="4929"></A> builtin should
+only be used when other techniques such as <TT>rpc</TT><A NAME="4625"></A> are not suitable.
+
+<P>
+
+<H3><A NAME="SECTION00863300000000000000"></A>
+<A NAME="sec:ji-remote-disconnect"></A>
+<BR>
+Termination of a <I>RemoteEclipse</I> connection
+</H3>
+
+<P>
+A <I>RemoteEclipse</I><A NAME="4629"></A> connection between ECLiPSe and Java may be
+terminated in different ways. Firstly, disconnection may be initiated
+by either side. Secondly the disconnection may be either <I>multilateral</I> or <I>unilateral</I>. Multilateral disconnection, the
+preferred method, is where the side which has control initiates
+disconnection. Unilateral disconnection is where the side which
+initiates disconnection does not have control, and should only take
+place as a clean-up routine when one side is forced to terminate the
+connection because of an unexpected event.
+
+<P>
+<DL>
+<DT><STRONG>Java-initiated multilateral disconnect</STRONG>
+<DD>is performed by
+ invoking the <TT>disconnect</TT> method on the <I>RemoteEclipse</I><A NAME="4636"></A>
+ instance while the Java side has control.
+
+<P>
+<DT><STRONG>Java-initiated unilateral disconnect</STRONG>
+<DD>is performed by
+ invoking the <TT>unilateralDisconnect</TT> method on the <I> RemoteEclipse</I><A NAME="4639"></A> instance while Java does not have control.
+
+<P>
+<DT><STRONG>ECLiPSe-initiated multilateral disconnect</STRONG>
+<DD>is performed on
+ the ECLiPSe side by executing a <A NAME="tex2html386"
+ HREF="../bips/kernel/externals/remote_disconnect-1.html">remote_disconnect/1</A><A NAME="4932"></A> goal
+
+while ECLiPSe has control, identifying the connection to be closed
+ by supplying the peer name.
+
+<P>
+<DT><STRONG>ECLiPSe-initiated unilateral disconnect</STRONG>
+<DD>cannot be
+ executed by the user, since ECLiPSe is not
+ multi-threaded. However, it may occur in certain urgent situations
+ e.g. if the ECLiPSe process is killed while ECLiPSe does not
+ have control.
+</DL>
+If an ECLiPSe-initiated disconnect occurs, or the connection is
+lost for whatever reason while ECLiPSe has control, the Java thread
+which handed control to ECLiPSe should throw an <I>EclipseTerminatedException</I>. If either of these happens while Java has
+control, the next invocation of a method on the <I>RemoteEclipse</I><A NAME="4655"></A> should throw an <I>EclipseTerminatedException</I>,
+although it is possible that some operations will throw a different
+class of <I>IOException</I>. If this should happen it is worth invoking
+the <TT>unilateralDisconnect()</TT> method to do a final clean-up.
+
+<P>
+
+<H2><A NAME="SECTION00864000000000000000"></A>
+<A NAME="sec:ji-compare-connection-classes"></A>
+<BR>
+Comparison of different Java-ECLiPSe connection techniques
+</H2>
+This section should give you some idea of when it is most appropriate
+to use each connection class. Figure <A HREF="node45.html#fig:ji-connection-classes">8.4</A>
+is a UML class diagram showing the most important relationships and
+operations of the principal classes and interfaces. 
+
+<P>
+All three classes implement <I>EclipseConnection</I>
+<A NAME="4663"></A>, which provides all the functionality
+you would expect during a ``session'' with ECLiPSe. The <I>EclipseEngine</I> interface <A NAME="4666"></A> is implemented
+when the JVM ``owns'' the ECLiPSe engine, and so provides the methods to
+access the standard I/O streams. Note that the termination methods are not
+in either of the interfaces, but are specific to each class. Furthermore,
+the <TT>resume()</TT> method allows <I>RemoteEclipse</I><A NAME="4670"></A> to explicitly hand
+control to ECLiPSe, but this operation is not supported by the other two
+classes.
+
+<P>
+To summarise the advantages and disadvantages Table
+<A HREF="#tab:ji-feature-comparison">8.2</A> gives an at-a-glance comparison of the
+different features of the different connection
+classes.<A NAME="4673"></A><A NAME="4674"></A>
+
+<P>
+<DIV ALIGN="CENTER">
+  </DIV>
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:ji-connection-classes"></A><A NAME="4829"></A>
+<TABLE>
+<CAPTION><STRONG>Figure:</STRONG>
+UML class diagram for different classes connecting Java and ECLiPSe. Some convenience methods from <I> EclipseConnection</I> have been omitted.</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+	
+<BR>
+
+	<IMG
+ WIDTH="496" HEIGHT="512" ALIGN="BOTTOM" BORDER="0"
+ SRC="embjava-diagrams/connection-classes.gif"
+ ALT="connection-classes.gif">
+	
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+<DIV ALIGN="CENTER">
+</DIV>
+
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="4839"></A>
+<TABLE>
+<CAPTION><STRONG>Table:</STRONG>
+ Feature comparison table for different ECLiPSe connection classes</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1" ALIGN="CENTER">
+<TR><TD ALIGN="LEFT">Feature</TD>
+<TD ALIGN="CENTER" COLSPAN=3>Java-ECLiPSe connection class</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER"><I> Embedded</I></TD>
+<TD ALIGN="CENTER"><I> OutOfProcess</I></TD>
+<TD ALIGN="CENTER"><I> Remote</I></TD>
+</TR>
+<TR><TD ALIGN="LEFT">Implements <I> EclipseConnection</I> interface (allowing <TT> rpc</TT><A NAME="4700"></A> and queues)</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">Yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Implements <I> EclipseEngine</I> interface (allowing access to ECLiPSe stdio streams)</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">-</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe is in a separate process (with separate memory heap/stack)</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">Yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe can be on a separate machine from Java</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">Yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe engine can start before/ end after Java virtual machine</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">Yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ECLiPSe engine created/ destroyed from Java</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">-</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Efficient transfer of data on queues and <TT> rpc</TT> invocations</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">-</TD>
+</TR>
+<TR><TD ALIGN="LEFT">One ECLiPSe can connect to many Java virtual machines using this</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">Yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">One Java virtual machine can connect to many ECLiPSe engines using this</TD>
+<TD ALIGN="CENTER">-</TD>
+<TD ALIGN="CENTER">Yes</TD>
+<TD ALIGN="CENTER">Yes</TD>
+</TR>
+</TABLE>
+</DIV>
+</TD></TR>
+</TABLE>
+</DIV>
+<BR>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1403"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1399"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1395"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1401"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1404"
+ HREF="node46.html">EXDR Data Interchange Format</A>
+<B> Up:</B> <A NAME="tex2html1400"
+ HREF="node39.html">Using the Java-ECLiPSe Interface</A>
+<B> Previous:</B> <A NAME="tex2html1396"
+ HREF="node44.html">Communicating between Java and</A>
+ &nbsp <B>  <A NAME="tex2html1402"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

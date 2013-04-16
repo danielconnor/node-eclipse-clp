@@ -1,0 +1,24 @@
+
+alldifferent(?List, ?Cap)
+
+   No domain value occurs more than Cap times in List
+
+Arguments
+   List                list of variables or domain values
+   Cap                 integer or integer variable
+
+Type
+   library(ic_symbolic)
+
+Description
+
+	Constrains the list so that no more than Cap elements can have the
+	same value.
+	This is implemented by mapping onto ic_global:alldifferent/2.
+	All list elements must be variables or values of the same domain.
+	If one or more of them are domain-less, they will be given the same
+	domain as the others.
+
+
+See Also
+   ic_global : alldifferent / 2

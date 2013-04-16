@@ -1,0 +1,55 @@
+<HTML><HEAD><TITLE>pretty_print(++Files)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(pretty_printer)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>pretty_print(++Files)</H1>
+Print a file in html format
+<DL>
+<DT><EM>Files</EM></DT>
+<DD>a filename (atom or string), or a list of filenames
+</DD>
+</DL>
+<H2>Description</H2>
+
+The system prints the contents of the file given as the argument as an
+output file in html format.  This is one of the possible formats
+supported by the pretty printer (see <b>pretty_print/2</b>).  The system
+automatically adds the extension <i>.html</i> and places the result in a
+subdirectory called 'pretty' relative to the source file.  Syntax coloring
+is used to highlight different language features, and a uniform formatting
+of the source code is used.
+<p>
+As the clauses are read with the normal Prolog read routine, comments
+within clauses are lost, but comments and spacing between clauses is
+preserved.
+<p>
+Hyperlinks are used for documented builtin predicates, as well as
+predicates defined in the same file.  For a built-in, the hyperlink
+will lead to the manual page of the predicate, for other predicates
+the link points to the first definition of the predicate.  The
+hyperlinks to the builtins are based on the installation directory of
+Eclipse, so that the resulting output will normally not work on a
+machine where eclipse is installed in a different directory.
+<p>
+If a list of several files is given, an additional index page index.html
+with links to the individual pretty-printed source files will be generated.
+<p>
+The pretty printer does not check for undefined predicates or
+predicates that are defined in included files.
+<p>
+The colours used are similar to those used by the EMACS Eclipse mode.
+Colours are used more consistently than in the EMACS editor, as the
+source text is parsed completely.
+<p>
+You can modify the colour scheme by modifying the style sheet
+style.css which is located in the directory where the .html files get
+generated (by default the subdirectory 'pretty').  The pretty-printer
+will generate a default style sheet file if none exists, but not touch
+any existing one.
+<p>
+
+<H2>Examples</H2>
+<PRE>
+?- pretty_print(simple').
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/pretty_printer/pretty_print-2.html">pretty_print / 2</A>
+</BODY></HTML>

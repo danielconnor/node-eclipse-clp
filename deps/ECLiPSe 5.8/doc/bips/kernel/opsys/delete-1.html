@@ -1,0 +1,55 @@
+<HTML><HEAD><TITLE>delete(+File)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>delete(+File)</H1>
+The file File (with absolute or relative pathname) is deleted.
+
+
+<DL>
+<DT><EM>+File</EM></DT>
+<DD>An atom or a string of a form acceptable to the operating                system.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to delete the file or directory File.  File may be an absolute or
+   relative filename.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>File is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>File is neither an atom nor a string.
+<DT><EM>(170) system interface error </EM>
+<DD>File does not exist.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: sh('ls file.pl').
+      file.pl
+      yes.
+      [eclipse]: delete('file.pl').
+      yes.
+      [eclipse]: sh('ls file.pl').
+      file.pl not found
+      yes.
+
+Error:
+      delete(File).                  (Error 4).
+      delete([file]).                (Error 5).
+      delete(nofile).                (Error 170).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/sh-1.html">sh / 1</A>, <A HREF="../../kernel/opsys/system-1.html">system / 1</A>, <A HREF="../../kernel/opsys/exists-1.html">exists / 1</A>, <A HREF="../../kernel/opsys/mkdir-1.html">mkdir / 1</A>
+</BODY></HTML>

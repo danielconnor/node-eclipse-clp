@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Domain Output</TITLE>
+<META NAME="description" CONTENT="Domain Output">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html521"
+ HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html517"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html511"
+ HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html519"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html522"
+ HREF="node12.html">Debugging Constraint Programs</A>
+<B> Up:</B> <A NAME="tex2html518"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html512"
+ HREF="node10.html">Search Methods</A>
+ &nbsp <B>  <A NAME="tex2html520"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00290000000000000000">
+Domain Output</A>
+</H1>
+The library <B>fd_domain.pl</B> contains output macros which
+cause an <B>fd</B> attribute as well as a domain to be printed
+as lists that represent the domain values.
+A domain variable is an attributed variable whose <B>fd</B> attribute
+has a <B>print</B> handler which prints it in the same format.
+For instance,<PRE>
+[eclipse 4]: X::1..10, dvar_attribute(X, A), A = fd{domain:D}.
+
+X = X{[1..10]}
+D = [1..10]
+A = [1..10]
+yes.
+[eclipse 5]: A::1..10, printf("%mw", A).
+A{[1..10]}
+A = A{[1..10]}
+yes.
+</PRE>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

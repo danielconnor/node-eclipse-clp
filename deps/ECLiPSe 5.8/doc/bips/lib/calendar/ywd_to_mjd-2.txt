@@ -1,0 +1,20 @@
+
+ywd_to_mjd(++DWY, ?MJD)
+
+   Convert an ISO8601 Year-Week-Day representation to MJD
+
+Arguments
+   DWY                 structure of the form Year-Week-Day
+   MJD                 Variable or integer
+
+Type
+   library(calendar)
+
+Description
+Convert a Year-WeekOfYear-DayOfWeek representation to MJD,
+    	where DayOfWeek is the day number within the week (1 for monday
+	up to 7 for sunday), and WeekOfYear is the ISO8601 week number
+	(where week 1 is the week containing January 4th). Note that
+	January 1 to 3 may belong to the previous year.
+
+

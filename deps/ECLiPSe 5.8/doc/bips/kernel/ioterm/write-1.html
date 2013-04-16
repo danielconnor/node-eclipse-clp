@@ -1,0 +1,40 @@
+<HTML><HEAD><TITLE>write(?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>write(?Term)</H1>
+The term Term is written on output stream according to the current operator
+declarations.
+
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to write the term Term on the current output according to the
+   current operator declarations.  Lists and compound terms are only
+   printed up to the nesting depth specified by the (stream-specific
+   or global) print_depth setting (cf. set_stream_property/3, set_flag/2).
+
+<P>
+Note
+   The output of write/1 is not necessarily in a form acceptable to
+   read/1/2.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>   Equivalent to write(output, Term).  (see write/2 for details).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/display-1.html">display / 1</A>, <A HREF="../../kernel/ioterm/display-2.html">display / 2</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/ioterm/write-2.html">write / 2</A>, <A HREF="../../kernel/ioterm/writeq-1.html">writeq / 1</A>, <A HREF="../../kernel/ioterm/writeq-2.html">writeq / 2</A>
+</BODY></HTML>

@@ -1,0 +1,258 @@
+<HTML><HEAD><TITLE>meta_attribute(+Name, +Handlers)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>meta_attribute(+Name, +Handlers)</H1>
+Declares the variable attribute Name with the corresponding handlers
+<DL>
+<DT><EM>+Name</EM></DT>
+<DD>Atom
+</DD>
+<DT><EM>+Handlers</EM></DT>
+<DD>List or nil.
+</DD>
+</DL>
+<H2>Description</H2>
+
+   This predicate is used to declare a variable attribute and/or the
+   corresponding handlers.  The Name is usually the name of module where
+   this attribute is being defined and used.  The unqualified use of
+   attributed variables, i.e.  terms in the form VarAttr is allowed only in
+   modules which have a defined attribute name, otherwise the qualified
+   usage VarName:Attr is required.
+<P>
+   The Handlers argument specifies a list of handler predicates for several
+   built-in operations which require user-defined actions whenever an
+   attributed variable is encountered.  The list contains elements in the
+   form Operation:Pred, where Operation is the predefined name of the
+   built-in operation and Pred is the handler predicate specification.  The
+   handler definition module is assumed to be the module in which
+   meta_attribute/2 is being called; another module can be specified by
+   using the tool body predicate meta_attribute_body/3.  When true/0 is
+   specified as the handler or when no handler for a particular operation
+   is specified, this operation will ignore this extension.  If the
+   extension Name already exists, the specified handlers are updated, the
+   non-specified ones remain.
+<P>
+   The call meta_attribute(Name, []) can be used as a preliminary
+   declaration of a particular attribute, e.g.  to compile a module part
+   before the actual declaration is called, or when processing separate
+   files that belong to a particular module.
+<P>
+   The meta_attribute/2 predicate is sensitive to the flag debug_compile.
+   If it is on, the calls to the local handlers will be traceable (and
+   slower), if it is off, it will be the opposite.  All specified handlers
+   will be exported from their definition module.
+<P>
+   The predefined operations and the corresponding handler arguments are
+   the following:
+<DL>
+<DT>unify<DD>
+<P>
+    Operation :   unification
+<P>
+    Handler :   handler(+Term, ?Attribute)
+<P>
+    Description :   The handler for the usual unification.  Term is the
+        term that was unified with the attributed variable, it is
+        either a nonvariable or an attributed variable.  Attribute is
+        directly the contents of the attribute slot corresponding to
+        the extension, i.e.  it is not the whole attributed variable.
+        When this handler is invoked, the attributed variable is already 
+        bound to Term.  
+
+<P>
+        If an attributed variable is unified with a standard variable, the
+        variable is bound to the attributed variable and no handlers are
+        invoked.  If an attributed variable is unified with another
+        attributed variable or a non-variable, the attributed variable is
+        bound (like a standard variable) to the other term and all handlers
+        for the unify operation are invoked.  Note that several attributed
+        variable bindings can occur e.g. during a head unification and also
+        during a single unification of compound terms.  The handlers are
+        only invoked at certain trigger points (usually before the next
+        predicate call).
+
+<P>
+
+<DT>test_unify<DD>
+<P>
+    Operation :   unification test
+<P>
+    Handler :   handler(+Term, ?Attribute)
+<P>
+    Description :   The handler for the unification which is not
+        supposed to trigger constraints propagation.  It is used e.g.
+        in the not_unify/2 predicate.  The handler arguments are
+        equivalent to those of the unification handler, Term is the
+        term that was unified with the attributed variable, Attribute
+        is the attribute of this extension.  During the execution of
+        the handler the attributed variable is bound to Term, however
+        when all local handlers succeed, all bindings are undone.
+<P>
+
+<DT>compare_instances<DD>
+<P>
+    Operation :   instance and variant tests
+<P>
+    Handler :   handler(-Res, ?TermL, ?TermR)
+<P>
+    Description :   The handler for the variant/2, instance/2 and other
+        instance-testing predicates.  The handler arguments are similar
+        to those of the compare_instances/3 predicate:  Res is the
+        relation between the two terms TermL and TermR, it can be
+        either = or &lt; (the handler might directly fail if the result is
+        &gt;).  All bindings made in the handler will be undone after
+        processing the local handlers.
+<P>
+
+<DT>copy_term<DD>
+<P>
+    Operation :   copying an attributed variable
+<P>
+    Handler :   handler(?AttrVar, ?Var)
+<P>
+    Description :   The handler for the copy_term/2 predicate.  AttrVar is
+        the attributed variable encountered in the copied term, Var is
+        its corresponding variable in the copy.  All extension handlers
+        receive the same arguments.  This means that if the attributed
+        variable should be copied as an attributed variable, the
+        handler must check if Var is still a free variable or if it was
+        already bound to an attributed variable by a previous handler.
+<P>
+
+<DT>delayed_goals_number<DD>
+<P>
+    Operation :   querying number of suspended goals of a variable
+<P>
+    Handler :   handler(?AttrVar, -GoalsNumber)
+<P>
+    Description :  The handler for the delayed_goals_number/2
+	predicate.  AttrVar is the attributed variable encountered in
+	the predicate.  The handler is supposed to return the number
+	of all suspended goals in this attribute.
+<P>
+
+<DT>get_bounds<DD>
+<P>
+    Operation :   get information about numeric variable bounds
+<P>
+    Handler :   handler(?AttrVar, -Lwb, -Upb)
+<P>
+    Description :  The handler for the get_var_bounds/3 predicate. 
+	The handler should only be defined if the attribute contains
+	information about numeric bounds.  The handler is only invoked
+	if the variable has the corresponding (non-empty) attribute. 
+	The handler should bind Lwb and Upb to numbers (any numeric
+	type) reflecting the attribute's information about lower and
+	upper bound of the variable, respectively.  If different
+	attributes return different bounds information,
+	get_var_bounds/3 will return the narrowest ones.
+<P>
+
+<DT>set_bounds<DD>
+<P>
+    Operation :   impose new bounds on an attributed variable
+<P>
+    Handler :   handler(?AttrVar, +Lwb, +Upb)
+<P>
+    Description :  The handler for the set_var_bounds/3 predicate. 
+	The handler should only be defined if the attribute can
+	incorporate information about numeric variable bounds.  The
+	handler is only invoked if the variable has the corresponding
+	(non-empty) attribute.  Lwb and Upb are the numbers that were
+	passed to set_var_bounds/3, and the handler is expected to
+	update its own bounds representation accordingly.
+<P>
+
+<DT>suspensions<DD>
+<P>
+    Operation :   querying suspensions attached to a variable
+<P>
+    Handler :   handler(?AttrVar, -ListOfSuspLists, -Tail)
+<P>
+    Description :  The handler for the suspensions/2 predicate. 
+	AttrVar is an attributed variable.  The handler should bind
+	ListOfSuspLists to a list containing all the attribute's
+	suspension lists and ending with Tail.
+<P>
+
+<DT>print<DD>
+<P>
+    Operation :   printing the attribute
+<P>
+    Handler :   handler(?AttrVar, -Attribute)
+<P>
+    Description : Printing the attribute in printf/2, 3 when the m option
+        is specified.  AttrVar is the attributed variable being printed,
+        Attribute is the term which will be printed as a value for this
+        attribute, qualified by the attribute name.  If no handler is
+        specified for an attribute, or the print handler fails, the
+        attribute will not be printed.  If there is only one attribute with
+        an associated print handler, the attribute value is not qualified
+        with the attribute name.
+</DL>
+The following handlers are still supported for compatibility,
+but their use is not recommended:
+<DL>
+<DT>delayed_goals<DD>
+<P>
+    Operation :   querying suspended goals of a variable (obsolete)
+<P>
+    Handler :   handler(?AttrVar, ?Goals, -GoalsTail)
+<P>
+    Description :   The handler for the delayed_goals/2 predicate.
+        AttrVar is the attributed variable encountered in the predicate.
+        The handler is supposed to create a difference list of all
+        goals in the suspended lists for this attribute. This handler
+	should not be used anymore, define a suspensions-handler instead.
+<P>
+<DT>pre_unify<DD>
+<P>
+    Operation :   pre-unification notification (compatibility only)
+<P>
+    Handler :   handler(?AttrVar, +Term)
+<P>
+    Description :  The handler is invoked before unification.  The
+	first argument is the attributed variable to be unified, the
+	second argument is the term it is going to be unified with. 
+	This handler is provided only for compatibility with SICStus
+	Prolog and its use is not recommended, because it is less
+	efficient than the <EM>unify</EM> handler and because its
+	semantics is somewhat unclear, there may be cases where
+	changes inside this handler may have unexpected effects.
+<P>
+</DL>
+
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>The arguments are not ground.
+<DT><EM>(5) type error </EM>
+<DD>The first argument is not an atom or the second one is not a    list in the required format.
+<DT><EM>(6) out of range </EM>
+<DD>The specified operation is not implemented or the handler    arity is wrong.
+</DL>
+<H2>Examples</H2>
+<PRE>
+[eclipse 5]: write(X{a}).
+undefined metaterm attribute in trans_meta_in(X, _g370, eclipse)
+syntax error : in source transformation
+| write(X{a}).
+|             ^ here
+[eclipse 6]: meta_attribute(eclipse, []).
+
+yes.
+[eclipse 7]: printf("%QPMw", X{a}).
+X{suspend : _g386 , a}
+X = X
+yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termcomp/not_unify-2.html">not_unify / 2</A>, <A HREF="../../kernel/termcomp/instance-2.html">instance / 2</A>, <A HREF="../../kernel/termcomp/variant-2.html">variant / 2</A>, <A HREF="../../kernel/termcomp/compare_instances-3.html">compare_instances / 3</A>, <A HREF="../../kernel/termmanip/copy_term-2.html">copy_term / 2</A>, <A HREF="../../kernel/suspensions/delayed_goals_number-2.html">delayed_goals_number / 2</A>, <A HREF="../../kernel/suspensions/delayed_goals-2.html">delayed_goals / 2</A>, <A HREF="../../kernel/termmanip/set_var_bounds-3.html">set_var_bounds / 3</A>, <A HREF="../../kernel/termmanip/get_var_bounds-3.html">get_var_bounds / 3</A>, <A HREF="../../kernel/ioterm/printf-2.html">printf / 2</A>, <A HREF="../../kernel/ioterm/printf-3.html">printf / 3</A>, <A HREF="../../kernel/suspensions/suspensions-2.html">suspensions / 2</A>, <A HREF="../../kernel/termmanip/add_attribute-2.html">add_attribute / 2</A>
+</BODY></HTML>

@@ -1,0 +1,26 @@
+<HTML><HEAD><TITLE>current_trigger(?Trigger)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_trigger(?Trigger)</H1>
+Succeeds if Trigger is a currently defined symbolic trigger.
+<DL>
+<DT><EM>Trigger</EM></DT>
+<DD>An atom or variable.
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>current_trigger(++)
+<LI>current_trigger(-)
+</UL>
+<H2>Description</H2>
+<P>
+    Succeeds if Trigger is a currently defined symbolic trigger for
+    suspensions (see trigger/1). If Trigger is a variable, the current
+    triggers will be enumerated one by one via backtracking.
+
+<H3>Fail Conditions</H3>
+Trigger is not a current trigger.
+<H3>Resatisfiable</H3>
+yes
+<H2>See Also</H2>
+
+</BODY></HTML>

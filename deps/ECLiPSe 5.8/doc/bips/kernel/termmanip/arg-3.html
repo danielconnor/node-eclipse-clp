@@ -1,0 +1,77 @@
+<HTML><HEAD><TITLE>arg(+N, +Term, ?Arg)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>arg(+N, +Term, ?Arg)</H1>
+Succeeds if Arg is the Nth argument of the compound term Term.
+
+
+<DL>
+<DT><EM>+N</EM></DT>
+<DD>Integer not greater than the arity of Term, or a list.
+</DD>
+<DT><EM>+Term</EM></DT>
+<DD>Compound term.
+</DD>
+<DT><EM>?Arg</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   If Term is a structure, unifies Arg with the Nth argument of a structure
+   Term.
+
+<P>
+   If Term is a list (N must be either the integer 1 (for the head) or 2
+   (for the tail), unifies Arg with the head or tail of the list.  This is
+   a consequence of the fact that ./2 is the list functor and
+   .(a,.(b,.(c,[]))) is the same as [a,b,c].
+
+<P>
+   If N is a list of integers and Term is a nested structure, then Arg
+   is the subterm of Term described by this list of integers.
+   E.g. arg([2,1,3], Term, Arg) is the same as arg(2, Term, T1),
+   arg(1, T1, T2), arg(3, T2, Arg).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Arg does not unify with the Nth argument of Term.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either N or Term (or both) is not instantiated    (non-coroutine mode only).
+<DT><EM>(5) type error </EM>
+<DD>N is instantiated, but not to an integer or list of integers.
+<DT><EM>(5) type error </EM>
+<DD>Term is instantiated, but not to a compound term.
+<DT><EM>(6) out of range </EM>
+<DD>N is an integer less than 1 or greater than the arity of    Term.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      arg(2,foo(boo,moo),moo).
+      arg(2,.(a,b,c),b).
+      arg(2,.(a,b),b).
+      arg(2,term1(term2(a,b),c),c).
+      arg(2,f(a,f(a,b)),f(X,Y)).        (gives X=a; Y=b).
+      arg(2,[a,b,c],[b,c]).
+      arg(2,.(a,.(b,.(c,[]))),[b,c]).
+      arg(2,[1],[]).
+      arg([2,1], f(a,g(b,c)), X).       (gives X=b).
+Fail:
+      arg(2,f(a,f(a,b)),f(X,X)).
+Error:
+      arg(N,f(1,2),1).         (Error 4).
+      arg(N,[],X),             (Error 5).
+      arg(0,foo(boo,moo),moo). (Error 6).
+      arg(3,foo(boo,moo),moo). (Error 6).
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/functor-3.html">functor / 3</A>, <A HREF="../../kernel/termmanip/EDD-2.html">=.. / 2</A>, <A HREF="../../kernel/termmanip/subscript-3.html">subscript / 3</A>
+</BODY></HTML>

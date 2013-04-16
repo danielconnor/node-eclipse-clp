@@ -1,0 +1,4 @@
+lib(iostream)
+
+   Built-ins to open, manipulate and close I/O streams
+

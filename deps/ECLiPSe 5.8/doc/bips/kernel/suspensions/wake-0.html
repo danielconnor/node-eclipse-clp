@@ -1,0 +1,69 @@
+<HTML><HEAD><TITLE>wake</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>wake</H1>
+Execute all scheduled suspensions whose priorities are higher than the current
+one.
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   Suspensions in ECLiPSe go through several stages:  They are
+   created, attached to variables or symbolic triggers, later
+   scheduled for execution, and finally executed.
+
+<P>
+   When a suspension is scheduled for execution, it gets inserted
+   into a global priority list where it is waiting for execution.
+   This global priority list is then processed explicitly by the
+   wake/0 predicate.
+   
+   This separation of scheduling and execution enables the proper
+   handling of priorities:  Low priority suspensions are not
+   necessarily executed by the next wake/0, but possibly later
+   when the current priority has become low enough.
+
+<P>
+   The separation also allows to schedule a batch of suspension lists
+   together before entering the priority-based execution scheme.
+
+<P>
+   wake/0 should therefore be called in the following situations:
+    
+   1.  after new suspensions have been scheduled by one or several
+   calls to schedule_suspensions/1,2 or notify_constrained/1.
+
+<P>
+   2.  whenever the current priority was lowered, since that may allow
+   further scheduled goals to be executed.
+
+<P>
+   Note that wake/0 is implicitly invoked after every sequence of
+   meta_unify handlers and should thus not be called inside the handlers.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 4]: make_suspension(write(a), 1, S),
+	schedule_suspensions(1, attr([S])),
+	wake, write(b).
+ab
+S = 'SUSP-_280-dead'
+yes.
+[eclipse 5]: make_suspension(write(a), 1, S),
+	schedule_suspensions(1, attr([S])),
+	write(b), wake.
+ba
+S = 'SUSP-_280-dead'
+yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/suspensions/insert_suspension-3.html">insert_suspension / 3</A>, <A HREF="../../kernel/suspensions/suspend-3.html">suspend / 3</A>, <A HREF="../../kernel/suspensions/suspend-4.html">suspend / 4</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-1.html">schedule_suspensions / 1</A>, <A HREF="../../kernel/suspensions/schedule_suspensions-2.html">schedule_suspensions / 2</A>, <A HREF="../../kernel/suspensions/attach_suspensions-2.html">attach_suspensions / 2</A>
+</BODY></HTML>

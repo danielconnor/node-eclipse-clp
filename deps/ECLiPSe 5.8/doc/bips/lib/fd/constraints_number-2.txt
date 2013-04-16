@@ -1,0 +1,37 @@
+
+constraints_number(?Var, ?N)
+
+   The number of constraints and suspended goals associated with the variable
+Var is N.
+
+
+
+Arguments
+   ?Var                Prolog term
+   ?N                  Variable or integer
+
+Type
+   library(fd)
+
+Description
+   N is the number of constraints and suspended goals currently attached to
+   the variable Var.  Note that this number may not correspond to the exact
+   number of different constraints attached to Var, as goals in different
+   suspending lists are counted separately.  This predicate is often used
+   when looking for the most or least constrained variable from a set of
+   domain variables.  If Var is instantiated, N is bound to a very large
+   integer, if Var is a free variable, N is zero.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   :: / 2, #:: / 2, deleteff / 3, deleteffc / 3

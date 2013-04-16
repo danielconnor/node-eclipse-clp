@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Demon Predicates</TITLE>
+<META NAME="description" CONTENT="Demon Predicates">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node115.html">
+<LINK REL="previous" HREF="node113.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node115.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3964"
+ HREF="node115.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3960"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3954"
+ HREF="node113.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3962"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3965"
+ HREF="node115.html">More about Priorities</A>
+<B> Up:</B> <A NAME="tex2html3961"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3955"
+ HREF="node113.html">Lower-level Primitives</A>
+ &nbsp <B>  <A NAME="tex2html3963"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001790000000000000000"></A>
+<A NAME="secdemon"></A>
+<BR>
+Demon Predicates
+</H1>
+A common pattern when implementing data-driven algorithms is the following
+variant of the report/1 example from above:<PRE>
+report(X) :-
+      suspend(report1(X), 1, X-&gt;constrained). % suspend
+
+report1(X) :-
+        ( var(X) -&gt;
+            writeln(constrained(X)),
+            suspend(report(X), 1, X-&gt;constrained) % re-suspend
+;
+            writeln(instantiated(X)) % die
+).
+</PRE>
+Here we have a goal that keeps monitoring changes to its variables.
+To do so, it suspends on some or all of those variables.
+When a change occurs, it gets woken, does something, and re-suspends.
+The repeated re-suspending has two disadvantages: it can be inefficient,
+and the goal does not have a unique identifying suspension that could be
+easily referred to, because on every re-suspend a new suspension is created.
+
+<P>
+To better support this type of goals, ECLiPSe provides a special type
+of predicate, called a <B>demon</B>. A predicate is turned into a
+<A NAME="10675"></A>
+demon by annotating it with a
+<A NAME="tex2html1515"
+ HREF="../bips/kernel/database/demon-1.html">demon/1</A><A NAME="10971"></A>
+declaration.
+A demon goal differs from a normal goal only in its behaviour on
+waking. While a normal goal disappears from the resolvent when it is
+woken, the demon remains in the resolvent.
+Declaratively, this corresponds to an implicit recursive call in
+the body of each demon clause.
+Or, in other words, the demon goal forks into one goal that remains in the
+suspended part of the resolvent, and an identical one
+that gets scheduled for execution.
+
+<P>
+With this functionality, our above example can be done more
+efficiently. One complication arises, however. Since the goal
+implicitly re-suspends, it now has to be explicitly killed when
+it is no longer needed. The easiest way to achieve this is to
+let it remember its own suspension in one of its arguments.
+This can then be used to kill the suspension when required:<PRE>
+% A demon that wakes whenever X becomes more constrained
+report(X) :-
+      suspend(report(X, Susp), 1, X-&gt;constrained, Susp).
+
+:- demon(report/2).
+report(X, _Susp) :-
+      ( var(X) -&gt;
+          writeln(constrained(X)) % implicitly re-suspend
+;
+          writeln(instantiated(X)),
+          kill_suspension(Susp) % remove from the resolvent
+).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3964"
+ HREF="node115.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3960"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3954"
+ HREF="node113.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3962"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3965"
+ HREF="node115.html">More about Priorities</A>
+<B> Up:</B> <A NAME="tex2html3961"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3955"
+ HREF="node113.html">Lower-level Primitives</A>
+ &nbsp <B>  <A NAME="tex2html3963"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

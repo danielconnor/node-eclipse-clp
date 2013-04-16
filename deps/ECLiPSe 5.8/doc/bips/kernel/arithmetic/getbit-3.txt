@@ -1,0 +1,61 @@
+
+getbit(+Number, +Index, ?Result)
+
+   Result is the Index'th bit of Number.
+
+
+
+Arguments
+   +Number             Integer.
+   +Index              Non-negative integer.
+   ?Result             A variable or integer.
+
+Type
+   Arithmetic
+
+Description
+   Returns the Index'th bit of Number, assuming binary two's complement
+   representation.  The least significant bit has index zero.
+   The result is either 0 or 1.
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to getbit(Number, Index, Result) is
+   equivalent to
+
+    Result is getbit(Number, Index)
+
+   which should be preferred.
+
+   In coroutining mode, if Number or Index are free variables, the call
+   is delayed until these variables are instantiated.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number or Index is not instantiated (non-coroutining mode    only).
+     5 --- Result is a number but not an integer.
+     5 --- Number or Index is a number but not an integer.
+    24 --- Number or Index is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+
+Examples
+   
+Success:
+      getbit(10, 3, 1).
+      getbit(10, 2, 0).
+      getbit(10, 99, 0).
+
+
+
+
+
+See Also
+   is / 2, clrbit / 3, setbit / 3

@@ -1,0 +1,67 @@
+
+!
+
+   Cut - succeeds and removes all choice points between cut and parent goal.
+
+
+
+Arguments
+
+Type
+   Control
+
+Description
+   The cut operation succeeds immediately when first encountered as a goal.
+   The cut commits all the choices made since the parent goal was invoked,
+   and causes any other alternatives to be discarded.
+
+
+   Note that:
+
+
+   !/0 cuts through ,/2, ;/2 and ->/2, but it does not cut through call/1,
+   not/1 or once/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: [user].
+       or(A -> B, C) :- call(A), !, call(B).
+       or(_ -> _, C) :- call(C).
+       user compiled 412 bytes in 0.02 seconds
+      [eclipse]: or(write(a)->fail, write(k)).
+      a
+      no.
+      [eclipse]: or(fail->fail,write(k)).
+      k
+      yes.
+
+      [eclipse]: [user].
+       echo :- repeat, read(X), echo(X), !.
+       echo(end_of_file).
+       echo(X) :- writeln(X), fail.
+       user compiled 404 bytes in 0.02 seconds
+      yes.    % if the cut is left out, backtracking occurs.
+      [eclipse]: echo.
+       f(1,2).
+      f(1,2)
+       end_of_file.
+      yes.
+
+
+
+
+
+See Also
+   fail / 0, once / 1, repeat / 0, ; / 2

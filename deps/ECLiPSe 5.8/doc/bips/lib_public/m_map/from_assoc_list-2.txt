@@ -1,0 +1,29 @@
+
+from_assoc_list(+AssocList, -Map)
+
+   Converts an association list into a map.
+
+Arguments
+   AssocList           A list of key-value pairs
+   Map                 A map
+
+Type
+   library(m_map)
+
+Description
+	
+	AssocList is a list of key/value pairs of the form Key-Value, 
+	and Map is a map containing these key/value pairs.  If a key
+	appears more than once in AssocList, then its corresponding value
+	in the map Map will be the last one appearing in AssocList.  
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   to_assoc_list / 2, from_sorted_assoc_list / 2

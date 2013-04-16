@@ -1,0 +1,35 @@
+
+merge(+MapA, +MapB, -Map)
+
+   Merges two maps into one.
+
+Arguments
+   MapA                A map to merge
+   MapB                The other map to merge
+   Map                 The merged map
+
+Type
+   library(m_map)
+
+Description
+	
+	The map Map is the result of merging the map MapA and the map MapB;
+	i.e. Map contains all the key/value pairs from both MapA and MapB.
+	If MapA and MapB have a key in common, then it is not defined
+	which corresponding value will end up associated with that key
+	in Map.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   overlay / 3

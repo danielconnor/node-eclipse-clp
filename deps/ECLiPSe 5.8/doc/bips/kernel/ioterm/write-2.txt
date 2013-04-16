@@ -1,0 +1,68 @@
+
+write(+Stream, ?Term)
+
+   The term Term is written on the output stream Stream according to the
+current operator declarations.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   ?Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+   Used to write the term Term on the output stream Stream according to the
+   current operator declarations.  Lists and compound terms are only
+   printed up to the nesting depth specified by the (stream-specific or
+   global) print_depth setting (cf. set_stream_property/3, set_flag/2).
+
+
+   Note that as usual, the output is buffered, so it may need to be flushed
+   (e.g.  explicitly using flush/1).
+
+
+Note
+   The output of write/1 is not necessarily in a form acceptable to
+   read/1,2.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is not an atom or an integer.
+   192 --- Stream is not an output steam.
+   193 --- Stream is an illegal stream specification.
+
+Examples
+   
+Success:
+      [eclipse]: open(file1,update,s), write(s, X + 2), close(s).
+      X = _72
+      yes.
+      [eclipse]: sh('cat file1').
+      _72 + 2
+      yes.
+
+Error:
+      write(S, a(b,c)).          (Error 4).
+      write("string", a(b,c)).   (Error 5).
+      write(9, X + 2).           (Error 192). % stream not open
+      write(atom, X + 2).        (Error 193).
+
+
+
+
+See Also
+   display / 1, display / 2, get_flag / 2, set_flag / 2, write / 1, writeq / 1, writeq / 2

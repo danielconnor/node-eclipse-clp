@@ -1,0 +1,16 @@
+
+time_to_mjd(++HMS, ?MJD)
+
+   Convert the time in H:M:S form to a float MJD <1.0
+
+Arguments
+   HMS                 A structure of the form H:M:S where H and M are integers and S is a float
+   MJD                 Variable or float
+
+Type
+   library(calendar)
+
+Description
+Returns a float MJD <1.0 encoding the time of day (UTC/GMT). This can be added to an integral day number to obtain a full MJD.
+
+

@@ -1,0 +1,24 @@
+
+ordered_sum(+List, ?Sum)
+
+   The list elements are ordered and their sum is Sum
+
+Arguments
+   List                List of integers or domain variables
+   Sum                 Variable or integer
+
+Type
+   library(ic_global)
+
+Description
+    This constraint is declaratively equivalent to:
+
+	ordered_sum(List, Sum) :-
+	    ordered(=
+    However, additional propagation is performed.
+    
+    Any input variables which do not already have finite bounds will
+    be given default bounds of -10000000 to 10000000.
+
+See Also
+   ordered / 2, sumlist / 2

@@ -1,0 +1,4 @@
+lib(fcompile)
+
+   Generate platform independent object files
+

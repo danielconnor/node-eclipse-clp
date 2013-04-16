@@ -1,0 +1,303 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Datagram Connection (internet domain)</TITLE>
+<META NAME="description" CONTENT="Datagram Connection (internet domain)">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node134.html">
+<LINK REL="previous" HREF="node132.html">
+<LINK REL="up" HREF="node130.html">
+<LINK REL="next" HREF="node134.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4240"
+ HREF="node134.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4236"
+ HREF="node130.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4230"
+ HREF="node132.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4238"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4241"
+ HREF="node134.html">Stream Connection (unix domain)</A>
+<B> Up:</B> <A NAME="tex2html4237"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Previous:</B> <A NAME="tex2html4231"
+ HREF="node132.html">Stream Connection (internet domain)</A>
+ &nbsp <B>  <A NAME="tex2html4239"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002130000000000000000">
+Datagram Connection (internet domain)</A>
+</H1>
+This type of communication is the most general one offered by ECLiPSe.
+It is based on packets sent from one process to another, perhaps across
+a network. Any machine which is reachable over
+the network can participate in the communication.
+
+<P>
+The communication protocol does not guarantee that the message
+will always be delivered, but normally it will be.
+Every packet represents a message which is read separately
+at the system level, however at the Prolog level the packet
+boundaries are not visible<A NAME="tex2html1734"
+ HREF="footnode.html#foot12579"><SUP>21.1</SUP></A>.
+The difference to stream communication is that
+there is no obligatory connection between the server and the client.
+First the socket has to be created, and then the process which wants
+to read from the it binds the socket to a name.
+Any other process can then connect directly to this socket
+using the <A NAME="tex2html1735"
+ HREF="../bips/kernel/iostream/connect-2.html">connect/2</A><A NAME="12630"></A> predicate and send data there.
+This connection can be temporary, and after writing the message
+to the socket the process can connect it to another socket,
+or just disconnect it by calling <B>connect(Socket, 0)</B>.
+
+<P>
+Such datagram connection works only in one direction, namely
+from the process that called <A NAME="tex2html1737"
+ HREF="../bips/kernel/iostream/connect-2.html">connect/2</A><A NAME="12633"></A> to the process that called
+<A NAME="tex2html1739"
+ HREF="../bips/kernel/iostream/bind-2.html">bind/2</A><A NAME="12636"></A>, however the connection in the other direction
+can be established in the same way.
+
+<P>
+Since ECLiPSe does not provide a link to the system call <I>sendto()</I>,
+the address where the packet should be sent
+to can be specified only using <A NAME="tex2html1741"
+ HREF="../bips/kernel/iostream/connect-2.html">connect/2</A><A NAME="12639"></A>.
+If the next packet is to be sent to a different address, a new <A NAME="tex2html1743"
+ HREF="../bips/kernel/iostream/connect-2.html">connect/2</A><A NAME="12642"></A>
+call can be used.
+The socket can be disconnected by calling <B>connect(s, 0/0)</B>.
+
+<P>
+The functionality of <I>recvfrom()</I> is not available, i.e.
+the sender has to identify itself explicitly in the message
+if it wants the receiver to know who the sender was.
+
+<P>
+Below is an example of a program that starts ECLiPSe on all
+available machines which are not highly loaded and accepts
+a hello message from them.
+Note the use of <I>rsh</I> to invoke the process on the remote machine
+and pass it the host name and port address. Note that this example is Unix
+specific. <PRE>
+% Invoke ECLiPSe on all available machines and accept a hello message
+% from them.
+connect_machines :-
+    machine_list(List), % make a list of machines from ruptime
+socket(internet, datagram, sigio(s)), % signal when data comes
+bind(s, Address),
+    set_interrupt_handler(io, io_handler/0),
+    connect_machines(List, Address).
+
+% As soon as a message arrives to the socket, the io signal will
+% be sent and the handler reads the message.
+io_handler :-
+    set_flag(enable_interrupts, off),
+    read_string(s, "\n", _, Message),
+    writeln(Message),
+    set_flag(enable_interrupts, on).
+
+% Invoke eclipse on all machines with small load and let them execute
+% the start/0 predicate
+connect_machines([info(RHost, UpTime, Users, L1, _, _)|Rest], Host/Port) :-
+    UpTime &gt; 0, % it is not down
+L1 &lt; 0.5, % load not too high
+Users &lt; 3, % not too many users
+!,
+    concat_string(, Command),
+    exec(['rsh', RHost, 'eclipse', Host, Port, '-b', 
+       '/home/lp/micha/sepia4/up.pl', '-e', 'start'], [], _),
+    connect_machines(Rest, Host/Port).
+connect_machines([_|Rest], Address) :-
+    connect_machines(Rest, Address).
+connect_machines([], _).
+
+% ECLiPSe on remote hosts is invoked with
+%          eclipse host port -b file.pl -e start
+% It connects to the socket of the main process,
+% sends it a hello message and exits.
+start :-
+    is_built_in(socket/3), % to ignore non-BSD machines
+argv(1, SHost),
+    argv(2, SPort),
+    atom_string(Host, SHost),
+    number_string(Port, SPort),
+    get_flag(hostname, LHost),
+    socket(internet, datagram, s), % create the socket
+connect(s, Host/Port), % connect to the main process
+printf(s, "hello from %s\n%b", LHost).
+
+% Invoke ruptime(1) and parse its output to a list of accessible
+% machines in the form 
+%    info(Host, UpTime, Users, Load1, Load2, Load3).
+machine_list(List) :-
+ % exec/2 cannot be used as it could overflow
+% the pipe and then block
+    exec(['ruptime', '-l'], [null, S], P),
+    parse_ruptime(S, List),
+    close(S),
+    wait(P, _),
+    !.
+</PRE>
+
+<P><PRE>
+% Parse the output of ruptime
+parse_ruptime(S, [Info|List]) :-
+    parse_uptime_record(S, Info),
+    !,
+    parse_ruptime(S, List).
+parse_ruptime(_, []).
+
+% parse one line of the ruptime output
+parse_uptime_record(S, info(Host, Time, Users, Load1, Load2, Load3)) :-
+    read_token(S, Host, _),
+    Host \== end_of_file,
+    read_token(S, Up, _),
+    (Up == up -&gt;
+        read_time(S, Time),
+        read_token(S, ',', _),
+        read_token(S, Users, _),
+        read_token(S, _, _),
+        read_token(S, ',', _),
+        read_token(S, load, _),
+        read_token(S, Load1, _),
+        read_token(S, ',', _),
+        read_token(S, Load2, _),
+        read_token(S, ',', _),
+        read_token(S, Load3, _)
+    ;
+        read_time(S, _),
+        Time = 0
+    ).
+
+% Parse the up/down time and if the machine is down, return 0
+read_time(S, Time) :-
+    read_token(S, T1, _),
+    (read_token(S, +, _) -&gt;
+        Days = T1,
+        read_token(S, Hours, _),
+        read_token(S, :, _)
+    ;
+        Days = 0,
+        Hours = T1
+    ),
+    read_token(S, Mins, _),
+    Time is ((24 * Days) + Hours) * 60 + Mins.
+</PRE>
+
+<P>
+and here is a script of the session:
+
+<P><PRE>
+[eclipse 1]: [up].
+up.pl      compiled traceable 4772 bytes in 0.08 seconds
+
+yes.
+[eclipse 2]: connect_machines.
+sending to mimas3
+sending to mimas8
+sending to acrab23
+sending to europa1
+sending to europa5
+sending to regulus2
+sending to miranda5
+sending to mimas2
+sending to triton6
+sending to europa2
+sending to acrab7
+sending to europa3
+sending to sirius
+sending to miranda6
+sending to charon6
+sending to acrab13
+sending to triton1
+sending to acrab20
+sending to triton4
+sending to charon2
+sending to triton5
+sending to acrab24
+sending to acrab21
+sending to scorpio
+sending to acrab14
+sending to janus5
+ 
+yes.
+[eclipse 3]: hello from mimas3
+eclipse: Command not found. % eclipse not installed here
+hello from regulus2
+hello from mimas8
+hello from acrab20
+hello from europa1
+hello from mimas2
+hello from miranda6
+hello from miranda5
+hello from europa3
+hello from charon6
+hello from charon2
+hello from acrab24
+hello from triton5
+hello from acrab21
+hello from janus5
+hello from triton4
+hello from triton6
+hello from europa2
+hello from europa5
+hello from acrab23
+hello from triton1
+hello from acrab14
+hello from acrab13
+hello from acrab7
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4240"
+ HREF="node134.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4236"
+ HREF="node130.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4230"
+ HREF="node132.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4238"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4241"
+ HREF="node134.html">Stream Connection (unix domain)</A>
+<B> Up:</B> <A NAME="tex2html4237"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Previous:</B> <A NAME="tex2html4231"
+ HREF="node132.html">Stream Connection (internet domain)</A>
+ &nbsp <B>  <A NAME="tex2html4239"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

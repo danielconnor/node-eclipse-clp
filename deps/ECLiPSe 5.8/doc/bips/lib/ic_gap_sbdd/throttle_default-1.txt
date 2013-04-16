@@ -1,0 +1,19 @@
+
+throttle_default(+SBDDInfo)
+
+   Default throttling predicate
+
+Arguments
+   SBDDInfo            The sbdd_shared data structure
+
+Type
+   library(ic_gap_sbdd)
+
+Description
+   Default throttling predicate used if none is given to sbdd_initialise/5
+   or sbdd_initialise_set/5.  This predicate simply succeeds, meaning that
+   a dominance check is performed at every node in the search tree.
+
+
+See Also
+   sbdd_initialise / 5, sbdd_initialise_set / 5, throttle_depth_unique / 2, throttle_depth_non_unique / 2, throttle_depth_mod_unique / 2, throttle_depth_mod_non_unique / 2

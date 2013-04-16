@@ -1,0 +1,101 @@
+
+xget(+Handle, +Index, -Value)
+
+   Get the Index-th field of an external data structure (referenced by Handle).
+
+
+
+Arguments
+   +Handle             An external data handle.
+   +Index              An integer.
+   -Value              A variable.
+
+Type
+   External Interface
+
+Description
+   ECLiPSe can manipulate external data structures via handles.
+   An external data handle can only be created by external code.
+   It consists of a pointer to the external data and a descriptor
+   for this data (a method table). ECLiPSe can then perform certain
+   operations on the data using this method table.
+
+
+   The xget/3 predicate invokes one of the methods, the get-method.
+   The intended meaning is that it gets a field of the external data
+   structure (indicated by Index) and unifies it with Value.
+   The details of how the index is interpreted and how the field's
+   value is converted to an ECLiPSe term is dependent on the
+   get-method supplied by external code.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Handle or Index is uninstantiated.
+     5 --- Handle is not a handle, or Index is not an integer.
+   141 --- The get-method is not implemented for this handle.
+
+Examples
+   
+    /* C code with embedded ECLiPSe call, passing data via C ararys */
+    #include "eclipse.h"
+
+    #define N 5
+    double data_in[N] = {1.1,2.2,3.3,4.4,5.5};
+    double data_out[N];
+
+    main()
+    {
+        pword   call;
+        int     i;
+        
+        ec_init();
+        ec_post_string("[my_code]");
+        ec_post_goal(
+            ec_term(ec_did("process", 3),
+                ec_long(N),
+                ec_handle(&ec_xt_double_arr, (t_ext_ptr) data_in),
+                ec_handle(&ec_xt_double_arr, (t_ext_ptr) data_out)
+            )
+        );
+        if (ec_resume() == PSUCCEED)
+        {
+            for (i=0; i<N; i++)
+                printf("%f,", data_out[i]);
+        }
+        ec_cleanup();
+    }
+
+
+    /* ECLiPSe code in file my_code.pl */
+
+    process(0, _, _) :- !.
+    process(N, In, Out) :-
+        N1 is N-1,
+        xget(In, N1, X),
+        Y is sqrt(X),
+        xset(Out, N1, Y),
+        process(N1, In, Out).
+
+
+    /* Sample run */
+
+    % main
+    1.048809,1.483240,1.816590,2.097618,2.345208,
+
+
+
+
+
+
+See Also
+   xset / 3, setarg / 3

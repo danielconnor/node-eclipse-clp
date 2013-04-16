@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>incremental_single_pair_shortest_path(+Graph, +DistanceArg, +SourceNode, +SinkNode, +Modified, -Path)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>incremental_single_pair_shortest_path(+Graph, +DistanceArg, +SourceNode, +SinkNode, +Modified, -Path)</H1>
+Computes short paths from a source to a sink node
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>DistanceArg</EM></DT>
+<DD>which argument of EdgeData to use as distance: integer
+</DD>
+<DT><EM>SourceNode</EM></DT>
+<DD>source node number (integer)
+</DD>
+<DT><EM>SinkNode</EM></DT>
+<DD>sink node number (integer)
+</DD>
+<DT><EM>Modified</EM></DT>
+<DD>list of e/3 edge structures whose DistanceArg argument has been modified
+</DD>
+<DT><EM>Path</EM></DT>
+<DD>Length-EdgeList structure
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Incrementally computes shortest paths from SourceNode to SinkNode.
+    Alternative paths are generated on backtracking. Fails if there is
+    no path at all.
+</P><P>
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. Important: the distance
+    information in EdgeData must be a positive number.
+</P><P>
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+</P><P>
+    Modified is the list of e/3 edge structures whose DistanceArg
+    argument has been modified since the last computation for this
+    SourceNode.
+</P><P>
+    All paths returned will have the same length and will be shortest
+    paths from SourceNode to SinkNode. Note that the solutions are not
+    generated in any specific order.
+</P><P>
+    A resulting path is returned as a Length-EdgeList structure where
+    Length is the length of the path and EdgeList is the path in
+    reverse order, i.e. starting with the edge reaching SinkNode and
+    ending with the edge starting from SourceNode.
+    </P>
+<H3>Fail Conditions</H3>
+There is no path from SourceNode to SinkNode
+<H3>Resatisfiable</H3>
+yes
+<H2>Examples</H2>
+<PRE>
+    ?- sample_graph(G), incremental_single_pair_shortest_path(G, 0, 1, M, P).
+    P = 2 - [e(2, 3, 1), e(1, 2, 1)]
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/shortest_paths-4.html">shortest_paths / 4</A>, <A HREF="../../lib/graph_algorithms/single_pair_shortest_path-5.html">single_pair_shortest_path / 5</A>, <A HREF="../../lib/graph_algorithms/all_short_paths_as_edges-6.html">all_short_paths_as_edges / 6</A>, <A HREF="../../lib/graph_algorithms/all_short_paths_as_graph-6.html">all_short_paths_as_graph / 6</A>, <A HREF="../../lib/graph_algorithms/incremental_all_shortest_paths_as_edges-6.html">incremental_all_shortest_paths_as_edges / 6</A>, <A HREF="../../lib/graph_algorithms/incremental_all_shortest_paths_as_graph-6.html">incremental_all_shortest_paths_as_graph / 6</A>, <A HREF="../../lib/graph_algorithms/single_pair_short_path-6.html">single_pair_short_path / 6</A>, <A HREF="../../lib/graph_algorithms/single_pair_all_short_paths_as_graph-7.html">single_pair_all_short_paths_as_graph / 7</A>, <A HREF="../../lib/graph_algorithms/possible_path-7.html">possible_path / 7</A>
+</BODY></HTML>

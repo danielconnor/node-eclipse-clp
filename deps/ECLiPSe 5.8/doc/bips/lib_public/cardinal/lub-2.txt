@@ -1,0 +1,29 @@
+
+lub(?SetVariable, -Lub)
+
+   Obtaining a set's lub
+
+Arguments
+   SetVariable         A set variable.
+   Lub                 A set.
+
+Type
+   library(cardinal)
+
+Description
+Lub is unified with the (least) upper bound of SetVariable.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Lub can not be unified with the current lub of SetVariable.
+
+Examples
+   
+?- S `::[c]+[a,b], lub(S,L).
+L = [a,b,c]
+
+
+See Also
+   lub / 4, glb / 2, poss / 2, glb_poss / 3, domain / 2, domain / 3

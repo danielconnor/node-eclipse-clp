@@ -1,0 +1,19 @@
+
+ord_insert(+Set1, +Element, ?Set2)
+
+   Adds an element to a set
+
+Arguments
+   Set1                A set
+   Element             A term
+   Set2                A set or variable
+
+Type
+   library(ordset)
+
+Description
+	Set2 is the set resulting from adding Element to Set1. It should
+	give exactly the same result as merge(Set1, [Element], Set2).
+    
+
+

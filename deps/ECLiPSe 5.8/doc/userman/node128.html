@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>File System</TITLE>
+<META NAME="description" CONTENT="File System">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node129.html">
+<LINK REL="previous" HREF="node127.html">
+<LINK REL="up" HREF="node125.html">
+<LINK REL="next" HREF="node129.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4169"
+ HREF="node129.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4165"
+ HREF="node125.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4159"
+ HREF="node127.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4167"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4170"
+ HREF="node129.html">Creating Communicating Processes</A>
+<B> Up:</B> <A NAME="tex2html4166"
+ HREF="node125.html">Operating System Interface</A>
+<B> Previous:</B> <A NAME="tex2html4160"
+ HREF="node127.html">Environment Access</A>
+ &nbsp <B>  <A NAME="tex2html4168"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html4171"
+ HREF="node128.html#SECTION002031000000000000000">Current Directory</A>
+<LI><A NAME="tex2html4172"
+ HREF="node128.html#SECTION002032000000000000000">Looking at Directories</A>
+<LI><A NAME="tex2html4173"
+ HREF="node128.html#SECTION002033000000000000000">Checking Files</A>
+<LI><A NAME="tex2html4174"
+ HREF="node128.html#SECTION002034000000000000000">Renaming and Removing Files</A>
+<LI><A NAME="tex2html4175"
+ HREF="node128.html#SECTION002035000000000000000">Filenames</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION002030000000000000000">
+File System</A>
+</H1>
+A number of built-in predicates is provided for dealing with files and
+directories.
+Here we consider only the file as a whole, for opening files and accessing
+their contents refer to chapter <A HREF="node59.html#chapio">10</A>.
+
+<P>
+
+<H2><A NAME="SECTION002031000000000000000">
+Current Directory</A>
+</H2>
+The current working directory is an important notion in UNIX.
+It can be read and changed within the ECLiPSe system by using <A NAME="tex2html1651"
+ HREF="../bips/kernel/opsys/getcwd-1.html">getcwd/1</A><A NAME="12359"></A> and
+<A NAME="tex2html1653"
+ HREF="../bips/kernel/opsys/cd-1.html">cd/1</A><A NAME="12362"></A> respectively.
+<A NAME="12167"></A>
+<A NAME="12168"></A>
+The current working directory is accessible as a global flag as well.
+Reading and writing this flag is equivalent to the use of <A NAME="tex2html1657"
+ HREF="../bips/kernel/opsys/getcwd-1.html">getcwd/1</A><A NAME="12365"></A> and
+<A NAME="tex2html1659"
+ HREF="../bips/kernel/opsys/cd-1.html">cd/1</A><A NAME="12368"></A>:<PRE>
+[eclipse 1]: getcwd(Where).
+
+Where = "/usr/name/prolog"
+yes.
+[eclipse 2]: cd(..).
+
+yes.
+[eclipse 3]: get_flag(cwd, Where)
+
+Where = "/usr/name"
+yes.
+</PRE>
+All ECLiPSe built-ins that take file names as arguments accept absolute
+pathnames as well as relative pathnames starting at the current directory.
+
+<P>
+
+<H2><A NAME="SECTION002032000000000000000">
+Looking at Directories</A>
+</H2>
+To look at the contents of a directory, <A NAME="tex2html1661"
+ HREF="../bips/kernel/opsys/read_directory-4.html">read_directory/4</A><A NAME="12371"></A> is available.
+<A NAME="12181"></A>
+It takes a directory pathname and a filename pattern and returns a list
+of subdirectories and a list of files matching the pattern.
+The following metacharacters are recognised in the pattern:
+* matches an arbitrary sequence of characters,
+? matches any single character, [] matches one of the
+characters inside the brackets unless the first one is a ^  
+in which case it matches any character but those inside the brackets.<PRE>
+[eclipse 1]: read_directory("/usr/john", "*", Dirlist, Filelist).
+Dirlist = ["subdir1", "subdir2"]
+Filelist = ["one.c", "two.c", "three.pl", "four.pl"]
+yes.
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION002033000000000000000">
+Checking Files</A>
+</H2>
+For checking the existence of files,
+<A NAME="tex2html1664"
+ HREF="../bips/kernel/opsys/exists-1.html">exists/1</A><A NAME="12374"></A> or the more powerful
+<A NAME="tex2html1666"
+ HREF="../bips/kernel/opsys/existing_file-4.html">existing_file/4</A><A NAME="12377"></A> is used.
+<A NAME="12191"></A>
+<A NAME="12192"></A>
+For accessing any file properties there is <A NAME="tex2html1670"
+ HREF="../bips/kernel/opsys/get_file_info-3.html">get_file_info/3</A><A NAME="12380"></A>.
+<A NAME="12195"></A>
+It can return file permissions, type, owner, size, inode, number of
+links as well as creation, access and modification times
+(as defined by the UNIX system call <I>stat(2)</I>; not all entries are
+meaningful under Windows), and accessibility
+information.
+It fails when the specified file does not exist.
+<A NAME="12197"></A>
+Refer to the reference manual or <A NAME="tex2html1674"
+ HREF="../bips/kernel/env/help-1.html">help/1</A><A NAME="12383"></A> for details.
+
+<P>
+
+<H2><A NAME="SECTION002034000000000000000">
+Renaming and Removing Files</A>
+</H2>
+For these basic operations with files, <A NAME="tex2html1676"
+ HREF="../bips/kernel/opsys/rename-2.html">rename/2</A><A NAME="12386"></A> and <A NAME="tex2html1678"
+ HREF="../bips/kernel/opsys/delete-1.html">delete/1</A><A NAME="12389"></A>
+are provided.
+<A NAME="12205"></A>
+<A NAME="12206"></A>
+
+<P>
+
+<H2><A NAME="SECTION002035000000000000000">
+Filenames</A>
+</H2>
+The filenames used by ECLiPSe is in the Unix format, including on Window
+platforms, with the addition that the disk such as <code>C:</code> is
+indicated by <code>//C/</code>, so a Windows filename such as
+<code>"C:\my\path\name.ecl"</code> should be writen as
+<code>"//C/my/path/name.pl"</code>. The utility <A NAME="tex2html1682"
+ HREF="../bips/kernel/opsys/os_file_name-2.html">os_file_name/2</A><A NAME="12392"></A> provides for
+the interconversion between the format used in ECLiPSe and the Operating
+Systems' format.  
+
+<P>
+The utility <A NAME="tex2html1684"
+ HREF="../bips/kernel/opsys/pathname-4.html">pathname/4</A><A NAME="12395"></A>
+is provided to ease the handling of filenames.
+<A NAME="12214"></A>
+It takes a full pathname and cuts it into the directory
+pathname, the filename proper and a suffix (
+the part beginning with the last dot in the string).
+It also expands symbolic pathnames, starting with <code>~</code>, <code>~</code>user
+or $var.<PRE>
+[eclipse 1]: Name = "~octopus/prolog/file.pl",
+        pathname(Name, Path, File, Suffix).
+
+Path = "/usr/octopus/prolog/"
+File = "file.pl"
+Name = "~octopus/prolog/file.pl"
+Suffix = ".pl"
+yes.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4169"
+ HREF="node129.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4165"
+ HREF="node125.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4159"
+ HREF="node127.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4167"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4170"
+ HREF="node129.html">Creating Communicating Processes</A>
+<B> Up:</B> <A NAME="tex2html4166"
+ HREF="node125.html">Operating System Interface</A>
+<B> Previous:</B> <A NAME="tex2html4160"
+ HREF="node127.html">Environment Access</A>
+ &nbsp <B>  <A NAME="tex2html4168"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

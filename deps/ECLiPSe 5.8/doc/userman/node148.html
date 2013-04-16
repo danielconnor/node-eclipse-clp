@@ -1,0 +1,1208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Event Types</TITLE>
+<META NAME="description" CONTENT="Event Types">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node149.html">
+<LINK REL="previous" HREF="node147.html">
+<LINK REL="up" HREF="node147.html">
+<LINK REL="next" HREF="node149.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4459"
+ HREF="node149.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4455"
+ HREF="node147.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4449"
+ HREF="node147.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4457"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4460"
+ HREF="node149.html">Stack Overflows</A>
+<B> Up:</B> <A NAME="tex2html4456"
+ HREF="node147.html">Events</A>
+<B> Previous:</B> <A NAME="tex2html4450"
+ HREF="node147.html">Events</A>
+ &nbsp <B>  <A NAME="tex2html4458"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html4461"
+ HREF="node148.html#SECTION002511000000000000000">Argument Types and Values</A>
+<LI><A NAME="tex2html4462"
+ HREF="node148.html#SECTION002512000000000000000">Arithmetic, Environment</A>
+<LI><A NAME="tex2html4463"
+ HREF="node148.html#SECTION002513000000000000000">Data and Memory Areas, Predicates, Operators</A>
+<LI><A NAME="tex2html4464"
+ HREF="node148.html#SECTION002514000000000000000">Modules, Visibility</A>
+<LI><A NAME="tex2html4465"
+ HREF="node148.html#SECTION002515000000000000000">Syntax Errors, Parsing</A>
+<LI><A NAME="tex2html4466"
+ HREF="node148.html#SECTION002516000000000000000">Compilation, Run-Time System, Execution</A>
+<LI><A NAME="tex2html4467"
+ HREF="node148.html#SECTION002517000000000000000">Top-Level</A>
+<LI><A NAME="tex2html4468"
+ HREF="node148.html#SECTION002518000000000000000">Macro Transformation Errors, Lexical Analyser</A>
+<LI><A NAME="tex2html4469"
+ HREF="node148.html#SECTION002519000000000000000">I/O, Operating System, External Interface</A>
+<LI><A NAME="tex2html4470"
+ HREF="node148.html#SECTION0025110000000000000000">Debugging, Object Files</A>
+<LI><A NAME="tex2html4471"
+ HREF="node148.html#SECTION0025111000000000000000">Extensions</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION002510000000000000000">
+Event Types</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION002511000000000000000">
+Argument Types and Values</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>1</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>general error</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>2</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>term of an unknown type</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>4</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>instantiation fault</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>5</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>type error</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>6</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>out of range</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>7</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>string contains unexpected characters</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>8</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>bad argument list</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION002512000000000000000">
+Arithmetic, Environment</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>15</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>creating parallel choice point</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>fail / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>16</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>failing to parallel choice point</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>fail / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>17</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>recomputation failed</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>20</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>arithmetic exception</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>21</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>undefined arithmetic expression</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>23</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>comparison trap</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>compare_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>24</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>number expected</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>25</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>integer overflow</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>integer_overflow_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>30</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to write a read-only flag</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>31</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>arity limit exceeded</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>32</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>no handler for event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>warning_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>33</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>event queue overflow</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+<BR>
+
+<P>
+
+<H2><A NAME="SECTION002513000000000000000">
+Data and Memory Areas, Predicates, Operators</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>40</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>stale object handle</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>41</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>array or global variable does not exist</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>undef_array_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>42</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>redefining an existing array</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>make_array_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>43</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>multiple definition postfix/infix</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>44</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>record already exists</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>45</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>record does not exist</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>undef_record_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>50</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to modify a read-only ground term</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>60</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>referring to an undefined procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>61</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>inconsistent tool redefinition</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>62</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>inconsistent procedure redefinition</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>63</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure not dynamic</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>64</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure already dynamic</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>dynamic_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>65</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure already defined</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>66</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to modify a system predicate</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>67</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure is not yet loaded</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>68</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>calling an undefined procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>call_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>69</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>autoload event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>autoload_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>70</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>accessing an undefined dynamic procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>undef_dynamic_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>71</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure already parallel</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>72</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>accessing an undefined operator</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>73</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>redefining an existing operator</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>true / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>74</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>hiding an existing global operator</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>true / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>75</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>referring to a deprecated predicate</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>declaration_warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>76</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>predicate declared but not defined</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>declaration_warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>77</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>predicate used but not declared or defined</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>declaration_warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>78</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>calling a procedure with a reserved name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION002514000000000000000">
+Modules, Visibility</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>80</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>not a module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>81</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>module/1 can appear only as a directive</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>82</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to access a locked module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>locked_access_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>83</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>creating a new module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>warning_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>84</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>referring to non-exported predicate</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>declaration_warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>85</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>referring to non-existing module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>declaration_warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>86</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>lookup module does not exist</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>no_lookup_module_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>87</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>attempt to redefine an existing local item</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>88</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>attempt to redefine an existing exported item</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>89</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>attempt to redefine an already imported item</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>warning_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>90</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure is already reexported</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>91</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>not a tool procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>92</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to redefine an existing local procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>93</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to redefine an existing exported procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>94</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to redefine an existing imported procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>96</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>ambiguous import</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>ambiguous_import_resolve / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>97</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>module already exists</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>98</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>key not correct</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>99</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>unresolved ambiguous import</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>ambiguous_import_warn / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>100</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>accessing a procedure defined in another module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>undef_dynamic_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>101</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to erase a module from itself</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>error_handler / 2</TD>
+</TR>
+</TABLE>
+<BR>
+<BR>
+
+<P>
+
+<H2><A NAME="SECTION002515000000000000000">
+Syntax Errors, Parsing</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>110</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>111</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: list tail ended improperly</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>112</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: illegal character in a quoted token</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>113</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: precedence too high</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>114</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: unexpected token</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>115</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: unexpected end of file</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>116</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: numeric constant out of range</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>117</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: bracket necessary</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>118</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: unexpected fullstop</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>119</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: postfix/infix operator expected</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>120</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: wrong solo char</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>121</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: space between functor and open bracket</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>122</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: variable with multiple attributes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>123</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>illegal iteration specifier in do-loop</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>124</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error : prefix operator followed by infix operator</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>125</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error : unexpected closing bracket</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>126</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error : grammar rule head is not valid</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>127</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error : grammar rule body is not valid</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>128</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error : in source transformation</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>129</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: source transformation floundered</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>parser_error_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION002516000000000000000">
+Compilation, Run-Time System, Execution</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>130</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: illegal head</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>131</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: illegal goal</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>132</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>syntax error: term of an unknown type</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>133</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>loading the library</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>true / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>134</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure clauses are not consecutive</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>135</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to redefine a protected procedure</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>136</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to redefine a built-in predicate</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>137</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to redefine a procedure with another type</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>138</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>singleton local variable in do-loop</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>singleton_in_loop / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>139</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>compiled or dumped file message</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiled_file_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>140</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>undefined instruction</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>141</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>unimplemented functionality</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>142</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>built-in predicate not available on this system</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>143</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>compiled query failed</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>144</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>a cut is not allowed in a condition</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>145</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>procedure being redefined in another file</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>redef_other_file_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>146</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>start of compilation</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>true / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>147</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>compilation aborted</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_abort_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>148</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>bad pragma</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiler_error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>149</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>code unit loaded</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>unit_loaded_handler / 3</TD>
+</TR>
+</TABLE>
+<BR>
+<BR>
+
+<P>
+The handlers for these events receive the following arguments:
+
+<P>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Second Argument</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Third Argument</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>130</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Culprit clause</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>131</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Culprit clause</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>132</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Culprit clause</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>133</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Library name (string)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>134</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Procedure Name/Arity</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>135</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Procedure Name/Arity</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>136</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Procedure Name/Arity</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>137</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Procedure Name/Arity</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>138</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Variable name (atom)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>139</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>(File, Size, Time), see below</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>140</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>'Emulate'</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>141</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Goal</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>142</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Goal</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>143</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Goal</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>144</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Goal (if an execution error) or Culprit clause (if compiler error)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>145</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>(Name/Arity, OldFile, NewFile)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>146</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>File</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>147</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>File</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>148</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Clause</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+</TABLE>
+
+<P>
+The second argument for the event 139 depends on the predicate
+where it was raised:
+
+<UL><LI><A NAME="tex2html1795"
+ HREF="../bips/kernel/database/compile-1.html">compile/1, 2</A><A NAME="13413"></A> - (file name, code size, compile time)
+
+<LI><A NAME="tex2html1797"
+ HREF="../bips/kernel/database/compile_stream-1.html">compile_stream/1</A><A NAME="13416"></A> - ('string', code size, compile time) with a string stream
+
+<LI><A NAME="tex2html1799"
+ HREF="../bips/kernel/database/compile_stream-1.html">compile_stream/1</A><A NAME="13419"></A> - (file name, code size, compile time) with a stream associated to a file
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION002517000000000000000">
+Top-Level</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>150</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>start of eclipse execution</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>sepia_start / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>151</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>eclipse restart</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>true / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>152</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>end of eclipse execution</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>sepia_end / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>153</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: print prompt</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>toplevel_prompt / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>154</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: start of query execution</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>true / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>155</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: print values</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>print_values / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>156</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: print answer</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>tty_ask_more / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>157</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>error exit</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_exit / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>158</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: entering break level</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>start_break / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>159</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: leaving break level</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>end_break / 3</TD>
+</TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+These events are not errors but rather hooks to allow users to modify
+the behaviour of the ECLiPSe toplevel.
+Therefore the arguments that are passed to the handler are not the
+erroneous goal and the caller module but defined as follows:
+
+<P>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Second Argument</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Third Argument</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>150</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>A free variable. If the handler binds the variable
+to an atom, this name is used as the toplevel module name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>151</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>undefined</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>152</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>The argument is the number that ECLiPSe will return to the
+operating system</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>153</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>current toplevel module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>current toplevel module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>154</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>a structure of the form
+<DIV ALIGN="CENTER">
+<I> goal(Goal, VarList, NewGoal, NewVarList)</I>,
+
+</DIV>
+where Goal is the goal that is about to be executed and VarList is the list
+that associates the variables in Goal with their names
+(like in <A NAME="tex2html1801"
+ HREF="../bips/kernel/ioterm/readvar-3.html">readvar/3</A><A NAME="13485"></A>).
+NewGoal and NewVarList are free variables. If the handler binds NewVarList
+then the toplevel will use NewGoal and NewVarList to replace Goal and VarList
+in the current query.</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>current toplevel module</TD>
+</TR>
+</TABLE>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Second Argument</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Third Argument</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>155</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>A list associating the variable names with their values after the
+query has been executed.</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>current toplevel module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>156</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>An atom stating the answer to the query that was just executed.
+The possible values are: <TT> yes</TT>, <TT> last_yes</TT> or <TT> no</TT>
+if the query had no variables,
+<TT> more_answers</TT>, <TT> last_answer</TT> if the query contained variables and
+bindings were printed, <TT> no_answer</TT> if a query containing variables failed.</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>current toplevel module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>157</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>undefined</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>158</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>break level</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>current toplevel module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>159</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>break level</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>current toplevel module</TD>
+</TR>
+</TABLE>
+
+<P>
+<BR>
+
+<P>
+When the handler for event 152 "end of eclipse execution" fails,
+ECLiPSe
+is not exited, but re-started. This can prevent
+accidental exits from the system.
+
+<P>
+
+<H2><A NAME="SECTION002518000000000000000">
+Macro Transformation Errors, Lexical Analyser</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>160</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>global macro transformation already exists</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>161</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>macro transformation already defined in this module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>macro_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>162</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>no macro transformation defined in this module</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>warning_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>163</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>illegal attempt to remove the last member of a character class</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>164</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>toplevel: print banner</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>tty_banner / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>165</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>can't compile an attributed variable (use add_attribute/2,3)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>166</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>file successfully processed</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>record_compiled_file_handler / 3</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<P>
+<BR>
+The event 164 is raised whenever the toplevel loop is restarted.
+
+<P>
+<BR>
+
+<P>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Second Argument</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Third Argument</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>164</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>the banner string</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>&nbsp;</TD>
+</TR>
+</TABLE>
+<BR>
+
+<P>
+
+<H2><A NAME="SECTION002519000000000000000">
+I/O, Operating System, External Interface</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>170</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>system interface error</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>system_error_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>171</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>File does not exist :</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>172</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>File is not open :</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>173</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>library not found</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>174</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>child process terminated due to signal</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>175</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>child process stopped</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>176</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>message passing error</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>177</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>shared library not found</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>190</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>end of file reached</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>eof_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>191</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>output error</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>output_error_handler / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>192</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>illegal stream mode</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>193</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>illegal stream specification</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>194</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>too many symbolic names of a stream</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>195</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>yield on flush</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>io_yield_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>196</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trying to modify a system stream</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>close_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>197</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>use 'input' or 'output' instead of 'user'</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>198</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>reading past the file end</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>past_eof_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>210</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Remember() not inside a backtracking predicate</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>211</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>External function does not exist</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>212</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>External function returned invalid code</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>213</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Error in external function</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>214</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Licensing problem</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION0025110000000000000000">
+Debugging, Object Files</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>230</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>uncaught exception</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>231</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>default help/0 message</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>fail / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>249</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger new suspensions event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>bip_delay / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>250</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger init event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>trace_start_handler_tty / 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>251</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger builtin fail event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>bip_port / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>252</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger port event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>trace_line_handler_tty / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>253</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger call event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>ncall / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>254</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger exit event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>nexit / 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>255</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger redo event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>redo / 5</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>256</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger delay event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>ndelay / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>257</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger wake event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>resume / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>258</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger builtin call event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>bip_port / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>259</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>debugger builtin exit event</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>bip_port / 4</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>260</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>unexpected end of file</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>261</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>invalid saved state</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>262</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>can not allocate required space</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>263</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>can not save or restore from another break level than level 0</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>264</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>not an eclipse object file</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiled_file_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>265</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>bad eclipse object file version</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>compiled_file_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>267</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>predicate not implemented in this version</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>268</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>predicate not supported in parallel session</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+These handlers receive special arguments:
+
+<P>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Second Argument</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Third Argument</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>252</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>trace_line{port:Port,frame:Frame}</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>264</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>(File, [], [])</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>265</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>(File, [], [])</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+</TABLE>
+<BR>
+
+<P>
+
+<H2><A NAME="SECTION0025111000000000000000">
+Extensions</A>
+</H2>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Event Type</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Default Event Handler</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>270</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>undefined variable attribute</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>271</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>bad format of the variable attribute</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>272</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>delay clause may cause indefinite delay</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>warning_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>273</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>delayed goals left</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>delayed_goals_handler / 3</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>274</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>stack of woken lists empty</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>error_handler / 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>280</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Found a solution with cost</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>cost_handler / 2</TD>
+</TR>
+</TABLE>
+
+<P>
+<BR>
+<BR>
+
+<P>
+The handlers for these events receive the following arguments:
+
+<P>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34><B> Event</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227><B> Second Argument</B></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128><B> Third Argument</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>272</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Culprit clause</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>Module</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>273</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>list of sleeping suspensions</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=34>280</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=227>Cost, Goal</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=128>undefined</TD>
+</TR>
+</TABLE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4459"
+ HREF="node149.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4455"
+ HREF="node147.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4449"
+ HREF="node147.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4457"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4460"
+ HREF="node149.html">Stack Overflows</A>
+<B> Up:</B> <A NAME="tex2html4456"
+ HREF="node147.html">Events</A>
+<B> Previous:</B> <A NAME="tex2html4450"
+ HREF="node147.html">Events</A>
+ &nbsp <B>  <A NAME="tex2html4458"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

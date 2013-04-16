@@ -1,0 +1,9 @@
+
+write_history
+
+   Writes the current command history into the .eclipse_history file
+
+Type
+   library(toplevel)
+
+

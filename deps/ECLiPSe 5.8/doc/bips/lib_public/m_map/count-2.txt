@@ -1,0 +1,30 @@
+
+count(+Map, ?Count)
+
+   Count the number of elements in a map.
+
+Arguments
+   Map                 A map
+   Count               The number of elements in Map
+
+Type
+   library(m_map)
+
+Description
+	
+	Counts the number of elements in the map Map, and attempts to
+	unify the result with Count.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Count does not unify with the number of elements in Map.
+
+

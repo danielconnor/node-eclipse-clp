@@ -1,0 +1,29 @@
+lib(config_opts)
+
+   This library provides a centralised mechanism for managing configuration
+   options for other libraries and applications.  Such options range from
+   turning logging on and off and specifying what statistics to collect and
+   print, to which redundant constraints and search strategies to use.
+
+   A software component registers the fact that it supports an option by
+   calling register_option/3.  An option's value can then be set and
+   retrieved through set_option/2 and get_option/2, respectively.  And any
+   party wishing to be notified when an option's value changes can achieve
+   this by calling request_notification/2.
+
+   The values and associated parameters of configuration options are
+   persistent across backtracking.  Values are copied when set and
+   retrieved, which means that any non-ground values will contain fresh
+   copies of variables when retrieved rather than the original ones.
+
+   Note that at the moment configuration option settings are global, which
+   makes them unsuitable for some purposes (e.g. any library that might be
+   used by more than one component of a software system if those components
+   may wish to use different settings for that library).  We hope to address
+   this issue in a future version of this library, probably by allowing the
+   use of handles to manage multiple sets of options.
+
+   This library is still experimental and is expected to evolve.  Feedback,
+   suggestions, problem reports, etc. welcome.
+
+

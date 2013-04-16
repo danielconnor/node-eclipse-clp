@@ -1,0 +1,17 @@
+
+hash_delete(+Table, +Key)
+
+   Remove the entry with key Key (if any)
+
+Arguments
+   Table               Hash table
+   Key                 a ground term
+
+Type
+   library(hash)
+
+Fail Conditions
+   None
+
+See Also
+   hash_remove / 3, hash_erase / 1

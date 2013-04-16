@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>set_var_bounds(?Var, +Lower, +Upper)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_var_bounds(?Var, +Lower, +Upper)</H1>
+Impose bounds on a numeric variable in a generic way
+<DL>
+<DT><EM>?Var</EM></DT>
+<DD>Variable or number.
+</DD>
+<DT><EM>+Lower</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>+Upper</EM></DT>
+<DD>A number.
+</DD>
+</DL>
+<H2>Description</H2>
+    This predicate is intended to be used on attributed variables that
+    have a numeric domain.  The bound information is distributed to the
+    variable's attributes via their set_bounds-handlers.  Only existing
+    attributes are involved, no new attributes are created!
+<P>
+    The bounds can be given as any numeric type, the set_bounds handlers
+    are expected to interpret them appropriately.
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Var is not a variable or number
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: lib(fd), lib(ic).
+    yes.
+
+    % update both attributes:
+    [eclipse 2]: ic:(X::3.0..9.0), fd:(X::1..7), set_var_bounds(X, 5, 6.5).
+    X = X{ic : 5.0..6.5, fd:[5, 6]}
+    yes.
+
+    % no attribute - no effect:
+    [eclipse 13]: set_var_bounds(X, 5, 6.5).
+    X = X
+    yes.
+
+    [eclipse 15]: set_var_bounds(0, 5, 6.5).
+    no (more) solution.
+
+    [eclipse 14]: set_var_bounds(a, 3,7).
+    type error in set_var_bounds(a, 3, 7)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/get_var_bounds-3.html">get_var_bounds / 3</A>
+</BODY></HTML>

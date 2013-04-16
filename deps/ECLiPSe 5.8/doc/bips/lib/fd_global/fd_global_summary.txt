@@ -1,0 +1,4 @@
+lib(fd_global)
+
+   Various global constraints over lists of FD variables
+

@@ -1,0 +1,17 @@
+
+make_queue(Queue)
+
+   creates a new empty queue
+
+Type
+   library(queues)
+
+Description
+
+    creates a new empty queue.  It will also match empty queues, but
+    because Prolog doesn't do the occurs check, it will also match
+    other queues, creating circular lists.  So this should ONLY be
+    used to make new queues.
+    
+
+

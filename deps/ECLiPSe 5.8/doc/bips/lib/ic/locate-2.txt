@@ -1,0 +1,28 @@
+
+locate(+Vars, ++Precision)
+
+   Locate solution intervals for Vars by splitting and search.
+
+Arguments
+   Vars                List of variables
+   Precision           Minimum required precision (float)
+
+Type
+   library(ic)
+
+Description
+
+   Locate solution intervals for the given variables with the required
+   precision.  This works well if the problem has a finite number of
+   solutions.  locate/2,3 work by nondeterministically splitting the
+   intervals of the variables until they are narrower than Precision (in
+   either absolute or relative terms).
+
+   locate/2 is defined in terms of locate/3 as follows:
+    
+    locate(Vars, Precision) :- locate(Vars, Precision, log).
+    
+
+
+See Also
+   locate / 3, locate / 4, squash / 3

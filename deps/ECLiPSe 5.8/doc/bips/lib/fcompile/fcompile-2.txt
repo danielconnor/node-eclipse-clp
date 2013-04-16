@@ -1,0 +1,106 @@
+
+fcompile(++File, ++Options)
+
+   Generates a object file from the ECLiPSe source File with specified options.
+
+Arguments
+   File                Name of source file (Atom or string)
+   Options             List of valid options and their values
+
+Type
+   library(fcompile)
+
+Description
+
+   Compiles the specified Prolog source file and generates an object file
+   with the same base name as the source file but with suffix .eco.
+   Object files can be loaded by the built-in predicates use_module/1,
+   lib/1, compile/1 and ensure_loaded/1, and also
+   with the eclipse -b command-line option.
+
+   File must be instantiated to a legitimate specification for an existing
+   file except for the suffix, which may be omitted. Options is a list of
+   Option:Value pairs where Option and value can be:
+
+
+   compile: YesOrNo
+
+        YesOrNo is either the  atom yes or no. For 'yes', fcompile will
+       try to first compile File (checking that it has not already been
+       compiled first).  This is usually what is required, as it ensures
+       that File can be properly read to generate the object file. The
+       default is 'yes'.
+
+   format: ByteOrText
+
+      ByteOrText is either the atom byte or text.  If 'text', the
+      object file will be in a textual format.  If 'byte', the object file
+      will be in a binary format which is larger, but will load faster
+      and is not human readable. The default is byte.
+
+   outdir: OutputDirectory
+
+        OutputDirectory is the directory where the generated object
+       file will be placed. It can be an atom or a string. The default is
+       the current working directory.
+
+   verbose: YesOrNo
+
+        YesOrNo is either the  atom yes or no. For 'yes', fcompile will
+       report in detail the predicates it is dumping out. This is probably
+       only needed for debugging fcompile, to trace its progress. The default
+       is 'no'.
+
+   The predicate will look for File with a `source' suffix (i.e. no
+   suffix, .ecl or .pl), compile the file by calling compile, and
+   generate an object form of the source file with suffix .eco.
+   The user should use include/1 directives to include all files that are
+   in the same module as the master file, and use_module/1 directives for
+   files that define a different module. Files mentioned in include
+   directives will not need to be fcompiled separately for their object
+   form.
+
+   This object form can be loaded into an ECLiPSe session even on a
+   different operating system/hardware platform from the one on which
+   it was generated.  However, the object format may change incompatibly
+   between different releases of ECLiPSe.
+
+   The fcompile library does not need to be loaded in order to load the object
+   file.  The built-in predicates ensure_loaded/1, use_module/1
+   and lib/1,2 will try to load an object file in preference to a
+   source file, if both are present.  The compile built-ins on the
+   other hand will prefer source files, unless the .eco
+   suffix is explicitly given.
+
+   It is recommended that object files always contain proper modules.
+   If an object file contains module-free code, then loading it into
+   an existing module that already has code can cause conflicts with
+   auxiliary predicates (e.g. from do/2 loop constructs).
+
+   Restrictions:
+
+     macro definitions should be quoted using 
+     no_macro_expansion/1, e.g.
+     
+         :- local macro(no_macro_expansion(maxint), 9999).
+     
+
+     directives in the module should not change the state 
+         of compiled code.
+
+     big integer constants between -2^63 and -2^31 and between
+     	2^31 and 2^63 should not appear directly in the source, and
+	will provoke a warning because the generated object code will
+	not be portable between 32 and 64 bit machines.
+
+
+
+Examples
+      fcompile(my_prog, []).   % equivalent to fcompile(my_prog)
+
+   fcompile(my_prog, [format:text, outdir:'../']).
+   % generate the object file in text format, and place it in the parent dir
+
+
+See Also
+   fcompile / 1

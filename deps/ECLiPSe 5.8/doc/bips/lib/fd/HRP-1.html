@@ -1,0 +1,28 @@
+<HTML><HEAD><TITLE>#\+ ?C</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>#\+ ?C</H1>
+The constraint expression C is false.
+
+
+<DL>
+<DT><EM>?C</EM></DT>
+<DD>An arithmetic constraint expression.
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint states that the constraint expressions C is false.  If
+   this is already the case, it simply succeeds.  Otherwise it is suspended
+   and after each domain change that may cause C to succeed, it is woken
+   and re-evaluated.  If C is true, the constraint fails.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if both C is true.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>See Also</H2>
+<A HREF="../../lib/fd/HFR-2.html">#/\ / 2</A>, <A HREF="../../lib/fd/HEG-2.html">#=> / 2</A>, <A HREF="../../lib/fd/HLEG-2.html">#<=> / 2</A>, <A HREF="../../lib/fd/HRF-2.html">#\/ / 2</A>
+</BODY></HTML>

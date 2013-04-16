@@ -1,0 +1,83 @@
+<HTML><HEAD><TITLE>unlock(+Module, +Password)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Modules</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>unlock(+Module, +Password)</H1>
+Unlocks the access to the module Module, if the password given in Password
+is correct
+
+
+<DL>
+<DT><EM>+Module</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>+Password</EM></DT>
+<DD>String.
+</DD>
+</DL>
+<H2>Description</H2>
+   unlock(Module, Password) unlock a module previously locked with
+   lock(Module, Password).  The access to the module is now again possible.
+
+<P>
+   An error is raised (and the module not unlocked) when trying to unlock a
+   module with a wrong password or when trying to unlock a module locked
+   with lock/1 (error 82).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Module or Password is/are not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Module is instantiated, but not to an atom or Password is    instantiated but not to a string.
+<DT><EM>(80) not a module </EM>
+<DD>Module is not a module.
+<DT><EM>(82) trying to access a locked module </EM>
+<DD>Trying to access a locked module Module.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse]: [user].
+      :- module(m).
+      :- export p/0.
+      p :- writeln(hello).
+      user        compiled 60 bytes in 0.00 seconds
+     yes.
+     [eclipse]: lock(m, "pass").
+     yes.
+     [eclipse]: module(m).
+     trying to access a locked module in module(m)
+     [eclipse]: import p/0 from m.
+     yes.
+     [eclipse]: p.
+     hello
+     yes.
+     [eclipse]: call(p) @ m.
+     trying to access a locked module in p
+     [eclipse]: unlock(m, "pass").
+     yes.
+     [eclipse]: call(p) @ m.
+     hello
+     yes.
+
+Error:
+     unlock(M, "pass").                        (Error 4).
+     unlock(m, Pass).                          (Error 4).
+     unlock(1, "pass").                        (Error 5).
+     unlock(not_a_module, "pass").             (Error 80).
+     lock(m, "pass"), unlock(m, "wrong_pass"). (Error 82).
+     lock(m), unlock(m, "pass").               (Error 82).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/lock-1.html">lock / 1</A>, <A HREF="../../kernel/modules/lock-2.html">lock / 2</A>, <A HREF="../../kernel/modules/get_module_info-3.html">get_module_info / 3</A>
+</BODY></HTML>

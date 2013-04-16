@@ -1,0 +1,1027 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Library Predicates</TITLE>
+<META NAME="description" CONTENT="Library Predicates">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node18.html">
+<LINK REL="previous" HREF="node16.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node18.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1104"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1100"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1094"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1102"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1105"
+ HREF="node18.html">General Guidelines for the</A>
+<B> Up:</B> <A NAME="tex2html1101"
+ HREF="node15.html">IC: A Hybrid Finite</A>
+<B> Previous:</B> <A NAME="tex2html1095"
+ HREF="node16.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html1103"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1106"
+ HREF="node17.html#SECTION00321000000000000000">Domain constraints</A>
+<LI><A NAME="tex2html1107"
+ HREF="node17.html#SECTION00322000000000000000">Arithmetic constraints</A>
+<LI><A NAME="tex2html1108"
+ HREF="node17.html#SECTION00323000000000000000">Reified constraints</A>
+<UL>
+<LI><A NAME="tex2html1109"
+ HREF="node17.html#SECTION00323100000000000000">Enforcing constraints</A>
+<LI><A NAME="tex2html1110"
+ HREF="node17.html#SECTION00323200000000000000">User-defined reified constraints</A>
+<UL>
+<LI><A NAME="tex2html1111"
+ HREF="node17.html#SECTION00323210000000000000">Reified variable is unbound</A>
+<LI><A NAME="tex2html1112"
+ HREF="node17.html#SECTION00323220000000000000">Reified variable is bound to 0</A>
+<LI><A NAME="tex2html1113"
+ HREF="node17.html#SECTION00323230000000000000">Reified variable is bound to 1</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html1114"
+ HREF="node17.html#SECTION00324000000000000000">Miscellaneous constraints</A>
+<LI><A NAME="tex2html1115"
+ HREF="node17.html#SECTION00325000000000000000">Integer labeling predicates</A>
+<LI><A NAME="tex2html1116"
+ HREF="node17.html#SECTION00326000000000000000">Real domain refinement predicates</A>
+<LI><A NAME="tex2html1117"
+ HREF="node17.html#SECTION00327000000000000000">Variable query predicates</A>
+<LI><A NAME="tex2html1118"
+ HREF="node17.html#SECTION00328000000000000000">Propagation threshold predicates</A>
+<LI><A NAME="tex2html1119"
+ HREF="node17.html#SECTION00329000000000000000">Solving by Interval Propagation</A>
+<LI><A NAME="tex2html1120"
+ HREF="node17.html#SECTION003210000000000000000">Reducing Ranges Further</A>
+<UL>
+<LI><A NAME="tex2html1121"
+ HREF="node17.html#SECTION003210100000000000000">Squash algorithm</A>
+</UL>
+<LI><A NAME="tex2html1122"
+ HREF="node17.html#SECTION003211000000000000000">Obtaining Solver Statistics</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00320000000000000000">
+Library Predicates</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00321000000000000000">
+Domain constraints</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html48"
+HREF="../bips/lib/ic/NN-2.html">Vars :: Domain</A><A NAME="1149"></A></STRONG>
+<DD>Constrains Vars to take only integer or real values from the domain
+specified by Domain.  Vars may be a variable, a list, or a submatrix (e.g. M[1..4, 3..6]); for a list or a submatrix, the domain is applied recursively
+so that one can apply a domain to, for instance, a list of lists of
+variables.  Domain can be specified as a simple range Lo .. Hi, or as a list
+of subranges and/or individual elements (integer variables only).  The type
+of the bounds determines the type of the variable (real or integer).  Also
+allowed are the (untyped) symbolic bound values <TT>inf</TT>, <TT>+inf</TT> and
+<TT>-inf</TT>.
+
+<P>
+<DT><STRONG><A NAME="tex2html50"
+ HREF="../bips/lib/ic/NN-3.html">::(Vars,Domain,Bool)</A><A NAME="1152"></A></STRONG>
+<DD><P>
+Provides a reified form of the <TT>::/2</TT> domain assignment predicate.  This
+reified <TT>::/3</TT> is defined only to work for one variable and only integer
+variables (unlike <TT>::/2</TT>), hence only the Domain formats suitable for
+integers may be supplied to this predicate.
+
+<P>
+For a single variable, V, the Bool will be instantiated to 0 if the
+current domain of V does not intersect with Domain.  It will be
+instantiated to 1 iff the domain of V is wholly contained within
+Domain.  Finally the Boolean will remain an integer variable in the
+range <TT>0..1</TT> if neither of the above two conditions hold.
+
+<P>
+Instantiating Bool to 1, will cause the constraint to behave exactly
+like <TT>::/2</TT>.  Instantiating Bool to 0 will cause Domain to be
+excluded from the domain of all the variables in Vars where such an
+exclusion is representable.  If such an integer domain is
+unrepresentable (e.g. <TT>-1.0Inf .. -5, 5..1.0Inf</TT>), then a delayed
+goal will be setup to exclude values when the bounds become
+sufficiently narrow.
+
+<P>
+Note that calling the reified form of <TT>::</TT> will result in the
+Variable becoming constrained to be integral, even if Bool is
+uninstantiated.
+
+<P>
+Further note that, like other reified predicates, <TT>::</TT> can be used
+infix in an IC expression e.g. <TT>B #= (X :: [1..10])</TT> is equivalent
+to <TT>::(X, [1..10], B)</TT>. See section&nbsp;<A HREF="node17.html#sec:reified-constraints">3.2.3</A>
+for more information of reified constraints.
+
+<P>
+<DT><STRONG><A NAME="tex2html52"
+ HREF="../bips/lib/ic/HNN-2.html">Vars #:: Domain</A><A NAME="1155"></A></STRONG>
+<DD>Constrains Vars to take only integer values from the domain
+specified by Domain.  Vars may be a variable, a list, or a submatrix (e.g. M[1..4, 3..6]); for a list or a submatrix, the domain is applied recursively
+so that one can apply a domain to, for instance, a list of lists of
+variables.  Domain can be specified as a simple range Lo .. Hi, or as a list
+of subranges and/or individual elements (integer variables only).  Also
+allowed are the (untyped) symbolic bound values <TT>inf</TT>, <TT>+inf</TT> and
+<TT>-inf</TT>.
+
+<P>
+<DT><STRONG><A NAME="tex2html54"
+ HREF="../bips/lib/ic/SNN-2.html">Vars $:: Domain</A><A NAME="1158"></A></STRONG>
+<DD>Constrains Vars to take real values from the domain specified by
+Domain.  Vars may be a variable, a list, or a submatrix (e.g. M[1..4,
+3..6]); for a list or a submatrix, the domain is applied recursively
+so that one can apply a domain to, for instance, a list of lists of
+variables.  Domain can only be specified as a simple range Lo .. Hi,
+in keeping with other implementations of this generic domain
+assignment predicate.
+
+<P>
+<DT><STRONG><A NAME="tex2html56"
+ HREF="../bips/lib/ic/reals-1.html">reals(Vars)</A><A NAME="1161"></A></STRONG>
+<DD>Declares that the given variables are IC variables.
+
+<P>
+<DT><STRONG><A NAME="tex2html58"
+ HREF="../bips/lib/ic/integers-1.html">integers(Vars)</A><A NAME="1164"></A></STRONG>
+<DD>Constrains the given variables to take integer values only.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00322000000000000000">
+Arithmetic constraints</A>
+</H2>
+
+<P>
+Note that the integer forms of the constraints are essentially the same as
+the general forms, except that they check that all constants are integers
+and generally constrain all variables <I>and subexpressions</I> to be
+integral.
+Thus with integer constraints, the solver does very much behave like a
+traditional integer solver, with any temporary variables and intermediate
+results assumed to be integral.
+This means that it makes little sense to use many of the nonlinear functions
+available for use in expressions (e.g. sin, cos, ln, exp) in integer
+constraints.
+It also means that one should take care using such things as division:
+<B>X/2 + Y/2 #= 1</B> and <B>X + Y #= 2</B> are different
+constraints, with the former constraining X and Y to be even.
+That said, if all the constants and variables are integral already and the
+subexpressions clearly so as a consequence, then the integer (#) constraints
+and general ($) constraints may be used integerchangeably.
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html60"
+HREF="../bips/lib/ic/SE-2.html">ExprX $= ExprY</A><A NAME="1169"></A>,
+
+<A NAME="tex2html62"
+ HREF="../bips/lib/ic/ENE-2.html">ic:(ExprX =:= ExprY)</A><A NAME="1172"></A></STRONG>
+<DD>ExprX is equal to ExprY.  ExprX and ExprY are general expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html64"
+ HREF="../bips/lib/ic/SGE-2.html">ExprX $&gt;= ExprY</A><A NAME="1175"></A>,
+
+<A NAME="tex2html66"
+ HREF="../bips/lib/ic/GE-2.html">ic:(ExprX &gt;= ExprY)</A><A NAME="1178"></A></STRONG>
+<DD>ExprX is greater than or equal to ExprY.  ExprX and ExprY are general
+expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html68"
+ HREF="../bips/lib/ic/SEL-2.html">ExprX $=&lt; ExprY</A><A NAME="1181"></A>,
+
+<A NAME="tex2html70"
+ HREF="../bips/lib/ic/EL-2.html">ic:(ExprX =&lt; ExprY)</A><A NAME="1184"></A></STRONG>
+<DD>ExprX is less than or equal to ExprY.  ExprX and ExprY are general expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html72"
+ HREF="../bips/lib/ic/SG-2.html">ExprX $&gt; ExprY</A><A NAME="1187"></A>,
+
+<A NAME="tex2html74"
+ HREF="../bips/lib/ic/G-2.html">ic:(ExprX &gt; ExprY)</A><A NAME="1190"></A></STRONG>
+<DD>ExprX is strictly greater than ExprY.  ExprX and ExprY are general
+expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html76"
+ HREF="../bips/lib/ic/SL-2.html">ExprX $&lt; ExprY)</A><A NAME="1193"></A>,
+
+<A NAME="tex2html78"
+ HREF="../bips/lib/ic/L-2.html">ic:(ExprX &lt; ExprY)</A><A NAME="1196"></A></STRONG>
+<DD>ExprX is strictly less than ExprY.  ExprX and ExprY are general expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html80"
+ HREF="../bips/lib/ic/SRE-2.html">ExprX $<code>\</code>= ExprY</A>,
+
+<A NAME="tex2html81"
+ HREF="../bips/lib/ic/ERE-2.html">ic:(ExprX =<code>\</code>= ExprY)</A></STRONG>
+<DD><A NAME="780"></A>
+<A NAME="781"></A>
+ExprX is not equal to ExprY.  ExprX and ExprY are general expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html82"
+ HREF="../bips/lib/ic/HE-2.html">ExprX #= ExprY</A><A NAME="1203"></A></STRONG>
+<DD>ExprX is equal to ExprY.  ExprX and ExprY are constrained to be integer
+expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html84"
+ HREF="../bips/lib/ic/HGE-2.html">ExprX #&gt;= ExprY</A><A NAME="1206"></A></STRONG>
+<DD>ExprX is greater than or equal to ExprY.  ExprX and ExprY are constrained to
+be integer expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html86"
+ HREF="../bips/lib/ic/HEL-2.html">ExprX #=&lt; ExprY</A><A NAME="1209"></A></STRONG>
+<DD>ExprX is less than or equal to ExprY.  ExprX and ExprY are constrained to be
+integer expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html88"
+ HREF="../bips/lib/ic/HG-2.html">ExprX #&gt; ExprY</A><A NAME="1212"></A></STRONG>
+<DD>ExprX is greater than ExprY.  ExprX and ExprY are constrained to be integer
+expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html90"
+ HREF="../bips/lib/ic/HL-2.html">ExprX #&lt; ExprY</A><A NAME="1215"></A></STRONG>
+<DD>ExprX is less than ExprY.  ExprX and ExprY are constrained to be integer
+expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html92"
+ HREF="../bips/lib/ic/HRE-2.html">ExprX #<code>\</code>= ExprY</A></STRONG>
+<DD><A NAME="799"></A>
+ExprX is not equal to ExprY.  ExprX and ExprY are constrained to be integer
+expressions.
+
+<P>
+<DT><STRONG><A NAME="tex2html93"
+ HREF="../bips/lib/ic/ac_eq-3.html">ac_eq(X, Y, C)</A><A NAME="1220"></A></STRONG>
+<DD>Arc-consistent implementation of <B>X #= Y + C</B>.  X and Y are
+constrained to be integer variables and to have ``reasonable'' bounds.  C
+must be an integer.
+
+<P>
+</DL>
+
+<P>
+The comparison constraints <code>=:=/2</code>, <code>&gt;=/2</code>, <code>=&lt;/2</code> and
+<code>=\=/2</code> have the same syntax as the standard ECLiPSe built-in
+comparison operators (and those of other constraint solvers).
+Unless explicitly qualified, the ECLiPSe built-ins are used.
+To use these constraints without the need to qualify them, use the
+alternative dollar-syntax.
+
+<P>
+
+<H2><A NAME="SECTION00323000000000000000"></A>
+<A NAME="sec:reified-constraints"></A>
+<BR>
+Reified constraints
+</H2>
+As mentioned earlier, when constraints appear in an expression
+context, then they evaluate to their reified truth value.  Practically
+this means that the constraints are posted in a passive <EM>check but
+do not propagate</EM> mode, whereby no variable domains are modified but
+checks are made to see if the constraint has become entailed
+(necessarily true) or dis-entailed (necessarily false).
+
+<P>
+The simplest and arguably most natural way to reify a constraint is to
+place it in an expression context (i.e. on either side of a <code>$=</code>,
+<code>$&gt;=</code>, <code>#=</code>, etc.) and assign its truth value to a variable.
+For example:
+
+<P>
+<PRE>
+TruthValue #= (X $&gt; 4).
+</PRE>
+
+<P>
+It is also possible to use the 3 argument form of the constraint predicates
+where the third argument is the reified truth value, for example:
+
+<P>
+<PRE>
+$&gt;(X, 4, TruthValue).
+</PRE>
+
+<P>
+But in general the previous form is recommended as it can be easily
+extended to handle the truth values of a combination of constraints, by
+using the infix operators <code>and</code> (logical conjunction), <code>or</code>
+(logical disjunction) and <code>=&gt;</code> (logical implication) or the prefix
+operator <code>neg</code> (logical negation). e.g.:
+
+<P>
+<PRE>
+TruthValue #= (X $&gt; 4 and Y $&lt; 6).
+</PRE>
+
+<P>
+Again, as mentioned earlier, there are a number of reified connectives
+which can be used to combine reified constraints using logical
+operations on their truth values.
+<DL>
+<DT><STRONG><A NAME="tex2html98"
+ HREF="../bips/lib/ic/and-2.html">and/2</A><A NAME="1224"></A></STRONG>
+<DD>Reified constraint conjunction. e.g.
+<code>B #= (X $&gt; 3 and X $&lt; 8)</code> or
+<code>X $&gt; 3 and X $&lt; 8</code>
+
+<P>
+<DT><STRONG><A NAME="tex2html100"
+ HREF="../bips/lib/ic/or-2.html">or/2</A><A NAME="1227"></A></STRONG>
+<DD>Reified constraint disjunction. e.g.
+<code>B #= (X $&gt; 3 or X $&lt; 8)</code> or
+<code>X $&gt; 3 or X $&lt; 8</code>
+
+<P>
+<DT><STRONG><A NAME="tex2html102"
+ HREF="../bips/lib/ic/EG-2.html">=&gt;/2</A><A NAME="1230"></A></STRONG>
+<DD>Reified constraint implication. e.g.
+<code>B #= (X $&gt; 3 =&gt; X $&lt; 8)</code> or
+<code>X $&gt; 3 =&gt; X $&lt; 8</code>
+
+<P>
+<DT><STRONG><A NAME="tex2html104"
+ HREF="../bips/lib/ic/neg-1.html">neg/1</A><A NAME="1233"></A></STRONG>
+<DD>Reified constraint negation. e.g.
+<code>B #= (neg X $&gt; 3)</code> or
+<code>neg X $&gt; 3</code>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00323100000000000000">
+Enforcing constraints</A>
+</H3>
+The logical truth value of a constraint, when reified, can be used to
+enforce the constraint (or its negation) during search.
+
+<P>
+The following three examples are equivalent:
+
+<P>
+<PRE>
+X $&gt; 4.
+</PRE>
+
+<P>
+<PRE>
+B #= (X $&gt; 4), B=1.
+</PRE>
+
+<P>
+<PRE>
+B #= (X $=&lt; 4), B=0.
+</PRE>
+
+<P>
+By unifying the value of the reified truth value, the constraint
+changes from being <EM>passive</EM> to being <EM>active</EM>.  Once actively
+true (or actively false) the constraint will prune domains as though
+it had been posted as a simple non-reified constraint.
+
+<P>
+
+<H3><A NAME="SECTION00323200000000000000">
+User-defined reified constraints</A>
+</H3>
+Reified constraints are implemented using the the 3 argument form of
+the constraint predicate if it exists (and it does exist for the
+arithmetic relation constraints).
+
+<P>
+User-defined constraints will be treated as reifiable if they appear in an
+expression context and as such should provide forms where the last argument
+is the reified truth value reflected into a variable.
+
+<P>
+The user-defined constraint should behave as follows depending on the
+state of the reified variable.
+
+<P>
+
+<H4><A NAME="SECTION00323210000000000000">
+Reified variable is unbound</A>
+</H4> When the reified variable is
+unbound, the constraint should not perform any domain reduction on its
+arguments, but should check to see if the constraint has become entailed or
+dis-entailed, setting the reified variable to <code>1</code> or <code>0</code>
+respectively.
+
+<P>
+
+<H4><A NAME="SECTION00323220000000000000">
+Reified variable is bound to 0</A>
+</H4> In the event that the reified
+variable becomes bound to <code>0</code> then the constraint should actively
+propagate its negation.
+
+<P>
+
+<H4><A NAME="SECTION00323230000000000000">
+Reified variable is bound to 1</A>
+</H4> In the event that the reified
+variable becomes bound to <code>1</code> then the constraint should actively
+propagate its normal semantics.
+
+<P>
+
+<H2><A NAME="SECTION00324000000000000000">
+Miscellaneous constraints</A>
+</H2>
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html106"
+HREF="../bips/lib/ic/alldifferent-1.html">alldifferent(Vars)</A><A NAME="1236"></A></STRONG>
+<DD>Constrains all elements of a list to be different from all other
+elements of the list.
+
+<P>
+<DT><STRONG><A NAME="tex2html108"
+ HREF="../bips/lib/ic/element-3.html">element(Index, List, Value)</A><A NAME="1239"></A></STRONG>
+<DD>Constrains Value to be the Index'th element of the list of integers List.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00325000000000000000">
+Integer labeling predicates</A>
+</H2>
+
+<P>
+These predicates can be used to enumerate solutions to a set of constraints
+over integer variables.  For optimisation, see also the
+<A NAME="tex2html116"
+ HREF="../bips/lib/branch_and_bound/index.html">branch_and_bound</A><A NAME="1242"></A> library.
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html110"
+HREF="../bips/lib/ic/indomain-1.html">indomain(Var)</A><A NAME="1245"></A></STRONG>
+<DD>Instantiates an integer IC variable to an element of its domain.
+
+<P>
+<DT><STRONG><A NAME="tex2html112"
+ HREF="../bips/lib/ic/labeling-1.html">labeling(Vars)</A><A NAME="1248"></A></STRONG>
+<DD>Instantiates all IC variables in a list to elements of their domains.
+
+<P>
+<DT><STRONG><A NAME="tex2html114"
+ HREF="../bips/lib/ic/search-6.html">search(Vars, Arg, Select, Choice, Method, Options)</A><A NAME="1251"></A></STRONG>
+<DD>Instantiates the variables Vars by performing a search based on the
+parameters provided by the user.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00326000000000000000">
+Real domain refinement predicates</A>
+</H2>
+
+<P>
+These predicates can be used to locate real solutions to a set of
+constraints.  They are essentially the same as those that were available in
+RIA; more details of the algorithms used can be found in
+section&nbsp;<A HREF="node17.html#sec:real-solving">3.2.10</A>.
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html118"
+HREF="../bips/lib/ic/locate-2.html">locate(Vars, Precision)</A><A NAME="1254"></A></STRONG>
+<DD>Locate solution intervals for Vars by splitting and search.  Precision
+indicates how accurate the intervals have to be (in absolute or relative
+terms) before splitting stops.
+
+<P>
+<DT><STRONG><A NAME="tex2html120"
+ HREF="../bips/lib/ic/locate-3.html">locate(Vars, Precision, LinLog)</A><A NAME="1257"></A></STRONG>
+<DD>As per locate/2, but LinLog specifies wither linear (<TT>lin</TT>) or
+logarithmic (<TT>log</TT>) splitting should be used.  (<A NAME="tex2html126"
+ HREF="../bips/lib/ic/locate-2.html">locate/2</A><A NAME="1260"></A> is
+equivalent to calling <A NAME="tex2html128"
+ HREF="../bips/lib/ic/locate-3.html">locate/3</A><A NAME="1263"></A> with <TT>log</TT> as the third
+argument.)
+
+<P>
+<DT><STRONG><A NAME="tex2html122"
+ HREF="../bips/lib/ic/locate-4.html">locate(LocateVars, SquashVars, Precision, LinLog)</A><A NAME="1266"></A></STRONG>
+<DD>As per <A NAME="tex2html130"
+ HREF="../bips/lib/ic/locate-3.html">locate/3</A><A NAME="1269"></A>, but also applies the squashing algorithm to
+SquashVars both before splitting commences, and then again after each split.
+
+<P>
+<DT><STRONG><A NAME="tex2html124"
+ HREF="../bips/lib/ic/squash-3.html">squash(Vars, Precision, LinLog)</A><A NAME="1272"></A></STRONG>
+<DD>Refine the intervals of Vars by the squashing algorithm.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00327000000000000000"></A>
+<A NAME="domain-query"></A>
+<BR>
+Variable query predicates
+</H2>
+
+<P>
+These predicates allow one to retrieve various properties of an IC variable
+(and usually work on ground numbers as well).
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html132"
+HREF="../bips/lib/ic/is_solver_var-1.html">is_solver_var(Var)</A><A NAME="1275"></A></STRONG>
+<DD>Succeeds if an only if Var is an IC variable.
+
+<P>
+<DT><STRONG><A NAME="tex2html134"
+ HREF="../bips/lib/ic/is_solver_type-1.html">is_solver_type(Term)</A><A NAME="1278"></A></STRONG>
+<DD>Succeeds if an only if Term is an IC variable or a number.
+
+<P>
+<DT><STRONG><A NAME="tex2html136"
+ HREF="../bips/lib/ic/get_solver_type-2.html">get_solver_type(Var, Type)</A><A NAME="1281"></A></STRONG>
+<DD>Returns whether Var is an integer variable or a real variable.
+
+<P>
+<DT><STRONG><A NAME="tex2html138"
+ HREF="../bips/lib/ic/get_bounds-3.html">get_bounds(Var, Lo, Hi)</A><A NAME="1284"></A></STRONG>
+<DD>Returns the current bounds of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html140"
+ HREF="../bips/lib/ic/get_min-2.html">get_min(Var, Lo)</A><A NAME="1287"></A></STRONG>
+<DD>Returns the current lower bound of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html142"
+ HREF="../bips/lib/ic/get_max-2.html">get_max(Var, Hi)</A><A NAME="1290"></A></STRONG>
+<DD>Returns the current upper bound of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html144"
+ HREF="../bips/lib/ic/get_float_bounds-3.html">get_float_bounds(Var, Lo, Hi)</A><A NAME="1293"></A></STRONG>
+<DD>Returns the current bounds of Var as floats.
+
+<P>
+<DT><STRONG><A NAME="tex2html146"
+ HREF="../bips/lib/ic/get_integer_bounds-3.html">get_integer_bounds(Var, Lo, Hi)</A><A NAME="1296"></A></STRONG>
+<DD>Returns the current bounds of the integer variable Var (infinite bounds are
+returned as floats).  Constrains Var to be integral if it isn't already.
+
+<P>
+<DT><STRONG><A NAME="tex2html148"
+ HREF="../bips/lib/ic/get_finite_integer_bounds-3.html">get_finite_integer_bounds(Var, Lo, Hi)</A><A NAME="1299"></A></STRONG>
+<DD>Returns the current (finite) bounds of the integer variable Var.  Constrains
+Var to be finite and integral if it isn't already.
+
+<P>
+<DT><STRONG><A NAME="tex2html150"
+ HREF="../bips/lib/ic/get_domain_size-2.html">get_domain_size(Var, Size)</A><A NAME="1302"></A></STRONG>
+<DD>Returns the number of elements in the IC domain for Var. Currently Var
+needs to be of type integer.
+
+<P>
+<DT><STRONG><A NAME="tex2html152"
+ HREF="../bips/lib/ic/get_domain-2.html">get_domain(Var, Domain)</A><A NAME="1305"></A></STRONG>
+<DD>Returns a ground representation of the current IC domain for Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html154"
+ HREF="../bips/lib/ic/get_domain_as_list-2.html">get_domain_as_list(Var, Domain)</A><A NAME="1308"></A></STRONG>
+<DD>Returns a list of all the elements in the IC domain for Var.  Currently Var
+needs to be of type integer.
+
+<P>
+<DT><STRONG><A NAME="tex2html156"
+ HREF="../bips/lib/ic/get_median-2.html">get_median(Var, Median)</A><A NAME="1311"></A></STRONG>
+<DD>Returns the median of the interval of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html158"
+ HREF="../bips/lib/ic/get_delta-2.html">get_delta(Var, Delta)</A><A NAME="1314"></A></STRONG>
+<DD>Returns the width of the interval of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html160"
+ HREF="../bips/lib/ic/is_in_domain-2.html">is_in_domain(Var, Value)</A><A NAME="1317"></A></STRONG>
+<DD>Succeeds if and only if Value is contained in the current domain of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html162"
+ HREF="../bips/lib/ic/is_in_domain-3.html">is_in_domain(Var, Value, Result)</A><A NAME="1320"></A></STRONG>
+<DD>Binds Result to 'yes', 'no' or 'maybe' depending on whether Value is
+in the current domain of Var.
+
+<P>
+<DT><STRONG><A NAME="tex2html164"
+ HREF="../bips/lib/ic/delayed_goals_number-2.html">delayed_goals_number(Var, Number)</A><A NAME="1323"></A></STRONG>
+<DD>Returns the number of delayed goals suspended on the IC attribute. This
+approximates the number of IC constraints that Var is involved in.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00328000000000000000">
+Propagation threshold predicates</A>
+</H2>
+
+<P>
+With interval constraint propagation, it is sometimes useful to limit
+propagation for efficiency reasons.  In IC, this is controlled by the
+propagation threshold.  The way it works is that for non-integer variables,
+bounds are only changed if the absolute and relative changes of the bound
+exceed this threshold (i.e. small changes are suppressed).  This means that
+constraints over real variables are only guaranteed to be consistent up to
+the current threshold (over and above any normal widening which occurs).
+
+<P>
+Note that a higher threshold speeds up computations, but reduces precision
+and may in the extreme case prevent the system from being able to locate
+individual solutions.
+
+<P>
+The default threshold is 1e-8.
+
+<P>
+<DL>
+<DT><STRONG><A NAME="tex2html166"
+HREF="../bips/lib/ic/get_threshold-1.html">get_threshold(Threshold)</A><A NAME="1326"></A></STRONG>
+<DD>Returns the current propagation threshold.
+
+<P>
+<DT><STRONG><A NAME="tex2html168"
+ HREF="../bips/lib/ic/set_threshold-1.html">set_threshold(Threshold)</A><A NAME="1329"></A></STRONG>
+<DD>Sets the propagation threshold.  Note that if the threshold is reduced using
+this predicate (requiring a higher level of precision), the current state of
+the system may not be consistent with respect to the new threshold.  If it
+is important that the new level of precision be realised for all or part of
+the system before computation proceeds, <A NAME="tex2html172"
+ HREF="../bips/lib/ic/set_threshold-2.html">set_threshold/2</A><A NAME="1332"></A> should be used
+instead.
+
+<P>
+<DT><STRONG><A NAME="tex2html170"
+ HREF="../bips/lib/ic/set_threshold-2.html">set_threshold(Threshold, WakeVars)</A><A NAME="1335"></A></STRONG>
+<DD>Sets the propagation threshold, with re-computation.  If the threshold has
+been reduced, all constraints suspended on the bounds of the variables in
+the list WakeVars are woken.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00329000000000000000"></A>
+<A NAME="955"></A>
+<BR>
+Solving by Interval Propagation
+</H2>
+Some problems can be solved just by interval propagation, for example:<PRE>
+[eclipse 9]: X :: 0.0..100.0, sqr(X) $= 7-X.
+
+X = X{2.1925824014821353 .. 2.1925824127108307}
+
+Delayed goals:
+    ...
+yes.
+</PRE>
+There are two things to note here:
+
+<UL><LI>The solver never instantiates real variables. They only get
+    reduced to narrow ranges.
+
+<LI>In general, many delayed goals remain at the end of propagation.
+<A NAME="961"></A>
+    This reflects the fact that the variable's ranges could possibly
+    be further reduced later on during the computation.
+    It also reflects he fact that
+
+<LI>the solver does not guarantee the existence of solutions in the
+<A NAME="962"></A>
+    computed ranges. However, it guarantees that there are no solutions
+    outside these ranges.
+
+</UL>
+Note that, since variables by default range from minus to plus infinity,
+<A NAME="964"></A>
+we could have written the above example as:<PRE>
+[eclipse 2]: sqr(X) $= 7-X, X $&gt;= 0.
+
+X = X{2.1925824014821353 .. 2.1925824127108307}
+
+Delayed goals:
+    ...
+yes.
+</PRE>
+If too little information is given, the interval propagation may not
+be able to infer any interesting bounds:<PRE>
+[eclipse 2]: sqr(X) $= 7-X.
+
+X = X{-1.0Inf .. 7.0}
+
+Delayed goals:
+    ...
+yes.
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION003210000000000000000"></A>
+<A NAME="sec:real-solving"></A>
+<BR>
+Reducing Ranges Further
+</H2>
+There are two methods for further domain reduction. They both rely on
+search and splitting the domains. There are 2 parameters to specify how
+domains are to be split.
+<A NAME="975"></A>
+
+<P>
+The <EM>Precision</EM> <A NAME="977"></A> parameter is used to specify the
+minimum required precision, i.e. the maximum size of the resulting
+intervals (in either absolute or relative terms).
+Note that the
+<A HREF="#arcprop">arc-propagation threshold</A>
+needs to be one or
+several orders of magnitude smaller than <EM>precision</EM>, otherwise
+the solver may not be able to achieve the required precision.
+
+<P>
+The <EM>lin/log</EM> <A NAME="982"></A><A NAME="983"></A> parameter guides the way domains are split.
+If it is set to <EM>lin</EM> then the split is in the arithmetic middle.
+If it is set to <EM>log</EM>, the split is such as to have the
+same number of floats to either side of the split. This is to take
+the logarithmic distribution of the floats into account.
+
+<P>
+If the ranges of variables at the start of the squashing algorithm are
+<A NAME="986"></A>
+known not to span several orders of magnitude (<!-- MATH: $|max| < 10 * |min|$ -->
+|max| &lt; 10 * |min|) the
+somewhat cheaper linear splitting may be used. In general, log splitting
+is recommended.
+
+<P>
+<DL>
+<DT><STRONG><B>locate(+Vars, +Precision)</B></STRONG>
+<DD><DT><STRONG><B>locate(+Vars, +Precision, +lin/log)</B></STRONG>
+<DD><A NAME="990"></A>
+<A NAME="991"></A>
+Locate solution intervals for the given variables with the required
+precision. This works well if the problem has a finite number of solutions.
+locate/2,3 work by nondeterministically splitting the ranges of the variables
+until they are narrower than Precision.
+
+<P>
+<DT><STRONG><B>squash(+Vars, +Precision, +lin/log)</B></STRONG>
+<DD><A NAME="993"></A>
+Use the
+<A HREF="node17.html#squash">squash algorithm</A>
+on these variables.
+This is a deterministic reduction of the ranges of variables, done by
+searching for domain restrictions which cause failure, and then reducing
+the domain to the complement of that which caused the failure.
+This algorithm is appropriate when the problem has continuous solution ranges
+(where locate would return many adjacent solutions).
+
+<P>
+<DT><STRONG><B>locate(+LocateVars,+SquashVars,+Precision,+lin/log)</B></STRONG>
+<DD><A NAME="999"></A>
+A variant of locate/2,3 with interleaved squashing:
+The
+<A HREF="node17.html#squash">squash algorithm</A>
+is applied once to the SquashVars initially,
+and then again after each splitting step,
+ie. each time one of the LocateVars has been split nondeterministically.
+A variable may occur both in LocateVars and SquashVars.
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION003210100000000000000"></A>
+<A NAME="squash"></A>
+<BR>
+Squash algorithm
+</H3>
+
+<P>
+<A NAME="1007"></A>
+A stronger propagation algorithm is also included. This is built upon the
+normal bound consistency. It guarantees that, if you take any variable
+and restrict its range to a small domain near one of its bounds,
+the original bound consistency solver will not find any constraint
+unsatisfied.
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="1010"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 3.1:</STRONG>
+Propagation with Squash algorithm (example)</CAPTION>
+<TR><TD><IMG
+ WIDTH="541" HEIGHT="421" BORDER="0"
+ SRC="img2.gif"
+ ALT="\begin{figure}
+\epsfbox{example1.eps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+All points (X,Y) Y &gt;= X, lying within the intersection of 2 circles with
+radius 2, one centred at (0,0) the other at (1,1).<PRE>
+[eclipse 2]: 4 $&gt;= X^2 + Y^2, 4 $&gt;= (X-1)^2+(Y-1)^2, Y $&gt;= X.
+
+Y = Y{-1.0000000000000004 .. 2.0000000000000004}
+X = X{-1.0000000000000004 .. 2.0000000000000004}
+
+Delayed goals:
+    ...
+yes.
+</PRE>
+The bound-consistency solution does not take into account the X &gt;= Y
+constraint. Intuitively this is because it passes through the corners
+of the box denoting the solution to the problem of simply intersecting
+the two circles.
+
+<P><PRE>
+[eclipse 2]: 4 $&gt;= X^2 + Y^2, 4 $&gt;= (X-1)^2+(Y-1)^2, Y $&gt;= X,
+                squash([X,Y], 1e-5, lin).
+
+X = X{-1.0000000000000004 .. 1.4142135999632601}
+Y = Y{-0.41421359996326 .. 2.0000000000000004}
+
+Delayed goals:
+    ...
+yes.
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION003211000000000000000">
+Obtaining Solver Statistics</A>
+</H2>
+
+<P>
+(Using the facilities described in this section requires importing the
+<A NAME="tex2html203"
+ HREF="../bips/lib/ic_kernel/index.html">ic_kernel</A><A NAME="1338"></A> module.  Also, since
+they depend on the internals of the IC library, the details presented here
+are subject to change without notice.)
+
+<P>
+Often it is difficult to know where the solver spends its time.
+The library has built-in counters which keep track of the number of times
+various events occur:
+<DL>
+<DT><STRONG>ic_lin_create</STRONG>
+<DD>The number of linear constraints set up.
+    <DT><STRONG>ic_lin_prop</STRONG>
+<DD>The number of times a linear constraint is propagated.
+    <DT><STRONG>ic_uni_prop/ic_bin_prop/ic_tern_prop</STRONG>
+<DD>The number of times a non-linear (unary/binary/ternary) operator is
+	propagated.
+    <DT><STRONG>ic_split</STRONG>
+<DD>The number of domain splits in locate/2,3,4.
+    <DT><STRONG>ic_squash</STRONG>
+<DD>The number of squash attempts in squash/3 or locate/4.
+</DL>
+
+<P>
+Users who wish to track activity within their own programs may (if they
+wish) use the same mechanism.  New event types can be registered (see
+below) and actions recorded by calling the
+<A NAME="tex2html205"
+ HREF="../bips/lib/ic_kernel/ic_event-1.html">ic_event(Event)</A><A NAME="1341"></A>
+predicate.
+
+<P>
+The counters are controlled using the primitives:
+<DL>
+<DT><STRONG><A NAME="tex2html189"
+ HREF="../bips/lib/ic_kernel/ic_stat-1.html">ic_stat(on)</A><A NAME="1344"></A></STRONG>
+<DD><DT><STRONG><A NAME="tex2html191"
+ HREF="../bips/lib/ic_kernel/ic_stat-1.html">ic_stat(off)</A><A NAME="1347"></A></STRONG>
+<DD>Enables/disable collection of statistics.  Default is off.
+
+<P>
+<DT><STRONG><A NAME="tex2html193"
+ HREF="../bips/lib/ic_kernel/ic_stat-1.html">ic_stat(reset)</A><A NAME="1350"></A></STRONG>
+<DD>Reset statistics counters.
+
+<P>
+<DT><STRONG><A NAME="tex2html195"
+ HREF="../bips/lib/ic_kernel/ic_stat-1.html">ic_stat(print)</A><A NAME="1353"></A></STRONG>
+<DD>Print statistics counters to the standard output stream.
+
+<P>
+<DT><STRONG><A NAME="tex2html197"
+ HREF="../bips/lib/ic_kernel/ic_stat_get-1.html">ic_stat_get(-Stat)</A><A NAME="1356"></A></STRONG>
+<DD>Returns a list of CounterName=CounterValue pairs, summarising the
+computation since the last reset.
+
+<P>
+<DT><STRONG><A NAME="tex2html199"
+ HREF="../bips/lib/ic_kernel/ic_event-1.html">ic_event(+Name)</A><A NAME="1359"></A></STRONG>
+<DD>Records the fact that the named event has happened.
+
+<P>
+<DT><STRONG><A NAME="tex2html201"
+ HREF="../bips/lib/ic_kernel/ic_stat_register_event-2.html">ic_stat_register_event(+Name,+Description)</A><A NAME="1362"></A></STRONG>
+<DD>Registers a new event type and sets the counter to 0.  This allows
+user-defined predicates to record their own events within the same
+framework.
+
+<P>
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1104"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1100"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1094"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1102"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1105"
+ HREF="node18.html">General Guidelines for the</A>
+<B> Up:</B> <A NAME="tex2html1101"
+ HREF="node15.html">IC: A Hybrid Finite</A>
+<B> Previous:</B> <A NAME="tex2html1095"
+ HREF="node16.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html1103"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

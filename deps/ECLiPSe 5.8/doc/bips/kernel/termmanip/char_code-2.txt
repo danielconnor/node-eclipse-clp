@@ -1,0 +1,61 @@
+
+char_code(?Char, ?Code)
+
+   Succeeds if Code is the numeric character code of the character Char.
+
+
+
+Arguments
+   ?Char               One-character atom, string or variable.
+   ?Code               Integer or variable.
+
+Type
+   Term Manipulation
+
+Description
+   If Char is instantiated to a one-character atom or string,
+   Code is unified with the corresponding numeric character code,
+   depending on the character encoding in use.
+
+
+   If Code is instantiated to an integer, Char is unified with the
+   corresponding one-character atom.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Code does not unify with the character code of Char.
+
+
+
+Exceptions
+     5 --- Char is instantiated, but not to a 1-character string or atom.
+     5 --- Code is instantiated, but not to an integer.
+     6 --- Code is instantiated to an integer outside the valid range for character codes.
+     4 --- Neither Char nor Code are instantiated (non-coroutine mode only).
+
+Examples
+   
+   Success:
+   char_code(b,98).
+   char_code("b",98).
+   char_code(C,99).     (gives C=c).
+   char_code(a,I).      (gives I=97).
+   Fail:
+   char_code(a,98).
+   Error:
+   char_code(C,I).       (Error 4).
+   char_code(ab,I).      (Error 5).
+   char_code(7,I).       (Error 5).
+   char_code(C,-1).      (Error 6).
+
+
+
+
+
+See Also
+   get_char / 1, get_char / 2, put_char / 1, put_char / 2, string_code / 3, string_list / 2, string_list / 3

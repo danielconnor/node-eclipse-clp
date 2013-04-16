@@ -1,0 +1,30 @@
+
+result(+File, +OptionList)
+
+   Pretty-print a file, including any code coverage results
+
+Arguments
+   File                Atom or string
+   OptionList          List of Name:Value pairs
+
+Type
+   library(coverage)
+
+Description
+
+    This will pretty-print the given source file, annotated with the
+    values of code coverage counters. By default, the resulting .html
+    file will be placed in a sub-directory called 'coverage', relative
+    to File.
+
+    OptionList is a list of options identical to the one accepted by
+    pretty_print/2 in the library(pretty_printer), and can be used to
+    modify the output style and the location of the output file.
+
+    This predicate only makes sense if File has previously been compiled
+    in coverage mode (using coverage:ccompile/1,2), and the code has been
+    run in order to obtain values for the coverage counters.
+    
+
+See Also
+   result / 1, pretty_printer : pretty_print / 2, ccompile / 1, library(coverage), library(pretty_printer)

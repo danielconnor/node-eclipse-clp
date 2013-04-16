@@ -1,0 +1,47 @@
+
+ccompile(+File, +OptionList)
+
+   Compile a file, inserting code coverage counters
+
+Arguments
+   File                Atom or string
+   OptionList          List of Name:Value pairs
+
+Type
+   library(coverage)
+
+Description
+
+    This is a variant of the ECLiPSe compiler that inserts code coverage
+    counters into the compiled code. This code can then be run, and the
+    results analysed by printing them using coverage:result/1.
+
+    Options to modify the behaviour of the code coverage library are:
+
+    exit_counters (default:on)
+    	Setting this to 'off' will suppress coverage counters at the end of
+	conjunctions (comma-sequences of subgoals).
+    blocks_only (default:off)
+    	Setting this to 'on' will leave only coverage counters at the
+	beginning and at the end of conjunctions (comma-sequences of
+	subgoals) and suppress all others.
+    macro_expansion (default:off)
+	This options affects only the printing of the result (html) file.
+	By default, read-macros are not expanded in this output.  In rare
+	cases, where macro expansion would affect the placement of coverage
+	counter positions, it may be necessary to set this option to 'on'
+	in order to display the counter values at the correct positions
+	in the code.
+    goal_expansion (default:on)
+    	Setting this to 'off' will suppress goal expansion (inlining)
+	during compilation. This may be necessary when the processed
+	code contains predicates that get executed at compile time.
+    verbose (default:off)
+    	If set to 'on', the coverage preprocessor will print predicate
+	names as they are processed (to log_output).
+
+
+    
+
+See Also
+   ccompile / 1, library(coverage), result / 1, result / 2

@@ -1,0 +1,32 @@
+<HTML><HEAD><TITLE>alldifferent(+List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd_global)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>alldifferent(+List)</H1>
+All members of List are different
+<H2>Description</H2>
+    All members of List are different.  This is an implementation with
+    the same semantics but with stronger propagation behaviour.
+    It checks for exhaustion of all sub-ranges of possible values.
+    </P><P>
+    Any input variables which do not already have finite bounds will
+    be given default bounds of -10000000 to 10000000.</P>
+<H2>Examples</H2>
+<PRE>
+    ?- length(Xs,5), Xs::1..4, alldifferent(Xs).
+    no (more) solution.
+
+
+    ?- [X1,X2]::1..2, [X3,X4,X5]::1..5, alldifferent([X1,X2,X3,X4,X5]).
+
+    X1 = X1{[1, 2]}
+    X2 = X2{[1, 2]}
+    X3 = X3{[3..5]}
+    X4 = X4{[3..5]}
+    X5 = X5{[3..5]}
+
+    Delayed goals:
+        alldifferent([X1{[1, 2]}, X2{[1, 2]}], 1)
+        alldifferent([X3{[3..5]}, X4{[3..5]}, X5{[3..5]}], 1)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/fd_global/alldifferent-1.html">alldifferent / 1</A>, <A HREF="../../lib/fd_global/alldifferent-2.html">alldifferent / 2</A>
+</BODY></HTML>

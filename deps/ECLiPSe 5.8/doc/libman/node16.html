@@ -1,0 +1,681 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1084"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1080"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1074"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1082"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1085"
+ HREF="node17.html">Library Predicates</A>
+<B> Up:</B> <A NAME="tex2html1081"
+ HREF="node15.html">IC: A Hybrid Finite</A>
+<B> Previous:</B> <A NAME="tex2html1075"
+ HREF="node15.html">IC: A Hybrid Finite</A>
+ &nbsp <B>  <A NAME="tex2html1083"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1086"
+ HREF="node16.html#SECTION00311000000000000000">What IC does</A>
+<LI><A NAME="tex2html1087"
+ HREF="node16.html#SECTION00312000000000000000">Differences between IC and FD</A>
+<LI><A NAME="tex2html1088"
+ HREF="node16.html#SECTION00313000000000000000">Differences between IC and RIA</A>
+<LI><A NAME="tex2html1089"
+ HREF="node16.html#SECTION00314000000000000000">Notes about interval arithmetic</A>
+<LI><A NAME="tex2html1090"
+ HREF="node16.html#SECTION00315000000000000000">Interval arithmetic and IC</A>
+<LI><A NAME="tex2html1091"
+ HREF="node16.html#SECTION00316000000000000000">Usage</A>
+<LI><A NAME="tex2html1092"
+ HREF="node16.html#SECTION00317000000000000000">Arithmetic Expressions</A>
+<UL>
+<LI><A NAME="tex2html1093"
+ HREF="node16.html#SECTION00317100000000000000"><B>eval</B></A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00310000000000000000">
+Introduction</A>
+</H1>
+
+<P>
+The IC (Interval Constraint) library is a new hybrid integer/real interval
+arithmetic constraint solver.  Its aim is to make it convenient for
+programmers to write hybrid solutions to problems, mixing together integer
+and real constraints and variables.
+
+<P>
+Previously, if one wished to mix integer and real constraints, one had to
+import separate solvers for each, with the solvers using different
+representations for the domains of variables.  This meant any variable
+appearing in both kinds of constraints would end up with two domain
+representations, with extra constraints necessary to keep the two
+representations synchronised.
+
+<P>
+
+<H2><A NAME="SECTION00311000000000000000"></A>
+<A NAME="609"></A>
+<BR>
+What IC does
+</H2>
+
+<P>
+IC is a general interval propagation solver which can be used to solve
+problems over both integer and real variables.  Integer variables behave
+much like those from the old finite domain solver FD, while real variables
+behave much like those from the old real interval arithmetic solver RIA.
+IC allows both kinds of variables to be mixed seamlessly in constraints,
+since (with a few exceptions) the same propagation algorithms are used
+throughout and all variables have the same underlying representation
+(indeed, a real variable can be turned into an integer variable simply by
+imposing an integrality constraint on it).
+
+<P>
+IC replaces the `fd', `ria' and `range' libraries.  Since IC does not
+support symbolic domains, there is a separate symbolic solver library
+`ic_symbolic', to provide the non-numeric functionality of `fd'.
+
+<P>
+
+<H2><A NAME="SECTION00312000000000000000">
+Differences between IC and FD</A>
+</H2>
+
+<P>
+
+<UL><LI>IC supports real variables and constraints; FD does not.
+
+<P>
+
+<LI>FD supports symbolic domains; IC does not (use the ic_symbolic
+        library).
+
+<P>
+
+<LI>In FD, numeric domains are more or less limited to
+        -10000000..10000000 (this default domain can be modified, but the
+        larger one makes it, the more likely one is to run into machine
+        integer overflow problems).  In IC there is no limit as such, and
+        bounds on integer variables can be infinite (though variables should
+        not be assigned infinite values).  However, since floating point
+        numbers are used in the underlying implementation, not every integer
+        value is representable.  Specifically, integer variables and
+        constraints ought to behave as expected until the values being
+        manipulated become large enough that they approach the precision
+        limit of a double precision floating point number (2<SUP>51</SUP> or so).
+        Beyond this, lack of precision may mean that the solver cannot be
+        sure which integer is intended, in which case the solver starts
+        behaving more like an interval solver than a traditional finite
+        domain solver.  Note however that this precision limit is way beyond
+        what is normally supported by finite domain solvers (typically
+        substantially less than 2<SUP>32</SUP>).  Note also that deliberately
+        working with integer variables in this kind of range is not
+        particularly recommended; the main intention is for the computation
+        to be ``safe'' if it strays up into this region by ensuring no
+        overflow problems.
+
+<P>
+
+<LI>IC usually requires that expressions constructed at runtime be
+        wrapped in <B>eval/1</B> when they appear in constraints; otherwise
+        the variable representing the express may be assumed to be an IC
+        variable, resulting in a type error. See section&nbsp;<A HREF="node16.html#sec:eval">3.1.7</A> for
+        more details.  We hope to remove this limitation in a future release.
+
+<P>
+
+<LI>IC does not support the <A NAME="tex2html16"
+ HREF="../bips/lib/fd/HLE-2.html">#&lt;=/2</A><A NAME="1105"></A>
+
+syntax for less-than-or-equal constraints.  Use
+        <A NAME="tex2html18"
+ HREF="../bips/lib/ic/HEL-2.html">#=&lt;/2</A><A NAME="1108"></A> (the standard
+
+ECLiPSe operator for integer less-than-or-equal constraints, also
+        supported by FD) instead.  Similarly, use
+        <A NAME="tex2html20"
+ HREF="../bips/lib/ic/HRE-2.html">#<code>\</code>=/2</A>
+<A NAME="623"></A>
+ instead of <A NAME="tex2html22"
+ HREF="../bips/lib/fd/HH-2.html">##/2</A><A NAME="1113"></A>.
+
+<P>
+
+<LI>The reified connectives provided by the two solvers are different:
+        FD's
+        <A NAME="tex2html24"
+ HREF="../bips/lib/fd/HRP-1.html">#<code>\</code>+/1</A>,
+
+<A NAME="628"></A>
+        <A NAME="tex2html26"
+ HREF="../bips/lib/fd/HFR-2.html">#<code>/\</code>/2</A>,
+
+<A NAME="631"></A>
+        <A NAME="tex2html28"
+ HREF="../bips/lib/fd/HRF-2.html">#<code>\/</code>/2</A>,
+
+<A NAME="634"></A>
+        <A NAME="tex2html30"
+ HREF="../bips/lib/fd/HEG-2.html">#=&gt;/2</A><A NAME="1122"></A> and
+
+<A NAME="tex2html32"
+ HREF="../bips/lib/fd/HLEG-2.html">#&lt;=&gt;/2</A><A NAME="1125"></A>
+
+(and their reified versions)
+        correspond to IC's
+        <A NAME="tex2html34"
+ HREF="../bips/lib/ic/neg-1.html">neg/1</A><A NAME="1128"></A>,
+
+<A NAME="tex2html36"
+ HREF="../bips/lib/ic/and-2.html">and/2</A><A NAME="1131"></A>,
+
+<A NAME="tex2html38"
+ HREF="../bips/lib/ic/or-2.html">or/2</A><A NAME="1134"></A>,
+
+<A NAME="tex2html40"
+ HREF="../bips/lib/ic/EG-2.html">=&gt;/2</A><A NAME="1137"></A> and
+
+<A NAME="tex2html42"
+ HREF="../bips/lib/ic/HE-2.html">#=/2</A><A NAME="1140"></A>
+
+(and their reified versions).
+        Note that IC has better reification support, in that any constraint
+        may be embedded in any other constraint expression, evaluating to
+        that constraint's reified value.
+
+<P>
+
+<LI>The primitives for accessing and manipulating the domains of
+        variables are different; see
+        <A HREF="node17.html#domain-query">the section on variable query predicates</A>
+        for details of IC's support for this.
+
+<P>
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION00313000000000000000">
+Differences between IC and RIA</A>
+</H2>
+
+<P>
+The main difference between IC's interval solving and RIA's is that IC is
+aware of and utilises the bounded real numeric type.
+This means bounded reals may appear in IC constraints, and IC variables may
+be unified with bounded reals (though direct unification is not recommended:
+it is preferable to use an equality constraint to do the assignment).
+In contrast, RIA will fail with a type error if bounded reals are used in
+either of these cases.
+
+<P>
+
+<H2><A NAME="SECTION00314000000000000000">
+Notes about interval arithmetic</A>
+</H2>
+
+<P>
+The main problem with using floating point arithmetic instead of real
+arithmetic for doing any kind of numerical computation or constraint solving
+is that it is only approximate.  Finite precision means a floating point
+value may only approximate the intended real; it also means there may be
+rounding errors when doing any computation.  Worse is that one does not know
+from looking at an answer how much error has crept into the computation; it
+may be that the result one obtains is very close to the true solution, or it
+may be that the errors have accumulated to the point where they are
+significant.  This means it can be hard to know whether or not the answer
+one obtains is actually a solution (it may have been unintentionally
+included due to errors), or worse, whether or not answers have been missed
+(unintentionally excluded due to errors).
+
+<P>
+Interval arithmetic is one way to manage the error problem.  Essentially
+each real number is represented by a pair of floating point bounds.  The
+true value of the number may not be known, but it is definitely known to lie
+between the two bounds.  Any arithmetic operation to be performed is then
+done using these bounds, with the resulting interval widened to take into
+account any possible error in the operation, thus ensuring the resulting
+interval contains the true answer.  This is the principle behind the bounded
+real arithmetic type.
+
+<P>
+Note that interval arithmetic does not guarantee small errors, it just
+provides a way of knowing how large the error may have become.
+
+<P>
+One drawback of the interval approach is that arithmetic comparisons can no
+longer always be answered with a simple ``yes'' or ``no''; sometimes the
+only possible answer is ``don't know''.  This is reflected in the behaviour
+of arithmetic comparators (=:=, &gt;=, etc.) when applied to bounded reals
+which overlap each other.  In such a case, one cannot know whether the true
+value of one is greater than, less than, or equal to the other, and so a
+delayed goal is left behind.  This delayed goal indicates that the
+computation succeeded, contingent on whether the condition in the delayed
+goal is true.  For example, if the delayed goal left behind was
+<code>0.2__0.4 &gt;= 0.1__0.3</code>, this indicates that the computation should be
+considered a success only if the true value represented by the bounded real
+on the left is greater than or equal to that of the bounded real on the
+right.  If the width of the intervals in any such delayed goals is
+non-trivial, then this indicates a problem with numerical accuracy.  It is
+up to the user to decide how large an error is tolerable for any given
+application.
+
+<P>
+
+<H2><A NAME="SECTION00315000000000000000">
+Interval arithmetic and IC</A>
+</H2>
+
+<P>
+In order to ensure the soundness of the results it produces, the IC
+solver does almost all computation using interval arithmetic.  As part
+of this, the first thing done to a constraint when it is given to the
+solver is to convert all non-integer numbers in it to bounded reals.
+Note that for this conversion, floating point numbers are assumed to
+refer to the closest representable float value, as per the type
+conversion predicate
+<A NAME="tex2html44"
+ HREF="../bips/kernel/arithmetic/breal-2.html">breal/2</A><A NAME="1143"></A>.
+This lack of widening when converting floating point numbers to
+bounded reals is fine if the floating point number is exactly 
+the intended real number, but if there is any uncertainty, that 
+uncertainty should be encoded by using a bounded real in the 
+constraint instead of a float.
+
+<P>
+One of the drawbacks of this approach is that the user is not
+protected from the fundamental inaccuracies that may occur when trying
+to represent decimal numbers with floating point values in binary.
+The user should be aware therefore that some numbers given explicitly
+as part of their program may <I>not</I> be safely represented as a
+bounded real that spans the exact decimal value. e.g. <code>X $= 0.1</code> or equivalently <code>X is breal(0.1)</code>.
+
+<P>
+This may lead to unexpected results such as
+<PRE>
+[eclipse 2]: X $= 0.1, Y $= 0.09999999999999999, X $&gt; Y.
+
+X = 0.1__0.1
+Y = 0.099999999999999992__0.099999999999999992
+Yes (0.00s cpu)
+
+[eclipse 3]: X $= 0.1, Y $= 0.099999999999999999, X $&gt; Y.
+
+No (0.00s cpu)
+</PRE>
+
+<P>
+This potential source of confusion arises only with values which are
+explicitly given within a program.  By replacing the assignment to Y
+with an expression which evaluates to the same real value we get
+
+<P>
+<PRE>
+[eclipse 4]: X $= 0.1, Y $= 0.1 - 0.000000000000000001, X $&gt; Y.
+
+X = 0.1__0.1
+Y = 0.099999999999999992__0.1
+
+
+Delayed goals:
+        ic : (0 &gt; -1.3877787807814457e-17__-0.0)
+Yes (0.00s cpu)
+</PRE>
+
+<P>
+Note the delayed goal indicating the conditions under which the original goal should be considered to have succeeded.
+
+<P>
+
+<H2><A NAME="SECTION00316000000000000000">
+Usage</A>
+</H2>
+
+<P>
+To load the IC library into your program, simply add the following directive
+at an appropriate point in your code.
+
+<P><PRE>
+:- lib(ic).
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00317000000000000000">
+Arithmetic Expressions</A>
+</H2>
+
+<P>
+The IC library solves constraint problems over the reals. It is not
+limited to linear constraints. So it can be used to solve general problems
+like:
+<PRE>
+[eclipse 2]: ln(X) $&gt;= sin(X).
+
+X = X{0.36787944117144228 .. 1.0Inf}
+
+
+Delayed goals:
+...
+Yes (0.01s cpu)
+</PRE>
+The IC library treats linear and non-linear constraints
+differently. Linear constraints are handled by a single propagator,
+whereas non-linear constraints are broken down into simpler
+ternary/binary/unary propagators.
+
+<P>
+Any relational constraint (<code>$=</code>, <code>$&gt;=</code>, <code>#=</code>, etc.)
+can be reified simply by including it in an expression where it will 
+evaluate to its reified truth value.
+
+<P>
+User-defined constraints may also be included in constraint expressions
+where they will be treated in a similar manner to user defined
+functions found in expressions handled by <code>is/2</code>.  That is to say
+they will be called at run-time with an extra argument to collect the
+result. Note, however, that user defined constraint/functions, when used
+in IC, should be deterministic.  User defined constraints/functions which
+leave choice points may not behave as expected.
+
+<P>
+Variables appearing in arithmetic IC constraints at compile-time are
+assumed to be IC variables unless they are wrapped in an <B>eval/1</B>
+term.  See section&nbsp;<A HREF="node16.html#sec:eval">3.1.7</A> for an more detailed explanation of
+usage.
+
+<P>
+The following arithmetic expression can be used inside the constraints:
+<DL>
+<DT><STRONG><code>X</code></STRONG>
+<DD><I>Variables</I>. If <code>X</code> is not yet a interval variable,
+    it is turned into one by implicitly constraining it to be a real
+    variable.
+
+<P>
+<DT><STRONG><code>123</code></STRONG>
+<DD>Integer constants.  They are assumed to be exact and are used
+    as is.
+
+<P>
+<DT><STRONG><code>0.1</code></STRONG>
+<DD>Floating point constants.  These are assumed to be exact and
+    are converted to a zero width bounded reals.
+
+<P>
+<DT><STRONG><code>pi,  e</code></STRONG>
+<DD>Intervals enclosing the constants <IMG
+ WIDTH="19" HEIGHT="21" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\pi$">
+and <I>e</I> respectively.
+
+<P>
+<DT><STRONG><code>inf</code></STRONG>
+<DD>Floating point infinity.
+
+<P>
+<DT><STRONG><code>+Expr</code></STRONG>
+<DD>Identity.
+
+<P>
+<DT><STRONG><code>-Expr</code></STRONG>
+<DD>Sign change.
+
+<P>
+<DT><STRONG><code>+-Expr</code></STRONG>
+<DD><code>Expr</code> or <code>-Expr</code>. The result is an interval
+    enclosing both. If however, either bound is infeasible then
+    the result is the bound that is feasible. If neither bound is
+    feasible, the goal fails.
+
+<P>
+<DT><STRONG><code>abs(Expr)</code></STRONG>
+<DD>The absolute value of Expr.
+
+<P>
+<DT><STRONG><code>E1+E2</code></STRONG>
+<DD>Addition.
+
+<P>
+<DT><STRONG><code>E1-E2</code></STRONG>
+<DD>Subtraction.
+
+<P>
+<DT><STRONG><code>E1*E2</code></STRONG>
+<DD>Multiplication.
+
+<P>
+<DT><STRONG><code>E1/E2</code></STRONG>
+<DD>Division.
+
+<P>
+<DT><STRONG><code>E1</code>^<code>E2</code></STRONG>
+<DD>Exponentiation.
+
+<P>
+<DT><STRONG><code>min(E1,E2)</code></STRONG>
+<DD>Minimum.
+
+<P>
+<DT><STRONG><code>max(E1,E2)</code></STRONG>
+<DD>Maximum.
+
+<P>
+<DT><STRONG><code>sqr(Expr)</code></STRONG>
+<DD>Square. Logically equivalent to <code>Expr*Expr</code>, but with better 
+    operational behaviour.
+
+<P>
+<DT><STRONG><code>sqrt(Expr)</code></STRONG>
+<DD>Square root (always positive).
+
+<P>
+<DT><STRONG><code>exp(Expr)</code></STRONG>
+<DD>Same as <code>e^Expr</code>.
+
+<P>
+<DT><STRONG><code>ln(Expr)</code></STRONG>
+<DD>Natural logarithm, the reverse of the exp function.
+
+<P>
+<DT><STRONG><code>sin(Expr)</code></STRONG>
+<DD>Sine.
+
+<P>
+<DT><STRONG><code>cos(Expr)</code></STRONG>
+<DD>Cosine.
+
+<P>
+<DT><STRONG><code>atan(Expr)</code></STRONG>
+<DD>Arcus tangens.  (Returns value between -pi/2 and pi/2.)
+
+<P>
+<DT><STRONG><code>rsqr(Expr)</code></STRONG>
+<DD>Reverse of the sqr function. Equivalent to <code>+-sqrt(Expr)</code>.
+
+<P>
+<DT><STRONG><code>rpow(E1,E2)</code></STRONG>
+<DD>Reverse of exponentiation. i.e. finds <code>X</code> in <code>E1 = X^E2</code>.
+
+<P>
+<DT><STRONG><code>sub(Expr)</code></STRONG>
+<DD>A subinterval of Expr.
+
+<P>
+<DT><STRONG><code>sum(ExprList)</code></STRONG>
+<DD>Sum of a list of expressions.
+
+<P>
+<DT><STRONG><code>min(ExprList)</code></STRONG>
+<DD>Minimum of a list of expressions.
+
+<P>
+<DT><STRONG><code>max(ExprList)</code></STRONG>
+<DD>Maximum of a list of expressions.
+
+<P>
+<DT><STRONG><code>and</code></STRONG>
+<DD>Reified constraint conjunction. e.g. <code>B #= (X$&gt;3 and X$&lt;8)</code>
+
+<P>
+<DT><STRONG><code>or</code></STRONG>
+<DD>Reified constraint disjunction. e.g. <code>B #= (X$&gt;3 or X$&lt;8) </code>
+
+<P>
+<DT><STRONG><code>=&gt;</code></STRONG>
+<DD>Reified constraint implication. e.g. <code>B #= (X$&gt;3 =&gt; X$&lt;8) </code>
+
+<P>
+<DT><STRONG><code>neg</code></STRONG>
+<DD>Reified constraint negation. e.g. <code>B #= (neg X$&gt;3) </code>
+
+<P>
+<DT><STRONG><code>\$&gt;</code>, <code>\$&gt;=</code>, <code>\$=</code>, <code>\$=&lt;</code>, <code>\$&lt;</code>, <TT>$<code>\</code>=</TT>,
+    <TT>#&gt;</TT>, <TT>#&gt;=</TT>, <TT>#=</TT>, <TT>#=&lt;</TT>, <TT>#&lt;</TT>,
+    <TT>#<code>\</code>=</TT>,
+    <code>&gt;</code>, <code>&gt;=</code>, <code>=:=</code>, <code>=&lt;</code>, <code>&lt;</code>, <TT>=<code>\</code>=</TT>,
+    <code>and</code>, <code>or</code>, <code>=&gt;</code>, <code>neg</code></STRONG>
+<DD>Any arithmetic or logical constraint that can be issued as a
+    goal may also appear within an expression.
+
+<P>
+Within the expression context, the constraint evaluates to its
+    reified truth value.  If the constraint is entailed by the
+    state of the constraint store then the (sub-)expression
+    evaluates to <code>1</code>.  If it is dis-entailed by the state of
+    the constraint store then it evaluates to <code>0</code>. If its
+    reified status is unknown then it evaluates to an integral
+    variable <code>0..1</code>.
+
+<P>
+Note: The simple cases (e.g. <code>Bool #= (X #&gt; 5)</code>) are
+    equivalent to directly calling the reified forms of the basic
+    constraints (e.g. <code>#&gt;(X, 5, Bool)</code>).
+
+<P>
+<DT><STRONG><code>foo(Arg1, Arg2 ... ArgN), module:foo(Arg1, Arg2 ... ArgN)</code></STRONG>
+<DD>Any terms found in the expression whose principle functor is
+    not listed above will be replaced in the expression by a newly
+    created auxiliary variable. This same variable will be
+    appended to the term as an extra argument, and then the term
+    will be called as <code>call(foo(Arg1, Arg2 ... ArgN, Aux))</code>.
+    If no lookup module is specified, then the current
+    module will be used.
+
+<P>
+This behaviour mimics that of
+    <A NAME="tex2html46"
+ HREF="../bips/kernel/arithmetic/is-2.html">is/2</A><A NAME="1146"></A>.
+
+<P>
+<DT><STRONG><code>eval(Expr)</code></STRONG>
+<DD>See section&nbsp;<A HREF="node16.html#sec:eval">3.1.7</A> for an explanation of <B>eval/1</B> usage.
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00317100000000000000"></A>
+<A NAME="sec:eval"></A>
+<BR>
+<B>eval</B>
+</H3>
+The <B>eval/1</B> wrapper inside arithmetic constraints is used to
+indicate that a variable will be bound to an expression at run-time.
+This feature will only be used by programs which generate their
+constraints dynamically at run-time, for example.
+<PRE>
+broken_sum(Xs,Sum):-
+    (
+        foreach(X,Xs),
+        fromto(Expr,S1,S2,0)
+    do
+        S1 = X + S2
+    ),
+    Sum $= Expr.
+</PRE>
+The above implementation of a summation constraint will not work as
+intended because the variable <TT>Expr</TT> will be treated like an IC
+variable when it is in fact the term <TT>+(X1,+(X2,+(...)))</TT>
+which is constructed in the for-loop.
+In order to get the desired functionality, one must wrap the variable
+<TT>Expr</TT> in an <B>eval/1</B>.
+<PRE>
+working_sum(Xs,Sum):-
+    (
+        foreach(X,Xs),
+        fromto(Expr,S1,S2,0)
+    do
+        S1 = X + S2
+    ),
+    Sum $= eval(Expr).
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1084"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1080"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1074"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1082"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1085"
+ HREF="node17.html">Library Predicates</A>
+<B> Up:</B> <A NAME="tex2html1081"
+ HREF="node15.html">IC: A Hybrid Finite</A>
+<B> Previous:</B> <A NAME="tex2html1075"
+ HREF="node15.html">IC: A Hybrid Finite</A>
+ &nbsp <B>  <A NAME="tex2html1083"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

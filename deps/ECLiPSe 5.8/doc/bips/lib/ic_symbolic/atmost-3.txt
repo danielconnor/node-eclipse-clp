@@ -1,0 +1,25 @@
+
+atmost(++N, +List, ++Value)
+
+   Value occurs N times in List
+
+Arguments
+   N                   integer
+   List                list of variables or domain values
+   Value               domain value
+
+Type
+   library(ic_symbolic)
+
+Description
+
+	Constrains its arguments such that Value occurs at most N times
+	in List.
+	This is implemented by mapping onto ic_global:atmost/3.
+	All list elements and Value must be variables or values of the
+	same domain.  If one or more of them are domain-less, they will
+	be given the same domain as the others.
+
+
+See Also
+   ic_global : atmost / 3

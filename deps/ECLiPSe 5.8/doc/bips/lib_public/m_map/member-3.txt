@@ -1,0 +1,35 @@
+
+member(+Map, ?Key, ?Value)
+
+   Succeeds if Key and Value unify with a key/value pair from Map.
+
+Arguments
+   Map                 A map
+   Key                 A key from Map
+   Value               The value in Map corresponding to Key
+
+Type
+   library(m_map)
+
+Description
+	
+	Tries to unify Key and Value with key/value pairs from the map Map.
+	
+	
+	If Key and Value are variables and Map is a map, then all
+	members of the map Map are found on backtracking.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   yes
+
+Fail Conditions
+   Fails if Key and Value do not unify with a key/value pair from Map.
+
+See Also
+   search / 3, lookup / 3

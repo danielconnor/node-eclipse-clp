@@ -1,0 +1,15 @@
+
+hash_add(+Table, +Key, +Value)
+
+   A synonym for hash_set/3
+
+Arguments
+   Table               A hash table
+   Key                 a ground term
+   Value               Any term
+
+Type
+   library(hash)
+
+See Also
+   hash_set / 3

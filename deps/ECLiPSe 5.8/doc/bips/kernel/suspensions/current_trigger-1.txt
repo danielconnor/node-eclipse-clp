@@ -1,0 +1,26 @@
+
+current_trigger(?Trigger)
+
+   Succeeds if Trigger is a currently defined symbolic trigger.
+
+Arguments
+   Trigger             An atom or variable.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+
+    Succeeds if Trigger is a currently defined symbolic trigger for
+    suspensions (see trigger/1). If Trigger is a variable, the current
+    triggers will be enumerated one by one via backtracking.
+
+
+Resatisfiable
+   yes
+
+Fail Conditions
+   Trigger is not a current trigger.
+
+See Also
+   

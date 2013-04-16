@@ -1,0 +1,93 @@
+<HTML><HEAD><TITLE>set_stream_property(+Stream, +Prop, +Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_stream_property(+Stream, +Prop, +Value)</H1>
+Sets the property Prop of the stream Stream to the value Value.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Atom or integer denoting an open stream.
+</DD>
+<DT><EM>+Prop</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>atom, string or integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to set various stream properties:
+
+<P>
+<PRE>
+    Prop            Value         Description
+
+    compress        on, off       a hint for output operations (e.g.
+                                  write_exdr/2) to use a more compact
+                                  output format (output streams only).
+                                  Default: on (file,pipe,socket) or off.
+
+    end_of_line     lf, crlf      which end-of-line sequence to write
+
+    event           atom          event on writing to empty stream
+                                  (see open/4)
+    flush           flush,        explicit or implicit flushing
+                    end_of_line
+
+    macro_expansion on, off       expand term macros (input streams only)
+
+    offset          integer       current position in the
+                                  stream, same as seek/2
+
+    output_options  list          default output options for all term
+                                  output on this stream. The list
+                                  format is as in write_term/2,3.
+
+    prompt          string        prompt string (input streams only)
+
+    prompt_stream   integer       output stream for the prompt
+                    or atom       (input streams only)
+
+    sigio           on, off       enable/disable SIGIO signals on
+                                  this stream (UNIX only)
+
+    yield           on, off       yield on end-of-file (see open/4)
+
+</PRE>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream, Prop or Value is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is neither an atom nor an integer.
+<DT><EM>(5) type error </EM>
+<DD>Prop is instantiated, but not to an atom.
+<DT><EM>(5) type error </EM>
+<DD>Value is of the wrong type for the given property.
+<DT><EM>(6) out of range </EM>
+<DD>Prop is an atom, but not a settable property.
+<DT><EM>(6) out of range </EM>
+<DD>Value is not recognised for the given property.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream does not denote an open stream.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    set_stream_property(input, prompt, "hello: ").
+    set_stream_property(Stream, flush, end_of_line).
+    set_stream_property(Stream, end_of_line, crlf).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/open-3.html">open / 3</A>, <A HREF="../../kernel/iostream/open-4.html">open / 4</A>, <A HREF="../../kernel/iostream/current_stream-1.html">current_stream / 1</A>, <A HREF="../../kernel/iostream/seek-2.html">seek / 2</A>, <A HREF="../../kernel/iostream/get_stream_info-3.html">get_stream_info / 3</A>, <A HREF="../../kernel/ioterm/write_term-2.html">write_term / 2</A>, <A HREF="../../kernel/ioterm/write_term-3.html">write_term / 3</A>
+</BODY></HTML>

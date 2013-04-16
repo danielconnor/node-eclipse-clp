@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>get(+Stream, ?Ascii)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get(+Stream, ?Ascii)</H1>
+Reads the next character from the input stream Stream and unifies its ASCII
+code with Ascii.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+<DT><EM>?Ascii</EM></DT>
+<DD>Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Takes the next character from the open input stream Stream and unifies
+   its integer ASCII code (in the range 0 to 255) to Ascii.  ASCII codes
+   for the non-printable characters (i.e.  control characters) are also
+   acceptable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Ascii does not unify with the next character from the buffered
+   input stream Stream.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is neither an integer nor an atom.
+<DT><EM>(5) type error </EM>
+<DD>Ascii is instantiated, but not to an integer.
+<DT><EM>(190) end of file reached </EM>
+<DD>End of file has been reached.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an input stream.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: get(input, 0'a),get(input,97).
+      &gt; aa
+      yes.
+Fail:
+      [eclipse]: get(input,98).
+      &gt; a
+      no.
+Error:
+      get(Stream,98).                 (Error 4).
+      get(input, '98').               (Error 5).
+      get(10,A).                      (Error 192).
+      get(atom,A).                    (Error 193).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/get-1.html">get / 1</A>, <A HREF="../../kernel/iochar/put-1.html">put / 1</A>, <A HREF="../../kernel/iochar/put-2.html">put / 2</A>
+</BODY></HTML>

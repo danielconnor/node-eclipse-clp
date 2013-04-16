@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE>from_corresponding_lists(++KeyList, ?ValueList, -Map)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>from_corresponding_lists(++KeyList, ?ValueList, -Map)</H1>
+Converts a corresponding pair of lists into a map.
+<DL>
+<DT><EM>KeyList</EM></DT>
+<DD>A list of keys
+</DD>
+<DT><EM>ValueList</EM></DT>
+<DD>A list of values corresponding to the keys in KeyList
+</DD>
+<DT><EM>Map</EM></DT>
+<DD>The created map
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	Converts a list of keys KeyList and a corresponding list of values
+	ValueList into a map Map.  If a key appears more than once in
+	KeyList, then its corresponding value in the map Map will be
+	the last one appearing in AssocList.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails if the lists aren't the same length.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/from_assoc_list-2.html">from_assoc_list / 2</A>, <A HREF="../../lib_public/m_map/det_insert_from_corresponding_lists-4.html">det_insert_from_corresponding_lists / 4</A>
+</BODY></HTML>

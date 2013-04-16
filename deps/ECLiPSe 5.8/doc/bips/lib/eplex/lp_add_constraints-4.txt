@@ -1,0 +1,56 @@
+
+lp_add_constraints(+Handle, +Constraints, ++Integers, -Indices)
+
+   Add new expandable constraints to the demon solver Handle.
+
+Arguments
+   Handle              Handle to a solver state
+   Constraints         A (possibly empty) list of expandable equality or  inequality constraints
+   Integers            A (possibly empty) list of problem variables to be considered as integers
+   Indices             Indices for the constraints in Constraints
+
+Type
+   library(eplex)
+
+Description
+
+  Add new expandable constraints (with possibly new variables) to a solver.
+  An expandable constraint can be expanded when new variables are added to
+  the problem. These constraints are in the form of having a constant on
+  the right-hand side, and coefficients for the problem variables on the
+  left. When new variables are added (via lp_add_columns/2), the
+  coefficients for these variables can be given for the expandable
+  constraints. Note that the constraints can only be expanded if there are
+  no trigger conditions (i.e. the problem must be solved explicitly), or if
+  the problem is not associated with an eplex instance. Otherwise, the
+  added constraints are treated as normal (non-expandable) constraints.
+
+  Constraints is a list of expandable constraints.  NewIntegers is a list
+  of variables that the external solver should consider as integers,
+  Indices is a list of the indices for the added constraints. It is
+  returned by the predicate, and has the same length as Constraints. Each
+  element in Indices is the index for the constraint in Constraints at the
+  same position in the list. This index is used to refer to the constraint
+  in lp_add_columns/2.
+
+  Operationally lp_add_constraints/4 behaves like lp_add_constraints/3,
+  except that it never trigger the solver as a demon:
+  The new constraints will be taken into account the next time the solver
+  is run, and  removed on backtracking. The constraints are normalised 
+  before being passed to the external solver. Unlike lp_add_constraints/3,
+  they are not simplified, and no consistency checks are performed. If any
+  of the constraints are ground, a type error is raised. 
+
+  Note that variables in NewIntegers can be any problem variables.
+ 
+
+Resatisfiable
+   no
+
+Exceptions
+     4 --- Handle, Constraints or Integers uninstantiated.
+     5 --- Some constraint in Constraints is ground.
+     5 --- Some constraint in Constraints is non-linear.
+
+See Also
+   lp_add_constraints / 3, lp_demon_setup / 5, lp_add / 3, lp_add_columns / 2, $= / 2, $=< / 2, $>= / 2, =:= / 2, =< / 2, >= / 2

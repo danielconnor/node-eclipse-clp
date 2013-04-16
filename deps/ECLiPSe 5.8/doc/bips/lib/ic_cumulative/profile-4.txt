@@ -1,0 +1,24 @@
+
+profile(+StartTimes, +Durations, +Resources, ?Profile)
+
+   Cumulative constraint on specified tasks.
+
+Arguments
+   StartTimes          List of start times for tasks (fd variables or integers)
+   Durations           List of duration for tasks (fd variables or integers)
+   Resources           List of resource usages by tasks (fd variables or integers)
+   Profile             List of resource usage at the start of each task
+
+Type
+   library(ic_cumulative)
+
+Description
+
+
+   StartTimes, Durations, Resources and Profile are lists of equal length N
+   of finite domain variable or integers with the same meaning as in
+   cumulative/4.  The list Profile indicates the level of resource usage at
+   the starting point of each task.
+
+
+

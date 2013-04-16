@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>make</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Development Environment and Global Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>make</H1>
+Recompile all files that have been modified since their last compilation.
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   This is a simple utility which uses file modification times to determine
+   if a file needs recompilation.  All compiled files in the system are
+   examined and recompiled if they have been modified since the previous
+   compilation.  make/0 can be defined as follows:
+
+<P>
+<PRE>
+make :- current_compiled_file(File, Time, Module),
+        get_file_info(File, mtime) =\= Time,
+        compile(File, Module),
+        fail.
+make.
+</PRE>
+
+<H3>Fail Conditions</H3>
+   none
+
+
+<H3>Resatisfiable</H3>
+   no
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: [file1,file2].
+file1.pl   compiled traceable 40 bytes in 0.00 seconds
+file2.pl   compiled traceable 40 bytes in 0.00 seconds
+
+yes.
+[eclipse 2]: sh("touch file1.pl").
+
+yes.
+[eclipse 3]: make.
+file1.pl   compiled traceable 40 bytes in 0.00 seconds
+
+yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/D-2.html">. / 2</A>, <A HREF="../../kernel/database/compile-1.html">compile / 1</A>, <A HREF="../../kernel/database/compile-2.html">compile / 2</A>, <A HREF="../../kernel/database/current_compiled_file-3.html">current_compiled_file / 3</A>, <A HREF="../../kernel/database/ensure_loaded-1.html">ensure_loaded / 1</A>
+</BODY></HTML>

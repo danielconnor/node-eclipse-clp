@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>portray_goal(+Term, ?TransTerm)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>portray_goal(+Term, ?TransTerm)</H1>
+Apply the goal portray (write macro) transformation to Term
+<DL>
+<DT><EM>+Term</EM></DT>
+<DD>A callable term.
+</DD>
+<DT><EM>?TransTerm</EM></DT>
+<DD>A variable or callable term.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+    Applies the goal-portray-transformation to Term, if any is visible in the
+    caller module. If no transformation is visible, TransTerm is identical
+    to Term.
+    <P>
+    This predicate is intended mainly for testing purposes, because
+    portray-transformations are normally performed implicitly by the
+    term output predicates write/1,2, writeln/1,2, print/1,2,
+    display/1,2, printf/2,3 or write_term/2,3.  
+    <P>
+    This predicate can defined in terms of portray_term/3 as
+    <PRE>
+	portray_goal(Term, TransTerm) :-
+	    portray_term(Term, TransTerm, term).
+    </PRE>
+    and is therefore deprecated.
+
+<H3>Fail Conditions</H3>
+None.
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: lib(fd).
+    yes.
+
+    [eclipse 4]: X#&gt;Y, delayed_goals([G]), portray_goal(G, PG)@fd.
+    X = X{[-9999999..10000000]}
+    Y = Y{[-10000000..9999999]}
+    G = gec(X{[-9999999..10000000]}, -1, Y{[-10000000..9999999]}, -1)
+    PG = X{[-9999999..10000000]} - Y{[-10000000..9999999]}#&gt;=1
+
+    Delayed goals:
+	    X{[-9999999..10000000]} - Y{[-10000000..9999999]}#&gt;=1
+    yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/portray_term-3.html">portray_term / 3</A>, <A HREF="../../kernel/database/expand_goal-2.html">expand_goal / 2</A>, <A HREF="../../kernel/syntax/portray-3.html">portray / 3</A>
+</BODY></HTML>

@@ -1,0 +1,20 @@
+
+ic_event(++Event)
+
+   Indicates that the specified event has occured.
+
+Arguments
+   Event               The short name of the event to record
+
+Type
+   library(ic_kernel)
+
+Description
+
+   Indicates that the specified event has occured.  Can be left in
+   production code as the call succeeds very quickly when stats gathering is
+   not turned on.
+
+
+See Also
+   ic_stat / 1, ic_stat_get / 1, ic_stat_register_event / 2

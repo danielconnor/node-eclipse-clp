@@ -1,0 +1,390 @@
+<HTML><HEAD><TITLE>library(ic)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(ic)</H1>
+Hybrid integer/real interval arithmetic constraint solver
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="HNN-2.html"><STRONG>?Vars #:: ++Domain</STRONG></A></DT>
+<DD>Constrain Vars to be integral and have the domain Domain.</DD>
+<DT><A HREF="HNN-3.html"><STRONG>#::(?Var, ++Domain, ?Bool)</STRONG></A></DT>
+<DD>Reflect into Bool the truth of Var having the domain Domain.</DD>
+<DT><A HREF="HL-2.html"><STRONG>?ExprX #< ?ExprY</STRONG></A></DT>
+<DD>ExprX is less than ExprY (with integrality constraints).</DD>
+<DT><A HREF="HL-3.html"><STRONG>#<(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is less than ExprY (with integrality constraints).</DD>
+<DT><A HREF="HE-2.html"><STRONG>?ExprX #= ?ExprY</STRONG></A></DT>
+<DD>ExprX is equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HE-3.html"><STRONG>#=(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HEL-2.html"><STRONG>?ExprX #=< ?ExprY</STRONG></A></DT>
+<DD>ExprX is less than or equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HEL-3.html"><STRONG>#=<(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is less than or equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HG-2.html"><STRONG>?ExprX #> ?ExprY</STRONG></A></DT>
+<DD>ExprX is strictly greater than ExprY (with integrality constraints).</DD>
+<DT><A HREF="HG-3.html"><STRONG>#>(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is strictly greater than ExprY (with integrality constraints).</DD>
+<DT><A HREF="HGE-2.html"><STRONG>?ExprX #>= ?ExprY</STRONG></A></DT>
+<DD>ExprX is greater than or equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HGE-3.html"><STRONG>#>=(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is greater than or equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HRE-2.html"><STRONG>?ExprX #\= ?ExprY</STRONG></A></DT>
+<DD>ExprX is not equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="HRE-3.html"><STRONG>#\=(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is not equal to ExprY (with integrality constraints).</DD>
+<DT><A HREF="SNN-2.html"><STRONG>?Vars $:: ++Domain</STRONG></A></DT>
+<DD>Constrain Vars to have the domain Domain.</DD>
+<DT><A HREF="SNN-3.html"><STRONG>$::(?Var, ++Domain, ?Bool)</STRONG></A></DT>
+<DD>Reflect into Bool the truth of Var having the domain Domain. Does not impose integrality.</DD>
+<DT><A HREF="SL-2.html"><STRONG>?ExprX $< ?ExprY</STRONG></A></DT>
+<DD>ExprX is strictly less than ExprY.</DD>
+<DT><A HREF="SE-2.html"><STRONG>?ExprX $= ?ExprY</STRONG></A></DT>
+<DD>ExprX is equal to ExprY.</DD>
+<DT><A HREF="SEL-2.html"><STRONG>?ExprX $=< ?ExprY</STRONG></A></DT>
+<DD>ExprX is less than or equal to ExprY.</DD>
+<DT><A HREF="SG-2.html"><STRONG>?ExprX $> ?ExprY</STRONG></A></DT>
+<DD>ExprX is strictly greater than ExprY.</DD>
+<DT><A HREF="SGE-2.html"><STRONG>?ExprX $>= ?ExprY</STRONG></A></DT>
+<DD>ExprX is greater than or equal to ExprY.</DD>
+<DT><A HREF="SRE-2.html"><STRONG>?ExprX $\= ?ExprY</STRONG></A></DT>
+<DD>ExprX is not equal to ExprY.</DD>
+<DT><A HREF="NN-2.html"><STRONG>?Vars :: ++Domain</STRONG></A></DT>
+<DD>Constrain Vars to have the domain Domain.</DD>
+<DT><A HREF="NN-3.html"><STRONG>::(?Var, ++Domain, ?Bool)</STRONG></A></DT>
+<DD>Reflect into Bool the truth of Var having the domain Domain.</DD>
+<DT><A HREF="L-2.html"><STRONG>ic:(?ExprX < ?ExprY)</STRONG></A></DT>
+<DD>ExprX is strictly less than ExprY.</DD>
+<DT><A HREF="L-3.html"><STRONG><(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is strictly less than ExprY.</DD>
+<DT><A HREF="ENE-2.html"><STRONG>ic:(?ExprX =:= ?ExprY)</STRONG></A></DT>
+<DD>ExprX is equal to ExprY.</DD>
+<DT><A HREF="ENE-3.html"><STRONG>=:=(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is equal to ExprY.</DD>
+<DT><A HREF="EL-2.html"><STRONG>ic:(?ExprX =< ?ExprY)</STRONG></A></DT>
+<DD>ExprX is less than or equal to ExprY.</DD>
+<DT><A HREF="EL-3.html"><STRONG>=<(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is less than or equal to ExprY.</DD>
+<DT><A HREF="EG-2.html"><STRONG>+ConX => +ConY</STRONG></A></DT>
+<DD>Constraint ConX being true implies ConY must both be true.</DD>
+<DT><A HREF="EG-3.html"><STRONG>=>(+ConX,+ConY,Bool)</STRONG></A></DT>
+<DD>Bool is the reified truth of constraint ConX implying the truth of ConY.</DD>
+<DT><A HREF="ERE-2.html"><STRONG>ic:(?ExprX =\= ?ExprY)</STRONG></A></DT>
+<DD>ExprX is not equal to ExprY.</DD>
+<DT><A HREF="ERE-3.html"><STRONG>=\=(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is not equal to ExprY.</DD>
+<DT><A HREF="G-2.html"><STRONG>ic:(?ExprX > ?ExprY)</STRONG></A></DT>
+<DD>ExprX is strictly greater than ExprY.</DD>
+<DT><A HREF="G-3.html"><STRONG>>(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is strictly greater than ExprY.</DD>
+<DT><A HREF="GE-2.html"><STRONG>ic:(?ExprX >= ?ExprY)</STRONG></A></DT>
+<DD>ExprX is greater than or equal to ExprY.</DD>
+<DT><A HREF="GE-3.html"><STRONG>>=(?ExprX, ?ExprY, ?Bool)</STRONG></A></DT>
+<DD>Reified ExprX is greater than or equal to ExprY.</DD>
+<DT><A HREF="ac_eq-3.html"><STRONG>ac_eq(?X, ?Y, ++C)</STRONG></A></DT>
+<DD>Arc-consistent implementation of X #= Y + C.</DD>
+<DT><A HREF="alldifferent-1.html"><STRONG>alldifferent(+Vars)</STRONG></A></DT>
+<DD>Constrains all elements of a list to be pairwise different.</DD>
+<DT><A HREF="and-2.html"><STRONG>+ConX and +ConY</STRONG></A></DT>
+<DD>Constraints ConX and ConY must both be true.</DD>
+<DT><A HREF="and-3.html"><STRONG>and(+ConX,+ConY,Bool)</STRONG></A></DT>
+<DD>Bool is the reified truth of both constraints ConX and ConY being true.</DD>
+<DT><A HREF="delayed_goals_number-2.html"><STRONG>delayed_goals_number(?Var, -Number)</STRONG></A></DT>
+<DD>Returns the number of goals delayed on the ic attribute of Var.</DD>
+<DT><A HREF="delete-5.html"><STRONG>delete(-X, +List, -R, ++Arg, ++Select)</STRONG></A></DT>
+<DD>Choose a domain variable from a list according to selection criteria.</DD>
+<DT><A HREF="element-3.html"><STRONG>element(?Index, ++List, ?Value)</STRONG></A></DT>
+<DD>Value is the Index'th element of the integer list List.</DD>
+<DT><A HREF="get_bounds-3.html"><STRONG>get_bounds(?Var, -Lo, -Hi)</STRONG></A></DT>
+<DD>Retrieve the current bounds of Var.</DD>
+<DT><A HREF="get_delta-2.html"><STRONG>get_delta(?Var, -Width)</STRONG></A></DT>
+<DD>Returns the width of the interval of Var.</DD>
+<DT><A HREF="get_domain-2.html"><STRONG>get_domain(?Var, ?Domain)</STRONG></A></DT>
+<DD>Returns a ground representation of the current IC domain of a variable.</DD>
+<DT><A HREF="get_domain_as_list-2.html"><STRONG>get_domain_as_list(?Var, ?DomainList)</STRONG></A></DT>
+<DD>List of all the elements in the IC domain of Var</DD>
+<DT><A HREF="get_domain_size-2.html"><STRONG>get_domain_size(?Var, ?Size)</STRONG></A></DT>
+<DD>Size is the number of integer elements in the IC domain for Var</DD>
+<DT><A HREF="get_finite_integer_bounds-3.html"><STRONG>get_finite_integer_bounds(?Var, -Lo, -Hi)</STRONG></A></DT>
+<DD>Retrieve the current (finite, integral) bounds of Var.</DD>
+<DT><A HREF="get_float_bounds-3.html"><STRONG>get_float_bounds(?Var, -Lo, -Hi)</STRONG></A></DT>
+<DD>Retrieve the current bounds of Var as floats.</DD>
+<DT><A HREF="get_integer_bounds-3.html"><STRONG>get_integer_bounds(?Var, -Lo, -Hi)</STRONG></A></DT>
+<DD>Retrieve the current bounds of (integral) Var.</DD>
+<DT><A HREF="get_max-2.html"><STRONG>get_max(?Var, -Hi)</STRONG></A></DT>
+<DD>Retrieve the current upper bound of Var.</DD>
+<DT><A HREF="get_median-2.html"><STRONG>get_median(?Var, -Median)</STRONG></A></DT>
+<DD>Returns the median of the interval of the IC variable Var.</DD>
+<DT><A HREF="get_min-2.html"><STRONG>get_min(?Var, -Lo)</STRONG></A></DT>
+<DD>Retrieve the current lower bound of Var.</DD>
+<DT><A HREF="get_solver_type-2.html"><STRONG>get_solver_type(?Var, -Type)</STRONG></A></DT>
+<DD>Retrieve the type of a variable.</DD>
+<DT><A HREF="get_threshold-1.html"><STRONG>get_threshold(-Threshold)</STRONG></A></DT>
+<DD>Returns the current propagation threshold.</DD>
+<DT><A HREF="indomain-1.html"><STRONG>indomain(?Var)</STRONG></A></DT>
+<DD>Instantiates an integer IC variable to an element of its domain.</DD>
+<DT><A HREF="indomain-2.html"><STRONG>indomain(?Var, ++Method)</STRONG></A></DT>
+<DD>a flexible way to assign values to finite domain variables</DD>
+<DT><A HREF="integers-1.html"><STRONG>integers(?Vars)</STRONG></A></DT>
+<DD>Vars' domain is the integer numbers.</DD>
+<DT><A HREF="is_in_domain-2.html"><STRONG>is_in_domain(++Val, ?Var)</STRONG></A></DT>
+<DD>Succeeds iff Val is in the domain of Var</DD>
+<DT><A HREF="is_in_domain-3.html"><STRONG>is_in_domain(++Val, ?Var, ?Result)</STRONG></A></DT>
+<DD>Binds Result to indicate presence of Val in domain of Var</DD>
+<DT><A HREF="is_solver_type-1.html"><STRONG>is_solver_type(?Term)</STRONG></A></DT>
+<DD>Succeeds iff Term is an IC variable or a number.</DD>
+<DT><A HREF="is_solver_var-1.html"><STRONG>is_solver_var(?Term)</STRONG></A></DT>
+<DD>Succeeds iff Term is an IC variable.</DD>
+<DT><A HREF="labeling-1.html"><STRONG>labeling(+Vars)</STRONG></A></DT>
+<DD>Instantiates all variables in a list to elements of their domains.</DD>
+<DT><A HREF="locate-2.html"><STRONG>locate(+Vars, ++Precision)</STRONG></A></DT>
+<DD>Locate solution intervals for Vars by splitting and search.</DD>
+<DT><A HREF="locate-3.html"><STRONG>locate(+Vars, ++Precision, ++LinLog)</STRONG></A></DT>
+<DD>Locate solution intervals for Vars by splitting and search.</DD>
+<DT><A HREF="locate-4.html"><STRONG>locate(+LocateVars, +SquashVars, ++Precision, ++LinLog)</STRONG></A></DT>
+<DD>Locate solution intervals for LocateVars, interleaving search with squashing.</DD>
+<DT><A HREF="max-2.html"><STRONG>max(+Vars, ?Max)</STRONG></A></DT>
+<DD>Constrains Max to be the largest element in Vars.</DD>
+<DT><A HREF="maxlist-2.html"><STRONG>maxlist(+Vars, ?Max)</STRONG></A></DT>
+<DD>Constrains Max to be the largest element in Vars.</DD>
+<DT><A HREF="min-2.html"><STRONG>min(+Vars, ?Min)</STRONG></A></DT>
+<DD>Constrains Min to be the smallest element in Vars.</DD>
+<DT><A HREF="minlist-2.html"><STRONG>minlist(+Vars, ?Min)</STRONG></A></DT>
+<DD>Constrains Min to be the smallest element in Vars.</DD>
+<DT><A HREF="neg-1.html"><STRONG>neg(+Con)</STRONG></A></DT>
+<DD>Constraints Con is negated.</DD>
+<DT><A HREF="neg-2.html"><STRONG>neg(+Con,Bool)</STRONG></A></DT>
+<DD>Bool is the logical negation of the reified truth constraints Con.</DD>
+<DT><A HREF="nth_value-3.html"><STRONG>nth_value(+Domain, ++N, -Value)</STRONG></A></DT>
+<DD>return the nth value in a domain</DD>
+<DT><A HREF="or-2.html"><STRONG>+ConX or +ConY</STRONG></A></DT>
+<DD>At least one of the constraints ConX or ConY must be true.</DD>
+<DT><A HREF="or-3.html"><STRONG>or(+ConX,+ConY,Bool)</STRONG></A></DT>
+<DD>Bool is the reified truth of at least one of the constraints ConX or ConY being true.</DD>
+<DT><A HREF="piecewise_linear-3.html"><STRONG>piecewise_linear(?X, ++Points, ?Y)</STRONG></A></DT>
+<DD>Relates X and Y according to a piecewise linear function.</DD>
+<DT><A HREF="print_solver_var-2.html"><STRONG>print_solver_var(?Var, -Printed)</STRONG></A></DT>
+<DD>Returns a representation of the IC variable Var suitable for printing.</DD>
+<DT><A HREF="reals-1.html"><STRONG>reals(?Vars)</STRONG></A></DT>
+<DD>Vars' domain is the real numbers.</DD>
+<DT><A HREF="search-6.html"><STRONG>search(+L, ++Arg, ++Select, +Choice, ++Method, +Option)</STRONG></A></DT>
+<DD>A generic search routine for finite domains or IC which implements 
+different partial search methods (complete, credit, lds, bbs, dbs, sbds,
+gap_sbds, gap_sbdd)</DD>
+<DT><A HREF="set_threshold-1.html"><STRONG>set_threshold(++Threshold)</STRONG></A></DT>
+<DD>Sets the propagation threshold.</DD>
+<DT><A HREF="set_threshold-2.html"><STRONG>set_threshold(++Threshold, +WakeVars)</STRONG></A></DT>
+<DD>Sets the propagation threshold with recomputation.</DD>
+<DT><A HREF="squash-3.html"><STRONG>squash(+Vars, ++Precision, ++LinLog)</STRONG></A></DT>
+<DD>Refine the intervals of Vars by the squashing algorithm.</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Reexports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>reexport struct(ic(_, _, _, _, _, _, _, _)) from <A HREF="../../lib/ic_kernel/index.html">ic_kernel</A></STRONG></DT><DD></DD>
+<DT><STRONG>reexport ic_constraints</STRONG></DT><DD></DD>
+<DT><STRONG>reexport ic_search</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+   The IC (Interval Constraint) library is a hybrid integer/real interval
+   arithmetic constraint solver.  Its aim is to make it convenient for
+   programmers to write hybrid solutions to problems, mixing together
+   integer and real constraints and variables.</P><P>
+
+   The integer constraints and variables are similar to those available in
+   the old finite domain library `fd'.  The real constraints are similar to
+   those that were available in the old real interval arithmetic library
+   `ria'.  Constraints which are not specifically integer constraints can be
+   applied to either real or integer variables (or a mix) seamlessly, and
+   any real variable can be converted to an integer variable at any time by
+   imposing an integrality constraint on it.</P><P>
+
+   The IC library replaces the `fd', `ria' and `range' libraries (with a new
+   symbolic solver library providing the non-numeric functionality of `fd').
+   <P>
+   For more information, see the IC section of the constraint library manual
+   or the documentation for the individual IC predicates.</P><P>
+
+   The IC library solves constraint problems over the reals.  It is not
+   limited to linear constraints, so it can be used to solve general
+   problems like:
+   <PRE>
+   [eclipse 2]: ln(X) $>= sin(X).
+
+   X = X{0.36787944117144228 .. 1.0Inf}
+   yes.
+   </PRE>
+   <P>
+   The IC library handles linear and non-linear, reified constraints and
+   user defined functions. 
+   <P>
+   User-defined functions/constraints are treated in a similar manner to
+   user defined functions found in expressions handled by is/2.  Note,
+   however, that user defined constraints/functions, when used in IC, should
+   be (semi-)deterministic.  User defined constraints/functions which leave
+   choice points may not behave as expected.
+   <P>
+   Linear constraints are handled by a single propagator, whereas non-linear
+   constraints are broken down into simpler ternary/binary/unary
+   propagators.  The value of any constraint found in an expression is its
+   reified truth value (0..1).
+   <P>
+   Variables appearing in arithmetic IC constraints at compile-time are
+   assumed to be IC variables unless they are wrapped in an <STRONG>eval/1</STRONG>
+   term.  The <STRONG>eval/1</STRONG> wrapper inside arithmetic constraints is used to
+   indicate that a variable will be bound to an expression at run-time.
+   This feature will only be used by programs which generate their
+   constraints dynamically at run-time, for example.
+   <PRE>
+   broken_sum(Xs,Sum):-
+       (
+	   foreach(X,Xs),
+	   fromto(Expr,S1,S2,0)
+       do
+	   S1 = X + S2
+       ),
+       Sum $= Expr.
+   </PRE>
+   <P>
+   The above implementation of a summation constraint will not work as
+   intended because the variable <TT>Expr</TT> will be treated like an IC
+   variable when it is in fact the term <TT>+(X1,+(X2,+(...)))</TT> which is
+   constructed in the for-loop.  In order to get the desired functionality,
+   one must wrap the variable <TT>Expr</TT> in an <STRONG>eval/1</STRONG>.
+   <P>
+   <PRE>
+   working_sum(Xs,Sum):-
+       (
+	   foreach(X,Xs),
+	   fromto(Expr,S1,S2,0)
+       do
+	   S1 = X + S2
+       ),
+       Sum $= eval(Expr).
+   </PRE>
+   <P>
+   The following arithmetic expression can be used inside the constraints:
+   <DL>
+   <DT><STRONG>X</STRONG><DD>
+	    Variables.  If X is not yet an interval variable, it is turned 
+	    into one.
+
+   <DT><STRONG>123</STRONG><DD>
+	    Integer constants.
+
+   <DT><STRONG>0.1</STRONG><DD>
+	    Floating point constants.  These are assumed to be exact and
+	    are converted to zero-width bounded reals.
+
+   <DT><STRONG>0.1__0.2</STRONG><DD>
+	    Bounded real constants.
+
+   <DT><STRONG>pi, e</STRONG><DD>
+	    Intervals enclosing the constants pi and e respectively.
+
+   <DT><STRONG>inf</STRONG><DD>
+	    Floating point infinity.
+
+   <DT><STRONG>+Expr</STRONG><DD>
+	    Identity.
+
+   <DT><STRONG>-Expr</STRONG><DD>
+	    Sign change.
+
+   <DT><STRONG>+-Expr</STRONG><DD>
+	    Expr or -Expr.  The result is an interval enclosing both.
+
+   <DT><STRONG>abs(Expr)</STRONG><DD>
+	    The absolute value of Expr.
+
+   <DT><STRONG>E1+E2</STRONG><DD>
+	    Addition.
+
+   <DT><STRONG>E1-E2</STRONG><DD>
+	    Subtraction.
+
+   <DT><STRONG>E1*E2</STRONG><DD>
+	    Multiplication.
+
+   <DT><STRONG>E1/E2</STRONG><DD>
+	    Division.
+
+   <DT><STRONG>E1^E2</STRONG><DD>
+	    Exponentiation.
+
+   <DT><STRONG>min(E1,E2)</STRONG><DD>
+	    Minimum.
+
+   <DT><STRONG>max(E1,E2)</STRONG><DD>
+	    Maximum.
+
+   <DT><STRONG>sqr(Expr)</STRONG><DD>
+	    Square.  Logically equivalent to Expr*Expr, but with better 
+	    operational behaviour.
+
+   <DT><STRONG>sqrt(Expr)</STRONG><DD>
+	    Square root (always positive).
+
+   <DT><STRONG>exp(Expr)</STRONG><DD>
+	    Same as e^Expr.
+
+   <DT><STRONG>ln(Expr)</STRONG><DD>
+	    Natural logarithm, the reverse of the exp function.
+
+   <DT><STRONG>sin(Expr)</STRONG><DD>
+	    Sine.
+
+   <DT><STRONG>cos(Expr)</STRONG><DD>
+	    Cosine.
+
+   <DT><STRONG>atan(Expr)</STRONG><DD>
+	    Arcus tangens.  (Returns value between -pi/2 and pi/2.)
+
+   <DT><STRONG>rsqr(Expr)</STRONG><DD>
+	    Reverse of the sqr function.  The same as +-sqrt(Expr).
+
+   <DT><STRONG>rpow(E1,E2)</STRONG><DD>
+	    Reverse of exponentiation. i.e. finds X in E1 = X^E2.
+
+   <DT><STRONG>sub(Expr)</STRONG><DD>
+	    A subinterval of Expr.
+
+   <DT><STRONG>sum(ExprList)</STRONG><DD>
+	    Sum of a list of expressions.
+
+   <DT><STRONG>min(ExprList)</STRONG><DD>
+	    Minimum of a list of expressions.
+
+   <DT><STRONG>max(ExprList)</STRONG><DD>
+	    Maximum of a list of expressions.
+
+   <DT><STRONG>and</STRONG><DD>
+	    Reified constraint conjunction.  e.g. X&gt;3 and Y&lt;8
+
+   <DT><STRONG>or</STRONG><DD>
+	    Reified constraint disjunction.  e.g. X&gt;3 or Y&lt;8
+
+   <DT><STRONG>=&gt;</STRONG><DD>
+	    Reified constraint implication.  e.g. X&gt;3 =&gt; Y&lt;8
+
+   <DT><STRONG>neg</STRONG><DD>
+	    Reified constraint negation.  e.g. neg X&gt;3
+
+   <DT><STRONG>$=, $\=, $&gt;, $&gt;=, $&lt;, $=&lt;, #=, #\=, #&gt;, #&gt;=, #&lt;, #=&lt;,
+   =:=, =\=, &gt;, &gt;=, &lt;, =&lt;, and, or, =&gt;, neg</STRONG><DD>
+	    Constraints whose value is taken as their reified truth value
+	    (0..1).
+
+   <DT><STRONG>foo(Arg1, Arg2 ... ArgN), module:foo(Arg1, Arg2 ...  ArgN)</STRONG></DT>
+	    Call user-defined constraint/function foo.
+
+   <DT><STRONG>eval(Var)</STRONG><DD>
+	    Var will be an expression at run-time.
+   </DL>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Warwick Harvey, Andrew Sadler, Andrew Cheadle
+</UL>
+<HR>Generated from ic.eci on Tue Jan 25 01:58:45 2005
+
+</BODY></HTML>

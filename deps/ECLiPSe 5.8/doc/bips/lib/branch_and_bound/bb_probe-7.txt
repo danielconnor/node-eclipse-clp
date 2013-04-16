@@ -1,0 +1,37 @@
+
+bb_probe(++From, ++To, +Goal, ?Template, ?Cost, ++Handle, ++Module)
+
+   Low-level primitive for building branch-and-bound-style search procedures
+
+Type
+   library(branch_and_bound)
+
+Description
+
+	bb_probe tries to find a solution for Goal in the range From..To.
+	If there is a solution, its Template and Cost are stored in Handle,
+	the computation is undone, and bb_probe succeeds.
+	If there is no solution, Handle is not changed and bb_probe fails.
+	The primitive set_var_bounds/3 is used to impose cost bounds
+	during the search process in a generic way.
+
+Examples
+   % a simple branch-and-bound procedure
+my_minimize(Goal, Cost, Solution, OptCost, Module) :-
+	bb_init(1000000, Handle),
+	(
+	    bb_delta(0, 1000000, Goal, Cost, Handle, Module)
+	;
+	    bb_solution(Handle, Solution),
+	    bb_cost(Handle, OptCost)
+	),
+	bb_finish(Handle).
+
+bb_delta(From, To, Goal, Cost, Handle, Module) :-
+	bb_probe(From, To, Goal, Goal, Cost, Handle, Module),
+	NewTo is bb_cost(Handle) - 1,
+	bb_delta(From, NewTo, Goal, Cost, Handle, Module).
+    
+
+See Also
+   bb_init / 2, bb_cost / 2, bb_solution / 2, bb_finish / 1, bb_min / 3, bb_min / 4, set_var_bounds / 3

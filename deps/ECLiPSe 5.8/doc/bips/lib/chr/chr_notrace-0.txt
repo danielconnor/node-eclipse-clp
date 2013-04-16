@@ -1,0 +1,40 @@
+
+chr_notrace
+
+   Deactivates the standard or Opium debugger extension for constraint
+handling rules.
+
+
+
+Arguments
+
+Type
+   library(chr)
+
+Description
+   The query chr_trace.  deactivates the standard or opium debugger.  In
+   case of the Opium debugger, its window remains until quited.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+      Success:
+[eclipse]: chr_notrace.
+yes.
+Debugger switched off
+
+
+
+
+
+See Also
+   chr_opium / 0, chr_trace / 0

@@ -1,0 +1,32 @@
+
+?X #\= ?Y
+
+   X is different from Y.
+
+
+
+Arguments
+   ?X                  A linear term.
+   ?Y                  A linear term.
+
+Type
+   library(fd)
+
+Description
+   This constraints states that the two linear terms are not equal.  It is
+   suspended until at most one variable appears in it and then its domain
+   is updated so that the constraint is satisfied.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      The constraint does not hold if X=Y.
+
+
+
+See Also
+   :: / 2, #:: / 2, #= / 2

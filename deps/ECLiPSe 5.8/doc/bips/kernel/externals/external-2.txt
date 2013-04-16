@@ -1,0 +1,111 @@
+
+external(+PredSpec, +CName)
+
+   Defines PredSpec to be a deterministic external predicate linked to the C
+function whose system name is CName.
+
+
+
+Arguments
+   +PredSpec           Of the form Atom/Integer (predicate name/arity).
+   +CName              Atom or string.
+
+Type
+   External Interface
+
+Description
+   Declares PredSpec to be a deterministic external predicate (in the
+   caller module) linked to the ``C'' function whose system name is CName.
+
+
+   If the visibility of PredSpec is not declared, it is set to local.
+
+
+   If necessary, an underscore is prepended to CName to get its form as
+   used by the C compiler.
+
+
+   If a call to PredSpec has already been compiled as a Prolog call or a
+   non-deterministic external call, error 62 is raised (``inconsistent
+   procedure redefinition'').  This can be prevented by defining the
+   external before compiling any call to it or by using the declaration
+   predicate external/1.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Either PredSpec or CName is not instantiated.
+     5 --- PredSpec is not of the form Atom/Integer.
+     5 --- CName is not an atom or a string.
+    62 --- A call to PredSpec has already been compiled as a Prolog    call or a non-deterministic external call.
+   211 --- External function does not exist.
+
+Examples
+   
+Assume we have the C++ file eg_cc_external.cc:
+
+    #include "eclipseclass.h"
+    extern "C" int
+    p_sumlist()
+    {
+	int res;
+	long x, sum = 0;
+	EC_word list(EC_arg(1));
+	EC_word car,cdr;
+
+	for ( ; list.is_list(car,cdr) == EC_succeed; list = cdr)
+	{
+	    res = car.is_long(&x);
+	    if (res != EC_succeed) return res;
+	    sum += x;
+	}
+	res = list.is_nil();
+	if (res != EC_succeed) return res;
+	return unify(EC_arg(2), EC_word(sum));
+    }
+
+
+Compile that into a dynamic library, e.g. using g++ on a Linux machine:
+
+    g++ -I/usr/local/eclipse/include/i386_linux -shared \
+    	-o eg_cc_external.so eg_cc_external.cc
+
+
+Load the .so file dynamically into Eclipse and declare the external:
+
+      ?- load('eg_cc_external.so').
+      yes.
+
+      ?- external(sumlist/2, p_sumlist).
+      yes.
+
+      ?- sumlist([1,2,3,4,5],S).
+      S = 15
+      yes.
+
+
+Errors:
+      external(PredSpec, "p_member"). (Error 4).
+      external(p/0, S).               (Error 4).
+      external('p/0', p_p0).          (Error 5).
+      external(p/0, 123).             (Error 5).
+      external(prmsg/1, nosuchfunc).  (Error 211).
+
+      ?- [user].
+       p :- a.
+       user   compiled 32 bytes in 0.00 seconds
+      yes.
+      ?- external(a/0, c_a).   (Error 62).
+
+
+See Also
+   external / 1, load / 1

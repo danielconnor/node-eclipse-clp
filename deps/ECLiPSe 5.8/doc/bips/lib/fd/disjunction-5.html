@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>disjunction(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>disjunction(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)</H1>
+Flag indicates which of the two non-overlapping tasks is scheduled as
+first.  Either the one with starting time Start1 and duration Duration1
+(then the value of Flag is 1), or the second one with starting time Start2
+and duration Duration2 (and the Flag is 2).
+
+
+<DL>
+<DT><EM>?Start1</EM></DT>
+<DD>A finite domain variable or integer
+</DD>
+<DT><EM>+Duration1</EM></DT>
+<DD>An integer
+</DD>
+<DT><EM>?Start2</EM></DT>
+<DD>A finite domain variable or integer
+</DD>
+<DT><EM>+Duration2</EM></DT>
+<DD>An integer
+</DD>
+<DT><EM>?Flag</EM></DT>
+<DD>A finite domain variable or integer
+</DD>
+</DL>
+<H2>Description</H2>
+   This constraint can be used to model two non-overlapping tasks with
+   known durations.  Given the starting times and durations, this
+   constraint uses constructive disjunction to remove all inconsistent
+   values from the domains of Start1 and Start2.  In addition to
+   maintaining their bounds in a consistent state, it also locally executes
+   both cases (first task before the second one or voce versa) and removes
+   all values which are not consistent with any of these two alternatives.
+
+<P>
+   If Duration1 or Duration2 is not integer, it obtains a default domain.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if there is no possibility to schedule given two tasks in any
+   order under given conditions.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   [eclipse 5]: [X, Y]::1..10, disjunction_choose(X, 5, Y, 7, F).
+   X = X[1..10]
+   Y = Y[1..10]
+   F = F[1, 2]
+   Delayed goals:
+   disjunction_choose_1(X[1..10], 5, Y[1..10], 7, F[1, 2])
+   yes.
+   [eclipse 6]: [X, Y]::1..10, disjunction(X, 5, Y, 7, F).
+   X = X[1..5, 8..10]
+   Y = Y[1..3, 6..10]
+   F = F
+   Delayed goals:
+   disjunction(X[1..5, 8..10], 5, Y[1..3, 6..10], 7, F)
+   yes.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/fd/disjunctive-3.html">disjunctive / 3</A>, <A HREF="../../lib/fd/disjunction_choose-5.html">disjunction_choose / 5</A>
+</BODY></HTML>

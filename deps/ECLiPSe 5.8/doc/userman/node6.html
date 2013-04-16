@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Terminology</TITLE>
+<META NAME="description" CONTENT="Terminology">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="umsroot.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2286"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2282"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2276"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2284"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2287"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Up:</B> <A NAME="tex2html2283"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html2277"
+ HREF="node5.html">Reporting Problems</A>
+ &nbsp <B>  <A NAME="tex2html2285"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00200000000000000000"></A>
+<A NAME="terminology"></A><A NAME="chapterm"></A>
+<BR>
+Terminology
+</H1>
+
+<P>
+This chapter defines the terminology which is used throughout the manual and
+in related documentation.
+
+<P>
+<DL>
+<DT><STRONG>+X</STRONG>
+<DD><A NAME="407"></A>
+This denotes an input argument. Such an argument must be instantiated before 
+a built-in is called.
+<P>
+<DT><STRONG>-X</STRONG>
+<DD><A NAME="408"></A>
+This denotes an output argument. Such an argument must be not 
+instantiated before a built-in is called.
+
+<P>
+<DT><STRONG>?X</STRONG>
+<DD><A NAME="409"></A>
+This denotes an input or an output argument. Such an argument may be either 
+instantiated or not  when a built-in is called.
+
+<P>
+<DT><STRONG>Arity</STRONG>
+<DD><A NAME="410"></A>
+Arity is the number of arguments to a term.
+Atoms are considered as functors with zero arity.
+The notation <I>Name/Arity</I> is used to specify a functor of name 
+<I>Name</I> with arity <I>Arity</I>.
+<A NAME="414"></A>
+
+<P>
+<DT><STRONG>Atom</STRONG>
+<DD>An arbitrary name chosen by the user to represent objects from the 
+problem domain.
+A Prolog <I>atom</I> corresponds to an identifier in other languages.
+<A NAME="416"></A>
+
+<P>
+<DT><STRONG>Atomic</STRONG>
+<DD>An atom, string or a number. A terms which does not contain other terms.
+<A NAME="417"></A>
+
+<P>
+<DT><STRONG>Body</STRONG>
+<DD>A clause <I>body</I> can either be of the form
+<PRE>
+Goal_1, Goal_2, ..., Goal_k
+</PRE>
+or simply
+<A NAME="421"></A>
+<PRE>
+Goal
+</PRE>
+<A NAME="424"></A>
+Each <I>Goal_i</I> must be  a callable term.
+
+<P>
+<DT><STRONG>Built-in Procedures</STRONG>
+<DD><A NAME="426"></A>
+These are predicates provided for the user by the
+ECLiPSe system, they are either written in Prolog or in the implementation
+language (usually ``C'').
+
+<P>
+<DT><STRONG>Clause</STRONG>
+<DD><A NAME="428"></A>
+See program clause or goal.
+
+<P>
+<DT><STRONG>Callable Term</STRONG>
+<DD><A NAME="429"></A>
+A <I>callable term</I> is either a compound term or an atom.
+
+<P>
+<DT><STRONG>Compound Term</STRONG>
+<DD><A NAME="431"></A>
+Compound terms are of the form
+<PRE>
+f(t_1, t_2, ..., t_n)
+</PRE>
+where <I>f</I> is the <I>functor</I> of the compound term
+<A NAME="436"></A>
+and <I>t_i</I> are terms, n is its arity. Lists and Pairs are also 
+compound terms.
+
+<P>
+<DT><STRONG>DID</STRONG>
+<DD><A NAME="438"></A>
+Each atom created within ECLiPSe is assigned a unique
+identifier called the <I>dictionary identifier</I> or <I>DID</I>.
+
+<P>
+<DT><STRONG>Difference List</STRONG>
+<DD><A NAME="442"></A>
+A difference list is a special kind of a list.
+Instead of being ended by <I>nil</I>, a difference list
+has an uninstantiated tail so that new elements
+can be appended to it in constant time.
+A difference list is written as <I>List - Tail</I>
+where <I>List</I> is the beginning of the list and <I>Tail</I>
+is its uninstantiated tail.
+Programs that use difference lists are usually more efficient
+and always much less readable than programs without them.
+
+<P>
+<DT><STRONG>Dynamic Procedures</STRONG>
+<DD><A NAME="447"></A>
+These are procedures which can be modified clause-wise, by adding or removing 
+one clause at a time. Note that this class of procedure is equivalent to 
+interpreted procedures in other Prolog systems. See also <I>static 
+procedures</I>.
+
+<P>
+<DT><STRONG>ElemSpec</STRONG>
+<DD><A NAME="449"></A>
+An <I>ElemSpec</I> specifies a global variable (an atom) or an array
+element (a ground compound term with as much arguments (integers) as
+the number of dimensions of the array).
+
+<P>
+<DT><STRONG>External Procedures</STRONG>
+<DD><A NAME="451"></A>
+These are procedures which are defined in a language
+other than Prolog, and explicitly connected to Prolog predicates by the user.
+
+<P>
+<DT><STRONG>Fact</STRONG>
+<DD><A NAME="452"></A>
+<A NAME="453"></A>
+A fact or <I>unit clause</I> is a term of the form:
+<PRE>
+Head.
+</PRE>
+<A NAME="457"></A>
+where <I>Head</I> is a structure or an atom.
+<A NAME="459"></A>
+A fact may be considered to be a rule whose body is always <I>true</I>.
+
+<P>
+<DT><STRONG>Functor</STRONG>
+<DD><A NAME="461"></A>
+A functor is characterised by its name which is an atom, and its arity
+which is its number of arguments.
+
+<P>
+<DT><STRONG>Goal Clause</STRONG>
+<DD><A NAME="462"></A>
+<A NAME="463"></A>
+See <I>query</I>.
+
+<P>
+<DT><STRONG>Ground</STRONG>
+<DD><A NAME="465"></A>
+A term is ground when it does not contain any uninstantiated variables.
+
+<P>
+<DT><STRONG>Head</STRONG>
+<DD><A NAME="466"></A>
+A head is a structure or an atom.
+
+<P>
+<DT><STRONG>Instantiated</STRONG>
+<DD><A NAME="467"></A>
+A variable is instantiated when it has been bound to an atomic or a 
+compound term as opposed to 
+being <I>uninstantiated</I> or <I>free</I>.  See also <I>ground</I>. 
+
+<P>
+<DT><STRONG>List</STRONG>
+<DD><A NAME="471"></A>
+A list is a special type of term within Prolog. It is a 
+recursive data structure consisting of <I>pairs</I> (whose tails are lists).
+A <TT>list</TT> is either the atom <TT>[]</TT> called <TT>nil</TT> as in LISP,
+or a pair whose tail is a list.
+The notation :
+<PRE>
+[a , b , c]
+</PRE>
+is shorthand for:
+<PRE>
+[a | [b | [c | []]]]
+</PRE>
+<A NAME="480"></A>
+<A NAME="481"></A>
+
+<P>
+<DT><STRONG>Name/Arity</STRONG>
+<DD><A NAME="482"></A>
+The notation <TT>Name/Arity</TT> is used to specify a functor of name 
+<B>Name</B> with arity <B>Arity</B>.
+
+<P>
+<DT><STRONG>Pair</STRONG>
+<DD><A NAME="486"></A>
+A pair is a compound term with the functor <TT>./2</TT> (<TT>dot</TT>)
+which is written as :
+<PRE>
+[H|T]
+</PRE>
+<TT>H</TT> is the <TT>head</TT> of the pair and <TT>T</TT> its <TT>tail</TT>.
+<A NAME="495"></A>
+<A NAME="496"></A>
+
+<P>
+<DT><STRONG>Predicate</STRONG>
+<DD><A NAME="497"></A>
+A predicate is another term for a <I>procedure</I>.
+
+<P>
+<DT><STRONG>PredSpec</STRONG>
+<DD><A NAME="499"></A>
+This is similar to the notation <TT>Name/Arity</TT>.
+Some built-ins allow the arity to be omitted and to specify
+<TT>Name</TT> only.
+This stands for all (visible) predicates with that name and any arity.
+
+<P>
+<DT><STRONG>Program Clause</STRONG>
+<DD>A <I>program clause</I> or <I>clause</I> is either the term
+<A NAME="504"></A>
+<A NAME="505"></A>
+<A NAME="506"></A>
+<PRE>
+Head :- Body.
+</PRE>
+<A NAME="509"></A>
+i.e. a compound term with the functor <I>:-/2</I>, or only a fact.
+
+<P>
+<DT><STRONG>Query</STRONG>
+<DD>A query  has the same form as <I>Body</I> 	
+and is also called a <I>goal</I>.
+<A NAME="513"></A>
+Such clauses occur mainly as input to the top level Prolog loop
+and in files being compiled, then they have the form
+<PRE>
+:- Goal_1, ..., Goal_k.
+</PRE>
+or
+<PRE>
+?- Goal_1, ..., Goal_k.
+</PRE>
+
+<P>
+<DT><STRONG>Regular Prolog Procedure</STRONG>
+<DD><A NAME="518"></A>
+A <I>regular (Prolog) procedure</I> is a sequence of user clauses whose heads
+have the same functor, which then identifies the user procedure.
+
+<P>
+<DT><STRONG>Simple Procedures</STRONG>
+<DD><A NAME="520"></A>
+Apart from regular procedures ECLiPSe recognises <I>simple procedures</I>
+which are written not in Prolog but in the implementation language, i.e. C
+and which are deterministic.
+There is a functor associated with each
+simple procedure, so that
+any procedure recognisable by ECLiPSe is identified by a functor,
+<A NAME="524"></A>
+or a compound term with this functor (or atom).
+
+<P>
+<DT><STRONG>SpecList</STRONG>
+<DD><A NAME="525"></A>
+The SpecList notation means a sequence of terms of the form:
+<PRE>
+name_1/a_1, name_2/a_2, ..., name_k/a_k.
+</PRE>
+The SpecList notation is used in many built-ins, for example, 
+to specify a list of procedures in the
+<A NAME="tex2html55"
+ HREF="../bips/kernel/modules/export-1.html">export/1</A><A NAME="555"></A> predicate.
+
+<P>
+<DT><STRONG>Static Procedures</STRONG>
+<DD><A NAME="530"></A>
+These are procedures which can only be changed as a whole unit, i.e. removed or 
+replaced.
+
+<P>
+<DT><STRONG>Stream</STRONG>
+<DD><A NAME="531"></A>
+This is an I/O channel identifier and can be a physical stream number, one of 
+the pre-defined stream identifiers (input, output, error, warning_output, log_output, null)
+or a user defined stream name (defined using
+<A NAME="tex2html59"
+ HREF="../bips/kernel/iostream/set_stream-2.html">set_stream/2</A><A NAME="558"></A> or <A NAME="tex2html61"
+ HREF="../bips/kernel/iostream/open-3.html">open/3</A><A NAME="561"></A>). 
+<A NAME="536"></A>
+<A NAME="537"></A> 
+
+<P>
+<DT><STRONG>Structures</STRONG>
+<DD>Compound terms which are not pairs are also called <I>structures</I>.
+<A NAME="539"></A>
+
+<P>
+<DT><STRONG>Term</STRONG>
+<DD>A <I>term</I> is the basic data type in Prolog.
+<A NAME="541"></A>
+It is either a <I>variable</I>, a <I>constant</I>,
+i.e. an <I>atom</I>, a <I>number</I> or a <I>string</I>,
+<A NAME="547"></A>
+<A NAME="548"></A>
+or a <I>compound term</I>.
+
+<P>
+</DL>
+
+<P>
+The notation <I>Pred/N1, N2</I> is often used in this documentation
+as a shorthand for <I>Pred/N1, Pred/N2</I>.
+
+<P>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2286"
+ HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2282"
+ HREF="umsroot.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2276"
+ HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2284"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2287"
+ HREF="node7.html">Getting started with ECLiPSe</A>
+<B> Up:</B> <A NAME="tex2html2283"
+ HREF="umsroot.html">ECLiPSe User Manual Release</A>
+<B> Previous:</B> <A NAME="tex2html2277"
+ HREF="node5.html">Reporting Problems</A>
+ &nbsp <B>  <A NAME="tex2html2285"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

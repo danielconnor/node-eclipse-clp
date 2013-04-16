@@ -1,0 +1,51 @@
+
+timeout(+Goal, ++TimeLimit, +TimeOutGoal)
+
+   Run the goal Goal for a maximum of TimeLimit seconds.
+
+Arguments
+   Goal                Goal to run
+   TimeLimit           Time limit of Goal in seconds (integer or float)
+   TimeOutGoal         Goal to run on expiry of TimeLimit
+
+Type
+   library(timeout)
+
+Description
+
+
+    Goal is executed as if called via call(Goal),
+    but only for a maximum of TimeLimit seconds. If the goal is
+    still executing after TimeLimit, time-out occurs, the execution of the
+    goal is terminated (via exit_block/1) and TimeOutGoal is executed.  If
+    the value of TimeLimit is 0 or 1.0Inf, no timeout is applied to the Goal.
+
+    Note that, if Goal is nondeterministic, execution flow may leave the scope
+    of timeout/3 on success and re-enter on failure. In this case, only time
+    spent within Goal will be counted towards the TimeLimit.
+
+    The predicate is based on the after event timers, so TimeLimit is 
+    measured in the timer currently used by after events. The current time
+    used for the associated event timer can be retrieved using
+    statistics(event_time, CurrentTime). The timeout predicate can be used 
+    with other after events, and can be nested within itself (i.e. embedded
+    within Goal or TimeOutGoal).
+
+    Note that timeout/3 can be defined in terms of timeout/7 as:
+
+    timeout(Goal, TimeLimit, TimeOutGoal) :-
+        timeout(Goal, TimeLimit, TimeOutGoal, all_solution, _, _, _).
+
+    
+
+Resatisfiable
+   If Goal is resatisfiable.
+
+Examples
+       ?- timeout((repeat,fail), 1.5, writeln(timed-out)). % time-out from infinite loop
+    timed - out
+    Yes (1.51s cpu)
+    
+
+See Also
+   timeout / 7, call_timeout_safe / 1, event_after / 2

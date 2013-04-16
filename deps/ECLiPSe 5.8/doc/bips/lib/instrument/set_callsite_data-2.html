@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>set_callsite_data(+SiteId, ?UserData)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(instrument)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_callsite_data(+SiteId, ?UserData)</H1>
+Associate arbitrary data with an instrumentation callsite 
+   in a non-logical store.
+<DL>
+<DT><EM>SiteId</EM></DT>
+<DD>Integer
+</DD>
+<DT><EM>UserData</EM></DT>
+<DD>Valid Prolog term
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Each code instrumentation point within a file is 
+   uniquely identified by its callsite identifier.
+   The callsite identifier is a monotonically increasing 
+   integer incrementing from the initial value of 0 for a 
+   new module. 
+   <P>
+   The predicate associates arbitrary data (a valid Prolog term) 
+   with a specified instrumentation callsite within a module or 
+   file.
+   <P>
+   The data is stored in a non-logical store and can be 
+   retrieved using <TT>instrument:get_callsite_data/2</TT>.
+   <P>
+   The predicate is a tool and data for a callsite 
+   of a module other than the current calling module context 
+   can be stored by invoking 
+   <TT>set_callsite_data(SiteId, UserData)@Module</TT>.
+<H3>Fail Conditions</H3>
+no
+<H3>Resatisfiable</H3>
+no
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SiteId is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SiteId is not an integer.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/instrument/file_callsites-3.html">file_callsites / 3</A>, <A HREF="../../lib/instrument/get_callsite_data-2.html">get_callsite_data / 2</A>, <A HREF="../../lib/instrument/instrument-2.html">instrument / 2</A>, <A HREF="../../lib/instrument/instrument-3.html">instrument / 3</A>, <A HREF="../../lib/instrument/index.html">library(instrument)</A>, <A HREF="../../lib/instrument/module_callsites-2.html">module_callsites / 2</A>, <A HREF="../../lib/instrument/itemplate-s.html">struct(itemplate)</A>, <A HREF="../../lib/instrument/defined_modules-2.html">defined_modules / 2</A>
+</BODY></HTML>

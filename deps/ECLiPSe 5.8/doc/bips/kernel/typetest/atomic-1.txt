@@ -1,0 +1,47 @@
+
+atomic(?Atomicterm)
+
+   Succeeds if Atomicterm is an atom, a number, or a string.
+
+
+
+Arguments
+   ?Atomicterm         Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Atomicterm is an atomic term.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Atomicterm is not an atom, a number or a string.
+
+
+
+Examples
+   
+Success:
+    atomic(atom).
+    atomic(1.4).
+    atomic(3).
+    atomic("Hello world").
+    atomic([]).
+
+Fail:
+    atomic([1,3,3,6]).
+    atomic(this(is,a,structure)).
+    atomic(X).
+
+
+
+
+
+See Also
+   atom / 1, compound / 1, var / 1

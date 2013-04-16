@@ -1,0 +1,34 @@
+
+apply_to_list(++KeyList, +Map, ?ValueList)
+
+   Map a list of keys to their corresponding values.
+
+Arguments
+   KeyList             A list of keys to map
+   Map                 The map to apply
+   ValueList           The list of corresponding values
+
+Type
+   library(m_map)
+
+Description
+	
+	This predicate applies the map Map to a list of keys KeyList to
+	produce the list of values ValueList; i.e. it maps a list of keys
+	to their corresponding values.  If one of the keys in KeyList is
+	not found in Map, then the predicate aborts witha runtime error.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if ValueList does not unify with the list of values corresponding to KeyList.
+
+See Also
+   lookup / 3

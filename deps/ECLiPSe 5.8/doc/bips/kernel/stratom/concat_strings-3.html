@@ -1,0 +1,68 @@
+<HTML><HEAD><TITLE>concat_strings(+Src1, +Src2, ?Dest)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>concat_strings(+Src1, +Src2, ?Dest)</H1>
+Succeeds if Dest is the concatenation of Src1 and Src2.
+
+
+<DL>
+<DT><EM>+Src1</EM></DT>
+<DD>String.
+</DD>
+<DT><EM>+Src2</EM></DT>
+<DD>String.
+</DD>
+<DT><EM>?Dest</EM></DT>
+<DD>String or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Dest is unified with the concatenation of Src1 and Src2.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Dest does not unify with the concatenation of Src1 and Src2.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Either (or both) of Src1 and Src2 is not instantiated    (non-coroutine mode only).
+<DT><EM>(5) type error </EM>
+<DD>Either (or both) of Src1 and Src2 is instantiated, but not    to a string.
+<DT><EM>(5) type error </EM>
+<DD>Dest is neither a string nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+  concat_strings("abc","def",X). (gives X="abcdef").
+
+  [eclipse]: [user].
+   absolutename(File,Abs) :-
+           string_list(File,List),
+           arg(1,List,0'/) -&gt; Abs = File;
+                            (getcwd(Cwd),
+                             concat_strings(Cwd,File,Abs)).
+   user compiled 256 bytes in 0.02 seconds
+  yes.
+  [eclipse]: absolutename("d.pl",P), absolutename("/usr/bin",F).
+  P = "/home/lp/user/d.pl"
+  F = "/usr/bin"
+  yes.
+
+Fail:
+  concat_strings("ab","bc","abc").
+
+Error:
+  concat_strings("a",X,"ab").             (Error 4).
+  concat_strings("big",'gest',X).         (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/stratom/append_strings-3.html">append_strings / 3</A>, <A HREF="../../kernel/stratom/concat_atoms-3.html">concat_atoms / 3</A>
+</BODY></HTML>

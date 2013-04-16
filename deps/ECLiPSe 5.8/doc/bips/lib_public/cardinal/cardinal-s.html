@@ -1,0 +1,51 @@
+<HTML><HEAD><TITLE>struct cardinal(domain, cardinality, minimum, maximum, union, bounded, glb, lub, bound)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(cardinal)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>struct cardinal(domain, cardinality, minimum, maximum, union, bounded, glb, lub, bound)</H1>
+Cardinal attributes of a set variable
+<H2>Fields</H2><DL>
+<DT><EM>domain</EM></DT>
+<DD>Set domain in the form [Glb:NIn,Poss:NMax], where Glb is the set's
+			glb, NIn its cardinality, Poss is its poss (i.e. its lub\glb),
+			and NMax is the lub's cardinality (i.e. NIn + #(Poss)).
+			If it is a set of sets and a union function attribute has been
+			declared, then each element of Poss comes annotated with its
+			respective length.
+</DD>
+<DT><EM>cardinality</EM></DT>
+<DD>Cardinality function (an integer or an FD variable).
+</DD>
+<DT><EM>minimum</EM></DT>
+<DD>Minimum function (an integer or an FD variable),
+			for sets of integers. Free variable if unused.
+</DD>
+<DT><EM>maximum</EM></DT>
+<DD>Maximum function (an integer or an FD variable),
+			for sets of integers. Free variable if unused.
+</DD>
+<DT><EM>union</EM></DT>
+<DD>Union function, for sets of sets. Free variable if unused;
+			otherwise, a list in the form
+			[UnionVar, GlbU+PossU, Singles, Lengths], where:<PRE>
+UnionVar: A set (variable or ground) corresponding to the union of the set's elements
+	(sets themselves);
+GlbU: Set union of the set's glb;
+PossU: Set of possible union elements with counters (X:N), i.e. an ordered
+	list of all elements in the sets in set's poss (lub\glb)
+	with the number of occurrences attached
+Singles: Set of elements where N=1 in PossU</PRE>
+</DD>
+<DT><EM>bounded</EM></DT>
+<DD>Suspension list.
+</DD>
+<DT><EM>glb</EM></DT>
+<DD>Suspension list.
+</DD>
+<DT><EM>lub</EM></DT>
+<DD>Suspension list.
+</DD>
+<DT><EM>bound</EM></DT>
+<DD>Suspension list.
+</DD>
+</DL>
+
+</BODY></HTML>

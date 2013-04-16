@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>peer_get_property(++Peer, ?Property, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">External Interface</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>peer_get_property(++Peer, ?Property, ?Value)</H1>
+Returns the properties of the peer Peer.
+<DL>
+<DT><EM>Peer</EM></DT>
+<DD>Peer name (atom).
+</DD>
+<DT><EM>Property</EM></DT>
+<DD>Property name (atom or variable).
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>Value of property Property for Peer.
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>peer_get_property(++, ++, ?)
+<LI>peer_get_property(++, -, -)
+</UL>
+<H2>Description</H2>
+   <P>
+   If Property is a variable, this predicate will enumerate on backtracking
+   all the properties of peer Peer. If Property is instantiated to a valid
+   property name, the value of the property for Peer is unified with Value.
+
+   <P>
+   Property is one of the following:
+
+<P>
+<PRE>
+   type     peer type (remote or embed)
+   lang     peer language (currently "tcl" or "java")
+   connect  connection information. Either:
+               remote(LocalHost,PeerHost,TimeOut) or
+               embed(Host,Host,block)
+   queues   current peer queues (list of stream ids)
+</PRE>
+<P>
+   'connect' returns the information on the connection for the peer. This
+   information is mainly relevant only for remote peers, but is provided
+   for the embedded peer for compatibility. The arguments for the remote 
+   and embedded cases are equivalent, and are:
+<PRE>
+       LocalHost   Original local Host specification at peer creation
+       PeerHost    Host for the Peer
+       TimeOut     Time-out interval for creating new peer queues
+</PRE>
+   For remote peers, LocalHost specifies how the local hostname will be
+   specified when setting up a connection between the peer and ECLiPSe.  It
+   is the same as how the hostname was specified initially when the peer
+   was set up: it can be either a variable, the actual hostname, or the
+   special name 'localhost'. The specification may place restrictions on how
+   the peer side client connection is specified. In particular, 'localhost'
+   would restrict the peer to be on the same host as ECLiPSe.  PeerHost is
+   either the hostname of the machine the peer is running on, or 
+   'localhost'. TimeOut is the time-out interval (in seconds) for accepting
+   peer queues, or the atom 'block' if there is no time-limit.
+<P>
+   The LocalHost and PeerHost are identical for the embedded peer, and is
+   the hostname Host of the machine. There are no time-outs, so TimeOut
+   argument is the the atom 'block'. 
+   
+   
+<H3>Fail Conditions</H3>
+Peer is not a current peer; Property is not a valid property.
+<H3>Resatisfiable</H3>
+  Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Peer or Property not of the right type.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/peer-1.html">peer / 1</A>
+</BODY></HTML>

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Examples of Using Attributed Variables</TITLE>
+<META NAME="description" CONTENT="Examples of Using Attributed Variables">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node104.html">
+<LINK REL="previous" HREF="node102.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node104.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3781"
+ HREF="node104.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3777"
+ HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3771"
+ HREF="node102.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3779"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3782"
+ HREF="node104.html">Attribute Specification</A>
+<B> Up:</B> <A NAME="tex2html3778"
+ HREF="node94.html">Attributed Variables</A>
+<B> Previous:</B> <A NAME="tex2html3772"
+ HREF="node102.html">Built-Ins and Attributed Variables</A>
+ &nbsp <B>  <A NAME="tex2html3780"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3783"
+ HREF="node103.html#SECTION001691000000000000000">Variables with Enumerated Domains</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001690000000000000000">
+Examples of Using Attributed Variables</A>
+</H1>
+
+<H2><A NAME="SECTION001691000000000000000">
+Variables with Enumerated Domains</A>
+</H2>
+As an example, let us implement variables of enumerable types
+using attributes.
+We choose to represent these variable as attributed variables
+whose attribute is
+a enum/1 structure with a list holding the values the variable may take,
+e.g.<PRE>
+X{enum([a,b,c])}
+</PRE>
+
+<P>
+We have to specify now what should happen when such a variable is
+bound. This is done by writing a handler for the <B>unify</B> operation.
+The predicate unify_enum/2 defined below is this
+handler.
+Its first argument is the value that the attributed variable has been bound to,
+the second is the attribute that the bound attributed variable had
+(keep in mind that the system has already bound the attributed variable to the
+new value).  We distinguish two cases:
+
+<P>
+First, the attributed variable has been
+bound to another attributed variable (1st clause of unify_enum/2).
+In this case, we form the intersection between the two lists
+of admissible values. If it is empty, we fail.
+If it contains exactly one value, we can instantiate the remaining
+attributed variable with this value.
+Otherwise, we bind it to a new attributed variable whose attribute represents
+the remaining admissible values.
+
+<P>
+Second, when the attributed variable has been bound to a non-variable, the
+task that remains for the handler is merely to check if this binding
+was admissible (2nd clause of unify_enum/2).
+
+<P><PRE>
+[eclipse 2]: module(enum).
+warning: creating a new module in module(enum)
+[enum 3]: [user].
+:- meta_attribute(enum, [unify:unify_enum/2, print:print_enum/2]).
+:- import setarg/3 from sepia_kernel.
+
+% unify_enum(+Term, Attribute)
+unify_enum(_, Attr) :-
+    /*** ANY + VAR ***/
+    var(Attr). % Ignore if no attribute for this extension
+unify_enum(Term, Attr) :-
+    compound(Attr),
+    unify_term_enum(Term, Attr).
+
+unify_term_enum(Value, enum(ListY)) :-
+    nonvar(Value), % The attributed variable was instantiated
+/*** NONVAR + META ***/
+    memberchk(Value, ListY).
+unify_term_enum(Y{AttrY}, AttrX) :-
+    -?-&gt;
+    unify_enum_enum(Y, AttrX, AttrY).
+
+unify_enum_enum(_, AttrX, AttrY) :-
+    var(AttrY), % no attribute for this extension
+/*** VAR + META ***/
+    AttrX = AttrY. % share the attribute
+unify_enum_enum(Y, enum(ListX), AttrY) :-
+    nonvar(AttrY),
+    /*** META + META ***/
+    AttrY = enum(ListY),
+     intersection(ListX, ListY, ListXY),
+     ( ListXY = [Val] -&gt;
+            Y = Val
+     ;   
+            ListXY \= [],
+            setarg(1, AttrY, ListXY)
+     ).  
+
+print_enum(enum(List), Attr) :-
+    -?-&gt;
+    Attr = List.
+ user       compiled traceable 1188 bytes in 0.03 seconds
+
+yes.
+[enum 4]: A{enum([yellow, blue, white, green])}
+                = B{enum([orange, blue, red, yellow])}.
+
+A = B = A{[blue, yellow]}
+yes.
+[enum 5]: A{enum([yellow, blue, white, green])}
+                = B{enum([orange, blue, red, black])}.
+
+A = B = blue
+yes.
+[enum 6]: A{enum([yellow, blue, white, green])} = white.
+
+A = white
+yes.
+[enum 7]: A{enum([yellow, blue, white, green])} = red.
+
+no (more) solution.
+</PRE>
+
+<P>
+Some further remarks on this code:
+<A NAME="9802"></A>
+<A NAME="9803"></A>
+<A NAME="9804"></A>
+The second clause of <B>unify_term_enum/2</B>
+is a <B>matching clause</B>, as indicated
+by the
+<B>-?-&gt;</B> guard.
+A matching clause is the only way to decompose an attributed variable.
+Note that this clause matches only calls that have an attributed variable
+with nonempty <B>enum</B> attribute on the
+first argument position.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3781"
+ HREF="node104.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3777"
+ HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3771"
+ HREF="node102.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3779"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3782"
+ HREF="node104.html">Attribute Specification</A>
+<B> Up:</B> <A NAME="tex2html3778"
+ HREF="node94.html">Attributed Variables</A>
+<B> Previous:</B> <A NAME="tex2html3772"
+ HREF="node102.html">Built-Ins and Attributed Variables</A>
+ &nbsp <B>  <A NAME="tex2html3780"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

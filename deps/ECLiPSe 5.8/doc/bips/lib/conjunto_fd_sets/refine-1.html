@@ -1,0 +1,19 @@
+<HTML><HEAD><TITLE>refine(?Set)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(conjunto_fd_sets)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>refine(?Set)</H1>
+Instantiate Set to a possible value
+<H2>Description</H2>
+
+    Instantiate Set to a possible value. The predicate backtracks over
+    all possible set instantiations. refine/1 is a special instance of
+    the more general insetdomain/4 predicate, and is defined as
+<PRE>
+    refine(Set) :-
+    	insetdomain(Set, any, small_first, in_notin).
+</PRE>
+
+<H3>Resatisfiable</H3>
+yes
+<H2>See Also</H2>
+<A HREF="../../lib/fd_sets/insetdomain-4.html">fd_sets : insetdomain / 4</A>, <A HREF="../../lib/ic_sets/insetdomain-4.html">ic_sets : insetdomain / 4</A>, <A HREF="../../lib/ic_hybrid_sets/insetdomain-4.html">ic_hybrid_sets : insetdomain / 4</A>
+</BODY></HTML>

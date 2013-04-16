@@ -1,0 +1,40 @@
+
+dvar_update(+DVar, +NewDom)
+
+   Change the domain of the domain variable DVar to NewDom and propagate the
+changes.
+
+
+
+Arguments
+   +DVar               A domain variable.
+   +NewDom             A finite domain.
+
+Type
+   library(fd)
+
+Description
+   If the size of the domain NewDom is 0, the predicate fails.  If it is 1,
+   the domain variable DVar is instantiated to the value in the domain.
+   Otherwise, if the size of the new domain is smaller than the size of the
+   domain variable's domain, the domain of DVar is replaced by NewDom, the
+   appropriate suspension lists in its attribute are passed to the waking
+   scheduler and so is the constrained list in the suspend attribute of the
+   domain variable.  If the size of the new domain is equal to the old one,
+   no updates and no waking is done, i.e.  this predicate does not check an
+   explicit equality of both domains.  If the size of the new domain is
+   greater than the old one, an error is raised.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dvar_attribute / 2, :: / 2, #:: / 2, dvar_replace / 2

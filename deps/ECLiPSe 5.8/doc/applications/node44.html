@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>How to use DCGs</TITLE>
+<META NAME="description" CONTENT="How to use DCGs">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node45.html">
+<LINK REL="previous" HREF="node43.html">
+<LINK REL="up" HREF="node42.html">
+<LINK REL="next" HREF="node45.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1165"
+ HREF="node45.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1159"
+ HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1153"
+ HREF="node43.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1161"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1163"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1166"
+ HREF="node45.html">Creating output data files</A>
+<B> Up:</B> <A NAME="tex2html1160"
+ HREF="node42.html">Input/Output</A>
+<B> Previous:</B> <A NAME="tex2html1154"
+ HREF="node43.html">Reading input data into</A>
+ &nbsp <B>  <A NAME="tex2html1162"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1164"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00720000000000000000"></A>
+<A NAME="howtousedcgs"></A>
+<BR>
+How to use DCGs
+</H1>
+
+<P>
+In this section we describe the use of tokenizers and DCG <A NAME="832"></A><A NAME="833"></A>(definite clause grammar) to produce a very flexible input system. The input routine of the NDI mapper<A NAME="834"></A> of RiskWise is completely implemented with this method, and we use some of the code in the examples below.
+
+<P>
+In this approach the data input is split into two parts, a tokenizer and a parser. The tokenizer read the input and splits it into tokens. Each token corresponds to one field in a data item. The parser is used to recognize the structure of the data and to group all data belonging to one item together.
+
+<P>
+Using these techniques to read data files is a bit of overkill, they are much more powerful and are used for example to read ECLiPSe terms themselves. But, given the right grammar, this process is very fast and extremely easy to modify and extend.
+
+<P>
+The top level routine <I>read_file</I> <A NAME="836"></A>opens the file, calls the tokenizer, closes the file and starts the parser. We assume here that at the end of the parsing the complete input stream has been read (third argument in predicate <I>phrase</I><A NAME="838"></A>). Normally, we would check the unread part and produce an error message.
+<PRE>
+:-mode read_file(++,-).
+read_file(File,Term):-
+        open(File,'read',S),
+        tokenizer(S,1,L),
+        close(S),
+        phrase(file(Term),L,[]).
+</PRE>
+
+<P>
+The tokenizer<A NAME="841"></A> is a bit complicated, since our NDI data format explicitly mentions end-of-line<A NAME="842"></A> markers, and does not distinguish between lower and upper case spelling. Otherwise, we might be able to use the built-in tokenizer of ECLiPSe (predicate <I>read_token</I><A NAME="844"></A>).
+
+<P>
+The tokenizer reads one line of the input at a time and returns it as a string. After each line, we insert a <I>end_of_line(N)</I> token into the output with <I>N</I> the current line number. This can be used for meaningful error messages, if the parsing fails (not shown here). We then split the input line into white space separated strings, eliminate any empty strings and return the rest as our tokens.
+
+<P>
+The output of the tokenizer will be a list of strings intermixed with end-of-line markers.
+<A NAME="846"></A>
+<PRE>
+:-mode tokenizer(++,++,-).
+tokenizer(S,N,L):-
+        read_string(S,'end_of_line',_,Line),
+        !,
+        open(string(Line),read,StringStream),
+        tokenizer_string(S,N,StringStream,L).
+tokenizer(_S,_N,[]).
+
+tokenizer_string(S,N,StringStream,[H|T]):-
+        non_empty_string(StringStream,H),
+        !,
+        tokenizer_string(S,N,StringStream,T).
+tokenizer_string(S,N,StringStream,[end_of_line(N)|L]):-
+        close(StringStream),
+        N1 is N+1,
+        tokenizer(S,N1,L).
+
+non_empty_string(Stream,Token):-
+        read_string(Stream, " \t\r\n", _, Token1),
+        (Token1 = "" -&gt;
+            non_empty_string(Stream,Token)
+        ;
+            Token = Token1
+        ).
+</PRE>
+We now show an example of grammar rules which define one data file of the NDI mapper, the RouterTrafficSample<A NAME="849"></A> file. The grammar for the file format is shown below:
+
+<P>
+<PRE>
+file              := &lt;file_type_line&gt; 
+                     &lt;header_break&gt;
+                     [&lt;data_line&gt;]* 
+file_type_line    := RouterTrafficSample &lt;newline&gt; 
+header_break      := # &lt;newline&gt; 
+data_line         := &lt;timestamp&gt; 
+                     &lt;router_name&gt; 
+                     &lt;tcp_segments_in&gt; 
+                     &lt;tcp_segments_out&gt; 
+                     &lt;udp_datagrams_in&gt; 
+                     &lt;udp_datagrams_in&gt; 
+                     &lt;newline&gt; 
+timestamp         := &lt;timestamp_ms&gt; 
+router_name       := &lt;name_string&gt;  
+tcp_segments_in   := integer 
+tcp_segments_out  := integer 
+udp_datagrams_in  := integer 
+udp_datagrams_out := integer
+</PRE>
+
+<P>
+This grammar translates directly into a DCG representation. The start symbol<A NAME="852"></A> of the grammar is <I>file(X)</I>, the argument <I>X</I> will be bound to the parse tree<A NAME="854"></A> for the grammar. Each rule uses the symbol <code>--&gt;</code> to define a rule head on the left side and its body on the right. All rules for this particular data file replace one non-terminal symbol<A NAME="855"></A><A NAME="856"></A> with one or more non-terminal symbols. The argument in the rules is used to put the parse tree together. For this data file, the parse tree will be a term <I>router_traffic_sample(L)</I> with <I>L</I> a list of terms <I>router_traffic_sample(A,B,C,D,E,F)</I> where the arguments are simple types (atoms and integers).
+
+<P>
+<PRE>
+file(X) --&gt; router_traffic_sample(X).
+
+router_traffic_sample(router_traffic_sample(L)) --&gt; 
+        file_type_line("RouterTrafficSample"),
+        header_break,
+        router_traffic_sample_data_lines(L).
+
+router_traffic_sample_data_lines([H|T]) --&gt; 
+        router_traffic_sample_data_line(H), 
+        !,
+        router_traffic_sample_data_lines(T).
+router_traffic_sample_data_lines([]) --&gt; [].
+
+router_traffic_sample_data_line(
+            router_traffic_sample(A,B,C,D,E,F)) --&gt; 
+        time_stamp(A),
+        router_name(B),
+        tcp_segments_in(C),
+        tcp_segments_out(D),
+        udp_datagrams_in(E),
+        udp_datagrams_out(F),
+        new_line.
+
+tcp_segments_in(X) --&gt; integer(X).
+
+tcp_segments_out(X) --&gt; integer(X).
+
+udp_datagrams_in(X) --&gt; integer(X).
+
+udp_datagrams_out(X) --&gt; integer(X).
+</PRE>
+Note the cut in the definition of <I>router_traffic_sample_data_lines</I>, which is used to commit to the rule when a complete data line as been read. If a format error occurs in the file, then we will stop reading at this point, and the remaining part of the input will be returned in <I>phrase</I><A NAME="863"></A>.
+
+<P>
+The following rules define the basic symbols of the grammar. Terminal symbols<A NAME="864"></A><A NAME="865"></A> are placed in square brackets, while additional Prolog code is added with braces<A NAME="866"></A>. The <I>time_stamp</I> rule for example reads one token <I>X</I>. It first checks that <I>X</I> is a string, then converts it to a number <I>N</I>, and then uses a library predicate <I>eclipse_date</I><A NAME="869"></A> to convert <I>N</I> into a date representation <!-- MATH: $Date: 2003/04/29 17:49:48$ -->
+<I>Date</I>: 2003/04/29 17:49:48, which is returned as the parse result. 
+<PRE>
+file_type_line(X) --&gt; ndi_string(X), new_line.
+
+header_break --&gt; 
+        ["#"],
+        new_line.
+
+router_name(X) --&gt; name_string(X).
+
+time_stamp(Date) --&gt; 
+        [X],
+        {string(X),
+         number_string(N,X),
+         eclipse_date(N,Date)
+        }.
+
+integer(N) --&gt; [X],{string(X),number_string(N,X),integer(N)}.
+
+name_string(A) --&gt; ndi_string(X),{atom_string(A,X)}.
+
+ndi_string(X) --&gt; [X],{string(X)}.
+
+new_line --&gt; [end_of_line(_)].
+</PRE>
+These primitives are reused for all files, so that adding the code to read a new file format basically just requires some rules defining the format. 
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1165"
+ HREF="node45.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1159"
+ HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1153"
+ HREF="node43.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1161"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html1163"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1166"
+ HREF="node45.html">Creating output data files</A>
+<B> Up:</B> <A NAME="tex2html1160"
+ HREF="node42.html">Input/Output</A>
+<B> Previous:</B> <A NAME="tex2html1154"
+ HREF="node43.html">Reading input data into</A>
+ &nbsp <B>  <A NAME="tex2html1162"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html1164"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

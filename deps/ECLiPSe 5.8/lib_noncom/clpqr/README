@@ -1,0 +1,94 @@
+A user manual for the solvers can be found at
+
+	http://www.ai.univie.ac.at/clpqr/
+
+Usage in a nutshell:
+
+	lib(clpq).	% load clp(q)
+
+	{2*A-3*B=11}	% wrap constraints with {}/1
+
+
+
+
+Differences between the SICStus and the Eclipse ports
+of the clp(q,r) solver modules:
+
+
+	-) In general there are many ways to express the same
+	   linear relationship. The solver does not care which
+	   linear variables are expressed in terms of which other 
+	   variables. The actual syntactical form depends on the
+	   construction history of the terms, i.e. the constraints
+	   fed to the solver. You might experience this effect
+	   if you use history mechanism in Eclipse.
+
+	-) $=/2 and friends are available for compatibility
+
+	-) The SICStus predicate call_residue/2 has currently no
+	   counterpart in Eclipse because the semantics need some
+	   discussion first.
+
+	-) The syntax for rational constants is rat(N,D) in SICStus
+	   corresponds to N_D in Eclipse. The explicit use of numeric
+	   constants is discouraged. Use {A=2/3} instead of A=2_3.
+	   This allows you to switch between clp(q) and clp(r) and
+	   Eclipse and SICStus.
+
+	-) Nonlinear residues simply print as delayed goals in Eclipse
+	   as opposed to floundered goals of the (non existing) nonlinear
+	   solver in the SICStus version:
+
+	       [eclipse 8]: {sin(X)=cos(X)}.
+
+	       X = X
+
+	       Delayed goals:
+		       {sin(X) - cos(X) = 0}
+
+
+	
+The file structure
+------------------
+
+The following layout has been chosen to meet the
+requirements of f-compilation in SICStus and the loading
+of shared code into independent modules in SICStus
+and Eclipse. Each host prolog x {q,r} pair provides a
+self contained view of the source files through soft links
+which point to the shared sources.
+
+
+     lib/
+
+	clpqr/				% code shared by r,q, and all host prologs
+		eclipse/		% host prolog specific shared code
+		sicstus/
+		examples/
+		test/			% driver for examples &
+					% reference output
+
+	clpq/				% clp(q) specific code, host dispatch
+		eclipse/
+		sicstus/
+	clpr/				% clp(r) specific code, host dispatch
+		eclipse/
+		sicstus/
+
+The SICStus branches may be populated to some degree but
+the merge are not been completed yet.
+
+At load/compile time we use current_module/1 to recognize
+our host environment. The load specification is the same
+for all host prologs:
+
+	use_module(library(clpq)) 
+	use_module(library(clpr))
+
+
+Simultaneous use of clp(q) and clp(r):
+--------------------------------------
+
+This is work in progress. Currently you should either load
+clpq OR clpr. Future versions will allow the two solvers
+to co-exist.

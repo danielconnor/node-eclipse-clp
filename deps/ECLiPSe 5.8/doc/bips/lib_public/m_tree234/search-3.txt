@@ -1,0 +1,33 @@
+
+search(+Tree, ++Key, ?Value)
+
+   Search a tree for a key.
+
+Arguments
+   Tree                A 2-3-4 tree
+   Key                 A key to search for
+   Value               The value corresponding to Key
+
+Type
+   library(m_tree234)
+
+Description
+	
+	This predicate searches the tree Tree for an entry with key Key.
+	If the key is found, then it attempts to unify the corresponding
+	value with Value.
+	
+	
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Key does not appear in Tree or if Value does not unify with the corresponding value found.
+
+See Also
+   member / 3, lookup / 3

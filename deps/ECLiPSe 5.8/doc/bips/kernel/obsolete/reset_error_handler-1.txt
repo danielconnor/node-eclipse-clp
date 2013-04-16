@@ -1,0 +1,59 @@
+
+reset_error_handler(+Number)
+
+   Resets the handler for error number Number to its default value.
+
+
+
+Arguments
+   +Number             Integer.
+
+Type
+   Obsolete
+
+Description
+   The error handler for the specified error number is reset to its default
+   value, cancelling any previous redefinition.
+
+
+   The errors which exist are implementation defined.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Number is not instantiated.
+     5 --- Number is instantiated, but not to an integer.
+     6 --- Number is not a valid error number.
+
+Examples
+   
+Success:
+      [eclipse]: string_list(S,L).
+      instantiation fault in string_list(_g50, _g52)
+      [eclipse]: set_error_handler(4,true/0), string_list(S,L).
+      S = _g56
+      L = _g58
+      yes.
+      [eclipse]: reset_error_handler(4), string_list(S,L).
+      instantiation fault in string_list(_g62, _g64)
+
+Error:
+      reset_error_handler(N).    (Error 4).
+      reset_error_handler(5.0).  (Error 5).
+      reset_error_handler(1000). (Error 6).
+
+
+
+
+
+See Also
+   reset_event_handler / 1

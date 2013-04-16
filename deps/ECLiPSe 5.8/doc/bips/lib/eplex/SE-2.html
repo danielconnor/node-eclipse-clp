@@ -1,0 +1,25 @@
+<HTML><HEAD><TITLE>EplexInstance:(?X $= ?Y)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(eplex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>EplexInstance:(?X $= ?Y)</H1>
+Constrains X to be equal to Y.
+<DL>
+<DT><EM>X</EM></DT>
+<DD>Linear expression
+</DD>
+<DT><EM>Y</EM></DT>
+<DD>Linear expression
+</DD>
+</DL>
+<H2>Description</H2>
+	Logically: Constrains X to be equal to Y.
+	X and Y are linear expressions.
+	Operationally, the constraint gets delayed until the external
+        solver state for EplexInstance is invoked.
+        </P><P>
+        The $ version of the arithmetic constraints are provided to allow 
+        code to be written which does not specify the solver. They are
+        equivalent to their eplex instance counterparts without the $ prefix.
+    
+<H2>See Also</H2>
+<A HREF="../../lib/eplex/ENE-2.html">=:= / 2</A>, <A HREF="../../lib/eplex/EL-2.html">=< / 2</A>, <A HREF="../../lib/eplex/GE-2.html">>= / 2</A>, <A HREF="../../lib/eplex/SGE-2.html">$>= / 2</A>, <A HREF="../../lib/suspend/SE-2.html">suspend : $= / 2</A>, <A HREF="../../lib/ic/SE-2.html">ic : $= / 2</A>, <A HREF="../../lib/colgen/SE-2.html">colgen : $= / 2</A>, <A HREF="../../lib/eplex/SEL-2.html">$=< / 2</A>, <A HREF="../../lib/eplex/eplex_solver_setup-1.html">eplex_solver_setup / 1</A>, <A HREF="../../lib/eplex/eplex_solver_setup-4.html">eplex_solver_setup / 4</A>, <A HREF="../../lib/eplex/eplex_probe-2.html">eplex_probe / 2</A>, <A HREF="../../lib/eplex/eplex_solve-1.html">eplex_solve / 1</A>, <A HREF="../../lib/eplex/eplex_get-2.html">eplex_get / 2</A>, <A HREF="../../lib/eplex/eplex_var_get-3.html">eplex_var_get / 3</A>, <A HREF="../../lib/eplex/eplex_cleanup-0.html">eplex_cleanup / 0</A>
+</BODY></HTML>

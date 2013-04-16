@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>?X &> ?Y</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_symbolic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>?X &> ?Y</H1>
+X is after Y in the domain order
+<DL>
+<DT><EM>X</EM></DT>
+<DD>variable or domain value
+</DD>
+<DT><EM>Y</EM></DT>
+<DD>variable or domain value
+</DD>
+</DL>
+<H2>Description</H2>
+
+	Constrains X and Y such that X is after Y in the domain order.
+	X and Y must be variables or values of the same domain. If one of
+	them is domain-less, it will be given the same domain as the other.
+
+<H2>Examples</H2>
+<PRE>
+    ?- [X,Y] &amp;:: weekday, X &amp;&gt; Y.
+    X = X{[tu, we, th, fr, sa, su]}
+    Y = Y{[mo, tu, we, th, fr, sa]}
+    There is 1 delayed goal.
+    Yes (0.00s cpu)
+
+    ?- th &amp;&gt; mo.
+    Yes (0.00s cpu)
+
+    ?- X &amp;&gt; th.
+    X = X{[fr, sa, su]}
+    Yes (0.00s cpu)
+
+    ?- th &amp;&gt; fr.
+    No (0.00s cpu)
+
+    ?- X &amp;&gt; Y.
+    Arguments have no domains in X &amp;&gt; Y in module eclipse
+    Abort
+
+    ?- X &amp;:: weekday, X &amp;&gt; red.
+    Arguments have different domains (weekday,colour) in X &amp;&gt; red ...
+    Abort
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/ic_symbolic/YG-3.html">&> / 3</A>, <A HREF="../../lib/ic_symbolic/YL-2.html">&< / 2</A>, <A HREF="../../lib/ic_symbolic/YEL-2.html">&=< / 2</A>, <A HREF="../../lib/ic_symbolic/YGE-2.html">&>= / 2</A>, <A HREF="../../lib/ic_symbolic/YE-2.html">&= / 2</A>, <A HREF="../../lib/ic_symbolic/YRE-2.html">&\= / 2</A>, <A HREF="../../lib/ic_symbolic/shift-3.html">shift / 3</A>, <A HREF="../../lib/ic_symbolic/rotate-3.html">rotate / 3</A>, <A HREF="../../kernel/termcomp/domain-1.html">domain / 1</A>
+</BODY></HTML>

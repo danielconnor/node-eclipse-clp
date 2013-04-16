@@ -1,0 +1,42 @@
+
+maximum(?SetVariable, ?Max)
+
+   Maximum of a set of integers
+
+Arguments
+   SetVariable         A Set (variable or ground) of integers.
+   Max                 An integer or an FD variable.
+
+Type
+   library(cardinal)
+
+Description
+Max is the maximum (i.e. the highest element) of SetVariable.
+		If Max is given (as an integer or FD variable) then SetVariable is
+		constrained to have such maximum.
+		If Max is a free variable, then it is unified with the set's maximum as
+		an FD variable or an integer (if it is already known).
+		maximum/2 can thus be used either to declare (or constrain) a maximum
+		function or to retrieve it.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Max can not be the maximum of SetVariable.
+
+Examples
+   
+?- S`::[]..[1,2], maximum(S,M).
+?- set(S,[],[1,2],[maximum:2], maximum(S,M).
+M = 2
+
+?- S`::[]+[1,2], maximum(S,1).
+S = [1]
+
+?- set(S,[],[1,2],[maximum:1], maximum(S,M).
+S = [1]
+M = 1
+
+See Also
+   minimum / 2, set / 4, sets / 4, cardinality / 2

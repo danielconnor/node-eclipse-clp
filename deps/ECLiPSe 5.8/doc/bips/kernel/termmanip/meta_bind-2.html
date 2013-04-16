@@ -1,0 +1,62 @@
+<HTML><HEAD><TITLE>meta_bind(-Meta, ?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>meta_bind(-Meta, ?Term)</H1>
+The attributed variable Meta is bound to the term Term without triggering the
+metaterm-unification event.
+
+
+<DL>
+<DT><EM>-Meta</EM></DT>
+<DD>An attributed variable.
+</DD>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   The attributed variable Meta is treated like a standard variable and bound to
+   Term.  The difference compared to using normal unification is that meta_bind/2
+   does not raise the meta-unification event, as is normally the case
+   whenever a attributed variable is bound.  An example of its use is in the handler
+   for the meta-unification event itself, e.g. when the attributed variable is to be
+   bound to a new one with a different attribute.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Meta is a free variable.
+<DT><EM>(5) type error </EM>
+<DD>Meta is instantiated.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 2]: meta_bind(X{a}, 3).
+
+    X = 3
+    yes.
+
+    [eclipse 5]: [user].
+     change_attribute(X{_Old}, New) ?- meta_bind(X, _{New}).
+
+    yes.
+    [eclipse 6]: change_attribute(X{a}, b), printf("%Mw", [X]).
+    X{b}
+
+Error:
+    meta_bind(_, a).                    (Error 4).
+    meta_bind(a, a).                    (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/meta-1.html">meta / 1</A>
+</BODY></HTML>

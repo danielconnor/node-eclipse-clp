@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>copy_term(+OldTerm, ?NewTerm)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>copy_term(+OldTerm, ?NewTerm)</H1>
+A copy of OldTerm with new variables is created and unified with NewTerm.
+
+
+<DL>
+<DT><EM>+OldTerm</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>?NewTerm</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   A copy of OldTerm is created, ie.  a term that is similar to OldTerm but
+   the free variables of OldTerm have been replaced by new variables which
+   do not occur elsewhere.  In other words, the new term is a most general
+   variant of the old one in the sense of variant/2.
+
+<P>
+   Metaterms are treated like normal variables, except that their
+   attributes are copied as specified by the corresponding copy_term handler.
+
+<P>
+   The effect of copy_term/2 is almost the same as of the sequence
+
+<P>
+<PRE>
+    setval(reserved_name, OldTerm),
+    getval(reserved_name, NewTerm)
+</PRE>
+   or a similar application of record/erase or assert/retract.  However,
+   copy_term/2 is faster, handles attributed variables more sensibly and is also
+   more space efficient since it does not physically copy ground subterms.
+
+<P>
+   Note that when the structure of the term to be copied is known, then
+   it is more efficient to use specialised unification code or a combination
+   of functor/3 and arg/3 to do the job.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if NewTerm does not unify with the copy of OldTerm.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+   Success:
+   copy_term(a, C).          (gives C=a).
+   copy_term(s(X,a,Y,X), C). (gives C=s(_g1, a, _g2, _g1)).
+   copy_term([X,2|Y], C).    (gives C=[_g1, 2| _g2]).
+   copy_term(X, C).
+   copy_term(X, s(1,2,3)).
+   Fail:
+   copy_term(s(X,X), s(3,4)).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/termmanip/copy_term_vars-3.html">copy_term_vars / 3</A>, <A HREF="../../kernel/termmanip/copy_term-3.html">copy_term / 3</A>, <A HREF="../../kernel/termcomp/variant-2.html">variant / 2</A>, <A HREF="../../kernel/termmanip/functor-3.html">functor / 3</A>, <A HREF="../../kernel/termmanip/term_variables-2.html">term_variables / 2</A>
+</BODY></HTML>

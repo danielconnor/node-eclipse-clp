@@ -1,0 +1,113 @@
+
+compile_term(+Clause)
+
+   Compile specified clause or list of clauses Clause.
+
+
+
+Arguments
+   +Clause             A valid Prolog clause, or list of clauses.
+
+Type
+   Predicate Database and Compiler
+
+Description
+   Compiles the specified clause, or list of clauses, similar to
+   compilation from a file.  If the clauses are for a predicate that
+   was undefined so far, a new static predicate will be created.  If
+   the clauses are for an existing static predicate, the new clauses
+   will replace the old definition of the predicate.  If the clauses
+   are for an existing dynamic predicate, the new clauses will be
+   added to the exiting ones for the dynamic predicate.
+
+   If Clause is a list, the list elements are interpreted as consecutive
+   clauses.  Otherwise, Clause will be taken as a single clause.
+   Each clause may be a fact or a rule.
+
+   This predicate works almost as if all the clauses in the list
+   were written into a file and this file was then compiled using
+   compile/1. It does however not perform any inline expansion on
+   the goals in the clause bodies. To do this, explicit preprocessing
+   of the clauses is required (e.g. using expand_goal/2). This may
+   change in a future release.
+
+   The difference between compile_term/1 and assert/1 is that
+   the predicates for which clauses are compiled are not necessarily
+   dynamic with compile_term/1, unless explicitly declared as such.
+   Therefore clauses compiled with compile_term/1 usually replace the
+   existing ones for the same predicate, moreover their source form is not
+   available.  Therefore, it can be used instead of assert/1 if the
+   properties of dynamic procedures are not required.
+
+   Unlike compiling a file, when an event occurs which is not just a
+   warning, the following clauses are not compiled, the compilation is
+   aborted.
+
+   See compile/1 for a more complete list of exceptions that can occur
+   during compilation.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Clause is a partial list.
+     5 --- Clause is a list whose tail is neither nil nor a variable.
+    82 --- The module in which the clauses should be compiled is locked.
+    94 --- There is already am imported predicate of the same name.
+   130 --- The head of a clause is not an atom or a compound term.
+   131 --- A subgoal in the body of a clause is not an atom, a compound term or a variable.
+   134 --- The clauses of a procedure are not consecutive.
+   136 --- Trying to redefine a built-in predicate without having declared it.
+   137 --- A procedure which was previously referenced as built-in or external is now defined as a regular one, or vice versa.
+   143 --- One of the clauses was a query and it failed.
+
+Examples
+   
+Success:
+   % several facts for different predicates
+   ?- compile_term([p(a), p(b), q(1), r("abc")]).
+
+   % a single clause
+   ?- compile_term(p(X) :- q(X)).
+
+   % two clauses for the same predicate
+   ?- compile_term([p([]), (p([X|Xs]) :- writeln(X), p(Xs))]).
+
+   % a declaration and two clauses
+   ?- compile_term([(:- export p/1), p(a), p(b)]).
+
+
+
+   % Compile_term/1 can be used for conditional compilation:
+   :- (exists('/usr/ucb') -> S = bsd; S = sysV),
+      compile_term(os(S)).
+
+   % Even a whole procedure can be conditionally compiled:
+   :- os(bsd) ->
+    compile_term([
+        (pred1(X) :- pred2(X), pred3(X)),
+        (pred1(Y) :- ...           )]).
+
+
+Error:
+
+   compile_term([p|X]).          (Error 4).
+   compile_term([a|b]).          (Error 5).
+   compile_term([[a]]).          (Error 94).
+   compile_term([(p :- write(a)), write(b)]).      (Error 94).
+   compile_term("a").          (Error 130).
+   compile_term(["a" :- b]).   (Error 130).
+   compile_term([p(X) :- 1]).    (Error 131).
+   compile_term([a, b, a]).      (Error 134).
+   compile_term(!).              (Error 135).
+   compile_term(:- var(a)).      (Error 143).
+
+
+See Also
+   compile / 1, compile / 2, . / 2, compile_stream / 1, assert / 1, expand_goal / 2, set_flag / 2, pragma / 1

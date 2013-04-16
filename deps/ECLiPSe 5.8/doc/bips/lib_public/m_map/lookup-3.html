@@ -1,0 +1,34 @@
+<HTML><HEAD><TITLE>lookup(+Map, ++Key, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_map)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lookup(+Map, ++Key, ?Value)</H1>
+Search a map for a key.
+<DL>
+<DT><EM>Map</EM></DT>
+<DD>A map
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>A key to search for
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value corresponding to Key
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	This predicate searches the map Map for an entry with key Key.
+	If the key is found, then it attempts to unify the corresponding
+	value with Value.  If the key is not found, then it aborts with
+	a runtime error.
+	</P>
+	<P>
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Fails if Value does not unify with the value corresponding to Key.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_map/member-3.html">member / 3</A>, <A HREF="../../lib_public/m_map/search-3.html">search / 3</A>
+</BODY></HTML>

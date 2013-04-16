@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>write_graph(+Graph, +File, +Format)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graphviz)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>write_graph(+Graph, +File, +Format)</H1>
+Write a picture of a graph as a file of a given format
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>A graph structure
+</DD>
+<DT><EM>File</EM></DT>
+<DD>A file name
+</DD>
+<DT><EM>Format</EM></DT>
+<DD>An atom (ps,dot,png,gif,...)
+</DD>
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- lib(graph_algorithms), lib(graphviz).
+    Yes (1.17s cpu)
+
+    ?- make_random_graph(10,30,true,true,true,G),
+       write_graph(G, "mygraph", png).
+    G = graph(...)
+    Yes (0.03s cpu)
+
+    ?- make_random_graph(10,30,true,true,true,G),
+       write_graph(G, "mygraph", dot).
+    G = graph(...)
+    Yes (0.03s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/graphviz/write_graph-2.html">write_graph / 2</A>, <A HREF="../../lib/graphviz/write_graph-4.html">write_graph / 4</A>, <A HREF="../../lib/graphviz/view_graph-2.html">view_graph / 2</A>, <A HREF="../../lib/graph_algorithms/index.html">library(graph_algorithms)</A>
+</BODY></HTML>

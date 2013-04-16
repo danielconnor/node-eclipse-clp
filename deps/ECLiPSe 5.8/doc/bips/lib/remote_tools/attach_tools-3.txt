@@ -1,0 +1,73 @@
+
+attach_tools(?Address, ++TimeOut, ?Goal)
+
+   A flexible attachment of remote development tools
+
+Arguments
+   Address             Address for the remote connection (Host/Port or variable)
+   TimeOut             Time-out interval (int/float or the atom block)
+   Goal                Goal to execute during connection
+
+Type
+   library(remote_tools)
+
+Description
+
+   Initiate the attachment of the remote development tools, providing the
+   user with more control over the connection than attach_tools/0. The
+   predicate will create a connection waiting for the remote development
+   tools to be attached to.  It will then execute Goal and then tries to
+   complete the connection by waiting at most TimeOut seconds for the
+   remote development tools to connect.  If TimeOut is the atom block, then
+   it will wait indefinitely.
+
+   Address is the Host/Port address that the remote connection will be
+   made.  This can be left as a variable, so that the system can determine
+   its own address, or the user can specify a specific Port. The main
+   purpose for Goal is to allow the user to start out the remote
+   development tools from it using Address, so that the user does not need
+   to manually connect the remote development tools. Control is initially
+   given back to ECLiPSe when the tools have been attached.
+
+   The predicate will fail or throw an exception if Goal respectively fails
+   or throw an exception. It will also fail if it waits more than TimeOut
+   seconds for the remote tools to connect. In these cases, the server
+   socket will be properly closed.
+
+   attach_tools/0 can be implemented using attach_tools/3 as follows:
+
+   
+         attach_tools :-
+             attach_tools(_, block, true).
+   
+   
+
+Resatisfiable
+   no
+
+Fail Conditions
+      Development tools already attached, or waiting TimeOut seconds  
+   for remote tools to connect, or if Goal fails
+
+Exceptions
+     4 --- Goal or TimeOut are variables
+     5 --- TimeOut is not an integer nor float nor atom
+     6 --- TimeOut is either too small or large or is an atom other than block
+
+Examples
+   
+    % the following will cause the remote tools to start automatically
+    % if tktools can be run from a shell. It will wait 10 seconds before
+    % failing and closing the server socket.
+    [eclipse 2]:  attach_tools(H/P,10,
+         exec(['tktools','--','-h',H,'-p',P], [], Pid)).
+
+    H = 'cow.icparc.ic.ac.uk'
+    P = 1953
+    Pid = 27678
+    Yes (0.04s cpu)
+    [eclipse 3]:
+   
+
+See Also
+   tools / 0, attach_tools / 0

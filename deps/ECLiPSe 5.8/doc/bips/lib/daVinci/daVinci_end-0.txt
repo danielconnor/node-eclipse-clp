@@ -1,0 +1,31 @@
+
+daVinci_end
+
+   This commands ends the information about a graph and calls daVinci to draw it.
+
+Arguments
+
+Type
+   library(daVinci)
+
+Description
+
+This commands is called once when all information about a graph have
+been transmitted.  It sends the graph description to the daVinci tool
+and causes it to bbe drawn.  After this command, the next daVinci
+command should be daVinci_begin/0 to begin the information about the
+next graph.   
+
+Resatisfiable
+   no
+
+Fail Conditions
+   fails if the stream daVinciEdge does not exist
+
+Examples
+   
+see daVinci_begin/0
+
+
+See Also
+   daVinci_begin / 0

@@ -1,0 +1,48 @@
+<HTML><HEAD><TITLE>library(apply_macros)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(apply_macros)</H1>
+Utilities to apply a predicate to all elements of a list resp. all subterms of a term
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="applist-2.html"><STRONG>applist(+Pred, +List)</STRONG></A></DT>
+<DD>Apply a predicate to all list elements</DD>
+<DT><A HREF="appnodes-2.html"><STRONG>appnodes(+Pred, +Term)</STRONG></A></DT>
+<DD>Call Pred on all Subterms of Term (depth-first and left-to-right order)</DD>
+<DT><A HREF="checklist-2.html"><STRONG>checklist(+Pred, +List)</STRONG></A></DT>
+<DD>Apply a predicate to all list elements</DD>
+<DT><A HREF="fromto-4.html"><STRONG>fromto(+From, +To, +Step, +Pred)</STRONG></A></DT>
+<DD>Call Pred with the numbers From..To in increments of Step</DD>
+<DT><A HREF="mapargs-3.html"><STRONG>mapargs(+Pred, +TermIn, ?TermOut)</STRONG></A></DT>
+<DD>Create new term by applying a predicate to all arguments</DD>
+<DT><A HREF="maplist-3.html"><STRONG>maplist(+Pred, +ListIn, ?ListOut)</STRONG></A></DT>
+<DD>Create new list by applying a predicate to all list elements</DD>
+<DT><A HREF="mapstream-3.html"><STRONG>mapstream(+Pred, ?ListIn, ?ListOut)</STRONG></A></DT>
+<DD>Like maplist/3, but delays if ListIn is not complete</DD>
+<DT><A HREF="selectlist-3.html"><STRONG>selectlist(+Pred, +ListIn, ?ListOut)</STRONG></A></DT>
+<DD>Creates output list of all list elements that pass a given test</DD>
+<DT><A HREF="sumargs-4.html"><STRONG>sumargs(+Pred, +Term, ?AccIn, ?AccOut)</STRONG></A></DT>
+<DD>Call Pred on all arguments of Term and collect a result in Accumulator</DD>
+<DT><A HREF="sumlist-4.html"><STRONG>sumlist(+Pred, +List, ?AccIn, ?AccOut)</STRONG></A></DT>
+<DD>Call Pred on all element of List and collect a result in Accumulator</DD>
+<DT><A HREF="sumnodes-4.html"><STRONG>sumnodes(+Pred, +Term, ?AccIn, ?AccOut)</STRONG></A></DT>
+<DD>Call Pred on all Subterms of Term and collect a result in Accumulator</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+    Note that this library is largely superseded by the do-loop construct!
+    <P>
+    A collection of utilities to apply a predicate to
+    all elements of a list resp. all subterm of a term.
+    To avoid performance degradation due to apply/2,
+    they are implemented as macros, i.e. they are specialized
+    into auxiliary predicates without metacalls, and the
+    calls are translated into calls of the auxiliary predicates.
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, ECRC Munich
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2004/11/19 14:54:47 $
+</UL>
+<HR>Generated from apply_macros.eci on Tue Jan 25 01:58:31 2005
+
+</BODY></HTML>

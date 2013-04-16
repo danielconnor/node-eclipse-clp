@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Less Common Topics</TITLE>
+<META NAME="description" CONTENT="Less Common Topics">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="previous" HREF="node42.html">
+<LINK REL="up" HREF="node39.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html2888"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2884"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2880"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2886"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2889"
+ HREF="node44.html">Arithmetic Evaluation</A>
+<B> Up:</B> <A NAME="tex2html2885"
+ HREF="node39.html">Module System</A>
+<B> Previous:</B> <A NAME="tex2html2881"
+ HREF="node42.html">Advanced Topics</A>
+ &nbsp <B>  <A NAME="tex2html2887"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html2890"
+ HREF="node43.html#SECTION00741000000000000000">Modules Using Other Languages</A>
+<LI><A NAME="tex2html2891"
+ HREF="node43.html#SECTION00742000000000000000">Creating and Erasing Modules at Runtime</A>
+<LI><A NAME="tex2html2892"
+ HREF="node43.html#SECTION00743000000000000000">Initialization and Finalization</A>
+<LI><A NAME="tex2html2893"
+ HREF="node43.html#SECTION00744000000000000000">Locking Modules</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00740000000000000000">
+Less Common Topics</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00741000000000000000">
+Modules Using Other Languages</A>
+</H2>
+
+<P>
+Modules created with the <A NAME="tex2html511"
+ HREF="../bips/kernel/modules/module-1.html">module/1</A><A NAME="4256"></A> directive automatically import
+<A NAME="4096"></A>
+<A NAME="4097"></A>
+the module <TT>eclipse_language</TT>,  which provides the standard set
+of ECLiPSe built-in predicates. 
+To create a module that uses a different language dialect, use
+<A NAME="tex2html515"
+ HREF="../bips/kernel/modules/module-3.html">module/3</A><A NAME="4259"></A>.
+For instance<PRE>
+:- module(mystdcode, [], iso).
+</PRE>
+creates a module in which you can use ISO Standard Prolog<A NAME="tex2html510"
+
+HREF="footnode.html#foot4157"><SUP>7.4</SUP></A>,
+but not all of ECLiPSe's usual language features.
+Note that the third argument (here <TT>iso</TT>) simply
+specifies a library which implements the desired language,
+so new languages can be added easily.
+
+<P>
+
+<H2><A NAME="SECTION00742000000000000000">
+Creating and Erasing Modules at Runtime</A>
+</H2>
+
+A module can also be created explicitly by a running program with
+<A NAME="tex2html517"
+ HREF="../bips/kernel/modules/create_module-1.html">create_module/1</A><A NAME="4262"></A> or
+<A NAME="tex2html519"
+ HREF="../bips/kernel/modules/create_module-3.html">create_module/3</A><A NAME="4265"></A>
+and erased with
+<A NAME="tex2html521"
+ HREF="../bips/kernel/modules/erase_module-1.html">erase_module/1</A><A NAME="4268"></A>. 
+The latter should be used with care, erasing a module while a
+predicate defined in that module is being executed can provoke
+unpredictable results. The same holds for trying to erase essential
+system modules.
+
+<P>
+
+<H2><A NAME="SECTION00743000000000000000"></A>
+<A NAME="initfini"></A><A NAME="4120"></A>
+<A NAME="4121"></A>
+<BR>
+Initialization and Finalization
+</H2>
+Sometimes modules have global state which needs to be initialised
+or finalised. For this purpose, modules can have
+<DL>
+<DT><STRONG>Local Initialization Goals:</STRONG>
+<DD>these are specified as<PRE>
+:- local initialization(Goal).
+</PRE>
+and are executed just after the module containing them has been loaded.
+<DT><STRONG>Exported Initialization Goals:</STRONG>
+<DD>these are specified as<PRE>
+:- export initialization(Goal).
+</PRE>
+and are executed whenever the module containing the declaration gets
+imported into another module. The call will happen in the context of
+the importing module.
+<DT><STRONG>Finalization Goals:</STRONG>
+<DD>these are specified as<PRE>
+:- local finalization(Goal).
+</PRE>
+and are executed just before the module containing them gets erased.
+Modules can get erased either explicitly through
+<A NAME="tex2html525"
+ HREF="../bips/kernel/modules/erase_module-1.html">erase_module/1</A><A NAME="4271"></A> 
+or implicitly when the module is re-compiled, or when the ECLiPSe
+session is exited.
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION00744000000000000000"></A>
+<A NAME="locking"></A><A NAME="4141"></A>
+<BR>
+Locking Modules
+</H2>
+By default, ECLiPSe does not strictly enforce the hiding of
+module internals. This facilitates program development as is makes
+it possible to inspect and trace without being too concerned about module
+boundaries. E.g. you can set a spy point on a local predicate p/3
+in module othermod by calling:<PRE>
+:- spy(p/3)@othermod.
+</PRE>
+Once a module implementation is stable and there is a need for privacy,
+it is possible to <EM>lock</EM> a module. Locking makes it impossible
+to access internal, local items from outside the module. Of course,
+the module can still be used though its interface.
+The built-in predicates related to locking are
+<A NAME="tex2html528"
+ HREF="../bips/kernel/modules/lock-1.html">lock/1</A><A NAME="4274"></A> which provides
+a definitive lock,
+<A NAME="tex2html530"
+ HREF="../bips/kernel/modules/lock-2.html">lock/2</A><A NAME="4277"></A>
+which allows subsequent unlocking using a password (
+<A NAME="tex2html532"
+ HREF="../bips/kernel/modules/unlock-2.html">unlock/2</A><A NAME="4280"></A>),
+and
+<A NAME="tex2html534"
+ HREF="../bips/kernel/modules/get_module_info-3.html">get_module_info/3</A><A NAME="4283"></A>
+which allows to check whether a module is locked.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2888"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html2884"
+ HREF="node39.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html2880"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html2886"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html2889"
+ HREF="node44.html">Arithmetic Evaluation</A>
+<B> Up:</B> <A NAME="tex2html2885"
+ HREF="node39.html">Module System</A>
+<B> Previous:</B> <A NAME="tex2html2881"
+ HREF="node42.html">Advanced Topics</A>
+ &nbsp <B>  <A NAME="tex2html2887"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

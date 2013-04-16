@@ -1,0 +1,40 @@
+
+pasm(+WAMCode, ?Size, ?Object)
+
+   Partially assemble WAMCode into an object format.
+
+
+
+Arguments
+   +WAMCode            A list of WAM instructions in the right format.
+   ?Size               Variable or integer
+   ?Object             A list of object words in the right format.
+
+Type
+   library(asm)
+
+Description
+   Partially assemble the WAM instructions given WAMCode without loading it
+   into the current session. Instead, an object format is generated. This
+   object format can be loaded into an ECLiPSe session using the low level
+   built-in store_pred/5. fcompile/1,2 uses this predicate to generate the
+   object code for predicates.
+
+
+   The partially assembled code consists of Object, which is a typed
+   representation of the words that need to be stored into memory; and
+   Size, the size in words that this object code will occupy in memory.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      If WAMCode is not in correct format.
+
+
+
+See Also
+   asm / 2, asm / 3, disasm / 2, disasm / 3, fcompile : fcompile / 1, sicstus : fcompile / 1, fcompile : fcompile / 2

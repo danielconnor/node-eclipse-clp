@@ -1,0 +1,77 @@
+
+update_struct(+StructName, +FieldList, ?OldStruct, ?NewStruct)
+
+   NewStruct is the same as OldStruct except that the fields in FieldList have been replaced
+
+Arguments
+   StructName          An atom (the structure name)
+   FieldList           A list of name:Value structures, or one such structure
+   OldStruct           Structure or variable
+   NewStruct           Variable or structure
+
+Type
+   Term Manipulation
+
+Description
+	This predicate is only useful together with structure declarations.
+	Its purpose is to allow updating a structure's fields (by creating
+	a new, updated structure) without having to know all the fields of
+	the structure, or its arity.
+
+	update_struct/4 creates a new structure NewStruct which is identical
+	to another structure OldStruct, except that the fields listed
+	in FieldList contain the values in FieldList, while all fields not
+	mentioned in FieldList retain the same values in OldStruct and
+	NewStruct.
+
+	update_struct/4 is usually expanded at compile time into two
+	simple, efficient unifications (see example).
+
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- StructName or FieldList is a variable
+     4 --- A member of FieldList (or its tail) is insufficiently instantiated
+     5 --- StructName is not an atom, or FieldList is not a proper list
+     5 --- An Element of FieldList is not an atom:term structure
+     6 --- StructName is not the name of a declared, visible structure
+     6 --- A field name in FieldList is not a field of the structure denoted by StructName
+
+Examples
+   
+    ?- local struct(person(name,address,age,salary)).
+    yes.
+
+    ?- Old = person{name:john,salary:4000,address:here,age:30},
+       update_struct(person, [salary:5000,address:there], Old, New).
+
+    Old = person(john, here, 30, 4000)
+    New = person(john, there, 30, 5000)
+    yes.
+
+    ?- update_struct(person, [salary:5000], Old, New).
+
+    Old = person(_244, _245, _246, _247)
+    New = person(_244, _245, _246, 5000)
+    yes.
+
+
+    % Compilation: The code
+
+    set_salary(Old, New, NewSalary) :-
+    	update_struct(person, [salary:NewSalary], Old, New).
+
+    % is compiled into
+
+    set_salary(Old, New, NewSalary) :-
+	Old = person(X1, X2, X3, _),
+	New = person(X1, X2, X3, NewSalary).
+
+
+See Also
+   struct / 1, = / 2

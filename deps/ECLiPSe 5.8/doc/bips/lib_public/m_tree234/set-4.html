@@ -1,0 +1,37 @@
+<HTML><HEAD><TITLE>set(+Tree0, ++Key, ?Value, -Tree)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(m_tree234)</A> | <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set(+Tree0, ++Key, ?Value, -Tree)</H1>
+Update the value corresponding to a key in a tree, inserting the key if it doesn't exist already.
+<DL>
+<DT><EM>Tree0</EM></DT>
+<DD>A 2-3-4 tree
+</DD>
+<DT><EM>Key</EM></DT>
+<DD>A key to set
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The value corresponding to Key
+</DD>
+<DT><EM>Tree</EM></DT>
+<DD>The tree after setting
+</DD>
+</DL>
+<H2>Description</H2>
+	<P>
+	If the key Key already exists in the tree Tree0, then this predicate
+	updates the corresponding value to be Value.  Otherwise it inserts
+	the key Key into the tree with value Value.  The resulting tree is
+	Tree.
+	</P>
+	<P>
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	</P>
+	
+<H3>Fail Conditions</H3>
+Never fails.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib_public/m_tree234/insert-4.html">insert / 4</A>, <A HREF="../../lib_public/m_tree234/update-4.html">update / 4</A>
+</BODY></HTML>

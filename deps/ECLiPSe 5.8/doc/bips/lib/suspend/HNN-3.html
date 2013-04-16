@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>#::(?Vars, ?Range, ?Bool)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(suspend)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>#::(?Vars, ?Range, ?Bool)</H1>
+Reified range constraint combined with integrality constraint
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>Variable or integer, or a list of variables or integers
+</DD>
+<DT><EM>Range</EM></DT>
+<DD>Variable or Lo..Hi, where Lo and Hi are variables or integer expressions
+</DD>
+<DT><EM>Bool</EM></DT>
+<DD>Variable, 0 or 1
+</DD>
+</DL>
+<H2>Description</H2>
+    Reified version of #::/2, i.e. the truth value of the range constraint is
+    reflected in the value of the 0/1 variable Bool.
+<P>
+    This constraint suspends until its first two arguments are ground.
+    It then unifies Bool according to the truth value of the corresponding
+    #::/2 constraint.
+<P>
+    Note: as opposed to #::/2, the first argument cannot be a list.
+    
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Range contains non-integers.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- #::(X, 1 .. 5, B), X = 3.
+    B = 1
+    X = 3
+    Yes (0.00s cpu)
+
+    % range violated
+    ?- #::(X, 1 .. 5, B), X = 6.
+    B = 0
+    X = 6
+    Yes (0.00s cpu)
+
+    % integrality violated
+    ?- #::(X, 1 .. 5, B), X = 3.0.
+    B = 0
+    X = 3.0
+    Yes (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/suspend/HNN-2.html">#:: / 2</A>
+</BODY></HTML>

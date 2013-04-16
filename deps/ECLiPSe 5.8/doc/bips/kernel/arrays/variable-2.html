@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>local variable(+Name, +Init)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>local variable(+Name, +Init)</H1>
+Creates the untyped non-logical variable Name.
+<DL>
+<DT><EM>+Name</EM></DT>
+<DD>An atom.
+</DD>
+<DT><EM>+Init</EM></DT>
+<DD>Any term
+</DD>
+</DL>
+<H2>Description</H2>
+   A non-logical variable with name Name (visible only in the
+   caller module) is created.  Its value is initialised to Init.
+   The contents of the variable persists across failures.
+   The value of a non-logical variable can be changed with
+   setval/2 and retrieved with getval/2.  Setting and retrieving terms
+   from a non-logical variable involves copying the term each time. 
+   In particular, if the term contains variables, they lose their
+   identity and are replaced with fresh ones.
+<P>
+   Notes:
+<P>
+   Declaring a variable twice is silently accepted, and the second
+   declaration is ignored.
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Name is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Name is not an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      :- local variable(a,[]).
+      :- local variable(count,0), variable(value,colour(red)).
+
+Error:
+      :- local variable(X, []).                      (Error 4).
+      :- local variable(6, 0).                       (Error 5).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/current_array-2.html">current_array / 2</A>, <A HREF="../../kernel/arrays/array-1.html">array / 1</A>, <A HREF="../../kernel/arrays/array-2.html">array / 2</A>, <A HREF="../../kernel/arrays/decval-1.html">decval / 1</A>, <A HREF="../../kernel/arrays/incval-1.html">incval / 1</A>, <A HREF="../../kernel/arrays/bag_create-1.html">bag_create / 1</A>, <A HREF="../../kernel/arrays/getval-2.html">getval / 2</A>, <A HREF="../../kernel/arrays/setval-2.html">setval / 2</A>, <A HREF="../../kernel/arrays/reference-1.html">reference / 1</A>, <A HREF="../../kernel/arrays/reference-2.html">reference / 2</A>, <A HREF="../../kernel/arrays/variable-1.html">variable / 1</A>
+</BODY></HTML>

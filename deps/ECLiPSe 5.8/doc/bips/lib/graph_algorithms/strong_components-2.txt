@@ -1,0 +1,22 @@
+
+strong_components(+Graph, -StrongComponents)
+
+   Computes the strongly connected components of a graph
+
+Arguments
+   Graph               a graph structure
+   StrongComponents    list of lists of integer node numbers
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes the strongly connected components, i.e. maximal subsets
+    of the graph's nodes in which all nodes are mutually accessible.
+    The implementation essentially uses Tarjan's algorithm with a
+    complexity of O(Nnodes + Nedges).
+    
+
+See Also
+   

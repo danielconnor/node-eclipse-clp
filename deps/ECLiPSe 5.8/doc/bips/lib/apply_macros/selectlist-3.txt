@@ -1,0 +1,12 @@
+
+selectlist(+Pred, +ListIn, ?ListOut)
+
+   Creates output list of all list elements that pass a given test
+
+Type
+   library(apply_macros)
+
+Examples
+   selectlist(<(0), [1,0,-2,3], [1,3]).
+
+

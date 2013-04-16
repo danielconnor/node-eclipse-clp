@@ -1,0 +1,53 @@
+
+merge_suspension_lists(+Pos1, +Attr1, +Pos2, +Attr2)
+
+   Destructively merge the suspension list on Pos1 in structure Attr1
+into the suspension list on Pos2 in structure Attr2.
+
+
+
+Arguments
+   +Pos1               Integer indicating the position of the suspension list.
+   +Attr1              Compound term, typically a variable's attribute.
+   +Pos2               Integer indicating the position of the suspension list.
+   +Attr2              Compound term, typically a variable's attribute.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   This predicate is used to merge two suspension lists. The list
+   in Attr1 remains unaffected but the list in Attr2 is replaced
+   by the merge of the two lists.
+
+
+   Suspension lists should be regarded an opaque data structure and
+   only be accessed and manipulated by the set of primitives provided
+   for this purpose.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Pos1, Pos2, Attr1 or Attr2 is not instatiated.
+     5 --- Pos1 or Pos2 is not an integer.
+     5 --- Attr1 or Attr2 is not a structure or has no suspension list on the indicated argument position.
+     6 --- Attr1 or Attr2 does not have a Position'th argument.
+
+Examples
+   
+
+
+
+
+
+See Also
+   insert_suspension / 3, insert_suspension / 4, schedule_suspensions / 2, init_suspension_list / 2, enter_suspension_list / 3

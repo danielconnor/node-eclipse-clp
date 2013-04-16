@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Constraint predicates</TITLE>
+<META NAME="description" CONTENT="Constraint predicates">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node26.html">
+<LINK REL="previous" HREF="node24.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node26.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html723"
+ HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html719"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html713"
+ HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html721"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html724"
+ HREF="node26.html">Examples</A>
+<B> Up:</B> <A NAME="tex2html720"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html714"
+ HREF="node24.html">The solver</A>
+ &nbsp <B>  <A NAME="tex2html722"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00340000000000000000">
+Constraint predicates</A>
+</H1>
+
+<P>
+<A NAME="2580"></A>
+<A NAME="2581"></A>
+
+<P>
+<B>?Svar <code>`::</code> ++Glb..++Lub</B> 
+<BLOCKQUOTE>
+attaches a domain to the set variable or to a list of set variables
+<EM>Svar</EM>.
+If
+Glb is not a subset of Lub
+it fails. If <EM>Svar</EM> is already a domain
+variable its domain will be updated according to the new domain; if
+<EM>Svar</EM> is instantiated it fails. Otherwise if <EM>Svar</EM> is free it
+becomes a set variable.
+
+</BLOCKQUOTE>
+<A NAME="2590"></A>
+<B>set(?Term)</B> 
+<BLOCKQUOTE>
+succeeds if <EM>Term</EM> is a ground set.
+
+</BLOCKQUOTE>
+<A NAME="2595"></A>
+<B>?S <code>`=</code> ?S1</B> 
+<BLOCKQUOTE>
+The value of the set term <EM>S</EM> is equal to
+the value of the set term <EM>S1</EM>.
+
+</BLOCKQUOTE>
+<A NAME="2601"></A>
+<B>?E in ?S</B> 
+<BLOCKQUOTE>
+The element <EM>E</EM> is an element of <EM>S</EM>.  If <EM>E</EM> is ground it
+is added to the lower bound of the domain of <EM>S</EM>, otherwise the constraint is
+delayed. If <EM>E</EM> is ground and does not belong to the upper bound
+of <EM>S</EM> domain, it fails.
+
+</BLOCKQUOTE>
+<A NAME="2611"></A>
+<B>?E notin ?S</B>
+<A NAME="2613"></A>
+<BLOCKQUOTE>
+The element <EM>E</EM> does not belong to <EM>S</EM>. If <EM>E</EM> is ground
+it is removed from the upper bound of <EM>S</EM>, otherwise the
+constraint is delayed. If <EM>E</EM> is ground and belongs to the upper
+bound of the domain of <EM>S</EM>, it is removed from the upper bound and
+the constraint is solved. If <EM>E</EM> is ground and belongs to the
+lower bound of <EM>S</EM> domain, it fails.
+
+</BLOCKQUOTE>
+<B>?S <code>`&lt;</code> ?S1</B> 
+<A NAME="2625"></A>
+<BLOCKQUOTE>
+The value of the set term <EM>S</EM> is a subset of the value of the set
+term <B>S1</B>. If the two terms are ground sets it just checks the
+inclusion and succeeds or fails. If the lower bound of the domain of <EM>S</EM> is not included in the upper bound of <EM>S1</EM> domain, it fails.
+Otherwise it checks the inclusion over the bounds. The constraint is
+then delayed.
+
+</BLOCKQUOTE>
+<B>?S <code>`&lt;&gt;</code> ?S1</B>
+<A NAME="2633"></A>
+<BLOCKQUOTE>
+The domains of S and S1 are disjoint (intersection empty).
+
+</BLOCKQUOTE>
+<B>all<code>_</code>union(?Lsets, ?S)</B>
+<A NAME="2637"></A>
+<BLOCKQUOTE>
+<EM>Lsets</EM> is a list of set variables or ground sets. <EM>S</EM> is a
+set term which is the union of all these sets. If <EM>S</EM> is a free
+variable, it becomes a set variable and its attached domain is defined
+from the union of the domains or ground sets in <EM>Lsets</EM>.
+
+</BLOCKQUOTE>
+<B>all<code>_</code>disjoint(?Lsets)</B>
+<A NAME="2645"></A>
+<BLOCKQUOTE>
+<EM>Lsets</EM> is a list of set variables of ground sets. All the sets are pairwise
+disjoint.
+
+</BLOCKQUOTE>
+<B><code>#</code>(?S,?C)</B> 
+<A NAME="2650"></A>
+<BLOCKQUOTE>
+<EM>S</EM> is a set term and <EM>C</EM> its cardinality. C can be a free
+variable, a finite domain variable or an integer. If C is free, this
+predicate is a mean to access the set cardinality and attach it to C.
+If not, the cardinality of S is constrained to be C.
+
+</BLOCKQUOTE>
+<B>sum<code>_</code>weight(?S,?W)</B>
+<A NAME="2656"></A>
+<BLOCKQUOTE>
+<EM>S</EM> is a set variable whose domain is a <EM>weighted domain</EM>.
+<EM>W</EM> is the weight of <EM>S</EM>. If <EM>W</EM> is a free variable, this
+predicate is a mean to access the set weight and attach it to W. If
+not, the weight of S is constrained to be W. e.g.
+</BLOCKQUOTE><PRE>
+S `:: {e(2,3)}..{e(2,3), e(1,4)}, sum_weight(S, W)
+</PRE><BLOCKQUOTE>
+returns W :: 3..7.
+
+</BLOCKQUOTE>
+<B>refine(?Svar)</B> 
+<A NAME="2667"></A>
+<BLOCKQUOTE>
+If <EM>Svar</EM> is a set variable, it labels <EM>Svar</EM> to its first
+possible domain value. If there are several instances of <EM>Svar</EM>,
+it creates choice points. If <EM>Svar</EM> is a ground set, nothing happens.
+Otherwise it fails. 
+
+</BLOCKQUOTE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html723"
+ HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html719"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html713"
+ HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html721"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html724"
+ HREF="node26.html">Examples</A>
+<B> Up:</B> <A NAME="tex2html720"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html714"
+ HREF="node24.html">The solver</A>
+ &nbsp <B>  <A NAME="tex2html722"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

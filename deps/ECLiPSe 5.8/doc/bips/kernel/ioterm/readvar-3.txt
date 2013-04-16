@@ -1,0 +1,94 @@
+
+readvar(+Stream, ?Term, -VarList)
+
+   Succeeds if the next Prolog term from the input stream Stream is
+successfully read and unified with Term, and any variables in Term are
+collected in the list VarList, together with their names.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   ?Term               Prolog term.
+   -VarList            A Variable.
+
+Type
+   Term I/O
+
+Description
+   Used to read the next term from the input stream Stream, unify it with
+   Term and store any variables in Term to the list VarList.  This is a
+   list of pairs in the format [VarName|Var].
+
+
+   VarName is the literal input variable name expressed as an atom; Var is
+   the variable.  The first element of the pair Varname is the atom
+   corresponding to the variable name, and the second element Var is the
+   corresponding variable.
+
+
+   If there is more than one Prolog term in the file, the term must be in
+   Prolog term format i.e.  terminated by a period and a blank space
+   character, neither of which are retained by Prolog.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+   Fails if a syntax error was detected and no term could be read
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is not an atom or an integer, Varlist is not a    variable.
+   190 --- End of file was encountered before reading any character.
+   192 --- Stream is not an input stream.
+   193 --- Stream is an illegal stream specification.
+   198 --- Trying to read even after the error 190 was raised.
+
+Examples
+   
+Success:
+      [eclipse]: readvar(input,Term,VarList).
+      > atom.
+      Term = atom
+      VarList = []
+      yes.
+
+      [eclipse]: readvar(input,T,L).
+      > X.
+      T = _50
+      L = [['X'|_50]]
+      yes.
+
+      [eclipse]: system('cat file1').
+      f(X,Y).
+      g(1,X).
+      yes.
+      [eclipse]: open(file1,update,r), readvar(r,T1,V1),
+      > readvar(r, T2,V2).
+      T1 = f(_120, _122)
+      V1 = [['X'|_120], ['Y'|_122]]
+      T2 = g(1, _146)              % the clauses are separate,
+      V2 = [['X'|_146]]            % so the X's are different.
+      yes.
+
+Fail:
+      [eclipse]: readvar(input, X + 2,V).
+      > X + 1.
+      no.
+
+Error:
+      readvar(S,a(b,c),V).          (Error 4).
+      readvar("string",a(b,c),V,).  (Error 5).
+      readvar(output,X + 2,V).      (Error 192).
+      readvar(atom,X + 2,V).        (Error 193).
+
+
+
+
+
+See Also
+   read / 1, read / 2

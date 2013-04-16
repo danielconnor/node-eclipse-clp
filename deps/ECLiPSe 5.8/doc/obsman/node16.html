@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>User-Defined Constraints</TITLE>
+<META NAME="description" CONTENT="User-Defined Constraints">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html581"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html577"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html571"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html579"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html582"
+ HREF="node17.html">Extensions</A>
+<B> Up:</B> <A NAME="tex2html578"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html572"
+ HREF="node15.html">General Guidelines to the</A>
+ &nbsp <B>  <A NAME="tex2html580"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html583"
+ HREF="node16.html#SECTION002141000000000000000">The <I>fd</I> Attribute</A>
+<LI><A NAME="tex2html584"
+ HREF="node16.html#SECTION002142000000000000000">Domain Access</A>
+<LI><A NAME="tex2html585"
+ HREF="node16.html#SECTION002143000000000000000">Domain Operations</A>
+<LI><A NAME="tex2html586"
+ HREF="node16.html#SECTION002144000000000000000">Accessing Domain Variables</A>
+<LI><A NAME="tex2html587"
+ HREF="node16.html#SECTION002145000000000000000">Modifying Domain Variables</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION002140000000000000000">
+User-Defined Constraints</A>
+</H1>
+The <B>fd.pl</B> library defines a set of low-level predicates
+which
+allow the user to process domain variables
+and their domains, modify them and write new constraint
+predicates.
+
+<P>
+
+<H2><A NAME="SECTION002141000000000000000">
+The <I>fd</I> Attribute</A>
+</H2>
+A domain variable is a metaterm.
+<A NAME="727"></A>
+<A NAME="728"></A>
+The <B>fd.pl</B> library defines a metaterm attribute
+<P>
+<BLOCKQUOTE><B>fd{domain:D, min:Mi, max:Ma, any:A}</B>
+</BLOCKQUOTE>
+<P>
+<A NAME="fd:attribute"></A>which stores the domain information together with several suspension lists.
+The attribute arguments have the following meaning:
+
+<UL><LI><B>domain</B> - the representation of the domain itself.
+Domains are treated as abstract data types, the users should not
+access them directly, but only using access and modification
+predicates listed below.
+
+<P>
+
+<LI><B>min</B> - a suspension list that should be woken when the minimum
+        of the domain is updated
+
+<P>
+
+<LI><B>max</B> - a suspension list that should be woken when the maximum
+        of the domain is updated
+
+<P>
+
+<LI><B>any</B> - a suspension list that should be woken when the domain
+        is reduced no matter how.
+
+</UL>
+The suspension list names can be used in the predicate <A NAME="tex2html151"
+ HREF="../bips/kernel/suspensions/suspend-3.html">suspend/3</A><A NAME="1271"></A>
+to denote an appropriate waking condition.
+
+<P>
+The attribute of a domain variable can be accessed
+with the predicate <A NAME="tex2html153"
+ HREF="../bips/lib/fd/dvar_attribute-2.html">dvar_attribute/2</A><A NAME="1274"></A>
+or by unification in a matching clause:
+<A NAME="744"></A><PRE>
+get_attribute(_{fd:Attr}, A) :-
+    -?-&gt;
+    Attr = A.
+</PRE>
+Note however, that this matching clause succeeds even if the first
+argument is a metaterm but its <B>fd</B> attribute is empty.
+To succeed only for domain variables, the clause
+must be<PRE>
+get_attribute(_{fd:Attr}, A) :-
+    -?-&gt;
+    nonvar(Attr),
+    Attr = A.
+</PRE>
+or to access directly attribute arguments, e.g. the domain<PRE>
+get_domain(_{fd:fd{domain:D}}, Dom) :-
+    -?-&gt;
+    D = Dom.
+</PRE>
+The <A NAME="tex2html156"
+ HREF="../bips/lib/fd/dvar_attribute-2.html">dvar_attribute/2</A><A NAME="1277"></A> has the advantage that it returns
+an attribute-like structure even if its argument is already
+instantiated, which is quite useful when coding <B>fd</B>
+constraints.
+
+<P>
+The attribute arguments can be accessed by macros from
+the <B>structures.pl</B> library,
+if e.g. <B>Attr</B> is the attribute of a domain variable, the max
+list can be obtained as
+
+<P>
+<BLOCKQUOTE>
+arg(max of fd, Attr, Max)
+
+</BLOCKQUOTE>
+or, using a unification
+<BLOCKQUOTE>
+Attr = fd{max:Max}
+
+</BLOCKQUOTE>
+
+<P>
+
+<H2><A NAME="SECTION002142000000000000000"></A>
+<A NAME="domaccess"></A>
+<BR>
+Domain Access
+</H2>
+The domains are represented as abstract data types, the users are not
+supposed to access them directly, instead a number of
+predicates and macros are available to allow operations on domains.
+
+<P>
+<DL>
+<DT><STRONG>dom_check_in(+Element, +Dom)</STRONG>
+<DD><A NAME="770"></A>
+Succeed if the integer <I>Element</I> is in the domain <I>Dom</I>.
+
+<P>
+<DT><STRONG>dom_compare(?Res, +Dom1, +Dom2)</STRONG>
+<DD><A NAME="773"></A>
+Works like <A NAME="tex2html160"
+ HREF="../bips/kernel/termcomp/compare-3.html">compare/3</A><A NAME="1280"></A> for terms.
+<I>Res</I> is unified with
+
+<UL><LI><P>
+<B>=</B>
+iff <I>Dom1</I> is equal to <I>Dom2</I>,
+
+<LI><P>
+<B>&lt;</B>
+iff <I>Dom1</I> is a proper subset of <I>Dom2</I>,
+
+<LI><P>
+<B>&gt;</B>
+iff <I>Dom2</I> is a proper subset of <I>Dom1</I>.
+
+</UL>
+Fails if neither domain is a subset of the other one.
+
+<P>
+<DT><STRONG>dom_member(?Element, +Dom)</STRONG>
+<DD><A NAME="791"></A>
+Successively instantiate <I>Element</I> to the values in the domain <I>Dom</I>
+(similar to <A NAME="tex2html163"
+ HREF="../bips/lib/fd/indomain-1.html">indomain/1</A><A NAME="1283"></A>).
+
+<P>
+<DT><STRONG>dom_range(+Dom, ?Min, ?Max)</STRONG>
+<DD><A NAME="796"></A>
+Return the minimum and maximum value  in the integer domain <I>Dom</I>.
+Fails if <I>Dom</I> is a domain containing non-integer 
+elements.
+This predicate can also be used to test if a given domain
+is integer or not.
+
+<P>
+<DT><STRONG>dom_size(+Dom, ?Size)</STRONG>
+<DD><A NAME="799"></A>
+<I>Size</I> is the number of elements in the domain <I>Dom</I>.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION002143000000000000000"></A>
+<A NAME="dommodify"></A>
+<BR>
+Domain Operations
+</H2>
+The following predicates operate on domains alone, without modifying
+domain <I>variables</I>.
+Most of them return the size of the resulting domain which can be used
+to test if any modification was done.
+
+<P>
+<DL>
+<DT><STRONG>dom_copy(+Dom1, -Dom2)</STRONG>
+<DD><A NAME="807"></A>
+<I>Dom2</I> is a copy of the domain <I>Dom1</I>.
+Since the updates are done in-place, two domain variables must not share
+the same physical domain and so when defining a new variable
+with an existing domain, the domain has to be copied first.
+
+<P>
+<DT><STRONG>dom_difference(+Dom1, +Dom2, -DomDiff, ?Size)</STRONG>
+<DD><A NAME="810"></A>
+The domain <I>DomDifference</I> is
+<I>Dom1 <code>\</code> Dom2</I>
+and <I>Size</I> is the number of its elements.
+Fails if <I>Dom1</I> is a subset of <I>Dom2</I>.
+
+<P>
+<DT><STRONG>dom_intersection(+Dom1, +Dom2, -DomInt, ?Size)</STRONG>
+<DD><A NAME="816"></A>
+The domain <I>DomInt</I> is the intersection of domains
+<I>Dom1</I> and <I>Dom2</I> and <I>Size</I> is the number of its elements.
+Fails if the intersection is empty.
+
+<P>
+<DT><STRONG>dom_union(+Dom1, +Dom2, -DomUnion, ?Size)</STRONG>
+<DD><A NAME="821"></A>
+The domain <I>DomUnion</I> is the union of domains
+<I>Dom1</I> and <I>Dom2</I> and <I>Size</I> is the number of its elements.
+Note that the main use of the predicate is to yield
+the most specific generalisation of two domains, in the usual cases
+the domains become smaller, not bigger.
+
+<P>
+<DT><STRONG>list_to_dom(+List, -Dom)</STRONG>
+<DD><A NAME="826"></A>
+Convert a list of ground terms and integer intervals into
+a domain <I>Dom</I>.
+It does not have to be sorted and integers and intervals
+may overlap.
+
+<P>
+<DT><STRONG>integer_list_to_dom(+List, -Dom)</STRONG>
+<DD><A NAME="828"></A>
+Similar to <A NAME="tex2html173"
+ HREF="../bips/lib/fd/list_to_dom-2.html">list_to_dom/2</A><A NAME="1286"></A> <A NAME="831"></A>, but the input list should
+contain only integers and integer intervals and it should be sorted.
+This predicate will merge adjacent integers and intervals
+into larger intervals whenever possible.
+typically, this predicate should be used to convert
+a sorted list of integers into a finite domain.
+If the list is known to already contain proper intervals,
+<A NAME="tex2html176"
+ HREF="../bips/lib/fd/sorted_list_to_dom-2.html">sorted_list_to_dom/2</A><A NAME="1289"></A> could be used instead.
+
+<P>
+<DT><STRONG>sorted_list_to_dom(+List, -Dom)</STRONG>
+<DD><A NAME="834"></A>
+Similar to <A NAME="tex2html179"
+ HREF="../bips/lib/fd/list_to_dom-2.html">list_to_dom/2</A><A NAME="1292"></A>, <A NAME="837"></A> but the input list is assumed
+to be already in the correct format, i.e. sorted and with correct integer
+and interval values.
+No checking on the list contents is performed.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION002144000000000000000">
+Accessing Domain Variables</A>
+</H2>
+The following predicates perform various operations:
+
+<P>
+<DL>
+<DT><STRONG>dvar_attribute(+DVar, -Attrib)</STRONG>
+<DD><A NAME="841"></A>
+<I>Attrib</I> is the attribute of the domain variable <I>DVar</I>.
+If <I>DVar</I> is instantiated, <I>Attrib</I> is bound to an attribute
+with a singleton domain and empty suspension lists.
+
+<P>
+<DT><STRONG>dvar_domain(+DVar, -Dom)</STRONG>
+<DD><A NAME="846"></A>
+<I>Dom</I> is the domain of the domain variable <I>DVar</I>.
+If <I>DVar</I> is instantiated, <I>Dom</I> is bound to
+a singleton domain.
+
+<P>
+<DT><STRONG>var_fd(?Var, +Dom)</STRONG>
+<DD><A NAME="851"></A>
+If <I>Var</I> is a free variable,
+it becomes a domain variable with the domain <I>Dom</I>
+and with empty suspension lists.
+The domain <I>Dom</I> is copied to make in-place updates
+logically sound.
+If <I>Var</I> is already a domain variable, its domain is intersected
+with the domain <I>Dom</I>.
+Fails if <I>Var</I> is not a variable.
+
+<P>
+<DT><STRONG>dvar_msg(+DVar1, +DVar2, -MsgDVar)</STRONG>
+<DD><A NAME="858"></A>
+<I>MsgVar</I> is a domain variable which is the most specific generalisation
+of domain variables or ground values <I>Var1</I> and <I>Var2</I>.
+
+<P>
+</DL>
+
+<P>
+
+<H2><A NAME="SECTION002145000000000000000">
+Modifying Domain Variables</A>
+</H2>
+When the domain of a domain variable is reduced, some suspension
+lists stored in the attribute have to be scheduled and woken.
+
+<P>
+<B>NOTE:</B> In the <B>fd.pl</B> library the suspension lists
+are woken precisely when the event associated with the
+list occurs.
+Thus e.g. the <B>min</B> list is woken if and only if the minimum
+value of the variable's domain is changed, but it is not
+woken when the variable is instantiated to this minimum
+or when another element from the domain is removed.
+In this way, user-defined constraints can rely on the fact that
+when they are executed, the domain was updated in the expected way.
+On the other hand, user-defined constraints should also comply
+with this rule and they should take care not to wake lists
+when their waking condition did not occur.
+Most predicates in this section actually do all the work themselves
+so that the user predicates may ignore scheduling and waking completely.
+
+<P>
+<DL>
+<DT><STRONG>dvar_remove_element(+DVar, +El)</STRONG>
+<DD><A NAME="868"></A>
+The element <I>El</I> is removed from the domain of <I>DVar</I> and all
+concerned lists are woken.
+If the resulting domain is empty, this predicate fails. If it is
+a singleton, <I>DVar</I> is instantiated.
+If the domain does not contain the element,
+no updates are made.
+
+<P>
+<DT><STRONG>dvar_remove_smaller(+DVar, +El)</STRONG>
+<DD><A NAME="872"></A>
+Remove all elements in the domain of <I>DVar</I> which are smaller than
+the integer <I>El</I> and wake all concerned lists.
+If the resulting domain is empty, this predicate fails; if it is
+a singleton, <I>DVar</I> is instantiated.
+
+<P>
+<DT><STRONG>dvar_remove_greater(+DVar, +El)</STRONG>
+<DD><A NAME="876"></A>
+Remove all elements in the domain of <I>DVar</I> which are greater than
+the integer <I>El</I> and wake all concerned lists.
+If the resulting domain is empty, this predicate fails; if it is
+a singleton, <I>DVar</I> is instantiated.
+
+<P>
+<DT><STRONG>dvar_update(+DVar, +NewDom)</STRONG>
+<DD><A NAME="880"></A>
+If the size of the domain <I>NewDom</I> is 0, the predicate fails.
+If it is 1,
+the domain variable <I>DVar</I>
+is instantiated to the value in the domain.
+Otherwise,
+if the size of the new domain is smaller than the size of
+the domain variable's domain,
+the domain of <I>DVar</I> is replaced by <I>NewDom</I>,
+the appropriate suspension lists in its attribute are passed
+to the waking scheduler and so is the <B>constrained</B> list
+in the <B>suspend</B> attribute of the domain variable.
+If the size of the new domain is equal to the old one, no
+updates and no waking is done, i.e. this predicate does not
+check an explicit equality of both domains.
+If the size of the new domain is greater than the old one,
+an error is raised.
+
+<P>
+<DT><STRONG>dvar_replace(+DVar, +NewDom)</STRONG>
+<DD><A NAME="887"></A>
+This predicate is similar to <A NAME="tex2html191"
+ HREF="../bips/lib/fd/dvar_update-2.html">dvar_update/2</A><A NAME="1295"></A>, but it
+does not propagate the changes, i.e. no waking is done.
+If the size of the new domain is 1, <I>DVar</I>
+is not instantiated, but it is given this singleton domain.
+This predicate is useful for local consistency checks.
+
+<P>
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html581"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html577"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html571"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html579"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html582"
+ HREF="node17.html">Extensions</A>
+<B> Up:</B> <A NAME="tex2html578"
+ HREF="node2.html">The Finite Domains Library</A>
+<B> Previous:</B> <A NAME="tex2html572"
+ HREF="node15.html">General Guidelines to the</A>
+ &nbsp <B>  <A NAME="tex2html580"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

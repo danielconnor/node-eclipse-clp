@@ -1,0 +1,68 @@
+<HTML><HEAD><TITLE>getenv(+Name, ?Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>getenv(+Name, ?Value)</H1>
+Succeeds if Name is the name of an environment variable or registry entry, and returns the corresponding value.
+<DL>
+<DT><EM>+Name</EM></DT>
+<DD>String or atom.
+</DD>
+<DT><EM>?Value</EM></DT>
+<DD>String or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+    The first argument must be a string or an atom. The predicate looks
+    up a value which the operating system has stored under this key.
+<P>
+    <B>UNIX</B>:  If Name is the name of a UNIX environment variable, this
+    variable's value is returned.  As an additional feature, if there
+    exists an environment variable whose name is the concatenation of
+    the value of Name and the ECLiPSe version number (e.g. 
+    "ECLIPSEDIR_4_9" if Name is "ECLIPSEDIR" and the version
+    is 4.9), then this variable's value is returned instead.
+<P>
+   <B>WINDOWS</B>: The name Name is looked up in the registry under the key
+    HKEY_LOCAL_MACHINE\SOFTWARE\IC-Parc\ECLiPSe\&lt;version&gt;. If there is
+    such an entry, its value is returned. Otherwise, Name is taken as
+    the name of an environment variable, whose value is returned if it
+    exists.
+<P>
+    If the lookup operation is unsuccessful, the predicate fails.
+
+<H3>Fail Conditions</H3>
+Fails if none of the lookup methods yielded any result.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Name is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Name is instantiated, but not to a string or an atom.
+<DT><EM>(5) type error </EM>
+<DD>Value is instantiated, but not to a string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      getenv('HOME',V).    (gives V="/home/username").
+      getenv("SHELL",V).   (gives V="/bin/csh").
+      getenv('TERM',V).    (gives V="sun-cmd").
+      getenv('USER',V).    (gives V="username").
+
+Fail:
+      getenv('HOEM',V).
+
+Error:
+      getenv(TERM,V).               (Error 4).
+      getenv('TERM',atom).          (Error 5).
+      getenv(1,V).                  (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/opsys/sh-1.html">sh / 1</A>, <A HREF="../../kernel/opsys/argv-2.html">argv / 2</A>, <A HREF="../../kernel/opsys/argc-1.html">argc / 1</A>
+</BODY></HTML>

@@ -1,0 +1,25 @@
+
+?Element in ?SetVariable
+
+   Set membership constraint
+
+Arguments
+   SetVariable         A set variable.
+   Element             A ground term or a variable.
+
+Type
+   library(cardinal)
+
+Description
+Constrain SetVariable to include Element.
+		in/2 is available for compatibility with conjunto library syntax.
+		It is equivalent to the preferred `@/2. See its description for details.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Element can not be a member of SetVariable.
+
+See Also
+   `@ / 2, `-@ / 2, notin / 2, `:: / 2

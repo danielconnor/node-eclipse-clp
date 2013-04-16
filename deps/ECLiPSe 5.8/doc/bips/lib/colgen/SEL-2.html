@@ -1,0 +1,34 @@
+<HTML><HEAD><TITLE>ColgenInstance:(?X $=< ?Y)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(colgen)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>ColgenInstance:(?X $=< ?Y)</H1>
+Constrains X to be less than or equal to Y.
+<DL>
+<DT><EM>X</EM></DT>
+<DD>Partial linear expression
+</DD>
+<DT><EM>Y</EM></DT>
+<DD>Partial linear expression
+</DD>
+</DL>
+<H2>Description</H2>
+    <P>
+    Logically: Constrains X to be less than or equal to Y.  X and Y
+    are partial linear expressions. Partial linear expressions may
+    contain terms of the form <TT>implicit_sum(+Var)</TT> in addition
+    to any terms allowed within a standard linear
+    expression. Variables occurring inside <TT>implicit_sum/1</TT>
+    terms are taken to be subproblem variables whose instantiation
+    will correspond to the coefficient of a generated master problem
+    variable in this constraint. Operationally, the constraint gets
+    delayed until the external solver state for ColgenInstance is
+    invoked.
+    </P><P>
+    The $ version of the arithmetic constraints are provided to allow
+    code to be written which does not specify the solver. They are
+    equivalent to their colgen instance counterparts without the $
+    prefix.
+    </P>
+ 
+<H2>See Also</H2>
+<A HREF="../../lib/colgen/SE-2.html">$= / 2</A>, <A HREF="../../lib/colgen/SGE-2.html">$>= / 2</A>, <A HREF="../../lib/colgen/ENE-2.html">=:= / 2</A>, <A HREF="../../lib/colgen/EL-2.html">=< / 2</A>, <A HREF="../../lib/colgen/GE-2.html">>= / 2</A>, <A HREF="../../lib/colgen/var_get-3.html">var_get / 3</A>
+</BODY></HTML>

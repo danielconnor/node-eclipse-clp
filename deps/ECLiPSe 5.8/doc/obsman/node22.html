@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Terminology</TITLE>
+<META NAME="description" CONTENT="Terminology">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node23.html">
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html687"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html683"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html677"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html685"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html688"
+ HREF="node23.html">Syntax</A>
+<B> Up:</B> <A NAME="tex2html684"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html678"
+ HREF="node21.html">The Set Domain Library</A>
+ &nbsp <B>  <A NAME="tex2html686"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00310000000000000000">
+Terminology</A>
+</H1>
+The computation domain of <EM><B>Conjunto</B></EM> is finite so set
+domain and set term will stand respectively for finite set domain and
+finite set term in the following. Here are defined some of the terms
+mainly used in the predicate description.
+
+<P>
+
+<B>Ground set</B>
+<BLOCKQUOTE>
+ A known finite set containing only atoms from
+the Herbrand Universe or its powerset but without any variable.
+
+</BLOCKQUOTE>
+<A NAME="2524"></A>
+<B>Set domain</B>
+<BLOCKQUOTE>
+A discrete lattice or powerset <EM>D</EM> attached to a set
+variable <EM>S</EM>. <EM>D</EM> is defined by
+S in 2^lub_s | glb_s is_subseteq S
+under inclusion specified by the notation
+</BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><code>Glb_s .. Lub_s</code>.
+<code>Glb_s</code> and <code>Lub_s</code> 
+represent respectively the intersection and union
+of elements of D.  Thus they are both ground sets. S is then called a
+<B>set domain variable</B>.
+
+</BLOCKQUOTE>
+<A NAME="2539"></A>
+<B>Weighted set domain</B>
+<BLOCKQUOTE>
+ A specific set domain <EM>WD</EM> attached to
+a set variable <EM>S</EM> where each element of <EM>WD</EM> is of the
+form <EM>e(s,w)</EM>. <EM>s</EM> is a ground set representing a possible value of the
+set variable and <EM>w</EM> is the weight or cost associated to this
+value. e.g.
+</BLOCKQUOTE><PRE>
+WD = {e(1,50),e({1,3},20)}..{e(1,50),e({1,3},20),e(f(a),100)}.
+</PRE><BLOCKQUOTE>
+D would have been:
+</BLOCKQUOTE><PRE>
+{1,{1,3}}..{1,{1,3},f(a)}.
+</PRE>
+<A NAME="2557"></A>
+<B>Set expression</B>
+<BLOCKQUOTE>
+ A composition of set domain variables or ground sets together
+with set operator symbols which are the standard ones coming from set
+theory.
+</BLOCKQUOTE>
+<P>
+<BLOCKQUOTE><code> S ::= S1 intersect S2 | S1 U S2 | S1 \ S2</code>
+</BLOCKQUOTE>
+<P>
+<A NAME="2562"></A>
+<B>Set term</B>
+<BLOCKQUOTE>
+ Any term of the followings: (1) a ground set, (2) a
+set domain  variable or (3)  a set expression. All set built-in
+predicates deal with set terms thus with any of the three cases.
+
+</BLOCKQUOTE>
+<A NAME="2566"></A>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html687"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html683"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html677"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html685"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html688"
+ HREF="node23.html">Syntax</A>
+<B> Up:</B> <A NAME="tex2html684"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html678"
+ HREF="node21.html">The Set Domain Library</A>
+ &nbsp <B>  <A NAME="tex2html686"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

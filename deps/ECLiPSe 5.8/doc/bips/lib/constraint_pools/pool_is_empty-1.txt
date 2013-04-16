@@ -1,0 +1,22 @@
+
+pool_is_empty(+Pool)
+
+   Check whether Pool is an empty constraint pool
+
+Arguments
+   Pool                Atom
+
+Type
+   library(constraint_pools)
+
+Description
+
+    Succeeds of Pool is an empty constraint pool, i.e. has no constraints
+    stored.
+    
+
+Examples
+       
+
+See Also
+   create_constraint_pool / 3, post_typed_pool_constraint / 3, collect_typed_pool_constraints / 3, collect_all_pool_constraints / 2, set_typed_pool_constraints / 3, get_all_pool_constraints / 2

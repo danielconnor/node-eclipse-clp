@@ -1,0 +1,38 @@
+
+poss(?SetVariable, -Poss)
+
+   Obtaining the still possible elements of a set (lub\glb)
+
+Arguments
+   SetVariable         A set variable.
+   Poss                A set.
+
+Type
+   library(cardinal)
+
+Description
+Poss is unified with the set of still possible elements of SetVariable
+		(i.e. its lub\glb).
+		If SetVariable is a set of sets and a union function attribute has been set,
+		then each element of Poss comes annotated with its respective length.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Poss can not be unified with the current poss (lub\glb) of SetVariable.
+
+Examples
+   
+?- S `::[c]+[a,b], poss(S,P).
+P = [a,b]
+
+?- S `::[[c]]+[[a,b]], poss(S,P).
+P = [[a,b]]
+
+?- set(S, [],[[a,b],[b,c],[a,c],[b]],[union:[a,b,c]]), poss(S,P).
+P = [[a, b] : 2, [a, c] : 2, [b] : 1, [b, c] : 2]
+
+
+See Also
+   glb / 2, glb_poss / 3, domain / 2, domain / 3, lub / 2, lub / 4

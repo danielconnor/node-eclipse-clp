@@ -1,0 +1,71 @@
+<HTML><HEAD><TITLE>max(+Number1, +Number2, ?Maximum)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>max(+Number1, +Number2, ?Maximum)</H1>
+Unifies the maximum of Number1 and Number2 with Maximum.
+
+
+<DL>
+<DT><EM>+Number1</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>+Number2</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Maximum</EM></DT>
+<DD>A variable or number.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to max(Number1, Number2, Maximum)
+   is equivalent to
+<PRE>
+	Maximum is max(Number1, Number2)
+</PRE>
+    which should be preferred for portability.
+<P>
+   In coroutining mode, if Number1 or Number2 are free variables, the call
+   to max/3 is delayed until these variables are instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Maximum.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number1 or Number2 is not instantiated (non-coroutining mode    only).
+<DT><EM>(5) type error </EM>
+<DD>Result is of a different type than the evaluation result.
+<DT><EM>(24) number expected </EM>
+<DD>Number1 or Number2 is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      max(5, 2, 5).
+      max(2_3, 3_4, 3_4).
+      max(5.0 , 2.0, 5.0).
+      max(5, 2.0, 5.0).         (The types are adjusted)
+      max(5, 2_0, 5_0).         (The types are adjusted)
+Fail:
+      max(1, 2, 3).
+Error:
+      max(A, 2, 6).             (Error 4).
+      max(1, 2, 2.0).           (Error 5).
+      max(5, 2.0, 5).           (Error 5).
+      max(4 - 2, 3, 3).         (Error 24).
+      max(5, 2, r).             (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

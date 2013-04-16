@@ -1,0 +1,13 @@
+:- module(metutl).
+:- export var_member_chk / 2.
+:- export variant / 2.
+:- export variables_of / 2.
+:- export unify / 2.
+:- export subterm / 2.
+:- export subsumes_chk / 2.
+:- export subsumes / 2.
+:- export simple / 1.
+:- export occurs_in / 2.
+:- export occurs_check / 2.
+:- export ground / 1.
+:- export copy / 2.

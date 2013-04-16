@@ -1,0 +1,54 @@
+
+portray_term(?Term, -TransTerm, +As)
+
+   Apply portray (write) transformations to Term
+
+Arguments
+   Term                A term.
+   TransTerm           A variable.
+   As                  One of the atoms 'term', 'goal' or 'clause'
+
+Type
+   Term I/O
+
+Description
+    Applies portray-transformations to Term, if any are visible in the
+    caller module. If no transformation is visible, TransTerm is identical
+    to Term.
+    
+    This predicate is intended mainly for testing purposes, because
+    portray-transformations are normally performed implicitly by the
+    term output predicates write/1,2, writeln/1,2, print/1,2,
+    display/1,2, printf/2,3 or write_term/2,3.  
+
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   None.
+
+Examples
+   
+    % Given the program:
+
+	:- local portray(s/1, tr_s/2, []).
+	tr_s(0, 0).
+	tr_s(s(S), N) :- tr_s(S, N1), N is N1+1.
+
+
+    % Implicit portray transformation by write/1:
+    ?- S = s(s(s(0))), write(S).
+    3
+    yes.
+
+    % Explicit portray transformation
+    % Note: no transformation done by writeq/1
+    ?- S = s(s(s(0))), writeq(S), portray_term(S, P, term), writeq(P).
+    s(s(s(0)))
+    3
+    yes.
+
+
+See Also
+   portray / 3, expand_clause / 2, expand_goal / 2, expand_macros / 2

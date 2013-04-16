@@ -1,0 +1,99 @@
+
+autoload_tool(+Library, +ListOfPredSpec )
+
+   Declares the predicates in ListOfPredSpec to be autoloading tools from the
+module (file) Library.pl.
+
+
+
+Arguments
+   +Library            Atom.
+   +ListOfPredSpecList of expressions of the form Atom/Integer.
+
+Type
+   Obsolete
+
+Description
+   Declares the predicates in the list ListOfPredSpec as tools defined in
+   the file Library.  If any of the specified tools is called, the system
+   looks in the library_path directories for the file Library.pl, compiles
+   it using lib/1  and re-calls the tool.  The file is supposed to contain
+   a module_interface/1 or begin_module/1 directive at its beginning but it
+   can be omitted and then Library is used as the module name.
+
+
+   The library file Library.pl must contain a tool/2 call for each of the
+   specified predicates.
+
+
+   Predicates declared as autoloaded are always defined as global but note
+   that the module directive in a file erase the module completely so that
+   the autoloaded procedure (and its visibility) are removed completely
+   before being recompiled.  This means that the global declaration must be
+   present in the file.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Library or ListOfPredSpec is not instantiated.
+     5 --- Library is instantiated, but not to an atom.
+     5 --- ListOfPredSpec is instantiated, but not to a list of    expressions of the form Atom/Integer.
+    62 --- a call to PredSpec has already been compiled before the    tool declaration (``inconsistent procedure redefinition'').
+   173 --- Library file Library.pl not found.  (when calling an    autoloaded predicate)
+
+Examples
+   
+Success:
+     [eclipse]: get_flag(library_path, Path),
+             get_flag(cwd, Cwd),
+             set_flag(library_path, [Cwd | Path]).
+     Cwd = "/home/user/"
+     Path = ["/usr/local/ECLIPSE/lib"]
+     yes.
+     [eclipse]: open("my_lib.pl", write, s),
+             write(s, ":- module(my_lib).\n"),
+             write(s, ":- global p/0.\n"),
+             write(s, ":- tool(p/0, writeln/1)."),
+             close(s).
+     yes.
+     [eclipse]: autoload_tool(my_lib, [p/0]).
+     yes.
+     [eclipse]: p.       % when p/0 is called, the library is
+                       % compiled first, ie. autoloaded.
+     loading the library /home/user/my_lib.pl
+     eclipse
+     yes.
+     [eclipse]: p.       % p/0 is not an autoloaded pred anymore
+     eclipse
+     yes.
+
+Error:
+     autoload_tool(Lib, [p/0]).            (Error 4).
+     autoload_tool(a_lib, L).              (Error 4).
+     autoload_tool("a_lib", [p/0]).        (Error 5).
+     autoload_tool(a_lib, [1]).            (Error 5).
+     autoload_tool(a_lib, p/0).            (Error 5).
+
+     [eclipse]: [user].
+      p :- t. % call compiled before tool declaration
+      user compiled 32 bytes in 0.00 seconds
+     yes.
+     [eclipse]: autoload_tool(a_lib, [t/0]). (Error 62).
+
+     autoload_tool(not_a_file, [p/0]).     (Error 173).
+
+
+
+
+
+See Also
+   ensure_loaded / 1, autoload / 2, lib / 1, lib / 2, tool / 1

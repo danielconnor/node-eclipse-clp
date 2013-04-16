@@ -1,0 +1,53 @@
+<HTML><HEAD><TITLE>shadow_var(?Var, +StoreName, -ShadowVar)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(shadow_cons)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>shadow_var(?Var, +StoreName, -ShadowVar)</H1>
+Finds the shadow variable associated with the input
+	variable in the specified shadow constraint store.  If none
+	exists, it creates one.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>A variable to be shadowed
+</DD>
+<DT><EM>StoreName</EM></DT>
+<DD>The name of a shadow constraint store.  This call may be the first reference to this store. It must be an atom.
+</DD>
+<DT><EM>ShadowVar</EM></DT>
+<DD>The associated shadow variable
+</DD>
+</DL>
+<H2>Description</H2>
+
+    The shadow variable 'represents' the original variable in the
+    named constraint store.  This allows it to be more (or less)
+    constrained than the original variable.  When the original
+    variable becomes instantiated, or has its domain/range narrowed,
+    this change is propagated to the shadow variable.
+<H3>Resatisfiable</H3>
+No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>StoreName is uninstantiated
+<DT><EM>(5) type error </EM>
+<DD>StoreName is not an atom
+</DL>
+<H2>Examples</H2>
+<PRE>
+    Success:
+        [eclipse]: shadow_var(X,fred,Y).
+        X = X{[fred - Y]}
+        Y = Y
+        yes.
+
+        [eclipse]: lib(fd).
+        ...
+        [eclipse]:  X::1..10, shadow_var(X,fred,Y), X#&lt;5, Y#&gt;3.
+        X = X{fd:[1..4], shadow_cons:[fred-4]}
+        Y = 4
+
+    Error:
+        shadow_var(X,Var,Y).  % Error 4
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/shadow_cons/shadow_call-2.html">shadow_call / 2</A>
+</BODY></HTML>

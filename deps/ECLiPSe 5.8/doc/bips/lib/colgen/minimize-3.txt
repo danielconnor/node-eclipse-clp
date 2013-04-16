@@ -1,0 +1,41 @@
+
+ColgenInstance:minimize(+SolveSubProblem, +Obj, -ObjVal)
+
+   Minimizes the problem associated with the colgen instance ColgenInstance.
+
+Arguments
+   SolveSubProblem     Subproblem solution predicate
+   Obj                 The objective function to minimize
+   ObjVal              The optimal solution cost
+
+Type
+   library(colgen)
+
+Description
+  
+  Minimize the partial linear expression Obj for the problem
+  associated with the colgen instance ColgenInstance, using
+  the user-defined predicate SolveSubProblem to provide
+  profitable variables during solution. The optimal solution cost is
+  unified with ObjVal.
+  
+  The first argument of the subproblem solution predicate must be a
+  subproblem structure:
+ 
+      sp_prob(master_pool, cutoff, cost, coeff_vars, aux, module)
+ 
+  where and master_pool will be unified with the colgen
+  instance ColgenInstance so that solutions can be posted to
+  it from within the solution predicate, cutoff is a minimum
+  acceptable value for the cost of subproblem solutions that will be
+  updated before calling the predicate, cost is the variable
+  occurring in the implicit sum term of obj (if any)
+  representing the contribution of new subproblem solutions to the
+  master problem solution cost, coeff_vars is a list of all
+  subproblem variables occurring in the implicit sum terms of master
+  problem constraints, and module is the module in which the
+  solution predicate should be called.
+  
+  
+
+

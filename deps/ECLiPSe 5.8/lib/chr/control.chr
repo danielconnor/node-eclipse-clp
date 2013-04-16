@@ -1,0 +1,49 @@
+% ECRC Thom Fruehwirth 931214
+% Sound if_then_else, negation and check, lazy conjunction and disjunction
+
+handler control.
+
+option(already_in_store, off). 
+option(already_in_heads, off).
+option(check_guard_bindings, on). 	% essential
+
+operator(1180,fx,chr_if).
+operator(900,fy,chr_not).
+operator(900,fy,chr_chk).
+
+operator(1000,xfy,and).
+operator(1100,xfy,or).
+
+
+constraints (chr_if)/1,(chr_not)/1,(chr_chk)/1. 
+
+% Condition C must be without side-effects
+
+if_then @ (chr_if C then A) <=> eval_condition(C,R) | 
+	(R==true -> A).
+if_then_else @ (chr_if C then A else B) <=> eval_condition(C,R) | 
+	(R==true -> A ; B).
+
+not_not @ chr_not chr_not C <=> 
+	chr_chk C.
+(not) @ chr_not C <=> eval_condition(C,R) | 
+	R==fail. 		% if C then fail else true.
+
+chk @ chr_chk C <=> eval_condition(C,R) | 
+	R==true. 		% C succeeds without delay or touching vars
+
+	eval_condition(C,R):-	% hackers delight, C without side-effects
+		nonvar(C),
+		(copy_term(C,C1),call(C1) -> C=C1,R=true ; R=fail).
+
+
+constraints (then)/2,(or)/2.
+
+(then) @ (A then B) <=> eval_condition(A,R) |	% lazy deterministic conjunction
+	(R==true -> B).
+
+label_with A or B if nonvar(A),nonvar(B). % delay disjunction till labeling time
+A or B :- A ; B.
+
+
+% end of handler control

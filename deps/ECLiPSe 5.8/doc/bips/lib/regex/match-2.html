@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>match(+Pattern, +String)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(regex)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>match(+Pattern, +String)</H1>
+A substring of String matches the regular expression Pattern
+<DL>
+<DT><EM>Pattern</EM></DT>
+<DD>A string (or a compiled pattern handle)
+</DD>
+<DT><EM>String</EM></DT>
+<DD>A string
+</DD>
+</DL>
+<H2>Description</H2>
+
+	Succeeds if all or a substring of String matches the regular
+	expression Pattern. For the description of regular expressions
+	see the library(regex) page.
+	<P>
+    	Equivalent to match(Pattern, String, []).
+    
+<H3>Fail Conditions</H3>
+String does not match Pattern
+<H2>Examples</H2>
+<PRE>
+    ?- match("aca", "abracadabra").
+    Yes
+
+    ?- match("^a[cd]a$", "abracadabra").
+    No
+
+    ?- match("^a[cd]a$", "ada").
+    Yes
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/regex/index.html">library(regex)</A>, <A HREF="../../lib/regex/match-3.html">match / 3</A>, <A HREF="../../lib/regex/match-4.html">match / 4</A>, <A HREF="../../lib/regex/matchsub-4.html">matchsub / 4</A>, <A HREF="../../lib/regex/matchall-4.html">matchall / 4</A>, <A HREF="../../lib/regex/split-4.html">split / 4</A>, <A HREF="../../lib/regex/compile_pattern-3.html">compile_pattern / 3</A>
+</BODY></HTML>

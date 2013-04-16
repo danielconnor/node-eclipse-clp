@@ -1,0 +1,62 @@
+
+?Term1 = ?Term2
+
+   Succeeds if Term1 and Term2 unify.
+
+
+
+Arguments
+   ?Term1              An arbitrary term.
+   ?Term2              An arbitrary term.
+
+Type
+   Comparing and Sorting
+
+Description
+   Succeeds if the term Term1 unifies with the term Term2,
+   otherwise it fails.
+
+
+   The unification procedure does not contain an occur check.  Hence,
+   cyclic structures can be created during unification.  These cyclic
+   structures may cause loops in attempting unification.  eg.  X = f(X,Y),
+   Y = f(X,Y).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Term1 does not unify with Term2.
+
+
+
+Exceptions
+    11 --- Term1 or Term2 contain an attributed variable and it is unified with a    nonvariable.
+
+Examples
+   
+   Success:
+   atom = atom.
+   atom = X.          (gives X = atom)
+   X = atom.          (gives X = atom)
+   f(1) = X.          (gives X = f(1))
+   Y = X.             (gives Y = _g68, X = _g68)
+   [1,X] = [Y,2].     (gives X = 2, Y = 1)
+   [1,X|Y] = [W,2|Z]. (gives X = 2, Y = _g78,
+   W = 1, Z = _g78)
+   [1,A,2,B] = [C|D]. (gives A = _g80, B = _g88,
+   C = 1, D = [_g80, 2, _g88])
+   Fail:
+   atom = neutron.
+   1.0 = 1.
+   [a|b] = [a,b].
+
+
+
+
+
+See Also
+   == / 2, \= / 2

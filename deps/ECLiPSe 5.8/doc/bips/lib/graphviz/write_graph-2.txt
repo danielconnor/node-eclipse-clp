@@ -1,0 +1,26 @@
+
+write_graph(+Graph, +File)
+
+   Write a picture of a graph as a postscript file
+
+Arguments
+   Graph               A graph structure
+   File                A file name
+
+Type
+   library(graphviz)
+
+Examples
+   
+    ?- lib(graph_algorithms), lib(graphviz).
+    Yes (1.17s cpu)
+
+    % will create a file mygraph.ps
+    ?- make_random_graph(10,30,true,true,true,G),
+       write_graph(G, "mygraph").
+    G = graph(...)
+    Yes (0.03s cpu)
+    
+
+See Also
+   write_graph / 3, write_graph / 4, view_graph / 2, library(graph_algorithms)

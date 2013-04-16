@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>discontiguous(++SpecList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>discontiguous(++SpecList)</H1>
+Declares the procedure(s) specified by SpecList as discontiguous
+<DL>
+<DT><EM>SpecList</EM></DT>
+<DD>term of the form Atom/Integer, or a comma-separated sequence of such terms, or a list of such terms
+</DD>
+</DL>
+<H2>Description</H2>
+   The discontiguous declaration specifies that clauses for the declared
+   predicate need not be together (contiguous) in the source file which contains
+   them, but can be interleaved with clauses for other predicates. All clauses
+   must be in a single file, though.
+<P>
+   A discontiguous declaration must textually occur in the same file and before
+   any clauses for the predicate. Multiple discontiguous declarations for the
+   same predicate are silently accepted.
+
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList or a component of it is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SpecList is instantiated, but not to a sequence or list of expressions of the form Atom/Integer.
+<DT><EM>(65) procedure already defined </EM>
+<DD>SpecList specifies a predicate which is already defined
+</DL>
+<H2>Examples</H2>
+<PRE>
+  [eclipse 1]: [user].
+   :- discontiguous(p/1).
+   p(a).
+   q(1).
+   p(b).
+  user       compiled traceable 220 bytes in 0.02 seconds
+  yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/compile-1.html">compile / 1</A>
+</BODY></HTML>

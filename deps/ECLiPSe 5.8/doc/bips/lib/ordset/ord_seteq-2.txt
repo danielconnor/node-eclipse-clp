@@ -1,0 +1,18 @@
+
+ord_seteq(+Set1, +Set2)
+
+   Compares two sets
+
+Arguments
+   Set1                A set
+   Set2                A set
+
+Type
+   library(ordset)
+
+Description
+	Succeeds when the two arguments represent the same set.  Since they
+	are assumed to be ordered representations, they must be identical.
+    
+
+

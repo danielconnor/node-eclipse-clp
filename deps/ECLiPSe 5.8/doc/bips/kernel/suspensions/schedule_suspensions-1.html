@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>schedule_suspensions(+Trigger)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Advanced Control and Suspensions</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>schedule_suspensions(+Trigger)</H1>
+Take the suspension list associated with the symbolic trigger
+Trigger and schedule them for execution.
+
+
+<DL>
+<DT><EM>+Trigger</EM></DT>
+<DD>An atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   Suspensions in ECLiPSe go through several stages: They are created,
+   attached to variables or symbolic triggers, later scheduled for execution,
+   and finally executed.
+
+<P>
+   The task of schedule_suspensions/1 is to take suspensions from the
+   global suspension list associated to the symbolic name Trigger, and
+   schedule them for execution.  The suspensions are inserted into a
+   global priority list, according to their individual priority.  A
+   subsequent wake/0 will then actually execute them.
+
+<P>
+   If no suspensions are associated to Trigger, schedule_suspensions/1
+   just succeeds and does nothing.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+[eclipse 1]: suspend(writeln(world), 2, trigger(hello)),
+        schedule_suspensions(hello), wake.  
+world
+yes.
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/demon-1.html">demon / 1</A>, <A HREF="../../kernel/suspensions/insert_suspension-3.html">insert_suspension / 3</A>, <A HREF="../../kernel/suspensions/insert_suspension-4.html">insert_suspension / 4</A>, <A HREF="../../kernel/suspensions/make_suspension-3.html">make_suspension / 3</A>, <A HREF="../../kernel/suspensions/get_suspension_data-3.html">get_suspension_data / 3</A>, <A HREF="../../kernel/suspensions/attach_suspensions-2.html">attach_suspensions / 2</A>, <A HREF="../../kernel/suspensions/trigger-1.html">trigger / 1</A>, <A HREF="../../kernel/suspensions/wake-0.html">wake / 0</A>
+</BODY></HTML>

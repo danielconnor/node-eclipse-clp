@@ -1,0 +1,30 @@
+
+peer_register_multitask(++Peer, -MsgQ)
+
+   Registers the peer Peer for peer multitasking.
+
+Arguments
+   Peer                Existing peer name (atom)
+   MsgQ                From ECLiPSe Multitasking message queue (variable)
+
+Type
+   External Interface
+
+Description
+
+   This predicate is intended for use only in implementing peer 
+   multitasking for an external language interface.
+
+   Registers the existing peer Peer as a multitask peer. A peer 
+   queue MsgQ for Peer is created to control the multitasking.
+   Only peers which are registered as a multitasking peer participate in 
+   the multitasking phase.
+
+Fail Conditions
+   Peer is already registered for multitasking.
+
+Exceptions
+     6 --- Peer is not an existing peer name
+
+See Also
+   peer_do_multitask / 1, peer_multitask_terminate / 0, peer_multitask_confirm / 0, peer_deregister_multitask / 1

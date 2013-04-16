@@ -1,0 +1,17 @@
+
+head_queue(Queue, Head)
+
+   unifies Head with the first element of the queue
+
+Type
+   library(queues)
+
+Description
+
+    unifies Head with the first element of the queue.  The tricky part
+    is that we might be at the end of a queue: Back-Back, with Back a
+    variable, and in that case this predicate should not succeed, as we
+    don't know what that element is or whether it exists yet.
+    
+
+

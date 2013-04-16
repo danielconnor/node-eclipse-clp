@@ -1,0 +1,38 @@
+
+set_var_name_counter(++BaseName, ++Start)
+
+   Set the initial value for the counter for variable name BaseName.
+
+Arguments
+   BaseName            A valid base-name (atom or string)
+   Start               Start value for counter (integer)
+
+Type
+   library(var_name)
+
+Description
+    
+	Set the initial counter value for a variable name BaseName that will
+        then be used in set_var_name/2, with Start as the initial value of 
+        the counter. If BaseName already exists (i.e. variables have already
+        been named using BaseName), the predicate will fail.
+
+    
+        It is expected that the main use of this predicate will be to change
+        the default counter start value from 0 to 1. However, no restrictions 
+        are placed on what the start value may be.
+
+
+Resatisfiable
+   no
+
+Fail Conditions
+   BaseName already exists.
+
+Exceptions
+     5 --- BaseName is not an atom or string.
+     5 --- Start is not an integer.
+     6 --- BaseName does not begin with a capital letter.
+
+See Also
+   set_var_name / 2

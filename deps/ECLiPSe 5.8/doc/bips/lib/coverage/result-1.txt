@@ -1,0 +1,26 @@
+
+result(+File)
+
+   Pretty-print a file, including any code coverage results
+
+Arguments
+   File                Atom or string
+
+Type
+   library(coverage)
+
+Description
+
+    This will pretty-print the given source file, annotated with the
+    values of code coverage counters. The resulting .html file will be
+    placed in a sub-directory called 'coverage', relative to File.
+    See result/2 for options to modify the output.
+
+    This predicate only makes sense if File has previously been compiled
+    in coverage mode (using coverage:ccompile/1,2), and the code has been
+    run in order to obtain values for the coverage counters.
+
+    
+
+See Also
+   result / 2, library(coverage), library(pretty_printer), ccompile / 1

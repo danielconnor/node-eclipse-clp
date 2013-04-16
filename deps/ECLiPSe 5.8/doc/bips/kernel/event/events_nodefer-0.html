@@ -1,0 +1,84 @@
+<HTML><HEAD><TITLE>events_nodefer</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>events_nodefer</H1>
+Allow event handling
+<H2>Description</H2>
+<P>    	Reenable event handling after it was previously deferred by
+        <UL>
+	    <LI>entering the handler for an event with the defer-property
+		(see event_create/3 and set_event_handler/2).</LI>
+	    <LI>a call to events_defer/0</LI>
+        </UL>
+	The purpose of this feature is to
+	<UL>
+	    <LI>sequence event handlers so they don't interrupt each other</LI>
+	    <LI>protect accesses to global data structures from being interrupted
+		or preempted by events.</LI>
+	</UL>
+	Events whose handling will be deferred are:
+	<UL>
+	   <LI>events raised by the builtin event/1</LI>
+	   <LI>events posted from external code using ec_post_event()</LI>
+	   <LI>events raised by interrupts whose handler is event/1</LI>
+	</UL>
+	Events that are raised while event handling is deferred will be
+	queued and handled later. A handler for an event with the defer-
+	property must always call events_nodefer/0 before exiting, e.g.
+	<PRE>
+	deferring_event_handler :-
+		writeln("This event handler"),
+		writeln("will not be interrupted"),
+		writeln("by other events!"),
+		events_nodefer.
+	</PRE>
+    </P><P>
+	CAUTION: events_nodefer/0 is a low-level primitive that must be
+	used with great care. Part of ECLiPSe's functionality (e.g. timeout,
+	branch-and-bound) relies on event handling and will not work
+	properly while event handling is deferred. Deferring and undeferring
+	events are nonlogical operations which are not undone on backtracking.
+	The programmer must therefore make sure that every time event handling
+	is deferred, it is eventually reenabled by a call to events_nodefer/0,
+	even in case of failure or abort in the deferred code sequence.
+    </P>
+    
+<H2>Examples</H2>
+<PRE>    % Without deferring, event handlers interrupt each other, which
+    % makes it seem as if events were handled in reverse order:
+
+    simple_handler(E) :-
+    	writeln(simple_handling(E)).
+
+    ?- set_event_handler(e1, simple_handler/1),
+       set_event_handler(e2, simple_handler/1),
+       set_event_handler(e3, simple_handler/1).
+    Yes (0.00s cpu)
+
+    ?-  event([e1,e2,e3]).
+    simple_handling(e3)
+    simple_handling(e2)
+    simple_handling(e1)
+    Yes (0.00s cpu)
+
+
+    % With deferring, event handlers are sequenced, i.e. every
+    % handler is allowed to finish before the next one executes:
+
+    deferred_handler(E) :-
+    	writeln(defered_handling(E)),
+	events_nodefer.
+
+    ?- set_event_handler(e1, defers(deferred_handler/1)),
+       set_event_handler(e2, defers(deferred_handler/1)),
+       set_event_handler(e3, defers(deferred_handler/1)).
+    Yes (0.00s cpu)
+
+    ?- event([e1,e2,e3]).
+    defered_handling(e1)
+    defered_handling(e2)
+    defered_handling(e3)
+    Yes (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>, <A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/event/events_defer-0.html">events_defer / 0</A>, <A HREF="../../kernel/event/set_event_handler-2.html">set_event_handler / 2</A>
+</BODY></HTML>

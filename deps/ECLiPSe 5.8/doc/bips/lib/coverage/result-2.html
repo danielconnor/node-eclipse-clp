@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE>result(+File, +OptionList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(coverage)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>result(+File, +OptionList)</H1>
+Pretty-print a file, including any code coverage results
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Atom or string
+</DD>
+<DT><EM>OptionList</EM></DT>
+<DD>List of Name:Value pairs
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    This will pretty-print the given source file, annotated with the
+    values of code coverage counters. By default, the resulting .html
+    file will be placed in a sub-directory called 'coverage', relative
+    to File.
+</P><P>
+    OptionList is a list of options identical to the one accepted by
+    pretty_print/2 in the library(pretty_printer), and can be used to
+    modify the output style and the location of the output file.
+</P><P>
+    This predicate only makes sense if File has previously been compiled
+    in coverage mode (using coverage:ccompile/1,2), and the code has been
+    run in order to obtain values for the coverage counters.
+    
+<H2>See Also</H2>
+<A HREF="../../lib/coverage/result-1.html">result / 1</A>, <A HREF="../../lib/pretty_printer/pretty_print-2.html">pretty_printer : pretty_print / 2</A>, <A HREF="../../lib/coverage/ccompile-1.html">ccompile / 1</A>, <A HREF="../../lib/coverage/index.html">library(coverage)</A>, <A HREF="../../lib/pretty_printer/index.html">library(pretty_printer)</A>
+</BODY></HTML>

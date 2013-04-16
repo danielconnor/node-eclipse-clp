@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Examples</TITLE>
+<META NAME="description" CONTENT="Examples">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node27.html">
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node27.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html735"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html731"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html725"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html733"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html736"
+ HREF="node27.html">When to use Set</A>
+<B> Up:</B> <A NAME="tex2html732"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html726"
+ HREF="node25.html">Constraint predicates</A>
+ &nbsp <B>  <A NAME="tex2html734"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html737"
+ HREF="node26.html#SECTION00351000000000000000">Set domains and interval reasoning</A>
+<LI><A NAME="tex2html738"
+ HREF="node26.html#SECTION00352000000000000000">Subset-sum computation with convergent weight</A>
+<LI><A NAME="tex2html739"
+ HREF="node26.html#SECTION00353000000000000000">The ternary Steiner system of order n</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00350000000000000000">
+Examples</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00351000000000000000">
+Set domains and interval reasoning</A>
+</H2>
+First we give a very simple example to demonstrate the expressiveness
+of set constraints and the propagation mechanism.
+
+<P><PRE>
+:- use_module(library(conjunto)).
+
+[eclipse 2]: Car `:: {renault} .. {renault, bmw, mercedes, peugeot},
+    Type_french = {renault, peugeot} , Choice `= Car /\ Type_french.
+
+Choice = Choice{{renault} .. {peugeot, renault}}
+Car = Car{{renault} .. {bmw, mercedes, peugeot, renault}}
+Type_french = {peugeot, renault}
+
+Delayed goals:
+      inter_s({peugeot, renault}, Car{{renault}..{bmw, mercedes,
+          peugeot, renault}}, Choice{{renault} .. {peugeot, renault}})
+yes.
+</PRE>
+If now we add one cardinality constraint:<PRE>
+[eclipse 3]: Car `:: {renault} .. {renault, bmw, mercedes, peugeot},
+    Type_french = {renault, peugeot} , Choice `= Car /\ Type_french,
+    #(Choice, 2).
+
+Car = Car{{peugeot, renault} .. {bmw, mercedes, peugeot, renault}}
+Type_french = {peugeot, renault}
+Choice = {peugeot, renault}
+yes.
+</PRE>
+The first example gives a set of cars from which we know
+<code>renault</code> belongs to. The other labels /renault, bmw,
+mercedes, peugeot/ are possible elements of this set. The
+<code>Type_french</code> set is ground and
+<code>Choice</code> is the set term resulting from the intersection of the
+first two sets. The first execution tells us that 
+<code>renault</code> is element of <code>Choice</code> and <code>peugeot</code> might be
+one. The intersection constraint is partially satisfied and might be
+reconsidered if one of the domain of the set terms involved changes.
+The cosntraint is  delayed.
+
+<P>
+In the second example an additional constraint restricts the cardinality of
+<code>Choice</code> to 2. Satisfying this constraint implies setting the
+<code>Choice</code> set to <code>{peugeot, renault}</code>. The domain of this
+set has been modified so is the intersection constraint activated and
+solved again. The final result adds <code>peugeot</code> to the <code>Car</code>
+set variable. The intersection constraint is now satisfied and removed
+from the constraint store.
+
+<P>
+
+<H2><A NAME="SECTION00352000000000000000">
+Subset-sum computation with convergent weight</A>
+</H2>
+
+<P>
+A more elaborate example is a small decision problem. We are given a
+finite weighted set and a <EM>target</EM> <code>t in N</code>. We ask whether there
+is a subset <I>s</I>' of <EM>S</EM> whose weight is <EM>t</EM>. This also corresponds to
+having a single weighted set domain and to look for its value such that
+its  weight is <EM>t</EM>. 
+
+<P>
+This problem is NP-complete. It is approximated in Integer Programming
+using a procedure which "trims" a list according to a given parameter.
+For example, the set variable<PRE>
+S `:: {}..{e(a,104), e(b,102), e(c,201) ,e(d,101)}
+</PRE>
+is approximated by the set variable<PRE>
+S' `:: {}..{e(c,201) ,e(d, 101)}
+</PRE>
+if the parameter
+delta is 0.04 (0.04 = 02/n where n =# S)
+<PRE>
+:- use_module(library(conjunto)).
+
+% Find the optimal solution to the subset-sum problem
+solve(S1, Sum) :-
+        getset(S),
+        S1 `:: {}.. S,
+        trim(S, S1),
+        constrain_weight(S1, Sum),
+        sum_weight(S1, W),
+        Cost = Sum - W,
+        min_max(labeling(S1), Cost).
+
+% The set weight has to be less than Sum
+constrain_weight(S1, Sum) :-
+        sum_weight(S1, W),
+        W #&lt;= Sum.
+
+% Get rid of a set of elements of the set according to a given delta
+trim(S, S1) :-
+        set2list(S, LS),
+        trim1(LS, S1).
+        
+trim1(LS, S1) :-
+        sort(2, =&lt;, LS, [E | LSorted]), 
+        getdelta(D),
+        testsubsumed(D, E, LSorted, S1).
+
+testsubsumed(_, _, [], _).
+testsubsumed(D, E, [F | LS], S1) :-
+        el_weight(E, We),
+        el_weight(F, Wf),
+        ( We =&lt; (1 - D) * Wf -&gt;
+            testsubsumed(D, F, LS, S1)
+        ;
+            F notin S1,
+            testsubsumed(D, E, LS, S1)
+        ).
+
+% Instantiation procedure
+labeling(Sub) :-
+        set(Sub),!.
+labeling(Sub) :-
+        max_weight(Sub, X),
+        ( X in Sub ; X notin Sub ),
+        labeling(Sub).
+
+% Some sample data
+getset(S) :- S = {e(a,104), e(b,102), e(c,201), e(d,101), e(e,305),
+                e(f,50), e(g,70),e(h,102)}.
+getdelta(0.05).
+</PRE>
+
+<P>
+The approach is is the following: first create the set domain
+variable(s), here there is only one which is the set we want to find.
+We state constraints which limit the weight of the set. We apply the
+``trim'' heuristics which removes possible elements of the set domain.
+And finally we define the cost term as a finite domain used in the
+<B>min<code>_</code>max/2</B> predicate. The cost term is an integer. The
+<B>conjunto.pl</B> library makes sure that any modification of an fd
+term involved with a set term is propagated on the set domain. The
+labeling procedure refines a set domain by selecting the element of
+the set domain which has the biggest weight using
+<code>max_weight(Sub, X),</code> and by adding it to the lower bound of the set
+domain. When running the example, we get the following result:<PRE>
+[eclipse 3]: solve(S, 550).
+Found a solution with cost 44
+Found a solution with cost 24
+
+S = {e(d, 101), e(e, 305), e(f, 50), e(g, 70)}
+yes.
+</PRE>
+An interesting point is that in set based problems, the optimization
+criteria mainly concern the cardinality or the weight of a set term.
+So in practice we just need to label the set term while applying the
+<B>fd</B> optimization predicates upon the set cardinality or the set
+weight. There is no need to define additional optimization predicates.
+
+<P>
+
+<H2><A NAME="SECTION00353000000000000000">
+The ternary Steiner system of order n</A>
+</H2>
+A ternary Steiner system of order <EM>n</EM> is a set of 
+ <code>n * (n-1)\6</code> triplets of distinct elements taking their values between <EM>1</EM> and
+<EM>n</EM>, such that all the pairs included in two different triplets are
+different. 
+
+<P>
+This problem is very well dedicated to be solved using set
+constraints:  (i) no order is required in the triplet
+elements and (ii) the constraint of the problem can be easily written
+with set constraints saying that any intersection of two set terms
+contains at most one element. With a finite domain approach,  the list of 
+domain variables which should be distinct requires to be given
+explicitely, thus the problem modelling is would be bit ad-hoc and not valid
+for any <EM>n</EM>.
+
+<P>
+<PRE>
+:- use_module(library(conjunto)).
+
+% Gives one solution to the ternary steiner problem.
+% n has to be congruent to 1 or 3 modulo 6.
+
+steiner(N, LS) :-
+        make_nbsets(N,NB),
+        make_domain(N, Domain),
+        init_sets(NB, Domain, LS),
+        card_all(LS, 3),
+        labeling(LS, []).
+
+labeling([], _).
+labeling([S | LS], L) :-
+        refine(S),
+        (LS = []  ; LS = [L2 | _Rest],
+        all_distincts([S | L], L2),
+        labeling(LS, [S | L])).
+
+% the labeled sets are distinct from the set to be labeled
+% this constraint is a disjonction so it is useless to put it
+% before the labeling as no information would be deduced anyway
+all_distincts([], _).
+all_distincts([S1 |L], L2) :-
+        distinctsfrom(S1, L2),
+        all_distincts(L, L2).
+
+distinctsfrom(S, S1) :-
+        #(S /\ S1,C),
+        fd:(C #&lt;= 1).
+
+% creates the required number of set variables according to n
+make_nbsets(N,NB) :-
+        NB is N * (N-1) // 6.
+
+% initializes the domain of the variables according to n
+make_domain(N, Domain) :-
+        D :: 1.. N,
+        dom(D, L),
+        list2set(L, Domain).
+
+init_sets(0, _Domain, []) :- !.
+init_sets(NB, Domain, Sol) :-
+        NB1 is NB-1,
+        init_sets(NB1, Domain, Sol1),
+        S `:: {} .. Domain,
+        Sol = [S | Sol1].
+
+% constrains the cardinality of each set variable to be equal to V (=3)
+card_all([], _V).
+card_all([Set1|LSets], V) :-
+        #(Set1, V),
+        card_all(LSets, V).
+</PRE>
+
+<P>
+The approach with sets is the following: first we create the number of
+set variables required according to the initial problem definition
+such that each set variable is a triplet. Then to initialize the
+domain of these set variables we use the fd predicates which allow to
+define a domain by an implicit enumeration approach 1..n. This process
+is cleaner than enumerating a list of integer between 1 and n. Once
+all the domain variables are created, we constrain their cardinality
+to be equal to three. Then starts the labeling procedure where all the
+sets are labeled one after the other. Each time one set is labeled,
+constraints are stated between the labeled set and the next one to be
+labeled. This constraint states that two sets have at most one element
+in common. The semantics of
+'#(S intersect S1, C), C &lt;= 1
+is equivalent
+to a disjunction between set values. This implies that in the
+contraint propagation phase, no information can be deduced until one
+of the set is ground and some element has been added to the second
+one. No additional heuristics or tricks have been added to this simple
+example so it works well for n = 7, 9 but with the value 13 it becomes
+quite long.  When running the example, we get the following result:
+
+<P>
+<PRE>
+[eclipse 4]: steiner(7, S).
+6 backtracks
+0.75
+S = [{1, 2, 3}, {1, 4, 5}, {1, 6, 7}, {2, 4, 6}, {2, 5, 7}, {3, 4, 7}, {3, 5, 6}]   
+yes.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html735"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html731"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html725"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html733"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html736"
+ HREF="node27.html">When to use Set</A>
+<B> Up:</B> <A NAME="tex2html732"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html726"
+ HREF="node25.html">Constraint predicates</A>
+ &nbsp <B>  <A NAME="tex2html734"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

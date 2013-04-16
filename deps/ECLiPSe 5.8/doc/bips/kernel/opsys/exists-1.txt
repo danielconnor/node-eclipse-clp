@@ -1,0 +1,63 @@
+
+exists(+File)
+
+   Succeeds if the file File (with absolute or relative pathname) exists.
+File can be a directory.
+
+
+
+Arguments
+   +File               Atom or string.
+
+Type
+   Operating System
+
+Description
+   Used to see if the file File exists.  File can be a directory.
+   exists(File) is equivalent to get_file_info(File, mode, _).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the file File (with absolute or relative pathname) does not
+   exist.
+
+
+
+Exceptions
+     4 --- File is not instantiated.
+     5 --- File is neither an atom nor a string.
+
+Examples
+   
+Success:
+   [eclipse]: sh('ls myfile').
+   myfile
+   [eclipse]: exists(myfile).
+   yes.
+
+   [eclipse]: sh('ls /home/user/workdir').
+   myfile
+   [eclipse]: exists('/home/user/workdir').
+   yes.
+
+Fail:
+   [eclipse]: sh('ls nofile').
+   nofile not found
+   [eclipse]: exists(nofile).
+   no.
+
+Error:
+   exists(File).                          (Error 4).
+   exists([file]).                        (Error 5).
+
+
+
+
+
+See Also
+   existing_file / 4, get_file_info / 3, sh / 1, system / 1, delete / 1, mkdir / 1

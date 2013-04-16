@@ -1,0 +1,50 @@
+
+register_option(++Name, ?InitialValue, +Options)
+
+   Register an option
+
+Arguments
+   Name                Name of the option (any ground term)
+   InitialValue        Initial value to be given to option
+   Options             List of options related to this option
+
+Type
+   library(config_opts)
+
+Description
+   This predicate sets up an option with name Name and initial value
+   InitialValue.  Name must be ground; InitialValue can be any term but
+   should normally be ground, since it will be copied when stored and
+   retrieved, which means that any retrieved non-ground value will contain
+   fresh copies of variables rather than the original ones.
+
+   Options must be a list.  The following terms may appear in this list:
+   
+   validation_pred(Pred/Arity)
+       Pred is used to validate any value to be assigned to the option.
+       This can be used to ensure that only legal values are assigned to the
+       option.  Arity must be either 1 or 2, corresponding to the arity of
+       the predicate to be called: if Arity is 1 then Pred(NewValue) is
+       called, if Arity is 2 then Pred(Name, NewValue) is called; Name is
+       the name of the option and NewValue is the value to be validated.  If
+       the call to Pred succeeds then the value is assigned to the option;
+       if it fails the value is not assigned.  Any choice points left by the
+       call to Pred are pruned upon success.
+
+       Only one validation predicate may be defined for any option; if more
+       are specified then each replaces the one before it.
+
+   notify_pred(Pred)
+       Specifies that Pred(Name, OldValue, NewValue) should be called
+       whenever the value of the option Name is changed.  OldValue is the
+       old value of the option that has just been replaced and NewValue is
+       the new value that has just been assigned.  Pred should not modify
+       OldValue or NewValue in any way, as this may interfere with other
+       notification predicates.  Note that any choice points left by the
+       call to Pred are pruned upon success.
+
+       See also request_notification/2.
+   
+
+See Also
+   set_option / 2, get_option / 2, get_all_options / 1, request_notification / 2

@@ -1,0 +1,68 @@
+<HTML><HEAD><TITLE>integer_atom(?Integer, ?Atom)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Strings and Atoms</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>integer_atom(?Integer, ?Atom)</H1>
+Conversion between an integer and an atom.
+It is more efficient to use number_string/2 wherever possible.
+
+
+<DL>
+<DT><EM>?Integer</EM></DT>
+<DD>Integer or variable.
+</DD>
+<DT><EM>?Atom</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   If Integer is instantiated, converts it to its associated atomic
+   representation Atom.
+
+<P>
+   If Atom is instantiated, converts it to its integer form Integer.
+
+<P>
+   Atom may contain only digits possibly preceded by a + or a -.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Atom does not unify with the atomic representation of Integer.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Integer is instantiated, but not to an integer.
+<DT><EM>(5) type error </EM>
+<DD>Atom is instantiated, but not to an atom.
+<DT><EM>(4) instantiation fault </EM>
+<DD>Both arguments are free variables (non-coroutine mode only).
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   integer_atom(1989,X).       (gives X = '1989').
+   integer_atom(X,'+12').      (gives X = 12).
+   integer_atom(-7,X).         (gives X = '-7').
+   integer_atom(X,'-7').       (gives X = -7).
+   integer_atom(N,'1234').     (gives N = 1234).
+   Fail:
+   integer_atom(I,'- 15').
+   integer_atom(I,' +15').
+   integer_atom(I,'2 ').
+   integer_atom(1234,'Abcd').
+   integer_atom(222,'123').
+   integer_atom(x,'+12').
+   Error:
+   integer_atom(A,B).          (Error 4).
+   integer_atom(124.5,X).      (Error 5).
+   integer_atom(N,1234).       (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/integer-1.html">integer / 1</A>, <A HREF="../../kernel/typetest/atom-1.html">atom / 1</A>, <A HREF="../../kernel/stratom/number_string-2.html">number_string / 2</A>
+</BODY></HTML>

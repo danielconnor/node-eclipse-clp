@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>repeat</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Control</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>repeat</H1>
+Succeeds as often as tried.
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   Used to succeed as often as tried.
+
+<P>
+   This predicate could be defined as
+
+<P>
+<PRE>
+   repeat.
+   repeat :- repeat.
+</PRE>
+   repeat/0 succeeds when reached on backtracking.
+
+<P>
+   !/0 may be added to exit from a clause containing repeat/0, as it
+   removes all choice points above it in the clause.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: [p].
+      /home/user/p compiled 408 bytes in 0.03 seconds
+      yes.
+      [eclipse]: print_file(p).
+      print_file(File) :-
+              open(File, read, S),
+              repeat,
+              get(S,Char),
+              put(Char),
+              at_eof(S),
+              !,
+              close(S),
+              flush(output).
+      yes.
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/control/I-0.html">! / 0</A>
+</BODY></HTML>

@@ -1,0 +1,10 @@
+
+hash_last(+Iter)
+
+   Succeeds if the iterator has reached the end of the table
+
+Type
+   library(hash)
+
+See Also
+   hash_iter / 2, hash_next / 4, hash_list / 3

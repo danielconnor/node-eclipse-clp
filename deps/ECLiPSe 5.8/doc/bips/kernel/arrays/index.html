@@ -1,0 +1,122 @@
+<HTML><HEAD><TITLE>Non-logical Variables, Arrays, Bags, Shelves and Stores</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Non-logical Variables, Arrays, Bags, Shelves and Stores</H1>
+Built-ins to store data across backtracking
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="array-1.html"><STRONG>local array(+Array)</STRONG></A></DT>
+<DD>Creates the untyped non-logical array Array.</DD>
+<DT><A HREF="array-2.html"><STRONG>local array(+Array, +Type)</STRONG></A></DT>
+<DD>Creates a non-logical array Array with given Type.</DD>
+<DT><A HREF="bag_abolish-1.html"><STRONG>bag_abolish(+BagHandle)</STRONG></A></DT>
+<DD>Destroy a bag explicitly</DD>
+<DT><A HREF="bag_count-2.html"><STRONG>bag_count(+BagHandle, ?Count)</STRONG></A></DT>
+<DD>Get the number of entries in a bag</DD>
+<DT><A HREF="bag_create-1.html"><STRONG>bag_create(-BagHandle)</STRONG></A></DT>
+<DD>Create a bag object which can store data across failures</DD>
+<DT><A HREF="bag_dissolve-2.html"><STRONG>bag_dissolve(+BagHandle, ?List)</STRONG></A></DT>
+<DD>Retrieve a bag's contents and destroy the bag</DD>
+<DT><A HREF="bag_enter-2.html"><STRONG>bag_enter(+BagHandle, +Term)</STRONG></A></DT>
+<DD>Enter a term into an existing bag object</DD>
+<DT><A HREF="bag_erase-1.html"><STRONG>bag_erase(+BagHandle)</STRONG></A></DT>
+<DD>Erase the contents of a bag</DD>
+<DT><A HREF="bag_retrieve-2.html"><STRONG>bag_retrieve(+BagHandle, ?List)</STRONG></A></DT>
+<DD>Retrieve a bag's contents</DD>
+<DT><A HREF="current_array-2.html"><STRONG>current_array(?Array, ?Options)</STRONG></A></DT>
+<DD>Succeeds if there exists an array as denoted by Array and with type and
+visibility as given in the list Options.
+
+</DD>
+<DT><A HREF="current_store-1.html"><STRONG>current_store(?StoreHandle)</STRONG></A></DT>
+<DD>StoreName is a visible store name</DD>
+<DT><A HREF="decval-1.html"><STRONG>decval(+ElemSpec)</STRONG></A></DT>
+<DD>Decrements the contents of the visible non-logical variable or array element ElemSpec by one.</DD>
+<DT><A HREF="erase_array-1.html"><STRONG>erase_array(+ArraySpec)</STRONG></A></DT>
+<DD>Erases existing visible array, non-logical variable or reference.</DD>
+<DT><A HREF="getval-2.html"><STRONG>getval(+ElemSpec, ?Value)</STRONG></A></DT>
+<DD>Retrieves the value of the visible array element, non-logical variable or reference ElemSpec</DD>
+<DT><A HREF="incval-1.html"><STRONG>incval(+ElemSpec)</STRONG></A></DT>
+<DD>Increments the contents of the visible non-logical variable or array element ElemSpec by one.</DD>
+<DT><A HREF="reference-1.html"><STRONG>local reference(+Name)</STRONG></A></DT>
+<DD>Creates a named reference called Name.</DD>
+<DT><A HREF="reference-2.html"><STRONG>local reference(+Name, ++Init)</STRONG></A></DT>
+<DD>Creates a named reference called Name with intial value Init.</DD>
+<DT><A HREF="setval-2.html"><STRONG>setval(+ElemSpec, ?Value)</STRONG></A></DT>
+<DD>Sets the value of a non-logical variable, array element, or reference to the value Value.</DD>
+<DT><A HREF="shelf-2.html"><STRONG>local shelf(++Name, +Init)</STRONG></A></DT>
+<DD>Create a named shelf object which can store data across failures</DD>
+<DT><A HREF="shelf_abolish-1.html"><STRONG>shelf_abolish(+ShelfHandle)</STRONG></A></DT>
+<DD>Destroy a shelf explicitly</DD>
+<DT><A HREF="shelf_create-2.html"><STRONG>shelf_create(+InitTerm, -ShelfHandle)</STRONG></A></DT>
+<DD>Create a shelf object which can store data across failures</DD>
+<DT><A HREF="shelf_create-3.html"><STRONG>shelf_create(++ShelfSpec, ?SlotInit, -ShelfHandle)</STRONG></A></DT>
+<DD>Create a shelf object which can store data across failures</DD>
+<DT><A HREF="shelf_get-3.html"><STRONG>shelf_get(+ShelfHandle, +Index, -Term)</STRONG></A></DT>
+<DD>Retrieve a stored term from a shelf object</DD>
+<DT><A HREF="shelf_set-3.html"><STRONG>shelf_set(+ShelfHandle, +Index, ?Term)</STRONG></A></DT>
+<DD>Store a term in a shelf object</DD>
+<DT><A HREF="store-1.html"><STRONG>local store(++Name)</STRONG></A></DT>
+<DD>Create a named store object which can store indexed data across failures</DD>
+<DT><A HREF="store_contains-2.html"><STRONG>store_contains(+StoreHandle, ++Key)</STRONG></A></DT>
+<DD>Check for an entry in a store object</DD>
+<DT><A HREF="store_count-2.html"><STRONG>store_count(+StoreHandle, ?Count)</STRONG></A></DT>
+<DD>Retrieve the number of entries in a store object</DD>
+<DT><A HREF="store_create-1.html"><STRONG>store_create(-StoreHandle)</STRONG></A></DT>
+<DD>Create an anonymous store object which can store indexed data across failures</DD>
+<DT><A HREF="store_delete-2.html"><STRONG>store_delete(+StoreHandle, ++Key)</STRONG></A></DT>
+<DD>Delete an entry in a store object</DD>
+<DT><A HREF="store_erase-1.html"><STRONG>store_erase(+StoreHandle)</STRONG></A></DT>
+<DD>Erase the contents of the specified store object</DD>
+<DT><A HREF="store_get-3.html"><STRONG>store_get(+StoreHandle, ++Key, ?Value)</STRONG></A></DT>
+<DD>Look up an entry in a store object</DD>
+<DT><A HREF="store_inc-2.html"><STRONG>store_inc(+StoreHandle, ++Key)</STRONG></A></DT>
+<DD>Increment an integral entry within a store object</DD>
+<DT><A HREF="store_set-3.html"><STRONG>store_set(+StoreHandle, ++Key, ?Value)</STRONG></A></DT>
+<DD>Make an entry into a store object</DD>
+<DT><A HREF="stored_keys-2.html"><STRONG>stored_keys(+StoreHandle, ?Keys)</STRONG></A></DT>
+<DD>Retrieve all keys stored in a store object</DD>
+<DT><A HREF="stored_keys_and_values-2.html"><STRONG>stored_keys_and_values(+StoreHandle, ?KeysValues)</STRONG></A></DT>
+<DD>Retrieve all data stored in a store object</DD>
+<DT><A HREF="test_and_setval-3.html"><STRONG>test_and_setval(+VarName, +Old, +New)</STRONG></A></DT>
+<DD>Test whether a non-logical variable has value Old and if so, set it to New.</DD>
+<DT><A HREF="variable-1.html"><STRONG>local variable(+Name)</STRONG></A></DT>
+<DD>Creates the untyped non-logical variable Name.</DD>
+<DT><A HREF="variable-2.html"><STRONG>local variable(+Name, +Init)</STRONG></A></DT>
+<DD>Creates the untyped non-logical variable Name.</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+	ECLiPSe provides several facilities to store information across
+	backtracking. The following table gives an overview. If at all
+	possible, the handle-based facilities (bags, shelves, stores)
+	should be preferred because they lead to cleaner, reentrant code
+	(without global state) and reduce the risk of memory leaks.
+<PRE>
+    Facility        Type            Reference       See
+    ================================================================
+    bags            unordered bag   by handle       bag_create/1
+    ----------------------------------------------------------------
+    shelves         array           by handle       shelf_create/2,3
+    ----------------------------------------------------------------
+    stores          hash table      by handle       store_create/1
+    ----------------------------------------------------------------
+    named shelves   array           by name         shelf/2
+    ----------------------------------------------------------------
+    named stores    hash table      by name         store/1
+    ----------------------------------------------------------------
+    non-logical     single cell     by name         variable/1,2
+    variables
+    ----------------------------------------------------------------
+    non-logical     array           by name         array/1,2
+    arrays
+    ----------------------------------------------------------------
+    records         ordered list    by name         record/1,2
+    ----------------------------------------------------------------
+    dynamic         ordered list    by name         dynamic/1,assert/1
+    predicates
+    ----------------------------------------------------------------
+</PRE>
+    
+<HR>Generated from arrays.eci on Tue Jan 25 01:58:21 2005
+
+</BODY></HTML>

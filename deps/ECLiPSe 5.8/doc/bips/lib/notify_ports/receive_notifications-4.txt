@@ -1,0 +1,28 @@
+
+receive_notifications(+ReceivePos, +ReceiveStruct, -Messages, -Status)
+
+   Receive a list of currently available notification messages
+
+Arguments
+   ReceivePos          positive integer, the send port's field number in ReceiveStruct
+   ReceiveStruct       a structure
+   Messages            a variable
+   Status              a variable
+
+Type
+   library(notify_ports)
+
+Description
+
+    This predicate retrieves all the messages that are currently
+    available at the given receive port.  This means all messages that
+    were sent via the associated send port but have not yet been
+    retrieved from this receive port.
+    
+    The Status argument indicates whether the associated sender is still
+    open ('open') or has been closed ('closed'). If closed, no more
+    messages will arrive on this receive port in the future.
+    
+
+See Also
+   foreachnotification / 7

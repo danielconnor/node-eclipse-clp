@@ -1,0 +1,59 @@
+
+union(+List1, +List2, ?Union)
+
+   Succeeds if Union is the list which contains the union of elements in List1
+and those in List2.
+
+
+
+Arguments
+   +List1              List.
+   +List2              List.
+   ?Union              List or variable.
+
+Type
+   library(lists)
+
+Description
+   Used to create the list of elements in List1 and not in List2, added to
+   those in List2.
+
+   The definition of this Prolog library predicate is:
+
+union([], L, L).
+union([Head|L1tail], L2, L3) :-
+        memberchk(Head, L2),
+        !,
+        union(L1tail, L2, L3).
+union([Head|L1tail], L2, [Head|L3tail]) :-
+        union(L1tail, L2, L3tail).
+
+   This predicate does not perform any type testing functions.
+
+   This predicate works properly for set operations only, so repeated
+   elements and variable elements should not be used.
+	
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Union does not unify with the list which contains the union of
+   elements in List1 and those in List2.
+
+
+
+Examples
+   
+Success:
+      union([1,2,3],[1,3],L).     (gives L=[2,1,3]).
+
+Fail:
+      union([1,2,3,2],[1,3],[1,2,3]).  % repeated elements
+
+
+
+
+
+See Also
+   subtract / 3, intersection / 3

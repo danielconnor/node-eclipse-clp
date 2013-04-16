@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>ic_stat_get(-StatsList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic_kernel)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>ic_stat_get(-StatsList)</H1>
+Returns the list of stats events description=value pairs
+<DL>
+<DT><EM>StatsList</EM></DT>
+<DD>The list of stats events description=value pairs
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Returns the list of stats events description=value pairs.
+<P>
+   IC records the following statistics by default.  Please note that since
+   these depend on the internals of IC, they are subject to change without
+   notice, and should be used as a guide only.
+<DL>
+	<DT>ic_lin_create
+	    <DD>Number of linear constraints set up.
+	<DT>ic_lin_prop
+	    <DD>Number of times a linear constraint is propagated.
+	<DT>ic_uni_prop/ic_bin_prop/ic_tern_prop
+	    <DD>Number of times a non-linear (unary/binary/ternary) operator is
+	    propagated.
+	<DT>ic_split
+	    <DD>Number of domain splits in locate/2,3,4.
+	<DT>ic_squash
+	    <DD>Number of squash attempts in squash/3 or locate/4.
+</DL>
+
+<H2>See Also</H2>
+<A HREF="../../lib/ic_kernel/ic_stat-1.html">ic_stat / 1</A>, <A HREF="../../lib/ic_kernel/ic_stat_get-1.html">ic_stat_get / 1</A>, <A HREF="../../lib/ic_kernel/ic_event-1.html">ic_event / 1</A>
+</BODY></HTML>

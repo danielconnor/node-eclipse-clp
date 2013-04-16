@@ -1,0 +1,13 @@
+<HTML><HEAD><TITLE>head_queue(Queue, Head)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(queues)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>head_queue(Queue, Head)</H1>
+unifies Head with the first element of the queue
+<H2>Description</H2>
+
+    unifies Head with the first element of the queue.  The tricky part
+    is that we might be at the end of a queue: Back-Back, with Back a
+    variable, and in that case this predicate should not succeed, as we
+    don't know what that element is or whether it exists yet.
+    
+
+</BODY></HTML>

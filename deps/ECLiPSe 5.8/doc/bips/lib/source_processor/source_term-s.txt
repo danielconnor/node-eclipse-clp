@@ -1,0 +1,14 @@
+
+struct source_term(term, vars)
+
+   A source term with additional information
+
+Fields
+   term                A term read from a source file (a clause, fact, etc)
+   vars                A list of the term's variables and their names
+
+Type
+   library(source_processor)
+
+See Also
+   readvar / 3

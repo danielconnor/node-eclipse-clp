@@ -1,0 +1,127 @@
+
+setof(?Term, +Goal, ?List)
+
+   Succeeds if List is the (non-empty) ordered list of all instances of Term
+such that Goal is provable.
+
+
+
+Arguments
+   ?Term               Prolog term, usually a variable, a compound term or list                containing variables.
+   +Goal               Callable term.
+   ?List               List or variable.
+
+Type
+   All Solutions
+
+Description
+   Unifies List with the ordered list (no duplicates) of all instances of
+   Term such that Goal is satisfied.  The variables appearing in Term
+   should not appear anywhere else in the clause except within Goal.
+
+
+   The following table illustrates the difference between the all solutions
+   predicates:
+
+
+
+    built-in  choice pts  duplicates  sorted pruned *
+    bagof/3   yes         yes         no     no
+    coverof/3 yes         no          no     yes
+    findall/3 no          yes         no     no
+    setof/3   yes         no          yes    no
+   * prune_instances/2 used on list of solutions.
+
+   If Goal is not a callable term, exceptions are raised in call/2.
+
+
+Note
+   If there are uninstantiated variables in Goal which do not appear in
+   Term, then setof/3 can be resatisfied.  It generates alternative values
+   for List corresponding to different instantiations of the free variables
+   of Goal not in Term.  Such variables occurring in Goal will not be
+   treated as free if they are explicitly bound within Goal through an
+   existential quantification written as, for example,
+
+
+
+   setof(X, Y^(X likes Y), S).
+
+   Then setof/3 will not backtrack over Y when getting a set of solutions
+   of X.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if List does not unify with the (non-empty) list of all instances
+   of Term such that Goal is provable.  Also fails if Goal has no solution.
+
+
+
+Exceptions
+     4 --- Goal is not instantiated.
+     5 --- Goal is instantiated, but not to a compound term.
+    68 --- Goal is an undefined procedure.
+
+Examples
+   
+Success:
+
+
+   % example using existential quantification:
+  [eclipse]: setof(Name,Num^current_stream(Name,Mode,Num),L),
+  > writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , read , _g84 , [debug_input, user] % does not
+  _g72 , string , _g84 , [""]              % backtrack over
+  _g72 , update , _g84 , [null]            & Num.
+  _g72 , write , _g84 , [error, user]
+
+  no (more) solution.
+  [eclipse]: setof(Name,current_stream(Name,Mode,Num),L),
+  > writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , read , 0 , [user]           % backtracks over Num.
+  _g72 , read , 3 , [debug_input]
+  _g72 , string , 5 , [""]
+  _g72 , update , 4 , [null]
+  _g72 , write , 1 , [user]
+  _g72 , write , 2 , [error]
+
+  no (more) solution.
+  [eclipse]: setof(N,(Mode,Num)^current_stream(N,Mode,Num),L),
+  > writeq((Name,Mode,Num,L)), nl, fail.
+  _g72 , _g78 , _g84 , ["", debug_input, error, null, user]
+
+  no (more) solution. % removes duplicates; sorted.
+
+
+  [eclipse]: [user].
+   h(f(1,2)).
+   h(f(1,2)).
+   h(f(1,X)).
+   h(f(X,Y)).   % instances of this element...
+   user compiled 476 bytes in 0.00 seconds
+  yes.
+  [eclipse]: setof(X,h(X),L).
+  X = _g58
+  L = [f(_g86, _g88), f(1, _g102), f(1, 2)]
+  yes.   % ...all bagged; removes duplicates; sorted.
+
+Fail:
+  setof(Y,current_stream(X,Y,Z),[strin]).
+
+Error:
+  setof(X,G,L).         (Error 4).
+  setof(X,"G",L).       (Error 5).
+  setof(X,a,L).         (Error 68).
+  setof(X,a(X),L).      (Error 68).
+
+
+
+
+
+See Also
+   bagof / 3, coverof / 3, findall / 3

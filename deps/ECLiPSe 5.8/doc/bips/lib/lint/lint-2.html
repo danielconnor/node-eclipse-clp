@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>lint(+File, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lint)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>lint(+File, +Options)</H1>
+Check the given source module file
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Name of the source file (atom or string)
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>A list of Option:Value structures
+</DD>
+</DL>
+<H2>Description</H2>
+
+    Analyse a source file, do various heuristic checks on the code,
+    and print warnings if appropriate.
+<P>
+    The possible options are:
+<DL>
+    <DT>head_unify ('off' or 'on')</DT>
+	<DD>warn if a clause with a cut contains aliasing in the head,
+	which may indicate non-steadfast code. Default: on.</DD>
+    <DT>missing_else ('off' or 'on')</DT>
+	<DD>warn if a conditions does not have an else case, since this
+	will fail and is more clearly written using a simple conjunction
+	or once/1. Default: on.</DD>
+    <DT>naming_conventions ('off' or 'on')</DT>
+	<DD>enable/disable naming conventions checks for variable names,
+	predicate names and module names. Default: on.</DD>
+    <DT>singletons ('off' or 'on')</DT>
+	<DD>enable/disable singleton variable checks. Default: on.</DD>
+</DL>
+    
+<H2>See Also</H2>
+<A HREF="../../lib/lint/lint-1.html">lint / 1</A>
+</BODY></HTML>

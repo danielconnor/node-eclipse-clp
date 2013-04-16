@@ -1,0 +1,29 @@
+
+impose_bounds(?Var, ++Lo, ++Hi)
+
+   Update (if required) the bounds of Var.
+
+Arguments
+   Var                 Variable or number
+   Lo                  Lower bound
+   Hi                  Upper bound
+
+Type
+   library(ic_kernel)
+
+Description
+
+   Primitive for updating the upper and lower bounds of Var, also used as
+   the set_bounds handler for the IC attribute.  As with impose_min/2 and
+   impose_max/2, it is intended for use in implementing constraint
+   propagators, and should not be called from ordinary user code (use $::/2
+   or ::/2 instead).  Its semantics is essentially:
+
+       impose_min(Var, Lo), impose_max(Var, Hi), wake.
+
+   Please see the documentation for impose_min/2 and impose_max/2 for more
+   details.
+
+
+See Also
+   impose_min / 2, impose_max / 2, ic : $:: / 2, ic : :: / 2

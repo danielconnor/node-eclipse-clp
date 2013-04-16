@@ -1,0 +1,139 @@
+
+viewable_create(?ViewableName, +Elements, ++Type, ++LocNamesList)
+
+   Create a viewable, specifying both type and location names.
+
+Arguments
+   ViewableName        A string or atom; the name of the new viewable.
+   Elements            A list nested to at least a depth equal to the number of dimensions, or an array with sufficient dimensions (as created for example by dim/2) or a graph structure.
+   Type                A ground term which is a valid viewable type. 
+   LocNamesList        A list of lists of strings (location names) or a list of semantic markup terms from graph structures.
+
+Type
+   library(viewable)
+
+Description
+
+
+        NOTE:When there are no registered visualisation clients,
+        this predicate succeeds with any arguments, and has no effect.
+
+        This predicate works exactly the same as
+        viewable_create/3 except that you have the added
+        ability to set location names (e.g. row/column names) for
+        arrays and to indicate which elements of the edge info
+        structure should be attached to edge labels for graphs.
+
+        For array type viewables the LocNamesList argument
+        should be a list as long as the number of dimensions in the
+        viewable. The ith element LocNames of
+        LocNamesList should be a list whose length is equal
+        to the size of the ith dimension of the new viewable. The jth
+        element of LocNames should be a ground string and
+        this will become the name of the jth location of the ith
+        dimension.  
+
+        For graph type viewables the LocNamesList argument
+        should be a list of the following form.
+
+
+[
+ node_property([0->[name(NodeInfoName), label]]),
+ edge_property([Index->[name(EdgeInfoName), label]])
+]
+
+
+        Where NodeInfoName is a meaningful name for the
+        information to be displayed at the nodes in the graph.  eg. If
+        the graph represented a computer network, the nodes may show
+        individual machine names. In such a case, "machine
+        name" would be a likely candidate for the NodeInfoName
+        argument.  Similarly EdgeInfoName refers to the
+        information associated with edge labels.
+
+        The Index argument specifies which part of the
+        edge info field should be shown on edges. 0:The whole edge
+        info structure.  N:The Nth argument of the edge info
+        structure.  [...,I,J,K]:The Kth argument of the Jth argument
+        of the Ith argument... of the edge info structure. See below
+        for examples.
+
+        For a more detailed description of creating viewables, refer to the
+        documentation for viewable_create/3.
+
+
+
+
+Resatisfiable
+   no
+
+Exceptions
+     4 --- ViewableName is not an atom, string or free variable.
+     1 --- ViewableName is the name of an existent viewable.
+     1 --- Elements is not a regular nested list or array with enough dimensions.
+     1 --- Type is not a ground valid type.
+     5 --- One of the viewable elements violates the element type.
+     5 --- LocNamesList is not a correctly-sized list of correctly-sized lists of strings.
+
+Examples
+   
+
+            To create a 2 x 3 viewable, you could do:
+
+            viewable_create(v1, [[A,B,C], [D,E,F]], 
+                            array([fixed, fixed], any), 
+                            [["foo", "bar"], ["tom", "dick", "harry"]]).
+
+            This would have two rows (named "foo" and "bar") each
+	    with three columns (named "tom", "dick" and
+	    "harry").
+
+            To create a graph viewable where node names are attached
+            to node labels and edge info fields are attached to edge
+            lables (ie info(1,foo(A)), info(2,foo(B)) and
+            info(3,foo(C)) as per viewable_create/3).
+
+            lib(graph_algorithms),
+            make_graph_symbolic([](n1,n2,n3),
+                                [edge(n1,n2,info(1,foo(A)),
+                                 edge(n2,n3,info(2,foo(B)),
+                                 edge(n1,n3,info(3,foo(C))], Graph),
+            viewable_create(v2, Graph, graph(fixed),
+                            [node_property([0->[name('node names'), label]]),
+                             edge_property([0->[name('edge info'), label]])
+                            ]).
+                            
+
+            To create a graph where the edges are labelled with the
+            second argument of the edge info structure. (ie with the
+            structures foo(A), foo(B) and foo(C))
+
+            lib(graph_algorithms),
+            make_graph_symbolic([](n1,n2,n3),
+                                [edge(n1,n2,info(1,foo(A)),
+                                 edge(n2,n3,info(2,foo(B)),
+                                 edge(n1,n3,info(3,foo(C))], Graph),
+            viewable_create(v2, Graph, graph(fixed),
+                            [node_property([0->[name('node names'), label]]),
+                             edge_property([2->[name('edge info'), label]])
+                            ]).
+
+            
+            To create a graph where the edges are labelled with the
+            first argument of the nested structure at the second
+            argument of the edge info structure. (ie with the
+            variables A, B and C)
+
+            lib(graph_algorithms),
+            make_graph_symbolic([](n1,n2,n3),
+                                [edge(n1,n2,info(1,foo(A)),
+                                 edge(n2,n3,info(2,foo(B)),
+                                 edge(n1,n3,info(3,foo(C))], Graph),
+            viewable_create(v2, Graph, graph(fixed),
+                            [node_property([0->[name('node names'), label]]),
+                             edge_property([[2,1]->[name('edge info'), label]])
+                            ]).
+            
+
+See Also
+   viewable_create / 2, viewable_create / 3, viewable_expand / 4, graph_algorithms : make_graph / 3

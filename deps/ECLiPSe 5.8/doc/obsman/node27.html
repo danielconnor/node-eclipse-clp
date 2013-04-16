@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>When to use Set Variables and Constraints...</TITLE>
+<META NAME="description" CONTENT="When to use Set Variables and Constraints...">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node28.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html750"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html746"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html740"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html748"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html751"
+ HREF="node28.html">User-defined constraints</A>
+<B> Up:</B> <A NAME="tex2html747"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html741"
+ HREF="node26.html">Examples</A>
+ &nbsp <B>  <A NAME="tex2html749"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00360000000000000000"></A>
+<A NAME="2722"></A>
+<BR>
+When to use Set Variables and Constraints...
+</H1>
+The <EM>subset-sum</EM> example shows that the general principle of solving
+problems using set domain constraints works just like finite domains:
+
+<UL><LI>Stating the variables and assigning an initial set domain to
+them.
+
+<LI>Constraining the variables. In the above example the constraint
+is just a built-in constraint but usually one needs to define
+additional constraints.
+
+<LI>Labeling the variables, <EM>i.e.</EM>, assigning values to them.
+In the set case it would not be very efficient to select one value for
+a set variable for the size of a set domain is exponential in the
+upper bound cardinality and thus the number of backtracks could be
+exponential too. A second reason is that no specific information can
+be deduced from a failure (backtrack) whereas if (like in the refine
+predicate) we add one by one elements to the set till it becomes
+ground or some failure is detected, we benefit much more from the
+constraint propagation mechanism.  Every domain modification activates
+some constraints associated to the variable (depending on the modified
+bound) and modifications are propagated to the other variables
+involved in the constraints. The search space is then reduced and
+either the goal succeeds or it fails.  In case of failure the labeling
+procedure backtracks and removes the last element added to the set
+variable and tries to instanciate the variable by adding another
+element to its lower bound.  In the <code>subset-sum</code> example the
+labeling only concerns a single set, but it can deal with a list of
+set terms like in the <code>steiner</code> example.  Although the choice for the
+element to be added can be done without specific criterion like in the
+<code>steiner</code> example, some  user defined heuristics can be embedded
+in the labeling procedure like in the <code>subset-sum</code> example. Then
+the user needs to define his own <code>refine</code> procedure.
+
+</UL>
+
+<P>
+Set constraints propose a new modelling of already solved problems or
+allows (like for the <EM>subset-sum</EM> example) to solve new problems
+using CLP. Therefore, one should take into account the problem
+semantics in order to define the initial search space as small as
+possible and to make a powerful use of set constraints. The objective
+of this library is to bring CLP to bear on graph-theorical problems
+like the <EM>steiner</EM> problem which is a hypergraph computation
+problem, thus leading to a better specification and solving of
+problems as, packing and partitioning which find their application in
+many real life problems.  A partial list includes: railroad crew
+scheduling, truck deliveries, airline crew scheduling, tanker-routing,
+information retrieval,time tabling problems, location problems,
+assembly line balancing, political districting,etc.
+
+<P>
+Sets seem adequate for problems where one is not interested in each
+element as a specific individual but in a collection of elements where
+no specific distinction is made and thus where symmetries among the
+element values need to be avoided (eg. steiner problem). They are also
+useful when heterogeneous constraints are involved in the problem like
+weight constraints combined with some disjointness constraints.
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html750"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html746"
+ HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html740"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html748"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html751"
+ HREF="node28.html">User-defined constraints</A>
+<B> Up:</B> <A NAME="tex2html747"
+ HREF="node21.html">The Set Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html741"
+ HREF="node26.html">Examples</A>
+ &nbsp <B>  <A NAME="tex2html749"
+ HREF="node34.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

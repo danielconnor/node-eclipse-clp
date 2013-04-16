@@ -1,0 +1,34 @@
+
+insert(+Map0, ++Key, ?Value, -Map)
+
+   Insert a key/value pair into a map, failing if the key already exists.
+
+Arguments
+   Map0                A map
+   Key                 A key to insert
+   Value               The value corresponding to Key
+   Map                 The map after insertion
+
+Type
+   library(m_map)
+
+Description
+	
+	This predicate inserts the key Key with corresponding value Value
+	into the map Map0, resulting in the map Map.  If the key Key is
+	already in the map, then the predicate fails.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Key already appears in Map0.
+
+See Also
+   det_insert / 4, update / 4, det_update / 4, set / 4

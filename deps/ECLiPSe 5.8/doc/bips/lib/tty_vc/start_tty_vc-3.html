@@ -1,0 +1,24 @@
+<HTML><HEAD><TITLE>start_tty_vc(++VCName, ++InitialViewGranularity, ++ChangeCondition)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(tty_vc)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>start_tty_vc(++VCName, ++InitialViewGranularity, ++ChangeCondition)</H1>
+Start a TTY visualisation client, specifying both the view granularity and the change condition.
+<DL>
+<DT><EM>VCName</EM></DT>
+<DD>An atom; the name of the TTY VC.
+</DD>
+<DT><EM>InitialViewGranularity</EM></DT>
+<DD>An atom: 'coarse' or 'fine'
+</DD>
+<DT><EM>ChangeCondition</EM></DT>
+<DD>A term of the form change_condition(&lt;Module&gt;, &lt;AttributeStructName&gt;, &lt;SuspListName&gt;)
+</DD>
+</DL>
+<H2>Description</H2>
+
+
+	    <p> This predicate starts a TTY visualisation client (VC), but allows the user to specify both the view granularity, as in <code>start_tty_vc/2</code> and the change condition. The change condition specifies the suspension list to use for updates. The most obvious choice is the default in the other two predicates, <code>constrained of suspend</code> in the <code>suspend</code> module. If other suspension lists are used, the value of the element displayed in the output of the TTY VC may sometimes be out of date. Otherwise the predicate behaves exactly like <code>start_tty_vc/2</code>.
+<H3>Resatisfiable</H3>
+no
+<H2>See Also</H2>
+<A HREF="../../lib/tty_vc/stop_tty_vc-0.html">stop_tty_vc / 0</A>, <A HREF="../../lib/tty_vc/start_tty_vc-1.html">start_tty_vc / 1</A>, <A HREF="../../lib/tty_vc/start_tty_vc-2.html">start_tty_vc / 2</A>
+</BODY></HTML>

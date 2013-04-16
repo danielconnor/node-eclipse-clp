@@ -1,0 +1,217 @@
+<HTML><HEAD><TITLE>library(cardinal)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">Third Party Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(cardinal)</H1>
+Finite Set Constraints Library
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="H-2.html"><STRONG>#(?SetExpression, ?Cardinality)</STRONG></A></DT>
+<DD>Cardinality of a set expression</DD>
+<DT><A HREF="BS-2.html"><STRONG>?SetVar1 `$ ?SetVar2</STRONG></A></DT>
+<DD>Set disjointness constraint</DD>
+<DT><A HREF="B-A-2.html"><STRONG>?Element `-@ ?SetVariable</STRONG></A></DT>
+<DD>Set non-membership constraint</DD>
+<DT><A HREF="BFE-2.html"><STRONG>?SetVar1 `/= ?SetVar2</STRONG></A></DT>
+<DD>Set inequality constraint</DD>
+<DT><A HREF="BNN-2.html"><STRONG>?SetVariable `:: ?Domain</STRONG></A></DT>
+<DD>Set variable declaration</DD>
+<DT><A HREF="BL-2.html"><STRONG>?SetVar1 `< ?SetVar2</STRONG></A></DT>
+<DD>Set inclusion constraint (obsolete)</DD>
+<DT><A HREF="BLG-2.html"><STRONG>?SetVar1 `<> ?SetVar2</STRONG></A></DT>
+<DD>Set disjointness constraint (obsolete)</DD>
+<DT><A HREF="BE-2.html"><STRONG>?SetExp1 `= ?SetExp2</STRONG></A></DT>
+<DD>Set equality constraint</DD>
+<DT><A HREF="BGE-2.html"><STRONG>?SetVar1 `>= ?SetVar2</STRONG></A></DT>
+<DD>Set inclusion constraint</DD>
+<DT><A HREF="BA-2.html"><STRONG>?Element `@ ?SetVariable</STRONG></A></DT>
+<DD>Set membership constraint</DD>
+<DT><A HREF="all_disjoint-1.html"><STRONG>all_disjoint(+SetVars)</STRONG></A></DT>
+<DD>All sets disjointness global constraint</DD>
+<DT><A HREF="all_union-2.html"><STRONG>all_union(+SetVars, ?Union)</STRONG></A></DT>
+<DD>Union constraint of a list of sets</DD>
+<DT><A HREF="card_labeling-1.html"><STRONG>card_labeling(?SetVars)</STRONG></A></DT>
+<DD>Label cardinality of set variables</DD>
+<DT><A HREF="cardinality-2.html"><STRONG>cardinality(?SetVariable, ?Cardinality)</STRONG></A></DT>
+<DD>Cardinality of a set</DD>
+<DT><A HREF="complement-2.html"><STRONG>complement(?SetVar, ?Complement)</STRONG></A></DT>
+<DD>Set complement constraint</DD>
+<DT><A HREF="complement-3.html"><STRONG>complement(?SetVar, ++Universe, ?Complement)</STRONG></A></DT>
+<DD>Set complement constraint</DD>
+<DT><A HREF="domain-2.html"><STRONG>domain(?SetVariable, -Domain)</STRONG></A></DT>
+<DD>Accessing the domain of a set</DD>
+<DT><A HREF="domain-3.html"><STRONG>domain(?SetVariable, ?Cardinality, ?Domain)</STRONG></A></DT>
+<DD>Accessing the domain of a set</DD>
+<DT><A HREF="glb-2.html"><STRONG>glb(?SetVariable, -Glb)</STRONG></A></DT>
+<DD>Obtaining a set's glb</DD>
+<DT><A HREF="glb_poss-3.html"><STRONG>glb_poss(?SetVariable, -Glb, -Poss)</STRONG></A></DT>
+<DD>Obtaining both the glb and the still possible elements of a set</DD>
+<DT><A HREF="in-2.html"><STRONG>?Element in ?SetVariable</STRONG></A></DT>
+<DD>Set membership constraint</DD>
+<DT><A HREF="lub-2.html"><STRONG>lub(?SetVariable, -Lub)</STRONG></A></DT>
+<DD>Obtaining a set's lub</DD>
+<DT><A HREF="lub-4.html"><STRONG>lub(?SetVariable, -Glb, -Poss, -Lub)</STRONG></A></DT>
+<DD>Obtaining a set's lub, together with its glb and poss (lub\glb)</DD>
+<DT><A HREF="maximum-2.html"><STRONG>maximum(?SetVariable, ?Max)</STRONG></A></DT>
+<DD>Maximum of a set of integers</DD>
+<DT><A HREF="minimum-2.html"><STRONG>minimum(?SetVariable, ?Min)</STRONG></A></DT>
+<DD>Minimum of a set of integers</DD>
+<DT><A HREF="notin-2.html"><STRONG>?Element notin ?SetVariable</STRONG></A></DT>
+<DD>Set non-membership constraint</DD>
+<DT><A HREF="poss-2.html"><STRONG>poss(?SetVariable, -Poss)</STRONG></A></DT>
+<DD>Obtaining the still possible elements of a set (lub\glb)</DD>
+<DT><A HREF="refine-2.html"><STRONG>refine(++UpDown, ?SetVar)</STRONG></A></DT>
+<DD>Refine a set variable's domain</DD>
+<DT><A HREF="set-4.html"><STRONG>set(?SetVariable, ++Glb, ++Poss, +Functions)</STRONG></A></DT>
+<DD>Set variable declaration with optional functions</DD>
+<DT><A HREF="set_labeling-1.html"><STRONG>set_labeling(?SetVars)</STRONG></A></DT>
+<DD>Label set variable(s)</DD>
+<DT><A HREF="set_labeling-2.html"><STRONG>set_labeling(++UpDown, +SetVars)</STRONG></A></DT>
+<DD>Label set variables</DD>
+<DT><A HREF="sets-4.html"><STRONG>sets(+SetVariables, ++Glb, ++Poss, +Functions)</STRONG></A></DT>
+<DD>Set variables declaration with optional functions</DD>
+<DT><A HREF="union_var-2.html"><STRONG>union_var(?SetVariable, ?UnionVar)</STRONG></A></DT>
+<DD>Union of a set of sets</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Structures</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="cardinal-s.html"><STRONG>struct cardinal(domain, cardinality, minimum, maximum, union, bounded, glb, lub, bound)</STRONG></A></DT>
+<DD>Cardinal attributes of a set variable</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export op(650, xfx, `=)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `/=)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `$)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `@)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `-@)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `::)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(550, xfx, `>=)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(500, yfx, `\/)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(400, yfx, `/\)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(300, yfx, `\)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, fx, #)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `<>)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, in)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, notin)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(650, xfx, `<)</STRONG></DT><DD></DD>
+<DT><STRONG>export op(300, yfx, \)</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Description</H2>
+Cardinal is a sets constraints library with especial inferences
+	on sets cardinality and other optional set functions (minimum and maximum for
+	sets of integers, and union for sets of sets.)
+	<P>
+	A set is naturally used to collect distinct elements sharing some property.
+	Combinatorial search problems over these data structures can thus be naturally
+	modelled by high level languages with set abstraction facilities, and efficiently
+	solved if constraint reasoning prunes search space when the sets are not fully
+	known a priori (i.e. they are variables ranging over a set domain).
+	<P>
+	Many complex relations between sets can be expressed with constraints such as set
+	inclusion, disjointness and equality over set expressions that may include such
+	operators as intersection, union or difference of sets. Also, as it is often the
+	case, one is not interested simply on these relations but on some attribute or
+	function of one or more sets (e.g. the cardinality of a set). For instance, the
+	goal of many problems is to maximise or minimise the cardinality of a set. Even
+	for satisfaction problems, some sets, although still variables, may be constrained
+	to a fixed cardinality or a stricter cardinality domain than just the one inferred
+	by the domain of a set variable (for instance, the cardinality of a set may have
+	to be restricted to be an even number).
+	<P>
+	Cardinal represents set variables by set intervals with a lower and an upper bound
+	considering set inclusion as a partial ordering. Consistency techniques are then
+	applied to set constraints by interval reasoning. A set domain variable S may be
+	specified by an interval [A,B] where A and B are known sets ordered by set inclusion,
+	representing the greatest lower bound and the lowest upper bound of S, respectively.
+	<P>
+	The cardinality of a set S, given as a finite domain variable C (#S=C), is not a
+	bijective function since two distinct sets may have the same cardinality. Still,
+	it can be constrained by the cardinalities of the set bounds.
+	<P>
+	A simple inference that can be done using cardinality information is to instantiate
+	the set to one of the set bounds, when it is known that the set cardinality must be
+	equal to the cardinality of that bound. But Cardinal does much more than that.
+	For instance, consider two set variables
+	S1,S2, that can assume either set value {} (empty set) or {a,b}. Their set domain
+	is thus [{},{a,b}] with cardinality 0 or 2. The intersection of S1 and S2 also
+	yelds set domain [{},{a,b}]. But we need a special inference to conclude that the
+	intersection cardinality is also either 0 or 2 (it can not be 1). Set solvers
+	other than Cardinal do not make such inferences.
+	<P>
+	Inferences using cardinalities can be very useful to deduce more rapidly the
+	non-satisfiability of a set of constraints, thus improving efficiency of
+	combinatorial search problem solving. As another simple example, if Z is known to be
+	the set difference between Y and X, both contained in set {a,b,c,d}, and it is known
+	that X has exactly 2 elements, it should be inferred that the cardinality of Z can
+	never exceed 2 elements (i.e. from X,Y in {a,b,c,d}, #X=2, Z=Y\X it should be
+	inferred that #Z =< 2). A failure could thus be immediately detected upon the
+	posting of a constraint such as #Z=3.
+	<P>
+	Inference capabilities such as these are particularly important when solving set
+	problems where cardinality plays a special role. Cardinal thus fully uses
+	constraint propagation on sets cardinality.
+	<P>
+
+<B>Intervals and Lattices</B>
+	<P>
+	Set intervals define a lattice of sets. The set inclusion relation between two
+	sets defines a partial order on P(U), the powerset over a certain universe U,
+	the set of all subsets of U.
+	<P>
+	Due to the transitivity rule, the top set, U, includes all sets of P(U);
+	while the bottom set, {}, is included in all sets of P(U). Consequently,
+	sets U and {} constitute an upper bound and a lower bound of P(U), respectively.
+	In addition, they are the least upper bound (lub) or join, and the greatest lower
+	bound (glb) or meet of P(U), since there is no other upper bound contained in
+	(‘less’ than) U  nor other lower bound containing (‘greater’ than) the empty set {}.
+	<P>
+	Let us now consider for U={a,b,c,d}, the sub-lattice connecting {a,b,d} and {b}
+	(thus also including sets {a,b} and {b,d}). Sets {} and {a,b,c,d} are still a
+	lower and an upper bound, but this time the glb is {b} and the lub is {a,b,d}.
+	<P>
+	The two bounds (glb and lub) define a set interval (e.g. [{b},{a,b,d}]) and may
+	form the domain of a set variable S, meaning that set S is one of those defined
+	by its interval (lattice); all other sets outside this domain are excluded from
+	the solution. Thus, b is definitely an element of S, while a and d are the only
+	other possible elements.
+	<P>
+	Set interval reasoning allows us to apply consistency techniques such as Bounded
+	Arc Consistency, due to the monotonic property of set inclusion.
+	<P>
+	Any set variable must then have a domain consisting of a set interval. In addition,
+	this interval should be kept as small as possible, in order to discard all sets
+	that are known not to belong to the solution, while not loosing any of the still
+	possible values (sets). The smallest such domain is the one with equal glb and lub,
+	i.e. a domain of the form [B,B], corresponding to a constant set B. For a set
+	variable that can assume any set value from a collection of known sets, such as
+	{{a,b},{a,c},{d}}, the corresponding interval is the convex closure of such
+	collection (which in this case is the set interval [{},{a,b,c,d}]). In general,
+	for n possible arbitrary sets S1...Sn, the corresponding set variable X has an
+	interval domain [glb, lub] where glb is the intersection of all S1...Sn, and lub
+	is their union.
+	<P>
+<B>Implementation Notes</B>
+	<P>
+	In Cardinal, all sets are represented as sorted lists, which eases working with
+	sets and lists interchangeably.
+	<P>
+	Set variable bounds are represented by its glb and its lub\glb, the set of
+	additional possible elements, which we refer to as poss.
+	<P>
+	Cardinal implements a number of set constraints such as inclusion, equality,
+	inequality, membership, disjointness, and even complement, together with set
+	operations (union, intersection and difference), as built-in.
+	<P>
+	As mentioned, Cardinal also allows the definition and use of optional set functions
+	(other than cardinality): minimum and maximum, for sets of integers, and union,
+	for sets of sets. Refer to the available predicates for details.
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>evolving
+<LI><STRONG>Author: </STRONG>Francisco Azevedo, CENTRIA
+</UL>
+<HR>Generated from cardinal.eci on Tue Jan 25 01:58:53 2005
+
+</BODY></HTML>

@@ -1,0 +1,4 @@
+lib(ic_kernel)
+
+   Low-level interface to the common kernel of the IC solver
+

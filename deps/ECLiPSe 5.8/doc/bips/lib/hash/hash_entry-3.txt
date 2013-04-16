@@ -1,0 +1,24 @@
+
+hash_entry(+Table, ?Key, ?Value)
+
+   Succeeds if Key and Value are an entry in table
+
+Arguments
+   Table               A hash table
+   Key                 a term
+   Value               a term
+
+Type
+   library(hash)
+
+Description
+
+	Like hash_get/3, but allows the Key to be uninstantiated, in which
+	case all hash table entries will be enumerated on backtracking.
+    
+
+Resatisfiable
+   yes
+
+See Also
+   hash_get / 3, hash_list / 3

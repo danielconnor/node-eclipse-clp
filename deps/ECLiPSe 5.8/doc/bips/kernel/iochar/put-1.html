@@ -1,0 +1,49 @@
+<HTML><HEAD><TITLE>put(+Ascii)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>put(+Ascii)</H1>
+The character represented by the ascii integer Ascii is put onto the
+buffered current output.
+
+
+<DL>
+<DT><EM>+Ascii</EM></DT>
+<DD>Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Puts the character represented by the integer ASCII code Ascii (in the
+   range 0 to 255) onto the buffered current output.
+
+<P>
+   The output from put/1 is buffered first, and is only output to the
+   screen when the output is flushed e.g.when returning to the ECLiPSe
+   prompt or explicitly using flush(1)..
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Ascii is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Ascii is instantiated, but not to an integer.
+</DL>
+<H2>Examples</H2>
+<PRE>   Equivalent to put(output, Ascii).  (see put/2 for details).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/get-1.html">get / 1</A>, <A HREF="../../kernel/iochar/get-2.html">get / 2</A>, <A HREF="../../kernel/iochar/put-2.html">put / 2</A>
+</BODY></HTML>

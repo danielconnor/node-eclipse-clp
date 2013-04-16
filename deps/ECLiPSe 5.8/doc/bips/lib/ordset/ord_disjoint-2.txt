@@ -1,0 +1,17 @@
+
+ord_disjoint(+Set1, +Set2)
+
+   Checks whether two sets are disjoint
+
+Arguments
+   Set1                A set
+   Set2                A set
+
+Type
+   library(ordset)
+
+Description
+	Succeeds when the two ordered sets have no element in common.
+    
+
+

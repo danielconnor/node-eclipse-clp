@@ -1,0 +1,10 @@
+
+socket_listen(+Socket, +Length)
+
+   Limit the maximum of pending connections
+
+Type
+   library(sockets)
+
+See Also
+   listen / 2

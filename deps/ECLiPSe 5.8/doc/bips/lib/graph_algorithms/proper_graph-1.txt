@@ -1,0 +1,17 @@
+
+proper_graph(+Graph)
+
+   Tests the integrity of the given graph data structure
+
+Arguments
+   Graph               a graph structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    
+
+See Also
+   

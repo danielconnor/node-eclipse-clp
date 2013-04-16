@@ -1,0 +1,70 @@
+
+create_module(+Module)
+
+   Create a module at runtime
+
+Arguments
+   +Module             Atom.
+
+Type
+   Modules
+
+Description
+   create_module/1 creates the given module if it does not exist yet.
+   If the module already exists, an exception is raised (error 97).
+
+   Note that modules are normally created by the compiler when it
+   encounters a module/1 directive.  The create_module/1 predicate
+   however creates modules dynamically at runtime.  The intended
+   applications are therefore mainly source processing tools, e.g.
+   compilers and loaders, or programs that need a clean name space
+   to store code and data.
+
+   Note that the created module will by default import the language
+   module eclipse_language.  To create a completely empty
+   module, use the more general predicate create_module/3.  In fact, 
+   create_module/1 is defined as
+
+   create_module(Module) :-
+       create_module(Module, [], eclipse_language).
+
+   The system does not allow the atom [] to be used as a module name!
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is not an atom, or Module is the atom [].
+    97 --- Module already exists.
+
+Examples
+   
+Success:
+    [eclipse 1]: create_module(m).
+    yes.
+    [eclipse 2]: export(data/1)@m.
+    yes.
+    [eclipse 3]: compile_term(data(99))@m.
+    yes.
+    [eclipse 4]: m:data(X).
+
+    X = 99
+    yes.
+    [eclipse 5]: erase_module(m).
+    yes.
+
+Error:
+    create_module(M).                   (Error 4).
+    create_module(1).                   (Error 5).
+    create_module(m), create_module(m). (Error 97).
+
+
+See Also
+   module / 1, create_module / 3, erase_module / 1, get_module_info / 3, current_module / 1

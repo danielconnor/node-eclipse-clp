@@ -1,0 +1,169 @@
+
+reexport +Module
+reexport +SpecList from +Module
+reexport +Module except +SpecList
+
+   Reexports a module's interface or a subset of it.
+
+Arguments
+   +Module             Atom.
+   +SpecList           One or a comma-separated sequence of valid export specifications
+
+Type
+   Modules
+
+Description
+    A reexport is conceptually an import combined with an export.  That
+    means that a reexported definition becomes visible inside the
+    reexporting module and is at the same time exported again.  A user
+    of a module's interface sees virtually no difference between
+    exported and reexported definitions.  Reexporting is a flexible
+    way to create tailored module interfaces, e.g. extend the interface
+    of an existing module, restrict it, combine features from several
+    modules, or create specific modifications of existing modules.
+
+    The reexport declaration comes in three flavours. To reexport the
+    complete interface of another module, use
+
+	:- reexport amodule.
+
+    However, often it is desirable or necessary to restrict the set of
+    reexported items.  This can be done in two ways, either by
+    explicitly listing the items to reexport, e.g.
+
+	:- reexport useful/3, good/1 from amodule.
+
+    or else by listing the exception that should not be reexported, e.g.
+
+	:- reexport amodule except useless/3, unwanted/1.
+
+   SpecList can contain any valid export specification, i.e.
+
+Name/Arity
+        procedure  specification
+
+domain(Spec)
+	domain declaration
+
+struct(Prototype)
+	structure declaration
+
+op(Prec,Assoc,Name)
+	operator declaration
+
+chtab(Char,Class)
+	character class declaration
+
+syntax_option(Option)
+	syntax option setting
+
+macro(Functor,Transformation,Options)
+	macro (input transformation) declaration
+
+portray(Functor,Transformation,Options)
+	portray (output transformation) declaration
+
+initialization(Goal)
+	initialization goal specification
+
+    Procedure specifications must be fully instantiated with name and
+    arity. All other specifications may contain anonymous variables
+    which serve as wildcards when matching the exports.  For example,
+    to reexport all operator declarations of another module use
+
+	:- reexport op(_,_,_) from amodule.
+
+    To reexport only the operator declaration for the operator 'before',
+    whatever it is defined to, use
+
+	:- reexport op(_,_,before) from amodule.
+
+    or to prevent a macro declaration for internal/3 from being reexported, use
+
+	:- reexport amodule except macro(internal/3,_,_).
+
+
+   When explicitly reexporting procedures, it is required that they are
+   actually exported from the other module. In all other cases, the items
+   listed in SpecList do not have to correspond to actually exported items
+   in the other module.
+
+   Reexported procedures are made accessible to other modules in the
+   same way as exported ones.  That means they can either be called by
+   explicitly qualifying them with the name of the reexporting module
+   (using :/2), or they can be imported from the reexporting module
+   and thus made visible elsewhere.
+
+   All the export (and reexport) directive of a module together form
+   what is called the module's interface. The module interface
+   can be extracted from a module source file using the icompile/2
+   utility from library(document). The interface can also be retrieved
+   from a loaded module by calling get_module_info/3.
+
+   Rexporting the same item twice, or reexporting something that has
+   previously been declared imported, is accepted silently.
+
+   Reexporting is not compatible with a local definition of the same
+   name (because reexport always implies an import as well), it raises
+   error 92.
+
+   The reexport/1 primitive can not only occur as a directive but can also
+   be called at runtime.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- SpecList or Module is insufficiently instantiated.
+     5 --- Module is not an atom.
+     5 --- SpecList contains an invalid specification.
+    92 --- One of the reexported procedures has the same name as a local procedure.
+
+Examples
+   
+% A module that is like m1 but adds something extra:
+
+    :- module(m).
+    :- reexport m1.
+    :- export extra/1.
+    extra(99).
+
+
+% A module that makes a subset of m1 available:
+
+    :- module(m).
+    :- reexport m1 except useless/3, unwanted/1.
+
+
+% A module that combines m1 and m2:
+
+    :- module(m).
+    :- reexport m1 except also_in_m2/2.
+    :- reexport m2.
+
+
+% A module that modifies m1:
+
+    :- module(m).
+    :- reexport m1 except different/1.
+    :- export different/1.
+    different(better).
+
+
+% Error cases:
+
+  :- reexport Q.                         (Error 4).
+  :- reexport p/a.                       (Error 5).
+
+  :- local p/1.
+  :- export p/1.                         (Error 92).
+
+
+See Also
+   import / 1, export / 1, local / 1, use_module / 1, module / 1, : / 2, get_module_info / 3, document : icompile / 1, document : icompile / 2, domain / 1, macro / 3, op / 3, portray / 3, struct / 1

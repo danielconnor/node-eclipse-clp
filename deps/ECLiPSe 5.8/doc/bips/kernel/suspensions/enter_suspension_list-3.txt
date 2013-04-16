@@ -1,0 +1,54 @@
+
+enter_suspension_list(++Position, +Attribute, +Susp)
+
+   Enter the suspension Susp into the suspension list at position Positiion within the structure Attribute.
+
+Arguments
+   Position            Integer indicating the position of the suspension list.
+   Attribute           Compound term, typically a variable's attribute.
+   Susp                A suspension
+
+Type
+   Advanced Control and Suspensions
+
+Description
+
+   This predicate is used to add a suspension to a single suspension list.
+   The suspension list is expected in the Position'th argument of the
+   structure Attribute. This argument can be either an existing suspension
+   list, or a variable. If it is a variable, a new suspension list with
+   Susp will be created. 
+
+   The functionality is similar to insert_suspension/3, but while
+   enter_suspension_list/3 enters only into a single suspension list,
+   insert_suspension/3 finds all variables in a term and inserts a
+   suspension into the attribute structures of all those variables.
+
+   Suspension lists should be regarded an opaque data structure and
+   only be accessed and manipulated by the set of primitives provided
+   for this purpose.
+
+
+
+Exceptions
+     4 --- Attribute, Susp or Position not instantiated.
+     5 --- Attribute is not a structure, or Susp not a suspension or Position is a non-integer number.
+     6 --- Attribute's arity is less than Position, or Position is zero or less.
+    24 --- Position is a non-number.
+   271 --- The suspension list in Position of Attribute is neither a list nor a free variable, or it contains an element which is not a suspension.
+
+Examples
+   
+[eclipse 1]: Att = att(_, hello), init_suspension_list(1, Att),
+         make_suspension(true, 3, S), enter_suspension_list(1, Att, S).
+
+Att = att(['SUSP-_286-susp'], hello)
+S = 'SUSP-_286-susp'
+
+Delayed goals:
+        true
+Yes (0.00s cpu)
+
+
+See Also
+   insert_suspension / 3, insert_suspension / 4, schedule_suspensions / 2, init_suspension_list / 2

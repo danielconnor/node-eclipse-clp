@@ -1,0 +1,417 @@
+<HTML><HEAD><TITLE>library(fd)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(fd)</H1>
+Finite domain library
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="H-3.html"><STRONG>#(?Min, ?Cstrs, ?Max)</STRONG></A></DT>
+<DD>The cardinality operator</DD>
+<DT><A HREF="HH-2.html"><STRONG>?X ## ?Y</STRONG></A></DT>
+<DD>X is different from Y.
+
+</DD>
+<DT><A HREF="HH-3.html"><STRONG>##(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X ## Y has the truth value B.
+
+</DD>
+<DT><A HREF="HFR-2.html"><STRONG>?C1 #/\ ?C2</STRONG></A></DT>
+<DD>The constraint expression C1 and the constraint expression C2 is true.
+
+</DD>
+<DT><A HREF="HFR-3.html"><STRONG>#/\(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #/\ Y has the truth value B.
+
+</DD>
+<DT><A HREF="HNN-2.html"><STRONG>?Vars #::  ?Domain</STRONG></A></DT>
+<DD>Terms in Vars have the domain Domain. The predicate is an alias for ::/2.
+
+</DD>
+<DT><A HREF="HNN-3.html"><STRONG>#::(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #::  Y has the truth value B. The predicate is an alias for ::/3.
+
+</DD>
+<DT><A HREF="HL-2.html"><STRONG>?X #< ?Y</STRONG></A></DT>
+<DD>The linear term X is less than the linear term Y.
+
+</DD>
+<DT><A HREF="HL-3.html"><STRONG>#<(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #< Y has the truth value B.
+
+</DD>
+<DT><A HREF="HLE-2.html"><STRONG>?X #<= ?Y</STRONG></A></DT>
+<DD>The linear term X is less than or equal to the linear term Y.
+
+</DD>
+<DT><A HREF="HLE-3.html"><STRONG>#<=(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #<= Y has the truth value B.
+
+</DD>
+<DT><A HREF="HLEG-2.html"><STRONG>?C1 #<=> ?C2</STRONG></A></DT>
+<DD>The constraint expression C1 is equivalent to the constraint expression C2.
+
+</DD>
+<DT><A HREF="HLEG-3.html"><STRONG>#<=>(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #<=> Y has the truth value B.
+
+</DD>
+<DT><A HREF="HE-2.html"><STRONG>?X #= ?Y</STRONG></A></DT>
+<DD>X is equal to Y.
+
+</DD>
+<DT><A HREF="HE-3.html"><STRONG>#=(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #= Y has the truth value B.
+
+</DD>
+<DT><A HREF="HEG-2.html"><STRONG>?C1 #=> ?C2</STRONG></A></DT>
+<DD>The constraint expression C1 implies the constraint expression C2.
+
+</DD>
+<DT><A HREF="HEG-3.html"><STRONG>#=>(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #=> Y has the truth value B.
+
+</DD>
+<DT><A HREF="HG-2.html"><STRONG>?X #> ?Y</STRONG></A></DT>
+<DD>The linear term X is greater than the linear term Y.
+
+</DD>
+<DT><A HREF="HG-3.html"><STRONG>#>(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #> Y has the truth value B.
+
+</DD>
+<DT><A HREF="HGE-2.html"><STRONG>?X #>= ?Y</STRONG></A></DT>
+<DD>The linear term X is greater than or equal to the linear term Y.
+
+</DD>
+<DT><A HREF="HGE-3.html"><STRONG>#>=(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #>= Y has the truth value B.
+
+</DD>
+<DT><A HREF="HRP-1.html"><STRONG>#\+ ?C</STRONG></A></DT>
+<DD>The constraint expression C is false.
+
+</DD>
+<DT><A HREF="HRP-2.html"><STRONG>#\+(?X, ?B)</STRONG></A></DT>
+<DD>The constraint #\+ X has the truth value B.
+
+</DD>
+<DT><A HREF="HRF-2.html"><STRONG>?C1 #\/ ?C2</STRONG></A></DT>
+<DD>The constraint expression C1 or the constraint expression C2 is true.
+
+</DD>
+<DT><A HREF="HRF-3.html"><STRONG>#\/(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #\/ Y has the truth value B.
+
+</DD>
+<DT><A HREF="HRE-2.html"><STRONG>?X #\= ?Y</STRONG></A></DT>
+<DD>X is different from Y.
+
+</DD>
+<DT><A HREF="HRE-3.html"><STRONG>#\=(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X #\= Y has the truth value B.
+
+</DD>
+<DT><A HREF="NN-2.html"><STRONG>?Vars ::  ?Domain</STRONG></A></DT>
+<DD>Terms in Vars have the domain Domain.
+
+</DD>
+<DT><A HREF="NN-3.html"><STRONG>::(?X, ?Y, ?B)</STRONG></A></DT>
+<DD>The constraint X ::  Y has the truth value B.
+
+</DD>
+<DT><A HREF="alldifferent-1.html"><STRONG>alldifferent(?List)</STRONG></A></DT>
+<DD>The elements of the list List are pairwise different.
+
+</DD>
+<DT><A HREF="alldistinct-1.html"><STRONG>alldistinct(?List)</STRONG></A></DT>
+<DD>The elements of the list List are pairwise different.
+
+</DD>
+<DT><A HREF="atmost-3.html"><STRONG>atmost(+N, ?List, +V)</STRONG></A></DT>
+<DD>At most N elements of the list List have the value V.
+
+</DD>
+<DT><A HREF="constraints_number-2.html"><STRONG>constraints_number(?Var, ?N)</STRONG></A></DT>
+<DD>The number of constraints and suspended goals associated with the variable
+Var is N.
+
+</DD>
+<DT><A HREF="contigs-5.html"><STRONG>contigs(+List, +Item, ?MaxLength, ?Occurrences, ?Contigs)</STRONG></A></DT>
+<DD>MaxLength is the longest sequence of Item occurring in List, Occurrences is
+the total number of occurrences of Item in List and Contigs is the number
+of sequences of Item in List.
+
+</DD>
+<DT><A HREF="default_domain-1.html"><STRONG>default_domain(-Var)</STRONG></A></DT>
+<DD>This predicate is called to assign a default domain to a free variable Var
+which occurs in arithmetic constraints.
+
+</DD>
+<DT><A HREF="deleteff-3.html"><STRONG>deleteff(?Var, +List, -Rest)</STRONG></A></DT>
+<DD>Select from List the variable Var which has the smallest domain and return
+the rest of the list.
+
+</DD>
+<DT><A HREF="deleteffc-3.html"><STRONG>deleteffc(?Var, +List, -Rest)</STRONG></A></DT>
+<DD>Select from List the variable Var which has the smallest domain and most
+constraints and return the rest of the list.
+
+</DD>
+<DT><A HREF="deletemin-3.html"><STRONG>deletemin(?Var, +List, -Rest)</STRONG></A></DT>
+<DD>Select from List the variable Var which has the smallest lower domain bound,
+and return the rest of the list.
+
+</DD>
+<DT><A HREF="disjunction-5.html"><STRONG>disjunction(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)</STRONG></A></DT>
+<DD>Flag indicates which of the two non-overlapping tasks is scheduled as
+first.  Either the one with starting time Start1 and duration Duration1
+(then the value of Flag is 1), or the second one with starting time Start2
+and duration Duration2 (and the Flag is 2).
+
+</DD>
+<DT><A HREF="disjunction_choose-5.html"><STRONG>disjunction_choose(?Start1, +Duration1, ?Start2, +Duration2, ?Flag)</STRONG></A></DT>
+<DD>Flag indicates which of the two non-overlapping tasks is scheduled as
+first.  Either the one with starting time Start1 and duration Duration1
+(then the value of Flag is 1), or the second one with starting time Start2
+and duration Duration2 (and the Flag is 2).
+
+</DD>
+<DT><A HREF="disjunctive-3.html"><STRONG>disjunctive(?Starts, +Durations, ?Flags)</STRONG></A></DT>
+<DD>Succeeds if there exists a sequential ordering of non-overlapping tasks
+with starting times Starts and durations Durations, with respect to the
+ordering priorities of single pairs of tasks (elementary disjunctions)
+represented in the list Flags.
+
+</DD>
+<DT><A HREF="dom-2.html"><STRONG>dom(+Var, ?List)</STRONG></A></DT>
+<DD>List is the list of elements in the domain of Var.
+
+</DD>
+<DT><A HREF="dom_check_in-2.html"><STRONG>dom_check_in(+Element, +Dom)</STRONG></A></DT>
+<DD>Element is in the domain Dom.
+
+</DD>
+<DT><A HREF="dom_compare-3.html"><STRONG>dom_compare(?Res, +Dom1, +Dom2)</STRONG></A></DT>
+<DD>Res is the result of the comparison of the domains Dom1 and Dom2.
+
+</DD>
+<DT><A HREF="dom_copy-2.html"><STRONG>dom_copy(+Dom1, -Dom2)</STRONG></A></DT>
+<DD>Dom2 is a copy of the domain Dom1.
+
+</DD>
+<DT><A HREF="dom_difference-4.html"><STRONG>dom_difference(+Dom1, +Dom2, -DomDiff, -Size)</STRONG></A></DT>
+<DD>The domain DomDifference is Dom1 \Dom2 and Size is the number of its
+elements.
+
+</DD>
+<DT><A HREF="dom_intersection-4.html"><STRONG>dom_intersection(+Dom1, +Dom2, -DomInt, -Size)</STRONG></A></DT>
+<DD>The domain DomInt is the intersection of domains Dom1 and Dom2 and Size is
+the number of its elements.
+
+</DD>
+<DT><A HREF="dom_member-2.html"><STRONG>dom_member(?Element, +Dom)</STRONG></A></DT>
+<DD>Element is in the domain Dom.
+
+</DD>
+<DT><A HREF="dom_range-3.html"><STRONG>dom_range(+Dom, ?Min, ?Max)</STRONG></A></DT>
+<DD>Return the minimum and maximum value in the integer domain Dom.
+
+</DD>
+<DT><A HREF="dom_size-2.html"><STRONG>dom_size(+Dom, ?Size)</STRONG></A></DT>
+<DD>Size is the number of elements in the domain Dom.
+
+</DD>
+<DT><A HREF="dom_to_list-2.html"><STRONG>dom_to_list(+Dom, ?List)</STRONG></A></DT>
+<DD>List is the list of elements in the domain Dom.
+
+</DD>
+<DT><A HREF="dom_union-4.html"><STRONG>dom_union(+Dom1, +Dom2, -DomUnion, -Size)</STRONG></A></DT>
+<DD>The domain DomUnion is the union of domains Dom1 and Dom2 and Size is the
+number of its elements.
+
+</DD>
+<DT><A HREF="dvar_attribute-2.html"><STRONG>dvar_attribute(+DVar, ?Attrib)</STRONG></A></DT>
+<DD>Attrib is the attribute of the domain variable DVar.
+
+</DD>
+<DT><A HREF="dvar_domain-2.html"><STRONG>dvar_domain(+DVar, -Dom)</STRONG></A></DT>
+<DD>Dom is the domain of the domain variable DVar.
+
+</DD>
+<DT><A HREF="dvar_msg-3.html"><STRONG>dvar_msg(+DVar1, +DVar2, -MsgDVar)</STRONG></A></DT>
+<DD>MsgDVar is a domain variable which is the most specific generalisation of
+domain variables or atomic values DVar1 and DVar2.
+
+</DD>
+<DT><A HREF="dvar_range-3.html"><STRONG>dvar_range(+DVar, ?Min, ?Max)</STRONG></A></DT>
+<DD>Return the minimum and maximum domain value of DVar</DD>
+<DT><A HREF="dvar_remove_element-2.html"><STRONG>dvar_remove_element(+DVar, +El)</STRONG></A></DT>
+<DD>The element El is removed from the domain of DVar and all concerned lists
+are woken.
+
+</DD>
+<DT><A HREF="dvar_remove_greater-2.html"><STRONG>dvar_remove_greater(+DVar, +El)</STRONG></A></DT>
+<DD>Remove all elements in the domain of DVar which are greater than the
+integer El and wake all concerned lists.
+
+</DD>
+<DT><A HREF="dvar_remove_smaller-2.html"><STRONG>dvar_remove_smaller(+DVar, +El)</STRONG></A></DT>
+<DD>Remove all elements in the domain of DVar which are smaller than the
+integer El and wake all concerned lists.
+
+</DD>
+<DT><A HREF="dvar_replace-2.html"><STRONG>dvar_replace(+DVar, +NewDom)</STRONG></A></DT>
+<DD>Change the domain of the domain variable DVar to NewDom without propagating
+the changes.
+
+</DD>
+<DT><A HREF="dvar_update-2.html"><STRONG>dvar_update(+DVar, +NewDom)</STRONG></A></DT>
+<DD>Change the domain of the domain variable DVar to NewDom and propagate the
+changes.
+
+</DD>
+<DT><A HREF="element-3.html"><STRONG>element(?Index, +List, ?Value)</STRONG></A></DT>
+<DD>Value is the Index'th element of the integer list List.
+
+</DD>
+<DT><A HREF="fd_eval-1.html"><STRONG>fd_eval(?C)</STRONG></A></DT>
+<DD>Evaluate and state the constraint expression C.
+
+</DD>
+<DT><A HREF="indomain-1.html"><STRONG>indomain(?Var)</STRONG></A></DT>
+<DD>Instantiate Var to a value in its domain.
+
+</DD>
+<DT><A HREF="integer_list_to_dom-2.html"><STRONG>integer_list_to_dom(+List, -Dom)</STRONG></A></DT>
+<DD>Convert a sorted list of integers and integer intervals into a domain Dom.
+
+</DD>
+<DT><A HREF="integers-1.html"><STRONG>integers(+Vars)</STRONG></A></DT>
+<DD>Constrains Vars to be integers.</DD>
+<DT><A HREF="is_domain-1.html"><STRONG>is_domain(?Term)</STRONG></A></DT>
+<DD>Succeeds if Term is a domain variable.
+
+</DD>
+<DT><A HREF="is_integer_domain-1.html"><STRONG>is_integer_domain(?Term)</STRONG></A></DT>
+<DD>Succeeds if Term is a domain variable with an integer domain.
+
+</DD>
+<DT><A HREF="isd-2.html"><STRONG>?B isd ?C</STRONG></A></DT>
+<DD>The constraint expression C evaluates to the boolean value B.
+
+</DD>
+<DT><A HREF="labeling-1.html"><STRONG>labeling(+Vars)</STRONG></A></DT>
+<DD>Instantiate all variables in a list to values in their domain</DD>
+<DT><A HREF="list_to_dom-2.html"><STRONG>list_to_dom(+List, -Dom)</STRONG></A></DT>
+<DD>Convert a list of atomic terms and integer intervals into a domain Dom.
+
+</DD>
+<DT><A HREF="maxdomain-2.html"><STRONG>maxdomain(+Var, ?Max)</STRONG></A></DT>
+<DD>Max is the maximum element in the domain of Var.
+
+</DD>
+<DT><A HREF="min_max-2.html"><STRONG>min_max(?Goal, ?C)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes the maximum of elements of C.
+
+</DD>
+<DT><A HREF="min_max-4.html"><STRONG>min_max(+Goal, ?Template, ?Solution, ?C)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes the maximum of elements of C,
+and unify the minimized Template with Solution.
+
+</DD>
+<DT><A HREF="min_max-5.html"><STRONG>min_max(?Goal, ?C, +Lower, +Upper, +Percent)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes the maximum of elements of C,
+within the bounds set by Lower,Upper and Percent.
+
+</DD>
+<DT><A HREF="min_max-6.html"><STRONG>min_max(?Goal, ?C, +Lower, +Upper, +Percent, +Timeout)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes the maximum of elements of C,
+within the bounds set by Lower,Upper and Percent in time not longer than
+Timeout.
+
+</DD>
+<DT><A HREF="min_max-8.html"><STRONG>min_max(+Goal, ?Template, ?Solution, ?C, +Lower, +Upper, +Percent, +Timeout)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes the maximum of elements of C,
+within the bounds set by Lower,Upper and Percent in time not longer than
+Timeout.
+
+</DD>
+<DT><A HREF="mindomain-2.html"><STRONG>mindomain(+Var, ?Min)</STRONG></A></DT>
+<DD>Min is the minimum element in the domain of Var.
+
+</DD>
+<DT><A HREF="minimize-2.html"><STRONG>minimize(?Goal, ?C)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes C.
+
+</DD>
+<DT><A HREF="minimize-4.html"><STRONG>minimize(+Goal, ?Template, ?Solution, ?C)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes C,
+and unify the minimized Template with Solution.
+
+</DD>
+<DT><A HREF="minimize-5.html"><STRONG>minimize(?Goal, ?C, +Lower, +Upper, +Percent)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes C, within the bounds set by Lower,
+Upper and Percent.
+
+</DD>
+<DT><A HREF="minimize-6.html"><STRONG>minimize(?Goal, ?C, +Lower, +Upper, +Percent, +Timeout)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes C, within the bounds set by Lower,
+Upper and Percent in time not longer than Timeout.
+
+</DD>
+<DT><A HREF="minimize-8.html"><STRONG>minimize(+Goal, ?Template, ?Solution, ?C, +Lower, +Upper, +Percent, +Timeout)</STRONG></A></DT>
+<DD>Find the solution of Goal that minimizes the maximum of elements of C,
+within the bounds set by Lower,Upper and Percent in time not longer than
+Timeout.
+
+</DD>
+<DT><A HREF="minimize_bound_check-0.html"><STRONG>minimize_bound_check</STRONG></A></DT>
+<DD>If within a minimization, force a check of the cost variable against
+the cost bound, which may lead to earlier failure.
+
+</DD>
+<DT><A HREF="new_domain_var-1.html"><STRONG>new_domain_var(-Var)</STRONG></A></DT>
+<DD>A user hook predicate which is called whenever a variable obtains a default
+domain from the solver.
+
+</DD>
+<DT><A HREF="par_indomain-1.html"><STRONG>par_indomain(?Var)</STRONG></A></DT>
+<DD>Instantiate Var to a number of values in its domain in parallel.
+
+</DD>
+<DT><A HREF="sequence-4.html"><STRONG>sequence(+List, +Item, ?MaxLength, ?Occurrences)</STRONG></A></DT>
+<DD>MaxLength is the longest sequence of Item occurring in List and Occurrences
+is the total number of occurrences of Item in List.
+
+</DD>
+<DT><A HREF="sorted_list_to_dom-2.html"><STRONG>sorted_list_to_dom(+List, -Dom)</STRONG></A></DT>
+<DD>Convert a sorted list of atomic terms and integer intervals into a domain
+Dom.
+
+</DD>
+<DT><STRONG>tr_fd_out(?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><A HREF="var_fd-2.html"><STRONG>var_fd(+Var, +Dom)</STRONG></A></DT>
+<DD>Create a domain variable with a given domain.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Reexports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>reexport fd_arith</STRONG></DT><DD>except fd_eq / 1, fd_eq / 2, fd_ge / 1, fd_ge / 2, fd_gec / 5, fd_gec_ent / 6, fd_ineq / 1, fd_ineq / 2, fd_qeq / 3, fd_re / 2, fd_dom_simple / 2, fd_dom_simple / 3</DD>
+<DT><STRONG>reexport fd_chip</STRONG></DT><DD></DD>
+<DT><STRONG>reexport fd_elipsys</STRONG></DT><DD></DD>
+<DT><STRONG>reexport fd_util</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>Other Exports</H2>
+<BLOCKQUOTE><DL>
+<DT><STRONG>export macro(element / 5, fd : tr_fd_out / 2, [write, goal])</STRONG></DT><DD></DD>
+</DL></BLOCKQUOTE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Micha Meier, ECRC Munich
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date
+</UL>
+<HR>Generated from fd.eci on Tue Jan 25 01:58:37 2005
+
+</BODY></HTML>

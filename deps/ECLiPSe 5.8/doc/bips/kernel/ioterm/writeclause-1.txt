@@ -1,0 +1,48 @@
+
+writeclause(+Clause)
+
+   The clause Clause is pretty printed on the current output .
+
+
+
+Arguments
+   +Clause             A Prolog term.
+
+Type
+   Term I/O
+
+Description
+   Used to pretty print the clause Clause on the current output according
+   to the current operator declarations.
+
+
+   When reading Prolog clauses from one file, and then writing to the
+   current output, the latter part can be done using writeclause/1.  This
+   is because the clauses are terminated by a period and a newline, which
+   are not retained by Prolog.  writeclause/1 replaces these, and flushes
+   the output.
+
+
+   writeclause/1,2 knows about the special meaning of ,/2, ;/2, ->/2, fg,
+   -->/2 and :-/2 and prints the clause with the appropriate indentation of
+   subgoals and some (redundant) parentheses to show the clause structure.
+   Everything else is written as with writeq/1,2, so output of writeclause/1,2
+   is readable for read/1,2.
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+	Equivalent to writeclause(output, Term).  (see writeclause/2 for details).
+
+
+See Also
+   writeq / 1, writeclause / 2

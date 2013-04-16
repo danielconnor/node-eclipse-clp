@@ -1,0 +1,75 @@
+<HTML><HEAD><TITLE>get_stream(++StreamId, ??Stream)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Stream I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get_stream(++StreamId, ??Stream)</H1>
+Succeeds if Stream is the stream to which the stream StreamId is assigned.
+
+
+<DL>
+<DT><EM>+StreamId</EM></DT>
+<DD>Atom or integer.
+</DD>
+<DT><EM>?Stream</EM></DT>
+<DD>Integer, atom or variable.
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>get_stream(+, -)
+<LI>get_stream(+, +)
+</UL>
+<H2>Description</H2>
+   StreamId is an existing symbolic or physical stream identifier.
+   If Stream is a variable, it will get bound to the physical stream number
+   corresponding to StreamId.  If Stream is an existing symbolic or physical
+   stream identifier, then the predicate succeeds iff StreamId and Stream
+   denote the same physical stream.
+
+<P>
+   The predefined symbolic system stream names are:
+
+<P>
+   input, output, error, warning_output, log_output,
+   stdin, stdout, stderr, null
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Stream is not a stream with the stream identifier StreamId.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>One or both of StreamId and Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is neither an atom, an integer nor a variable.
+<DT><EM>(5) type error </EM>
+<DD>StreamId is neither an atom nor an integer.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>StreamId is an illegal stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: get_stream(input,X).
+      X = 0
+      yes.
+
+      [eclipse]: set_stream(a,input), get_stream(input,a), get_stream(a,input).
+      yes.
+
+Fail:
+      set_stream(b,4), get_stream(b, 10).
+
+Error:
+      get_stream(Id, S).      (Error 4).
+      get_stream(1.0,S).      (Error 5).
+      get_stream(3, S).       (Error 5).
+      get_stream(blah,S).     (Error 193). % does not exist
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iostream/set_stream-2.html">set_stream / 2</A>
+</BODY></HTML>

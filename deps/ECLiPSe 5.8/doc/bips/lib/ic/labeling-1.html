@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>labeling(+Vars)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>labeling(+Vars)</H1>
+Instantiates all variables in a list to elements of their domains.
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>A list of integer IC variables or integers
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Simple predicate for instantiating a list of integer IC variables to
+   elements of their domains.  (Integers are also allowed in the list; they
+   are effectively ignored.)  The variables are instantiated in the order in
+   which they appear in the list; the implementation is essentially:
+<PRE>
+        labeling([]).
+        labeling([Var|Rest]) :-
+            indomain(Var),
+            labeling(Rest).
+</PRE></P>
+
+<H3>Resatisfiable</H3>
+Yes.
+<H2>See Also</H2>
+<A HREF="../../lib/ic/indomain-1.html">indomain / 1</A>, <A HREF="../../lib/fd/labeling-1.html">fd : labeling / 1</A>
+</BODY></HTML>

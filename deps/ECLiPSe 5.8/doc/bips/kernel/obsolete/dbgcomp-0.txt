@@ -1,0 +1,82 @@
+
+dbgcomp
+
+   Tells the compiler to generate code with debug instructions.  Equivalent to
+the call to set_flag(debug_compile, on).
+
+
+
+Arguments
+
+Type
+   Obsolete
+
+Description
+   Only predicates that have been compiled with debug instructions can be
+   traced by the debugger.
+
+
+   The generation of debug instruction is switched on by default, and is
+   only switched off using nodbgcomp/0 or else using
+   set_flag(debug_compile, off).  This can be reversed using dbgcomp/0 or
+   else using
+   set_flag(debug_compile, on).
+
+
+   Predicates that have been compiled without debug instructions cannot be
+   traced by the debugger (only entering and leaving such a predicate can
+   be shown).
+
+
+   On the other hand, this code uses less space and runs slightly faster
+   than code with debug instructions.  So it makes sense to compile
+   well-tested predicates without debug instructions.
+
+
+   Note however that predicates with debug instructions that are called by
+   predicates without debug instructions are invisible to the debugger.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: dbgcomp, [user].
+       p :- writeln(hello).
+       user compiled 60 bytes in 0.02 seconds.
+      [eclipse]: nodbgcomp, [user].
+       q :- writeln(hello).
+       % generated code is smaller
+       user compiled 44 bytes in 0.00 seconds.
+      [eclipse]: trace.
+      yes.
+      Debugger switched on - creep mode
+      [eclipse]: p.
+        (1) 0  CALL   p (dbg)?- creep
+      B (2) 1  CALL   writeln(hello) (dbg)?- creep
+      hello
+      B (2) 1  EXIT   writeln(hello) (dbg)?- creep
+        (1) 0  EXIT   p (dbg)?- creep
+      yes.
+      [eclipse]: q.
+      N (1) 0  CALL   q (dbg)?- creep  % the inside of q/0
+      hello                            % is invisible
+      N (1) 0  EXIT   q (dbg)?- creep  % to the debugger
+      yes.
+
+
+
+
+
+
+See Also
+   pragma / 1, nodbgcomp / 0, get_flag / 2, set_flag / 2

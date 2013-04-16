@@ -1,0 +1,62 @@
+<HTML><HEAD><TITLE>tool_body(+PredSpecI, ?PredSpecB, ?Module)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Modules</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>tool_body(+PredSpecI, ?PredSpecB, ?Module)</H1>
+Succeeds if PredSpecI is a tool interface procedure, PredSpecB is its body
+procedure, and Module the module where it is defined.
+
+
+<DL>
+<DT><EM>+PredSpecI</EM></DT>
+<DD>Expression of the form Atom/Integer.
+</DD>
+<DT><EM>+PredSpecB</EM></DT>
+<DD>Expression of the form Atom/Integer.
+</DD>
+<DT><EM>?Module</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   To a given tool interface procedure it finds the corresponding body
+   procedure and the module where it is defined.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails unless PredSpecI is a tool interface procedure, PredSpecB is its
+   body procedure, and Module the module where it is defined.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>PredSpecI is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Either PredSpecI or PredSpecB is instantiated, but not to    the form Atom/Integer.
+<DT><EM>(91) not a tool procedure </EM>
+<DD>PredSpecI is not a tool interface procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: tool_body(write/1, P, M), (import P from M).
+      P = write_ / 2             % find the body
+      M = sepia_kernel           %   procedure and
+      yes.                       %   import it
+
+Fail:
+      tool_body(write/1, true/0, M).
+
+Error:
+      tool_body(L, P, M).                   (Error 4).
+      tool_body("current_functor/1", P, M). (Error 5).
+      tool_body(current_functor/1, P, M).   (Error 91).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/modules/tool-2.html">tool / 2</A>
+</BODY></HTML>

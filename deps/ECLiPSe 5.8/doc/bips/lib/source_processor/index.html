@@ -1,0 +1,54 @@
+<HTML><HEAD><TITLE>library(source_processor)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(source_processor)</H1>
+Tools for processing ECLiPSe sources
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="meta_predicate_pattern-1.html"><STRONG>meta_predicate_pattern(?Pattern)</STRONG></A></DT>
+<DD>Describes built-in ECLiPSe meta-predicate patterns</DD>
+<DT><A HREF="source_close-2.html"><STRONG>source_close(+SourcePos, +OptionList)</STRONG></A></DT>
+<DD>Close an open ECLiPSe source file.</DD>
+<DT><A HREF="source_open-3.html"><STRONG>source_open(+File, +OptionList, -SourcePos)</STRONG></A></DT>
+<DD>Open an ECLiPSe source code file for subsequent processing</DD>
+<DT><A HREF="source_read-4.html"><STRONG>source_read(+SourcePos, -NextPos, -Kind, -SourceTerm)</STRONG></A></DT>
+<DD>Read the next term from an open ECLiPSe source file</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Structures</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="source_position-s.html"><STRONG>struct source_position(stream, file, line, offset, remaining_files, included_from, options, created_modules, oldcwd, module)</STRONG></A></DT>
+<DD>Current source position</DD>
+<DT><A HREF="source_term-s.html"><STRONG>struct source_term(term, vars)</STRONG></A></DT>
+<DD>A source term with additional information</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Examples</H2>
+<PRE>
+    % This can be used as a template for source processing code:
+    % a source file is opened,
+    % every term is read and printed,
+    % then the file is closed
+
+    test(File) :-
+	source_open(File, [], SP0),
+	(
+	    fromto(begin, _, Class, end),
+	    fromto(SP0, SP1, SP2, SPend)
+	do
+	    source_read(SP1, SP2, Class, SourceTerm),
+	    SP1 = source_position{file:F,line:L,module:M},
+	    printf("%w %w:%d %w%n", [M,F,L,Class]),
+	    arg(term of source_term, SourceTerm, Term),
+	    writeclause(Term)
+	),
+	source_close(SPend, []).
+    </PRE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, IC-Parc
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date: 2004/12/03 15:28:53 $
+</UL>
+<HR>Generated from source_processor.eci on Tue Jan 25 01:58:38 2005
+
+</BODY></HTML>

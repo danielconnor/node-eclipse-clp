@@ -1,0 +1,121 @@
+
+read_token(+Stream, ?Token, ?Class)
+
+   Succeeds if the next token from the input stream Stream is successfully
+read and unified with Token and its token class with Class.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+   ?Token              Variable or constant.
+   ?Class              Variable or atom.
+
+Type
+   Character I/O
+
+Description
+   This predicate is an interface to the Sepia tokenizer.  It can be used
+   to read terms which are not ended by a fullstop or even to build whole
+   new parsers.  The next token from the input stream Stream is read and
+   unified with Token.  The token class of this token is unified with
+   Class.
+
+
+   The possible token classes with examples:
+
+
+
+   ---------------------------------------
+   | Input Example  Token    Class        |
+   |------------------------------------  |
+   | X              "X"      var          |
+   | _              "_"      anonymous    |
+   | abc            'abc'    atom         |
+   | 'a-b'          'a-b'    quoted_atom  |
+   | 123            123      integer      |
+   | 1.2            1.2      float        |
+   | 1_3            1_3      rational     |
+   | 0.9__1.1       0.9__1.1 breal        |
+   | "abc"          "abc"    string       |
+   | ,              ','      comma        |
+   | )              ")"      solo         |
+   | <SPACE>(       "("      open_par     |
+   | .<NL>          '.'      fullstop     |
+   | 1e789<NL>      "1e789"  error        |
+   ---------------------------------------|
+
+   Note that square brackets and curly brackets are single tokens; solo
+   characters are read as string tokens.  All syntax errors are reported as
+   class error, with the input string up to the error as Token.  The
+   default error handler for the event 190 (reading EOF) returns
+   end_of_file in both Class and Token.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Token does not unify with the next token read from the input
+   stream Stream or its class with Class.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is not an atom or an integer.
+     5 --- Class does not unify with an atom.
+   190 --- End of file was encountered before reading any character.
+   192 --- Stream is not an input stream.
+   193 --- Stream is an illegal stream specification.
+   198 --- Trying to read even after the error 190 was raised.
+
+Examples
+   
+Success:
+      [eclipse 1]: read_token(input,T,C).
+              []
+      T = []
+      C = atom
+      [eclipse 2]: read_token(input,T,C).
+              [
+      T = "["
+      C = solo
+      [eclipse 3]: read_token(input, "k",C).
+              "k"
+      C = string
+      [eclipse 4]: read_token(input,T,C).
+              X
+      T = "X"
+      C = var
+      [eclipse 5]: read_token(input,T,C).
+              1.6e-5.
+      T = 1.6e-05
+      C = float
+
+Fail:
+      [eclipse 6]: read_token(input, "[", C).
+              &
+      no.
+
+Error:
+      [eclipse 7]: read_token(input, T, C).
+              ^D
+      T = end_of_file
+      C = end_of_file
+      yes. (Error 190, default handler)
+
+      read_token(S, a(b,c), C).         (Error 4).
+      read_token("string", a(b,c), C).  (Error 5).
+      read_token(9, X + 2, C).          (Error 192). % stream not open
+      read_token(atom, X + 2, C).       (Error 193).
+
+
+
+
+
+
+See Also
+   get_chtab / 2, set_chtab / 2, read_token / 2

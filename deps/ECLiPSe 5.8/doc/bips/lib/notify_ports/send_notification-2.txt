@@ -1,0 +1,23 @@
+
+send_notification(+SendPort, +Message)
+
+   Send a notification message
+
+Arguments
+   SendPort            a send port structure
+   Message             arbitrary term
+
+Type
+   library(notify_ports)
+
+Description
+
+    Messages is an arbitrary term that gets send via the send port SendPort.
+    All receivers that have connected to this send port at the time of
+    sending will be able to receive the message.
+    
+
+Fail Conditions
+   Fails if SendPort is closed
+
+

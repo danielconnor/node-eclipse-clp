@@ -1,0 +1,46 @@
+<HTML><HEAD><TITLE>date(?Date)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Operating System</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>date(?Date)</H1>
+Date is bound to the string giving the date and time.
+
+
+<DL>
+<DT><EM>?Date</EM></DT>
+<DD>Variable or string.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies Date with the current date and time.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Date is not the day's date.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Date is instantiated, but not to a string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: date(Date).
+      Date = "Fri Aug  25 12:00:00 1989\n"
+      yes.
+
+Fail:
+      date("Fri Aug  24 12:00:00 1989\n").
+
+Error:
+      date(thursday).                (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/opsys/local_time-8.html">local_time / 8</A>, <A HREF="../../kernel/opsys/local_time_string-3.html">local_time_string / 3</A>, <A HREF="../../lib/calendar/index.html">library(calendar)</A>
+</BODY></HTML>

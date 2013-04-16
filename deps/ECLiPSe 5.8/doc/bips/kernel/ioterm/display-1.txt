@@ -1,0 +1,39 @@
+
+display(+Term)
+
+   Term is displayed on the current output --- without considering operator
+definitions.
+
+
+
+Arguments
+   +Term               Prolog term.
+
+Type
+   Term I/O
+
+Description
+   Used to display an expression in standard parenthesised prefix notation,
+   onto the current output. This is mainly useful for debugging,
+   in order to see how a term has been parsed.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+      Equivalent to display(output, Term).  (see display/2).
+
+
+
+
+
+See Also
+   display / 2, write / 1, write / 2, writeq / 1, writeq / 2

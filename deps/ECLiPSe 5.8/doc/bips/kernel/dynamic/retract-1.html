@@ -1,0 +1,86 @@
+<HTML><HEAD><TITLE>retract(+Clause)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Dynamic Predicates</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>retract(+Clause)</H1>
+Succeeds if a clause that unifies with Clause can be removed from the
+database.
+
+
+<DL>
+<DT><EM>+Clause</EM></DT>
+<DD>Atom or compound term
+</DD>
+</DL>
+<H2>Description</H2>
+   Removes the first clause that matches the argument from the database.
+   On backtracking, successive clauses that match are removed.  The clauses
+   are not reasserted when backtracking occurs through retract/1.
+
+<P>
+   The functor of the head of Clause must be that of a predicate declared
+   as dynamic, otherwise an error occurs.  If no clause matches, it fails.
+
+<P>
+   retract/1 satisfies the logical update semantics.  When retract/1 is
+   first called, it makes a virtual copy of the clauses that match and, on
+   backtracking, unifies its argument with them and removes them from the
+   database.  Any modifications made to the procedure after retract/1 has
+   started executing do not, in any way, affect its behaviour.  A
+   subsequent call, however, makes and uses a new, virtual, copy of the
+   modified database.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if no dynamic clause unifies with Clause
+
+
+<H3>Resatisfiable</H3>
+   Yes
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Clause is not instantiated
+<DT><EM>(4) instantiation fault </EM>
+<DD>The head of Clause is a free variable.
+<DT><EM>(5) type error </EM>
+<DD>Clause or the head of Clause is not a callable term.
+<DT><EM>(63) procedure not dynamic </EM>
+<DD>Procedure is not dynamic
+<DT><EM>(70) accessing an undefined dynamic procedure </EM>
+<DD>Procedure is undefined
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: assert(city(munich)), assert(city(london)),
+    assert((p :- write(hi), write(there))).
+
+    yes.
+    [eclipse]: retract(city(X)).
+
+    X = munich     More? (;)
+    yes.
+    [eclipse]: retract(city(X) :- Body).
+
+    X = london
+    Body = true
+    yes.
+    [eclipse]: retract(p :- Body).
+
+    Body = write(hi) , write(there)
+    yes.
+Fail:
+    assert(fact),retract(fact),retract(fact).
+
+Error:
+    retract(X).                            (Error 4).
+    retract("x").                          (Error 5).
+    retract(listing).                      (Error 63).
+    retract(undef).                        (Error 70).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/dynamic/asserta-1.html">asserta / 1</A>, <A HREF="../../kernel/dynamic/dynamic-1.html">dynamic / 1</A>, <A HREF="../../kernel/dynamic/listing-1.html">listing / 1</A>
+</BODY></HTML>

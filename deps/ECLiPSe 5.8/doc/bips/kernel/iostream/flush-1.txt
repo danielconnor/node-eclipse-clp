@@ -1,0 +1,63 @@
+
+flush(+Stream)
+
+   Flushes the output stream Stream.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined symbolic stream name).
+
+Type
+   Stream I/O
+
+Description
+   Used to flush any data contained in the Stream buffer.
+
+
+   Buffered output may need to be flushed e.g.  by writing again, by using
+   flush/1, or by closing the stream.
+
+
+   Stream can be a symbolic stream name (atom) or a physical stream number
+   (integer).
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is instantiated neither to an integer nor an atom.
+   192 --- Stream is not an output stream.
+
+Examples
+   
+Success:
+      flush(output).
+      flush(null).
+
+      [eclipse]: pipe(in,out), write(out, 'q(a).\n'),
+      > flush(out), read(in,T).
+      T = q(a).
+      yes.
+
+Error:
+      flush(Stream).            (Error 4).
+      flush("Stream").          (Error 5).
+      flush(12).                (Error 192). % no such stream
+      flush(debug_input).       (Error 192). % input stream
+
+
+
+
+
+See Also
+   set_stream_property / 3, open / 3, open / 4, close / 1, tyo / 2

@@ -1,0 +1,48 @@
+
+?X &> ?Y
+
+   X is after Y in the domain order
+
+Arguments
+   X                   variable or domain value
+   Y                   variable or domain value
+
+Type
+   library(ic_symbolic)
+
+Description
+
+	Constrains X and Y such that X is after Y in the domain order.
+	X and Y must be variables or values of the same domain. If one of
+	them is domain-less, it will be given the same domain as the other.
+
+
+Examples
+   
+    ?- [X,Y] &:: weekday, X &> Y.
+    X = X{[tu, we, th, fr, sa, su]}
+    Y = Y{[mo, tu, we, th, fr, sa]}
+    There is 1 delayed goal.
+    Yes (0.00s cpu)
+
+    ?- th &> mo.
+    Yes (0.00s cpu)
+
+    ?- X &> th.
+    X = X{[fr, sa, su]}
+    Yes (0.00s cpu)
+
+    ?- th &> fr.
+    No (0.00s cpu)
+
+    ?- X &> Y.
+    Arguments have no domains in X &> Y in module eclipse
+    Abort
+
+    ?- X &:: weekday, X &> red.
+    Arguments have different domains (weekday,colour) in X &> red ...
+    Abort
+    
+
+See Also
+   &> / 3, &< / 2, &=< / 2, &>= / 2, &= / 2, &\= / 2, shift / 3, rotate / 3, domain / 1

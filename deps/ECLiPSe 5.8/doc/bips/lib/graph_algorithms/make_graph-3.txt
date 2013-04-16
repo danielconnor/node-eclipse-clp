@@ -1,0 +1,56 @@
+
+make_graph(+NNodes, ++EdgeList, -Graph)
+
+   Creates a graph with minimal overhead
+
+Arguments
+   NNodes              the number of nodes: integer >= 0
+   EdgeList            a (possibly empty) list of e/3 structures in no particular order
+   Graph               will be bound to a graph structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    This predicate creates a graph data structure according to the given
+    information.  A graph consists of nodes that are numbered from 1 to
+    NNodes and directed edges between the nodes. An edge is represented
+    by the data structure
+
+	e(Source, Target, EdgeData)
+
+    where Source and Target are integers indicating the start and end
+    point of the edge, and EdgeData is an arbitrary data structure
+    holding additional information about the edge, e.g. capacity,
+    distance, weight, name etc.  The EdgeData field should have the
+    same structure for all edges in the graph.  If there is no
+    information attached to edges, the field should be set to 1
+    for edges between different nodes and to 0 otherwise.
+    Several library predicates inspect the EdgeData field or an argument
+    of the EdgeData field, e.g. the shortest path predicate can
+    use any numeric component of EdgeData as the distance criterion.
+    Caution: the distance arguments will be compared using general term
+    comparison (see compare/3) and should therefore have the same
+    type in all edges (e.g. all integer or all float).
+    
+
+Fail Conditions
+   Edges contain nonexisting node numbers
+
+Exceptions
+     6 --- NNodes is negative
+     4 --- NNodes or EdgeList are uninstantiated
+     5 --- NNodes is not integral
+
+Examples
+   
+    % the 13-node undirected graph from Sedgewick:Algorithms
+    make_graph( 13,
+	[ e(1,6,1),e(1,2,1),e(1,7,1),e(3,1,1),e(4,6,1),e(5,4,1),
+	  e(6,5,1),e(7,5,1),e(7,10,1),e(7,3,1),e(8,7,1),e(8,9,1),e(9,8,1),
+	  e(10,11,1),e(10,12,1),e(10,13,1),e(12,7,1),e(12,13,1),e(13,12,1) ],
+        Graph).
+
+See Also
+   make_graph_symbolic / 3, graph_set_nodenames / 2, library(graphviz), compare / 3

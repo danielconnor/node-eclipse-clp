@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>conflict_vars(-Vars)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(repair)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>conflict_vars(-Vars)</H1>
+Returns the list of variables which are currently non-tenable.
+<DL>
+<DT><EM>Vars</EM></DT>
+<DD>List of variables that are currently non-tenable
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+When a variable becomes untenable, it appears in the set of conflict
+variable, when it becomes tenable, is disappears.
+This primitive returns the list of all currently untenable variables.
+Note that all these variables must be reassigned in any solution
+(there is no other way to repair untenability).
+Variable reassignment can be achieved
+by changing the variable's tentative value with tent_set/2,
+or by instantiating the variable.
+Care should be taken whilst implementing repairs through tentative
+value changes since this is a non-monotonic operation: conflicting repairs
+may lead to cycles and the computation may not terminate.  
+</P>
+
+<H2>See Also</H2>
+<A HREF="../../lib/repair/tenable-1.html">tenable / 1</A>, <A HREF="../../lib/repair/tent_set-2.html">tent_set / 2</A>
+</BODY></HTML>

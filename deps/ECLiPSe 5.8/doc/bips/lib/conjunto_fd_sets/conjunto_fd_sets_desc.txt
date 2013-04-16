@@ -1,0 +1,19 @@
+lib(conjunto_fd_sets)
+
+
+    This is a wrapper for library(fd_sets) to make it more backward
+    compatible with its predecessor, the set solver library(conjunto).
+    Supported are:
+    
+    the curly-bracket syntax for sets (input only)
+    the backquote-syntax for several constraints (`<>,`<,`::,`=)
+    refine/1
+    
+    Not supported are:
+    
+    non-integer set elements
+    el_weight/2, sum_weight/2 (but see fd_sets:weight/2)
+    max_weight/2 (but see fd_sets:insetdomain/4)
+    
+
+

@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>is_event(?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>is_event(?Term)</H1>
+Succeeds if Term is an event name or handle
+<DL>
+<DT><EM>Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether Term is either an event name (an atom) or an event
+   handle (a special kind of handle as created by event_create/3).
+
+<H3>Fail Conditions</H3>
+Fails if Term is neither an atom nor an event handle.
+
+
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+
+    ?- is_handle(my_event).
+    Yes (0.00s cpu)
+
+    ?- event_create(true, [], E), is_handle(E).
+    E = 'EVENT'(16'edc90b18)
+    Yes (0.00s cpu)
+
+    ?- bag_create(B), is_event(B).
+    No (0.00s cpu)
+
+    ?- is_event(_).
+    No (0.00s cpu)
+
+    ?- is_event(42).
+    No (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/event/event-1.html">event / 1</A>, <A HREF="../../kernel/typetest/atom-1.html">atom / 1</A>, <A HREF="../../kernel/typetest/is_handle-1.html">is_handle / 1</A>, <A HREF="../../kernel/event/event_create-3.html">event_create / 3</A>, <A HREF="../../kernel/typetest/type_of-2.html">type_of / 2</A>
+</BODY></HTML>

@@ -1,0 +1,68 @@
+<HTML><HEAD><TITLE>polynorm(?Expression, -NormPoly, -Residue)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(linearize)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>polynorm(?Expression, -NormPoly, -Residue)</H1>
+Extracts and normalises the polynomial part of an arithmetic expression
+<DL>
+<DT><EM>Expression</EM></DT>
+<DD>Arithmetic expression with constants and variables
+</DD>
+<DT><EM>NormPoly</EM></DT>
+<DD>Normalized polynomial
+</DD>
+<DT><EM>Residue</EM></DT>
+<DD>Residual nonpolynomial components in the form AuxVar=Expr
+</DD>
+</DL>
+<H2>Description</H2>
+	This predicate converts a general arithmetic expression into a
+	normalized polynomial representation and possibly a nonpolynomial
+	residue. The normalized polynomial representation is a follows:
+<P>
+	A <EM>monomial</EM> is a list of constants and variables and represents
+	the product of all the list elements.
+	In a <EM>normalised monomial</EM>, the list is sorted, the first element is
+	the (only) constant and the others are variables.
+<P>
+	A <EM>normalised polynomial</EM> is represented as a list of lists of
+	normalised monomials. The sublists represent groups of monomials
+	of the same degree in ascending order. If there are no monomials
+	for a certain degree, the list element is missing:
+<PRE>
+	[ConstantMonos, LinearMonos, QuadraticMonos, CubicMonos, ...]
+</PRE>
+	In a normalised polynomial, all monomials are normalised and
+	all monomials with identical variables are merged.
+<P>
+	Non-polynomial components are factored out by introducing an
+	auxiliary variable and adding a term Aux=NonPolyExpr to the
+	Residue result list.  All variables within Expression (which
+	are free at normalization time) are taken to be numerical
+	variables.  If you intend to have variables which can be bound
+	to symbolic expressions rather than number, they must be
+	wrapped into an eval/1 functor.
+    
+<H2>Examples</H2>
+<PRE>
+    ?- polynorm(2*5 + 3*(X+5*Y+7)*Z, Poly, Res).
+    X = X
+    Y = Y
+    Z = Z
+    Poly = [[[10]], [[21, Z]], [[3, X, Z], [15, Y, Z]]]
+    Res = []
+    yes.
+
+    ?- polynorm(3*(X+Y),  Poly, Res).
+    X = X
+    Y = Y
+    Poly = [[[3, X], [3, Y]]]
+    Res = []
+    yes.
+
+    ?- polynorm(3, Poly, Res).
+    Poly = [[[3]]]
+    Res = []
+    yes.
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/linearize/polydenorm-2.html">polydenorm / 2</A>, <A HREF="../../lib/linearize/polyrenorm-2.html">polyrenorm / 2</A>, <A HREF="../../lib/linearize/linearize-3.html">linearize / 3</A>
+</BODY></HTML>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Altering programs at run time</TITLE>
+<META NAME="description" CONTENT="Altering programs at run time">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="previous" HREF="node65.html">
+<LINK REL="up" HREF="node64.html">
+<LINK REL="next" HREF="node67.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3237"
+ HREF="node67.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3233"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3229"
+ HREF="node65.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3235"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3238"
+ HREF="node67.html">ECLiPSe Macros</A>
+<B> Up:</B> <A NAME="tex2html3234"
+ HREF="node64.html">Dynamic Code</A>
+<B> Previous:</B> <A NAME="tex2html3230"
+ HREF="node65.html">Compiling Procedures as Dynamic</A>
+ &nbsp <B>  <A NAME="tex2html3236"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001120000000000000000">
+Altering programs at run time</A>
+</H1>
+
+<P>
+The Prolog database can be updated during the execution of a program.
+<A NAME="6382"></A>
+ECLiPSe allows the user to modify procedures dynamically by adding
+new clauses via <A NAME="tex2html911"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert/1</A><A NAME="6441"></A> and by removing some clauses via <A NAME="tex2html913"
+ HREF="../bips/kernel/dynamic/retract-1.html">retract/1</A><A NAME="6444"></A>.
+<A NAME="6388"></A>
+<A NAME="6389"></A>
+These predicates operate on dynamic procedures; if it is
+required that the definition of a procedure be altered through
+assertion and retraction, the procedure should therefore first be declared
+dynamic (see the previous section). The effect of <A NAME="tex2html917"
+ HREF="../bips/kernel/dynamic/assert-1.html">assert/1</A><A NAME="6447"></A> and
+<A NAME="tex2html919"
+ HREF="../bips/kernel/dynamic/retract-1.html">retract/1</A><A NAME="6450"></A> on static procedures is explained below.
+
+<P>
+The effect of the goal<PRE>
+assert(ProcClause)
+</PRE>
+where
+<TT>ProcClause</TT><A NAME="tex2html909"
+ HREF="footnode.html#foot6417"><SUP>11.1</SUP></A>is a clause of the procedure <TT>Proc</TT>, is as follows.
+<DL COMPACT>
+<DT>1.
+<DD>If <TT>Proc</TT> has not been previously defined, the assertion
+raises an exception, however the default handler for this exception
+just declares the given procedure silently as dynamic and executes
+the assertion.
+<P>
+<DT>2.
+<DD>If <TT>Proc</TT> is already defined as a dynamic procedure,
+the assertion adds <I>ProcClause</I>
+to the database after any clauses already existing for <TT>Proc</TT>.
+
+<P>
+<DT>3.
+<DD>If <TT>Proc</TT> is already defined as a static procedure, then the assertion
+raises an exception.
+</DL>
+
+<P>
+The goal <PRE>
+retract(Clause)
+</PRE>
+will unify <TT>Clause</TT> with a clause on the dynamic database and remove it.
+If <TT>Clause</TT> does not specify a dynamic procedure, an exception is raised.
+
+<P>
+<A NAME="6414"></A>
+ECLiPSe's dynamic database features the so-called <I>logical update semantics</I>.
+This means that any change in the database that occurs as a result of
+executing one of the builtins of the abolish, assert or retract family
+affects only those goals that start executing
+afterwards. For every call to a dynamic procedure, the procedure is
+virtually frozen at call time.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3237"
+ HREF="node67.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3233"
+ HREF="node64.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3229"
+ HREF="node65.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3235"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3238"
+ HREF="node67.html">ECLiPSe Macros</A>
+<B> Up:</B> <A NAME="tex2html3234"
+ HREF="node64.html">Dynamic Code</A>
+<B> Previous:</B> <A NAME="tex2html3230"
+ HREF="node65.html">Compiling Procedures as Dynamic</A>
+ &nbsp <B>  <A NAME="tex2html3236"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

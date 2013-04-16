@@ -1,0 +1,31 @@
+lib(iso)
+
+
+    This library provides a reasonable degree of compatibility with
+    the definition of Standard Prolog as defined in ISO/IEC 13211-1
+    (Information Technology, Programming Languages, Prolog, Part 1: 
+    General Core, 1995).  The areas where the library is not fully
+    compiant are I/O and exception handling.  However it should be
+    sufficient for most applications.  The library is provided in
+    source form.
+    
+    The effect of the compatibility library is local to the module where
+    it is loaded. For maximal ISO-compatibility, an ISO-program should
+    be contained in a  separate module starting with a directive like
+    
+    :- module(myisomodule, [], iso).
+    
+    In this case, Eclipse-specific language constructs will not be available.
+    
+    If the compatibility package is loaded into a standard module, e.g. like
+    
+    :- module(mymixedmdule).
+    :- use_module(library(iso)).
+    
+    then ISO and Eclipse language features can be used together. However,
+    ambiguities must be resolved explicitly and confusion may arise from
+    the different meaning of quotes in Eclipse vs ISO.
+    
+    The recommended way is therefore the former one, ie to put code written
+    in different language dialects into different modules.
+

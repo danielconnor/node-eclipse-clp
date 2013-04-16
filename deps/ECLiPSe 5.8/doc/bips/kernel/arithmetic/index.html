@@ -1,0 +1,285 @@
+<HTML><HEAD><TITLE>Arithmetic</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>Arithmetic</H1>
+Built-ins for arithmetic computations
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="X-3.html"><STRONG>*(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the product Number1 * Number2 and unifies the resulting value
+with Result.
+
+</DD>
+<DT><A HREF="P-2.html"><STRONG>+(+Number, ?Result)</STRONG></A></DT>
+<DD>Checks if Number is a number and unifies it with Result.
+
+</DD>
+<DT><A HREF="P-3.html"><STRONG>+(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the sum Number1 + Number2 and unifies the resulting value with
+Result.
+
+</DD>
+<DT><A HREF="--2.html"><STRONG>-(+Number, ?Result)</STRONG></A></DT>
+<DD>Unifies the negative of Number with Result.
+
+</DD>
+<DT><A HREF="--3.html"><STRONG>-(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the difference Number1 - Number2 and unifies the resulting value
+with Result.
+
+</DD>
+<DT><A HREF="F-3.html"><STRONG>/(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the quotient Number1 / Number2 and unifies the resulting value
+with Result.
+
+</DD>
+<DT><A HREF="FF-3.html"><STRONG>//(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the integer quotient Number1 // Number2 and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="FR-3.html"><STRONG>/\(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the bitwise conjunction Number1 /\ Number2 and unifies the
+resulting value with Result.
+
+</DD>
+<DT><A HREF="L-2.html"><STRONG>+Expr1 < +Expr2</STRONG></A></DT>
+<DD>Succeed if the value of Expr1 is less than the value of Expr2.
+
+</DD>
+<DT><A HREF="LL-3.html"><STRONG><<(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Shifts Number1 left arithmetically by Number2 bits and unifies the
+resulting value with Result.
+
+</DD>
+<DT><A HREF="ENE-2.html"><STRONG>+Expr1 =:= +Expr2</STRONG></A></DT>
+<DD>Succeed if the value of Expr1 is equal to the value of Expr2.
+
+</DD>
+<DT><A HREF="EL-2.html"><STRONG>+Expr1 =< +Expr2</STRONG></A></DT>
+<DD>Succeed if the value of Expr1 is less than or equal to the value of Expr2.
+
+</DD>
+<DT><A HREF="ERE-2.html"><STRONG>+Expr1 =\= +Expr2</STRONG></A></DT>
+<DD>Succeed if the value of Expr1 is not equal to the value of Expr2.
+
+</DD>
+<DT><A HREF="G-2.html"><STRONG>+Expr1 > +Expr2</STRONG></A></DT>
+<DD>Succeed if the value of Expr1 is greater than the value of Expr2.
+
+</DD>
+<DT><A HREF="GE-2.html"><STRONG>+Expr1 >= +Expr2</STRONG></A></DT>
+<DD>Succeed if the value of Expr1 is greater than or equal to the value of
+Expr2.
+
+</DD>
+<DT><A HREF="GG-3.html"><STRONG>>>(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Shifts Number1 right arithmetically by Number2 bits and unifies the
+resulting value with Result.
+
+</DD>
+<DT><A HREF="R-2.html"><STRONG>\(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the bitwise complement of Number and unifies the resulting value
+with Result.
+
+</DD>
+<DT><A HREF="RF-3.html"><STRONG>\/(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the bitwise disjunction Number1 \/ Number2 and unifies the
+resulting value with Result.
+
+</DD>
+<DT><A HREF="U-3.html"><STRONG>^(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the expression Number1 "to the power of" Number2 and unifies the
+resulting value with Result.
+
+</DD>
+<DT><A HREF="abs-2.html"><STRONG>abs(+Number, ?Result)</STRONG></A></DT>
+<DD>Unifies the absolute value of Number with Result.
+
+</DD>
+<DT><A HREF="acos-2.html"><STRONG>acos(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the trigonometric function acos(Number) and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="asin-2.html"><STRONG>asin(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the trigonometric function asin(Number) and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="atan-2.html"><STRONG>atan(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the trigonometric function atan(Number) and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="between-4.html"><STRONG>between(+From, +To, +Step, ?Result)</STRONG></A></DT>
+<DD>Generate integer values between From and To with Step increment.
+
+</DD>
+<DT><A HREF="breal-2.html"><STRONG>breal(+Number, ?Result)</STRONG></A></DT>
+<DD>Converts Number into a breal number and unifies it with Result.</DD>
+<DT><A HREF="breal_bounds-3.html"><STRONG>breal_bounds(+Number, ?Min, ?Max)</STRONG></A></DT>
+<DD>Extracts lower and upper floating point bounds of Number</DD>
+<DT><A HREF="breal_from_bounds-3.html"><STRONG>breal_from_bounds(++Lo, ++Hi, -Result)</STRONG></A></DT>
+<DD>Constructs a bounded real from the given floating point bounds</DD>
+<DT><A HREF="breal_max-2.html"><STRONG>breal_max(+Number, ?Result)</STRONG></A></DT>
+<DD>Extracts the upper floating point bound of Number</DD>
+<DT><A HREF="breal_min-2.html"><STRONG>breal_min(+Number, ?Result)</STRONG></A></DT>
+<DD>Extracts the lower floating point bound of Number</DD>
+<DT><A HREF="ceiling-2.html"><STRONG>ceiling(+Number, ?Result)</STRONG></A></DT>
+<DD>Unifies Result with the least integral value that is greater than or equal to
+Number and of the same numeric type as Number.
+
+</DD>
+<DT><A HREF="clrbit-3.html"><STRONG>clrbit(+Number, +Index, ?Result)</STRONG></A></DT>
+<DD>Result is Number with the Index'th bit cleared.
+
+</DD>
+<DT><A HREF="cos-2.html"><STRONG>cos(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the trigonometric function cos(Number) and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="denominator-2.html"><STRONG>denominator(+Number, ?Result)</STRONG></A></DT>
+<DD>Extracts the denominator of the rational Number and unifies the resulting
+integer with Result.
+
+</DD>
+<DT><A HREF="eval-2.html"><STRONG>eval(+Expression, ?Result)</STRONG></A></DT>
+<DD>Used to evaluate eval/1 terms in arithmetic expressions.</DD>
+<DT><A HREF="exp-2.html"><STRONG>exp(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the exponential function exp(Number) ("e to the power of Number")
+and unifies the resulting value with Result.
+
+</DD>
+<DT><A HREF="fix-2.html"><STRONG>fix(+Number, ?Result)</STRONG></A></DT>
+<DD>Unifies the integer part of Number with Result (Truncation towards zero).
+
+</DD>
+<DT><A HREF="float-2.html"><STRONG>float(+Number, ?Result)</STRONG></A></DT>
+<DD>Converts Number to float and unifies the resulting value with
+Result.
+
+</DD>
+<DT><A HREF="floor-2.html"><STRONG>floor(+Number, ?Result)</STRONG></A></DT>
+<DD>Unifies Result with the greatest integral value that is less or equal than
+Number and of the same numeric type as Number.
+
+</DD>
+<DT><A HREF="frandom-1.html"><STRONG>frandom(?F)</STRONG></A></DT>
+<DD>Generates a random floating-point number F in the range <0, 1>.
+
+</DD>
+<DT><A HREF="gcd-3.html"><STRONG>gcd(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Unifies Results with the Greatest Common Divisor of Number1 and Number2</DD>
+<DT><A HREF="getbit-3.html"><STRONG>getbit(+Number, +Index, ?Result)</STRONG></A></DT>
+<DD>Result is the Index'th bit of Number.
+
+</DD>
+<DT><A HREF="is-2.html"><STRONG>?Result is +Expression</STRONG></A></DT>
+<DD>Evaluates the arithmetic expression Expression and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="lcm-3.html"><STRONG>lcm(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Unifies Results with the Least Common Multiple of Number1 and Number2</DD>
+<DT><A HREF="ln-2.html"><STRONG>ln(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the natural logarithm ln(Number) and unifies the resulting value
+with Result.
+
+</DD>
+<DT><A HREF="max-2.html"><STRONG>max(+ExprList, ?Result)</STRONG></A></DT>
+<DD>Evaluates the the arithmetic expressions in ExprList and unifies their maximum
+with Result.
+
+</DD>
+<DT><A HREF="max-3.html"><STRONG>max(+Number1, +Number2, ?Maximum)</STRONG></A></DT>
+<DD>Unifies the maximum of Number1 and Number2 with Maximum.
+
+</DD>
+<DT><A HREF="min-2.html"><STRONG>min(+ExprList, ?Result)</STRONG></A></DT>
+<DD>Evaluates the the arithmetic expressions in ExprList and unifies their minimum
+with Result.
+
+</DD>
+<DT><A HREF="min-3.html"><STRONG>min(+Number1, +Number2, ?Minimum)</STRONG></A></DT>
+<DD>Unifies the minimum of Number1 and Number2 with Minimum.
+
+</DD>
+<DT><A HREF="mod-3.html"><STRONG>mod(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the modulus Number1 mod Number2 and unifies the resulting value
+with Result.
+
+</DD>
+<DT><A HREF="numerator-2.html"><STRONG>numerator(+Number, ?Result)</STRONG></A></DT>
+<DD>Extracts the numerator of the rational Number and unifies the resulting
+integer with Result.
+
+</DD>
+<DT><A HREF="plus-3.html"><STRONG>plus(?Add1, ?Add2, ?Sum)</STRONG></A></DT>
+<DD>Succeeds if Sum is the sum of integer arguments Add1 and Add2.
+
+</DD>
+<DT><A HREF="random-1.html"><STRONG>random(?N)</STRONG></A></DT>
+<DD>Generates a random integer N.
+
+</DD>
+<DT><A HREF="rational-2.html"><STRONG>rational(+Number, ?Result)</STRONG></A></DT>
+<DD>Converts Number into a rational number and unifies it with Result.
+
+</DD>
+<DT><A HREF="rationalize-2.html"><STRONG>rationalize(+Number, ?Result)</STRONG></A></DT>
+<DD>Converts Number into a compact rational number and unifies it with Result.
+
+</DD>
+<DT><A HREF="round-2.html"><STRONG>round(+Number, ?Result)</STRONG></A></DT>
+<DD>Rounds Number to the nearest integral value of the same type</DD>
+<DT><A HREF="seed-1.html"><STRONG>seed(+Seed)</STRONG></A></DT>
+<DD>Sets the initial seed Seed for generating random numbers with random/1 or
+frandom/1.
+
+</DD>
+<DT><A HREF="setbit-3.html"><STRONG>setbit(+Number, +Index, ?Result)</STRONG></A></DT>
+<DD>Result is Number with the Index'th bit set.
+
+</DD>
+<DT><A HREF="sgn-2.html"><STRONG>sgn(+Number, ?Result)</STRONG></A></DT>
+<DD>Unifies Result with the sign of Number which is either -1, 0 or 1.
+
+</DD>
+<DT><A HREF="sin-2.html"><STRONG>sin(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the trigonometric function sin(Number) and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="sqrt-2.html"><STRONG>sqrt(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the square root sqrt(Number) and unifies the resulting value with
+Result.
+
+</DD>
+<DT><A HREF="sum-2.html"><STRONG>sum(+ExprList, ?Result)</STRONG></A></DT>
+<DD>Evaluates the the arithmetic expressions in ExprList and unifies their sum
+with Result.
+
+</DD>
+<DT><A HREF="tan-2.html"><STRONG>tan(+Number, ?Result)</STRONG></A></DT>
+<DD>Evaluates the trigonometric function tan(Number) and unifies the resulting
+value with Result.
+
+</DD>
+<DT><A HREF="times-3.html"><STRONG>times(?Factor1, ?Factor2, ?Product)</STRONG></A></DT>
+<DD>Succeeds if Product is the result of multiplying integer arguments Factor1
+and Factor2.
+
+</DD>
+<DT><A HREF="xor-3.html"><STRONG>xor(+Number1, +Number2, ?Result)</STRONG></A></DT>
+<DD>Evaluates the bitwise exclusive disjunction Number1 xor Number2 and unifies
+the resulting value with Result.
+
+</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+See also the User Manual chapter on Arithmetic
+<HR>Generated from arithmetic.eci on Tue Jan 25 01:58:20 2005
+
+</BODY></HTML>

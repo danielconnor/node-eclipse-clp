@@ -1,0 +1,434 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Attachment</TITLE>
+<META NAME="description" CONTENT="Attachment">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node53.html">
+<LINK REL="previous" HREF="node51.html">
+<LINK REL="up" HREF="node49.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1515"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1511"
+ HREF="node49.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1505"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1513"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1516"
+ HREF="node53.html">Remote Peer Queues</A>
+<B> Up:</B> <A NAME="tex2html1512"
+ HREF="node49.html">The Remote Interface Protocol</A>
+<B> Previous:</B> <A NAME="tex2html1506"
+ HREF="node51.html">Basics</A>
+ &nbsp <B>  <A NAME="tex2html1514"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1517"
+ HREF="node52.html#SECTION001031000000000000000">An example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001030000000000000000"></A>
+<A NAME="remoteattach"></A>
+<BR>
+Attachment
+</H1>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="rattach"></A><A NAME="6396"></A>
+<TABLE>
+<CAPTION><STRONG>Figure 10.1:</STRONG>
+Summary of the attachment protocol</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+</DIV><!-- MATH: $\includegraphics{remoteconnect.ps}$ -->
+<IMG
+ WIDTH="466" HEIGHT="413" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.gif"
+ ALT="\includegraphics{remoteconnect.ps}">
+<DIV ALIGN="CENTER">
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+The attachment process is summarised in Figure&nbsp;<A HREF="node52.html#remoteattach">10.3</A>. It is
+initiated from the ECLiPSe side, by either calling
+<A NAME="tex2html402"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="7369"></A> or the more flexible <A NAME="tex2html404"
+ HREF="../bips/kernel/externals/remote_connect_setup-3.html">remote_connect_setup/3</A><A NAME="7372"></A>
+and <A NAME="tex2html406"
+ HREF="../bips/kernel/externals/remote_connect_accept-6.html">remote_connect_accept/6</A><A NAME="7375"></A> pair. In fact, <B>remote_connect/3</B> is implemented using <B>remote_connect_setup/3</B> and <B>remote_connect_accept/6</B> with default
+values for some of the arguments. 
+
+<P>
+The attachment can be divided into several phases: 
+
+<P>
+<DL COMPACT>
+<DT>1.
+<DD>Initialisation and handshaking: the control connection is
+established, and handshaking between the two sides are carried out -
+checking that the remote protocols on the two sides are compatible;
+checking the pass-term.
+<DT>2.
+<DD>Establishing the ERPC connections and exchange of information
+(remote language, ECLiPSe name for the peer).
+<DT>3.
+<DD>User-defined initialisations.
+</DL>
+
+<P>
+The remote protocol version is stored in the flag <TT>remote_protocol_version</TT>, accessible via <A NAME="tex2html408"
+ HREF="../bips/kernel/env/get_flag-2.html">get_flag/2</A><A NAME="7378"></A>. This
+should be a <TT>remote_protocol/1</TT> term, with an integer version
+number. This version number should only change when the protocol is
+modified. Checking of the version ensures that the same (or at
+least compatible) versions of the protocol are used, so that the two sides
+behaves correctly. The version information is sent from the remote side
+(which must have its own copy of the version information), and the
+ECLiPSe side checks that this is compatible with the protocol version it
+is using. In order to cope with remote connections which may not be using
+the remote protocol, the ECLiPSe side waits only for a fixed period of
+time for the remote side to send the version information before timing out.
+
+<P>
+Time-out on the ECLiPSe side can also occur for forming any of the
+connections between the two sides, from the control connection to the peer
+queue. This is specified by the user in <TT>remote_connect_accept/6</TT>. If
+time-out occurs during the attachment, then the attachment process is
+abandoned, and the predicate fails (any connected sockets will be closed).
+
+<P>
+The detailed sequence of events for the attachment for the remote side
+(with some description of the relevant ECLiPSe side actions) are:
+
+<P>
+<DL COMPACT>
+<DT>1.
+<DD>ECLiPSe side: a socket server for the control connection is
+created, using the address Host/Port which can be specified by the
+user. It then waits to accept a socket stream for the control connection
+from the remote side. The user can specify the amount of time to wait
+before this operation times-out, which would then terminate the attachment.
+<P>
+<DT>2.
+<DD>Remote side: create a client socket stream for the control connection,
+with an address compatible with Host/Port. The socket stream should
+be in blocking mode, and perform no translation on the data sent.
+<DT>3.
+<DD>Remote side: sends the remote protocol version information on the
+control socket in EXDR format and flush it. This should be a <TT>remote_protocol/1</TT> term. 
+<DT>4.
+<DD>ECLiPSe side: reads the EXDR version term from the control
+socket, and compares with the version on the ECLiPSe side. If the two
+protocols are compatible, it sends the EXDR string <TT>yes</TT> back to
+the remote side; otherwise it sends the ECLiPSe remote protocol version
+to the remote side and disconnects from the remote side (raising
+unimplemented functionality error). The ECLiPSe side waits at
+most 100 seconds after the control connection is established for the remote side's version: after
+this the ECLiPSe side disconnects the control connection and raises out
+of range error. 
+<DT>5.
+<DD>It is expected that the future versions of the protocol will remain
+unchanged up to this point at least, to ensure the proper handshaking and
+checking of versions.
+<DT>6.
+<DD>Remote side: write the `pass-term' in EXDR format on the newly created control
+connection and flush it. This provides a simple security check: ECLiPSe
+side will check if the `pass-term' matches the `pass-term' it was given
+when the remote connection was initiated - for <A NAME="tex2html410"
+ HREF="../bips/kernel/externals/remote_connect-3.html">remote_connect/3</A><A NAME="7381"></A>, the
+pass-term is the empty string, but the user can specify any pass-term if
+<A NAME="tex2html412"
+ HREF="../bips/kernel/externals/remote_connect_setup-3.html">remote_connect_setup/3</A><A NAME="7384"></A> and <A NAME="tex2html414"
+ HREF="../bips/kernel/externals/remote_connect_accept-6.html">remote_connect_accept/6</A><A NAME="7387"></A> are
+used. If the terms are not identical, then the ECLiPSe side will
+discontinue the attachment process.
+
+<P>
+<DT>7.
+<DD>Remote side: read from the control connection the ECLiPSe name for the control
+connection. This is sent in EXDR format, and is used to identify this
+particular remote attachment - the peer name for the peer. This name is needed when calling ec_rpc goals
+that refer to the peer. 
+<DT>8.
+<DD>Remote side: write the name of the programming language (e.g. tcl, java) of the
+remote process on the control connection. This should be in EXDR string
+format, and the connection flushed. 
+<DT>9.
+<DD>ECLiPSe side: read the name of the programming language and store
+it (it can be accessed later via <A NAME="tex2html416"
+ HREF="../bips/kernel/externals/peer_get_property-3.html">peer_get_property/3</A><A NAME="7390"></A>). The ECLiPSe
+side now wait to accept the socket stream (using the same socket server as
+the control connection) for the ec_rpc connection. This can also time-out.
+<DT>10.
+<DD>Remote side: create a client socket stream for the ec_rpc connection, using the
+same Port as for the control connection. This stream should be in
+blocking mode, and perform no translation on the data sent. The server
+socket on the ECLiPSe will be closed after accepting this client.
+<DT>11.
+<DD>Remote side: read the control connection name again on the remote side, on the
+newly established ec_rpc connection. This is also sent in EXDR format. This
+is designed to verify that the ec_rpc connection is indeed connected to the
+ECLiPSe side. 
+<DT>12.
+<DD>Remote side: the remote side now has control. Any user-defined initialisations on the remote
+side can now be performed, to make the remote side ready for the
+interaction. The remote side has the control initially. Note that
+user-defined initialisations on the ECLiPSe side is also performed after
+sending the control name on the ec_rpc connection. After the
+initialisation, ECLiPSe side will suspend and listen on the control
+connection for the remote side to give control back to the ECLiPSe side.
+</DL>
+
+<P>
+At the end of this, the remote side should be ready for normal interaction
+with the ECLiPSe side.
+
+<P>
+The remote_connect/3 or remote_connect_accept/6 predicate wait for the control to be handed back by
+the remote side before exiting. Thus when the predicate succeeds, the
+remote side has been attached and properly initialised, with ECLiPSe
+side having control.
+
+<P>
+The protocol does not specify how the remote side should be informed of the
+Host/Port address for the initial socket connection. The Address can be
+fixed before hand (with the Address argument instantiated, or
+the information can be transmitted either manually or via files. In
+addition, the remote process can be started from within ECLiPSe using
+the <A NAME="tex2html418"
+ HREF="../bips/kernel/opsys/exec-3.html">exec/3</A><A NAME="7393"></A> command, with the host and port supplied as arguments.
+
+<P>
+In accepting client socket connections from the remote side, the ECLiPSe
+side is informed of the host of the remote side. This should either be the
+client's hostname, or 'localhost'. After accepting the control connection,
+subsequent connections (for ec_rpc and any peer queues) are checked to
+ensure that they are from the same client. If not, the attachment is
+terminated by ECLiPSe. Using 'localhost' as the name on either side will
+restrict the two sides to be on the same machine (and they must both use
+localhost for Host in the address, rather than the actual hostname). 
+
+<P>
+
+<H2><A NAME="SECTION001031000000000000000">
+An example</A>
+</H2>
+
+<P>
+The following is a simple example of making a remote attachment on the
+remote side. In this case, the remote side is also an ECLiPSe program.
+A remote attachment by a program written in another programming language
+will need to provide a similar function in that language:
+
+<P>
+<PRE>
+% Example code for making a remote attachment on the remote side
+
+:- local variable(ecsidehost).
+
+% remote_attach/6 makes a remote attachment to a host ECLiPSe program.
+% Args:
+%    +Host: host name on ECLiPSe side
+%    +Port: port on ECLiPSe side
+%    +Pass: `pass-term' - used to verify the connection
+%    +Init: goal to call to perform any application specific initialisation
+%    -Control: the remote side (local) name of the control connection
+%    -Ec_rpc:  the remote side name of the ec_rpc connection
+%    -EcSideControl: the ECLiPSe side name for the control connection
+
+remote_attach(Host, Port, Pass, Init, Control, Ec_rpc, EcSideControl) :-
+ % control connection
+new_client_socket(Host, Port, Control),
+ % send the protocol version information to the ECLiPSe side
+% we are the remote side, so must have our own version info.
+     write_exdr(Control, remote_protocol(1)), flush(Control),
+ % read response from ECLiPSe side to make sure it is compatible...
+read_exdr(Control, IsSameVersion),
+     (IsSameVersion == "yes" -&gt;
+         true 
+     ; 
+         writeln("Incompatible versions of remote protocol. Failing...."),
+         fail
+     ),
+ % send pass-term; if this does not match the pass-term on the ECLiPSe
+% side, it will terminate the attachment
+     write_exdr(Control, Pass), flush(Control),
+ % ECLiPSe side name for connection
+read_exdr(Control, EcSideControl),
+ % send language name to ECLiPSe side
+write_exdr(Control, "eclipse"), flush(Control),
+ % Ec_rpc connection
+new_client_socket(Host, Port, Ec_rpc),
+ % read control name again on Ec_rpc to verify connection
+% in a more sophisticated implementation, this should time-out
+     (read_exdr(Ec_rpc, EcSideControl) -&gt;
+        true 
+     ; 
+	% if not verified, terminate connection
+close(Control), close(Ec_rpc),
+        fail
+     ),
+ % Remote side now has control, call Init to perform application
+% specific initialisations
+     call(Init),
+ % hand control over to ECLiPSe side...
+write_exdr(Control, resume), flush(Control).
+
+
+new_client_socket(Host, Port, Socket) :-
+     socket(internet, stream, Socket),
+     connect(Socket, Host/Port).
+
+%----------------------------------------------------
+% the following code make use of remote_attach/6 to make an attachment,
+% and then disconnect immediately when ECLiPSe side returns control
+
+test(Host, Port) :-
+ % make the remote attachment. For this simple example, there is no
+% application specific initialisations, and the default pass-term
+ % of an empty string is used...
+remote_attach(Host, Port, "", true, Control, Ec_rpc, _),
+ % control has been given to ECLiPSe side, wait for ECLiPSe side to
+% return control....
+     read_exdr(Control, _),
+ % immediately disconnect from ECLiPSe side
+write_exdr(Control, disconnect), flush(Control),
+ % wait for ECLiPSe side to acknowledge disconnect...
+read_exdr(Control, disconnect_yield),
+ % clean up
+close(Control), close(Ec_rpc).
+</PRE>
+
+<P>
+In addition to the attachment, the example contains a very simple example
+of using the protocol by exchanging control messages with the ECLiPSe
+side. After attachment, it disconnects the remote attachment as soon as
+control is handed back to it. For more details on the messages, see next
+section. 
+
+<P>
+To try out the example, start an ECLiPSe session and initiate a remote
+attachment. This process is the ECLiPSe side:
+
+<P>
+<PRE>
+(ECLiPSe side)
+[eclipse 1]: remote_connect(Host/Port, Control, _).
+Socket created at address chicken.icparc.ic.ac.uk/32436
+</PRE>
+
+<P>
+Now start another ECLiPSe session, compile the example program, and make
+the attachment to the ECLiPSe side:
+
+<P>
+<PRE>
+(Remote side)
+[eclipse 4]: test('chicken.icparc.ic.ac.uk', 32436).
+</PRE>
+
+<P>
+On the ECLiPSe side, <TT>remote_connect/3</TT> should now succeed:
+
+<P>
+<PRE>
+(ECLiPSe side)
+Host = 'chicken.icparc.ic.ac.uk'
+Port = 32436
+Control = peer3
+yes.
+[eclipse 2]:
+</PRE>
+
+<P>
+The remote side is suspended, awaiting the ECLiPSe side to return
+control. To return control to the remote side, the ECLiPSe side should
+call <A NAME="tex2html420"
+ HREF="../bips/kernel/externals/remote_yield-1.html">remote_yield/1</A><A NAME="7396"></A> (see section&nbsp;<A HREF="node55.html#remotesupport">10.6</A> for a description
+of <TT>remote_yield/1</TT>):
+
+<P>
+<PRE>
+(ECLiPSe side)
+[eclipse 2]: remote_yield(peer3).
+Abort
+[eclipse 3]:
+</PRE>
+
+<P>
+In this simple example, when control is returned to remote side, it
+immediately disconnects, thus the <TT>remote_yield/1</TT> on the ECLiPSe
+side is aborted (as disconnect was initiated from the remote side), as per
+the disconnect protocol.
+
+<P>
+<PRE>
+(Remote side)
+[eclipse 4]: test('chicken.icparc.ic.ac.uk', 32436).
+
+yes.
+[eclipse 5]:
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1515"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1511"
+ HREF="node49.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1505"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1513"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1516"
+ HREF="node53.html">Remote Peer Queues</A>
+<B> Up:</B> <A NAME="tex2html1512"
+ HREF="node49.html">The Remote Interface Protocol</A>
+<B> Previous:</B> <A NAME="tex2html1506"
+ HREF="node51.html">Basics</A>
+ &nbsp <B>  <A NAME="tex2html1514"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

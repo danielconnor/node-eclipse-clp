@@ -1,0 +1,33 @@
+
+dvar_remove_smaller(+DVar, +El)
+
+   Remove all elements in the domain of DVar which are smaller than the
+integer El and wake all concerned lists.
+
+
+
+Arguments
+   +DVar               A domain variable.
+   +El                 An atomic term.
+
+Type
+   library(fd)
+
+Description
+   Remove all elements in the domain of DVar which are smaller than the
+   integer El and wake all concerned lists.  If the resulting domain is
+   empty, this predicate fails, if it is a singleton, DVar is instantiated.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dvar_attribute / 2, :: / 2, #:: / 2

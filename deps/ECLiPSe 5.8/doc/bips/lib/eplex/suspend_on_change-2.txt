@@ -1,0 +1,13 @@
+
+EplexInstance:suspend_on_change(?Var, +Susp)
+
+   Record the given suspension to be scheduled whenever a solution is found for the EplexInstance.
+
+Arguments
+   Var                 A solver problem variable for solver associated with EplexInstance
+   Susp                Suspension to schedule when the typed solution for this variable changes
+
+Type
+   library(eplex)
+
+

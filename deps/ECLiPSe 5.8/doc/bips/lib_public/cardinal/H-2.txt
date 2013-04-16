@@ -1,0 +1,38 @@
+
+#(?SetExpression, ?Cardinality)
+
+   Cardinality of a set expression
+
+Arguments
+   SetExpression       A Set expression.
+   Cardinality         An integer or an FD variable.
+
+Type
+   library(cardinal)
+
+Description
+Cardinality is the cardinality of SetExpression, a set term possibly
+		including set operators `/\, `\/ and `\ (or \). 
+		SetExpression is first evaluated into a ground set or a set variable and then
+		its Cardinality is applied as in cardinality/2.
+
+Resatisfiable
+   No.
+
+Fail Conditions
+   Fails if Cardinality can not be the cardinality of SetExpression.
+
+Examples
+   
+?- S `::[]..[a,b], #(S,C).
+?- S `::[]..[a,b], #(S `/\ [b,c],1).
+?- S `::[]..[a,b], #([b,c] `\/ S `\ [a,z] `/\ [g], C).
+C = 2,
+?- S `::[]..[a,b], #(([b,c] `\/ S `\ [a,z]) `/\ [g], C).
+C = 0
+?- S1 `::[]..[a,b], S2 `::[]..[b,c,d], #(S1 `/\ S2, 2).
+no
+
+
+See Also
+   cardinality / 2, `= / 2

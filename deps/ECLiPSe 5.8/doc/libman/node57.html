@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Low-Level Solver Interface</TITLE>
+<META NAME="description" CONTENT="Low-Level Solver Interface">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node58.html">
+<LINK REL="previous" HREF="node56.html">
+<LINK REL="up" HREF="node53.html">
+<LINK REL="next" HREF="node58.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1757"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1753"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1747"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1755"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1758"
+ HREF="node58.html">Multiple Solver States</A>
+<B> Up:</B> <A NAME="tex2html1754"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1748"
+ HREF="node56.html">Advanced Use of Eplex</A>
+ &nbsp <B>  <A NAME="tex2html1756"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1759"
+ HREF="node57.html#SECTION00941000000000000000">Setting Up a Solver State</A>
+<UL>
+<LI><A NAME="tex2html1760"
+ HREF="node57.html#SECTION00941100000000000000">lp_demon_setup(+Objective, -Cost, +ListOfOptions, 
++TriggerModes, -Handle)</A>
+<LI><A NAME="tex2html1761"
+ HREF="node57.html#SECTION00941200000000000000">lp_setup(+NormConstraints, +Objective, +ListOfOptions, -Handle)</A>
+</UL>
+<LI><A NAME="tex2html1762"
+ HREF="node57.html#SECTION00942000000000000000">Adding Constraints to a Solver State</A>
+<UL>
+<LI><A NAME="tex2html1763"
+ HREF="node57.html#SECTION00942100000000000000">lp_add_constraints(+Handle, +Constraints, +NewIntegers)</A>
+<LI><A NAME="tex2html1764"
+ HREF="node57.html#SECTION00942200000000000000">lp_add(+Handle, +NewNormConstraints, +NewIntegers)</A>
+<LI><A NAME="tex2html1765"
+ HREF="node57.html#SECTION00942300000000000000">lp_add_vars(+Handle, +Vars)</A>
+<LI><A NAME="tex2html1766"
+ HREF="node57.html#SECTION00942400000000000000">lp_var_set_bounds(+Handle, +Var, ++Lo,++Hi)</A>
+</UL>
+<LI><A NAME="tex2html1767"
+ HREF="node57.html#SECTION00943000000000000000">Running a Solver State Explicitly</A>
+<UL>
+<LI><A NAME="tex2html1768"
+ HREF="node57.html#SECTION00943100000000000000">lp_solve(+Handle,
+-Cost)</A>
+<LI><A NAME="tex2html1769"
+ HREF="node57.html#SECTION00943200000000000000">lp_probe(+Handle, +Probes, -Cost)</A>
+</UL>
+<LI><A NAME="tex2html1770"
+ HREF="node57.html#SECTION00944000000000000000">Accessing the Solver State</A>
+<UL>
+<LI><A NAME="tex2html1771"
+ HREF="node57.html#SECTION00944100000000000000">lp_get(+Handle, +What, -Value)</A>
+<LI><A NAME="tex2html1772"
+ HREF="node57.html#SECTION00944200000000000000">lp_var_get(+Handle,+Var, +What, -Value)</A>
+<LI><A NAME="tex2html1773"
+ HREF="node57.html#SECTION00944300000000000000">lp_var_get_bounds(+Handle, +Var, -Lo, -Hi)</A>
+<LI><A NAME="tex2html1774"
+ HREF="node57.html#SECTION00944400000000000000">reduced_cost_pruning(+Handle,?GlobalCost)</A>
+</UL>
+<LI><A NAME="tex2html1775"
+ HREF="node57.html#SECTION00945000000000000000">Expandable Problem and Constraints</A>
+<UL>
+<LI><A NAME="tex2html1776"
+ HREF="node57.html#SECTION00945100000000000000">lp_add_constraints(+Handle, +Constraints, +Ints, -Idxs)</A>
+<LI><A NAME="tex2html1777"
+ HREF="node57.html#SECTION00945200000000000000">lp_add_columns(+Handle, +Columns)</A>
+</UL>
+<LI><A NAME="tex2html1778"
+ HREF="node57.html#SECTION00946000000000000000">Changing Solver State Settings</A>
+<UL>
+<LI><A NAME="tex2html1779"
+ HREF="node57.html#SECTION00946100000000000000">lp_set(+Handle, +What, +Value)</A>
+</UL>
+<LI><A NAME="tex2html1780"
+ HREF="node57.html#SECTION00947000000000000000">Destroying a Solver State</A>
+<UL>
+<LI><A NAME="tex2html1781"
+ HREF="node57.html#SECTION00947100000000000000">lp_cleanup(+Handle)</A>
+</UL>
+<LI><A NAME="tex2html1782"
+ HREF="node57.html#SECTION00948000000000000000">Miscellaneous Predicates</A>
+<UL>
+<LI><A NAME="tex2html1783"
+ HREF="node57.html#SECTION00948100000000000000">lp_read(+File, +Format, -Handle)</A>
+<LI><A NAME="tex2html1784"
+ HREF="node57.html#SECTION00948200000000000000">lp_write(+Handle, +Format, +File)</A>
+<LI><A NAME="tex2html1785"
+ HREF="node57.html#SECTION00948300000000000000">normalise_cstrs(+Constraints, -NormConstraints, -NonlinConstr)</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00940000000000000000">
+Low-Level Solver Interface</A>
+</H1>
+
+<P>
+For many applications, the facilities presented so far should be
+appropriate for using Simplex/MIP through ECLiPSe.
+However, sometimes it may be more convenient or efficient
+to directly access the solver state
+instead of going through the abstraction of the eplex instances. 
+This section describes lower level operations like how to set up
+solvers manually. In fact, these lower level predicates are used to
+implement the predicates provided with eplex instances.
+
+<P>
+These predicates accesses the external solver state via a handle, which is
+returned when the solver state is set up, and subsequently used to access a
+particular solver state by the other predicates. The handle should be
+treated as a opaque data structure that is used by the eplex library to
+refer to a particular solver state.
+
+<P>
+
+<H2><A NAME="SECTION00941000000000000000">
+Setting Up a Solver State</A>
+</H2>
+
+<P>
+
+<H3><A NAME="SECTION00941100000000000000"></A><A NAME="4538"></A>
+<BR>
+<A NAME="tex2html484"
+ HREF="../bips/lib/eplex/lp_demon_setup-5.html">lp_demon_setup(+Objective, -Cost, +ListOfOptions, 
++TriggerModes, -Handle)</A>
+</H3>
+
+<P>
+This is used to set up a demon solver, and <TT>eplex_solver_setup/4</TT> calls
+this predicate. There is one extra argument compared to <TT>  eplex_solver_setup/4</TT>: the solver state handle <TT>Handle</TT>, which is
+returned by this predicate when the new solver state is created.
+The other arguments are the same as in <TT>eplex_solver_setup/4</TT>, except
+that there is an additional option in <TT>ListOfOptions</TT>: <TT>  collect_from/1</TT>. This is used to specify which, if any, eplex instance
+the solver state should be collecting constraints from. If an eplex
+instance is specified (as <TT>pool(Instance)</TT>), then the solver state is
+associated with that instance. If the eplex instance is <I>not</I> to be
+associated with an eplex instance, <TT>none</TT> should be given as the
+argument to <TT>collect_from</TT>. This allows a solver state to be set up
+without the overhead of an eplex instance. The solver state will not
+collect any constraints automatically when it is invoked; instead the
+constraints must be added explicitly via the handle (using <TT>  lp_add_constraints/3</TT>).
+
+<P>
+By default, the external solver is invoked once after set up
+by <TT>lp_demon_setup</TT>,
+if any <TT>TriggerModes</TT> is specified. Otherwise, the solver is not
+invoked and the predicate returns after set up.
+
+<P>
+
+<H3><A NAME="SECTION00941200000000000000"></A><A NAME="4541"></A>
+<A NAME="lpsetup"></A>
+<BR>
+<A NAME="tex2html486"
+ HREF="../bips/lib/eplex/lp_setup-4.html">lp_setup(+NormConstraints, +Objective, +ListOfOptions, -Handle)</A>
+</H3>
+This is an even lower-level primitive, setting up a solver state
+without any automatic triggering.
+It creates a new solver state for the set of constraints NormConstraints
+(see <A HREF="#constrcoll">below</A> for how to obtain a set of
+normalised constraints).
+Apart from the explicitly listed constraints, the variable's ranges will
+be taken into account as the variable bounds for the simplex algorithm.
+Undeclared variables are implicitly declared as <A HREF="#reals1">reals/1</A>.
+
+<P>
+However, when variables have been declared integers in other solvers (e.g. using <A NAME="tex2html488"
+ HREF="../bips/lib/ic/integers-1.html">ic:integers/1</A><A NAME="4544"></A>),
+that is not taken into account by the solver by default.
+This means that the solver will only work on the <EM>relaxed problem</EM>
+(ie. ignoring the integrality constraints),
+unless specified otherwise in the options.
+Objective is either <TT>min(Expr)</TT> or <TT>max(Expr)</TT>
+where Expr is a linear (or quadratic) expression.
+ListOfOptions is a list of solver options, the same as for
+<A NAME="tex2html490"
+ HREF="../bips/lib/eplex/lp_demon_setup-5.html">lp_demon_setup/5</A><A NAME="4547"></A> and <A NAME="tex2html492"
+ HREF="../bips/lib/eplex/eplex_solver_setup-4.html">eplex_solver_setup/4</A><A NAME="4550"></A>, except for the <TT>  collect_from</TT> and <TT>initial_solve</TT> options, which are specific for the
+demon solvers.
+
+<P>
+
+<H2><A NAME="SECTION00942000000000000000">
+Adding Constraints to a Solver State</A>
+</H2>
+
+<P>
+Constraints can be added directly to a solver state without posting them to
+an eplex instance. This is done by:
+
+<P>
+
+<H3><A NAME="SECTION00942100000000000000"></A><A NAME="4553"></A>
+<BR>
+<A NAME="tex2html494"
+ HREF="../bips/lib/eplex/lp_add_constraints-3.html">lp_add_constraints(+Handle, +Constraints, +NewIntegers)</A>
+</H3>
+
+<P>
+Add new constraints (with possibly new variables) to the solver state
+represented by Handle
+The new constraints will be taken into account the next time the
+solver is run.  The constraints will be removed on backtracking.
+
+<P>
+The constraints are first normalised, and simple constraints filtered out (as
+discussed in section&nbsp;<A HREF="node55.html#linear-constraints">9.2.1</A>) before they are added
+to the external solver (by calling lp_add/3 described below).
+
+<P>
+
+<H3><A NAME="SECTION00942200000000000000"></A><A NAME="4556"></A>
+<A NAME="lp-add"></A>
+<BR>
+<A NAME="tex2html496"
+ HREF="../bips/lib/eplex/lp_add-3.html">lp_add(+Handle, +NewNormConstraints, +NewIntegers)</A>
+</H3>
+
+<P>
+This adds the constraints (both linear and intergrality) to the
+external solver represented by Handle. The linear arithmetic constraints
+must be normalised. Note that it is possible to add trivial constraints,
+which would be filtered out by the higher level <TT>lp_add_constraints/3</TT>
+using this predicate. Integrality constraints on non-problem variables are
+filtered out and a warning given.
+
+<P>
+
+<H3><A NAME="SECTION00942300000000000000"></A><A NAME="4559"></A>
+<BR>
+<A NAME="tex2html498"
+ HREF="../bips/lib/eplex/lp_add_vars-2.html">lp_add_vars(+Handle, +Vars)</A>
+</H3>
+
+<P>
+This adds the variables in Vars to the external solver state represented by
+Handle. The variables should not contain variables which are already
+problem variables. The variables are given the default bounds of
+-infinity..infinity. 
+
+<P>
+
+<H3><A NAME="SECTION00942400000000000000"></A><A NAME="4562"></A>
+<BR>
+<A NAME="tex2html500"
+ HREF="../bips/lib/eplex/lp_var_set_bounds-4.html">lp_var_set_bounds(+Handle, +Var, ++Lo,++Hi)</A>
+</H3>
+
+<P>
+This updates the bounds for the problem variable Var in the external
+solver state represented by Handle. Failure occurs if Var is not a problem
+variable. 
+
+<P>
+
+<H2><A NAME="SECTION00943000000000000000">
+Running a Solver State Explicitly</A>
+</H2>
+
+<P>
+
+<H3><A NAME="SECTION00943100000000000000"></A><A NAME="4565"></A>
+<BR>
+<A NAME="tex2html502"
+ HREF="../bips/lib/eplex/lp_solve-2.html">lp_solve(+Handle,
+-Cost)</A>
+</H3>
+Apply the external solver's LP or MIP solver to the problem represented by Handle.
+Precisely which method is used depends on the options given to lp_setup/4.
+lp_solve/2 fails if there is no solution or succeeds
+if an optimal solution is found, returning the solution's cost in Cost
+(unlike with lp_demon_setup/6, Cost gets instantiated to a number).
+After a success, various solution and status information can be retrieved
+using lp_get/3 and lp_var_get/4.
+
+<P>
+The set of constraints considered by the solver is the one given when the
+solver was created plus any new constraints that were added
+(e.g  by lp_add_constraints/3) in the meantime.
+
+<P>
+If there was an error condition, or limits were exceeded,
+lp_solve/2 raises an event. See section <A HREF="node61.html#lpevents">9.8</A> for details.
+
+<P>
+
+<H3><A NAME="SECTION00943200000000000000"></A>
+<A NAME="4281"></A>
+<BR>
+lp_probe(+Handle, +Probes, -Cost)
+</H3>
+Similar to lp_solve/2, but optimize for a modified problem as specified by
+Probes. This is the
+predicate called by <A NAME="tex2html505"
+ HREF="../bips/lib/eplex/eplex_probe-2.html">eplex_probe/2</A><A NAME="4568"></A>
+
+<H2><A NAME="SECTION00944000000000000000">
+Accessing the Solver State</A>
+</H2>
+
+<P>
+In section&nbsp;<A HREF="node56.html#eplex-instance-solver-info">9.3.1</A>, we discussed how solver state
+information can be accessed via the eplex instance. Here are the lower
+level predicates that directly access this information via the solver
+state's handle:
+
+<P>
+
+<H3><A NAME="SECTION00944100000000000000"></A><A NAME="4571"></A>
+<BR>
+<A NAME="tex2html507"
+ HREF="../bips/lib/eplex/lp_get-3.html">lp_get(+Handle, +What, -Value)</A>
+</H3>
+Retrieve information about solver state and results. See the reference
+manual description of <TT>lp_get/3</TT> for a detailed description of the
+available values for <TT>What</TT>.
+
+<P>
+For example, it is possible to obtain the solution values from the last
+successful invocation of the external solver using the following:
+
+<P>
+<PRE>
+    instantiate_solution(Handle) :-
+        lp_get(Handle, vars, Vars),
+        lp_get(Handle, typed_solution, Values),
+        Vars = Values.
+</PRE>
+
+<P>
+
+<H3><A NAME="SECTION00944200000000000000"></A><A NAME="4574"></A>
+<BR>
+<A NAME="tex2html509"
+ HREF="../bips/lib/eplex/lp_var_get-4.html">lp_var_get(+Handle,+Var, +What, -Value)</A>
+</H3>
+Retrieve information about solver state represented by Handle,
+related to a specific variable Var. Again, see the reference manual for the
+available parameters.
+
+<P>
+
+<H3><A NAME="SECTION00944300000000000000"></A><A NAME="4577"></A>
+<BR>
+<A NAME="tex2html511"
+ HREF="../bips/lib/eplex/lp_var_get_bounds-4.html">lp_var_get_bounds(+Handle, +Var, -Lo, -Hi)</A>
+</H3>
+Retrieve the bounds of the problem variable Var from the solver state
+represented by Handle. 
+
+<P>
+
+<H3><A NAME="SECTION00944400000000000000"></A><A NAME="4580"></A>
+<BR>
+<A NAME="tex2html513"
+ HREF="../bips/lib/eplex/reduced_cost_pruning-2.html">reduced_cost_pruning(+Handle,?GlobalCost)</A>
+</H3>
+This predicate implements a technique to prune variable bounds
+based on a global cost bound and the reduced costs of some solution to
+a problem relaxation.  The assumptions are that there is a global
+problem whose cost variable is GlobalCost, and that Handle refers to
+a linear relaxation of this global problem.
+The pruning potentially affects all variables involved in the relaxed
+problem.
+
+<P>
+
+<H2><A NAME="SECTION00945000000000000000"></A>
+<A NAME="coladd"></A>
+<BR>
+Expandable Problem and Constraints
+</H2>
+
+<P>
+We provide low-level primitives to `expand' an eplex problem. Such a problem is
+considered to have as yet unspecified components in the objective function
+and posted constraints. These constraints are known as expandable constraints.
+The as yet unspecified component involve variables
+that have not yet been added to the problem. When these variables are
+added, coefficients for the variables can be added to the expandable
+constraints, as well as the objective function. These primitives are the
+basis for implementing <B>column generation</B>, and are used by the column
+generation library, lib(colgen). 
+
+<P>
+These primitives modify an existing eplex problem <I>non-monotonically</I>, and can only be used on problems that are not
+represented by an eplex instance, and was not setup as a demon solver
+(i.e. no trigger conditions are specified). 
+
+<P>
+
+<H3><A NAME="SECTION00945100000000000000"></A><A NAME="4583"></A>
+<A NAME="4309"></A>
+<BR>
+<A NAME="tex2html515"
+ HREF="../bips/lib/eplex/lp_add_constraints-4.html">lp_add_constraints(+Handle, +Constraints, +Ints, -Idxs)</A>
+</H3>
+This adds expandable constraints Constraints to the solver state
+represented by Handle. The predicate returns a list of indicies for these
+constraints in Idxs. The indicies are used to refer to the constraints when
+new variables are added to expand the problem.
+
+<P>
+
+<H3><A NAME="SECTION00945200000000000000"></A><A NAME="4586"></A>
+<A NAME="4313"></A>
+<BR>
+<A NAME="tex2html518"
+ HREF="../bips/lib/eplex/lp_add_columns-2.html">lp_add_columns(+Handle, +Columns)</A>
+</H3>
+This expands the problem by adding new variables (columns) to the solver
+state represented by Handle. Columns is a list of
+variable:column-specification pair, where variable is the variable to be
+added as a new column, and column-specification the specification for the
+non-zero components of the column, i.e. coefficients for the expandable
+constraints (referred to using the index obtained from
+lp_add_constraints/4) and the objective for this variable.
+
+<P>
+
+<H2><A NAME="SECTION00946000000000000000">
+Changing Solver State Settings</A>
+</H2>
+In addition to accessing information from the solver state, some options (a
+subset of those specified during solver set up) can be changed by:
+
+<H3><A NAME="SECTION00946100000000000000"></A><A NAME="4589"></A>
+<BR>
+<A NAME="tex2html521"
+ HREF="../bips/lib/eplex/lp_set-3.html">lp_set(+Handle, +What, +Value)</A>
+</H3>
+This primitive can be used to change some of the initial options
+even after setup. <EM>Handle</EM> refers to an existing solver state. See the
+reference manual for details.
+
+<P>
+
+<H2><A NAME="SECTION00947000000000000000">
+Destroying a Solver State</A>
+</H2>
+
+<H3><A NAME="SECTION00947100000000000000"></A><A NAME="4592"></A>
+<BR>
+<A NAME="tex2html523"
+ HREF="../bips/lib/eplex/lp_cleanup-1.html">lp_cleanup(+Handle)</A>
+</H3>
+
+<P>
+Destroy the specified solver state, free all memory, etc. If the solver
+state is associated with an eplex handle, the solver state is disassociated
+with the eplex instance. However, unlike <A NAME="tex2html525"
+ HREF="../bips/lib/eplex/eplex_cleanup-0.html">eplex_cleanup/0</A><A NAME="4595"></A>, the
+outstanding constraints not yet collected by the solver is not removed.
+
+<P>
+As with <TT>eplex_cleanup/0</TT>, care should be taken before using this
+non-logical predicate. 
+
+<P>
+
+<H2><A NAME="SECTION00948000000000000000">
+Miscellaneous Predicates</A>
+</H2>
+
+<H3><A NAME="SECTION00948100000000000000"></A><A NAME="4598"></A>
+<BR>
+<A NAME="tex2html527"
+ HREF="../bips/lib/eplex/lp_read-3.html">lp_read(+File, +Format, -Handle)</A>
+</H3>
+
+<P>
+Read a problem from a file and setup a solver for it.  Format is
+<TT>lp</TT> or <TT>mps</TT>.
+The result is a handle similar to the one obtained by lp_setup/4.
+
+<H3><A NAME="SECTION00948200000000000000"></A><A NAME="4601"></A>
+<BR>
+<A NAME="tex2html529"
+ HREF="../bips/lib/eplex/lp_write-3.html">lp_write(+Handle, +Format, +File)</A>
+</H3>
+
+<P>
+Write out the problem in the solver state represented by Handle to the file
+File in format Format.
+
+<P>
+
+<H3><A NAME="SECTION00948300000000000000"></A><A NAME="4604"></A>
+<BR>
+<A NAME="tex2html531"
+ HREF="../bips/lib/eplex/normalise_cstrs-3.html">normalise_cstrs(+Constraints, -NormConstraints, -NonlinConstr)</A>
+</H3>
+where Constraints is a list of terms of the form
+X <code>$=</code> Y, X <code>$&gt;=</code> Y or X <code>$=&lt;</code> Y 
+where X and Y are arithmetic expressions.
+The linear constraints are returned in normalised form in NormConstraints,
+the nonlinear ones are returned unchanged in NonlinConstr.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1757"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1753"
+ HREF="node53.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1747"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1755"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1758"
+ HREF="node58.html">Multiple Solver States</A>
+<B> Up:</B> <A NAME="tex2html1754"
+ HREF="node53.html">EPLEX: The ECLiPSe/LP/MIP Interface</A>
+<B> Previous:</B> <A NAME="tex2html1748"
+ HREF="node56.html">Advanced Use of Eplex</A>
+ &nbsp <B>  <A NAME="tex2html1756"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

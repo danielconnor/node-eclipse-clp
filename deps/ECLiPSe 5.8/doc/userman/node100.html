@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Attribute Modification</TITLE>
+<META NAME="description" CONTENT="Attribute Modification">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node101.html">
+<LINK REL="previous" HREF="node99.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node101.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3744"
+ HREF="node101.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3740"
+ HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3734"
+ HREF="node99.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3742"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3745"
+ HREF="node101.html">Attributed Variable Handlers</A>
+<B> Up:</B> <A NAME="tex2html3741"
+ HREF="node94.html">Attributed Variables</A>
+<B> Previous:</B> <A NAME="tex2html3735"
+ HREF="node99.html">Decomposing Attributed Variables</A>
+ &nbsp <B>  <A NAME="tex2html3743"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001660000000000000000">
+Attribute Modification</A>
+</H1>
+Often an extension needs to modify the data stored in the
+attribute to reflect changes in the computation.
+The usual Prolog way to do this is by reserving
+one argument in the attribute structure for this next value.
+before accessing the most recent attribute value this chain
+of values has to be dereferenced until a value is found whose
+link is still free.
+A perfect compiler should be able to detect that the older
+attribute values are no longer accessed and it would compile
+these modifications using destructive assignment.
+Current compilers are unfortunately not able to perform
+this optimization (some systems can reduce these chains
+during garbage collection, but until this occurs,
+the list has to be dereferenced for each access and update).
+To avoid performance loss for both attribute updating and
+access, ECLiPSe provides a predicate for explicit
+attribute update: 
+<B>setarg(I, Term, NewArg)</B> will update the <B>I</B>'th
+argument of <B>Term</B> to be <B>NewArg</B>.
+Its previous value will be restored on backtracking.
+
+<P>
+Libraries which define user-programmable extensions
+like e.g. <B>fd.pl</B> usually define predicates that
+modify the attribute or a part of it, so that an explicit
+use of the <A NAME="tex2html1310"
+ HREF="../bips/kernel/termmanip/setarg-3.html">setarg/3</A><A NAME="9836"></A> predicate is not necessary.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3744"
+ HREF="node101.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3740"
+ HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3734"
+ HREF="node99.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3742"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3745"
+ HREF="node101.html">Attributed Variable Handlers</A>
+<B> Up:</B> <A NAME="tex2html3741"
+ HREF="node94.html">Attributed Variables</A>
+<B> Previous:</B> <A NAME="tex2html3735"
+ HREF="node99.html">Decomposing Attributed Variables</A>
+ &nbsp <B>  <A NAME="tex2html3743"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

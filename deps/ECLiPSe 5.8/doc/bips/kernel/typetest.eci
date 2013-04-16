@@ -1,0 +1,865 @@
+:- comment(alias, "Type Testing").
+:- comment(summary, "Meta-logical built-ins to test the type of terms").
+
+:- comment(nonground / 2, [
+	summary:"Succeeds if Term is not a ground term and binds Variable to one of the
+variables inside Term.
+
+",
+	template:"nonground(?Term, -Variable)",
+	desc:html("   Used to test whether Term is not ground i.e. whether it contains at
+   least one free variable.  The argument Variable is unified with one of
+   the variables inside Term, i.e. with one of the responsibles for its
+   non-groundness.  When Term contains several variables, it is not
+   specified which one will be returned as Variable.  As usual, attributed
+   variables are also considered variables.
+
+<P>
+"),
+	args:["?Term" : "Prolog term.", "-Variable" : "A variable."],
+	resat:"   No.",
+	fail_if:"   Fails if Term is ground.\n\n",
+	eg:"
+Success:
+    nonground(Term, V).       % unifies V with Term
+    nonground(f(a,B,c), V).   % unifies V with B
+    nonground([x,Y|Z], V).    % unifies V with Y or Z
+    nonground(s(X{a}), V).    % unifies V with X{a}
+
+Fail:
+    nonground(atom, V).
+    nonground(likes(man, woman), V).
+
+
+
+",
+	see_also:[nonground / 1, nonground / 3, nonvar / 1, var / 1]]).
+
+:- comment(nonground / 3, [
+	summary:"Succeeds if Term contains at least N different variables, and returns N of
+them in the list VarList.
+
+",
+	template:"nonground(+N, ?Term, ?VarList)",
+	desc:html("   Used to test whether Term contains at least N different variables.  The
+   argument VarList is unified with a list of exactly N of those variables.
+   If Term contains more than N variables, it is not further specified
+   which ones will be in the list and in which order.  As usual, attributed
+   variables are also considered variables.
+
+<P>
+   Note that this predicate is a generalisation of nonground/1 and
+   nonground/2 which could be written as:
+
+<P>
+<PRE>
+    nonground(Term) :- nonground(1, Term, _).
+    nonground(Term, Var) :- nonground(1, Term, [Var]).
+</PRE>
+"),
+	args:["+N" : "Integer.", "?Term" : "Prolog term.", "?VarList" : "List or variable."],
+	resat:"   No.",
+	fail_if:"   Fails if Term contains less than N variables.\n\n",
+	exceptions:[4 : "N is not instantiated.", 5 : "VarList instantiated but not to a list.", 6 : "N is not positive."],
+	eg:"
+Success:
+    nonground(1, Term, L).       % gives L = [Term]
+    nonground(1, f(a,B,c), L).   % gives L = [B]
+    nonground(2, [X,Y,Z], L).    % gives L = [Y,X]
+    nonground(2, [X,Y,Z], L).    % gives L = [Y,X]
+    nonground(1, s(X{a}), L).    % gives L = [X{a}]
+
+Fail:
+    nonground(1, atom, L).
+    nonground(2, f(a,B,c), L).
+    nonground(2, [X,X,X], L).
+
+
+
+",
+	see_also:[nonground / 1, nonground / 2, nonvar / 1, var / 1]]).
+
+:- comment(current_atom / 1, [
+	summary:"Succeeds if Atom is an atom in the system.
+
+",
+	template:"current_atom(?Atom)",
+	desc:html("   Used to return all currently defined atoms.
+
+<P>
+   Note that once an atom name is specified for the first time it is
+   automatically made known to the system, so calls to current_atom/1 with
+   any atom as an argument will always succeed.
+
+<P>
+"),
+	args:["?Atom" : "Atom or variable."],
+	resat:"   Yes.",
+	fail_if:"   None.\n\n",
+	exceptions:[5 : "Atom is not instantiated to an atom."],
+	eg:"
+Success:
+   current_atom(eclipse).
+   current_atom(anything).
+   current_atom('My atom').
+
+   [eclipse]: current_atom(X).
+
+   X = []    More? (;)         % RETURN pressed
+   yes.
+   [eclipse]:
+
+Error:
+   current_atom(1).           Error 5.
+   current_atom(man(1)).      Error 5.
+
+
+
+",
+	see_also:[atom / 1, current_functor / 1]]).
+
+:- comment(current_functor / 1, [
+	summary:"Succeeds if PredSpec is a functor known to the system.
+
+",
+	template:"current_functor(?PredSpec)",
+	desc:html("   Used to test whether PredSpec is a functor known to the system or to
+   return all functors defined.
+
+<P>
+   Note that PredSpec is specified in the format Name/Arity and may be
+   specified with Name as an atom or variable and/or Arity as an integer or
+   variable.
+
+<P>
+"),
+	args:["?PredSpec" : "Functor in the form Name/Arity or variable."],
+	resat:"   Yes.",
+	fail_if:"   Fails if PredSpec is not a currently known functor.\n\n",
+	exceptions:[5 : "PredSpec is instantiated but not in the format Atom /    Integer"],
+	eg:"
+Success:
+   current_functor(findall/N).
+   current_functor(N/4).
+   current_functor((',')/2).
+
+   [eclipse]: current_functor(X).
+
+   X = '' / 0     More? (;)
+
+   X = findall / 0     More? (;)
+
+   X = findall / 3     More? (;)
+
+   X = at_eof_handler / 0     More? (;)    % RETURN pressed
+   yes.
+   [eclipse]:
+
+Fail:
+   current_functor(myfunctor/100).
+
+Error:
+   current_functor(abc)           Error 5.
+   current_functor(man(1)).       Error 5.
+
+
+
+",
+	see_also:[atom / 1, current_atom / 1, current_op / 3]]).
+
+:- comment(atom / 1, [
+	summary:"Succeeds if Atom is a Prolog atom.
+
+",
+	template:"atom(?Atom)",
+	desc:html("   Used to test whether Atom is an atom.
+
+<P>
+"),
+	args:["?Atom" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Atom is not an atom.\n\n",
+	eg:"
+Success:
+        atom(atom).
+        atom('Anything').
+        atom(*).
+        atom([]).
+        atom(#).
+        atom($).
+        atom(/).
+        atom(\\).
+
+Fail:
+        atom(1).
+        atom(this(is,a,structure)).
+        atom(X).
+
+
+
+",
+	see_also:[var / 1, type_of / 2]]).
+
+:- comment(atomic / 1, [
+	summary:"Succeeds if Atomicterm is an atom, a number, or a string.
+
+",
+	template:"atomic(?Atomicterm)",
+	desc:html("   Used to test whether Atomicterm is an atomic term.
+
+<P>
+"),
+	args:["?Atomicterm" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Atomicterm is not an atom, a number or a string.\n\n",
+	eg:"
+Success:
+    atomic(atom).
+    atomic(1.4).
+    atomic(3).
+    atomic(\"Hello world\").
+    atomic([]).
+
+Fail:
+    atomic([1,3,3,6]).
+    atomic(this(is,a,structure)).
+    atomic(X).
+
+
+
+",
+	see_also:[atom / 1, compound / 1, var / 1]]).
+
+:- comment(compound / 1, [
+	summary:"Succeeds if Term is of type compound, i.e.  a structure or a list.
+
+",
+	template:"compound(?Term)",
+	desc:html("   Used to test whether Term is a compound term.
+
+<P>
+"),
+	args:["?Term" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Term is not a compound term.\n\n",
+	eg:"
+   Success:
+   compound(f(1,2)).
+   compound([1,2,3]).
+   compound(.(1,2)).
+   Fail:
+   compound(\"f(1,2)\").
+   compound(Term).
+   compound(atom).
+
+
+
+",
+	see_also:[atom / 1, atomic / 1, var / 1]]).
+
+:- comment(integer / 1, [
+	summary:"Succeeds if Integer is an integer number.
+
+",
+	template:"integer(?Integer)",
+	desc:html("   Used to test whether Integer is of type integer.
+
+<P>
+"),
+	args:["?Integer" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Integer is not an integer number.\n\n",
+	eg:"
+   Success:
+   integer(10).
+   integer(-40).
+   Fail:
+   integer('4').
+   integer(Integer).
+
+
+
+",
+	see_also:[integer_atom / 2, number / 1, float/1, real / 1, rational/1, breal/1]]).
+
+:- comment(nonground / 1, [
+	summary:"Succeeds if VarTerm is not ground.
+
+",
+	template:"nonground(?VarTerm)",
+	desc:html("   Used to test whether VarTerm is not ground i.e.  contains at least one
+   free variable.
+
+<P>
+"),
+	args:["?VarTerm" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if VarTerm is ground.\n\n",
+	eg:"
+   Success:
+   nonground(VarTerm).
+   nonground(f(a,B,c)).
+   nonground([x,y|Z]).
+   Fail:
+   nonground(atom).
+   nonground(likes(man,woman)).
+
+
+
+",
+	see_also:[nonvar / 1, ground/1, type_of / 2, var / 1]]).
+
+:- comment(ground / 1, [
+	summary:"Succeeds if Term is ground.
+",
+	template:"ground(?Term)",
+	desc:html("
+	Used to test whether Term is ground, i.e. contains no variables.
+"),
+	args:["?Term" : "Prolog term."],
+	resat:"No.",
+	fail_if:"Fails if Term is not ground.\n\n",
+	eg:"
+   Success:
+   ground(atom).
+   ground(likes(mouse,cheese)).
+   Fail:
+   ground(VarTerm).
+   ground(f(a,B,c)).
+   ground([x,y|Z]).
+",
+	see_also:[nonvar / 1, nonground/1, type_of / 2, var / 1]]).
+
+:- comment(nonvar / 1, [
+	summary:"Succeeds if Term is instantiated.
+
+",
+	template:"nonvar(?Term)",
+	desc:html("   Used to test whether Term is instantiated.
+
+<P>
+"),
+	args:["?Term" : "Any Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Term is not instantiated.\n\n",
+	eg:"
+   Success:
+   nonvar(atom).
+   Fail:
+   nonvar(Var).
+
+
+
+",
+	see_also:[nonground / 1, type_of / 2, var / 1]]).
+
+:- comment(real / 1, [
+	summary:"Succeeds if Real is a real (float or breal) number.",
+	template:"real(?Real)",
+	desc:html("   Used to test whether Real is a real number, i.e.
+	either a floating point number (float) or a bounded real number
+	(breal). It could be defined as:
+<PRE>
+   real(X) :- float(X).
+   real(X) :- breal(X).
+</PRE>
+"),
+	args:["?Real" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Real is not a real number.\n\n",
+	eg:"
+   Success:
+   real(1.0).
+   real(0.99__1.01).
+   real(3e27).
+   real(1e300__1.0Inf).
+   Fail:
+   real(1).
+   real('1.0').
+   real(X).
+
+
+
+",
+	see_also:[atomic / 1, float/1, integer / 1, number / 1, rational/1, breal/1]]).
+
+:- comment(float / 1, [
+	summary:"Succeeds if Real is a floating point number.",
+	template:"float(?Real)",
+	desc:html("   Used to test whether Real is a floating point number.
+
+<P>
+"),
+	args:["?Real" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Real is not a floating point number.\n\n",
+	eg:"
+   Success:
+   float(1.0).
+   float(3e27).
+   Fail:
+   float(1).
+   float('1.0').
+   float(X).
+",
+	see_also:[atomic / 1, integer / 1, number / 1, rational/1, breal/1, real/1]]).
+
+:- comment(string / 1, [
+	summary:"Succeeds if String is a string.
+
+",
+	template:"string(?String)",
+	desc:html("   Used to test whether String is a string.
+
+<P>
+"),
+	args:["?String" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if String is not a string.\n\n",
+	eg:"
+   Success:
+   string(\"astring\").
+   Fail:
+   string('astring').
+   string(X).
+
+
+
+",
+	see_also:[atom / 1, atomic / 1, var / 1]]).
+
+:- comment(free / 1, [
+	summary:"Succeeds if Var is a free variable, not an attributed one.
+
+",
+	template:"free(?Var)",
+	desc:html("   Used to test whether Var is a free variable.  free/1 is like var/1 but
+   does not succeed for attributed variables.
+
+<P>
+"),
+	args:["?Var" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Var is instantiated or an attributed variable.\n\n",
+	eg:"
+Success:
+      free(X).
+      free(_abc).
+      free(_).
+
+Fail:
+      free(X{a}).
+      suspend:(X>0), free(X).
+      var(atom).
+      var('Abc').
+
+
+
+",
+	see_also:[nonground / 1, nonvar / 1, meta / 1, type_of / 2, var / 1]]).
+
+:- comment(is_handle / 1, [
+	summary:"Succeeds if Term is an external data handle.
+
+",
+	template:"is_handle(?Term)",
+	desc:html("   Used to test whether Term is a handle for external data.
+   Such handles can be created by external predicates using the
+   ECLiPSe C or C++ API.
+
+<P>
+"),
+	args:["?Term" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Term is not an external data handle.\n\n",
+	eg:"
+
+    ?- bag_create(B), is_handle(B).
+    B = 'BAG'(16'edc90b18)
+    Yes (0.00s cpu)
+
+    ?- is_handle(_).
+    No (0.00s cpu)
+
+    ?- is_handle(42).
+    No (0.00s cpu)
+
+",
+	see_also:[is_event/1,type_of/2,xget/3,xset/3]]).
+
+:- comment(is_event / 1, [
+	summary:"Succeeds if Term is an event name or handle",
+	desc:html("\
+   Used to test whether Term is either an event name (an atom) or an event
+   handle (a special kind of handle as created by event_create/3).
+"),
+	args:["Term" : "Prolog term."],
+	resat:"No.",
+	fail_if:"Fails if Term is neither an atom nor an event handle.\n\n",
+	eg:"
+
+    ?- is_handle(my_event).
+    Yes (0.00s cpu)
+
+    ?- event_create(true, [], E), is_handle(E).
+    E = 'EVENT'(16'edc90b18)
+    Yes (0.00s cpu)
+
+    ?- bag_create(B), is_event(B).
+    No (0.00s cpu)
+
+    ?- is_event(_).
+    No (0.00s cpu)
+
+    ?- is_event(42).
+    No (0.00s cpu)
+",
+	see_also:[event/1,atom/1,is_handle/1,event_create/3,type_of/2]]).
+
+:- comment(is_suspension / 1, [
+	summary:"Succeeds if Term is a sleeping suspension.
+
+",
+	template:"is_suspension(?Term)",
+	desc:html("   Used to test whether Term is a sleeping suspension, i.e.  a suspension
+   that has not yet been executed.  type_of/2 can be used to test for a
+   sleeping or executed suspension.
+
+<P>
+"),
+	args:["?Term" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Term is not a sleeping suspension.\n\n",
+	eg:"
+Success:
+      make_suspension(true, 2, S), is_suspension(S).
+
+Fail:
+      is_suspension(X).
+
+      is_suspension(a).
+
+      make_suspension(true, 2, S), schedule_suspensions(1, s(S)),
+      wake, is_suspension(S).
+
+
+
+",
+	see_also:[type_of / 2, make_suspension / 3, schedule_suspensions / 2,
+		suspensions/1, suspensions/2]]).
+
+:- comment(meta / 1, [
+	summary:"Succeeds if Var is an attributed variable.
+
+",
+	template:"meta(?Var)",
+	desc:html("   Used to test whether Var is an attributed variable.
+
+<P>
+"),
+	args:["?Var" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Var is not an attributed variable.\n\n",
+	eg:"
+Success:
+      meta(X{a}).
+      suspend:(X>0), meta(X).
+
+Fail:
+      meta(atom).
+      meta(X).
+
+
+
+",
+	see_also:[free / 1, type_of / 2, var / 1]]).
+
+:- comment(number / 1, [
+	summary:"Succeeds if Number is a number.
+
+",
+	template:"number(?Number)",
+	desc:html("   Used to test whether Number is a number.  number/1 could be defined as
+
+<P>
+<PRE>
+   number(X) :- integer(X).
+   number(X) :- rational(X).
+   number(X) :- float(X).
+   number(X) :- breal(X).
+</PRE>
+"),
+	args:["?Number" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Number is not a number.\n\n",
+	eg:"
+   Success:
+   number(10).
+   number(-21.0).
+   number(1_3).
+   number(3e27).
+   Fail:
+   number(pi).
+   number(e).
+   number('-21.0').
+   number(X).
+   number(fred).
+
+
+
+",
+	see_also:[atomic / 1, integer / 1, breal/1, rational / 1, float/1, real / 1]]).
+
+:- comment(rational / 1, [
+	summary:"Succeeds if Rational is a rational number.
+
+",
+	template:"rational(?Rational)",
+	desc:html("   Used to test whether Rational is a rational number.
+
+<P>
+"),
+	args:["?Rational" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Rational is not a rational number.\n\n",
+	eg:"
+   Success:
+   rational(1_3).
+   set_flag(prefer_rationals, on), X is 1/3, rational(X).
+   Fail:
+   rational(1).
+   rational(1.0).
+   rational('1.0').
+   rational(a).
+   rational(X).
+
+
+
+",
+	see_also:[atomic / 1, integer / 1, number / 1, float/1, real / 1, breal/1]]).
+
+:- comment(breal / 1, [
+    summary:"Succeeds if Breal is a bounded real number.",
+    amode:breal(?),
+    desc:html("\
+	Used to test whether a term is a bounded real number.
+	A bounded real (breal) is conceptually a real number, and it
+	is represented by a lower and upper bound in floating point
+	format.
+"),
+    args:["Breal" : "A term."],
+    resat:"No.",
+    fail_if:"Fails if Breal is not a bounded real number.\n\n",
+    eg:"
+Success:
+    ?- breal(0.99__1.01).
+    Yes (0.00s cpu)
+
+    ?- X is breal(pi), breal(X).
+    X = 3.1415926535897927__3.1415926535897936
+    Yes (0.00s cpu)
+
+Fail:
+    ?- breal(1.0).
+    No (0.00s cpu)
+
+    ?- breal(1).
+    No (0.00s cpu)
+
+    ?- breal(\"hello\").
+    No (0.00s cpu)
+",
+	see_also:[atomic / 1, integer / 1, number / 1, float/1, real / 1, rational/1, breal/2]]).
+
+:- comment(type_of / 2, [
+	summary:"Succeeds if Type is the data type of the term Term.
+
+",
+	template:"type_of(?Term, ?Type)",
+	desc:html("   The type of the term Term is unified with Type.
+
+<P>
+   The types are atoms from the set: string, atom, var, integer, rational,
+   float, breal, compound, handle, db_reference, goal.
+
+<P>
+"),
+	args:["?Term" : "Prolog term.", "?Type" : "Atom or variable."],
+	resat:"   No.",
+	fail_if:"   Fails if Type is not the data type of Term or else if Type is an atom\n   that is not in the above set.\n\n",
+	exceptions:[5 : "Type is instantiated, but not to an atom."],
+	eg:"
+Success:
+      type_of(X,T).         (gives T=var).
+      type_of([1,2],T).     (gives T=compound).
+      type_of([],atom).
+      type_of(#,atom).
+      type_of($,atom).
+      type_of(*,atom).
+      type_of(/,atom).
+      type_of(\\,atom).
+      type_of(\"a\",string).
+      type_of(1,integer).
+      type_of(123456789012345,integer).
+      type_of(1_3,rational).
+      type_of(1.0,float).
+      type_of(0.99__1.01,breal).
+      type_of(a(b),compound).
+      record(k, a), recorded(k, _, R), type_of(R, db_reference).
+      make_suspension(true,S), type_of(S, goal).
+Fail:
+      type_of(2.0,integer).
+      type_of(2.0,float).
+Error:
+      type_of(2,\"atom\").  (Error 5).
+
+
+
+",
+	see_also:[atom / 1, compound / 1, free / 1, integer / 1, meta / 1,
+	number / 1, nonground / 1, breal/1, rational / 1, float/1, float/1,
+	real / 1, string / 1, var / 1]]).
+
+:- comment(var / 1, [
+	summary:"Succeeds if Var is a variable or an attributed variable.
+
+",
+	template:"var(?Var)",
+	desc:html("\
+   Used to test whether Var is a variable or an attributed variable.  The
+   difference between var/1 and free/1 is that var/1 succeeds on attributed
+   variables as well.
+
+<P>
+   var/1 could be defined as
+
+<P>
+<PRE>
+    var(X) :- free(X).
+    var(X) :- meta(X).
+</PRE>
+"),
+	args:["?Var" : "Prolog term."],
+	resat:"   No.",
+	fail_if:"   Fails if Var is instantiated.\n\n",
+	eg:"
+Success:
+      var(X).
+      var(_abc).
+      var(_).
+      var(X{a}).
+      suspend:(X>0), var(X).
+
+Fail:
+      var(atom).
+      var('Abc').
+
+
+
+",
+	see_also:[free / 1, meta / 1, nonground / 1, nonvar / 1, type_of / 2]]).
+
+:- comment(get_var_info / 3, [
+	summary:"Succeeds if Var is an uninstantiated variable, InfoName is a valid
+information name and the information value Value unifies with the value of
+the information.
+
+",
+	template:"get_var_info(?Var, ?InfoName, ?Value)",
+	desc:html("   This predicate is used to test the type of a free variable or to get its
+   source name (when available).
+
+<P>
+   The possible values for InfoName are type or name.
+
+<P>
+   If InfoName unifies with name, the predicate will succeed if the source
+   name of the free variable Var is available and unifies with Value.
+
+<P>
+   If InfoName unifies with type, the predicate will succeed if Value
+   unifies with the type of the variable Var.
+
+<P>
+   The possible types are:
+
+<P>
+<PRE>
+    meta      an attributed variable (metaterm)
+    free      a free variable
+</PRE>
+"),
+	args:["?Var" : "Prolog Term, usually a variable.", "?InfoName" : "Atom or variable.", "?Value" : "Atom or variable."],
+	resat:"   Yes.",
+	fail_if:"   Fails if Var is not a variable, or if InfoName and Value do not unify\n   with a valid information name and its value.\n\n",
+	exceptions:[5 : "InfoName or Value is neither an atom nor a variable.", 6 : "InfoName is not an information name."],
+	eg:"
+Success:
+      ?- suspend:(Var1 > Var2), get_var_info(Var1, Info, Value).
+      Var2 = Var2
+      Var1 = Var1
+      Info = name
+      Value = 'Var1'
+      Delayed goals:
+       Var1 > Var2     More? (;)
+
+      Var2 = Var2
+      Var1 = Var1
+      Info = type
+      Value = meta
+
+      Delayed goals:
+       Var1 > Var2
+      yes.
+
+      ?- get_var_info(Var1, type, Type).
+      Var1 = Var1
+      Type = free
+      yes.
+
+      ?- set_flag(variable_names,off).
+      yes.
+
+      ?- get_var_info(Var1, name, Name).
+      no (more) solution.
+
+Fail:
+      get_var_info(atom, name, Name).
+      set_flag(variable_names, off),
+          get_var_info(X, name, Name).
+
+Error:
+      get_var_info(X, not_an_info, Y).    (Error 6)
+      get_var_info(X, type, 123).         (Error 5)
+
+
+
+
+",
+	see_also:[set_flag / 2, type_of / 2, var / 1]]).
+
+
+:- comment(acyclic_term / 1, [
+    summary:"Succeeds if Term is acyclic (finite)",
+    index:["occurs check","rational tree","cyclic term"],
+    desc:html("\
+	Used to test whether Term is acyclic (a finite tree).
+	Fails if Term is cyclic (an infinite, rational tree).
+"),
+    args:["Term" :"Arbitrary term"],
+    fail_if:"Fails if Term is cyclic",
+    eg:"
+    ?- X = f(f(a)), acyclic_term(X).
+    X = f(f(a))
+    Yes (0.00s cpu)
+
+    ?- X = f(X), acyclic_term(X).
+    No (0.00s cpu)
+
+
+    % could be used to simulate occurs check
+    unify_with_occurs_check(X, X) :- acyclic_term(X).
+
+",
+    see_also:[]]).
+

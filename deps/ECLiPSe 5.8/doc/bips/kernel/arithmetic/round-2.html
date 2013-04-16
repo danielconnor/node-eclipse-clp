@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>round(+Number, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>round(+Number, ?Result)</H1>
+Rounds Number to the nearest integral value of the same type
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or number.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to round(Number, Result) is
+   equivalent to
+<PRE>
+    Result is round(Number)
+</PRE>
+    which should be preferred for portability.
+<P>
+   In coroutining mode, if Number is a free variable, the call to round/2
+   is delayed until this variable is instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated (non-coroutining mode only).
+<DT><EM>(5) type error </EM>
+<DD>Number and Result are numbers of different type.
+<DT><EM>(24) number expected </EM>
+<DD>Number is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      round(1.49, 1.0).
+      round(1.5, 2.0).          (odd integer part)
+      round(2.5, 2.0).
+      round(2.51, 3.0).         (even integer part)
+      round(3.5, 4.0).
+      round(-6.4, Result).      (gives Result = -6.0)
+      round(3, 3).
+Fail:
+      round(1, 0.0).
+Error:
+      round(A, 6.0).                   (Error 4).
+      round(0.5, 0).                   (Error 5).
+      round(4 + 2.3, 6.0).             (Error 24).
+      round(1, r).                     (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

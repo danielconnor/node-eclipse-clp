@@ -1,0 +1,47 @@
+<HTML><HEAD><TITLE>set_up_probe(+Tasks, +Constraints, -Cost, ++Options, -Handle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(probe)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>set_up_probe(+Tasks, +Constraints, -Cost, ++Options, -Handle)</H1>
+Sets up a linear probe for a set of constraints
+<DL>
+<DT><EM>Tasks</EM></DT>
+<DD>A term containing some variables
+</DD>
+<DT><EM>Constraints</EM></DT>
+<DD>A list of numerical constraints
+</DD>
+<DT><EM>Cost</EM></DT>
+<DD>A cost variable
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>An options structure
+</DD>
+<DT><EM>Handle</EM></DT>
+<DD>A variable which will record the handle of the matrix 
+used by the linear solver
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+The constraints are passed to <B>add_con</B>, which adds them to both the 
+fd and linear solvers.  The cost is declared to be an integer.  All the 
+finite domain variables in the term <B>Tasks</B> are associated with a demon 
+which forwards their bounds to the linear solver.  (The priority of this 
+demon is one higher than that of the probe.)
+</P><P>
+<B>lp_demon_setup</B> is then invoked to set up the linear solver, with the 
+priority specified in the <B>Options</B> parameter.  Solutions returned
+by the linear solver are automatically used to update the tentative values  
+of all the variables.
+</P>
+
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE>
+?- Options = options{granularity:3,priority:5},
+   Cost=X1,
+   set_up_probe([X1,X2,X3],[X1&gt;X2,X2&gt;X3],Cost,Options,H).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/ic_probing_for_scheduling/probe_cstr_sched-7.html">ic_probing_for_scheduling : probe_cstr_sched / 7</A>, <A HREF="../../lib/probing_for_scheduling/probe_cstr_sched-7.html">probing_for_scheduling : probe_cstr_sched / 7</A>, <A HREF="../../lib/probe/add_con-3.html">add_con / 3</A>, <A HREF="../../lib/eplex/lp_demon_setup-5.html">eplex : lp_demon_setup / 5</A>
+</BODY></HTML>

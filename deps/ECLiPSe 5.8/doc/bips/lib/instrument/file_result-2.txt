@@ -1,0 +1,69 @@
+
+file_result(+File, +OptionList)
+
+   Pretty-print a file, including any instrumentation results
+
+Arguments
+   File                Atom or string
+   OptionList          List of options
+
+Type
+   library(instrument)
+
+Description
+
+   This will pretty-print the specified source file in the calling 
+   module context, annotated with the result of instrumentation. 
+   The resulting .html file is placed in a sub-directory called 
+   instrument', relative to File.
+   
+   The use of this predicate is only meaningful if the module has 
+   previously been instrumented and compiled 
+   using instrument:instrument/1,2, and the code has been 
+   run in order to obtain instrumentation results.
+   
+   OptionList is a list of options identical to the one accepted by 
+   pretty_print/2 in the library(pretty_printer), and can be 
+   used to modify the output style and the location of the output file.
+   
+   Additionally, OptionList may contain the following options:
+   
+   ignore_module_templates (default:off)
+   
+   Specifying this option as on results in the 
+   use of file local templates only during instrumentation. 
+   Templates are not sought from the global store.
+   
+   This option should only be specified if it was also specified 
+   during instrumentation (i.e. when using 
+   instrument:instrument/3).
+   
+   macro_expansion (default:off)
+   
+   This option affects only the printing of the result (html) file. 
+   By default, read-macros are not expanded in this output. 
+   In rare cases, where macro expansion would affect the placement of 
+   instrumentation positions, it may be necessary to set 
+   this option to on in order to display the instrumentation 
+   at the correct positions in the code.
+   
+   verbose (default:off)
+   
+   If set to on, the instrument preprocessor 
+   will print predicate names as they are processed (to 
+   log_output). 
+   If set to debug, the instrument preprocessor 
+   prints each instrumented and/or woven predicate definition (to 
+   log_output).
+   
+   See struct(itemplate) for documentation of how the 
+   result instrumentation is used in the annotation and pretty-printing 
+   of the code.
+   
+   The predicate is a tool and the instrumentation results of a 
+   file in an alternate module to the current calling module context 
+   can be obtained invoking module_result(File, OptionList)@Module.
+   
+
+See Also
+   instrument / 2, instrument / 3, file_result / 1, library(instrument), library(pretty_printer), module_result / 0, module_result / 1, struct(itemplate), defined_modules / 2

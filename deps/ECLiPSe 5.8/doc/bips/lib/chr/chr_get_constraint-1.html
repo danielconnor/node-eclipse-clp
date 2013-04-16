@@ -1,0 +1,91 @@
+<HTML><HEAD><TITLE>chr_get_constraint(?Constraint)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(chr)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>chr_get_constraint(?Constraint)</H1>
+Remove a constraint unifying with Constraint from the constraint store.
+
+
+<DL>
+<DT><EM>?Constraint</EM></DT>
+<DD>A constraint (callable term) defined by constraint handling                rules.
+</DD>
+</DL>
+<H2>Description</H2>
+   Removes a constraint unifying with Constraint from the constraint store.
+   Note that if the unification with Constraint binds variables occurring
+   also in other constraints in the constraint store, these constraints may
+   be simplified (see last examples).  Thus it is recommended to use either
+   a free variable or a term with variable arguments for Constraint.  Used
+   by advanced constraint handling rules users to manipulate themselves the
+   constraints defined by constraint handling rules.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if there is no constraint (defined by constraint handling rules)
+   in the constraint store that unifies with Constraint.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>   Example using the constraint handler for Booleans  bool.chr:
+[eclipse]: chr_get_constraint(C).
+no (more) solution.
+
+[eclipse]: and(X,Y,Z), or(X,Y,Z).
+
+Constraints:
+(1) X_g745 * Y_g777 = Z_g809 % pretty print of and/3 constraint
+(2) X_g745 + Y_g777 = Z_g809 % pretty print of or/3 constraint
+
+yes.
+
+[eclipse]: and(X,Y,Z), or(X,Y,Z), chr_get_constraint(C).
+
+C = X * Y = Z
+
+Constraints:
+(2) X_g765 + Y_g797 = Z_g829
+     More? (;)
+
+C = X + Y = Z
+
+Constraints:
+(1) X_g765 * Y_g797 = Z_g829
+     More? (;)
+no (more) solution.
+
+[eclipse]: and(X,Y,Z), or(X,Y,Z), chr_get_constraint(and(1,A,B)).
+% or/3 - constraint is solved when X is bound to 1
+X = 1
+Y = A
+Z = 1
+A = A
+B = 1
+
+[eclipse]: and(X,Y,Z), or(X,Y,Z), chr_get_constraint(and(1,1,0)).
+no (more) solution. % or/3 - constraint fails
+
+[eclipse]: and(X,Y,Z), chr_get_constraint(and(1,1,0)).
+
+X = 1
+Y = 1
+Z = 0
+
+
+   The predicate chr_labeling/0 can be defined as:
+labeling :-
+   chr_get_constraint(C),
+   chr_label_with(C),
+   !,
+   chr_resolve(C),
+   labeling.
+
+labeling.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/chr/chr_labeling-0.html">chr_labeling / 0</A>, <A HREF="../../lib/chr/chr_label_with-1.html">chr_label_with / 1</A>, <A HREF="../../lib/chr/chr_resolve-1.html">chr_resolve / 1</A>, <A HREF="../../lib/chr/chr_get_constraint-1.html">chr_get_constraint / 1</A>, <A HREF="../../lib/chr/chr_get_constraint-2.html">chr_get_constraint / 2</A>
+</BODY></HTML>

@@ -1,0 +1,13 @@
+
+mjd_to_unix(++MJD, ?UnixTime)
+
+   Convert an MJD to the UNIX time representation
+
+Arguments
+   MJD                 Integer or float
+   UnixTime            Variable or integer
+
+Type
+   library(calendar)
+
+

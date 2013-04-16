@@ -1,0 +1,64 @@
+
+stored_keys_and_values(+StoreHandle, ?KeysValues)
+
+   Retrieve all data stored in a store object
+
+Arguments
+   StoreHandle         A store handle or store name
+   KeysValues          A variable or list
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+	This retrieves a list of all key/value pairs which are stored
+	in the given store object. If the store is empty, the empty list
+	is returned. Otherwise, a list of Key - Value terms is returned.
+
+	The order of the returned list is undefined.
+
+	The complexity of this operation is linear in the size of all keys
+	and values, since they need to be copied.
+
+	Note: If StoreHandle is not a handle, then it must be an atom or a
+	compound term, and the store is identified by this term's toplevel
+	functor together with the context module.
+
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- StoreHandle is uninstantiated
+     5 --- StoreHandle is neither atom nor compound term nor store handle
+    45 --- StoreHandle is not the name of a store
+
+Examples
+   
+
+    ?- store_create(Handle),
+       store_set(Handle, tom, 12345),
+       store_set(Handle, name(dick,tracy), phone(42376,home)),
+       store_set(Handle, numbers:prime, [2,3,5,7|_More]),
+       stored_keys_and_values(Handle, Data).
+
+    Handle = 'STORE'(16'003130e8)
+    Data = [(numbers : prime) - [2, 3, 5, 7|_More],
+            tom - 12345,
+	    name(dick, tracy) - phone(42376, home)]
+    Yes (0.00s cpu)
+
+    ?- store_create(Handle),
+       stored_keys_and_values(Handle, Data).
+
+    Handle = 'STORE'(16'003130e8)
+    Data = []
+    Yes (0.00s cpu)
+    
+
+See Also
+   store / 1, local / 1, store_erase / 1, store_set / 3, store_contains / 2, store_get / 3, store_delete / 2, stored_keys / 2, store_create / 1, store_count / 2

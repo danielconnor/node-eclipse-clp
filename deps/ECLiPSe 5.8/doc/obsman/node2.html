@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Finite Domains Library</TITLE>
+<META NAME="description" CONTENT="The Finite Domains Library">
+<META NAME="keywords" CONTENT="obsman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="obsman.css">
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="obsman.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html375"
+ HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html371"
+ HREF="obsman.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html365"
+ HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html373"
+ HREF="node34.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html376"
+ HREF="node3.html">Terminology</A>
+<B> Up:</B> <A NAME="tex2html372"
+ HREF="obsman.html">ECLiPSe Obsolete Libraries Manual</A>
+<B> Previous:</B> <A NAME="tex2html366"
+ HREF="node1.html">Introduction</A>
+ &nbsp <B>  <A NAME="tex2html374"
+ HREF="node34.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00200000000000000000"></A>
+<A NAME="chapdomains"></A><A NAME="280"></A>
+<BR>
+The Finite Domains Library
+</H1>
+
+<P>
+The library <B>fd.pl</B>
+implements constraints over finite domains that can contain
+integer as well as atomic (i.e. atoms, strings, floats, etc.)
+and ground compound (e.g. <I>f(a, b)</I>)
+elements.
+Modules that use the library must start with the directive
+<BLOCKQUOTE>
+<B>:- use_module(library(fd)).</B>
+
+</BLOCKQUOTE>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html377"
+ HREF="node3.html">Terminology</A>
+<LI><A NAME="tex2html378"
+ HREF="node4.html">Constraint Predicates</A>
+<LI><A NAME="tex2html379"
+ HREF="node5.html">Arithmetic Constraint Predicates</A>
+<LI><A NAME="tex2html380"
+ HREF="node6.html">Logical Constraint Predicates</A>
+<LI><A NAME="tex2html381"
+ HREF="node7.html">Evaluation Constraint Predicates</A>
+<LI><A NAME="tex2html382"
+ HREF="node8.html">CHIP Compatibility Constraints Predicates</A>
+<LI><A NAME="tex2html383"
+ HREF="node9.html">Utility Constraints Predicates</A>
+<LI><A NAME="tex2html384"
+ HREF="node10.html">Search Methods</A>
+<LI><A NAME="tex2html385"
+ HREF="node11.html">Domain Output</A>
+<LI><A NAME="tex2html386"
+ HREF="node12.html">Debugging Constraint Programs</A>
+<LI><A NAME="tex2html387"
+ HREF="node13.html">Debugger Support</A>
+<LI><A NAME="tex2html388"
+ HREF="node14.html">Examples</A>
+<LI><A NAME="tex2html389"
+ HREF="node15.html">General Guidelines to the Use of Domains</A>
+<LI><A NAME="tex2html390"
+ HREF="node16.html">User-Defined Constraints</A>
+<UL>
+<LI><A NAME="tex2html391"
+ HREF="node16.html#SECTION002141000000000000000">The <I>fd</I> Attribute</A>
+<LI><A NAME="tex2html392"
+ HREF="node16.html#SECTION002142000000000000000">Domain Access</A>
+<LI><A NAME="tex2html393"
+ HREF="node16.html#SECTION002143000000000000000">Domain Operations</A>
+<LI><A NAME="tex2html394"
+ HREF="node16.html#SECTION002144000000000000000">Accessing Domain Variables</A>
+<LI><A NAME="tex2html395"
+ HREF="node16.html#SECTION002145000000000000000">Modifying Domain Variables</A>
+</UL>
+<LI><A NAME="tex2html396"
+ HREF="node17.html">Extensions</A>
+<LI><A NAME="tex2html397"
+ HREF="node18.html">Example of Defining a New Constraint</A>
+<LI><A NAME="tex2html398"
+ HREF="node19.html">Program Examples</A>
+<UL>
+<LI><A NAME="tex2html399"
+ HREF="node19.html#SECTION002171000000000000000">Constraining Variable Pairs</A>
+<UL>
+<LI><A NAME="tex2html400"
+ HREF="node19.html#SECTION002171100000000000000">User-Defined Constraints</A>
+<LI><A NAME="tex2html401"
+ HREF="node19.html#SECTION002171200000000000000">Using the <I>element</I> Constraint</A>
+<LI><A NAME="tex2html402"
+ HREF="node19.html#SECTION002171300000000000000">Using Evaluation Constraints</A>
+<LI><A NAME="tex2html403"
+ HREF="node19.html#SECTION002171400000000000000">Using Generalised Propagation</A>
+<LI><A NAME="tex2html404"
+ HREF="node19.html#SECTION002171500000000000000">Using Constraint Handling Rules</A>
+</UL>
+<LI><A NAME="tex2html405"
+ HREF="node19.html#SECTION002172000000000000000">Puzzles</A>
+<LI><A NAME="tex2html406"
+ HREF="node19.html#SECTION002173000000000000000">Bin Packing</A>
+<UL>
+<LI><A NAME="tex2html407"
+ HREF="node19.html#SECTION002173100000000000000">Capacity Constraints</A>
+<LI><A NAME="tex2html408"
+ HREF="node19.html#SECTION002173200000000000000">Containment Constraints</A>
+<LI><A NAME="tex2html409"
+ HREF="node19.html#SECTION002173300000000000000">Requirement Constraints</A>
+<LI><A NAME="tex2html410"
+ HREF="node19.html#SECTION002173400000000000000">Exclusive Constraints</A>
+<LI><A NAME="tex2html411"
+ HREF="node19.html#SECTION002173500000000000000">Atmost Constraints</A>
+<LI><A NAME="tex2html412"
+ HREF="node19.html#SECTION002173600000000000000">Ordering Constraints</A>
+<LI><A NAME="tex2html413"
+ HREF="node19.html#SECTION002173700000000000000">Labeling</A>
+</UL>
+</UL>
+<LI><A NAME="tex2html414"
+ HREF="node20.html">Current Known Restrictions and Bugs</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

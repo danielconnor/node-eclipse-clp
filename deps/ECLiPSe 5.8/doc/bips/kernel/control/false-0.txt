@@ -1,0 +1,49 @@
+
+false
+
+   Does not succeed (synonym of fail/0).
+
+
+
+Arguments
+
+Type
+   Control
+
+Description
+   Does not succeed.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Always fails.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: [user].
+       not1(Goal) :- call(Goal), !, false.
+       not1(_).
+       user compiled 208 bytes in 0.02 seconds
+      [eclipse]: not1(true).
+      no.
+      [eclipse]: not1(fail).
+      yes.
+      [eclipse]: not1(false).
+      yes.
+
+Fail:
+      false.
+
+
+
+
+
+See Also
+   fail / 0

@@ -1,0 +1,54 @@
+<HTML><HEAD><TITLE>eval(+Expression, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>eval(+Expression, ?Result)</H1>
+Used to evaluate eval/1 terms in arithmetic expressions.
+<DL>
+<DT><EM>+Expression</EM></DT>
+<DD>An arithmetic expression.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or a number.
+</DD>
+</DL>
+<H2>Description</H2>
+   This is one of the predicates used by the ECLiPSe compiler to expand
+   arithmetic expressions. If an expression contains a subexpression that
+   is not known at compile time, it must be wrapped in eval/1, e.g.
+<PRE>
+   X is eval(Expr)+1
+</PRE>
+   This will be compiled into the sequence
+<PRE>
+   eval(Expr,T1), +(T1,1,X)
+</PRE>
+   and eval/2 will interpret the expression Expr at runtime.
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result or if a
+   user-defined evaluation predicate fails.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Expression is uninstantiated.
+<DT><EM>(5) type error </EM>
+<DD>Result is neither a number nor a variable.
+<DT><EM>(5) type error </EM>
+<DD>Evaluation of Expression gives a different type than Result.
+<DT><EM>(21) undefined arithmetic expression </EM>
+<DD>An evaluation predicate in the expression is not defined.
+<DT><EM>(24) number expected </EM>
+<DD>Expression is not a valid arithmetic expression.
+</DL>
+<H2>Examples</H2>
+<PRE>
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>, <A HREF="../../kernel/arithmetic/P-2.html">+ / 2</A>, <A HREF="../../kernel/arithmetic/--2.html">- / 2</A>, <A HREF="../../kernel/arithmetic/abs-2.html">abs / 2</A>, <A HREF="../../kernel/arithmetic/sgn-2.html">sgn / 2</A>, <A HREF="../../kernel/arithmetic/ceiling-2.html">ceiling / 2</A>, <A HREF="../../kernel/arithmetic/floor-2.html">floor / 2</A>, <A HREF="../../kernel/arithmetic/round-2.html">round / 2</A>, <A HREF="../../kernel/arithmetic/P-3.html">+ / 3</A>, <A HREF="../../kernel/arithmetic/--3.html">- / 3</A>, <A HREF="../../kernel/arithmetic/X-3.html">* / 3</A>, <A HREF="../../kernel/arithmetic/F-3.html">/ / 3</A>, <A HREF="../../kernel/arithmetic/FF-3.html">// / 3</A>, <A HREF="../../kernel/arithmetic/mod-3.html">mod / 3</A>, <A HREF="../../kernel/arithmetic/U-3.html">^ / 3</A>, <A HREF="../../kernel/arithmetic/min-3.html">min / 3</A>, <A HREF="../../kernel/arithmetic/max-3.html">max / 3</A>, <A HREF="../../kernel/arithmetic/R-2.html">\ / 2</A>, <A HREF="../../kernel/arithmetic/FR-3.html">/\ / 3</A>, <A HREF="../../kernel/arithmetic/RF-3.html">\/ / 3</A>, <A HREF="../../kernel/arithmetic/xor-3.html">xor / 3</A>, <A HREF="../../kernel/arithmetic/GG-3.html">>> / 3</A>, <A HREF="../../kernel/arithmetic/LL-3.html"><< / 3</A>, <A HREF="../../kernel/arithmetic/clrbit-3.html">clrbit / 3</A>, <A HREF="../../kernel/arithmetic/getbit-3.html">getbit / 3</A>, <A HREF="../../kernel/arithmetic/setbit-3.html">setbit / 3</A>, <A HREF="../../kernel/arithmetic/sin-2.html">sin / 2</A>, <A HREF="../../kernel/arithmetic/cos-2.html">cos / 2</A>, <A HREF="../../kernel/arithmetic/tan-2.html">tan / 2</A>, <A HREF="../../kernel/arithmetic/asin-2.html">asin / 2</A>, <A HREF="../../kernel/arithmetic/acos-2.html">acos / 2</A>, <A HREF="../../kernel/arithmetic/atan-2.html">atan / 2</A>, <A HREF="../../kernel/arithmetic/exp-2.html">exp / 2</A>, <A HREF="../../kernel/arithmetic/ln-2.html">ln / 2</A>, <A HREF="../../kernel/arithmetic/sqrt-2.html">sqrt / 2</A>, <A HREF="../../kernel/arithmetic/fix-2.html">fix / 2</A>, <A HREF="../../kernel/arithmetic/float-2.html">float / 2</A>, <A HREF="../../kernel/arithmetic/rational-2.html">rational / 2</A>, <A HREF="../../kernel/arithmetic/numerator-2.html">numerator / 2</A>, <A HREF="../../kernel/arithmetic/denominator-2.html">denominator / 2</A>
+</BODY></HTML>

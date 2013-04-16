@@ -1,0 +1,20 @@
+lib(ic_probing_for_scheduling)
+
+
+    This is a complete search method for resource-constrained scheduling 
+    problems
+    
+    The user interface is similar to the cumulative constraint, with a 
+    list of task start times, durations and resources; and a maximum 
+    resource limit.  There is one extra argument, a cost function which 
+    is to be minimised. 
+    
+    Probing for scheduling differs radically from the cumulative constraint
+    because it includes a search routine.  In its behaviour it is an
+    optimisation procedure and not simply a constraint which enforces 
+    consistency. 
+    
+    The search is focussed towards an optimal vlaue of the cost function.
+    
+    
+

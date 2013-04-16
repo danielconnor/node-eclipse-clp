@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Alternatives</TITLE>
+<META NAME="description" CONTENT="Alternatives">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node27.html">
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node27.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html830"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html824"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html818"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html826"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html828"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html831"
+ HREF="node27.html">Iteration on lists</A>
+<B> Up:</B> <A NAME="tex2html825"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html819"
+ HREF="node25.html">Overview</A>
+ &nbsp <B>  <A NAME="tex2html827"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html829"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html832"
+ HREF="node26.html#SECTION00620010000000000000">Description</A>
+<LI><A NAME="tex2html833"
+ HREF="node26.html#SECTION00620020000000000000">Parameters</A>
+<LI><A NAME="tex2html834"
+ HREF="node26.html#SECTION00620030000000000000">Schema</A>
+<LI><A NAME="tex2html835"
+ HREF="node26.html#SECTION00620040000000000000">Comments</A>
+<LI><A NAME="tex2html836"
+ HREF="node26.html#SECTION00620050000000000000">Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00620000000000000000">
+Alternatives</A>
+</H1>
+
+<H4><A NAME="SECTION00620010000000000000">
+Description</A>
+</H4> This concept is used to choose between alternative <A NAME="450"></A>actions 
+based on some data structure. For each alternative, a guard <I>q</I><SUB><I>i</I></SUB> is specified. 
+The guard <A NAME="452"></A>is a test which succeeds if the condition for selecting one alternative 
+is met. The actions <A NAME="453"></A><I>r</I><SUB><I>i</I></SUB> are executed when the guard succeeds. In order to choose 
+only the right alternative, and not to leave any unwanted choicepoints in the 
+execution, we must eliminate the remaining alternatives after the guard succeeds. For 
+this we use a cut (!) <A NAME="455"></A>after each guard but the last. We can leave out the cut after 
+the last guard, as there are no choices left at this point.
+
+<H4><A NAME="SECTION00620020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>X</STRONG>
+<DD>a data structure
+</DL>
+<H4><A NAME="SECTION00620030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode alternatives(+).
+alternatives(X):-
+        q1(X),
+        !,
+        r1(X).
+alternatives(X):-
+        q2(X),
+        !,
+        r2(X).
+alternatives(X):-
+        qn(X),
+        rn(X).
+</PRE>
+<H4><A NAME="SECTION00620040000000000000">
+Comments</A>
+</H4>
+Very often, other parameters must be passed either to the guards, or to the actions. 
+
+<P>
+The errors which are introduced if a cut to commit to a choice is left out are 
+very hard to debug, and may only show after long execution. Much better to 
+always cut after each guard.
+
+<P>
+When adding new parameters it is important to ensure that they are added to all 
+clauses of the predicate. If a parameter is not used in some clause, then it 
+should be added as a singleton variable.
+If we miss an argument on one of the clauses in the middle, the compiler will create an error message about <I>non consecutive clauses</I><A NAME="464"></A>. But if we miss an argument for either the first or the last clause, the compiler will just treat this as another predicate definition with the same name, but a different arity. Errors of this form are very hard to spot.
+
+<H4><A NAME="SECTION00620050000000000000"></A>
+<A NAME="466"></A>
+<BR>
+Example
+</H4>
+<PRE>
+:-mode interface_type(+,+,-).
+interface_type(_Node,local,local):-
+        !.
+interface_type(Node,_Interface,backbone_net):-
+        node(Node,net),
+        !.
+interface_type(Node,Interface,backbone):-
+        backbone_line(Node,Interface,_,_),
+        !.
+interface_type(Node,Interface,backbone):-
+        backbone_line(_,_,Node,Interface),
+        !.
+interface_type(Node,Interface,interconnection):-
+        group(interconnection,_,Node,Interface),
+        !.
+interface_type(_Node,_Interface,customer).
+</PRE>
+Here we branch on information passed in the first two arguments, and return a result in the last argument. The last clause is a default rule, saying that the interface type is <I>customer</I>, if none of the other rules applied.
+
+<P>
+Some programmers perfer to make the output unification explicit, like so:
+<PRE>
+:-mode interface_type(+,+,-).
+interface_type(_Node,local,Result):-
+        !,
+        Result = local.
+interface_type(Node,_Interface,Result):-
+        node(Node,net),
+        !,
+        Result = backbone_net.
+interface_type(Node,Interface,Result):-
+        backbone_line(Node,Interface,_,_),
+        !,
+        Result = backbone.
+interface_type(Node,Interface,Result):-
+        backbone_line(_,_,Node,Interface),
+        !,
+        Result = backbone.
+interface_type(Node,Interface,Result):-
+        group(interconnection,_,Node,Interface),
+        !,
+        Result = interconnection.
+interface_type(_Node,_Interface,Result):-
+        Result = customer.
+</PRE>
+This has advantages if the predicate may be called with the last argument instantiated.
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html830"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html824"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html818"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html826"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html828"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html831"
+ HREF="node27.html">Iteration on lists</A>
+<B> Up:</B> <A NAME="tex2html825"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html819"
+ HREF="node25.html">Overview</A>
+ &nbsp <B>  <A NAME="tex2html827"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html829"
+ HREF="node78.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

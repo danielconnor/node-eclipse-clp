@@ -1,0 +1,50 @@
+
+current_module(?Module)
+
+   Succeeds if Module is an existing module.
+
+
+
+Arguments
+   ?Module             Atom or variable.
+
+Type
+   Modules
+
+Description
+   current_module/1 checks if there exists a module of a given name, or
+   finds on backtracking the names of all the existing modules.  A module
+   exists in the system iff it has been compiled or explicitely created.
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if Module does not unify with an existing module.
+
+
+
+Exceptions
+     5 --- Module is instantiated, but not to an atom.
+
+Examples
+   
+Success:
+
+    [eclipse]: current_module(M).
+    M = eclipse     More? (;)
+    M = sepia_kernel     More? (;)
+    M = eclipse_language     More? (;)
+    M = lists     More? (;)
+    M = profile     More? (;)
+    M = suspend     More? (;)    % type <cr>
+    yes.
+Fail:
+    current_module(not_a_module).
+Error:
+    current_module("eclipse").         (Error 5).
+
+
+See Also
+   create_module / 1, create_module / 3, erase_module / 1, module / 1, get_module_info / 3

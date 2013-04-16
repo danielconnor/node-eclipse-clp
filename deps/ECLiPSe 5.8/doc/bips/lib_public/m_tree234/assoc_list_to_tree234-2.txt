@@ -1,0 +1,29 @@
+
+assoc_list_to_tree234(+AssocList, -Tree)
+
+   Converts an association list into a tree.
+
+Arguments
+   AssocList           A list of key-value pairs
+   Tree                A 2-3-4 tree
+
+Type
+   library(m_tree234)
+
+Description
+	
+	AssocList is a list of key/value pairs of the form Key-Value,
+	and Tree is a tree containing these key/value pairs.  If a key
+	appears more than once in AssocList, then its corresponding value
+	in the tree Tree will be the last one appearing in AssocList.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   tree234_to_assoc_list / 2

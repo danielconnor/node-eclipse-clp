@@ -1,0 +1,71 @@
+
+merge(+List1, +List2, ?List3)
+
+   Succeeds if List3 is a merged list of List1 and List2.  If both lists are
+sorted, List3 will be sorted.
+
+
+
+Arguments
+   +List1              List.
+   +List2              List.
+   ?List3              List or variable.
+
+Type
+   Comparing and Sorting
+
+Description
+   Used to merge the sorted lists List1 and List2 to give the sorted list
+   List3.  merge(L1,L2,L3) is equivalent to merge(0,=<,L1,L2,L3).
+
+
+   For two lists [e1,e2,e3] and [f1,f2,f3], e1 is compared to f1.  The
+   lower (dictated by the standard ordering below) is put into List3, and
+   the next element is compared to the next element in the other list.
+   This process continues until both lists are exhausted.
+
+
+   In particular, this will merge two sorted lists into a sorted list.
+
+
+   The sort is done according to the standard ordering of terms.
+   Duplicates are not removed.  See compare/3 for this standard ordering.
+   Note in particular that numbers are first ordered by their type (integer,
+   float, etc) and only then by their magnitude, i.e. sorting numbers of
+   different types may not give the expected result.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if List3 does not unify with the merging of the lists List1 and
+   List2 outlined below.
+
+
+
+Examples
+   
+Success:
+      merge([2,4,6],[1,3,5],L).
+                            (gives L=[1,2,3,4,5,6]).
+      merge([f(1),f(7)],[f(8),f(10)],L).
+                          (gives L=[f(1),f(7),f(8),f(10)]).
+      merge([f(5),f(8)],[f(1),f(2),f(2),f(5),f(8)],L).
+            (gives L=[f(1),f(2),f(2),f(5),f(5),f(8),f(8)]).
+      merge([a,w],[a,b,b,r,w],L).
+            (gives L=[a,a,b,b,r,w,w]).
+      merge([f(2),f(1)],[f(3),f(8)],L).
+            (gives L=[f(2),f(1),f(3),f(8)]).
+
+Fail:
+      merge([2,4,6],[1,3,5],[1,2,3,4,5]).
+
+
+
+
+
+See Also
+   compare / 3, merge / 5, msort / 2

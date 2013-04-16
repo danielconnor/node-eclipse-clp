@@ -1,0 +1,60 @@
+
+single_pair_short_path(+Graph, +DistanceArg, +SourceNode, +SinkNode, +Tolerance, -Path)
+
+   Computes short paths from a source to a sink node
+
+Arguments
+   Graph               a graph structure
+   DistanceArg         which argument of EdgeData to use as distance: integer
+   SourceNode          source node number (integer)
+   SinkNode            sink node number (integer)
+   Tolerance           tolerable deviation from minimal length (non-negative number)
+   Path                Length-EdgeList structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    Computes shortest (or sufficiently short) paths from SourceNode to
+    SinkNode. Alternative paths are generated on backtracking.
+    Fails if there is no path at all.
+
+    DistanceArg refers to the graph's EdgeData information that was
+    specified when the graph was constructed. If EdgeData is a simple
+    number, then DistanceArg should be 0 and EdgeData will be taken
+    as the length of the edge. If EdgeData is a compound data structure,
+    DistanceArg should be a number between 1 and the arity of that
+    structure and determines which argument of the EdgeData structure
+    will be interpreted as the edge's length. Important: the distance
+    information in EdgeData must be a non-negative number.
+
+    If DistanceArg is given as -1, then any EdgeData is ignored and
+    the length of every edge is assumed to be equal to 1.
+
+    If Tolerance is given as zero, all paths returned will have the same
+    length and will be shortest paths from SourceNode to SinkNode.
+    If Tolerance is nonzero, additional paths will be returned with
+    lengths up to the length of the shortest path plus the tolerance.
+    Note that the solutions are not generated in any specific order.
+
+    A resulting path is returned as a Length-EdgeList structure where
+    Length is the length of the path and EdgeList is the path in
+    reverse order, i.e. starting with the edge reaching SinkNode and
+    ending with the edge starting from SourceNode.
+    
+
+Resatisfiable
+   yes
+
+Fail Conditions
+   There is no path from SourceNode to SinkNode
+
+Examples
+   
+    ?- sample_graph(G), single_pair_short_path(G, 0, 1, 3, P).
+    P = 2 - [e(2, 3, 1), e(1, 2, 1)]
+    
+
+See Also
+   shortest_paths / 4, single_pair_shortest_path / 5, all_short_paths_as_edges / 6, all_short_paths_as_graph / 6, single_pair_all_short_paths_as_graph / 7, possible_path / 7

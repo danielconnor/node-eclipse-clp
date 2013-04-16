@@ -1,0 +1,38 @@
+
+get_median(?Var, -Median)
+
+   Returns the median of the interval of the IC variable Var.
+
+Arguments
+   Var                 A variable or a number
+   Median              The median of the interval
+
+Type
+   library(ic)
+
+Description
+
+   Returns the median of the interval of Var (usually so that the interval
+   can be split).  If Var has not been declared before, it will be turned
+   into an unrestricted real variable.  If Var is a ground number, the
+   median will be calculated appropriately based on its type.
+
+   If the interval crosses 0, then the median is 0.  Otherwise, the median
+   splits the interval logarithmically so that the two subintervals have the
+   same number of representable floats.
+
+
+Examples
+   [eclipse 2]: X :: 10..1000, get_median(X, M).
+X = X{10 .. 1000}
+M = 100.0
+Yes (0.00s cpu)
+
+[eclipse 3]: X :: -1..1000, get_median(X, M).
+X = X{-1 .. 1000}
+M = 0.0
+Yes (0.00s cpu)
+
+
+See Also
+   get_delta / 2, get_bounds / 3

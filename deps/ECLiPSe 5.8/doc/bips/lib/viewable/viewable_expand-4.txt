@@ -1,0 +1,62 @@
+
+viewable_expand(++ViewableName, ++DimensionNumber, +ExtraElements, ++LocName)
+
+   Expand a dimension of a viewable by adding new elements, specifying the name of the new location.
+
+Arguments
+   ViewableName        A string or atom; the name of an existent viewable
+   DimensionNumber     An integer: the number of the dimension to be enlarged.
+   ExtraElements       A nested list or an array of the right size/dimensions, containing the new viewable elements.
+   LocName             A string: the name of the new location.
+
+Type
+   library(viewable)
+
+Description
+
+
+        NOTE:When there are no registered visualisation clients,
+        this predicate succeeds with any arguments, and has no effect.
+
+        This predicate behaves exactly the same as viewable_expand/3 except that you have the added ability to name the new location of the expanded dimension. LocName is a string which becomes the name for the new location. 
+
+        For more details on expanding viewables, see the documentation for viewable_expand/3. 
+
+
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if ViewableName is not the name of an existent viewable, or if the requested dimension of the viewable is not flexible.
+
+Exceptions
+     4 --- ViewableName is not a string or atom
+     5 --- DimensionNumber is not a ground integer
+     6 --- DimensionNumber is not positive, or exceeds the viewable's number of dimensions
+     1 --- ExtraElements is not a regular nested list or array of the correct size/dimensions
+     5 --- ExtraElements contains elements which do not conform to the element type of the viewable
+     5 --- LocName is not a string
+
+Examples
+   
+
+[Assuming that at least one visualisation client is registered]
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+       	               array([flexible, fixed], any)), 
+       viewable_expand(v1, 1, [R, S, T], "barg").
+
+       This will add to the 2 x 3 viewable a third row, named "barg".
+
+       viewable_create(v1, [[X, Y, Z], [A, B, C]], 
+       	               array([fixed, flexible], any)), 
+       viewable_expand(v1, 2, [Q, P], "zatch").
+
+       This will add to the 2 x 3 viewable a fourth column, named "zatch".
+
+
+
+
+See Also
+   viewable_expand / 3, viewable_create / 4, viewable_size / 2, viewable_type / 2

@@ -1,0 +1,9 @@
+
+serve_queue(OldQueue, Head, NewQueue)
+
+   removes the first element of the queue for service
+
+Type
+   library(queues)
+
+

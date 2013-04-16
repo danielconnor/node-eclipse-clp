@@ -1,0 +1,63 @@
+
+cputime(?Time)
+
+   Succeeds if Time is the elapsed user cpu time in seconds.
+
+
+
+Arguments
+   ?Time               Float number or variable.
+
+Type
+   Operating System
+
+Description
+   Used to find the elapsed user cpu time in seconds, it is equivalent to
+   statistics(times, [Time|_]).
+
+
+   The cpu time is the `user' time i.e.  the CPU time used while executing
+   instructions in the user space of the calling process.
+
+
+   Note that the granularity of the system clock is usually 1/60 or 1/50 of
+   a second.  Hence if you use cputime/1 to measure runtimes make sure that
+   the measured intervals are long enough.
+
+
+   The time given by the ps command gives the sum of `user' time and
+   `system' time, which is the CPU time used by the system on behalf of the
+   calling process.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Time is not the elapsed `user' cpu time.
+
+
+
+Exceptions
+     5 --- Time is instantiated, but not to a float.
+
+Examples
+   
+Success:
+   [eclipse]: cputime(T).
+   T = 0.0333333
+   yes.
+
+Fail:
+      cputime(0.000001).
+Error:
+      cputime(2).                    (Error 5).
+
+
+
+
+
+See Also
+   statistics / 0, statistics / 2, date / 1, get_flag / 2

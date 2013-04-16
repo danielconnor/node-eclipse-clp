@@ -1,0 +1,73 @@
+
+EplexInstance:eplex_solve(-Cost)
+
+   Explicitly invoke the external solver associated with EplexInstance.
+
+Arguments
+   Cost                Value of returned solution
+
+Type
+   library(eplex)
+
+Description
+
+   Explicitly triggers the solver associated with the eplex instance 
+   EplexInstance. If the solver was set up without any trigger conditions,
+   then it needs to be explicitly triggered via a call to this predicate.
+
+   The external solver's LP, QP or MIP solver is applied to the
+   problem represented by the eplex instance.  Precisely which method is used
+   depends on the options given at set up.  eplex_solve/1 fails if
+   there is no solution or succeeds if an optimal solution is found,
+   returning the solution's cost in Cost. After a success, various
+   solution and status information can be retrieved using eplex_get/2
+   and eplex_var_get/3.
+
+   When a solver is triggered repeatedly, each invocation will
+   automatically take into account the current variable bounds.  The set of
+   constraints considered by the solver is the one given when the solver
+   was created plus any new constraints that were posted in the
+   meantime.
+
+   The user can define their own handlers (per eplex instance/problem) to
+   handle cases where there was some  error condition, or some limits were 
+   exceeded during the solving of the problem. If no handler was defined,
+   by default an event would be raised. These are:
+
+    suboptimal handler (eplex_suboptimal event)
+    	This means that a solution was found but it may be suboptimal.
+	The default behaviour is to print a warning and succeed.
+    unbounded_handler (eplex_unbounded event)
+	This means that the problem is unbounded.  The default
+	behaviour is to bind Cost to infinity (positive or negative
+	depending on the optimisation direction), print a warning and
+	succeed.  CAUTION: No solution values are computed when the
+	problem is unbounded, so unless the problem was set up with
+	the solution(no) option, an error will occur when trying to
+	continue as if the optimisation had succeeded.
+    unknown_handler (eplex_unknown event)
+    	This means that due to the solution method chosen, it is unknown
+	whether the problem is unbounded or infeasible. The default
+	behaviour is to print a warning and fail (even though this
+	may be logically wrong!).
+    abort_handler (eplex_abort event)
+    	Some other error condition occurred during optimisation.
+	The default behaviour is to print an error and abort.
+
+
+   Note that the events are raised for the low-level primitive lp_solve/2,
+   which is called by eplex_solve/1.
+
+
+Fail Conditions
+   External solver was unable to find a solution.
+
+Exceptions
+     5 --- EplexInstance does not a solver setup for it.
+   eplex_suboptimal --- Solution was found, but is possibly suboptimal
+   eplex_unbounded --- Problem is unbounded, no solution values
+   eplex_unknown --- Result is unknown (infeasible or unbounded)
+   eplex_abort --- External solver aborted for some reason
+
+See Also
+   eplex_solver_setup / 4, eplex_solver_setup / 1, eplex_var_get / 3, eplex_get / 2, $= / 2, $=< / 2, $>= / 2, =:= / 2, >= / 2, =< / 2, $:: / 2, :: / 2, integers / 1, reals / 1

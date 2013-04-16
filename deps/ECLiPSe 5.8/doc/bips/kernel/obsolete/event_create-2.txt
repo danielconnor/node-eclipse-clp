@@ -1,0 +1,68 @@
+
+event_create(+Goal, -EventHandle)
+
+   Create an ECLiPSe event from an arbitrary goal.
+
+Arguments
+   Goal                An arbitrary goal
+   EventHandle         A free variable
+
+Type
+   Obsolete
+
+Description
+	This creates an event from the goal provided, which can be raised 
+	with the standard event handling predicates (e.g. event / 1, event_after / 2
+	and event_after_every / 2) using the associated handle.
+    
+	The event creation requires non-logical copying of the goal.
+	As a result, if the goal contains variables, they lose their identity 
+	and are replaced with fresh ones.
+    
+	The intended use of such events are for localised event handling
+	or when it is necessary to pass ground parameters to the event goal,
+	i.e. when the use of a global event handler is unnecessary or does not suffice.
+    
+	It should be noted that the event handle is the only way to uniquely
+	identify a given event.  E.g. if an event has been scheduled as an
+	after-event (using event_after/3 or events_after/2), it can only be
+	cancelled by invoking cancel_after_event/2 with the correct handle.
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- Goal is not instantiated
+     5 --- Goal is not a valid goal
+     5 --- EventHandle is not a free variable
+
+Examples
+       ?- event_create(writeln('Goodbye cruel world!'), Event),
+    	writeln('Hello world!'),
+	event(Event).
+    Hello world!
+    Goodbye cruel world!
+    Event = 'EVENT'(16'503f0238)
+    Yes (0.00s cpu)
+
+    ?- event_create(writeln('e1'), E1Event),
+	event_create(writeln('e2'), E2Event),
+	events_after([E1Event-every(0.2), E2Event-0.5]),
+	repeat, fail.
+    e1
+    e1
+    e2
+    e1
+    e1
+    ^C
+    interruption: type a, b, c, e, or h for help : ? e1
+    abort
+    Aborting execution ...
+    
+
+See Also
+   event_create / 3

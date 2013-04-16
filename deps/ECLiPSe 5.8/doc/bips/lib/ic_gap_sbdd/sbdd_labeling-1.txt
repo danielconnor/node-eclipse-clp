@@ -1,0 +1,18 @@
+
+sbdd_labeling(?List)
+
+   Instantiate all integer SBDD variables in a list to elements of their domains
+
+Arguments
+   List                A list of integer SBDD variables or integers
+
+Type
+   library(ic_gap_sbdd)
+
+Description
+   Like labeling/1, but uses sbdd_indomain/1 to do the instantiation so that
+   the SBDD dominance checks are performed appropriately.
+
+
+See Also
+   fd : labeling / 1, ic : labeling / 1, sbdd_indomain / 1

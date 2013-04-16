@@ -1,0 +1,54 @@
+
+remote_connect_setup(?Address, ?Peer, -Socket)
+
+   First half of initiating a remote interface connection.
+
+Arguments
+   Address             Address for remote connection (Host/Port or variable)
+   Peer                Remote Peer name (atom or variable)
+   Socket              Server socket stream number (variable)
+
+Type
+   External Interface
+
+Description
+    
+    Set up the initial stage for a remote interface connection. This
+    predicate type checks the arguments and creates a socket server at
+    address Host/Port. This socket server will accept the socket stream
+    connections from the remote process that is to be attached. The socket
+    server stream is returned in Socket. Peer should be the name of the new
+    remote Peer; if it is a variable, the predicate will assign a new name
+    to the Peer. If Peer is an atom, the predicate will fail if Peer is an
+    existing peer name (including names which has been created using
+    remote_connect_setup/3, but not yet attached by remote_connect_accept/6).
+    
+    When the predicate returns, the remote process can make its socket
+    connections at Host/Port. The connecting request will suspend until
+    they are accepted on the ECLiPSe side by calling
+    remote_connect_accept/6. 
+    
+    This predicate should always be followed by a call to
+    remote_connect_accept/6, which completes the remote connection. The
+    predicates are separated to allow the user to start the connecting
+    request on the remote process. This can be done for example via exec/3.
+    
+    If Host and Port are not initially variables, they must be valid for
+    forming a socket connection. If Host is `localhost', then the remote
+    connection would be restricted to the same host as the ECLiPSe process.
+    
+    The predicates remote_connect_setup/3 and remote_connect_accept/6 are
+    used to implement remote_connect/3. 
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+   Peer is an existing peer name; Host or Port are not valid.
+
+Exceptions
+     5 --- Arguments are not of the correct type
+
+See Also
+   remote_connect_accept / 6, remote_disconnect / 1, remote_yield / 1, remote_connect / 3, exec / 3

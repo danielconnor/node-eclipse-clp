@@ -1,0 +1,80 @@
+<HTML><HEAD><TITLE>current_module_predicate(+Property, ?PredSpec)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Predicate Database and Compiler</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_module_predicate(+Property, ?PredSpec)</H1>
+Used to enumerate all predicates with given property in the caller module
+<DL>
+<DT><EM>+Property</EM></DT>
+<DD>An atom.
+</DD>
+<DT><EM>?PredSpec</EM></DT>
+<DD>A variable or an expression of the form Atom/Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+    This predicate is mainly used to enumerate all predicates in the caller
+    module with one of the following properties (for testing, use get_flag/3):
+<DL>
+<DT><STRONG>undeclared</STRONG><DD>
+    predicates that have been referenced but are neither
+    declared nor defined in this module.
+<DT><STRONG>no_module</STRONG><DD>
+    predicates whose module of origin is known (through import or qualified
+    reference), but that module does not exist.
+<DT><STRONG>no_export</STRONG><DD>
+    predicates whose module of origin exists, but the predicate is not
+    exported from there.
+<DT><STRONG>local</STRONG><DD>
+    defined predicates that are local
+<DT><STRONG>exported</STRONG><DD>
+    defined predicates that are exported
+<DT><STRONG>reexported</STRONG><DD>
+    defined predicates that are reexported
+<DT><STRONG>exported_reexported</STRONG><DD>
+    defined predicates that are exported or reexported
+<DT><STRONG>defined</STRONG><DD>
+    predicates defined in this module (local or exported)
+<DT><STRONG>undefined</STRONG><DD>
+    local or exported predicates that have not been defined (no clauses)
+<DT><STRONG>deprecated</STRONG><DD>
+    predicates that are imported or referenced via qualification, but have
+    their deprecated-flag set.
+</DL>
+    This predicate is more efficient than current_predicate/1 and
+    current_built_in/1 when one is not interested in imported predicates.
+    In particular, it does not complain about ambiguous imports.
+
+<H3>Fail Conditions</H3>
+Fails if there is no (further) predicate with the given property
+<H3>Resatisfiable</H3>
+Yes.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Property is not instantiated
+<DT><EM>(5) type error </EM>
+<DD>Property is not an atom
+<DT><EM>(5) type error </EM>
+<DD>PredSpec is instantiated, but not to the form Atom/Integer.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    [eclipse 1]: [user].
+     :- local r/0.
+     p :- q, r.
+    yes.
+
+    [eclipse 2]: current_module_predicate(defined,P).
+    P = p / 0
+    yes.
+
+    [eclipse 3]: current_module_predicate(undefined,P).
+    P = r / 0
+    yes.
+
+    [eclipse 4]: current_module_predicate(undeclared,P).
+    P = q / 0
+    yes.
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/current_built_in-1.html">current_built_in / 1</A>, <A HREF="../../kernel/database/current_predicate-1.html">current_predicate / 1</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>
+</BODY></HTML>

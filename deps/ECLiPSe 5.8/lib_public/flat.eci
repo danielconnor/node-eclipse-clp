@@ -1,0 +1,13 @@
+:- module(flat).
+:- export list_to_times / 2.
+:- export times_to_list / 2.
+:- export list_to_plus / 2.
+:- export plus_to_list / 2.
+:- export list_to_or / 2.
+:- export or_to_list / 2.
+:- export list_to_and / 2.
+:- export and_to_list / 2.
+:- export list_to_binary / 4.
+:- export list_to_binary / 3.
+:- export binary_to_list / 5.
+:- export binary_to_list / 4.

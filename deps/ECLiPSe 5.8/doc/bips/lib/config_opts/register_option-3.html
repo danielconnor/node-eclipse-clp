@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>register_option(++Name, ?InitialValue, +Options)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(config_opts)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>register_option(++Name, ?InitialValue, +Options)</H1>
+Register an option
+<DL>
+<DT><EM>Name</EM></DT>
+<DD>Name of the option (any ground term)
+</DD>
+<DT><EM>InitialValue</EM></DT>
+<DD>Initial value to be given to option
+</DD>
+<DT><EM>Options</EM></DT>
+<DD>List of options related to this option
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate sets up an option with name Name and initial value
+   InitialValue.  Name must be ground; InitialValue can be any term but
+   should normally be ground, since it will be copied when stored and
+   retrieved, which means that any retrieved non-ground value will contain
+   fresh copies of variables rather than the original ones.<P>
+
+   Options must be a list.  The following terms may appear in this list:
+   <DL>
+   <DT>validation_pred(Pred/Arity)</DT>
+       <DD>Pred is used to validate any value to be assigned to the option.
+       This can be used to ensure that only legal values are assigned to the
+       option.  Arity must be either 1 or 2, corresponding to the arity of
+       the predicate to be called: if Arity is 1 then Pred(NewValue) is
+       called, if Arity is 2 then Pred(Name, NewValue) is called; Name is
+       the name of the option and NewValue is the value to be validated.  If
+       the call to Pred succeeds then the value is assigned to the option;
+       if it fails the value is not assigned.  Any choice points left by the
+       call to Pred are pruned upon success.<P>
+
+       Only one validation predicate may be defined for any option; if more
+       are specified then each replaces the one before it.</DD>
+
+   <DT>notify_pred(Pred)</DT>
+       <DD>Specifies that Pred(Name, OldValue, NewValue) should be called
+       whenever the value of the option Name is changed.  OldValue is the
+       old value of the option that has just been replaced and NewValue is
+       the new value that has just been assigned.  Pred should not modify
+       OldValue or NewValue in any way, as this may interfere with other
+       notification predicates.  Note that any choice points left by the
+       call to Pred are pruned upon success.<P>
+
+       See also request_notification/2.</DD>
+   </DL>
+<H2>See Also</H2>
+<A HREF="../../lib/config_opts/set_option-2.html">set_option / 2</A>, <A HREF="../../lib/config_opts/get_option-2.html">get_option / 2</A>, <A HREF="../../lib/config_opts/get_all_options-1.html">get_all_options / 1</A>, <A HREF="../../lib/config_opts/request_notification-2.html">request_notification / 2</A>
+</BODY></HTML>

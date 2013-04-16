@@ -1,0 +1,33 @@
+<HTML><HEAD><TITLE>ground(?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>ground(?Term)</H1>
+Succeeds if Term is ground.
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+
+	Used to test whether Term is ground, i.e. contains no variables.
+
+<H3>Fail Conditions</H3>
+Fails if Term is not ground.
+
+
+<H3>Resatisfiable</H3>
+No.
+<H2>Examples</H2>
+<PRE>
+   Success:
+   ground(atom).
+   ground(likes(mouse,cheese)).
+   Fail:
+   ground(VarTerm).
+   ground(f(a,B,c)).
+   ground([x,y|Z]).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/nonvar-1.html">nonvar / 1</A>, <A HREF="../../kernel/typetest/nonground-1.html">nonground / 1</A>, <A HREF="../../kernel/typetest/type_of-2.html">type_of / 2</A>, <A HREF="../../kernel/typetest/var-1.html">var / 1</A>
+</BODY></HTML>

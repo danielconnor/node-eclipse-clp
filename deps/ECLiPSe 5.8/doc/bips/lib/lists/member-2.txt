@@ -1,0 +1,58 @@
+
+member(?Term, ?List)
+
+   Succeeds if Term unifies with a member of the list List.
+
+
+
+Arguments
+   ?Term               Prolog term.
+   ?List               List or variable.
+
+Type
+   library(lists)
+
+Description
+   Tries to unify Term with an element of the list List.
+
+   If Term is a variable and List is a list, all the members of the list
+   List are found on backtracking.
+
+   If List is not instantiated, member/2 binds List to a new partial list
+   containing the element Term.
+
+   The definition of this Prolog library predicate is:
+
+       member(X,[X|_]).
+       member(X,[Y|T]) :- member(X,T).
+
+   This predicate does not perform any type testing functions.
+	
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      Fails if Term does not unify with a member of the list List.
+
+
+
+Examples
+   
+Success:
+      member(q,[1,2,3,p,q,r]).
+      member(q,[1,2,F]).      (gives F=q).
+      member(X,[1,X]).        (gives X=1; X=_g118).
+      member(X,[2,I]).        (gives X=2 I=_g114; X=_g94 I=_g94).
+      member(1,L).            (gives L=[1|_g64];
+                                     L=[_g62,1|_g68] etc).
+
+Fail:
+      member(4,[1,2,3]).
+
+
+
+
+
+See Also
+   memberchk / 2

@@ -1,0 +1,72 @@
+
+define_error(+Message, -N)
+
+   Error number N is newly defined to give the message Message.
+
+
+
+Arguments
+   +Message            String.
+   -N                  Variable.
+
+Type
+   Obsolete
+
+Description
+   This predicate is used to define new user error types.  Message is a
+   string which is going to be printed when this error occurs (the string
+   returned by error_id/2).  N is bound to the new error number.  The
+   default error handler for the new error is error_handler/2.
+
+
+   Note that the error numbers should not be hard-coded in subsequent calls
+   to error/2 etc., as the error numbers are arranged at run time and may
+   be changed between releases.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Message is not instantiated.
+     5 --- Message is instantiated, but not to a string.
+     5 --- N is instantiated.
+
+Examples
+   
+Success:
+      define_error("my first error message",N).  (gives N=340).
+      define_error("my second error message",N). (gives N=341).
+
+      [eclipse]: [user].
+       :- define_error("1st arg should be number",N),
+          setval(usererror, N).
+       do(N,Res) :-(number(N) ->
+              Res is sqrt(N)
+              ;
+              getval(usererror, Err),
+              error(Err, do(N,Res))).
+       user compiled 232 bytes in 0.00 seconds
+      yes.
+      [eclipse]: do(4,2.0).
+      yes.
+      [eclipse]: do(four,2.0).
+      1st arg should be number in do(four, 2.0)
+Error:
+      define_error(M,N).                    (Error 4).
+      define_error(atom,N).                 (Error 5).
+      define_error("incorrect module",340). (Error 5).
+
+
+
+
+
+See Also
+   set_event_handler / 2, error_id / 2

@@ -1,0 +1,13 @@
+lib(ic_probe_support)
+
+
+    A library exporting structures and predicates used in probing for scheduling.
+
+The following two structures are exported:
+
+task(start,duration,resource)
+options(granularity,priority)
+
+
+    
+

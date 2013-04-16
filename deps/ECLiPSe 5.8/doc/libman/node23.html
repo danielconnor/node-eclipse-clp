@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Edge-finder</TITLE>
+<META NAME="description" CONTENT="Edge-finder">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="node20.html">
+<LINK REL="next" HREF="node24.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1194"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1190"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1186"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1192"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1195"
+ HREF="node24.html">The Integer Sets Library</A>
+<B> Up:</B> <A NAME="tex2html1191"
+ HREF="node20.html">Additional Finite Domain Constraints</A>
+<B> Previous:</B> <A NAME="tex2html1187"
+ HREF="node22.html">Cumulative Constraint and Resource</A>
+ &nbsp <B>  <A NAME="tex2html1193"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00430000000000000000">
+Edge-finder</A>
+</H1>
+
+<P>
+The libraries <B>ic_edge_finder</B> and <B>ic_edge_finder3</B>
+implement stronger versions of the
+disjunctive and cumulative scheduling constraints. They employ
+a technique known as edge-finding to derive stronger bounds on
+the starting times of the tasks.
+The library is loaded using either<PRE>
+:- use_module(library(ic_edge_finder)).
+</PRE>
+to get a weaker variant with quadratic complexity, or<PRE>
+:- use_module(library(ic_edge_finder3)).
+</PRE>
+to get a stronger variant with cubic complexity.
+
+<P>
+<DL>
+<DT><STRONG>disjunctive(+StartTimes,+Durations)</STRONG>
+<DD> 
+<BR>
+<A NAME="2136"></A>
+A disjunctive scheduling constraint. StartTimes and Durations
+are lists of equal length N of integer variables or integers.
+The declarative meaning is that the N tasks with certain start times
+and duration do not overlap at any point in time.
+
+<P>
+<DT><STRONG>cumulative(+StartTimes,+Durations,+Resources,++ResourceLimit)</STRONG>
+<DD> 
+<BR>
+<A NAME="2137"></A>
+A cumulative scheduling constraint. StartTimes, Durations and Resources
+are lists of equal length N of integer variables or integers.
+ResourceLimit is an integer. The declarative meaning is:
+If there are N tasks, each starting at a certain start time, having
+a certain duration and consuming a certain (constant) amount of
+resource, then the sum of resource usage of all the tasks does not
+exceed ResourceLimit at any time.
+This constraint can propagate more information than the implementation
+in library(cumulative).
+
+<P>
+<DT><STRONG>cumulative(+StartTimes,+Durations,+Resources,+Area,++ResourceLimit)</STRONG>
+<DD> 
+<BR>
+<A NAME="2138"></A>
+In this variant, an area (the product of duration and resource usage of
+a task) can be specified, e.g. if duration or resource usage are not
+known in advance. The edge-finder algorithm can make use of this information
+to derive bound updates.
+</DL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1194"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1190"
+ HREF="node20.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1186"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1192"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1195"
+ HREF="node24.html">The Integer Sets Library</A>
+<B> Up:</B> <A NAME="tex2html1191"
+ HREF="node20.html">Additional Finite Domain Constraints</A>
+<B> Previous:</B> <A NAME="tex2html1187"
+ HREF="node22.html">Cumulative Constraint and Resource</A>
+ &nbsp <B>  <A NAME="tex2html1193"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

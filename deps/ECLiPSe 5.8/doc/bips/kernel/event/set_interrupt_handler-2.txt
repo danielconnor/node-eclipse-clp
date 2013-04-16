@@ -1,0 +1,114 @@
+
+set_interrupt_handler(+IntId, +PredSpec)
+
+   Sets an interrupt handler PredSpec for the interrupt IntId
+
+Arguments
+   +IntId              Integer or atom.
+   +PredSpec           Term of the form Atom/Integer.
+
+Type
+   Event Handling
+
+Description
+
+   Assigns the procedure specified by PredSpec as the interrupt handler for
+   the interrupt whose name or number is given by IntId.
+
+   See the ECLiPSe User Manual for details on the operation of
+   interrupt handlers.
+
+   The interrupt handlers of the following interrupts cannot be modified,
+   since they cannot be caught by ECLiPSe .
+
+    No. Code     Description  Example
+    9   SIGKILL  kill         kill process from keyboard
+    17  SIGSTOP  stop         cannot be caught, blocked, ignored
+
+   The interrupts which can be caught or trapped are implementation
+   defined.
+
+   The following interrupt handlers have a special meaning and can be
+   used even with the embedded library version of Eclipse:
+
+    Handler     Meaning
+    -------     -------
+    true/0      ignore the interrupt (SIG_IGN).
+    default/0   take the default operating system action when the
+                interrupt occurs (SIG_DFL).
+    event/1     handle the signal by posting a (synchronous) event. The
+                symbolic name of the interrupt will be used as the event name.
+    throw/1     invoke exit_block/1 with the interrupt's symbolic name.
+    abort/0     invoke exit_block(abort)
+    halt/0      halt Eclipse and terminate the process
+    internal/0  the signal is used by Eclipse to implement internal
+                functionality (e.g. profiler)
+
+    All other handler specifications cause the specified predicate to
+    be called in a nested invocation of the Eclipse engine. This is
+    not supported on some hardware/OS platforms, e.g. Windows.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Either IntId or PredSpec is not instantiated.
+     5 --- IntId is not an atom or integer.
+     5 --- PredSpec is neither a variable nor of the form Atom/Integer.
+     6 --- IntId is not a valid interrupt name or number.
+     6 --- PredSpec is of the form Atom/Integer, but the integer is greater than 3.
+    60 --- PredSpec is of the form Atom/Integer, but no such predicate has been defined.
+   170 --- The interrupt cannot be caught.
+
+Examples
+   
+Success:
+    ?- get_interrupt_handler(alrm,M,N).
+    M = event / 1
+    N = sepia_kernel
+    yes.
+
+    ?- set_interrupt_handler(alrm,true/0), interrupt(alrm).
+    yes.
+
+    ?- kill(0, alrm).
+    yes.
+
+    ?- get_interrupt_handler(alrm,M,N).
+    M = true / 0
+    N = sepia_kernel
+    yes.
+
+    ?- [user].
+     a :- write(log_output, "interrupt 16"), fail.
+     user compiled 136 bytes in 0.00 seconds
+
+    ?- set_interrupt_handler(16,a/0).
+    yes.
+
+    ?- kill(0, 16).
+    interrupt 16
+    yes.
+
+Error:
+    set_interrupt_handler(N,true/0).    (Error 4).
+    set_interrupt_handler(15,P).        (Error 4).
+    set_interrupt_handler(15.0,true/0). (Error 5).
+    set_interrupt_handler(1000,X).      (Error 6).
+    set_interrupt_handler(-1,X).        (Error 6).
+    set_interrupt_handler(6,a/4).       (Error 6).  % arity > 3.
+    set_interrupt_handler(6,t/2).       (Error 60). % no t/2.
+    set_interrupt_handler(9,true/0).    (Error 170).
+    set_interrupt_handler(17,true/0).   (Error 170).
+
+
+
+
+See Also
+   event / 1, set_event_handler / 2, current_interrupt / 2, get_interrupt_handler / 3

@@ -1,0 +1,34 @@
+
+lp_add(+Handle, +NewNormCons, +NewIntegers)
+
+   Add new constraints to a solver state Handle.
+
+Arguments
+   Handle              Handle to a solver state
+   NewNormCons         List of new normalised constraints
+   NewIntegers         List of variables to be considered as integers
+
+Type
+   library(eplex)
+
+Description
+
+  Add new normalised constraints (with possibly new variables) to a solver.
+  This is a lower level predicate called by lp_add_constraints/3 and when
+  constraints are collected from the constraints pool by the solver. The
+  constraints are not simplified and must already be normalised, so
+  constraints which would otherwise be simplified away by the higher level
+  predicates can be added to the external solver. The constraints will be
+  removed on backtracking. Note that the solver will not be invoked directly.
+
+  Note that variables in NewIntegers can be any problem variables. In
+  previous versions of ECLiPSe, there was a restriction that the variables
+  be new problem variables; this restriction has been removed.
+
+
+
+Resatisfiable
+   no
+
+See Also
+   lp_setup / 4

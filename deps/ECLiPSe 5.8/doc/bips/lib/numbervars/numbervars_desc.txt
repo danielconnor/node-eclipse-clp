@@ -1,0 +1,20 @@
+lib(numbervars)
+
+
+    Implements the numbervars(Term, From, To) predicate of C-Prolog.  Term
+    is any term, From and To are integer numbers.  All variables in Term
+    are instantiated to terms of the form
+    
+	$VAR(N) 
+    
+    where N is an integer number.  The first encountered variable will be
+    coded by the number From, on exit To is instantiated to the next
+    unused number. 
+    
+    This predicate can thus be used to encode nonground term using a
+    ground representation.  Note that metaterms can be used for the same
+    purpose, but their use is both more efficient and more general,
+    because the variables are not actually instantiated and so they can be
+    used again as variables when needed. 
+    
+

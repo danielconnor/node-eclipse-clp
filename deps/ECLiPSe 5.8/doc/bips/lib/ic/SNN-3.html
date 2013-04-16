@@ -1,0 +1,61 @@
+<HTML><HEAD><TITLE>$::(?Var, ++Domain, ?Bool)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(ic)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>$::(?Var, ++Domain, ?Bool)</H1>
+Reflect into Bool the truth of Var having the domain Domain. Does not impose integrality.
+<DL>
+<DT><EM>Var</EM></DT>
+<DD>Variable
+</DD>
+<DT><EM>Domain</EM></DT>
+<DD>Domain specification
+</DD>
+<DT><EM>Bool</EM></DT>
+<DD>Reified truth value
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   Provides a reified form of the $::/2 domain assignment predicate.  This
+   reified $::/3 is defined only to work for one variable and real 
+   variables (unlike ::/3), hence only the Domain formats suitable for
+   reals may be supplied to this reified $::/3.
+   <P>
+   For a single variable, V, the Bool will be instantiated to 0 if the
+   current domain of V does not intersect with Domain.  It will be
+   instantiated to 1 iff the domain of V is wholly contained within Domain.
+   Finally the Boolean will remain an integer variable in the range 0..1, if
+   neither of the above two conditions hold.
+   <P>
+   Instantiating Bool to 1, will cause the constraint to behave exactly like
+   $::/2.  Instatiating Bool to 0 will cause a set of delayed goals to
+   excluded the range from the domain of the variable where such an
+   exclusion is representable.
+   <P>
+   Note that calling the reified form of $:: will NOT result in the Variable
+   becoming constrained to be integral, even if domain contains only integers.
+   <P>
+   Further note that, like other reified predicates, $:: can be used infix in
+   an IC expression, e.g. B #= (X $:: [1..10]) is equivalent to
+   $::(X, [1..10], B).
+
+<H2>Examples</H2>
+<PRE>[eclipse 2]: $::(X, 1..30,1).
+
+X = X{1.0 .. 30.0}
+Yes (0.00s cpu)
+
+[eclipse 3]: $::(X, [1..10, 12..30],0).
+
+Abort
+type error in $::(X, [1 .. 10, 12 .. 30], 0)
+
+[eclipse 4]: $::(X, 1.0..30.0,B).
+
+X = X{-1.0Inf .. 1.0Inf}
+B = B{[0, 1]}
+There are 3 delayed goals.
+Yes (0.00s cpu)
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/ic/integers-1.html">integers / 1</A>, <A HREF="../../lib/ic/reals-1.html">reals / 1</A>, <A HREF="../../lib/suspend/SNN-2.html">suspend : $:: / 2</A>, <A HREF="../../lib/eplex/SNN-2.html">eplex : $:: / 2</A>, <A HREF="../../lib/ic/SNN-2.html">$:: / 2</A>, <A HREF="../../lib/ic/NN-3.html">:: / 3</A>
+</BODY></HTML>

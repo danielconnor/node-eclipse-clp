@@ -1,0 +1,21 @@
+
+print_default_options(+Stream)
+
+   Print the valid options and their current default values to Stream
+
+Arguments
+   Stream              An output stream
+
+Type
+   library(module_options)
+
+Description
+
+    The exact behaviour of this predicate depends on the module from where
+    it is invoked: It prints a list of the valid options and their current
+    default values onto the stream Stream.
+
+    
+
+See Also
+   library(module_options), get_options / 2, set_default_option / 2

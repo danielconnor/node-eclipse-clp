@@ -1,0 +1,31 @@
+
+sorted_keys(+Map, -KeyList)
+
+   Return all the keys from a map, in sorted order.
+
+Arguments
+   Map                 A map
+   KeyList             A list of all the keys from Map
+
+Type
+   library(m_map)
+
+Description
+	
+	KeyList is a list of all the keys appearing in the map Map, in
+	sorted order.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   keys / 2, values / 2

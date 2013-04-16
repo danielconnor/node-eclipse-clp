@@ -1,0 +1,20 @@
+
+minlist(+List, ?Min)
+
+   Min is the minimum of the values in List
+
+Arguments
+   List                List of integers or domain variables
+   Min                 Variable or integer
+
+Type
+   library(ic_global)
+
+Description
+    	Min is the minimum of the values in List.  Operationally: 
+	Min gets updated to reflect the current range of the minimum
+	of variables and values in List.  Likewise, the list
+	elements get constrained to the minimum given
+
+See Also
+   maxlist / 2, sumlist / 2

@@ -1,0 +1,76 @@
+<HTML><HEAD><TITLE>dbgcomp</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>dbgcomp</H1>
+Tells the compiler to generate code with debug instructions.  Equivalent to
+the call to set_flag(debug_compile, on).
+
+
+<DL>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Only predicates that have been compiled with debug instructions can be
+   traced by the debugger.
+
+<P>
+   The generation of debug instruction is switched on by default, and is
+   only switched off using nodbgcomp/0 or else using
+   set_flag(debug_compile, off).  This can be reversed using dbgcomp/0 or
+   else using
+   set_flag(debug_compile, on).
+
+<P>
+   Predicates that have been compiled without debug instructions cannot be
+   traced by the debugger (only entering and leaving such a predicate can
+   be shown).
+
+<P>
+   On the other hand, this code uses less space and runs slightly faster
+   than code with debug instructions.  So it makes sense to compile
+   well-tested predicates without debug instructions.
+
+<P>
+   Note however that predicates with debug instructions that are called by
+   predicates without debug instructions are invisible to the debugger.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      [eclipse]: dbgcomp, [user].
+       p :- writeln(hello).
+       user compiled 60 bytes in 0.02 seconds.
+      [eclipse]: nodbgcomp, [user].
+       q :- writeln(hello).
+       % generated code is smaller
+       user compiled 44 bytes in 0.00 seconds.
+      [eclipse]: trace.
+      yes.
+      Debugger switched on - creep mode
+      [eclipse]: p.
+        (1) 0  CALL   p (dbg)?- creep
+      B (2) 1  CALL   writeln(hello) (dbg)?- creep
+      hello
+      B (2) 1  EXIT   writeln(hello) (dbg)?- creep
+        (1) 0  EXIT   p (dbg)?- creep
+      yes.
+      [eclipse]: q.
+      N (1) 0  CALL   q (dbg)?- creep  % the inside of q/0
+      hello                            % is invisible
+      N (1) 0  EXIT   q (dbg)?- creep  % to the debugger
+      yes.
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/directives/pragma-1.html">pragma / 1</A>, <A HREF="../../kernel/obsolete/nodbgcomp-0.html">nodbgcomp / 0</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>
+</BODY></HTML>

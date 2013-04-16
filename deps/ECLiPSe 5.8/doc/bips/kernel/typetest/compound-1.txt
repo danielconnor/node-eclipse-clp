@@ -1,0 +1,44 @@
+
+compound(?Term)
+
+   Succeeds if Term is of type compound, i.e.  a structure or a list.
+
+
+
+Arguments
+   ?Term               Prolog term.
+
+Type
+   Type Testing
+
+Description
+   Used to test whether Term is a compound term.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Term is not a compound term.
+
+
+
+Examples
+   
+   Success:
+   compound(f(1,2)).
+   compound([1,2,3]).
+   compound(.(1,2)).
+   Fail:
+   compound("f(1,2)").
+   compound(Term).
+   compound(atom).
+
+
+
+
+
+See Also
+   atom / 1, atomic / 1, var / 1

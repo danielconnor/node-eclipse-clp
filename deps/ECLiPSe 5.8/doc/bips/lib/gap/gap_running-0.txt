@@ -1,0 +1,15 @@
+
+gap_running
+
+   Query whether a GAP session is currently active
+
+Type
+   library(gap)
+
+Description
+   This predicate succeeds if there is a GAP session currently active and
+   fails if there is not.
+
+
+See Also
+   gap_ensure_started / 0, gap_shutdown / 0, gap_restart / 0

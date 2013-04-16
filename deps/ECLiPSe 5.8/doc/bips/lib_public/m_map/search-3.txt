@@ -1,0 +1,33 @@
+
+search(+Map, ++Key, ?Value)
+
+   Search a map for a key.
+
+Arguments
+   Map                 A map
+   Key                 A key to search for
+   Value               The value corresponding to Key
+
+Type
+   library(m_map)
+
+Description
+	
+	This predicate searches the map Map for an entry with key Key.
+	If the key is found, then it attempts to unify the corresponding
+	value with Value.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Key does not appear in Map or if Value does not unify with the corresponding value found.
+
+See Also
+   member / 3, lookup / 3, inverse_search / 3

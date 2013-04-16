@@ -1,0 +1,36 @@
+
+upper_bound_lookup(+Map, ++SearchKey, ?Key, ?Value)
+
+   Search a map for the largest key no larger than SearchKey.
+
+Arguments
+   Map                 A map
+   SearchKey           A key to search for
+   Key                 The key found
+   Value               The value corresponding to Key
+
+Type
+   library(m_map)
+
+Description
+	
+	This predicate searches the map Map for the entry with the
+	largest key which is no larger than SearchKey.  If such a key is
+	found, then it attempts to unify it with Key and the corresponding
+	value with Value.  If such a key is not found, then it aborts with
+	a runtime error.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Key and Value do not unify with the key and value found.
+
+See Also
+   lower_bound_search / 4, lower_bound_lookup / 4, upper_bound_search / 4

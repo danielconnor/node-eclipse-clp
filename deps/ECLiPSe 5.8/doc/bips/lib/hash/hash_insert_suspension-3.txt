@@ -1,0 +1,67 @@
+
+hash_insert_suspension(+Table, +Susp, -Notifications)
+
+   Attach a suspension to be woken on hash table modifications
+
+Arguments
+   Table               Hash table
+   Susp                A suspension
+   Notifications       A receive port, see library(notify_ports)
+
+Type
+   library(hash)
+
+Description
+
+        Attach a suspension Susp to the hash table Table such that it gets
+	woken whenever the table changes (i.e. when entries are added, changed
+	or removed).
+	
+	The suspended goal would typically be a demon (because it is going to
+	be woken repeatedly, on every change). hash_insert_suspension/3 also
+	supplies a Notifications argument, which should be used as one of the
+	arguments of the suspended goal (see example). This is a "receive
+	port" as defined by library(notify_ports), and is used to convey
+	information about the changes that happened to the hash table.
+	The notifications are of the following form:
+	
+	add(Key,Value)             if a table entry was added
+	chg(Key,OldValue,NewValue) if a table entry was modified
+	rem(Key,OldValue)          if a table entry was removed
+	
+	Note that the suspensions will be always be woken after the hash
+	table has changed, so they will see the new state when they wake up.
+    
+
+Examples
+   
+    % Program:
+
+	hash_create_verbose(H) :-
+	    hash_create(H),
+	    make_suspension(report(Notifications,Susp), 2, Susp),
+	    hash_insert_suspension(H, Susp, Notifications).
+
+	:- demon(report/2).
+	report(Notifications, Susp) :-
+	    notify_ports:receive_notifications(Notifications, List, Status),
+	    writeln(changes:List),
+	    ( Status = closed -> kill_suspension(Susp) ; true ).
+
+
+    % Sample execution
+
+    ?- hash_create_verbose(H),
+       hash_set(H,k1,v1), hash_set(H,k1,v2), hash_delete(H,k1),
+       hash_terminate_suspensions(H).
+    changes : [add(k1, v1)]
+    changes : [chg(k1, v1, v2)]
+    changes : [rem(k1, v2)]
+    changes : []
+
+    H = hash(4, 0, [])
+    Yes (0.00s cpu)
+    
+
+See Also
+   hash_terminate_suspensions / 1, notify_ports : receive_notifications / 3, notify_ports : foreachnotification / 6, library(notify_ports), demon / 1

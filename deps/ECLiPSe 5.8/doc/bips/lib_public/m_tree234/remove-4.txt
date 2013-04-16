@@ -1,0 +1,34 @@
+
+remove(+Tree0, ++Key, ?Value, -Tree)
+
+   Remove a key/value pair from a tree, failing if the key is not present.
+
+Arguments
+   Tree0               A 2-3-4 tree
+   Key                 The key to remove
+   Value               The value corresponding to Key
+   Tree                The tree after removal
+
+Type
+   library(m_tree234)
+
+Description
+	
+	If the key Key appears in the tree Tree0, then remove it and attempt
+	to unify its corresponding value with Value.  Tree is Tree0 with the
+	key removed.
+	
+	
+	This predicate should only be called with trees created by other
+	predicates from the tree234 module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails is Key does not appear in Tree0 or if Value does not unify with the corresponding value.
+
+See Also
+   delete / 3, remove_smallest / 4

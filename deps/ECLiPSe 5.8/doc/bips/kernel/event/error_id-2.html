@@ -1,0 +1,90 @@
+<HTML><HEAD><TITLE>error_id(+N, ?Message)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Event Handling</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>error_id(+N, ?Message)</H1>
+Succeeds if Message unifies with the error message string defined for error
+number N.
+
+
+<DL>
+<DT><EM>+N</EM></DT>
+<DD>Positive integer.
+</DD>
+<DT><EM>?Message</EM></DT>
+<DD>String or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate unifies Message with the message string defined for error
+   number N.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Message does not unify with the error message string defined
+   for error number N.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>N is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>N is instantiated, but not to an integer.
+<DT><EM>(5) type error </EM>
+<DD>Message is instantiated, but not to a string.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      error_id(80,M).
+           (gives M="not a module").
+      error_id(70,M).
+           (gives M="accessing an undefined dynamic procedure").
+      error_id(60,M).
+           (gives M="accessing an undefined procedure").
+      error_id(90,M).
+           (gives M="declaration not at module beginning").
+
+      ?- [user].
+       warning_handler(X, Where) :-
+              write('(warning) '),
+              error_id(X, Message),
+              write(Message),
+              write(' in '),
+              write(Where).
+       user compiled 332 bytes in 0.05 seconds
+
+      ?- warning_handler(60,dummy).
+      (warning) accessing an undefined procedure in dummy
+      yes.
+
+      ?- [user].
+       fail_warning(N, Where) :-
+               write("Warning: Failure due to "),
+               error_id(N, Errmsg),
+               write(Errmsg),
+               write(":"-Where),
+               fail.
+       user compiled 328 bytes in 0.00 seconds
+      yes.
+
+      ?- set_event_handler(68, fail_warning/2).
+      yes.
+
+      ?- p.
+      Warning: Failure due to calling an undefined procedure: - p
+      no.
+Fail:
+      error_id(60,"procedure not defined").
+Error:
+      error_id(N,"not a module").        (Error 4).
+      error_id(1.0,M).                   (Error 5).
+      error_id(1,atom).                  (Error 5).
+
+
+</PRE>
+<H2>See Also</H2>
+
+</BODY></HTML>

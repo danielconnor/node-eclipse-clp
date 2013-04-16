@@ -1,0 +1,50 @@
+lib(gap)
+
+   This library provides an interface to the GAP computational algebra
+   system (see www.gap-system.org).  GAP must be installed and appear in the
+   user's path in order for this library to work.
+
+   Commands can be sent to GAP using the gap_command/2 predicate.  If there
+   are results that need to be returned to ECLiPSe, use gap_query/3 or
+   gap_query_string/3.  Normally GAP will be started automatically when it
+   is needed, and shut down automatically when the ECLiPSe session ends, but
+   some manual control is available through gap_ensure_started/0,
+   gap_shutdown/0 and gap_restart/0.  gap_running/0 can be used to determine
+   whether a GAP session is currently active.
+
+   The current implementation of the library only supports one GAP session
+   at a time, to be shared amongst all software components that use the
+   library.  In future we expect to allow multiple concurrent independent
+   sessions through the use of handles.
+
+   This library supports the following options (see library(config_opts)):
+   
+   gap_reporting_level
+       Controls how much reporting output the GAP interface generates.
+       Valid levels are:
+       
+       silent
+           Generate no reporting output under any circumstances.
+       error
+           Generate reporting output only when an error occurs.
+       standard
+           Generate basic reporting output.
+       verbose
+           Generate lots of reporting output, including all commands and
+           queries sent to/from GAP.
+       
+       The default is standard.  Verbose can be useful for debugging.
+
+   gap_reporting_stream
+       Specifies the stream to send reporting output to.  By default,
+       ECLiPSe's standard output stream is used.
+   
+
+   This library is still experimental and is expected to evolve.  Feedback,
+   suggestions, problem reports, etc. welcome.
+
+   Please note that this library currently does not work on Windows machines
+   since it relies on named pipes, which are currently unsupported by
+   cygwin.
+
+

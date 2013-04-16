@@ -1,0 +1,74 @@
+
+create_module(+Module, +Exports, +Imports)
+
+   Create a module at runtime, with given exports and imports.
+
+Arguments
+   +Module             Atom.
+   +Exports            A list of export specifications as in export/1
+   +Imports            An atom or a list of atoms
+
+Type
+   Modules
+
+Description
+   create_module/3 creates the given module if it does not exist yet.
+   If the module already exists, an exception is raised (error 97).
+
+   Once the module is created, the module (or list of modules) given as
+   Imports is imported.
+
+   The list Exports must contain valid export specifications as
+   described in export/1.  It defines the initial part of the module's
+   interface, subsequent export and reexport directives can add to that.
+
+   Note that modules are normally created by the compiler when it
+   encounters a module/1 or module/3 directive.  The create_module/3
+   predicate however creates modules dynamically at runtime.  The
+   intended applications are therefore mainly source processing tools,
+   e.g. compilers and loaders, or programs that need a clean name
+   space to store code and data.
+
+   The system does not allow the atom [] to be used as a module name!
+   If [] is given as the Imports argument, it indicates the empty list,
+   rather than a module with name [].
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module, Imports or Exports is not instantiated.
+     5 --- Module is not an atom, or Module is the atom [].
+     5 --- Imports is not an atom or list of atoms.
+     5 --- Exports is not a list of exportable items.
+    97 --- Module already exists.
+
+Examples
+   
+Success:
+    [eclipse 1]: create_module(m, [data/1], []).
+    yes.
+    [eclipse 2]: compile_term(data(99))@m.
+    yes.
+    [eclipse 3]: m:data(X).
+
+    X = 99
+    yes.
+    [eclipse 4]: erase_module(m).
+    yes.
+
+Error:
+    create_module(M, [], []).                (Error 4).
+    create_module(m, _, _).                  (Error 4).
+    create_module(m, [], library(iso)).      (Error 5).
+    create_module(m,[],[]), create_module(m,[],[]). (Error 97).
+
+
+See Also
+   module / 1, module / 3, create_module / 1, erase_module / 1, get_module_info / 3, current_module / 1

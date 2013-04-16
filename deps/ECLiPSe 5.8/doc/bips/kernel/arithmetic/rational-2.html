@@ -1,0 +1,82 @@
+<HTML><HEAD><TITLE>rational(+Number, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>rational(+Number, ?Result)</H1>
+Converts Number into a rational number and unifies it with Result.
+
+
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or rational number.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to rational(Number, Result) is
+   equivalent to
+<PRE>
+    Result is rational(Number)
+</PRE>
+    which should be preferred.
+<P>
+   When Number is an integer, Result is a rational with denominator 1.
+<P>
+   When Number is already a rational, Result is identical to Number.
+<P>
+   When Number is a float, Result is a rational whose value is exactly equal
+   to the value of the floating-point number. Since floats are usually
+   approximations of the intended value, the results may look unintuitive
+   and have unnecessarily large numerators and denominators. Use rationalize/2
+   to produce the most compact rational that still converts back into the
+   original float. rational/2 is usually faster than rationalize/2.
+<P>
+   Bounded reals cannot be converted to rationals.
+<P>
+   In coroutining mode, if Number is a free variable, the call to
+   rational/2 is delayed until this variable is instantiated.
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated (non-coroutining mode only).
+<DT><EM>(5) type error </EM>
+<DD>Result is a number but not of type rational.
+<DT><EM>(24) number expected </EM>
+<DD>Number is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+<DT><EM>(141) unimplemented functionality </EM>
+<DD>Number is a bounded real
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      rational(25, 25_1).
+      rational(1.5, 3_2).
+      rational(3_4,3_4).
+      rational(9_12,3_4).
+      rational(-6, Result).      (gives Result = -6_1)
+      rational(0.1, Result).     (gives Result = 3602879701896397_36028797018963968)
+Fail:
+      rational(1, 2_1).
+Error:
+      rational(A, 1_3).                   (Error 4).
+      rational(3, 3).                     (Error 5).
+      rational(1, r).                     (Error 24).
+      rational(4 + 2, 6_1).               (Error 24).
+      rational(0.9__1.1, X).              (Error 141).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/rationalize-2.html">rationalize / 2</A>, <A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

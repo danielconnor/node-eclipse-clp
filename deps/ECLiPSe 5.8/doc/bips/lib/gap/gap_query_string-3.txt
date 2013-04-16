@@ -1,0 +1,25 @@
+
+gap_query_string(++Format, +Args, ?Result)
+
+   Query GAP
+
+Arguments
+   Format              Format string
+   Args                List of arguments
+   Result              Result (string)
+
+Type
+   library(gap)
+
+Description
+   Evaluates an expression in GAP and returns the result as a string.  The
+   expression is specified using Format and Args a la printf/2, and should
+   be a valid GAP expression (no terminating semicolon).  The result is
+   returned as a string in Result.
+
+   If there is no currently active GAP session, one is started before
+   sending the query.
+
+
+See Also
+   gap_query / 3, gap_command / 2, printf / 2

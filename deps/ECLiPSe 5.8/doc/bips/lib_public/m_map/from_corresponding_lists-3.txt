@@ -1,0 +1,30 @@
+
+from_corresponding_lists(++KeyList, ?ValueList, -Map)
+
+   Converts a corresponding pair of lists into a map.
+
+Arguments
+   KeyList             A list of keys
+   ValueList           A list of values corresponding to the keys in KeyList
+   Map                 The created map
+
+Type
+   library(m_map)
+
+Description
+	
+	Converts a list of keys KeyList and a corresponding list of values
+	ValueList into a map Map.  If a key appears more than once in
+	KeyList, then its corresponding value in the map Map will be
+	the last one appearing in AssocList.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if the lists aren't the same length.
+
+See Also
+   from_assoc_list / 2, det_insert_from_corresponding_lists / 4

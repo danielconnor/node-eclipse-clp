@@ -1,0 +1,1399 @@
+:- comment(alias, "Control").
+:- comment(summary, "Built-ins and language constructs to control execution").
+
+:- comment(phrase / 3, [
+	summary:"Succeeds if Tokens can be parsed as part of the grammar defined in Grammar
+and Remainder contains any remaining terms in Tokens.
+
+",
+	template:"phrase(+Grammar, ?Tokens, ?Remainder)",
+	desc:html("   phrase/3 is used to parse grammars (DCGs) defined using the grammar rule
+   operator --&gt;.  The flag macro_expansion must be set on when compiling
+   grammar rules.
+
+<P>
+   Giving a list of terms in Tokens, phrase/3 parses it according to the
+   grammar defined in Grammar.  As the terms in Tokens are parsed in order,
+   any remaining terms are returned in Remainder.  Further acceptable
+   solutions are returned on backtracking.
+"),
+	args:["+Grammar" : "Compound Term or Atom.", "?Tokens" : "List of Prolog terms.", "?Remainder" : "List of Prolog terms."],
+	resat:"   Depends on the grammar.",
+	fail_if:"   The initial terms in Tokens does not belong to Grammar\n\n",
+	exceptions:[4 : "Grammar is not instantiated.", 5 : "Grammar is a number or a string."],
+	eg:"
+   [eclipse]: [user].
+    a --> [].
+    a --> [z],a.
+    user compiled 212 bytes in 0.03 seconds
+   yes.
+   [eclipse]: phrase(a,[z,z],[]).
+
+   yes.
+   [eclipse]: phrase(a,[z,z,z,y],[z,y]).
+
+   yes.
+   [eclipse]: phrase(a,[z,z,y],R).
+
+   R = [z, z, y]     More? (;)
+
+   R = [z, y]     More? (;)
+
+   R = [y]     More? (;)
+
+   no (more) solution.
+   [eclipse]: phrase(a,X,[y]).
+
+   X = [y]     More? (;)
+
+   X = [z, y]     More? (;)
+
+   X = [z, z, y]     More? (;)
+
+   X = [z, z, z, y]     More? (;)
+
+   X = [z, z, z, z, y]     More? (;)
+   yes.
+   [eclipse]:
+
+Fail:
+   phrase(a, [z, z, y], []).
+
+Error:
+   phrase(X, [what, time, is, it], [is, it],R).  (Error 4).
+   phrase(\"a\", X,R).                             (Error 5).
+   phrase(456, X,R).                             (Error 5).
+
+
+
+",
+	see_also:[current_macro / 4, macro / 3, erase_macro / 2]]).
+
+:- comment(abort / 0, [
+	summary:"The current computation is aborted and control is returned to the top
+level.
+
+",
+	template:"abort",
+	desc:html("   Used to abort the current computation and return control to the top
+   level.  This predicate is also executed when Ctrl-C is typed (unless the
+   interrupt handler for this event has been redefined).
+
+<P>
+   abort/0 is implemented using exit_block(abort) which is caught by the
+   top level loop.  If there is an active block/3 call whose tag matches
+   the atom abort, the control does not return to the top level loop but is
+   caught by this block.  If there is neither a top level loop (eg the -e
+   option has been used) nor any block to catch the abort, then ECLiPSe will
+   either return to the host program (in case of an embedded ECLiPSe) or
+   the ECLiPSe process will exit (in case of a standalone ECLiPSe).
+
+<P>
+"),
+	args:[],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	eg:"
+   [eclipse]: abort.
+   Aborting execution....
+   [eclipse]:
+
+
+
+",
+	see_also:[kill / 2, block / 3, exit_block / 1]]).
+
+:- comment(call / 1, [
+	summary:"Succeeds if Goal succeeds.
+
+",
+	template:"call(+Goal)",
+	desc:html("   Calls the goal Goal.  This predicate is used to call goals whose
+   functors are known only at the time they are called.
+
+<P>
+   Note that:
+
+<P>
+   call(Goal) is logically the same as Goal and !/0 does not cut through
+   call/1.
+
+<P>
+"),
+	args:["+Goal" : "Atom or compound term."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails.\n\n",
+	exceptions:[4 : "Goal is not instantiated.", 5 : "Goal is not an atom or a compound term."],
+	eg:"
+Success:
+      [eclipse]: [user].
+       or(A -> B, C) :- call(A), !, call(B).
+       or(_ -> _, C) :- call(C).
+       user compiled 412 bytes in 0.02 seconds
+      [eclipse]: or(write(a)->fail, write(k)).
+      a
+      no.
+      [eclipse]: or(fail->write(here),true).
+      yes.
+
+Fail:
+      [eclipse]: call(fail),write(here).
+      no.
+Error:
+      call(G).                  (Error 4).
+      call(\"write(a)\").         (Error 5).
+
+
+
+",
+	see_also:[subcall / 2, (@) / 2, (:) / 2]]).
+
+:- comment((',') / 2, [
+	summary:"Comma (AND) operator - succeeds if the goals Goal1 and Goal2 both succeed
+
+",
+	template:"+Goal1 , +Goal2",
+	desc:html("   Succeeds if both Goal1 and Goal2 can be satisfied.
+
+<P>
+   Note that !/0 cuts through ,/2.
+
+<P>
+"),
+	args:["+Goal1" : "Atom or compound term.", "+Goal2" : "Atom or compound term."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	eg:"
+Success:
+      [eclipse]: (F=\"file1\", writeln(F)).
+      file1
+      F = \"file1\"
+      yes.
+
+      [eclipse]: call((write(a), write(b))).
+      ab
+      yes.
+
+
+
+",
+	see_also:[(;) / 2]]).
+
+:- comment(! / 0, [
+	index:["Cut"],
+	summary:"Cut - succeeds and removes all choice points between cut and parent goal.
+
+",
+	template:"!",
+	desc:html("   The cut operation succeeds immediately when first encountered as a goal.
+   The cut commits all the choices made since the parent goal was invoked,
+   and causes any other alternatives to be discarded.
+
+<P>
+   Note that:
+
+<P>
+   !/0 cuts through ,/2, ;/2 and -&gt;/2, but it does not cut through call/1,
+   not/1 or once/1.
+
+<P>
+"),
+	args:[],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	eg:"
+Success:
+      [eclipse]: [user].
+       or(A -> B, C) :- call(A), !, call(B).
+       or(_ -> _, C) :- call(C).
+       user compiled 412 bytes in 0.02 seconds
+      [eclipse]: or(write(a)->fail, write(k)).
+      a
+      no.
+      [eclipse]: or(fail->fail,write(k)).
+      k
+      yes.
+
+      [eclipse]: [user].
+       echo :- repeat, read(X), echo(X), !.
+       echo(end_of_file).
+       echo(X) :- writeln(X), fail.
+       user compiled 404 bytes in 0.02 seconds
+      yes.    % if the cut is left out, backtracking occurs.
+      [eclipse]: echo.
+       f(1,2).
+      f(1,2)
+       end_of_file.
+      yes.
+
+
+
+",
+	see_also:[fail / 0, (once) / 1, repeat / 0, (;) / 2]]).
+
+:- comment(fail / 0, [
+	summary:"Does not succeed.  A synonym of false/0.
+
+",
+	template:"fail",
+	desc:html("   Does not succeed.
+
+<P>
+"),
+	args:[],
+	resat:"   No.",
+	fail_if:"   Always fails.\n\n",
+	eg:"
+Success:
+      [eclipse]: [user].
+       not1(Goal) :- call(Goal),!,fail.
+       not1(_).
+       user compiled 208 bytes in 0.02 seconds
+      [eclipse]: not1(true).
+      no.
+      [eclipse]: not1(fail).
+      yes.
+
+Fail:
+     fail.
+
+
+
+",
+	see_also:[true / 0, false / 0]]).
+
+:- comment(false / 0, [
+	summary:"Does not succeed (synonym of fail/0).
+
+",
+	template:"false",
+	desc:html("   Does not succeed.
+
+<P>
+"),
+	args:[],
+	resat:"   No.",
+	fail_if:"   Always fails.\n\n",
+	eg:"
+Success:
+      [eclipse]: [user].
+       not1(Goal) :- call(Goal), !, false.
+       not1(_).
+       user compiled 208 bytes in 0.02 seconds
+      [eclipse]: not1(true).
+      no.
+      [eclipse]: not1(fail).
+      yes.
+      [eclipse]: not1(false).
+      yes.
+
+Fail:
+      false.
+
+
+
+",
+	see_also:[fail / 0]]).
+
+:- comment((not) / 1, [
+	index:["Negation"],
+	summary:"Succeeds if Goal cannot be satisfied (uses negation as failure).
+
+",
+	template:"not +Goal",
+	desc:html("   Used to fail if Goal succeeds.  Uses the standard Prolog form of
+   negation as failure.
+
+<P>
+   To check whether a call Goal succeeds without binding variables, the
+   call not not Goal can be used.  Note that !/0 does not cut through
+   not/1.
+
+<P>
+"),
+	args:["+Goal" : "Atom or compound term."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal succeeds.\n\n",
+	eg:"
+Success:
+      not fail .
+      not 1 == 2 .
+      not X==1 .
+      not not X = 1.
+          % does not bind X
+Fail:
+      not(X=1).
+      not(true).
+      not(3 == 3).
+
+
+
+",
+	see_also:[(\+) / 1, (~) / 1, (->)/2]]).
+
+:- comment((\+) / 1, [
+	index:["Negation"],
+	summary:"Succeeds if Goal cannot be satisfied.  Uses negation as failure (synonym of not/1).
+
+",
+	template:"\\+ +Goal",
+	desc:html("   Used to fail if the goal Goal can be satisfied.  Uses the standard
+   Prolog form of negation as failure.
+
+<P>
+   May be used to check whether a call Goal succeeds without binding
+   variables, the call \\+ \\+ Goal can be used.
+
+<P>
+   Note that:
+
+<P>
+   !/0 does not cut through \\+/1.
+
+<P>
+"),
+	args:["+Goal" : "Goal."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal succeeds.\n\n",
+	eg:"
+Success:
+      \\+ fail.
+      \\+ 1 == 2.
+      \\+ X == 1.
+      \\+ \\+ X = 1.
+          % does not bind X
+Fail:
+      \\+ X = 1.
+      \\+ true.
+      \\+ 3 == 3.
+
+
+
+",
+	see_also:[(->)/2, (not) / 1, (~) / 1]]).
+
+:- comment((once) / 1, [
+	summary:"Succeeds if Goal succeeds, and removes all its alternatives --- equivalent
+to call((Goal, !))
+
+",
+	template:"once +Goal",
+	desc:html("   Used to find a single solution for Goal, alternative solutions are
+   ignored (cut).
+
+<P>
+   Note that !/0 does not cut through once/1.
+
+<P>
+"),
+	args:["+Goal" : "Goal."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails.\n\n",
+	exceptions:[4 : "Goal is not instantiated.", 5 : "Goal is neither an atom nor a compound term."],
+	eg:"
+Success:
+      [eclipse]: once member(X, [1,2,3]).
+      X = 1       % only first solution is bound.
+      yes.
+
+Fail:
+      [eclipse]: once 1=2.
+      no.
+
+Error:
+      once Goal.                     (Error 4).
+      once \"ls\".                     (Error 5).
+      once 1.0.                      (Error 5).
+
+
+
+",
+	see_also:[call / 1, (->) / 2]]).
+
+:- comment((;) / 2, [
+	index:["Disjunction","Or"],
+	summary:"Semicolon (OR) operator - Succeeds if the goal Goal1 succeeds or if the
+goal Goal2 succeeds.
+
+",
+	template:"+Goal1 ; +Goal2",
+	desc:html("   Succeeds if either of Goal1 and Goal2 succeed.
+
+<P>
+   Note that:
+
+<P>
+   !/0 cuts through ;/2.
+
+<P>
+"),
+	args:["+Goal1" : "Atom or compound term.", "+Goal2" : "Atom or compound term."],
+	resat:"   Yes.",
+	fail_if:"   Fails if both Goal1 and Goal2 fail.\n\n",
+	eg:"
+Success:
+      1 == 2; 2 == 2.
+
+      [eclipse]: (write(a), fail) ; (write(b); write(c)).
+      ab
+      yes.
+
+      [eclipse]: (write(a); write(b)), write(c).
+      ac
+      yes.
+
+Fail:
+      1 == 2; 3 == 2.
+
+
+
+",
+	see_also:[! / 0, (->) / 2]]).
+
+:- comment((~) / 1, [
+	index:["Negation"],
+	summary:"The sound negation operator.  If Goal is not ground, the predicate delays.
+
+",
+	template:"~?Goal",
+	desc:html("
+   This is the sound negation operator.  It can be used instead of
+   not/1, or \\+/1 (the negation as failure operators).  It is known
+   that negation as failure may yield non-logical results if the Goal
+   contains free variables.  To avoid this, ~/1 delays if Goal is not
+   ground.  If the free variables are bound later in the execution,
+   the delayed predicate is woken and executed and may yield success
+   or failure.  While ~/1 always behaves logically, in some cases it
+   delays where negation as failure or constructive negation would
+   have immediately (and correctly) failed.
+
+<P>
+"),
+	args:["?Goal" : "Callable term or a variable."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal can be satisfied\n\n",
+	eg:"
+Success:
+    ~ 3 = 4.
+    ~ 3 = X,            (delays ...
+        X = 4.             ... and succeeds with X = 4)
+Fail:
+    ~ 3 = 3.
+    ~ 3 = X,            (delays ...
+        X = 3.             ... and fails)
+    ~ X = X,            (delays ...
+        X = 3.             ... and fails)
+
+
+
+",
+	see_also:[(not) / 1, (\+) / 1, suspend/3]]).
+
+:- comment((@) / 2, [
+	summary:"Goal is executed in the calling context of ContextModule.
+
+",
+	template:"Goal @ ContextModule",
+	desc:html("   The calling context of a goal is normally the module where the goal is
+   called.  @/2 allows to specify this context module explicitly.  This is
+   needed when writing meta-predicates (i.e. predicates which have goals or
+   predicates as their arguments) or predicates which depend otherwise on
+   the module system's visibility rules.
+<P>
+   @/2 changes only the context module, not the lookup module. I.e. the
+   way the definition of Goal is found is not affected at all. To specify
+   the lookup module, use :/2. The following table summarises:
+<PRE>
+	Call within module(m)         lookup module    caller module
+
+	..., twice(X), ...               m               m
+	..., lm : twice(X), ...         lm               m
+	..., twice(X) @ cm, ...          m              cm
+	..., lm : twice(X) @ cm, ...    lm              cm
+	..., call(twice(X)) @ cm, ...   cm              cm
+</PRE>
+   If Goal is not a tool-predicate, then Goal@ContextModule is completely
+   equivalent to Goal.
+"),
+	args:["+Goal" : "Callable term (atom or compound).", "+ContextModule" : "Atom."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails.\n\n",
+	exceptions:[4 : "Goal is not instantiated.", 5 : "Goal is neither an atom nor a compound term.", 68 : "Goal is an undefined procedure in the caller module."],
+	eg:"
+    [eclipse 1]: [user].
+     :- tool(where/0, where/1).
+     where(Module) :-
+        printf(\"where/0 was called from module %w\\n\",
+         [Module]).
+    ^D
+    [eclipse 2]: where.
+    where/0 was called from module eclipse
+    yes.
+    [eclipse 3]: where @ m.
+    where/0 was called from module m
+    yes.
+    [eclipse 4]: call(where) @ m.
+    calling an undefined procedure where in module m
+    [eclipse 1]: [user].
+     :- tool(print_local_preds/0, print_local_preds/1).
+     print_local_preds(Module) :-
+            current_predicate(P) @ Module,
+            get_flag(P, visibility, local) @ Module,
+            writeln(P),
+            fail.
+    ^D
+    [eclipse 2]: print_local_preds.
+    print_local_preds / 0
+    print_local_preds / 1
+
+
+
+",
+	see_also:[(:) / 2, call / 1, tool / 2]]).
+
+
+:- comment((:) / 2, [
+	summary:"Call the procedure visible in LookupModule rather than the caller module",
+	template:"+LookupModule : +Goal",
+	desc:html("\
+   This predicate provides a means to invoke a procedure which is not visible.
+   Normally, when a procedure is called, the system looks for a visible
+   definition (local or imported) in the caller module.  This primitive
+   on the other hand allows to specify a different lookup module.
+<P>
+   Two conditions must be satisfied for the lookup to succeed:
+<UL>
+   <LI>the definition wanted must be visible in the lookup module
+   <LI>the definition wanted must be exported from its home module
+</UL>
+   The purpose of this is to allow calling procedures whose definition is
+   not visible in the caller module.  The two main uses of this facility are:
+<OL>
+   <LI>If there are several definitions of a procedure with the same name
+       in different modules, :/2 can be used to specify which one to call.
+   <LI>If a module wants to define a procedure, but needs to call
+      another procedure of the same name (but from a different module),
+     :/2 can be used to call that one instead of the locally defined one.
+</OL>
+   Note that :/2 does not affect the caller (context) module.
+   The following table summarises the different idioms:
+<PRE>
+	Call within module(m)         lookup module    caller module
+
+	..., twice(X), ...               m               m
+	..., lm : twice(X), ...         lm               m
+	..., twice(X) @ cm, ...          m              cm
+	..., lm : twice(X) @ cm, ...    lm              cm
+	..., call(twice(X)) @ cm, ...   cm              cm
+</PRE>
+<P>
+   Note: In earlier versions of Eclipse the left hand side argument of
+   :/2 was required to be the module where the procedure was defined,
+   rather than just visible.
+"),
+	args:["+Goal" : "Callable term (atom or compound).", "+LookupModule" : "Atom."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails.\n\n",
+	exceptions:[4 : "Goal is not instantiated.",
+	    4 : "Module is not instantiated.",
+	    5 : "Goal is neither an atom nor a compound term.",
+	    5 : "Module is not an atom.",
+	    68 : "Goal is an undefined procedure in Module."],
+	eg:"
+% two definitions are visible:
+
+    :- lib(ria).    % exports #>= / 2
+    :- lib(eplex).  % exports #>= / 2
+
+	..., ria:(X #>= Y), ...
+	..., eplex:(X #>= Y), ...
+
+
+% the library predicate is hidden by the local definition:
+
+    :- lib(lists).     % exports print_list/1
+
+    print_list(List) :-
+	writeln(\"This is the list:\"),
+	lists:print_list(List).
+
+",
+	see_also:[call / 1, (@) / 2, (export) / 1]]).
+
+
+:- comment((do) / 2, [
+	index:["foreach","fromto","foreacharg","foreachelem","foreachindex","for","multifor","count","Iteration","Loops"],
+	summary:"Execute Goals iteratively according to IterationSpecs.
+
+",
+	template:"+IterationSpecs do +Goals",
+	desc:html("
+    This is a meta-predicate for writing simple iterations without
+    the need for an auxiliary recursive predicate.
+<P>
+    A do-loop corresponds to a call to an auxiliary recursive
+    predicate of the form
+<PRE>	do__n(...).
+	do__n(...) :- Goals, do__n(...).</PRE>
+    IterationSpecs is one (or a comma-separated sequence) of the following:
+    <DL>
+    <DT><STRONG>fromto(First,In,Out,Last)</STRONG><DD>
+    	iterate Goals starting with In=First until Out=Last.
+	In and Out are local variables in Goals.
+
+    <DT><STRONG>foreach(X,List)</STRONG><DD>
+    	iterate Goals with X ranging over all elements of List.
+	X is a local variable in Goals.
+	Can also be used for constructing a list.
+
+    <DT><STRONG>foreacharg(X,StructOrArray)</STRONG><DD>
+    	iterate Goals with X ranging over all arguments of StructOrArray.
+	X is a local variable in Goals.
+	Cannot be used for constructing a term.
+
+    <DT><STRONG>foreacharg(X,StructOrArray,Idx)</STRONG><DD>
+	same as before, but Idx is set to the argument position of X in
+	StructOrArray, i.e. arg(Idx, StructOrArray, X) is true.
+	X and Idx are local variables in Goals.
+
+    <DT><STRONG>foreachelem(X,Array)</STRONG><DD>
+	like foreacharg/2, but iterates over all elements of an array
+	of arbitrary dimension.  The order is the natural order, i.e.
+	if Array = []([](a, b, c), [](d, e, f)), then for successive
+	iterations X is bound in turn to a, b, c, d, e and f.
+	X is a local variable in Goals.
+	Cannot be used for constructing a term.
+
+    <DT><STRONG>foreachelem(X,Array,Idx)</STRONG><DD>
+	same as before, but Idx is set to the index position of X in
+	Array, i.e. subscript(Array, Idx, X) is true.
+	X and Idx are local variables in Goals.
+
+    <DT><STRONG>foreachindex(Idx,Array)</STRONG><DD>
+	like foreachelem/3, but returns just the index position and not the
+	element.  Idx is a local variable in Goals.
+
+    <DT><STRONG>for(I,MinExpr,MaxExpr)</STRONG><DD>
+	iterate Goals with I ranging over integers from MinExpr to
+	MaxExpr.  I is a local variable in Goals.  MinExpr and MaxExpr
+	can be arithmetic expressions.  Can be used only for
+	controlling iteration, i.e. MaxExpr cannot be uninstantiated. 
+
+    <DT><STRONG>for(I,MinExpr,MaxExpr,Increment) </STRONG><DD>
+	same as before, but Increment can be specified (it defaults to 1). 
+
+    <DT><STRONG>multifor(List,MinList,MaxList)</STRONG><DD>
+	like for/3, but allows iteration over multiple indices (saves
+	writing nested loops).  Each element of List takes a value
+	between the corresponding elements in MinList and MaxList.
+	Successive iterations go through the possible combinations of
+	values for List in lexicographic order.  List is a local
+	variable in Goals.  MinList and MaxList must be either
+	lists of arithmetic expressions evaluating to integers, or
+	arithmetic expressions evaluating to integers (in the latter case
+	they are treated as lists containing the (evaluated) integer
+	repeated an appropriate number of times).  If none of List,
+	MinList and MaxList is a list of fixed length at compile time then
+	either MinList or MaxList must be a list of fixed length at call
+	time (so that it is known how many indices are to be iterated).
+	All lists must be the same length and must not be empty.
+
+    <DT><STRONG>multifor(List,MinList,MaxList,IncrementList)</STRONG><DD>
+	same as before, but IncrementList can be specified (i.e. how
+	much to increment each element of List by).  IncrementList must
+	be either a list of arithmetic expressions evaluating to non-zero
+	integers, or an arithmetic expression evaluating to a non-zero
+	integer (in which case all elements are incremented by this amount).
+	IncrementList defaults to 1.
+
+    <DT><STRONG>count(I,Min,Max)</STRONG><DD>
+    	iterate Goals with I ranging over integers from Min up to Max.
+	I is a local variable in Goals.
+	Can be used for controlling iteration as well as counting,
+	i.e. Max can be a variable.
+
+    <DT><STRONG>param(Var1,Var2,...)</STRONG><DD>
+    	for declaring variables in Goals global, ie shared with the context.
+	CAUTION: By default, variables in Goals are local!
+
+    <DT><STRONG>loop_name(Name)</STRONG><DD>
+	This specifier does not affect the semantics of the loop. It allows
+	to give the loop a name, mainly for debugging purposes. Name must be
+	an atom, and is used as the name of the auxiliary predicate into which
+	the loop may be compiled. The name should therefore not clash with
+	other predicate names in the same module.
+    </DL>
+    Note that fromto/4 is the most general specifier, but foreach/2,
+    foreacharg/2,3, foreachelem/2,3, foreachindex/2, count/3, for/3,4,
+    multifor/3,4 and param/N are convenient shorthands.
+    <P>
+    Syntax: The do-operator binds like the semicolon, i.e. less than comma.
+    That means that the whole do-construct should always be bracketed.
+    <P>
+    Unless you use :-pragma(noexpand) or :-dbgcomp, the do-construct is
+    compiled into an efficient auxiliary predicate. By default, the name of
+    this predicate is do__nnn (where nnn is a unique integer), unless you
+    have explicitly specified a name using the loop_name(Name) specifier.
+"),
+	args:[
+	    "+IterationSpecs" : "a comma-separated sequence of iteration specifiers",
+	    "+Goal" : "a goal (atom or compound term)"],
+	resat:"   No.",
+	fail_if:"   Fails if one of the Goals fails, or if two IterationSpecs\n   specify a different number of iterations.\n\n",
+	exceptions:[4 : "IterationSpecs insufficiently instantiated", 123 : "Ill-formed IterationSpecs"],
+	eg:"
+% iterate over list
+?- (foreach(X,[1,2,3]) do writeln(X)).
+
+% maplist (construct a new list from an existing list)
+?- (foreach(X,[1,2,3]), foreach(Y,List) do Y is X+3).
+
+% sumlist
+?- (foreach(X,[1,2,3]), fromto(0,In,Out,Sum) do Out is In+X).
+
+% reverse list
+?- (foreach(X,[1,2,3]), fromto([],In,Out,Rev) do Out=[X|In]).
+
+% reverse list (even shorter)
+?- (foreach(X,[1,2,3]), fromto([],In,[X|In],Rev) do true).
+
+% iterate over integers from 1 up to 5
+?- (for(I,1,5) do writeln(I)).
+
+% iterate over integers from 1 up to 5
+?- (count(I,1,5) do writeln(I)).
+
+% iterate over integers from 5 down to 1
+?- (for(I,5,1,-1) do writeln(I)).
+
+% make list of integers [1,2,3,4,5]
+?- (for(I,1,5), foreach(I,List) do true).
+
+% make a list of length 3
+?- (foreach(_,List), for(_,1,3) do true).
+
+% get the length of a list
+?- (foreach(_,[a,b,c]), count(_,1,N) do true).
+
+% actually, the length/2 builtin is (almost)
+length(List, N) :- (foreach(_,List), count(_,1,N) do true).
+
+% iterate [I,J] over [1,1], [1,2], [1,3], [2,1], ..., [3,3]:
+?- (multifor([I,J],1,3) do writeln([I,J])).
+
+% similar, but have different start/stop values for I and J:
+?- (multifor([I,J], [2,1], [4,5]) do writeln([I,J])).
+
+% similar, but only do odd values for the second variable:
+?- (multifor(List, [2,1], [4,5], [1,2]) do writeln(List)).
+
+% filter list elements
+?- (foreach(X,[5,3,8,1,4,6]), fromto(List,Out,In,[]) do
+    X>3 -> Out=[X|In] ; Out=In).
+
+% iterate over structure arguments
+?- (foreacharg(X,s(a,b,c,d,e)) do writeln(X)).
+
+% collect args in list
+% (bad example, use =.. if you really want to do that!)
+?- (foreacharg(X,s(a,b,c,d,e)), foreach(X,List) do true).
+
+% collect args reverse
+?- (foreacharg(X,s(a,b,c,d,e)), fromto([],In,[X|In],List) do true).
+
+% or like this:
+?- S = s(a,b,c,d,e), functor(S, _, N),
+    (for(I,N,1,-1), foreach(A,List), param(S) do arg(I,S,A)).
+
+% rotate args in a struct
+?- S0 = s(a,b,c,d,e), functor(S0, F, N), functor(S1, F, N),
+    (foreacharg(X,S0,I), param(S1, N) do I1 is (I mod N)+1, arg(I1,S1,X)).
+
+% flatten an array into a list
+?- (foreachelem(X,[]([](5,1,2),[](3,3,2))), foreach(X,List) do true).
+
+% transpose a 2D array
+?- A = []([](5,1,2),[](3,3,2)), dim(A, [R,C]), dim(T, [C,R]),
+    (foreachelem(X,A,[I,J]), param(T) do subscript(T, [J,I], X)).
+
+% same, using foreachindex
+?- A = []([](5,1,2),[](3,3,2)), dim(A, [R,C]), dim(T, [C,R]),
+    (foreachindex([I,J],A), param(A, T) do
+     subscript(A, [I,J], X), subscript(T, [J,I], X)).
+
+% The following two are equivalent
+?- (foreach(X,[1,2,3])        do             writeln(X)).
+?- (fromto([1,2,3],In,Out,[]) do In=[X|Out], writeln(X)).
+
+% The following two are equivalent
+?- (count(I,1,5)     do            writeln(I)).
+?- (fromto(0,I0,I,5) do I is I0+1, writeln(I)).
+
+
+% Two examples for nested loops. Print all pairs of list elements:
+?- Xs = [1,2,3,4],
+    ( foreach(X, Xs), param(Xs) do
+	( foreach(Y,Xs), param(X) do
+	    writeln(X-Y)
+	)
+    ).
+
+% and the same without symmetries:
+?- Xs = [1,2,3,4],
+    ( fromto(Xs, [X|Xs1], Xs1, []) do
+	( foreach(Y,Xs1), param(X) do
+	    writeln(X-Y)
+	)
+    ).
+
+
+% Find all pairs of list elements and collect them in a result list:
+
+pairs(Xs, Ys, Zs) :-
+    (
+        foreach(X,Xs),
+        fromto(Zs, Zs4, Zs1, []),
+        param(Ys)
+    do
+        (
+            foreach(Y,Ys),
+            fromto(Zs4, Zs3, Zs2, Zs1),
+            param(X)
+        do
+            Zs3 = [X-Y|Zs2]
+        )
+    ).
+
+
+% Flatten a 2-dimensional matrix into a list:
+
+flatten_matrix(Mat, Xs) :-
+    dim(Mat, [M,N]),
+    (
+	for(I,1,M),
+	fromto(Xs, Xs4, Xs1, []),
+	param(Mat,N)
+    do
+	(
+	    for(J,1,N),
+	    fromto(Xs4, [X|Xs2], Xs2, Xs1),
+	    param(Mat,I)
+	do
+	    subscript(Mat, [I,J], X)
+	)
+    ).
+
+% Same using multifor to avoid nesting:
+
+flatten_matrix(Mat, Xs) :-
+    dim(Mat, [M,N]),
+    (
+	multifor([I,J], 1, [M,N]),
+	foreach(X, Xs),
+	param(Mat)
+    do
+	subscript(Mat, [I,J], X)
+    ).
+
+% Same for an array of arbitrary dimension:
+
+flatten_array(Array, Xs) :-
+    dim(Array, Dims),
+    (
+	multifor(Idx, 1, Dims),
+	foreach(X, Xs),
+	param(Array)
+    do
+	subscript(Array, Idx, X)
+    ).
+
+% Same but returns the elements in the reverse order:
+
+flatten_array(Array, Xs) :-
+    dim(Array, Dims),
+    (
+	multifor(Idx, Dims, 1, -1),
+	foreach(X, Xs),
+	param(Array)
+    do
+	subscript(Array, Idx, X)
+    ).
+",
+	see_also:[pragma / 1]]).
+
+:- comment(fork / 2, [
+	summary:"Succeeds for all integers I between 1 and Max.  The solutions are generated
+in parallel.
+
+",
+	template:"fork(+Max, ?I)",
+	desc:html("   Generates in parallel the integers between 1 and a given maximum Max.
+   The order of solutions is unspecified.  For every value of Max, this
+   predicate behaves as if defined by
+
+<P>
+<PRE>
+   :- parallel fork/2.
+   fork(Max, Max).
+   ...
+   fork(Max, 2).
+   fork(Max, 1).
+</PRE>
+   Operationally, the advantage of fork/2 compared to a recursive
+   definition like
+
+<P>
+<PRE>
+   :- parallel bfork/2.
+   bfork(Max, Max).
+   bfork(Max, I) :- Max&gt;1, Max1 is Max-1, bfork(Max1, I).
+</PRE>
+   is that fork/2 creates only a single wide choice point instead of Max
+   binary ones.  This improves efficiency, especially for parallel
+   execution.
+
+<P>
+"),
+	args:[
+	"Max":"Integer",
+	"I":"Variable or Integer"
+	],
+	resat:"   Yes.",
+	fail_if:"   Fails if Max is less than 1.\n\n",
+	exceptions:[4 : "Max is not instantiated.", 5 : "Max is not an integer."],
+	eg:"
+% peclipse -w 3
+[eclipse 1]: fork(5,X), get_flag(worker, W).
+X = 5
+W = 1     More? (;)
+X = 3
+W = 3     More? (;)
+X = 4
+W = 2     More? (;)
+X = 2
+W = 1     More? (;)
+X = 1
+W = 3     More? (;)
+no (more) solution.
+
+
+
+",
+	see_also:[between / 4, (parallel) / 1, repeat / 0, get_flag / 2]]).
+
+:- comment((-?->) / 1, [
+	index:["Matching"],
+	summary:"The matching operator.  The head of the clause which contains it will not
+be unified with the caller, one-way matching will be used instead.
+
+",
+	template:"-?-> ?Body",
+	desc:html("   This operator is used to produce matching clauses, i.e.  clauses whose
+   head is unified with the caller only in one direction, namely without
+   binding any variables in the caller.  Therefore, only those clause will
+   be selected, which are more general than the call, i.e.  the call must
+   be an instance of the head.  If the clause head is unifiable with the
+   call, but this unification would bind any of the variables in the call,
+   the unification fails.
+
+<P>
+   -?-&gt; must occur at the beginning of the clause body, directly behind the
+   :- symbol, and it must be followed by a non-empty body.  Matching
+   clauses with no body must use true/0 after the matching operator.
+
+<P>
+   The matching operator can be also used to decompose attributed
+   variables.  When an attributed variable occurs in the head of a matching
+   clause, it is not unified with the call argument (which would trigger
+   the unification handlers) but instead, the call argument is decomposed
+   into the variable and its attribute(s):
+
+<P>
+<PRE>
+    get_attr(X{A}, Attr) :-
+	-?-&gt;
+	A = Attr.
+</PRE>
+   This predicate can be used to return the attribute of its argument if it
+   is an attributed variable and to fail if it is not.
+
+<P>
+"),
+	args:["?Body" : "Callable term or a variable."],
+	resat:"   No.",
+	fail_if:"   None.\n\n"
+	]).
+
+:- comment(mutex_init / 1, [
+	summary:"Initialise the mutual exclusion lock MutexId",
+	template:"mutex_init(+MutexId)",
+	desc:html("\
+   This built-in is used in parallel programs in connection with mutex/2
+   to implement mutual exclusion between parallel workers.
+    "),
+	args:["+MutexId" : "Atom."],
+	exceptions:[4 : "MutexId is not instantiated",
+		5 : "MutexId is not an atom"],
+	see_also:[mutex/ 2]]).
+
+
+:- comment(mutex / 2, [
+	summary:"Equivalent to once(Goal) but with mutual exclusion among parallel workers.
+
+",
+	template:"mutex(+MutexId, +Goal)",
+	desc:html("   This built-in can be used in parallel programs to implement mutual
+   exclusion between parallel workers.  A Goal that is called via mutex/2
+   can be sure that no parallel worker is executing at the same time any
+   goal that is protected by a mutex/2 with the same MutexId.
+
+<P>
+   Note that in a side effect free program there is no need ever to worry
+   about mutual exclusion.  Only when side effects are involved (e.g.
+   read/1,2 and write/1,2, assert/1, setval/2, record/2 etc.)  it may be
+   necessary to acquire exclusive access to the common resource by using
+   mutex/2.
+
+<P>
+"),
+	args:["+MutexId" : "Atom.", "+Goal" : "Atom or compound term."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails.\n\n",
+	exceptions:[4 : "Goal is not instantiated.", 5 : "Goal is not an atom or a compound term."],
+	eg:"
+    :- mutex_init(my_lock).
+
+    atomic_write_list(List) :-
+        % make sure the list is printed in one chunk
+        mutex(my_lock, write_list(List)).
+
+    write_list([]) :- nl.
+    write_list([X|Xs]) :- writeln(X), write_list(Xs).
+
+    [eclipse]: generate_lists_in_parallel(L),
+               atomic_write_list(L), fail.
+
+
+
+",
+	see_also:[mutex_init / 1, (once) / 1]]).
+
+:- comment(block / 3, [
+	summary:"Similar to call(Goal) if Goal succeeds or fails.  If an exit_block/1 is
+executed inside Goal, whose argument unifies with Tag, then Recovery is
+executed.
+
+",
+	desc:html("   First Goal is called from the current module and if this succeeds then
+   block/3 succeeds.  If Goal fails then so does the call of block/3.  If,
+   however, during the execution of Goal there is a call of
+   exit_block(TagExit) such that Tag unifies with TagExit, then block/3
+   calls the goal Recovery, and succeeds or fails according to whether
+   Recovery succeeds or fails.  If Tag does not unify with TagExit, the
+   system continues looking for an earlier invocation of block/3.
+
+<P>
+"),
+	amode:block(+,+,+),
+	amode:block(+,-,+),
+	args:["Goal" : "An atom or a compound term.",
+		"Tag" : "An atom, integer, handle or variable.",
+		"Recovery" : "An atom or a compound term."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails, or if Recovery fails.\n\n",
+	exceptions:[4 : "Either Goal or Recovery is not instantiated.",
+	    5 : "Goal or Recovery is neither an atom nor a compound term.",
+	    5 : "Tag is instantiated but not to an atom, integer or handle.",
+	    68 : "Either Goal or Recovery is an undefined predicate."],
+	eg:"
+      % success or failure are not affected by the block:
+      ?- block(X is 3 + 4, T, writeln(recover(T))).
+      X = 7
+      T = T
+      Yes (0.00s cpu)
+
+      ?- block(8 is 3 + 4, T, writeln(recover(T))).
+      No (0.00s cpu)
+
+      % A variable Tag catches all exit_blocks
+      ?- block(exit_block(hello), T, writeln(recover(T))).
+      recover(hello)
+      T = hello
+      Yes (0.00s cpu)
+
+      % An instantiated Tag catches only matching exit_blocks
+      ?- block(exit_block(hello), hello, writeln(recovered)).
+      recovered
+      Yes (0.00s cpu)
+
+      ?- block(exit_block(hello), world, writeln(recovered)).
+      uncaught exception in exit_block(hello)
+      Abort
+
+      % ECLiPSe's error handlers usually execute exit_block(abort)
+      % and therefore can be caught with a block:
+      ?- block(X is 1//0, T, writeln(recover(T))).
+      arithmetic exception in //(1, 0, X)
+      recover(abort)
+      X = X
+      T = abort
+      Yes (0.01s cpu)
+
+
+Error:
+      block(go, hello, Recovery).      (Error 4).
+      block(Goal, any, thing).         (Error 4).
+      block(go, hello(X), problem).    (Error 5).
+      block(go, hello, \"a\").           (Error 5).
+      block(nonex, t, write(bye)).     (Error 68).
+",
+	see_also:[exit_block / 1, abort/0]]).
+
+:- comment((^) / 2, [
+	index:["Existential quantification"],
+	summary:"Succeeds if Goal succeeds.
+
+",
+	template:"+Vars ^ +Goal",
+	desc:html("   Calls the goal Goal.  This predicate is equivalent to call(Goal) unless
+   used inside bagof/3, setof/3 or coverof/3.  In this case it is to be
+   read as \"there exist instantiations for the variables in Vars such that
+   Goal is true\".
+
+<P>
+"),
+	args:["+Vars" : "Any term, but usually a variable.", "+Goal" : "Atom or compound term."],
+	resat:"   No.",
+	fail_if:"   Fails if Goal fails.\n\n",
+	exceptions:[4 : "Goal is not instantiated.", 5 : "Goal is not an atom or a compound term."],
+	eg:"
+refer to bagof/3 for examples.
+
+
+
+",
+	see_also:[call / 1, bagof / 3, setof / 3, coverof / 3]]).
+
+:- comment(exit_block / 1, [
+	summary:"Continues the program at the recovery procedure of the block/3 predicate
+whose Tag argument unifies with TagExit.
+
+",
+	desc:html("   Can only occur after block(Goal,Tag, Recovery) has been invoked.  First
+   Goal is called and if this succeeds then block/3 succeeds.  If Goal
+   fails then so does the call of block/3.  If, however, during the
+   execution of Goal there is a call of exit_block(TagExit) such that Tag
+   unifies with TagExit, then block/3 calls the goal Recovery, and succeeds
+   or fails according to whether Recovery succeeds or fails.  If Tag does
+   not unify with TagExit, the system continues looking for an earlier
+   invocation of block/3.
+<P>
+   If no block/3 catches the exit, then control will either return to the
+   host program (in case of an embedded ECLiPSe) or the ECLiPSe process
+   will exit (in case of a standalone ECLiPSe).
+<P>
+"),
+	amode:exit_block(++),
+	args:["TagExit" : "An atom, integer or handle."],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	exceptions:[
+	    4 : "TagExit is uninstantiated.",
+	    5 : "TagExit is instantiated but not to an atom, integer or handle.",
+	    230 : "TagExit does not unify with a Tag of any uncompleted call of block/3."],
+	eg:"
+      % A variable Tag catches all exit_blocks
+      ?- block(exit_block(hello), T, writeln(recover(T))).
+      recover(hello)
+      T = hello
+      Yes (0.00s cpu)
+
+      % An instantiated Tag catches only matching exit_blocks
+      ?- block(exit_block(hello), hello, writeln(recovered)).
+      recovered
+      Yes (0.00s cpu)
+
+      ?- block(exit_block(hello), world, writeln(recovered)).
+      uncaught exception in exit_block(hello)
+      Abort
+
+
+Error:
+      exit_block(\"a\").                (Error 5).
+      exit_block(a).                  (Error 230).
+",
+	see_also:[block / 3]]).
+
+
+:- comment((->) / 2, [
+	index:["Conditional"],
+	summary:"Conditional construct - succeeds if either Condition succeeds, and then Goal2
+succeeds; or else if Condition fails, and then Else succeeds.",
+	template:"+Condition -> +Then ; +Else",
+	desc:html("
+   The conditional (if-then-else) construct.  First Condition is called
+   and if this succeeds any further solutions of Condition are cut and
+   Then is called.  Else is never executed in this case regardless of the
+   outcome of Then.
+<P>
+   If Condition fails, Else is called.  In this case, Then is never executed.
+<P>
+   It is allowed, but not recommended to use -&gt;/2 without ;/2 as
+   <PRE>
+   ( Condition -&gt; Then )
+   </PRE>
+   If Condition succeeds, any further solutions of Condition are cut and Then
+   is called (as above). If Condition fails, the whole construct fails,
+   which is often considered unintuitive. If this behaviour is really
+   wanted, it can be expressed more clearly by
+   <PRE>
+   once(Condition), Then
+   </PRE>
+<P>
+   The more common idiom, where nothing is to be done in the else-case,
+   must be written like this, using true/0:
+   <PRE>
+   ( Condition -&gt; Then ; true )
+   </PRE>
+<P>
+   Also note that Condition must not contain a !/0.  If a !/0 appears in
+   Then or Else, it cuts through the whole construct.
+
+<P>
+   Since -&gt;/2 and ;/2 have a lower precedence than ,/2, call should always
+   be enclosed in parentheses:
+    <PRE>
+    ( Condition -&gt;
+        Then
+    ;
+        Else
+    )
+    </PRE>
+"),
+	args:["+Condition" : "Atom or compound term.", "+Then" : "Atom or compound term.", "+Else" : "Atom or compound term."],
+	resat:"   No.",
+	fail_if:"   Fails if Condition succeeds and Then fails, or if Condition and Else fail.\n\n",
+	exceptions:[4 : "One of the arguments is not instantiated.", 5 : "One of the arguments is neither an atom nor a compound term."],
+	eg:"
+Success:
+      [eclipse]: X = 1, (X == 1 -> write(a); write(b)).
+      a
+      X = 1
+      yes.
+
+      [eclipse]: fail->write(not_me); write(me).
+      me
+      yes.
+      [eclipse]: [user].
+       p(1). p(2).
+       q(1). q(3).
+       r(2). r(3).
+       user        compiled 408 bytes in 0.00 seconds
+      yes.
+      [eclipse]: p(X)->q(Y);r(Y).
+      X = 1
+      Y = 1     More? (;)   % p/1 is cut; q/1 isn't.
+
+      X = 1
+      Y = 3
+      yes.
+      [eclipse]: p(3)->q(2);r(2).
+      yes.
+
+
+Fail:
+      [eclipse]: X = 1, (X == 2 -> write(da); write(nyet)).
+      nyet
+      X = _g76      % X is not bound.
+      no.
+
+Error:
+      Goal -> write(a); fail.        (Error 4).
+      \"write(a)\" -> true; fail.      (Error 5).
+
+
+
+",
+	see_also:[(;) / 2, ! / 0]]).
+
+:- comment(repeat / 0, [
+	summary:"Succeeds as often as tried.
+
+",
+	template:"repeat",
+	desc:html("   Used to succeed as often as tried.
+
+<P>
+   This predicate could be defined as
+
+<P>
+<PRE>
+   repeat.
+   repeat :- repeat.
+</PRE>
+   repeat/0 succeeds when reached on backtracking.
+
+<P>
+   !/0 may be added to exit from a clause containing repeat/0, as it
+   removes all choice points above it in the clause.
+
+<P>
+"),
+	args:[],
+	resat:"   Yes.",
+	fail_if:"   None.\n\n",
+	eg:"
+Success:
+      [eclipse]: [p].
+      /home/user/p compiled 408 bytes in 0.03 seconds
+      yes.
+      [eclipse]: print_file(p).
+      print_file(File) :-
+              open(File, read, S),
+              repeat,
+              get(S,Char),
+              put(Char),
+              at_eof(S),
+              !,
+              close(S),
+              flush(output).
+      yes.
+
+
+
+
+",
+	see_also:[! / 0]]).
+
+:- comment(true / 0, [
+	summary:"Succeeds always.
+
+",
+	template:"true",
+	desc:html("   Succeeds.  For example, can be used as a default, to join the `then'
+   path in -&gt;/2 to the `if' path, or as a void event handler.
+
+<P>
+"),
+	args:[],
+	resat:"   No.",
+	fail_if:"   None.\n\n",
+	eg:"
+Success:
+      (F \\== \"d.error\" ->
+           writeln(error, \"Incorrect file \"),
+           writeln( error,F)
+      ;
+           true
+      ),
+      (L < 0 ->
+           writeln(error, \"Error in line number\")
+      ;
+           true
+      ).
+
+
+
+",
+	see_also:[fail / 0, false / 0]]).
+

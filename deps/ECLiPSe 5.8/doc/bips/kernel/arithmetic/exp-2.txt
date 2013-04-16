@@ -1,0 +1,64 @@
+
+exp(+Number, ?Result)
+
+   Evaluates the exponential function exp(Number) ("e to the power of Number")
+and unifies the resulting value with Result.
+
+
+
+Arguments
+   +Number             A number.
+   ?Result             A variable, float or breal.
+
+Type
+   Arithmetic
+
+Description
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to exp(Number, Result) is
+   equivalent to
+
+    Result is exp(Number)
+
+    which should be preferred for portability.
+
+   In coroutining mode, if Number is a free variable, the call to exp/2 is
+   delayed until this variable is instantiated.
+
+
+
+
+Resatisfiable
+      No
+
+Fail Conditions
+      Fails if the result of the evaluation does not unify with Result.
+
+
+
+Exceptions
+     4 --- Number is not instantiated (non-coroutining mode only).
+     5 --- Result is a number but not a float or breal.
+    24 --- Number is not of a numeric type.
+    24 --- Result is neither a number nor a variable.
+    20 --- floating point overflow
+
+Examples
+   
+Success:
+      exp(0.0, Result).       (gives Result = 1.0)
+      exp(-6, Result).        (gives Result = 0.00247875)
+Fail:
+      exp(1, 0.0).
+Error:
+      exp(A, 6.0).                   (Error 4).
+      exp(0, 1).                     (Error 5).
+      exp(4 + 2, 403.429).           (Error 24).
+      exp(1, r).                     (Error 24).
+
+
+
+
+
+See Also
+   is / 2

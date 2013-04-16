@@ -1,0 +1,6 @@
+lib(remote_tools)
+
+   This library allows the Tk development tools to be used via the remote Tcl
+interface. This allows the development tools to be used by any ECLiPSe
+session, and not just one which uses the embedded Tcl interface.
+

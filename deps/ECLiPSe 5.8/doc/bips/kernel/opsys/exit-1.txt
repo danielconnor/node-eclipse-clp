@@ -1,0 +1,49 @@
+
+exit(+Status)
+
+   The Prolog session is ended and the specified status returned to the
+operating system.
+
+
+
+Arguments
+   +Status             Integer
+
+Type
+   Operating System
+
+Description
+   Used to exit from the Prolog session.  If user_end/0 is defined and
+   global, it is called.  All buffers are flushed, streams are closed and
+   ECLiPSe exits.  The specified status code is returned to the operating
+   system.  exit(0) is identical with halt.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Status is not instantiated.
+     5 --- Status is instantiated to a non-integer.
+
+Examples
+   
+Success:
+      [eclipse]: exit(5).
+      csh% echo $status
+      5
+      csh%
+
+
+
+
+
+See Also
+   halt / 0, toplevel : break / 0, pause / 0

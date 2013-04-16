@@ -1,0 +1,51 @@
+<HTML><HEAD><TITLE>library(sockets)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(sockets)</H1>
+Sicstus compatible sockets interface
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="current_host-1.html"><STRONG>current_host(?HostName)</STRONG></A></DT>
+<DD>Get the host machine name</DD>
+<DT><A HREF="socket-2.html"><STRONG>socket(+Domain, -Socket)</STRONG></A></DT>
+<DD>Create a socket</DD>
+<DT><A HREF="socket_accept-2.html"><STRONG>socket_accept(+Socket, -Stream)</STRONG></A></DT>
+<DD>Extract the first connection to socket</DD>
+<DT><A HREF="socket_bind-2.html"><STRONG>socket_bind(+Socket, +Address)</STRONG></A></DT>
+<DD>Bind a socket to an address</DD>
+<DT><A HREF="socket_connect-3.html"><STRONG>socket_connect(+Socket, +Address, -Stream)</STRONG></A></DT>
+<DD>Connect a socket to an address</DD>
+<DT><A HREF="socket_listen-2.html"><STRONG>socket_listen(+Socket, +Length)</STRONG></A></DT>
+<DD>Limit the maximum of pending connections</DD>
+<DT><A HREF="socket_select-5.html"><STRONG>socket_select(+Socket, -NewStream, +TimeOut0, +Streams, -ReadStreams)</STRONG></A></DT>
+<DD>Wait for new connection on Socket, and for data on Streams</DD>
+<DT><A HREF="stream_select-3.html"><STRONG>stream_select(+Streams, +TimeOut0, -ReadStreams)</STRONG></A></DT>
+<DD>Wait for data on Streams</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+    Note that ECLiPSe provides its own built-in socket manipulation
+    predicates which provides similar functionality to this library.
+    <P>
+    This library is only provided for compatibility with the socket
+    manipulation predicates of SICStus Prolog. To use these predicates,
+    the sockets library has to be loaded: 
+    <PRE>
+    :- use_module(library(sockets)).
+    </PRE>
+    For SICStus 3.0, the sockets predicates are also in a sockets library,
+    so no changes are needed to load the library.  However, for older
+    versions of SICStus, the predicates are available as built-ins, and no
+    library has to be loaded.  So if the code is written for older
+    versions of SICStus, then the above line has to be added. 
+    <P>
+    The sockets library can be used independently of the sicstus library. 
+    
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Kish Shen, ECRC Munich
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and ICL
+<LI><STRONG>Date: </STRONG>$Date: 2001/09/13 17:48:58 $
+</UL>
+<HR>Generated from sockets.eci on Tue Jan 25 01:58:34 2005
+
+</BODY></HTML>

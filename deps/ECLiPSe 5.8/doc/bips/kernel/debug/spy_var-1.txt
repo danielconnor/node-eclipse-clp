@@ -1,0 +1,72 @@
+
+spy_var(?Var)
+
+   Create a SPYTERM-port in the debugger and prepare for tracing
+modifications to Var as MODIFY-ports.
+
+
+
+Arguments
+   Var                 A variable, possibly attributed.
+
+Type
+   Debugging
+
+Description
+    This predicate allows to trace modifications to the variable Var.
+
+
+    When the debugger is on, this predicate causes a SPYTERM-port to
+    be displayed.  In the subsequent execution, any variable
+    modification in Var will be shown as a MODIFY-port.  The SPYTERM
+    and MODIFY-port have the same unique invocation number, therefore
+    the invocation-skip command (i) can be used to follow the chain of
+    modifications.
+
+
+    This is equivalent to
+
+
+
+    spy_term(Var, Var->(constrained of suspend))
+
+    
+    This feature is implemented using high-priority (1) delayed goals
+    which create the MODIFY-ports.  These goals are visible to the
+    user as monitor_term/4 goals among the delayed goals.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+[eclipse 1]: lib(fd).
+yes.
+
+[eclipse 1]: trace.
+Debugger switched on - creep mode
+
+[eclipse 3]: [X, Y] :: 1..9, spy_var(X), X #> Y, Y #> X.
+  (1) 1 CALL  [X, Y] :: 1..9   %> creep
+  (1) 1 EXIT  [X{[1..9]}, Y{[1..9]}] :: 1..9   %> creep
+  (3) 2 SPYTERM  X{[1..9]}   %> jump to invoc: [3]? 
+  (3) 3 MODIFY  X{[2..9]}   %> jump to invoc: [3]? 
+  (3) 4 MODIFY  X{[4..7]}   %> jump to invoc: [3]? 
+
+no (more) solution.
+
+
+
+
+
+
+See Also
+   suspend / 3, spy_term / 2, trace_point_port / 3, trace / 1

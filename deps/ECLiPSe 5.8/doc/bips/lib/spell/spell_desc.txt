@@ -1,0 +1,9 @@
+lib(spell)
+
+
+    The effect of loading this library is to modify the event handler
+    for calling an undefined procedure.  A spelling correction
+    algorithm is used to see if the cause was a misspelling of an
+    existing predicate. 
+    
+

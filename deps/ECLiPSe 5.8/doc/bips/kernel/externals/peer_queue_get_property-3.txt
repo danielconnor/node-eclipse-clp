@@ -1,0 +1,46 @@
+
+peer_queue_get_property(++Queue, ?Property, ?Value)
+
+   Get or enumerate properties of a peer queue Queue.
+
+Arguments
+   Queue               Peer queue (atom or integer).
+   Property            Queue property name (atom or variable).
+   Value               Value of property Property.
+
+Type
+   External Interface
+
+Description
+
+   Get or enumerate properties of a peer queue Queue. If Property is a
+   variable, the properties of the queue will be enumerated on
+   backtracking. Otherwise, if Property is a property name, the value for
+   that property for Queue is unified with Value. The properties are:
+
+
+
+     type       type of queue:
+                  sync(SId):  synchronous queue 
+                                 SId is Socket Id for remote peers, 
+                                        Stream Id for the embedded peer
+		  async:      asynchronous queue
+     direction  direction of queue:
+                  fromec:   from ECLiPSe to remote 
+                  toec:     to ECLiPSe from remote
+                  bidirect: bidirectional
+     peer_type  type of the peer that Queue belongs to:
+                  embed  : for embedded peer
+                  remote : for remote peer
+     peer_name  name of the peer that Queue belongs to.
+
+   
+
+Resatisfiable
+     Yes.
+
+Fail Conditions
+   Queue is not a current peer queue.
+
+See Also
+   peer_queue_create / 5, peer_queue_close / 1

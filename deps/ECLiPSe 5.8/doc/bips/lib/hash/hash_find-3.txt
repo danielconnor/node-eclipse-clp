@@ -1,0 +1,18 @@
+
+hash_find(+Table, +Key, -Value)
+
+   A synonym for hash_get/3
+
+Arguments
+   Table               A hash table
+   Key                 a ground term
+   Value               Any term
+
+Type
+   library(hash)
+
+Fail Conditions
+   No entry for Key
+
+See Also
+   hash_get / 3

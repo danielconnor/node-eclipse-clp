@@ -1,0 +1,54 @@
+<HTML><HEAD><TITLE>subset(?SubList, +List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(lists)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>subset(?SubList, +List)</H1>
+Succeeds if List is the list which contains all elements from SubList in
+the same order as in SubList.
+
+
+<DL>
+<DT><EM>?SubList</EM></DT>
+<DD>A term which unifies with a list.
+</DD>
+<DT><EM>+List</EM></DT>
+<DD>A term which unifies with a list.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test if a specified list contains all elements of another list,
+   or to generate all sublists of a given list.
+<P>
+   The definition of this Prolog library predicate is:
+<PRE>
+        subset([],[]).
+        subset([X|L],[X|S]) :-
+            subset(L,S).
+        subset(L, [_|S]) :-
+            subset(L,S).
+</PRE>
+   This predicate does not perform any type testing functions.
+<P>
+   This predicate works properly for set operations only, so repeated
+   elements, variable elements and unsorted lists should not be used.
+	
+<H3>Fail Conditions</H3>
+   Fails if SubList does not unify with a list whose elements are all
+   contained in List in the same order as in SubList.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>
+Success:
+      subset([1,3], [1,2,3]).
+      subset(X, [1,3,4]).        % backtracks over all subsets
+
+Fail:
+      subset([2,1], [1,2,3]).   % different order
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/lists/union-3.html">union / 3</A>, <A HREF="../../lib/lists/subtract-3.html">subtract / 3</A>, <A HREF="../../lib/lists/intersection-3.html">intersection / 3</A>
+</BODY></HTML>

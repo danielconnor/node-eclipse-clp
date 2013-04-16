@@ -1,0 +1,34 @@
+<HTML><HEAD><TITLE>peer_deregister_multitask(++Peer)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">External Interface</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>peer_deregister_multitask(++Peer)</H1>
+Deregisters and removes the peer Peer from peer multitasking.
+<DL>
+<DT><EM>Peer</EM></DT>
+<DD>Existing multitasking peer name (atom)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   This predicate is intended for use only in implementing peer 
+   multitasking for an external language interface.
+</P><P>
+   Deregisters the existing multitasking peer Peer as a multitask peer.
+   The  multitasking control peer queue for Peer, created when the peer was
+   registered  for multitasking, is closed. Peer will no longer be involved 
+   in future multitasking phases.
+</P><P>
+   Note that while information associated with the multitasking for Peer is
+   removed from the ECLiPSe side, any information on the external side is
+   not touched. It is the responsibility of the external language interface
+   to remove any multitasking information on the external side, before or
+   after using this predicate.
+<H3>Fail Conditions</H3>
+Peer is a peer, but not registered for multitasking.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(6) out of range </EM>
+<DD>Peer is not an existing peer name
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/peer_register_multitask-2.html">peer_register_multitask / 2</A>, <A HREF="../../kernel/externals/peer_do_multitask-1.html">peer_do_multitask / 1</A>, <A HREF="../../kernel/externals/peer_multitask_terminate-0.html">peer_multitask_terminate / 0</A>, <A HREF="../../kernel/externals/peer_multitask_confirm-0.html">peer_multitask_confirm / 0</A>
+</BODY></HTML>

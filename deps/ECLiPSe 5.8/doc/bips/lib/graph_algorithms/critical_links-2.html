@@ -1,0 +1,27 @@
+<HTML><HEAD><TITLE>critical_links(+Graph, -Links)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>critical_links(+Graph, -Links)</H1>
+Finds critical links in a bidirected graph
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>Links</EM></DT>
+<DD>a list of edge pairs (output)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    Finds all the critical links of a bidirected graph. We define an
+    (bidirected) link as a pair of (oppositely directed) edges between
+    two nodes. A critical link is one that, when removed, would make the
+    graph more disconnected.
+    <P></P>
+    The result is returned as a list of links, where each link is a
+    hyphenated pair of e/3 edge structures like e(I,J,Dij) - e(J,I,Dji).
+    </P>
+<H3>Fail Conditions</H3>
+Fails if the graph is not bidirected
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/graph_is_bidirected-1.html">graph_is_bidirected / 1</A>, <A HREF="../../lib/graph_algorithms/articulation_points-2.html">articulation_points / 2</A>
+</BODY></HTML>

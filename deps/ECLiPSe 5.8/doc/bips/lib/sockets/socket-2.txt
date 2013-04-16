@@ -1,0 +1,10 @@
+
+socket(+Domain, -Socket)
+
+   Create a socket
+
+Type
+   library(sockets)
+
+See Also
+   socket / 3

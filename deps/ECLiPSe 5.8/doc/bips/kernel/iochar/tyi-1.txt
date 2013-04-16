@@ -1,0 +1,49 @@
+
+tyi(?Ascii)
+
+   Succeeds if the ascii code of the next character read in raw mode from the
+current input is successfully unified with Ascii.
+
+
+
+Arguments
+   ?Ascii              Integer.
+
+Type
+   Character I/O
+
+Description
+   Takes the next character from the current input and unifies its integer
+   ASCII code (in the range 0 to 255) with Ascii.  The input is in raw mode
+   so that no newline character must be typed.
+
+
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Ascii does not unify with the next character from the current
+   input.
+
+
+
+Exceptions
+     5 --- Ascii is instantiated, but not to an integer.
+   190 --- End of file was encountered before reading any character.
+   198 --- Trying to read even after the error 190 was raised.
+
+Examples
+      Equivalent to tyi(input, Ascii).  (see tyi/2 for details).
+
+
+
+
+
+See Also
+   tyi / 2, tyo / 1, tyo / 2

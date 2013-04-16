@@ -1,0 +1,36 @@
+<HTML><HEAD><TITLE>nth_value(+Domain, ++N, -Value)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(fd_search)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>nth_value(+Domain, ++N, -Value)</H1>
+return the nth value in a domain
+<DL>
+<DT><EM>Domain</EM></DT>
+<DD>The domain list to select a value from
+</DD>
+<DT><EM>N</EM></DT>
+<DD>The position of the value to select
+</DD>
+<DT><EM>Value</EM></DT>
+<DD>The selected value
+</DD>
+</DL>
+<H2>Description</H2>
+Find the nth value in a domain given by an interval or a list of
+integers and intervals, as it is returned for example by ic's
+<b>get_domain/2</b> or fd's <b>::/2</b>.
+
+<H3>Fail Conditions</H3>
+N &lt; 1 or there are less than N values in the domain.
+<H3>Resatisfiable</H3>
+no
+<H2>Examples</H2>
+<PRE>
+% a typical use
+
+	....
+	get_domain(X, L),
+	nth_value(L, 2, Value),
+	....
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/fd/NN-2.html">fd : :: / 2</A>, <A HREF="../../lib/ic/get_domain-2.html">ic : get_domain / 2</A>
+</BODY></HTML>

@@ -1,0 +1,51 @@
+
+daVinci_begin
+
+   Start the connection to daVinci and begin the transfer of a new graph
+
+Arguments
+
+Type
+   library(daVinci)
+
+Description
+
+This commands opens the connection to the daVinci system if not
+already open and starts the information about a new graph.  This
+predicate should be called once for each graph to be transmitted.  
+
+
+Resatisfiable
+   no
+
+Fail Conditions
+   no
+
+Examples
+   
+:-use_module(daVinci).
+
+top:-
+	daVinci_begin,
+	daVinci_node(1),
+	daVinci_node(2,'a bigger label'),
+	daVinci_node(aa),
+
+	daVinci_edge(1,1,2),
+	daVinci_edge(2,2,2),
+	daVinci_edge(3,2,aa),
+
+	daVinci_node_attribute(1,'COLOR','red'),
+	daVinci_node_attribute(2,'COLOR','dodgerblue'),
+
+	daVinci_node_attribute(2,'FONTSTYLE','italic'),
+	daVinci_edge_attribute(3,'EDGECOLOR','blue'),
+	daVinci_edge_attribute(3,'EDGEPATTERN','dashed'),
+	daVinci_node(4),
+	daVinci_edge(4,2,4),
+	daVinci_edge(5,4,2),
+	daVinci_end.
+
+
+See Also
+   daVinci_end / 0

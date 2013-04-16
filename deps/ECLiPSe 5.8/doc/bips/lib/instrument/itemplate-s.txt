@@ -1,0 +1,406 @@
+
+struct itemplate(clause_start, clause_end, clause_fail, clause_redo, block_start, block_end, block_fail, block_redo, subgoal_start, subgoal_end, subgoal_fail, subgoal_redo, call_start, call_end, call_fail, call_redo, fact, inbetween, result, meta_args, exclude, code_weaver, asserted, module_scope, file_local, goal_expansion)
+
+    The template used to guide predicate instrumentation
+
+Fields
+   clause_start        PredSpec of maximum arity two, the atom 'inherit', or variable
+   clause_end          PredSpec of maximum arity two, the atom 'inherit', or variable
+   clause_fail         PredSpec of maximum arity two, the atom 'inherit', or variable
+   clause_redo         PredSpec of maximum arity two, the atom 'inherit', or variable
+   block_start         PredSpec of maximum arity two, the atom 'inherit', or variable
+   block_end           PredSpec of maximum arity two, the atom 'inherit', or variable
+   block_fail          PredSpec of maximum arity two, the atom 'inherit', or variable
+   block_redo          PredSpec of maximum arity two, the atom 'inherit', or variable
+   subgoal_start       PredSpec of maximum arity two, the atom 'inherit', or variable
+   subgoal_end         PredSpec of maximum arity two, the atom 'inherit', or variable
+   subgoal_fail        PredSpec of maximum arity two, the atom 'inherit', or variable
+   subgoal_redo        PredSpec of maximum arity two, the atom 'inherit', or variable
+   call_start          PredSpec of maximum arity two, the atom 'inherit', or variable
+   call_end            PredSpec of maximum arity two, the atom 'inherit', or variable
+   call_fail           PredSpec of maximum arity two, the atom 'inherit', or variable
+   call_redo           PredSpec of maximum arity two, the atom 'inherit', or variable
+   fact                PredSpec of maximum arity one, the atom 'inherit', or variable
+   inbetween           PredSpec of maximum arity two, the atom 'inherit', or variable
+   result              PredSpec of maximum arity five, the atom 'inherit', or variable
+   meta_args           List of itemplate or variable
+   exclude             List of PredSpec, the atom 'inherit', or variable
+   code_weaver         PredSpec of maximum arity six, the atom 'inherit', or variable
+   asserted            Specific atom, the atom 'inherit' or variable
+   module_scope        Atomic module name, the atom 'inherit' or variable
+   file_local          Specific atom, the atom 'inherit' or variable
+   goal_expansion      Specific atom, the atom 'inherit' or variable
+
+Type
+   library(instrument)
+
+Description
+
+   The itemplate structure serves as a specification that 
+   determines how predicate definitions and calls to predicates are instrumented.
+   
+   An itemplate is associated with a predicate whose definition or 
+   invocations are to be instrumented. This association is specified as an 
+   argument to instrument:instrument/2 or instrument:instrument/3 
+   and is of the form: PredSpec = itemplate{...}.
+   
+   PredSpec is of the form Module:Functor/Arity. 
+   If the module qualifier is omitted, then PredSpec is assumed to 
+   be a predicate defined within the calling module context in which 
+   instrument/2 was invoked. The definition context for a module 
+   can be wildcarded by specifying the module qualifier as the atom 
+   every_module or by setting the itemplate module_scope 
+   field to every_module.
+   
+   This has two effects:
+   
+    When instrumenting predicate definitions a template can be applied 
+        to a predicate regardless of the module it is defined in.
+    When instrumenting predicate calls a template can be applied to a 
+        predicate regardless of whether it is module qualified or not.
+   
+   However, as a general rule of thumb, predicate specifications for 
+   PredSpec and instrumentation predicates within the templates 
+   should be correctly module qualified. 
+   
+   When determining whether a predicate is to be instrumented, a template is 
+   sought which matches the module qualified PredSpec, first using 
+   the named module (or current module if unqualified) and then using 
+   every_module as the module qualifier.
+   
+   Within the template, predicate specifications supplied to its fields 
+   determine how predicate instrumentation and invocation proceeds. 
+   The template specifies the following instrumentation points:
+   
+   clause_start
+   
+   A call to the specified predicate is placed at the beginning of each 
+   clause definition of the predicate the template is being applied to.
+   
+   clause_end
+   
+   A call to the specified predicate is placed at the end of each clause 
+   definition of the predicate the template is being applied to.
+   
+   clause_fail
+   
+   A call to the specified predicate is placed such that failure within 
+   the clause definition of the predicate the template is being applied 
+   to results in its invocation.
+   
+   clause_redo
+   
+   A call to the specified predicate is placed such that failure and 
+   re-execution (i.e. resatisfiable execution) within the clause 
+   definition of the predicate the template is being applied to results 
+   in its invocation.
+   
+   block_start
+   
+   A call to the specified predicate is placed at the beginning of each 
+   conjunction (comma-sequences of subgoals) within the definition of 
+   the predicate the template is being applied to.
+   
+   block_end
+   
+   A call to the specified predicate is placed at the end of each 
+   conjunction within the definition of the predicate the template is 
+   being applied to.
+   
+   block_fail
+   
+   A call to the specified predicate is placed such that failure of each 
+   conjunction within the definition of the predicate the template is being 
+   applied to results in its invocation.
+   
+   block_redo
+   
+   A call to the specified predicate is placed such that failure and 
+   re-execution (i.e. resatisfiable execution) of each conjunction within 
+   the definition of the predicate the template is being applied to results 
+   in its invocation.
+   
+   subgoal_start
+   
+   A call to the specified predicate is placed at the beginning of each 
+   subgoal within the definition of the predicate the template is being 
+   applied to.
+   
+   subgoal_end
+   
+   A call to the specified predicate is placed at the end of each subgoal 
+   within the definition of the predicate the template is being applied to.
+   
+   subgoal_fail
+   
+   A call to the specified predicate is placed such that failure of each 
+   subgoal within the definition of the predicate the template is being 
+   applied to results in its invocation.
+   
+   subgoal_redo
+   
+   A call to the specified predicate is placed such that failure and 
+   re-execution (i.e. resatisfiable execution) of each subgoal within 
+   the definition of the predicate the template is being applied to results 
+   in its invocation.
+   
+   call_start
+   
+   A call to the specified predicate is placed at the beginning of each 
+   call invocation of the predicate the template is being applied to.
+   
+   call_end
+   
+   A call to the specified predicate is placed at the end of each call 
+   invocation of the predicate the template is being applied to.
+   
+   call_fail
+   
+   A call to the specified predicate is placed such that failure of a call 
+   invocation of the predicate the template is being applied to results in 
+   its invocation.
+   
+   call_redo
+   
+   A call to the specified predicate is placed such that failure and 
+   re-execution (i.e. resatisfiable execution) of a call invocation of the 
+   predicate the template is being applied to results in its invocation.
+   
+   fact
+   
+   A call to the specified predicate is placed as the clause body of the 
+   fact predicate the template is being applied to. A fact is a predicate 
+   definition with no defined clause body.
+   
+   inbetween
+   
+   A call to the specified predicate is placed at the end of each subgoal 
+   of a conjunction within the definition of the predicate the template is 
+   being applied to.
+   
+   
+   The default value for the instrumentation predicates is that none are 
+   defined and so no instrumentation is performed. This is equivalent to 
+   setting the field values explicitly to free variables.
+   
+   The instrumentation predicates must be defined with one of the following 
+   signatures:
+   
+   Arity 0
+   
+   When an arity zero instrumentation predicate is specified, it is invoked 
+   with no arguments passed.
+   
+   Arity 1
+   
+   Each code instrumentation point within a module is uniquely identified 
+   by its callsite identifier. The callsite identifier is a monotonically 
+   increasing integer incrementing from the initial value of 0. It is the 
+   callsite identifier value that is passed to an arity one instrumentation 
+   predicate.
+   
+   Arity 2
+   
+   An arity two instrumentation predicate is passed the callsite identifier 
+   in argument position one and an auxiliary variable in argument position 
+   two. The same auxiliary variable is passed as argument two to the start, 
+   end and fail instrumentation points (i.e. it is common to clause_start, 
+   clause_end , clause_fail and clause_redo while a 
+   different auxiliary variable is common to block_start, 
+   block_end, block_fail and block_redo, etc).
+   
+   
+   It is anticipated that the callsite identifier be used for executing 
+   callsite specific code or storing data pertinent to the callsite in a 
+   non-logical store keyed by callsite identifier - 
+   set_callsite_data/2 and get_callsite_data/2 are provided 
+   for exactly this purpose.
+   
+   The auxiliary variable passed as argument two to instrumentation 
+   predicates is provided for convenience for capturing 'delta' measurements 
+   between the start, end and fail instrumentation points. The variable is a 
+   logical variable and while the value passed to the end or fail predicate 
+   is guaranteed to be the value bound by the start predicate, backtracking 
+   past the start predicate results in the unbinding of the variable. If the 
+   captured delta should be retained beyond backtracking then it should be 
+   placed in the callsite's non-logical store using set_callsite_data/2.
+   
+   The maximum arity of the fact and inbetween point predicates is one - 
+   only the callsite identifier is passed, there is no benefit in passing an 
+   auxiliary variable.
+   
+   The result instrumentation predicate provides a mechanism for 
+   pretty-printing the annotated source code with the instrumentation results 
+   gathered during execution. By executing instrument:module_result/0
+   or instrument:file_result/1 the predicate specified for result 
+   instrumentation within the template is invoked as each of the 
+   instrumentation points are encountered for pretty-printing.
+   
+   The result instrumentation predicate must be defined with one of the 
+   following signatures:
+    
+   Arity 0
+   
+   When an arity zero predicate is specified, it is invoked with no 
+   arguments passed.
+   
+   Arity 1
+   
+   The callsite identifier representing the instrumentation point is 
+   passed to an arity one result predicate.
+   
+   Arity 2
+   
+   The instrumentation point type is passed as argument two of an arity 
+   two result predicate. The point type is the atom associated with the 
+   point, for example call_start, call_end, call_fail or call_redo, 
+   etc. 
+   
+   Arity 3
+   
+   The module into which the file being pretty-printed was instrumented 
+   and compiled is passed as argument three of an arity three result predicate.
+   
+   Arity 4
+   
+   The goal appearing in the source code around which instrumentation was 
+   originally placed is passed as argument four of an arity four result 
+   predicate.
+   
+   Arity 5
+   
+   The fifth argument of an arity five result predicate is a result goal 
+   that can be returned to the pretty-printer to be placed in the 
+   pretty-printed output in the place of the fourth argument goal. This 
+   allows the goal to be annotated with commentary or instrumentation results.
+   
+   
+   The meta_args field of the itemplate structure is 
+   applicable only to templates associated with predicates that are 
+   meta-predicates. When applicable, meta_args is a list of 
+   itemplate. Each element in the list is a template for the 
+   corresponding argument of the meta-predicate. The template defined 
+   instrumentation points are applied to the code found inside the 
+   meta-predicate at this argument position. For example: 
+   findall/3 = itemplate{..., meta_args:[_, ITemplateArg2, _]...} 
+   is an itemplate specification describing the instrumentation 
+   of the meta-predicate findall/3. Argument one and three undergo 
+   no instrumentation (denoted by free variables) and argument two is 
+   instrumented according to ITemplateArg2.
+   
+   Within the meta-predicate argument itemplate fields may be 
+   specified as being inherit-ed. When such a field is specified 
+   as inherited it is set to the corresponding value of the template used in 
+   instrumenting the definition of the predicate in which the call to the 
+   meta-predicate resides. 
+   
+   The exclude field of the itemplate contains a list of 
+   predicate specifications. Any occurrence of such a predicate as a call 
+   or subgoal is excluded from application of the instrumentation specified 
+   by the enclosing template. The main use of exclusion is in preventing 
+   instrumentation application to recursive predicates or built-ins.
+   
+   The code_weaver field of the itemplate specifies a 
+   predicate of arity six that is a compile-time callback allowing arbitrary 
+   user code to be woven into the code currently undergoing compilation. The 
+   weaving of user code is performed before the insertion of instrumentation 
+   predicates. The arguments of the predicate are as follows:
+    
+   File
+   
+   The name of the file currently undergoing compilation.
+   
+   Code
+   
+   The block of code available for manipulation by the user specified code 
+   weaving predicate.
+   
+   Type
+   
+   The ECLiPSe construct type of the 'Code' block, one of: 
+   clause, head, body, fact, variable, conjunction, disjunction, 
+   conditional, do, goal. The decomposition of code blocks into these 
+   various constructs is for convenience to save the weaver predicate from 
+   having to match out the constructs itself. It is however free to do so 
+   by operating solely on the clause construct.
+   
+   WeavedCode
+   
+   The block of code that results from the weaving of the Code' block with 
+   the arbitrary user code. 
+   
+   Mode
+   
+   The mode that code weaving is proceeding in, either compile, 
+   during compilation, or print during pretty-printing.
+   
+   Module
+   
+   The module the code is being compiled into.
+   
+   
+   The remaining fields of the itemplate structure specify the 
+   options:
+   
+   asserted (default:free variable)
+   
+   The value of asserted may be the atoms: on, off and 
+   post_compile or a free variable. When a free variable, the 
+   instrumentation predicates are compiled into the code like any other 
+   predicates. However, when set to one of the atomic values, the predicates 
+   are compiled such that they can be inserted and removed at runtime. This 
+   is done efficiently such that there is negligible overhead on execution.
+   
+   The value on specifies that the predicates are initially inserted.
+   The value off that they are removed and  post_compile 
+   that they are not inserted until compilation of the whole file has 
+   completed. The post_compile option is provided so that 
+   instrumentation predicates inserted into predicate definitions that get 
+   executed at compile-time do not get executed.
+   
+   During execution, the instrumentation predicates can be inserted and 
+   removed using instrument:instrument_control/2. 
+   
+   module_scope (default:free variable)
+   
+   The possible values are an atom representing a module name, the atom 
+   every_module or a free variable indicating the current module. 
+   The value is used to determine the module definition context of 
+   unqualified instrumentation predicates or the predicate associated with 
+   the template for definition and call instrumentation:
+   
+   Named module
+   
+   The unqualified predicate is qualified with the named module.
+   
+   Free variable
+   
+   The unqualified predicate is qualified with the calling module context 
+   in which instrument/2 was first invoked.
+   
+   every_module
+   
+   The unqualified predicate is qualified with the name of the current 
+   compilation module.
+   
+   file_local (default:off)
+   
+   Templates persist in a global store between successive calls to 
+   instrument/2 and instrument/3. If it is undesirable 
+   for a template to be added to the global store (thus making it available 
+   for the instrumentation of other files and modules) an itemplate 
+   may be declared as being applicable to only the file currently being 
+   instrumented by setting this option to on.
+   
+   The search order for an instrumentation template is first in the file 
+   local store and then in the global store.
+   
+   goal_expansion (default:on)
+   
+   Setting this to off will suppress goal expansion inlining) 
+   during compilation. This may be necessary when the processed code 
+   contains predicates that get executed at compile time. 
+   
+
+See Also
+   erase_all_templates / 0, get_callsite_data / 2, instrument / 2, instrument / 3, instrument_control / 2, library(instrument), module_callsites / 2, module_result / 0, set_callsite_data / 2, defined_modules / 2

@@ -1,0 +1,58 @@
+<HTML><HEAD><TITLE>source_open(+File, +OptionList, -SourcePos)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(source_processor)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>source_open(+File, +OptionList, -SourcePos)</H1>
+Open an ECLiPSe source code file for subsequent processing
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Name of source file (Atom or string)
+</DD>
+<DT><EM>OptionList</EM></DT>
+<DD>List of options, possibly empty
+</DD>
+<DT><EM>SourcePos</EM></DT>
+<DD>Source position handle
+</DD>
+</DL>
+<H2>Description</H2>
+This predicates opens an ECLiPSe source file for subsequent
+    reading with source_read/4. Compared to the standard primitives for
+    reading from a file, this takes care of
+    <UL>
+    <LI>nesting of included files
+    <LI>creating and keeping track of modules
+    <LI>syntax settings
+    <LI>comments (optional)
+    <LI>changing the current directory to the opened file's directory
+    </UL>
+    OptionList can contain the following:
+    <DL>
+    <DT>keep_comments</DT>
+	<DD>treat comments and spacing between source terms as data
+		rather than ignoring it</DD>
+    <DT>no_macro_expansion</DT>
+	<DD>do not expand term macros (e.g. with/2 and of/2)</DD>
+    <DT>no_clause_expansion</DT>
+	<DD>do not expand clause macros (e.g. DCGs)</DD>
+    <DT>recreate_modules</DT>
+	<DD>erase and re-create module when encountering a module directive</DD>
+    </DL>
+    source_open/3 and source_read/4 maintain a 'current source position',
+    which is a structure containing (among others) the following fields:
+    <PRE>
+    :- export struct(source_position(
+	stream,			% Eclipse stream
+	file,			% canonical file name
+	line,			% integer
+	offset,			% integer
+	included_from,		% source_position or []
+	module,			% current source module
+	...
+    )).
+    </PRE>
+    i.e. information about the module context and the precise location
+    of a source term (e.g. for error messages).
+    <P>
+    
+<H2>See Also</H2>
+<A HREF="../../lib/source_processor/source_close-2.html">source_close / 2</A>, <A HREF="../../lib/source_processor/source_read-4.html">source_read / 4</A>
+</BODY></HTML>

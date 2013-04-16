@@ -1,0 +1,18 @@
+
+alldifferent(+List,++Capacity)
+
+   The list List contains at most Capacity elements of each value
+
+Type
+   library(ic_global)
+
+Description
+    This is a generalization of alldifferent/1. It allows repeated
+    elements in the list, but there can be no more than Capacity elements with
+    a particular value.
+    
+    Any input variables which do not already have finite bounds will
+    be given default bounds of -10000000 to 10000000.
+
+See Also
+   alldifferent / 1

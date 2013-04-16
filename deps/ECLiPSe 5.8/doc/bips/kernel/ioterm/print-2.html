@@ -1,0 +1,116 @@
+<HTML><HEAD><TITLE>print(+Stream, ?Term)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>print(+Stream, ?Term)</H1>
+The term Term is written on the output stream Stream according to the
+current operator declarations, using the predicate portray/2 or portray/1
+if it exists.
+
+
+<DL>
+<DT><EM>+Stream</EM></DT>
+<DD>Integer (stream number) or Atom (reserved or user-defined                symbolic stream name).
+</DD>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to print the term Term on the output stream Stream according to the
+   current operator declarations, i.e.  the same as write/2, however the
+   user has the possibility to influence the way the term is printed.  If
+   the predicate portray/2 is visible in the module where print/2 was
+   called from, it is used by print/2 in the following way:
+
+<P>
+  * If Term is a variable, it is printed using write/2.
+
+<P>
+  * If Term is a nonvariable or an attributed variable, then portray(Stream,
+    Term) is called.  If it succeeds, so does print/2.  Otherwise, if Term is
+    atomic, it is written using write/2 and the predicate succeeds.  If
+    Term is a compound term, its main functor is printed using write/2 and
+    print/2 is called recursively on its arguments.
+
+<P>
+   Note that when this predicate is used to print a list, only the elements
+   of the list, i.e.  the heads, are passed to the recursive calls of
+   print/2, but not the list tails.  Thus e.g.  a list [1,2,3] will be
+   passed once to portray/2 as a whole and then the elements 1, 2, 3, but
+   not [2,3], [3] and [].
+
+<P>
+   If portray/2 is not visible but portray/1 is, it is called instead of
+   portray/2, but then the Stream argument cannot be passed to it, and it
+   is therefore the responsibility of portray/1 itself to print the data to
+   the correct stream.  portray/1, 2 is used by the system when printing
+   out the answer binding in the top-level loop to the answer_output
+   stream) and in the debugger, when the output command is set to print, to
+   the debug_output stream.
+
+<P>
+   As usual, the output is buffered, so it may need to be flushed (e.g.
+   explicitly using flush/1).
+
+<P>
+Note
+   The output of print/2 is not necessarily in a form acceptable to
+   read/1,2 and there is no 'printq' predicate.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Stream is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Stream is not an atom or an integer.
+<DT><EM>(192) illegal stream mode </EM>
+<DD>Stream is not an output steam.
+<DT><EM>(193) illegal stream specification </EM>
+<DD>Stream is not a stream specification.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: [user].
+     portray(S, a) :- write(S, b).
+
+     p(a).
+     user   compiled 148 bytes in 0.00 seconds
+
+    yes.
+    [eclipse]: write(write(a)), nl, print(output, print(a)).
+    write(a)
+    print(b)
+    yes.
+    [eclipse]: trace.
+
+    yes.
+    Debugger switched on - creep mode
+    [eclipse]: p(a).
+      (1) 0  CALL   p(a) (dbg)?- output: write        ('o' typed)
+      (1) 0  CALL   p(a) (dbg)?- output: display
+      (1) 0  CALL   p(a) (dbg)?- output: print/writeq
+      (1) 0  CALL   p(b) (dbg)?- creep
+      (1) 0  EXIT   p(b) (dbg)?- creep
+
+    yes.
+
+Error:
+     print(S, a(b,c)).         (Error 4).
+     print("str", a(b,c)).     (Error 5).
+     print(input, X).          (Error 192).
+     print(nostr, X + 2).      (Error 193).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/ioterm/display-1.html">display / 1</A>, <A HREF="../../kernel/ioterm/display-2.html">display / 2</A>, <A HREF="../../kernel/ioterm/print-1.html">print / 1</A>, <A HREF="../../kernel/ioterm/write-1.html">write / 1</A>, <A HREF="../../kernel/ioterm/write-2.html">write / 2</A>, <A HREF="../../kernel/ioterm/writeq-1.html">writeq / 1</A>, <A HREF="../../kernel/ioterm/writeq-2.html">writeq / 2</A>
+</BODY></HTML>

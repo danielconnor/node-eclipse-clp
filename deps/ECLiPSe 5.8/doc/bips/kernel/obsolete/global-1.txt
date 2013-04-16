@@ -1,0 +1,122 @@
+
+global +SpecList
+
+   Declares the procedure(s) and other modular items specified by SpecList
+to be global.
+
+
+Arguments
+   +SpecList           Sequence of modular item specifications.
+
+Type
+   Obsolete
+
+Description
+   This predicate is obsolete - global visibility is being deprecated.
+   For procedures, use export declarations instead. For other global
+   items, replace them by local ones and, if necessary, provide exported
+   access procedures to manipulate them.
+
+   This predicate was used to declare the visibility of procedures
+   and other names as global. SpecList is a comma-separated list
+   of expressions of the following form:
+
+ Name/Arity
+        procedure specification (since global procedures are no longer
+	supported, this is now the same as exporting)
+
+ variable(Name)
+	non-logical variable declaration
+
+ reference(Name)
+	reference declaration
+
+ array(Name)
+	untyped non-logical array declaration
+
+ array(Name,Type)
+	typed non-logical array declaration
+
+ record(Name)
+	record key declaration
+
+ struct(Prototype)
+	structure declaration
+
+ op(Prec,Assoc,Name)
+	operator declaration
+
+macro(Functor,Transformation,Options)
+	macro (input transformation) declaration
+
+portray(Functor,Transformation,Options)
+	portray (output transformation) declaration
+
+    For backward compatibility, global declarations of variables,
+    references, arrays, records, structures, operators and macros
+    still work. However, global procedure declarations now have the
+    same effect as an export declaration and generate a warning message.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- SpecList is not instantiated.
+     5 --- SpecList is instantiated, but not to a valid global specification
+    94 --- SpecList is already imported.
+
+Examples
+   
+Success:
+
+  [eclipse]: [user].
+   :- global p/1.
+   p(eclipse).
+   user compiled 40 bytes in 0.00 seconds
+  yes.
+  [eclipse]: module(m).
+  [m]: [user].
+   :- local p/1. % can be omitted here since default is local.
+   p(m).
+   user compiled 40 bytes in 0.00 seconds
+  yes.
+  [m]: p(X).
+  X = m
+  yes.
+  [m]: abolish(p/1).
+  yes. % local predicate is abolished, global is visible again
+  [m]: p(X).
+  X = eclipse
+  yes.
+
+Error:
+
+  global(Q).                        (Error 4).
+  global("Pred").                   (Error 5).
+
+  [eclipse]: [user].
+   % :- tool(t/0) here would prevent error 62 in global(t/0) below
+   p :- t.
+   user   compiled 32 bytes in 0.02 seconds
+  yes.
+  [eclipse]: module(m).
+  [m]: [user].
+   :- tool(t/0, writeln/1).
+   :- global(t/0).                  (Error 62).
+
+  global(p/0), global(p/0).         (Error 89). (warning)
+  (import p/0 from m), global(p/0). (Error 94).
+  global(true/0).                   (Error 95).
+
+
+
+
+
+See Also
+   export / 1, import / 1, local / 1

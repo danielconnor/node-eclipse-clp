@@ -1,0 +1,85 @@
+<HTML><HEAD><TITLE>update_struct(+StructName, +FieldList, ?OldStruct, ?NewStruct)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Term Manipulation</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>update_struct(+StructName, +FieldList, ?OldStruct, ?NewStruct)</H1>
+NewStruct is the same as OldStruct except that the fields in FieldList have been replaced
+<DL>
+<DT><EM>StructName</EM></DT>
+<DD>An atom (the structure name)
+</DD>
+<DT><EM>FieldList</EM></DT>
+<DD>A list of name:Value structures, or one such structure
+</DD>
+<DT><EM>OldStruct</EM></DT>
+<DD>Structure or variable
+</DD>
+<DT><EM>NewStruct</EM></DT>
+<DD>Variable or structure
+</DD>
+</DL>
+<H2>Description</H2>
+	This predicate is only useful together with structure declarations.
+	Its purpose is to allow updating a structure's fields (by creating
+	a new, updated structure) without having to know all the fields of
+	the structure, or its arity.
+<P>
+	update_struct/4 creates a new structure NewStruct which is identical
+	to another structure OldStruct, except that the fields listed
+	in FieldList contain the values in FieldList, while all fields not
+	mentioned in FieldList retain the same values in OldStruct and
+	NewStruct.
+<P>
+	update_struct/4 is usually expanded at compile time into two
+	simple, efficient unifications (see example).
+
+<H3>Fail Conditions</H3>
+None
+<H3>Resatisfiable</H3>
+No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>StructName or FieldList is a variable
+<DT><EM>(4) instantiation fault </EM>
+<DD>A member of FieldList (or its tail) is insufficiently instantiated
+<DT><EM>(5) type error </EM>
+<DD>StructName is not an atom, or FieldList is not a proper list
+<DT><EM>(5) type error </EM>
+<DD>An Element of FieldList is not an atom:term structure
+<DT><EM>(6) out of range </EM>
+<DD>StructName is not the name of a declared, visible structure
+<DT><EM>(6) out of range </EM>
+<DD>A field name in FieldList is not a field of the structure denoted by StructName
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- local struct(person(name,address,age,salary)).
+    yes.
+
+    ?- Old = person{name:john,salary:4000,address:here,age:30},
+       update_struct(person, [salary:5000,address:there], Old, New).
+
+    Old = person(john, here, 30, 4000)
+    New = person(john, there, 30, 5000)
+    yes.
+
+    ?- update_struct(person, [salary:5000], Old, New).
+
+    Old = person(_244, _245, _246, _247)
+    New = person(_244, _245, _246, 5000)
+    yes.
+
+
+    % Compilation: The code
+
+    set_salary(Old, New, NewSalary) :-
+    	update_struct(person, [salary:NewSalary], Old, New).
+
+    % is compiled into
+
+    set_salary(Old, New, NewSalary) :-
+	Old = person(X1, X2, X3, _),
+	New = person(X1, X2, X3, NewSalary).
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/struct-1.html">struct / 1</A>, <A HREF="../../kernel/termcomp/E-2.html">= / 2</A>
+</BODY></HTML>

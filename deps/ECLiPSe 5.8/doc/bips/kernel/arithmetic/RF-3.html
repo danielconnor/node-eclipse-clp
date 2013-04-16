@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>\/(+Number1, +Number2, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>\/(+Number1, +Number2, ?Result)</H1>
+Evaluates the bitwise disjunction Number1 \/ Number2 and unifies the
+resulting value with Result.
+
+
+<DL>
+<DT><EM>+Number1</EM></DT>
+<DD>Integer.
+</DD>
+<DT><EM>+Number2</EM></DT>
+<DD>Integer.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to \/(Number1, Number2, Result) is
+   equivalent to
+<PRE>
+    Result is Number1 \/ Number2
+</PRE>
+    which should be preferred for portability.
+<P>
+   In coroutining mode, if Number1 or Number2 are free variables, the call
+   to \//3 is delayed until these variables are instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number1 or Number2 is not instantiated (non-coroutining mode    only).
+<DT><EM>(5) type error </EM>
+<DD>Result is a number but not an integer.
+<DT><EM>(5) type error </EM>
+<DD>Number1 or Number2 is a number but not an integer.
+<DT><EM>(24) number expected </EM>
+<DD>Number1 or Number2 is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      \/(11, 7, 15).
+      \/(11, -7, Result).     (gives Result = -5)
+Fail:
+      \/(1, 2, 4).
+Error:
+      \/(A, 2, 6).              (Error 4).
+      \/(6, 2.0, 6.0).          (Error 5).
+      \/(4 + 2, 2, 6).          (Error 24).
+      \/(5, 2, r).              (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

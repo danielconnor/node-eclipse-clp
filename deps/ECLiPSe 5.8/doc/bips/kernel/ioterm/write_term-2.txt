@@ -1,0 +1,32 @@
+
+write_term(?Term, +Options)
+
+   The term Term is written to the current output in a format specified by Options
+
+Arguments
+   Term                An arbitrary term
+   Options             List of option terms
+
+Type
+   Term I/O
+
+Description
+
+    This is a generalisation of the predicates write/1, writeq/1, print/1,
+    display/1, write_canonical/1. It is used to write an arbitrary term
+    Term onto the current output stream according to the given options.
+
+    write_term(Term, Options) is equivalent to
+    write_term(output, Term, Options).
+    For details see write_term/3.
+
+    
+
+Examples
+   
+	Equivalent to write_term(output, Term, Options).
+	See write_term/3 for examples.
+
+
+See Also
+   write_term / 3, display / 1, print / 1, printf / 2, write / 1, writeq / 1, write_canonical / 1

@@ -1,0 +1,80 @@
+<HTML><HEAD><TITLE>nospy ?Speclist</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Debugging</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>nospy ?Speclist</H1>
+All spypoints are removed from all the procedures given by SpecList.  If
+SpecList is a variable, remove all spypoints.
+
+
+<DL>
+<DT><EM>SpecList</EM></DT>
+<DD>Sequence of expressions of the form Atom/Integer, Atom or                Variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   Removes spypoints from all procedures given by SpecList.
+
+<P>
+   If SpecList is of the form name, then spypoints are removed from
+   procedures with name name and of any arity.
+
+<P>
+   If SpecList is a variable, all spypoints of visible procedures are
+   removed.
+
+<P>
+   Note that spypoints can also be removed with set_flag(Proc, spy, off).
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>SpecList is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>SpecList is neither of the form Atom/Integer, nor of the    form atom.
+<DT><EM>(60) referring to an undefined procedure </EM>
+<DD>SpecList is an undefined procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+    [eclipse]: [user].
+     q.
+     p :- q, writeln(hi).
+     user compiled 112 bytes in 0.00 seconds
+    yes.
+    [eclipse]: debug.
+    Leap mode switched on
+    yes.
+    [eclipse]: spy writeln/1.
+    spypoint added to writeln / 1.
+    yes.
+    [eclipse]: p.
+    B+(3) 1  CALL   writeln(hi) (dbg)?- leap    % type l
+    hi
+    B+(3) 1  EXIT   writeln(hi) (dbg)?- leap
+    yes.
+    [eclipse]: nospy writeln/1.
+    spypoint removed from writeln / 1.
+    yes.
+    [eclipse]: p.
+    hi
+    yes.
+
+Error:
+    nospy(I).         (Error 4).
+    nospy("l").       (Error 5).
+    nospy(foo).       (Error 60).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/debug/spy-1.html">spy / 1</A>, <A HREF="../../kernel/database/get_flag-3.html">get_flag / 3</A>, <A HREF="../../kernel/database/set_flag-3.html">set_flag / 3</A>
+</BODY></HTML>

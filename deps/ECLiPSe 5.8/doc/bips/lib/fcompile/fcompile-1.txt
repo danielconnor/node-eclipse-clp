@@ -1,0 +1,19 @@
+
+fcompile(++File)
+
+   Generates a byte-form object file from the ECLiPSe source File.
+
+Arguments
+   File                Name of source file (Atom or string)
+
+Type
+   library(fcompile)
+
+Description
+  Same as fcompile/2 with all options set to their default
+     values: the object file is placed in the current working directory,
+     byte format is generated, non-verbose, and fcompile tries to
+     compile the program first.
+
+See Also
+   fcompile / 2

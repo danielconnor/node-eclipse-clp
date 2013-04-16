@@ -1,0 +1,4 @@
+lib(typetest)
+
+   Meta-logical built-ins to test the type of terms
+

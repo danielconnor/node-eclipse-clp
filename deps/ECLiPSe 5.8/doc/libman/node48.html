@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>More on the CHR Language</TITLE>
+<META NAME="description" CONTENT="More on the CHR Language">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node49.html">
+<LINK REL="previous" HREF="node47.html">
+<LINK REL="up" HREF="node43.html">
+<LINK REL="next" HREF="node49.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1549"
+ HREF="node49.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1545"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1539"
+ HREF="node47.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1547"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1550"
+ HREF="node49.html">Labeling</A>
+<B> Up:</B> <A NAME="tex2html1546"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1540"
+ HREF="node47.html">The CHR Language</A>
+ &nbsp <B>  <A NAME="tex2html1548"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1551"
+ HREF="node48.html#SECTION00851000000000000000">Declarations</A>
+<LI><A NAME="tex2html1552"
+ HREF="node48.html#SECTION00852000000000000000">ECLiPSe Clauses</A>
+<LI><A NAME="tex2html1553"
+ HREF="node48.html#SECTION00853000000000000000">Options</A>
+<LI><A NAME="tex2html1554"
+ HREF="node48.html#SECTION00854000000000000000">CHR Built-In Predicates</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00850000000000000000">
+More on the CHR Language</A>
+</H1>
+
+<P>
+The following subsections describe declarations, clauses, options and built-in
+predicates of the CHR language.
+
+<P>
+
+<H2><A NAME="SECTION00851000000000000000"></A><A NAME="3113"></A>
+<BR>
+Declarations
+</H2>
+
+<P>
+Declarations name the constraint handler, its constraints, specify
+their syntax and use in built-in labeling.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Declaration</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>handler</code> Name<code>.</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>constraints</code> SpecList<code>.</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>operator(</code>Precedence<code>,</code>Associativity<code>,</code>Name<code>).</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>label_with</code> Constraint <code>if</code> Guard<code>.</code></TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The optional <code>handler</code> declaration<A NAME="3119"></A> documents the name of the constraint
+handler. Currently it can be omitted, but will be useful in future releases for
+combining handlers.
+
+<P>
+The mandatory <code>constraints</code> declaration<A NAME="3120"></A> lists the constraints
+defined in the handler.  A ``SpecList'' is a list of Name<code>/</code>Arity
+pairs for the constraints. 
+The declaration of a constraint <EM>must appear before</EM>
+the constraint handling rules and ECLiPSe clauses which define it,
+otherwise a syntax error is raised.
+There can be several <TT>constraints</TT> declarations. 
+
+<P>
+The optional <code>operator</code> declaration<A NAME="3123"></A> declares an operator, with
+the same arguments as <TT>op/3</TT> in ECLiPSe. However, while the usual
+operator declarations are ignored during compilation from <TT>chr</TT> to
+<TT>pl</TT> files, the CHR operator declarations are taken into account
+(see also the subsection on clauses).
+
+<P>
+The optional <code>label_with</code> declaration<A NAME="3127"></A> specifies when the
+ECLiPSe clauses of a constraint can be used for built-in labeling
+(see subsection on labeling).  
+
+<P>
+<B>Example, contd.:</B> The first lines of the minmax handler are
+declarations: <PRE>
+handler minmax.
+
+constraints leq/2, neq/2, minimum/3, maximum/3.
+
+operator(700, xfx, leq).
+operator(700, xfx, neq).
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION00852000000000000000">
+ECLiPSe Clauses</A>
+</H2>
+
+<P>
+A constraint handler program may also include arbitrary ECLiPSe code (written
+with the four operators <code>:- /[1,2]</code> and <code>?- /[1,2]</code>).
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Clause</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">Head <code>:-</code> Body.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">Head <code>?-</code> Body.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>:-</code> Body.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>?-</code> Body.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Note that <TT>:-/1</TT> and <TT>?-/1</TT> <EM>behave different from each other</EM> in CHR programs.
+Clauses starting with <TT>:-</TT> are <EM>copied</EM> into the <TT>pl</TT>
+file by the CHR compiler, clauses with <TT>?-</TT> are <EM>executed</EM>
+by the compiler. As the <TT>op</TT> declaration needs both copying and
+execution, we have introduced the special <TT>operator</TT> declaration
+(see previous subsection on declarations). A "Head" can be a "Constraint",
+such clauses are used for built-in labeling only (see section on labeling).
+
+<P>
+
+<H2><A NAME="SECTION00853000000000000000"></A><A NAME="3148"></A>
+<BR>
+Options
+</H2>
+
+<P>
+The <TT>option</TT> command allows the user to set options in the CHR compiler.  
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Option</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT"><code>option(</code>Option<code>,</code> On_or_off<code>).</code></TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Options can be switched on or off. <EM>Default is</EM> <TT>on</TT>.
+Advanced users may switch an option off to improve the efficiency
+of the handler at the cost of safety. Options are:
+
+<P>
+
+<UL><LI><code>check_guard_bindings</code><A NAME="3158"></A>:
+When executing a guard<A NAME="3159"></A>, it is checked that no global variables
+(variables of the rule heads) are touched (see subsection on how
+CHRs work). If the option is on, guards involving cut, if-then-else
+or negation may not work correctly if a global variable has been touched before.
+If switched off, guard checking may be significantly
+faster, but only safe if the user makes sure that global variables are
+not touched. To ensure that the variables are sufficiently bound,
+tests like <TT>nonvar/1</TT> or delays can be added to the predicates
+used in the guards.
+
+<P>
+
+<LI><code>already_in_store</code><A NAME="3161"></A>: 
+Before adding a user-defined constraint to the constraint store, it is
+checked if there is an identical one already in the store. If there
+is, the new constraint needs not to be added. The handling of the
+duplicate constraint is avoided. This option can be set to <code>off</code>,
+because the checking may be too expensive if duplicate constraints
+rarely occur.  Specific duplicate constraints can still be removed by
+a simpagation rule of the form <code>Constraint \ Constraint &lt;=&gt; true</code>.
+
+<P>
+
+<LI><code>already_in_heads</code><A NAME="3162"></A>: 
+In two-headed simplification rules, the intention is often to simplify
+the two head constraints into a stronger version of one of the
+constraints.  However, a straightforward encoding of the rule may
+include the case where the new constraint is identical to the
+corresponding head constraint.  Removing the head constraint and
+adding it again in the body is inefficient and may cause termination
+problems. If the <code>already_in_heads</code> option is on, in such a case
+the head constraint is kept and the body constraint ignored. Note
+however, that this optimization currently <EM>only works if</EM> the body
+constraint is the only goal of the body or the first goal in the
+conjunction comprising the body of the rule (see the example handler
+for domains). The option may be too expensive if identical head-body
+constraints rarely occur.
+
+<P>
+
+<LI>Note that the ECLiPSe environment flag <code>debug_compile</code> (set and
+unset with <code>dbgcomp</code> and <code>nodbgcomp</code>)<A NAME="3164"></A><A NAME="3165"></A><A NAME="3166"></A> is also taken into
+account by the CHR compiler. The default is <TT>on</TT>.
+If switched off, the resulting code is more
+efficient, but cannot be debugged anymore (see section <A HREF="node51.html#chrdebug">8.8</A>).
+
+<P>
+
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION00854000000000000000">
+CHR Built-In Predicates</A>
+</H2>
+
+<P>
+There are some built-in predicates to compile <TT>chr</TT> files, for
+debugging, built-in labeling and to
+inspect the constraint store and remove its constraints:
+
+<UL><LI><TT>chr2pl(</TT>File)<A NAME="3174"></A> compiles ``File'' from a <TT>chr</TT> to <TT>pl</TT> file.  
+
+<P>
+
+<LI><TT>chr(</TT>File)<A NAME="3178"></A> compiles ``File'' from a <TT>chr</TT> to
+<TT>pl</TT> file and loads the <TT>pl</TT> file.  
+
+<P>
+
+<LI><code>chr_trace</code><A NAME="3182"></A> activates the standard debugger and
+shows constraint handling.
+
+<LI><code>chr_notrace</code><A NAME="3183"></A> stops either debugger.
+
+<P>
+
+<LI><TT>chr_labeling</TT><A NAME="3185"></A>
+provides built-in labeling (see corresponding subsection).  
+
+<LI><TT>chr_label_with(</TT>Constraint)<A NAME="3187"></A> checks if ``Constraint'' satisfies a
+<TT>label_with</TT> declaration (used for built-in labeling).  
+
+<LI><TT>chr_resolve(</TT>Constraint)<A NAME="3190"></A> uses the ECLiPSe 
+clauses to solve a constraint (used for built-in labeling).
+
+<P>
+
+<LI><TT>chr_get_constraint(</TT>Constraint)<A NAME="3192"></A>
+gets a constraint unifying with ``Constraint'' from the constraint
+store and removes it, gets another constraint on backtracking.
+
+<LI><TT>chr_get_constraint(</TT>Variable,Constraint)<A NAME="3194"></A> is the same as 
+<TT>chr_get_constraint/1</TT> except that the constraint constrains the variable
+``Variable''.
+
+<P>
+
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1549"
+ HREF="node49.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1545"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1539"
+ HREF="node47.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1547"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1550"
+ HREF="node49.html">Labeling</A>
+<B> Up:</B> <A NAME="tex2html1546"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1540"
+ HREF="node47.html">The CHR Language</A>
+ &nbsp <B>  <A NAME="tex2html1548"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,15 @@
+
+trimcore
+
+   Frees currently unused memory.
+
+Type
+   Development Environment and Global Settings
+
+Description
+
+   Calling this predicate will free some currently deallocated memory, such
+   as memory occupied by retracted and abolished clauses. It also
+   returns deallocated stack space back to the operating system.
+
+

@@ -1,0 +1,30 @@
+
+values(+Map, -ValueList)
+
+   Return all the values from a map.
+
+Arguments
+   Map                 A map
+   ValueList           A list of all the values from Map
+
+Type
+   library(m_map)
+
+Description
+	
+	ValueList is a list of all the values appearing in the map Map.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Never fails.
+
+See Also
+   values / 2

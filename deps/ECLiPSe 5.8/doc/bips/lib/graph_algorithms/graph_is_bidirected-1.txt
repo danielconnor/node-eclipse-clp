@@ -1,0 +1,21 @@
+
+graph_is_bidirected(+Graph)
+
+   Tests whether a graph is bidirected
+
+Arguments
+   Graph               a graph structure
+
+Type
+   library(graph_algorithms)
+
+Description
+
+    A graph is bidirected if for every edge from S to T there is a
+    corresponding edge from T to S. In case of loops (i.e. an edge
+    from S to S) a second, different edge from S to S is required
+    to satisfy the bidirectedness condition.
+    
+
+See Also
+   make_undirected_graph / 2

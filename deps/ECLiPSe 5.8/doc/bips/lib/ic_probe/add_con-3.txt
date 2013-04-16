@@ -1,0 +1,29 @@
+
+add_con(+Constraint, ++Options, +Handle)
+
+   Add a constraint to the ic and linear solvers
+
+Arguments
+   Constraint          A numerical constraint, with functor 
+                         '=:=', '>=', '=<', '>' or '<'
+   Options             An options structure
+   Handle              A linear solver handle
+
+Type
+   library(ic_probe)
+
+Description
+ 
+If the inequality is strict, X>Y or X', then the granularity 
+ specified in the options is added to the smaller term to create a non-strict 
+ inequality, which can be passed to the linear solver.  Thus if the granularity
+ is 3, then for X>Y the constraint X>=Y+3 is added to the 
+ linear  solver and  X#>=Y+3  is added to the ic solver.
+
+
+
+Resatisfiable
+   no
+
+See Also
+   set_up_probe / 5

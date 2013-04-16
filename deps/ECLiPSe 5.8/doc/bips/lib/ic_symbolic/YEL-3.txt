@@ -1,0 +1,15 @@
+
+&=<(?X, ?Y, ?Bool)
+
+   Reified version of X &=< Y
+
+Arguments
+   X                   variable or domain value
+   Y                   variable or domain value
+   Bool                0, 1, or boolean variable
+
+Type
+   library(ic_symbolic)
+
+See Also
+   &=< / 2

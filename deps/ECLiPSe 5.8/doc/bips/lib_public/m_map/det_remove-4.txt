@@ -1,0 +1,35 @@
+
+det_remove(+Map0, ++Key, ?Value, -Map)
+
+   Remove a key/value pair from a map, aborting if the key is not present.
+
+Arguments
+   Map0                A map
+   Key                 The key to remove
+   Value               The value corresponding to Key
+   Map                 The map after removal
+
+Type
+   library(m_map)
+
+Description
+	
+	This predicate removes the key Key and its corresponding value from
+	the map Map0, resulting in the map Map.  It then attempts to
+	unify the removed value with Value.  If the key Key was not in the
+	map Map0, then the predicate aborts with a runtime error.
+	
+	
+	This predicate should only be called with maps created by other
+	predicates from the map module.
+	
+	
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Fails if Value does not unify with the value corresponding to Key.
+
+See Also
+   delete / 3, remove / 4

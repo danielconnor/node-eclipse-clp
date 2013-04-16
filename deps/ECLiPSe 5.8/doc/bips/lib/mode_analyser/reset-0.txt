@@ -1,0 +1,35 @@
+
+reset
+
+   Reset the mode analysis results for predicates compiled 
+   into the calling context module.
+
+Arguments
+
+Type
+   library(mode_analyser)
+
+Description
+
+   This predicate erases all mode analysis data for every predicate that 
+   has been compiled into the calling context module using the mode 
+   analysis compiler.  The predicate is a tool and as such can be 
+   invoked for an arbitrary module using mode_analyser:reset@Module.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   no
+
+Exceptions
+     4 --- Calling context module is not instantiated
+
+Examples
+   
+   [eclipse 6]: mode_analyser:reset@eclipse.
+
+   Yes (0.00s cpu)
+
+See Also
+   analyse / 1, result / 0, result / 1

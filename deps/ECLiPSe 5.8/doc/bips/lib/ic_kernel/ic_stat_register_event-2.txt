@@ -1,0 +1,34 @@
+
+ic_stat_register_event(++Event, ++Description)
+
+   Registers a new stats event to be collected
+
+Arguments
+   Event               The short name of the event
+   Description         The long name of the event
+
+Type
+   library(ic_kernel)
+
+Description
+
+   When a program wishes to record events of interest throughout its runtime
+   it can do so by first registering the event type with the stats logger at
+   the beginning of the program.  E.g.
+
+	ic_stat_register_event('myevent','My really important event').
+
+   Calls to ic_event/1 can then be inserted in the appropriate places
+   throughout the code.  E.g.
+
+	foo:-
+		ic_event('myevent'),
+		bar(X).	
+
+   While stats gathering is not enabled (i.e. without the program explicitly
+   calling ic_stat(on)) these events are processed very efficiently, and so
+   can be left in code without incurring any significant overhead.
+
+
+See Also
+   ic_stat / 1, ic_stat_get / 1, ic_event / 1

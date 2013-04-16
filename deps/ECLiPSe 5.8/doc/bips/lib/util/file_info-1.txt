@@ -1,0 +1,9 @@
+
+file_info(+File)
+
+   List all information about the specified File
+
+Type
+   library(util)
+
+

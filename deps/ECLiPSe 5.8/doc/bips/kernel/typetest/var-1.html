@@ -1,0 +1,50 @@
+<HTML><HEAD><TITLE>var(?Var)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>var(?Var)</H1>
+Succeeds if Var is a variable or an attributed variable.
+
+
+<DL>
+<DT><EM>?Var</EM></DT>
+<DD>Prolog term.
+</DD>
+</DL>
+<H2>Description</H2>
+   Used to test whether Var is a variable or an attributed variable.  The
+   difference between var/1 and free/1 is that var/1 succeeds on attributed
+   variables as well.
+
+<P>
+   var/1 could be defined as
+
+<P>
+<PRE>
+    var(X) :- free(X).
+    var(X) :- meta(X).
+</PRE>
+
+<H3>Fail Conditions</H3>
+   Fails if Var is instantiated.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+Success:
+      var(X).
+      var(_abc).
+      var(_).
+      var(X{a}).
+      suspend:(X&gt;0), var(X).
+
+Fail:
+      var(atom).
+      var('Abc').
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/free-1.html">free / 1</A>, <A HREF="../../kernel/typetest/meta-1.html">meta / 1</A>, <A HREF="../../kernel/typetest/nonground-1.html">nonground / 1</A>, <A HREF="../../kernel/typetest/nonvar-1.html">nonvar / 1</A>, <A HREF="../../kernel/typetest/type_of-2.html">type_of / 2</A>
+</BODY></HTML>

@@ -1,0 +1,10 @@
+
+shuffle(+List, -ShuffledList)
+
+   Shuffle a list, ie randomize the element order
+
+Type
+   library(lists)
+
+See Also
+   msort / 2

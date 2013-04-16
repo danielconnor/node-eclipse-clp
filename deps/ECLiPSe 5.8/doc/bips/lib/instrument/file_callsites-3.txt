@@ -1,0 +1,41 @@
+
+file_callsites(+File, ?StartId, ?EndId)
+
+   Retrieve start and end callsite identifiers for named file.
+
+Arguments
+   File                Atom or string
+   StartId             Intger
+   EndId               Integer
+
+Type
+   library(instrument)
+
+Description
+
+   Each code instrumentation point within a file is 
+   uniquely identified by its callsite identifier.
+   The callsite identifier is a monotonically increasing 
+   integer incrementing from the initial value of 0 for a 
+   new module. 
+   
+   As additional files are instrumented and 
+   compiled into a module, the start identifier is 
+   incremented from the end identifier of the previous file. 
+   The predicate retrieves the start and end callsite 
+   identifiers for the file.
+   
+   The predicate is a tool and the callsite identifiers 
+   of a file instrumented in a module other than the current 
+   calling module context can be retrieved by invoking 
+   file_callsites(File, StartId, EndId)@Module.
+
+Resatisfiable
+   no
+
+Fail Conditions
+   StartId or EndId are not the file's starting and 
+    ending callsite identifiers.
+
+See Also
+   get_callsite_data / 2, instrument / 2, instrument / 3, library(instrument), module_callsites / 2, set_callsite_data / 2, struct(itemplate), defined_modules / 2

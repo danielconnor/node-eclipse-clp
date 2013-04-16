@@ -1,0 +1,64 @@
+/* time point constraints */
+% thom fruehwirth ECRC 1991-92, 931223
+
+handler time-point.
+
+option(already_in_store, on). 
+option(already_in_heads, on).	% essential for termination of intersect rule
+option(check_guard_bindings, off).
+
+operator(700,xfy,'=<+').
+operator(700,xfy,'=<*').
+
+	ground(X):- not nonground(X).
+
+
+constraints (=<+)/2, (=<*)/2.
+
+start(X):- 0=<*X=<*0.
+
+ground @
+X=<+Y=<+Z <=> ground(X-Y-Z) | X=<Y, Y=<Z.
+ground @
+X=<*Y=<*Z <=> ground(X-Y-Z) | X=<Y, Y=<Z.
+
+inconsistent @
+A=<*X=<*B <=> A>B | fail.
+intersect @
+A=<*Y=<*B,C=<*Y=<*D <=> AC is max(A,C), BD is min(B,D) | AC=<*Y=<*BD.
+
+propagate_forward @
+A=<*Y=<*B,C=<+Y-Z=<+D ==> AC is A+C , BD is B+D , AC=<*Z=<*BD.
+propagate_backward @
+A=<*Y=<*B,C=<+Z-Y=<+D ==> AC is A-D , BD is B-C , AC=<*Z=<*BD.
+
+
+/*
+% example in old user-interface:
+CRS>   start(X),3=<+X-Y=<+10,4=<+Y-Z=<+5.
+3 =<+X - Y =<+10
+4 =<+Y - Z =<+5
+0 =<* X =<* 0
+3 =<* Y =<* 10
+7 =<* Z =<* 15
+
+CRS>    start(_0),
+	10 =<+_0 - _1 =<+20,
+	10 =<+_3 - _2 =<+20,
+	30 =<+_1 - _2 =<+40,
+	40 =<+_3 - _4 =<+50,
+	60 =<+_0 - _4 =<+70.
+YES IF
+10 =<+_0 - _1 =<+20
+10 =<+_3 - _2 =<+20
+30 =<+_1 - _2 =<+40
+40 =<+_3 - _4 =<+50
+60 =<+_0 - _4 =<+70
+0 =<* _0 =<* 0
+10 =<* _1 =<* 20
+20 =<* _3 =<* 30
+40 =<* _2 =<* 50
+60 =<* _4 =<* 70
+*/
+
+% end of handler time-point

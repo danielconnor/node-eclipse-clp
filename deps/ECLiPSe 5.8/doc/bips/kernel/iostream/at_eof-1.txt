@@ -1,0 +1,63 @@
+
+at_eof(+Stream)
+
+   Succeeds if the position of the pointer to stream Stream is at the end of
+file.
+
+
+
+Arguments
+   +Stream             Integer (stream number) or Atom (reserved or user-defined symbolic stream name).
+
+Type
+   Stream I/O
+
+Description
+   Used to test if the position of the pointer to stream Stream is at the
+   end of file.
+
+
+   Stream can be a symbolic stream name or a physical stream number.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Stream is a file with its pointer not at end of file.
+
+
+
+Exceptions
+     4 --- Stream is not instantiated.
+     5 --- Stream is instantiated, but not to an atom or an integer.
+   192 --- Stream is an illegal stream mode.
+
+Examples
+   
+Success:
+      at_eof(null).
+
+      [eclipse]: open(file1,write,s), at_eof(s),
+      > write(s,hello), at(s,5), at_eof(s), close(s).
+      yes.
+
+Fail:
+
+      [eclipse]: open(file1,write,s),write(s,hello), close(s),
+      > open(file1,read,s), at_eof(s), close(s).
+      no.
+
+Error:
+      at_eof(X).                  (Error 4).
+      at_eof("s").                (Error 5).
+      at_eof(not_a_stream).       (Error 192).
+
+
+
+
+
+See Also
+   at / 2, seek / 2, stream_truncate / 1

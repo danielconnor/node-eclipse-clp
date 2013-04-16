@@ -1,0 +1,44 @@
+<HTML><HEAD><TITLE>garbage_collect</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Development Environment and Global Settings</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>garbage_collect</H1>
+Request an immediate garbage collection.
+
+
+<DL>
+</DL>
+<H2>Description</H2>
+   Causes an immediate garbage collection of the global and trail stack,
+   provided that the garbage collector is not switched off (cf.
+   set_flag/2).  In any case the predicate succeeds.
+
+<P>
+   Note that the garbage collector is usually triggered automatically,
+   controlled by the user-definable flag gc_interval.  Therefore, the usage
+   of garbage_collect/0 should be restricted to situations where the
+   automatic triggering performs badly.  In this case it should be inserted
+   in a place where it is known for sure that a lot of structures and lists
+   have become useless, eg.  just before a tail-recursive call as shown in
+   the example.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H2>Examples</H2>
+<PRE>
+cycle(OldState) :-
+    transform(OldState, NewState), /* long computation     */
+    !,
+    garbage_collect,               /* OldState is obsolete */
+    cycle(NewState).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/env/env-0.html">env / 0</A>, <A HREF="../../kernel/env/set_flag-2.html">set_flag / 2</A>, <A HREF="../../kernel/env/get_flag-2.html">get_flag / 2</A>
+</BODY></HTML>

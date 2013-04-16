@@ -1,0 +1,147 @@
+<HTML><HEAD><TITLE>library(notify_ports)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(notify_ports)</H1>
+One-to-many notification ports
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="close_sender-1.html"><STRONG>close_sender(+SendPort)</STRONG></A></DT>
+<DD>Close a send port</DD>
+<DT><A HREF="close_sender-2.html"><STRONG>close_sender(+Pos, +Struct)</STRONG></A></DT>
+<DD>Close a send port on a structure field</DD>
+<DT><A HREF="foreachnotification-6.html"><STRONG>foreachnotification(+BaseName, -Message, +Params, +ReceivePort, -Status, +Goals)</STRONG></A></DT>
+<DD>A control construct to iterate over received notifications</DD>
+<DT><A HREF="foreachnotification-7.html"><STRONG>foreachnotification(+BaseName, -Message, +Params, +ReceivePos, +ReceiveStruct, -Status, +Goals)</STRONG></A></DT>
+<DD>A control construct to iterate over received notifications</DD>
+<DT><A HREF="open_receiver-2.html"><STRONG>open_receiver(+SendPort, -ReceivePort)</STRONG></A></DT>
+<DD>Create a receiver for a given notification sender</DD>
+<DT><A HREF="open_receiver-4.html"><STRONG>open_receiver(+SendPos, +SendStruct, +ReceivePos, +ReceiveStruct)</STRONG></A></DT>
+<DD>Create a receiver for a given notification sender</DD>
+<DT><A HREF="open_receiver_init-4.html"><STRONG>open_receiver_init(+SendPort, +InitialMessages, -InitialMessagesTail, -ReceivePort)</STRONG></A></DT>
+<DD>Create a receiver for a given notification sender</DD>
+<DT><A HREF="open_receiver_init-6.html"><STRONG>open_receiver_init(+SendPos, +SendStruct, +InitialMessages, -InitialMessagesTail, +ReceivePos, +ReceiveStruct)</STRONG></A></DT>
+<DD>Create a receiver for a given notification sender</DD>
+<DT><A HREF="open_sender-1.html"><STRONG>open_sender(-SendPort)</STRONG></A></DT>
+<DD>Create a send port</DD>
+<DT><A HREF="open_sender-2.html"><STRONG>open_sender(+Pos, +Struct)</STRONG></A></DT>
+<DD>Initialise a structure field as a send port</DD>
+<DT><A HREF="receive_notifications-3.html"><STRONG>receive_notifications(+ReceivePort, -Messages, -Status)</STRONG></A></DT>
+<DD>Receive a list of currently available notification messages</DD>
+<DT><A HREF="receive_notifications-4.html"><STRONG>receive_notifications(+ReceivePos, +ReceiveStruct, -Messages, -Status)</STRONG></A></DT>
+<DD>Receive a list of currently available notification messages</DD>
+<DT><A HREF="send_notification-2.html"><STRONG>send_notification(+SendPort, +Message)</STRONG></A></DT>
+<DD>Send a notification message</DD>
+<DT><A HREF="send_notification-3.html"><STRONG>send_notification(+Pos, +Struct, +Message)</STRONG></A></DT>
+<DD>Send a notification message</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+    This library implements a nonlogical feature, called notification
+    ports. It is a one-to-many form of messaging, i.e. there
+    is one send port and possibly many attached receive ports.
+    Both send and receive ports have unique handles, which is the
+    nonlogical bit. Apart from that, the message stream is just an
+    infinite list, with the sender extending the list at the tail and
+    the receivers each individually progressing through the list.
+    <P>
+    Straightforward interface:
+    <PRE>
+	open_sender(-Sender)
+	close_sender(+Sender)
+	send_notification(+Sender, +Message)
+	open_receiver(+Sender, -Receiver)
+	open_receiver_init(+Sender, +InitMsgs, -InitMsgsTail, -Receiver)
+	receive_notifications(+Receiver, -Messages, -Status)
+	foreachnotification(+BaseName, -Message, +Params, +Receiver, -Status, +Goals)
+    </PRE>
+    There is also a slightly more memory efficient API where sender and
+    receiver can be fields of larger structures rather than separate
+    substructures. These  larger structures must always be created
+    by the caller (in the case of the sender this is often an attribute
+    structure, in the case of the receiver it is sometimes advantageous
+    to package a suspension together with the receiver in order to kill
+    it at the end of all messages):
+    <PRE>
+	open_sender(+SendPos, +SendStruct)
+	close_sender(+SendPos, +SendStruct)
+	send_notification(+SendPos, +SendStruct, +Message)
+	open_receiver(+SendPos, +SendStruct, +ReceivePos, +ReceiveStruct)
+	open_receiver_init(+SendPos, +SendStruct, +InitMsgs, -InitMsgsTail,
+				+ReceivePos, +ReceiveStruct)
+	receive_notifications(+ReceivePos, +ReceiveStruct, -Messages, -Status)
+	foreachnotification(+BaseName, -Message, +Params, +ReceivePos, +ReceiveStruct, -Status, +Goals)
+    </PRE>
+    
+<H2>Examples</H2>
+<PRE>
+    % This example shows a typical use of notification ports.
+    % A notification port is used in addition to a waking list
+    % in order to transfer precise information about the reason for waking.
+
+    % We define a variable attribute (myattr) consisting of a send port
+    % and a waking list. 
+
+
+    :- lib(notify_ports).
+
+    :- meta_attribute(myattr, []).
+    :- local struct(myattr(port,susplist)).
+    :- local struct(myrec(port,susp)).
+
+
+    test :-
+	    init_var(X),
+	    log_all_messages(X),
+	    touch_var(X, hello),
+	    touch_var(X, out),
+	    touch_var(X, there),
+	    fini_var(X).
+
+
+    % initialise and attach our attribute to the given variable
+    init_var(X) :-
+	    Attr = myattr{},
+	    open_sender(port of myattr, Attr),
+	    init_suspension_list(susplist of myattr, Attr),
+	    add_attribute(X, Attr, myattr).
+
+
+    % simulate an action on the variable: send a message and wake
+    touch_var(_X{myattr:Attr}, Message) ?-
+	    send_notification(port of myattr, Attr, Message),
+	    schedule_suspensions(susplist of myattr, Attr),
+	    wake.
+
+    % finalise the attribute, e.g. before the variable gets instantiated
+    fini_var(_X{myattr:Attr}) ?-
+            close_sender(port of myattr, Attr),
+	    schedule_suspensions(susplist of myattr, Attr),
+	    wake.
+
+    % a sample demon that will report every time the variable is touched
+    log_all_messages(X{myattr:Attr}) ?-
+	    Receiver = myrec{susp:Susp},
+	    open_receiver(port of myattr, Attr, port of myrec, Receiver),
+	    suspend(log_demon(Receiver), 2, X-&gt;myattr:(susplist of myattr), Susp).
+
+    :- demon log_demon/1.
+    log_demon(Receiver) :-
+	    foreachnotification(log, Message, [], port of myrec, Receiver, Status, (
+		writeln(received(Message))
+	    )),
+	    ( Status = closed -&gt;
+		arg(susp of myrec, Receiver, Susp),
+		kill_suspension(Susp),
+		writeln(closed)
+	    ;
+		true
+	    ).
+    </PRE>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies
+<LI><STRONG>Date: </STRONG>$Date: 2004/12/03 15:28:53 $
+</UL>
+<HR>Generated from notify_ports.eci on Tue Jan 25 01:58:38 2005
+
+</BODY></HTML>

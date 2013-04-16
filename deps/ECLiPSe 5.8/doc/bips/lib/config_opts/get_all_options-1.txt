@@ -1,0 +1,24 @@
+
+get_all_options(?OptionList)
+
+   Retrieves the current values of all options
+
+Arguments
+   OptionList          List of (Module:Name)-Value terms
+
+Type
+   library(config_opts)
+
+Description
+   This predicate retrieves the current values of all options, returning a
+   list of terms of the form (Module:Name)-Value, where Name is the name of
+   the option, Module is the module that defined (registered) it, and Value
+   is the current value of the option.
+
+   The values are copied during retrieval, which means that if they are
+   non-ground then they will contain fresh copies of variables rather than
+   the original ones (or sharing with other retrieved copies).
+
+
+See Also
+   register_option / 3, set_option / 2, get_option / 2

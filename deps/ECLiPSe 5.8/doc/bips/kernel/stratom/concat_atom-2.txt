@@ -1,0 +1,71 @@
+
+concat_atom(+List, ?Dest)
+
+   Succeeds if Dest is the concatenation of the atomic terms contained in List.
+It is more efficient to use concat_string/2 whenever possible.
+
+
+
+Arguments
+   +List               List of atomic terms.
+   ?Dest               Atom or variable.
+
+Type
+   Strings and Atoms
+
+Description
+   Dest is unified with the concatenation of the atomic terms contained in
+   List.  List may contain numbers, atoms and strings.  The result of the
+   concatenation is always an atom.
+
+
+   The use of this predicate is discouraged in favour of concat_string/2,
+   because the creation of new atoms involves entering them into a
+   dictionary whose garbage collection is relatively expensive.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if Dest does not unify with the concatenation of the terms in
+   List.
+
+
+
+Exceptions
+     4 --- List is not instantiated (non-coroutine mode only).
+     4 --- List contains free variables (non-coroutine mode only).
+     5 --- List is instantiated, but not to a list of atomic terms.
+     5 --- Dest is neither an atom nor a variable.
+
+Examples
+   
+Success:
+      concat_atom([abc,def],abcdef).
+
+      concat_atom(["Str1","Str2"],X).
+                             X = 'Str1Str2'.
+
+      concat_atom([the,man," is aged ",20],X).
+                             X = 'theman is aged 20'.
+
+      concat_atom([1,2,3],X)
+                             X = '123'.
+
+Fail:
+      concat_atom([ab,bc],abc).
+
+Error:
+      concat_atom(A,X).        (Error 4).
+      concat_atom([abc,D],X).  (Error 4).
+      concat_atom(art,X).      (Error 5).
+
+
+
+
+
+See Also
+   concat_string / 2, concat_atoms / 3, atom_string / 2, join_string / 3

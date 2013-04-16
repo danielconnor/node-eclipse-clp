@@ -1,0 +1,78 @@
+<HTML><HEAD><TITLE>library(gap)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(gap)</H1>
+Library for interfacing with the GAP computational algebra system
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="gap_command-2.html"><STRONG>gap_command(++Format, +Args)</STRONG></A></DT>
+<DD>Send a command to GAP</DD>
+<DT><A HREF="gap_ensure_started-0.html"><STRONG>gap_ensure_started</STRONG></A></DT>
+<DD>Make sure there is a GAP session active</DD>
+<DT><A HREF="gap_query-3.html"><STRONG>gap_query(++Format, +Args, ?Result)</STRONG></A></DT>
+<DD>Query GAP</DD>
+<DT><A HREF="gap_query_string-3.html"><STRONG>gap_query_string(++Format, +Args, ?Result)</STRONG></A></DT>
+<DD>Query GAP</DD>
+<DT><A HREF="gap_restart-0.html"><STRONG>gap_restart</STRONG></A></DT>
+<DD>Restart a GAP session</DD>
+<DT><A HREF="gap_running-0.html"><STRONG>gap_running</STRONG></A></DT>
+<DD>Query whether a GAP session is currently active</DD>
+<DT><A HREF="gap_shutdown-0.html"><STRONG>gap_shutdown</STRONG></A></DT>
+<DD>Shut down a GAP session</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+   This library provides an interface to the GAP computational algebra
+   system (see <A HREF="http://www.gap-system.org/">www.gap-system.org</A>).  GAP must be installed and appear in the
+   user's path in order for this library to work.<P>
+
+   Commands can be sent to GAP using the gap_command/2 predicate.  If there
+   are results that need to be returned to ECLiPSe, use gap_query/3 or
+   gap_query_string/3.  Normally GAP will be started automatically when it
+   is needed, and shut down automatically when the ECLiPSe session ends, but
+   some manual control is available through gap_ensure_started/0,
+   gap_shutdown/0 and gap_restart/0.  gap_running/0 can be used to determine
+   whether a GAP session is currently active.<P>
+
+   The current implementation of the library only supports one GAP session
+   at a time, to be shared amongst all software components that use the
+   library.  In future we expect to allow multiple concurrent independent
+   sessions through the use of handles.<P>
+
+   This library supports the following options (see library(config_opts)):
+   <DL>
+   <DT>gap_reporting_level</DT>
+       <DD>Controls how much reporting output the GAP interface generates.
+       Valid levels are:<P>
+       <DL>
+       <DT>silent</DT>
+           <DD>Generate no reporting output under any circumstances.</DD>
+       <DT>error</DT>
+           <DD>Generate reporting output only when an error occurs.</DD>
+       <DT>standard</DT>
+           <DD>Generate basic reporting output.</DD>
+       <DT>verbose</DT>
+           <DD>Generate lots of reporting output, including all commands and
+           queries sent to/from GAP.</DD>
+       </DL><P>
+       The default is standard.  Verbose can be useful for debugging.<P></DD>
+
+   <DT>gap_reporting_stream</DT>
+       <DD>Specifies the stream to send reporting output to.  By default,
+       ECLiPSe's standard output stream is used.</DD>
+   </DL>
+
+   This library is still experimental and is expected to evolve.  Feedback,
+   suggestions, problem reports, etc. welcome.<P>
+
+   Please note that this library currently does not work on Windows machines
+   since it relies on named pipes, which are currently unsupported by
+   cygwin.<P>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>evolving
+<LI><STRONG>Author: </STRONG>Warwick Harvey, Steve Linton, Ian Gent and others
+</UL>
+<H2>See Also</H2>
+<A HREF="../../lib/config_opts/index.html">library(config_opts)</A><HR>Generated from gap.eci on Tue Jan 25 01:58:49 2005
+
+</BODY></HTML>

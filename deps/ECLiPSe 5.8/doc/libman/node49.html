@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Labeling</TITLE>
+<META NAME="description" CONTENT="Labeling">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node43.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1565"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1561"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1555"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1563"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1566"
+ HREF="node50.html">Writing Good CHR Programs</A>
+<B> Up:</B> <A NAME="tex2html1562"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1556"
+ HREF="node48.html">More on the CHR</A>
+ &nbsp <B>  <A NAME="tex2html1564"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00860000000000000000">
+Labeling</A>
+</H1>
+
+<P>
+In a constraint logic program, constraint handling is interleaved
+with making choices. Typically, without making choices, constraint
+problems cannot be solved completely. <EM>Labeling</EM><A NAME="3199"></A>
+is a controlled
+way to make choices. Usually, a labeling predicate is called
+at the end of the program which chooses values for the variables
+constrained in the program.
+We will understand labeling in the most general sense as a procedure
+introducing arbitrary choices (additional constraints on constrained
+variables) in a systematic way.
+
+<P>
+The CHR run-time system provides <EM>built-in labeling</EM><A NAME="3201"></A> for
+user-defined constraints. The idea is to write clauses for
+user-defined constraints that are used for labeling the variables in
+the constraint. These clauses are not used during constraint handling,
+but only during built-in labeling. Therefore the ``Head'' of a clause may
+be a user-defined ``Constraint''.
+The <TT>label_with</TT> declaration<A NAME="3203"></A> restricts the use of the 
+clauses for built-in labeling (see subsection on declarations).  There
+can be several <TT>label_with</TT> declarations for a constraint.
+
+<P>
+<B>Example, contd.:</B> <PRE>
+label_with minimum(X, Y, Z) if true.
+minimum(X, Y, Z):- X leq Y, Z = X.
+minimum(X, Y, Z):- Y lss X, Z = Y.
+</PRE>
+
+<P>
+The built-in labeling is invoked by calling the CHR built-in predicate
+<TT>chr_labeling/0</TT> (no arguments). Once called, whenever no more
+constraint handling is possible, the built-in labeling will choose a
+constraint goal whose <TT>label_with</TT> declaration is satisfied for
+labeling. It will introduce choices using the clauses of the constraint.
+
+<P>
+<B>Example, contd.:</B>
+A query without and with built-in labeling: <PRE>
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,W), Z neq W.
+
+X = _g357
+Y = _g389
+Z = _g421
+W = _g1227
+ 
+Constraints:
+(1) minimum(_g357, _g389, _g421)
+(2) _g421 leq _g357
+(3) _g421 leq _g389
+(4) maximum(_g357, _g389, _g1227)
+(5) _g357 leq _g1227
+(7) _g389 leq _g1227
+(10) _g421 lss _g1227
+
+yes.
+
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,W), Z neq W, chr_labeling.
+
+X = Z = _g363
+Y = W = _g395
+ 
+Constraints:
+(10) _g363 lss _g395
+
+     More? (;) 
+
+X = W = _g363
+Y = Z = _g395
+
+Constraints:
+(17) _g395 lss _g363
+
+yes.
+</PRE>
+
+<P>
+Advanced users can write their own labeling procedure taking into
+account the constraints in the constraint store (see next subsection
+for CHR built-in predicates to inspect and manipulate the constraint
+store). 
+
+<P>
+<B>Example</B>
+The predicate <TT>chr_labeling/0</TT> can be defined as: <PRE>
+        labeling :-
+                chr_get_constraint(C),
+                chr_label_with(C),
+                !,
+                chr_resolve(C),
+                labeling.
+        labeling.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1565"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1561"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1555"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1563"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1566"
+ HREF="node50.html">Writing Good CHR Programs</A>
+<B> Up:</B> <A NAME="tex2html1562"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1556"
+ HREF="node48.html">More on the CHR</A>
+ &nbsp <B>  <A NAME="tex2html1564"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

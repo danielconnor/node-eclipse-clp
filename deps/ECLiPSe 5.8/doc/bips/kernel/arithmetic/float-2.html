@@ -1,0 +1,65 @@
+<HTML><HEAD><TITLE>float(+Number, ?Result)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Arithmetic</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>float(+Number, ?Result)</H1>
+Converts Number to float and unifies the resulting value with
+Result.
+
+
+<DL>
+<DT><EM>+Number</EM></DT>
+<DD>A number.
+</DD>
+<DT><EM>?Result</EM></DT>
+<DD>A variable or float.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is used by the ECLiPSe compiler to expand evaluable
+   arithmetic expressions.  So the call to float(Number, Result) is
+   equivalent to
+<PRE>
+    Result is float(Number)
+</PRE>
+    which should be preferred for portability.
+<P>
+   In coroutining mode, if Number is a free variable, the call to float/2
+   is delayed until this variable is instantiated.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if the result of the evaluation does not unify with Result.
+
+
+<H3>Resatisfiable</H3>
+   No
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Number is not instantiated (non-coroutining mode only).
+<DT><EM>(5) type error </EM>
+<DD>Result is a number but not a float.
+<DT><EM>(24) number expected </EM>
+<DD>Number is not of a numeric type.
+<DT><EM>(24) number expected </EM>
+<DD>Result is neither a number nor a variable.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      float(1, 1.0).
+      float(-6, Result).         (gives Result = -6.0)
+Fail:
+      float(1, 0.0).
+Error:
+      float(A, 6.0).                   (Error 4).
+      float(0, 0).                     (Error 5).
+      float(4 + 2, 6.0).               (Error 24).
+      float(1, r).                     (Error 24).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arithmetic/is-2.html">is / 2</A>
+</BODY></HTML>

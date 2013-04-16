@@ -1,0 +1,21 @@
+
+?Vars $:: ++Domain
+
+   Constrain Vars to have the domain Domain.
+
+Arguments
+   Vars                Variable, list of variables or submatrix of variables
+   Domain              Domain specification
+
+Type
+   library(ic)
+
+Description
+
+   Like ::/2, but does not perform any type analysis on the domain and does
+   not enforce integrality on the variables even if the domain specified has
+   integer bounds.
+
+
+See Also
+   :: / 2, #:: / 2

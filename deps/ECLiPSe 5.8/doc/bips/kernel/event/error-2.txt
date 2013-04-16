@@ -1,0 +1,102 @@
+
+error(+EventId, ?Culprit)
+
+   An error or event EventId is raised and the corresponding error handler is executed
+
+Arguments
+   +EventId            Atom, integer or structure with functor default/1.
+   ?Culprit            Prolog term.
+
+Type
+   Event Handling
+
+Description
+   The event or error EventId with Culprit as its culprit goal is raised.
+   EventId is either an integer error number, or an atomic event name.
+   The error handler which is associated with EventId is invoked,
+   with its first argument set to EventId, its second argument to Culprit,
+   and its third argument and fourth argument are the context module in
+   which error/2 is invoked. If the handler has less than four arguments,
+   the extra information is lost.
+
+   This simulates an occurrence of the error EventId inside a call
+   to Culprit.  The valid error numbers are those returned by
+   current_error/1.  Event names can be any atom as long as an event handler
+   has been defined for them.
+
+   If EventId is a structure with functor default/1, the structure's argument
+   is taken as the error number and the default handler is executed, even
+   if the error handler has been redefined using set_event_handler/2.
+   This is useful for writing user error handlers.
+
+   If the event handler succeeds, possibly binding some variables
+   inside Culprit, then error/2 succeeds as well. If the handler fails
+   or calls exit_block/1, then so does error/2.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the handler fails.
+
+
+
+Exceptions
+     4 --- EventId is not instantiated.
+     5 --- EventId is not an error specification.
+     6 --- EventId is a number but not a valid error number.
+    32 --- No handler is associated to EventId
+
+Examples
+   
+Success:
+
+   % Writing a predicate with type checking
+    ?- [user].
+     is_positive(N) :-
+            number(N),
+            !,
+            N >= 0.
+     is_positive(N) :-
+            error(5, is_positive(N)).
+     user compiled 244 bytes in 0.02 seconds
+    yes.
+
+    ?- is_positive(a).
+    type error in is_positive(a)
+
+   % changing the behaviour of a built-in by redefining a handler
+    ?- //(1,0,X).       % change this behaviour
+    arithmetic exception in //(1, 0, X)
+
+    ?- [user].        % define the new handler
+     my_handler(_, //(_,_,Result)) :-
+            !,
+            Result = infinity.
+     my_handler(Err, Goal) :-
+            error(default(Err), Goal).
+     user compiled 212 bytes in 0.00 seconds
+    yes.
+
+    ?- set_event_handler(20, my_handler/2).
+    yes.
+
+    ?- //(1,0,X).      % check if it works
+    X = infinity
+    yes.
+
+    ?- sqrt(-1,X).   % other culprits: as before
+    arithmetic exception in sqrt(-1, _g36)
+
+Error:
+      error(N,dummy(1)).    (Error 4).
+      error(5.0,dummy(1)).  (Error 5).
+      error(-2,dummy(1)).   (Error 6).
+
+
+
+
+
+See Also
+   error / 3, event / 1, current_error / 1, error_id / 2, get_event_handler / 3, reset_event_handler / 1, reset_error_handlers / 0, set_event_handler / 2

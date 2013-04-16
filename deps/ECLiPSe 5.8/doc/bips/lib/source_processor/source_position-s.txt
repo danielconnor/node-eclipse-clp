@@ -1,0 +1,29 @@
+
+struct source_position(stream, file, line, offset, remaining_files, included_from, options, created_modules, oldcwd, module)
+
+   Current source position
+
+Fields
+   stream              the Eclipse stream being read
+   file                this file's canonical file name
+   line                this position's line number (integer)
+   offset              this position's byte offset (integer)
+   remaining_files     list of files still to be included
+   included_from       the source_position from which this file is included, or [] if not included
+   options             structure describing option settings
+   created_modules     list of modules created so far
+   oldcwd              current directory before opening this file
+   module              read-module at this source position
+
+Type
+   library(source_processor)
+
+Description
+This structure describes a particular position that has been
+    	reached during processing of an ECLiPSe source file. It also describes
+	what has to be done when this file is finished. The source_read/3
+	predicate reads a term from a given source position and returns
+	the new source position after the read.
+
+See Also
+   source_open / 3, source_close / 2, source_read / 4

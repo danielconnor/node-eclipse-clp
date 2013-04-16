@@ -1,0 +1,53 @@
+
+sleep(+Seconds)
+
+   The execution of ECLiPSe is suspended for Seconds number of seconds.
+
+
+
+Arguments
+   +Seconds            Positive number (integer or float).
+
+Type
+   Operating System
+
+Description
+   sleep/1 causes the the suspension of execution of ECLiPSe for Seconds
+   number of seconds.
+
+
+   However, ECLiPSe will respond to interrupts while asleep.  On most
+   operating systems, interrupts will terminate the sleep prematurely.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Seconds is uninstantiated.
+     5 --- Seconds is not an integer or float.
+
+Examples
+   
+Success:
+      [eclipse]: sleep(0.3).
+                           % short sleep
+      yes.                 % "yes" appears after 0.3 seconds.
+
+      [eclipse]: sleep(63072000).
+                           % long sleep
+      yes.                 % "yes" appears after 2 years.
+
+
+
+
+
+See Also
+   alarm / 1, pause / 0

@@ -1,0 +1,57 @@
+<HTML><HEAD><TITLE>current_store(?StoreHandle)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Non-logical Variables, Arrays, Bags, Shelves and Stores</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>current_store(?StoreHandle)</H1>
+StoreName is a visible store name
+<DL>
+<DT><EM>StoreHandle</EM></DT>
+<DD>A variable or a store name (atom or compound)
+</DD>
+</DL>
+<H3>Calling Modes</H3><UL>
+<LI>current_store(+)
+<LI>current_store(-)
+</UL>
+<H2>Description</H2>
+	Used to check whether StoreName is the name of a visible store,
+	or to enumerate all visible store names in the context module. 
+<P>
+	Note that this predicate will only accept/generate store names
+	that have been created with local/1, store/1, not anonymous
+	store handles created via store_create/1.
+</PRE>
+	Note: StoreHandle gets unified with an atom or a compound term,
+	and the store is identified by this term's toplevel functor
+	together with the context module.
+    
+<H3>Fail Conditions</H3>
+StoreName is not a visible store name
+<H3>Resatisfiable</H3>
+Yes
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>StoreHandle is neither atom nor compound term nor variable
+</DL>
+<H2>Examples</H2>
+<PRE>
+    :- local store(shed).
+    :- local store(warehouse/3).
+
+    ?- current_store(shed).
+    Yes (0.00s cpu)
+
+    ?- current_store(heap).
+    No (0.00s cpu)
+
+    ?- current_store(X).
+    X = shed
+    More (0.00s cpu) ? ;
+
+    X = warehouse(_184, _185, _186)
+    More (0.00s cpu) ? ;
+
+    No (0.00s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/arrays/store-1.html">store / 1</A>, <A HREF="../../kernel/modules/local-1.html">local / 1</A>
+</BODY></HTML>

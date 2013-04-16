@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Syntax Differences between ECLiPSe and other Prologs</TITLE>
+<META NAME="description" CONTENT="Syntax Differences between ECLiPSe and other Prologs">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node145.html">
+<LINK REL="previous" HREF="node143.html">
+<LINK REL="up" HREF="node140.html">
+<LINK REL="next" HREF="node145.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4398"
+ HREF="node145.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4394"
+ HREF="node140.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4388"
+ HREF="node143.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4396"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4399"
+ HREF="node145.html">Changing the Parser behaviour</A>
+<B> Up:</B> <A NAME="tex2html4395"
+ HREF="node140.html">Syntax</A>
+<B> Previous:</B> <A NAME="tex2html4389"
+ HREF="node143.html">Formal definition of clause</A>
+ &nbsp <B>  <A NAME="tex2html4397"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002340000000000000000"></A>
+<A NAME="syntaxdiff"></A>
+<BR>
+Syntax Differences between ECLiPSe and other Prologs
+</H1>
+<A NAME="13052"></A>
+
+<P>
+ECLiPSe supports the following extensions of Prolog syntax:
+
+<UL><LI>Attributed variables: <code>X{Attr}</code>
+
+<LI>Rational numbers: <code>3_4</code>
+
+<LI>Bounded real numbers: <code>1.99__2.01</code>
+
+<LI>Array subscripts: <code>Matrix[3,4]</code>
+
+<LI>Structures with named fields: <code>emp{age:33,salary:33000}</code>
+
+<LI>Binary prefix operators: <code>some X p(X)</code>
+
+</UL>
+Some of these extensions can be disabled via syntax option settings
+(this is done for example by the compatibility packages).
+In addition to the above extensions, the following minor differences
+exist between default ECLiPSe syntax and most Prolog systems:
+
+<UL><LI>In ECLiPSe, end of file is accepted as fullstop
+
+<P>
+
+<LI>By default, an unquoted vertical bar can be used as an atom or
+    functor (controlled by the syntax option <B>bar_is_no_atom</B>).
+
+<P>
+
+<LI>By default, operators with precedence higher than 1000 are allowed
+    in a comma-separated list of terms, i.e. structure arguments
+    and lists. The ambiguity is resolved by considering commas
+    as argument separators rather than operators inside the term.
+    Thus e.g.
+<PRE>
+p(a :- b, c)
+</PRE>
+    is accepted and parsed as <B>p/2</B>. This behaviour can be disabled
+    (and turned into a syntax error) by setting the syntax option
+    <B>limit_arg_precedence</B>.
+
+<P>
+
+<LI>By default, double-quoted items are parsed as strings, not as character
+    lists.  This behaviour can be changed via
+    <A NAME="tex2html1785"
+ HREF="../bips/kernel/syntax/set_chtab-2.html">set_chtab/2</A><A NAME="13067"></A>
+
+which allows string-quotes, list-quotes and atom-quotes to be redefined.
+
+<P>
+
+<LI>By default, consecutive string- or list-quotes have the effect of
+    concatenating the quoted items, while consecutive atom-quotes have
+    no special meaning. The syntax option <B>doubled_quote_is_quote</B>
+    changes this.
+
+<P>
+
+<LI>By default, blank space between a sign and a number is significant:
+    When there is no space between sign and number, the sign is taken as
+    part of the number. With space, the sign is taken as prefix operator.
+    This is controlled by the syntax option <B>blanks_after_sign</B>.
+
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4398"
+ HREF="node145.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4394"
+ HREF="node140.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4388"
+ HREF="node143.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4396"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4399"
+ HREF="node145.html">Changing the Parser behaviour</A>
+<B> Up:</B> <A NAME="tex2html4395"
+ HREF="node140.html">Syntax</A>
+<B> Previous:</B> <A NAME="tex2html4389"
+ HREF="node143.html">Formal definition of clause</A>
+ &nbsp <B>  <A NAME="tex2html4397"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

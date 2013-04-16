@@ -1,0 +1,28 @@
+<HTML><HEAD><TITLE>BfsInstance:solver_setup(+OptSense, +Solver)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(bfs)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>BfsInstance:solver_setup(+OptSense, +Solver)</H1>
+Setup a bfs solver tree for bfs instance BfsInstance.
+<DL>
+<DT><EM>OptSense</EM></DT>
+<DD>Optimisation direction: min or max
+</DD>
+<DT><EM>Solver</EM></DT>
+<DD>Node relaxation solver
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+  Setup a new solver tree for the bfs instance BfsInstance. The tree
+  will be associated with BfsInstance; BfsInstance must not already
+  have a solver tree associated with it. Once the solver tree is setup,
+  it can be optimised via solve/1.
+</P><P>
+  This is a simplified version of solver_setup/3, it is equivalent to
+  calling solver_setup/3 with the following default options:
+<PRE>
+       solver_setup(OptSense, Solver, [])
+</PRE>
+
+<H2>See Also</H2>
+<A HREF="../../lib/bfs/integers-1.html">integers / 1</A>, <A HREF="../../lib/bfs/bfs_branch-1.html">bfs_branch / 1</A>, <A HREF="../../lib/bfs/node_info-5.html">node_info / 5</A>, <A HREF="../../lib/bfs/solver_setup-3.html">solver_setup / 3</A>, <A HREF="../../lib/bfs/solve-1.html">solve / 1</A>, <A HREF="../../lib/bfs/get-2.html">get / 2</A>, <A HREF="../../lib/bfs/var_get-3.html">var_get / 3</A>, <A HREF="../../lib/bfs/statistics-0.html">statistics / 0</A>
+</BODY></HTML>

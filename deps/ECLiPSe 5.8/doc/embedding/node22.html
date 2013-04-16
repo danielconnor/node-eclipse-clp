@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Type conversion between Tcl and ECLiPSe</TITLE>
+<META NAME="description" CONTENT="Type conversion between Tcl and ECLiPSe">
+<META NAME="keywords" CONTENT="embroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="embroot.css">
+<LINK REL="next" HREF="node23.html">
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html978"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html974"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html968"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html976"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html979"
+ HREF="node23.html">Incompatible and obsolete commands</A>
+<B> Up:</B> <A NAME="tex2html975"
+ HREF="node15.html">Embedding into Tcl/Tk</A>
+<B> Previous:</B> <A NAME="tex2html969"
+ HREF="node21.html">Obtaining the Interface Type</A>
+ &nbsp <B>  <A NAME="tex2html977"
+ HREF="node76.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00570000000000000000"></A>
+<A NAME="secexdrtcl"></A>
+<BR>
+Type conversion between Tcl and ECLiPSe
+</H1>
+
+<P>
+EXDR (ECLiPSe External Data Representation, see also chapter
+<A HREF="node46.html#chapexdr">9</A>) is a data encoding that allows to represent a
+significant subset of the ECLiPSe data types.  The following Tcl
+primitives are provided to handle EXDR-format:
+<DL>
+<DT><STRONG><A NAME="ecwriteexdr"></A><A NAME="1230"></A>ec_write_exdr <I>channel data ?format?</I></STRONG>
+<DD> 
+<BR>
+write an EXDR-term onto the given channel.
+        The term is constructed using the <I>data</I> argument and
+        the additional type information provided in the <I>format</I>
+        argument. If no format is specified, it defaults to S (string).
+
+<P>
+<DT><STRONG><A NAME="ecreadexdr"></A><A NAME="1235"></A>ec_read_exdr <I>channel</I></STRONG>
+<DD> 
+<BR>
+reads an EXDR-term from the given channel and returns it
+        as a Tcl data structure, according to its type. Note that,
+        since Tcl does not have a strong type system, some typing
+        information can get lost in this process (e.g. string vs. atom).
+
+<P>
+<DT><STRONG><A NAME="1237"></A>ec_tcl2exdr <I>data ?format?</I></STRONG>
+<DD> 
+<BR>
+This is the low-level primitive to encode the given <I>data</I> and
+        type information in <I>format</I> to an EXDR-string which is
+        suitable for sending over communication links to ECLiPSe or
+        other agents which can decode EXDR-format.
+        If no format is specified, it defaults to S (string).
+
+<P>
+<DT><STRONG><A NAME="1242"></A>ec_exdr2tcl <I>exdr_string</I></STRONG>
+<DD> 
+<BR>
+This is the low-level primitive to decode an EXDR-string.
+        It returns a Tcl data structure, according to the type information
+        encoded in the EXDR-string. Note that,
+        since Tcl does not have a strong type system, some typing
+        information can get lost in this process (e.g. string vs. atom).
+</DL>
+
+<P>
+Since Tcl is an untyped language, all commands which create EXDR terms
+accept, in addition to the data, an optional <B>format</B> argument
+which allows all EXDR data types to be specified.
+The syntax is as follows:
+
+<P>
+<BLOCKQUOTE>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT"><B> To create EXDR type</B></TD>
+<TD ALIGN="LEFT"><B> use &lt;format&gt;</B></TD>
+<TD ALIGN="LEFT"><B> data required</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT">String</TD>
+<TD ALIGN="LEFT">S</TD>
+<TD ALIGN="LEFT">string (binary)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">String</TD>
+<TD ALIGN="LEFT">U</TD>
+<TD ALIGN="LEFT">string (utf8)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Integer</TD>
+<TD ALIGN="LEFT">I</TD>
+<TD ALIGN="LEFT">integer</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Double</TD>
+<TD ALIGN="LEFT">D</TD>
+<TD ALIGN="LEFT">double</TD>
+</TR>
+<TR><TD ALIGN="LEFT">List</TD>
+<TD ALIGN="LEFT">[&lt;<B> formats</B>&gt;]</TD>
+<TD ALIGN="LEFT">fixed length list</TD>
+</TR>
+<TR><TD ALIGN="LEFT">List</TD>
+<TD ALIGN="LEFT">[&lt;<B> formats</B>&gt;*]</TD>
+<TD ALIGN="LEFT">list</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Struct</TD>
+<TD ALIGN="LEFT">(&lt;<B> formats</B>&gt;)</TD>
+<TD ALIGN="LEFT">fixed list, first elem functor name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Struct</TD>
+<TD ALIGN="LEFT">(&lt;<B> formats</B>&gt;*)</TD>
+<TD ALIGN="LEFT">list, first elem functor name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Anonymous Variable</TD>
+<TD ALIGN="LEFT">_</TD>
+<TD ALIGN="LEFT">string "_"</TD>
+</TR>
+</TABLE>
+</BLOCKQUOTE>
+
+<P>
+Here are some examples that show which Tcl data/format pair corresponds
+to which ECLiPSe term (the curly brackets are just Tcl quotes and
+not part of the format string):<PRE>
+Tcl data        Tcl format      Eclipse term
+
+hello           S               "hello"
+hello           ()              hello
+123             S               "123"
+123             I               123
+123             D               123.0
+123             ()              '123'
+{a 3 4.5}       {[SID]}         ["a", 3, 4.5]
+{a 3 4.5}       S               "a 3 4.5"
+{1 2 3 4}       {[I*]}          [1, 2, 3, 4]
+{f 1 2 3}       {(I*)}          f(1,2,3)
+{is _ {- 1 2}}  {(_(II))}       _ is 1-2
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html978"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html974"
+ HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html968"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html976"
+ HREF="node76.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html979"
+ HREF="node23.html">Incompatible and obsolete commands</A>
+<B> Up:</B> <A NAME="tex2html975"
+ HREF="node15.html">Embedding into Tcl/Tk</A>
+<B> Previous:</B> <A NAME="tex2html969"
+ HREF="node21.html">Obtaining the Interface Type</A>
+ &nbsp <B>  <A NAME="tex2html977"
+ HREF="node76.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

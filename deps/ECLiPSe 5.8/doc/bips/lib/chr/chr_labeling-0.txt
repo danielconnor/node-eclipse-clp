@@ -1,0 +1,76 @@
+
+chr_labeling
+
+   Activates the built-in labeling feature for constraint handling rules.
+
+
+
+Arguments
+
+Type
+   library(chr)
+
+Description
+   The constraint handling rule run-time system provides built-in labeling
+   user-defined constraints.  The built-in labeling is invoked by calling
+   the built-in predicate chr_labeling/0.  Once called, whenever no more
+   constraint handling is possible, the built-in labeling will choose a
+   constraint goal whose label_with declaration is satisfied for labeling.
+   It will introduce choices using the clauses of the constraint.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None, only on backtracking.
+
+
+
+Examples
+   
+   A query without and with built-in labeling:
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,W), Z neq W.
+
+X = _g357
+Y = _g389
+Z = _g421
+W = _g1227
+
+Constraints:
+(1) minimum(_g357, _g389, _g421)
+(2) _g421 leq _g357
+(3) _g421 leq _g389
+(4) maximum(_g357, _g389, _g1227)
+(5) _g357 leq _g1227
+(7) _g389 leq _g1227
+(10) _g421 lss _g1227
+
+yes.
+
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,W),
+           Z neq W, chr_labeling.
+
+X = Z = _g363
+Y = W = _g395
+
+Constraints:
+(10) _g363 lss _g395
+
+     More? (;)
+
+X = W = _g363
+Y = Z = _g395
+
+Constraints:
+(17) _g395 lss _g363
+yes.
+
+
+
+
+
+See Also
+   chr_label_with / 1, chr_resolve / 1, chr_get_constraint / 1, chr_get_constraint / 2

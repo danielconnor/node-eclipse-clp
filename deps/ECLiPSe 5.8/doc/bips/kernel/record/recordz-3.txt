@@ -1,0 +1,62 @@
+
+recordz(+Key, ?Value, -DBRef)
+
+   Records the term Value at the end of key Key in the indexed database.
+
+
+
+Arguments
+   +Key                An atom or compound term.
+   ?Value              Any prolog term.
+   -DBRef              A variable.
+
+Type
+   Recorded Database
+
+Description
+   Used to record any prolog term Value at the end of the indexed database
+   entry associated with the key Key.  Unlike recordz/2, this predicate
+   delivers a so-called database reference in DBRef which is a unique name
+   for the indexed database entry that is created.  Note that it is not a
+   number!  In the case of compound terms, all keys of the same name and
+   arity are treated as equal.
+
+
+   If backtracking occurs through the call of recordz/3 the associated
+   Value is not removed from the indexed database.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Key is not instantiated.
+     5 --- Key is neither an atom nor a compound term.
+     5 --- DBRef neither a variable nor a database reference.
+
+Examples
+   
+   Success:
+    [eclipse]: recordz(whiskey,jameson,Ref1),
+             recordz(whiskey,bushmills,Ref2).
+    Ref1 = 98518
+    Ref2 = 98538
+    yes.
+Error:
+    recordz(Key, anything, Ref).          (Error 4)
+    recordz("key",anything, Ref).         (Error 5)
+    recordz(key,anything, 99).            (Error 5)
+
+
+
+
+
+See Also
+   recorda / 3, recorded / 3, erase / 1, referenced_record / 2

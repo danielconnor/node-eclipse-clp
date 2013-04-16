@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Basic Constraints</TITLE>
+<META NAME="description" CONTENT="Basic Constraints">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node36.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node36.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1365"
+ HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1361"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1355"
+ HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1363"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1366"
+ HREF="node36.html">Global Constraints</A>
+<B> Up:</B> <A NAME="tex2html1362"
+ HREF="node32.html">The Symbolic Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html1356"
+ HREF="node34.html">Domains and Domain Variables</A>
+ &nbsp <B>  <A NAME="tex2html1364"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00630000000000000000">
+Basic Constraints</A>
+</H1>
+The following constraints implement the basic relationships between
+two domain values.  The constraints require their arguments to come
+from identical domains, otherwise an error is raised.
+<DL>
+<DT><STRONG><A NAME="tex2html339"
+ HREF="../bips/lib/ic_symbolic/YE-2.html">?X &amp;= ?Y</A><A NAME="2607"></A></STRONG>
+<DD>X is the same as Y
+<DT><STRONG><A NAME="tex2html341"
+ HREF="../bips/lib/ic_symbolic/YRE-2.html">?X &amp;<code>\</code>= ?Y</A></STRONG>
+<DD><A NAME="2554"></A>
+    X is different from Y
+<DT><STRONG><A NAME="tex2html342"
+ HREF="../bips/lib/ic_symbolic/YL-2.html">?X &amp;&gt; ?Y</A><A NAME="2612"></A></STRONG>
+<DD>X is strictly before Y in the domain order
+<DT><STRONG><A NAME="tex2html344"
+ HREF="../bips/lib/ic_symbolic/YG-2.html">?X &amp;&lt; ?Y</A><A NAME="2615"></A></STRONG>
+<DD>X is strictly after Y in the domain order
+<DT><STRONG><A NAME="tex2html346"
+ HREF="../bips/lib/ic_symbolic/YEL-2.html">?X &amp;=&lt; ?Y</A><A NAME="2618"></A></STRONG>
+<DD>X is the same as Y, or before Y in the domain order
+<DT><STRONG><A NAME="tex2html348"
+ HREF="../bips/lib/ic_symbolic/YGE-2.html">?X &amp;&gt;= ?Y</A><A NAME="2621"></A></STRONG>
+<DD>X is the same as Y, or after Y in the domain order
+<DT><STRONG><A NAME="tex2html350"
+ HREF="../bips/lib/ic_symbolic/shift-3.html">shift(?X,?C,?Y)</A><A NAME="2624"></A></STRONG>
+<DD>Y is C places above X in the domain order.
+    X and Y have symbolic domains, C has an integer domain.
+<DT><STRONG><A NAME="tex2html352"
+ HREF="../bips/lib/ic_symbolic/rotate-3.html">rotate(?X,?C,?Y)</A><A NAME="2627"></A></STRONG>
+<DD>like shift/3 but wraps at domain boundary.
+<DT><STRONG><A NAME="tex2html354"
+ HREF="../bips/lib/ic_symbolic/element-3.html">element(?Index,++List,?Value)</A><A NAME="2630"></A></STRONG>
+<DD>Value occurs List at position Index.
+    Value has a symbolic domain, Index has an integer domain.
+    List is a number of symbolic domain values.
+</DL>
+For example<PRE>
+?- [X, Y] &amp;:: weekday, X &amp;&lt; Y.
+X = X{[mo, tu, we, th, fr, sa]}
+Y = Y{[tu, we, th, fr, sa, su]}
+Yes (0.00s cpu)
+
+?- X &amp;:: weekday, X &amp;=&lt; we.
+X = X{[mo, tu, we]}
+Yes (0.00s cpu)
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1365"
+ HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1361"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1355"
+ HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1363"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1366"
+ HREF="node36.html">Global Constraints</A>
+<B> Up:</B> <A NAME="tex2html1362"
+ HREF="node32.html">The Symbolic Domain Library</A>
+<B> Previous:</B> <A NAME="tex2html1356"
+ HREF="node34.html">Domains and Domain Variables</A>
+ &nbsp <B>  <A NAME="tex2html1364"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

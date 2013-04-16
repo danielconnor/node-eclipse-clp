@@ -1,0 +1,82 @@
+
+statprofile(+File, +Statistics, +OptionsList)
+
+   Instrument a file with statistics profiling code.
+
+Arguments
+   File                Atom or string
+   Statistics          List of statistic keywords
+   OptionsList         List of Name:Value pairs
+
+Type
+   library(instprofile)
+
+Description
+    
+   The predicate inserts into the user code of File, instrumentation 
+   for the collection of the statistics (statistics/2 metric keywords) 
+   specified in Statistics. The instrumentation is inserted by default 
+   at clause entry and exit points (i.e. the start, end, fail and redo 
+   ports of the conceptual predicate box model) and aggregates the cost 
+   for each of the metrics as the program executes. The source code can 
+   be annotated with these aggregated results using the result/0 predicate. 
+   Additionally, the results may be dumped to a file in a format suitable 
+   for offline analysis and graphing.
+   
+   OptionList may contain the following options:
+   
+   instrument_style  (default:clause)
+   
+   Valid values for this option are clause, block, 
+   subgoal and call. These values correspond to the
+   instrument insertion points of instrument library. Each provides a
+   different level of granularity for the profiling of code fragments.
+   
+   delta_results (default:off)
+   
+   Specifying this option as on indicates that the instrumentation
+   results for execution of individual profiled code fragments (associated by
+   instrument's callsite identifier) should be written to the file specified 
+   using open_delta_file/1. More specifically, these are the delta results,
+   the difference for each of the statistics between the start and end of the
+   profiled code fragment's execution.
+   
+   Instrument library options
+   
+   In addition to the above options, options valid to the instrument
+   library can also be passed in OptionsList. The most useful of which are 
+   verbose and instrument_recursive. 
+   instrument_recursive is used to prevent the incorrect aggregation
+   of results accumulated during the execution of recursive predicates, by
+   default it is off, i.e. recursive predicates will not be instrumented.
+   
+   
+   The instrumentation profiler places an overhead on the execution of the 
+   code undergoing profiling due to the insertion of the profiling code.
+   The sample based profiler is implemented using after events and is
+   therefore less intrusive in its effect on the performance of the 
+   executing code than the instrumentation profiler. However, it is used to
+   indicate the trend of resource usage over time of a running program not to
+   attribute specific costs of a statistic to a specific piece of code. The
+   instrumentation based profiler is used to do this.
+   
+
+Resatisfiable
+   no
+
+Fail Conditions
+   Statistics is empty or contains an invalid statistic/2 keyword.
+
+Exceptions
+     5 --- File is not an atom or string.
+
+Examples
+   
+   [eclipse 1]: instprofile:statprofile(queen,[global_stack_used, trail_stack_used], 
+                                        [instrument_style:block, delta_results:on]).
+
+   Yes (0.06s cpu)
+   
+
+See Also
+   open_delta_file / 1, close_delta_file / 0, result / 0, aggregate_result / 1, reset / 0, statprofile / 2, statistics / 2, library(instprofile), library(instrument), instrument : instrument / 3

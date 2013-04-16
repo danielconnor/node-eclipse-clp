@@ -1,0 +1,45 @@
+<HTML><HEAD><TITLE>get(?Ascii)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>get(?Ascii)</H1>
+Reads the next character from the current input stream and unifies its
+ASCII code with Ascii.
+
+
+<DL>
+<DT><EM>?Ascii</EM></DT>
+<DD>Integer.
+</DD>
+</DL>
+<H2>Description</H2>
+   Takes the next character from the current input and unifies its integer
+   ASCII code (in the range 0 to 255) to Ascii.
+
+<P>
+   ASCII codes for the non-printable characters (i.e.  control characters)
+   are also acceptable.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Ascii does not unify with the next character from the buffered
+   current input.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Ascii is instantiated, but not to an integer.
+<DT><EM>(190) end of file reached </EM>
+<DD>End of file has been reached.
+</DL>
+<H2>Examples</H2>
+<PRE>   Equivalent to get(input, Ascii).  (see get/2 for details).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/iochar/get-2.html">get / 2</A>, <A HREF="../../kernel/iochar/put-1.html">put / 1</A>, <A HREF="../../kernel/iochar/put-2.html">put / 2</A>
+</BODY></HTML>

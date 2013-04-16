@@ -1,0 +1,4 @@
+lib(daVinci)
+
+   This library provides a simple interface to the daVinci graph drawing tool
+

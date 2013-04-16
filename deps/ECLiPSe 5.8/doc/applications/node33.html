@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Minimum</TITLE>
+<META NAME="description" CONTENT="Minimum">
+<META NAME="keywords" CONTENT="tutorial">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="tutorial.css">
+<LINK REL="next" HREF="node34.html">
+<LINK REL="previous" HREF="node32.html">
+<LINK REL="up" HREF="node24.html">
+<LINK REL="next" HREF="node34.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html963"
+ HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html957"
+ HREF="node24.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html951"
+ HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html959"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A> 
+<A NAME="tex2html961"
+ HREF="node78.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html964"
+ HREF="node34.html">Best and rest</A>
+<B> Up:</B> <A NAME="tex2html958"
+ HREF="node24.html">Programming Concepts</A>
+<B> Previous:</B> <A NAME="tex2html952"
+ HREF="node32.html">Combine</A>
+ &nbsp <B>  <A NAME="tex2html960"
+ HREF="node1.html">Contents</A></B> 
+ &nbsp <B>  <A NAME="tex2html962"
+ HREF="node78.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html965"
+ HREF="node33.html#SECTION00690010000000000000">Description</A>
+<LI><A NAME="tex2html966"
+ HREF="node33.html#SECTION00690020000000000000">Parameters</A>
+<LI><A NAME="tex2html967"
+ HREF="node33.html#SECTION00690030000000000000">Schema</A>
+<LI><A NAME="tex2html968"
+ HREF="node33.html#SECTION00690040000000000000">Comments</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00690000000000000000">
+Minimum</A>
+</H1>
+
+<H4><A NAME="SECTION00690010000000000000"></A>
+<A NAME="655"></A>
+<BR>
+Description
+</H4>This concept selects the smallest element of a list according to some comparison operator <I>better</I>.
+
+<H4><A NAME="SECTION00690020000000000000">
+Parameters</A>
+</H4>
+<DL>
+<DT><STRONG>L</STRONG>
+<DD>a list
+<DT><STRONG>V</STRONG>
+<DD>a free variable, will be bound to an entry of <I>L</I></DL>
+<H4><A NAME="SECTION00690030000000000000">
+Schema</A>
+</H4>
+<PRE>
+:-mode minimum(+,-).
+minimum([H|T],V):-
+        (foreach(X,T),
+         fromto(H,In,Out,V) do
+            minimum_step(X,In,Out)
+        ).
+
+minimum_step(X,Old,X):-
+        better(X,Old),
+        !.
+minimum_step(X,Old,Old).
+</PRE>
+<H4><A NAME="SECTION00690040000000000000">
+Comments</A>
+</H4>
+This implementation of minimum fails if the input list has no elements. This means that somewhere else in the program we have to handle the case where the input list is empty. This seems to be the most clear definition of minimum, an empty list does not have a smallest element.
+
+<P>
+If several elements of the list have the same minimal value, only the first one is returned.
+<BR><HR>
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

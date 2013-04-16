@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The CHR Language</TITLE>
+<META NAME="description" CONTENT="The CHR Language">
+<META NAME="keywords" CONTENT="libman">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="libman.css">
+<LINK REL="next" HREF="node48.html">
+<LINK REL="previous" HREF="node46.html">
+<LINK REL="up" HREF="node43.html">
+<LINK REL="next" HREF="node48.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1535"
+ HREF="node48.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1531"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1525"
+ HREF="node46.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1533"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1536"
+ HREF="node48.html">More on the CHR</A>
+<B> Up:</B> <A NAME="tex2html1532"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1526"
+ HREF="node46.html">Example Constraint Handlers</A>
+ &nbsp <B>  <A NAME="tex2html1534"
+ HREF="node71.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1537"
+ HREF="node47.html#SECTION00841000000000000000">Constraint Handling Rules</A>
+<LI><A NAME="tex2html1538"
+ HREF="node47.html#SECTION00842000000000000000">How CHRs Work</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00840000000000000000">
+The CHR Language</A>
+</H1>
+
+<P>
+User-defined constraints are defined by constraint handling rules
+- and optional
+ECLiPSe clauses for the built-in labeling feature.
+The constraints must be declared before they are defined.
+A CHR program (file extension <TT>chr</TT>) may also include other declarations,
+options and arbitrary ECLiPSe clauses.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Program</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">Statement [ Program ]</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Statement</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">Declaration |&nbsp;Option |&nbsp;Rule |&nbsp;Clause</TD>
+</TR>
+</TABLE>
+</DIV>
+Constraint handling rules involving
+the same constraint can be scattered across a file as long as they are
+in the same module and compiled together. For readability
+declarations and options should precede rules and clauses.
+
+<P>
+In the following subsections, we introduce constraint handling
+rules and explain how they work. The next section 
+describes declarations, clauses, options 
+and built-in predicates for CHRs.
+
+<P>
+
+<H2><A NAME="SECTION00841000000000000000">
+Constraint Handling Rules</A>
+</H2>
+
+<P>
+A constraint handling rule has one or two heads, an optional guard, a
+body and an optional name.  A ``Head'' is a ``Constraint''. A
+``Constraint'' is an ECLiPSe <EM>callable term</EM> (i.e. atom or
+structure) whose functor is a declared constraint.  A
+``Guard''<A NAME="3079"></A> is an ECLiPSe goal. The <EM>guard is a test</EM>
+on the applicability of a rule.  The ``Body'' of a rule is an
+ECLiPSe goal (including constraints).  
+The execution of the guard and the body should not involve
+side-effects (like <TT>assert/1</TT>, <TT>write/1</TT>) (for more information
+see the section on writing CHR programs).  A rule can be named with
+a ``RuleName'' which can be any ECLiPSe term (including variables
+from the rule).  During debugging (see section
+<A HREF="node51.html#chrdebug">8.8</A>),
+this name will be displayed instead of the
+whole rule.
+
+<P>
+There are three kinds of constraint handling rules.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Rule</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">SimplificationRule |&nbsp;PropagationRule |&nbsp;SimpagationRule</TD>
+</TR>
+<TR><TD ALIGN="LEFT">SimplificationRule</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">[ RuleName <code>@</code> ] Head [ <code>,</code> Head ] <code> &lt;=&gt;</code> [Guard <code>|</code>] Body.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">PropagationRule</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">[ RuleName <code>@</code> ] Head [ <code>,</code> Head ] <code> ==&gt;</code> [Guard <code>|</code>] Body.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">SimpagationRule</TD>
+<TD ALIGN="LEFT">&nbsp;::=&nbsp;</TD><TD ALIGN="LEFT">[ RuleName <code>@</code> ] Head <code>\</code> Head <code> &lt;=&gt;</code> [Guard <code>|</code>] Body.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Declaratively, a rule relates heads and body <EM>provided the guard
+is true</EM>.  A simplification rule<A NAME="3090"></A> means that
+the heads are true if and only if the body is true.  A propagation
+rule<A NAME="3091"></A> means that the body is true if the heads
+are true.  A simpagation rule<A NAME="3092"></A> is a combination
+of a simplification and propagation rule.  The rule ``Head1 <code>\</code>
+Head2
+<code>&lt;=&gt;</code> Body<code></code>'' is equivalent to the simplification rule
+``Head1 <code>,</code> Head2 <code>&lt;=&gt;</code> Body<code>,</code> Head1<code>.</code>''
+However, the simpagation rule is more compact to write, more efficient
+to execute and has better termination behavior than the corresponding
+simplification rule.
+
+<P>
+<B>Example:</B>
+Assume you want to write a constraint handler for minimum and maximum
+based on inequality constraints.  The complete code can be found in
+the handler file <TT>minmax.chr</TT>. <PRE>
+ handler minmax.
+
+constraints leq/2, neq/2, minimum/3, maximum/3.
+built_in     @ X leq Y &lt;=&gt; \+nonground(X),\+nonground(Y) | X @=&lt; Y.
+reflexivity  @ X leq X &lt;=&gt; true.
+antisymmetry @ X leq Y, Y leq X &lt;=&gt; X = Y.
+transitivity @ X leq Y, Y leq Z ==&gt; X \== Y, Y \== Z, X \== Z | X leq Z.
+...
+built_in     @ X neq Y &lt;=&gt; X \== Y | true.
+irreflexivity@ X neq X &lt;=&gt; fail. 
+...
+subsumption  @ X lss Y \ X neq Y &lt;=&gt; true.
+simplification @ X neq Y, X leq Y &lt;=&gt; X lss Y. 
+...
+min_eq @ minimum(X, X, Y) &lt;=&gt; X = Y.
+min_eq @ minimum(X, Y, X) &lt;=&gt; X leq Y.
+min_eq @ minimum(X, Y, Y) &lt;=&gt; Y leq X.
+...
+propagation @ minimum(X, Y, Z) ==&gt; Z leq X, Z leq Y.
+...
+</PRE>
+
+<P>
+Procedurally, a rule can fire only if its guard succeeds.  A firing
+simplification rule <EM>replaces</EM> the head constraints by the body
+constraints, a firing propagation rule keeps the head constraints and
+<EM>adds</EM> the body. A firing simpagation rule keeps the first head
+and replaces the second head by the body. See the next subsection for
+more details.
+
+<P>
+
+<H2><A NAME="SECTION00842000000000000000">
+How CHRs Work</A>
+</H2>
+
+<P>
+ECLiPSe will first solve the built-in constraints, 
+then user-defined constraints by CHRs then the other goals.
+
+<P>
+<B>Example, contd.:</B> <PRE>
+[eclipse]: chr(minmax).
+minmax.chr compiled traceable 106874 bytes in 3.37 seconds
+minmax.pl  compiled traceable 124980 bytes in 1.83 seconds
+yes.
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,Z).
+X = Y = Z = _g496
+yes.
+</PRE>
+
+<P>
+Each user-defined constraint is associated with all rules in whose
+heads it occurs by the CHR compiler. Every time a user-defined
+constraint goal is added or re-activated, it checks itself the
+applicability of its associated CHRs by <EM>trying</EM> each CHR.  To
+try a CHR, one of its heads is matched against the constraint goal.
+If a CHR has two heads, the constraint store is searched for a
+``partner'' constraint that matches the other head.  If the matching
+succeeded, the guard is executed as a test. Otherwise the rule delays
+and the next rule is tried.
+
+<P>
+The guard<A NAME="3104"></A> either succeeds, fails or delays.  If the guard succeeds,
+the rule fires. Otherwise the rule delays and the next rule is tried.
+In the current implementation, a guard succeeds if its execution
+succeeds without delayed goals and attempts to ``touch'' a global
+variable (one that occurs in the heads).  A variable is <EM>touched</EM>
+if it is unified with a term (including other variables), if it gets
+more constrained by built-in constraints (e.g. finite domains or
+equations over rationals) or if a goal delays on it (see also the <TT>check_guard_bindings</TT> option<A NAME="3107"></A>).  Currently, built-in constraints used
+in a guard act as tests only (see also the section on writing good
+CHR programs).
+
+<P>
+If the firing CHR is a simplification rule, the matched constraint
+goals are removed and the body of the CHR is executed.  Similarly
+for a firing simpagation rule, except that the first head is kept.  If
+the firing CHR is a propagation rule the
+body of the CHR is executed and the next rule is tried. It is remembered
+that the propagation rule fired, so it will not fire again (with the
+same partner constraint) if the constraint goal is re-activated.
+
+<P>
+If the constraint goal has not been removed and all rules have been tried,
+it delays until a variable occurring in the constraint is touched.
+Then the constraint is re-activated and all its rules are tried
+again.
+
+<P>
+<B>Example, contd.:</B>
+The following trace is edited, 
+rules that are tried in vain and redelay have been removed. 
+<PRE>
+[eclipse]: chr_trace.
+yes.
+Debugger switched on - creep mode
+[eclipse]: notrace. % trace only constraints
+Debugger switched off
+yes.
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,Z).
+
+ADD (1) minimum(X, Y, Z)
+TRY (1) minimum(_g218, _g220, _g222) with propagation
+RULE 'propagation' FIRED
+
+ ADD (2) leq(_g665, _g601)
+
+ ADD (3) leq(_g665, Var)
+
+ADD (4) maximum(_g601, Var, _g665)
+TRY (4) maximum(_g601, Var, _g665) with propagation
+RULE 'propagation' FIRED
+
+ ADD (5) leq(_g601, _g665)
+ TRY (5) leq(_g601, _g665) (2) leq(_g665, _g601) with antisymmetry
+ RULE 'antisymmetry' FIRED
+
+TRY (4) maximum(_g601, Var, _g601) with max_eq
+RULE 'max_eq' FIRED
+
+ ADD (6) leq(Var, _g601)
+ TRY (3) leq(_g601, Var) (6) leq(Var, _g601) with antisymmetry
+ RULE 'antisymmetry' FIRED
+
+TRY (1) minimum(_g601, _g601, _g601) with min_eq
+RULE 'min_eq' FIRED
+
+ ADD (7) leq(_g601, _g601)
+ TRY (7) leq(_g601, _g601) with reflexivity
+ RULE 'reflexivity' FIRED
+
+X = Y = Z = _g558
+yes.
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1535"
+ HREF="node48.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1531"
+ HREF="node43.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1525"
+ HREF="node46.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html1533"
+ HREF="node71.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html1536"
+ HREF="node48.html">More on the CHR</A>
+<B> Up:</B> <A NAME="tex2html1532"
+ HREF="node43.html">The Constraint Handling Rules</A>
+<B> Previous:</B> <A NAME="tex2html1526"
+ HREF="node46.html">Example Constraint Handlers</A>
+ &nbsp <B>  <A NAME="tex2html1534"
+ HREF="node71.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey <BR>
+2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

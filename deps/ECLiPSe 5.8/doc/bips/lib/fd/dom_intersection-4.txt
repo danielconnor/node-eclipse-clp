@@ -1,0 +1,34 @@
+
+dom_intersection(+Dom1, +Dom2, -DomInt, -Size)
+
+   The domain DomInt is the intersection of domains Dom1 and Dom2 and Size is
+the number of its elements.
+
+
+
+Arguments
+   +Dom1               A finite domain.
+   +Dom2               A finite domain.
+   -DomInt             A variable.
+   -Size               A variable.
+
+Type
+   library(fd)
+
+Description
+   The domain DomInt is the intersection of domains Dom1 and Dom2 and Size
+   is the number of its elements.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      Fails if the intersection is empty.
+
+
+
+See Also
+   dom_compare / 3, dom_member / 2, dom_range / 3, dom_size / 2, dvar_domain / 2

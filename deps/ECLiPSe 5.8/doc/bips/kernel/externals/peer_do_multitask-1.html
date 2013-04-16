@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>peer_do_multitask(+Type)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">External Interface</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>peer_do_multitask(+Type)</H1>
+Perform a multitasking phase.
+<DL>
+<DT><EM>Type</EM></DT>
+<DD>User defined term (term)
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   This predicate is intended for use only in implementing peer 
+   multitasking for an external language interface.
+</P><P>
+   Multitasking is done within this predicate. That is, a multitasking 
+   phase is initiated when the predicate is called, and when the multitasking 
+   phase is finished, the predicate returns. If the abort exception is
+   raised during the multitasking phase, the multitasking phase is properly
+   terminated before the abort continues. 
+</P><P>
+   Type is a user defined term that is passed to all the multitasking 
+   peers when the multitasking phase is initiated. This allows the 
+   programming of different types of multitasking situations. Type must be 
+   representable as an EXDR term.
+</P><P>
+   This is the only way to initiate multitasking, so if the user wishes to
+   to initiate multitasking from a peer, they should call this goal 
+   via an ERPC.
+</P><P>
+   During a multitasking phase, multitasking peers are each given a
+   time-slice in round-robin fashion. They are allowed to perform ERPC
+   during the time-slice. (More precisely: they are allow to execute
+   peer-side code that contains ERPCs).
+</P><P>
+   To participate in peer multitasking, a peer should first be registered
+   using peer_register_multitask/2. A peer can then initiate multitasking
+   by calling peer_do_multitask/1 while the peer has control. The
+   multitasking phase is started, and all registered peer will be informed
+   during their time-slice that a multitasking phase has started. If the
+   peer is interested in this particularly multitasking phase (as specified
+   in Type), they should execute peer_multitask_confirm/0. The multitasking
+   phase can be terminated by any peer by calling
+   peer_multitask_terminate/0.
+   
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(peer_multitask_empty) </EM>
+<DD>No peer is currently registered for multitasking.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../kernel/externals/peer_register_multitask-2.html">peer_register_multitask / 2</A>, <A HREF="../../kernel/externals/peer_multitask_terminate-0.html">peer_multitask_terminate / 0</A>, <A HREF="../../kernel/externals/peer_multitask_confirm-0.html">peer_multitask_confirm / 0</A>
+</BODY></HTML>

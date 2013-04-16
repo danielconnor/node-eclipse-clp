@@ -1,0 +1,73 @@
+
+lock(+Module)
+
+   Locks the access to the module Module.
+
+
+
+Arguments
+   +Module             Atom.
+
+Type
+   Modules
+
+Description
+   Used to forbid the access to the given module when not using its
+   interface.
+
+
+   It is impossible to unlock a module locked with lock/1.  However, a
+   module locked using lock/2, can still be unlocked with unlock/2.
+
+
+   An error is raised (error 82) when trying to lock a locked module.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Module is not instantiated.
+     5 --- Module is instantiated, but not to an atom.
+    80 --- Module is not a module.
+    82 --- Trying to access a locked module Module.
+
+Examples
+   
+Success:
+     [eclipse]: [user].
+      :- module(m).
+      :- export p/0.
+      p :- writeln(hello).
+      user compiled 60 bytes in 0.00 seconds
+     yes.
+     [eclipse]: lock(m).
+     yes.
+     [eclipse]: module(m).
+     trying to access a locked module in module(m)
+     [eclipse]: import p/0 from m.
+     yes.
+     [eclipse]: call(p) @ m.
+     trying to access a locked module in p
+     [eclipse]: p.
+     hello
+     yes.
+Error:
+     lock(M).                   (Error 4).
+     lock(1).                   (Error 5).
+     lock(not_a_module).        (Error 80).
+     lock(m), call(p) @ m.      (Error 82).
+
+
+
+
+
+See Also
+   lock / 2, unlock / 2, get_module_info / 3

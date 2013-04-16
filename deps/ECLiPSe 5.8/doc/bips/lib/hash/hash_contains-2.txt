@@ -1,0 +1,17 @@
+
+hash_contains(+Table, +Key)
+
+   Succeeds if there is an entry stored under key Key
+
+Arguments
+   Table               A hash table
+   Key                 a ground term
+
+Type
+   library(hash)
+
+Fail Conditions
+   No entry for Key
+
+See Also
+   hash_get / 3, hash_list / 3

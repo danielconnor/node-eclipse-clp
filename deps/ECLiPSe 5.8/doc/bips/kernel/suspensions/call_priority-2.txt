@@ -1,0 +1,81 @@
+
+call_priority(+Goal, +Priority)
+
+   Execute Goal with priority Priority.
+
+
+
+Arguments
+   +Goal               Atom or compound term.
+   +Priority           A small integer.
+
+Type
+   Advanced Control and Suspensions
+
+Description
+   All goals in ECLiPSe execute under a certain priority. An execution
+   can only be interrupted by the waking of a goal with a higher
+   priority. Priorities are most relevant in data-driven algorithms,
+   to specify that certain goals must do their work before others
+   can meaningfully execute.
+
+
+   Priorities range from 1 (most urgent) to 12 (least urgent). The
+   toplevel goal of an execution always runs at the lowest priority (12).
+
+
+   call_priority/2 runs a goal at a given priority. If this priority
+   is higher than the one under which call_priority was invoked,
+   the goal executes immediately, but will be less interruptable
+   by woken goals. If the specified priority is lower, the execution
+   of goal will be effectively deferred until there are no more urgent
+   goal present.
+
+
+   Warning: Although it is possible to write programs that only work
+   correctly under a particular priority ordering, such practice is
+   strongly discouraged. Priorities should only affect efficiency,
+   never correctness.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Goal or Priority is not instantiated.
+     5 --- Goal is not an atom or a compound term, 		or Priority is not an integer.
+    24 --- Priority is not a number.
+
+Examples
+   
+    [eclipse 1]: [user].       
+     p :- call_priority(writeln(hello),8), writeln(world).
+
+    user       compiled traceable 136 bytes in 0.00 seconds
+    yes.
+    [eclipse 10]: call_priority(p,5).
+    world
+    hello
+    yes.
+    [eclipse 11]: call_priority(p,10).
+    hello
+    world
+    yes.
+    [eclipse 12]: call_priority(p,8).
+    hello
+    world
+    yes.
+
+
+
+
+
+See Also
+   get_priority / 1, make_suspension / 3, make_suspension / 4, suspend / 3, suspend / 4, set_suspension_data / 3

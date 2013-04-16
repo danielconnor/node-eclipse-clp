@@ -1,0 +1,65 @@
+
+repeat
+
+   Succeeds as often as tried.
+
+
+
+Arguments
+
+Type
+   Control
+
+Description
+   Used to succeed as often as tried.
+
+
+   This predicate could be defined as
+
+
+
+   repeat.
+   repeat :- repeat.
+
+   repeat/0 succeeds when reached on backtracking.
+
+
+   !/0 may be added to exit from a clause containing repeat/0, as it
+   removes all choice points above it in the clause.
+
+
+
+
+Resatisfiable
+      Yes.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+   
+Success:
+      [eclipse]: [p].
+      /home/user/p compiled 408 bytes in 0.03 seconds
+      yes.
+      [eclipse]: print_file(p).
+      print_file(File) :-
+              open(File, read, S),
+              repeat,
+              get(S,Char),
+              put(Char),
+              at_eof(S),
+              !,
+              close(S),
+              flush(output).
+      yes.
+
+
+
+
+
+
+See Also
+   ! / 0

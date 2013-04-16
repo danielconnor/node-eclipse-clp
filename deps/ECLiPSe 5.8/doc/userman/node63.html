@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Term Output Formats</TITLE>
+<META NAME="description" CONTENT="Term Output Formats">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="previous" HREF="node62.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node64.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3198"
+ HREF="node64.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3194"
+ HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3190"
+ HREF="node62.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3196"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3199"
+ HREF="node64.html">Dynamic Code</A>
+<B> Up:</B> <A NAME="tex2html3195"
+ HREF="node59.html">Input and Output</A>
+<B> Previous:</B> <A NAME="tex2html3191"
+ HREF="node62.html">In-memory Streams</A>
+ &nbsp <B>  <A NAME="tex2html3197"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3200"
+ HREF="node63.html#SECTION001041000000000000000">Write_term and Printf</A>
+<LI><A NAME="tex2html3201"
+ HREF="node63.html#SECTION001042000000000000000">Other Term Output Predicates</A>
+<LI><A NAME="tex2html3202"
+ HREF="node63.html#SECTION001043000000000000000">Default Output Options</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001040000000000000000"></A>
+<A NAME="secoutputformats"></A>
+<BR>
+Term Output Formats
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION001041000000000000000">
+Write_term and Printf</A>
+</H2>
+
+<P>
+The way ECLiPSe terms are printed can be customised in a number of ways.
+The most flexible predicates to print terms are
+<A NAME="tex2html865"
+ HREF="../bips/kernel/ioterm/write_term-3.html">write_term/3</A><A NAME="6021"></A>
+and
+<A NAME="tex2html867"
+ HREF="../bips/kernel/ioterm/printf-3.html">printf/3</A><A NAME="6024"></A>.
+They both allow all variants of term output, but the format is
+specified in a different way.
+<A NAME="5814"></A>
+The following figure gives an overview.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>Output Option for write_term/2,3</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>Format char for printf %..w</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>as(term)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>do not assume any particular meaning of the printed term</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>as(clause)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>C</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print the term as a clause (apply clause transformations)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>as(goal)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>G</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print the term as a goal (apply goal transformations)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>attributes(none)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>do not print any variable attributes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>attributes(pretty)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>m</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print attributes using the corresponding print handlers</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>attributes(full)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>M</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print the full contents of all variable attributes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>compact(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print extra blank space (around operators, after commas, etc.) for better readability</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>compact(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>K</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>don't print blank space unless necessary</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>depth(Max)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&lt;Max&gt;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print the term only up to a maximum nesting depth of Max (a positive integer)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>depth(0)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>observe the stream-specific or global flag 'print_depth'</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>depth(full)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>D</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print the whole term (may loop when the term is cyclic!)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>dotlists(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>write lists in square bracket notation, e.g. [a,b]</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>dotlists(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>.</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>write lists as terms with functor ./2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>newlines(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print newlines inside quotes as escape sequence <code>\</code>n</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>newlines(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>N</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print newlines as line breaks even inside quotes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>numbervars(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>do not treat '$VAR'/1 terms specially</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>numbervars(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>I</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print terms of the form '$VAR'(N) as named variables: 
+'$VAR'(0) is printed as A, '$VAR'(25) as Z, '$VAR'(26) as A1 and so on.
+When the argument is an atom or a string, just this argument is printed.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>operators(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>obey operator declarations and print prefix/infix/postfix</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>operators(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>O</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>ignore operator declarations and print functor notation</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>portrayed(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>do not use portray/1,2</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>portrayed(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>P</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>call the user-defined predicate portray/1,2 for printing</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>quoted(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>do not print quotes around strings or atoms</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>quoted(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>Q</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>quote strings and atoms if necessary</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>transform(true)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>apply portray transformations (write macros)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>transform(false)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>T</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>do not apply portray transformations (write macros).</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>variables(default)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>&nbsp;</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print variables using their source name (if available)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>variables(raw)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>v</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print variables using a system-generated name, e.g. _123</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>variables(full)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>V</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print variables using source name followed by a number, e.g. Alpha_132</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99>variables(anonymous)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=43>_</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>print every variable as a simple underscore</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+<DIV ALIGN="CENTER">Overview of term output options (see write_term/3 for more details)
+<A NAME="outputoptions"></A>
+</DIV>
+The
+<A NAME="tex2html870"
+ HREF="../bips/kernel/ioterm/write_term-2.html">write_term/2</A><A NAME="6027"></A> and
+<A NAME="tex2html872"
+ HREF="../bips/kernel/ioterm/write_term-3.html">write_term/3</A><A NAME="6030"></A>
+predicates print a single ECLiPSe term and accept a list of
+output options (first column in the table <A HREF="node63.html#outputoptions">10.4.1</A>).
+
+<P>
+The
+<A NAME="tex2html874"
+ HREF="../bips/kernel/ioterm/printf-2.html">printf/2</A><A NAME="6033"></A> and
+<A NAME="tex2html876"
+ HREF="../bips/kernel/ioterm/printf-3.html">printf/3</A><A NAME="6036"></A>
+predicates are similar to C's printf(3) function, but provide
+additional format characters for printing ECLiPSe terms.
+<A NAME="5835"></A>
+The basic format string for printing arbitrary terms is "%w".
+Additional format characters can go between % and w, according
+to the second column in the table <A HREF="node63.html#outputoptions">10.4.1</A>.
+
+<P>
+For example, the following pairs of printing goals are equivalent:<PRE>
+printf("%mw",  [X])  &lt;-&gt;   write_term(X, [attributes(pretty)])
+printf("%O.w", [X])  &lt;-&gt;   write_term(X, [operators(false),dotlist(true)])
+printf("%5_w", [X])  &lt;-&gt;   write_term(X, [depth(5),variables(anonymous)])
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION001042000000000000000">
+Other Term Output Predicates</A>
+</H2>
+
+<P>
+The other term output predicates
+<A NAME="tex2html879"
+ HREF="../bips/kernel/ioterm/write-2.html">write/2</A><A NAME="6039"></A>,
+<A NAME="tex2html881"
+ HREF="../bips/kernel/ioterm/writeq-2.html">writeq/2</A><A NAME="6042"></A>,
+<A NAME="tex2html883"
+ HREF="../bips/kernel/ioterm/write_canonical-2.html">write_canonical/2</A><A NAME="6045"></A>,
+<A NAME="tex2html885"
+ HREF="../bips/kernel/ioterm/display-2.html">display/2</A><A NAME="6048"></A>,
+<A NAME="tex2html887"
+ HREF="../bips/kernel/ioterm/print-2.html">print/2</A><A NAME="6051"></A>
+can all be defined in terms of write_term/3 (or, similarly
+in terms of printf/3) as follows:<PRE>
+write(X)   :- write_term(X, []).
+writeq(X)  :- write_term(X, [variables(raw), attributes(full),
+                transform(false), quoted(true), depth(full)]).
+write_canonical(X) :- write_term(X, [variables(raw), attributes(full),
+                transform(false), quoted(true), depth(full),
+                dotlist(true), operators(false)]).
+display(X) :- write_term(X, [dotlist(true), operators(false)]).
+print(X)   :- write_term(X, [portrayed(true)]).
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION001043000000000000000">
+Default Output Options</A>
+</H2>
+
+<P>
+It is possible to set default output options for an output stream
+in order to globally affect all output to this particular stream.
+The
+<A NAME="tex2html889"
+ HREF="../bips/kernel/iostream/set_stream_property-3.html">set_stream_property/3</A><A NAME="6054"></A>
+predicate can be used to assign default options (in the same form as
+accepted by write_term/3) to a stream.
+These options will then be observed by all output predicates which do not
+override the particular option.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3198"
+ HREF="node64.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3194"
+ HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3190"
+ HREF="node62.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3196"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3199"
+ HREF="node64.html">Dynamic Code</A>
+<B> Up:</B> <A NAME="tex2html3195"
+ HREF="node59.html">Input and Output</A>
+<B> Previous:</B> <A NAME="tex2html3191"
+ HREF="node62.html">In-memory Streams</A>
+ &nbsp <B>  <A NAME="tex2html3197"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

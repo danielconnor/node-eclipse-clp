@@ -1,0 +1,77 @@
+<HTML><HEAD><TITLE>chr_get_constraint(Variable,?Constraint)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(chr)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>chr_get_constraint(Variable,?Constraint)</H1>
+Remove a constraint in which the variable Variable occurs and which unifies
+with Constraint from the constraint store.
+
+
+<DL>
+<DT><EM>Variable</EM></DT>
+<DD>A free variable.
+</DD>
+<DT><EM>?Constraint</EM></DT>
+<DD>A constraint (callable term) defined by constraint handling                rules.
+</DD>
+</DL>
+<H2>Description</H2>
+   Removes a constraint in which the variable Variable occurs and which
+   unifies with Constraint from the constraint store.  Note that if the
+   unification with Constraint binds variables occurring also in other
+   constraints in the constraint store, these constraints may be simplified
+   (see last examples).  Thus it is recommended to use either a free
+   variable or a term with variable arguments for Constraint.  Used by
+   advanced constraint handling rules users to manipulate themselves the
+   constraints defined by constraint handling rules.  See also
+   chr_get_constraint/1 for more examples.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Variable is not a free variable or if there is no constraint
+   (defined by constraint handling rules) in the constraint store that
+   unifies with Constraint and in which the variable Variable occurs.
+
+
+<H3>Resatisfiable</H3>
+   Yes.
+<H2>Examples</H2>
+<PRE>   Example using the constraint handler for Booleans  bool.chr:
+[eclipse]: and(X,Y,Z), or(A,B,C), chr_get_constraint(Y,Cstr).
+
+X = X
+Z = Z
+A = A
+B = B
+Y = Y
+Cstr = X * Y = Z
+
+Constraints:
+(2) A + B = C   % pretty print for or/3 - constraint
+
+     More? (;)
+
+no (more) solution.
+
+
+   The following predicate labeling(+Varlist) labels the variables in the
+   list Varlist:
+labeling([X|VL]) :-
+   var(X),
+   chr_get_constraint(X,C),
+   chr_label_with(C),
+   !,
+   chr_resolve(C),
+   labeling([X|VL]).
+
+labeling([X|VL]) :-
+   labeling(VL).
+
+labeling([]).
+
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/chr/chr_labeling-0.html">chr_labeling / 0</A>, <A HREF="../../lib/chr/chr_label_with-1.html">chr_label_with / 1</A>, <A HREF="../../lib/chr/chr_resolve-1.html">chr_resolve / 1</A>, <A HREF="../../lib/chr/chr_get_constraint-2.html">chr_get_constraint / 2</A>
+</BODY></HTML>

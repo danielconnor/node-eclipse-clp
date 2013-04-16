@@ -1,0 +1,112 @@
+<HTML><HEAD><TITLE>+Goal infers +Language</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(propia)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>+Goal infers +Language</H1>
+Do generalized propagation over Goal according to the approximation Language.
+<DL>
+<DT><EM>+Goal</EM></DT>
+<DD>Callable Term.
+</DD>
+<DT><EM>+Language</EM></DT>
+<DD>One of the terms most, unique, consistent, fd, ic, range or ac
+</DD>
+</DL>
+<H2>Description</H2>
+	Used to turn an arbitrary, nondeterministic Goal into a
+	(deterministic) constraint, whose inference power is
+	determined by the approximation Language. This is done using the
+	Generalised Propagation Method (see T. Le Provost and M. Wallace,
+	Domain-Independent Propagation, Proceedings of the FGCS'92, Tokyo,
+	June 1992).
+	<P>
+	The infers-predicate computes the most specific generalization
+	of all the solutions of the Goal according to the approximation
+	Language and delays if Goal has several non comparable solutions.
+	<P>
+	With the language 'most', Goal is bound to the most specific
+	generalization of all its solutions.  This generalisation will
+	depend what solvers are loaded - (ic, fd, range or several of
+	them).  If one of the solutions is not a variant of this
+	answer, the goal is delayed until one of its variables is
+	bound.  Note that the Goal may have an infinity of solutions.
+	<P>
+	Using other languages, an approximation of this most specific
+	generalization can be computed.  With the 'unique' language,
+	infers/2 instantiates the Goal only if it has a unique
+	solution (or the first solution of Goal subsumes all the
+	others).  With the 'consistent' language, infers/2 does not
+	bind the Goal but only checks if Goal has at least one
+	solution.  The languages 'ic', 'fd' and 'range' extract the most
+	specific generalisation expresssible using finite domains and
+	ranges respectively.
+	<P>
+	The language 'ac' implements generalised arc consistency on
+	the table produced by computing all the (finitely) many
+	solutions to the goal in advance. This requires that some solver
+	implementing the element/3 constraint is loaded (fd, ic_global).
+	
+<H3>Fail Conditions</H3>
+Fails if Goal has no solution.
+<H3>Resatisfiable</H3>
+No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Goal or Language is not instantiated.
+<DT><EM>(6) out of range </EM>
+<DD>Language is not a correct language.
+<DT><EM>(68) calling an undefined procedure </EM>
+<DD>Goal is an undefined procedure.
+</DL>
+<H2>Examples</H2>
+<PRE>
+    Success:
+	[eclipse]: member(X, [f(1), f(2)]) infers most.
+        X = f(_g1)
+        Delayed goals:
+        member(f(_g1), [f(1), f(2)]) infers most
+        yes.
+	[eclipse]: [user].
+	and(0, 0, 0).
+        and(0, 1, 0).
+	and(1, 0, 0).
+	and(1, 1, 1).
+	user       compiled traceable 528 bytes in 0.00 seconds
+	yes.
+	[eclipse]: and(0, X, Y).
+	X = X
+	Y = 0     More? (;)          % Prolog: two solutions
+	X = 0
+	Y = 0
+	yes.
+	[eclipse]: and(0, X, Y) infers most.
+	X = X
+	Y = 0
+	yes.                         % Prolog + infers: one solution
+	[eclipse]: [user].
+	greater_than(succ(X), X).
+	greater_than(succ(X), Y) :- greater_than(X, Y).
+	user       compiled traceable 268 bytes in 0.00 seconds
+	yes.
+	[eclipse]: greater_than(X, zero).
+	X = succ(zero)     More? (;) % Prolog: infinity of solutions
+	...
+	[eclipse]: greater_than(X, zero) infers most.
+	X = succ(_g2)
+	Delayed goals:
+	    infers(greater_than(succ(_g2), zero), most, eclipse)
+	yes.
+        [eclipse]: lib(fd).
+        ...
+        [eclipse]: member(X, [f(1), f(2)]) infers most.
+	X = f(_g3[1, 2])
+	yes.
+    Fail:
+	[eclipse]: member(1, [2, 3]) infers consistent.
+	no (more) solution.
+    Error:
+	Goal infers most. % Error 4
+	true infers true.  % Error 6
+    </PRE>
+<H2>See Also</H2>
+
+</BODY></HTML>

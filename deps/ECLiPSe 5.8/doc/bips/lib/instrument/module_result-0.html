@@ -1,0 +1,32 @@
+<HTML><HEAD><TITLE>module_result</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(instrument)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>module_result</H1>
+Pretty-print all files in a module, including any 
+    instrumentation results
+<DL>
+</DL>
+<H2>Description</H2>
+<P>
+   This will pretty-print all source files in the calling module context, 
+   annotated with the result of instrumentation.  The resulting .html 
+   files are placed in a sub-directory called instrument', relative to 
+   the files that were compiled into the file.
+   </P><P>
+   See <TT>module_result/1</TT> for options to modify the output.
+   </P><P>
+   The use of this predicate is only meaningful if the module has 
+   previously been instrumented and compiled 
+   using <TT>instrument:instrument/1,2</TT>, and the code has been 
+   run in order to obtain instrumentation results.
+   </P><P>
+   See <TT>struct(itemplate)</TT> for documentation of how the 
+   result instrumentation is used in the annotation and pretty-printing 
+   of the code.
+   </P><P>
+   The predicate is a tool and the instrumentation results of a 
+   module other than the current calling module context can be obtained 
+   by invoking <TT>module_result@Module</TT>.
+   <P>
+<H2>See Also</H2>
+<A HREF="../../lib/instrument/instrument-2.html">instrument / 2</A>, <A HREF="../../lib/instrument/instrument-3.html">instrument / 3</A>, <A HREF="../../lib/instrument/file_result-1.html">file_result / 1</A>, <A HREF="../../lib/instrument/file_result-2.html">file_result / 2</A>, <A HREF="../../lib/instrument/index.html">library(instrument)</A>, <A HREF="../../lib/pretty_printer/index.html">library(pretty_printer)</A>, <A HREF="../../lib/instrument/module_result-1.html">module_result / 1</A>, <A HREF="../../lib/instrument/itemplate-s.html">struct(itemplate)</A>, <A HREF="../../lib/instrument/defined_modules-2.html">defined_modules / 2</A>
+</BODY></HTML>

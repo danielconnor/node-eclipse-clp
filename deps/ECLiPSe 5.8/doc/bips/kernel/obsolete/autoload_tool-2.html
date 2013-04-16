@@ -1,0 +1,103 @@
+<HTML><HEAD><TITLE>autoload_tool(+Library, +ListOfPredSpec )</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Obsolete</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>autoload_tool(+Library, +ListOfPredSpec )</H1>
+Declares the predicates in ListOfPredSpec to be autoloading tools from the
+module (file) Library.pl.
+
+
+<DL>
+<DT><EM>+Library</EM></DT>
+<DD>Atom.
+</DD>
+<DT><EM>+ListOfPredSpecList</EM></DT>
+<DD>of expressions of the form Atom/Integer.
+</DD>
+</DL>
+<H3>This built-in predicate is obsolete!</H3>
+<H2>Description</H2>
+   Declares the predicates in the list ListOfPredSpec as tools defined in
+   the file Library.  If any of the specified tools is called, the system
+   looks in the library_path directories for the file Library.pl, compiles
+   it using lib/1  and re-calls the tool.  The file is supposed to contain
+   a module_interface/1 or begin_module/1 directive at its beginning but it
+   can be omitted and then Library is used as the module name.
+
+<P>
+   The library file Library.pl must contain a tool/2 call for each of the
+   specified predicates.
+
+<P>
+   Predicates declared as autoloaded are always defined as global but note
+   that the module directive in a file erase the module completely so that
+   the autoloaded procedure (and its visibility) are removed completely
+   before being recompiled.  This means that the global declaration must be
+   present in the file.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   None.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Library or ListOfPredSpec is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Library is instantiated, but not to an atom.
+<DT><EM>(5) type error </EM>
+<DD>ListOfPredSpec is instantiated, but not to a list of    expressions of the form Atom/Integer.
+<DT><EM>(62) inconsistent procedure redefinition </EM>
+<DD>a call to PredSpec has already been compiled before the    tool declaration (``inconsistent procedure redefinition'').
+<DT><EM>(173) library not found </EM>
+<DD>Library file Library.pl not found.  (when calling an    autoloaded predicate)
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+     [eclipse]: get_flag(library_path, Path),
+             get_flag(cwd, Cwd),
+             set_flag(library_path, [Cwd | Path]).
+     Cwd = "/home/user/"
+     Path = ["/usr/local/ECLIPSE/lib"]
+     yes.
+     [eclipse]: open("my_lib.pl", write, s),
+             write(s, ":- module(my_lib).\n"),
+             write(s, ":- global p/0.\n"),
+             write(s, ":- tool(p/0, writeln/1)."),
+             close(s).
+     yes.
+     [eclipse]: autoload_tool(my_lib, [p/0]).
+     yes.
+     [eclipse]: p.       % when p/0 is called, the library is
+                       % compiled first, ie. autoloaded.
+     loading the library /home/user/my_lib.pl
+     eclipse
+     yes.
+     [eclipse]: p.       % p/0 is not an autoloaded pred anymore
+     eclipse
+     yes.
+
+Error:
+     autoload_tool(Lib, [p/0]).            (Error 4).
+     autoload_tool(a_lib, L).              (Error 4).
+     autoload_tool("a_lib", [p/0]).        (Error 5).
+     autoload_tool(a_lib, [1]).            (Error 5).
+     autoload_tool(a_lib, p/0).            (Error 5).
+
+     [eclipse]: [user].
+      p :- t. % call compiled before tool declaration
+      user compiled 32 bytes in 0.00 seconds
+     yes.
+     [eclipse]: autoload_tool(a_lib, [t/0]). (Error 62).
+
+     autoload_tool(not_a_file, [p/0]).     (Error 173).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/database/ensure_loaded-1.html">ensure_loaded / 1</A>, <A HREF="../../kernel/obsolete/autoload-2.html">autoload / 2</A>, <A HREF="../../kernel/database/lib-1.html">lib / 1</A>, <A HREF="../../kernel/obsolete/lib-2.html">lib / 2</A>, <A HREF="../../kernel/obsolete/tool-1.html">tool / 1</A>
+</BODY></HTML>

@@ -1,0 +1,29 @@
+
+dvar_range(+DVar, ?Min, ?Max)
+
+   Return the minimum and maximum domain value of DVar
+
+Arguments
+   +DVar               A domain variable or integer.
+   ?Min                An integer or a variable.
+   ?Max                An integer or a variable.
+
+Type
+   library(fd)
+
+Description
+	Return the minimum and maximum domain value of the domin
+	variable DVar.  This predicate can also be used to test if a
+	given domain is an integer one or not. 
+	If DVar is instantiated, Min and Max will be identical.
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+See Also
+   dvar_domain / 2, dom_range / 3

@@ -1,0 +1,78 @@
+
+local reference(+Name)
+
+   Creates a named reference called Name.
+
+Arguments
+   +Name               An atom.
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   This creates a named reference with the atomic name Name.  A named
+   reference can be used to hold a reference to a term in the same way
+   as a logical variable.  Unlike the non-logical variables, the value
+   of a reference is not a copy, but identical to the original term it
+   was set to.  This implies that the value behaves logically, i.e. 
+   it disappears on backtracking, bindings to the variables inside it
+   are undone on backtracking etc.  A typical example of it use is global
+   state that a set of predicates wants to share without having to
+   pass an argument pair through all the predicate invocations. 
+
+   Changing the value of a reference is similar to changing an argument
+   of a compound term using setarg/3.
+
+   The initial value of a reference is the integer 0. To have a different
+   initial value, use reference/2.
+
+   There are no arrays of references, but the same effect can be
+   achieved by storing a structure in a reference and using the
+   structure's arguments.  The arguments can then be accessed and
+   modified using arg/3 and setarg/3 respectively. 
+
+   Note: Declaring a reference twice is silently accepted, and the second
+   declaration is ignored.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Name is not instantiated.
+     5 --- Name is not an atom.
+
+Examples
+   
+% comparison between references and nonlogical variables
+
+      [eclipse 1]: local reference(a), variable(b).
+
+      yes.
+      [eclipse 2]: Term = p(X), setval(a, Term), getval(a, Y), Y == Term.
+      X = X
+      Y = p(X)
+      Term = p(X)
+      yes.
+      [eclipse 3]: Term = p(X), setval(b, Term), getval(b, Y), Y == Term.
+
+      no (more) solution.
+
+% values of references are subject to backtracking:
+
+    [eclipse 4]: setval(a, 1), (setval(a, 2), getval(a, X); getval(a, Y)).
+      X = 2
+      Y = Y     More? (;) 
+
+      X = X
+      Y = 1
+
+
+
+See Also
+   reference / 2, setval / 2, getval / 2, setarg / 3, arg / 3

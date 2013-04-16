@@ -1,0 +1,69 @@
+
+dynamic +SpecList
+
+   Declares the procedures specified by SpecList as dynamic.
+
+
+
+Arguments
+   +SpecList           Sequence of expressions of the form Atom/Integer.
+
+Type
+   Dynamic Predicates
+
+Description
+   Declare the procedures specified by SpecList as dynamic procedures.
+   This has to be done before the procedure is defined.
+
+
+   To change a static procedure to a dynamic one it must first be
+   abolished.
+
+
+   If the procedure was already dynamic Error 64 is raised.  The default
+   error handler erases all existing clauses and succeeds.  This is useful
+   for recompiling files with dynamic declarations, but it can be redefined
+   if desired.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- SpecList is not instantiated.
+     5 --- SpecList is instantiated, but not to a sequence of    expressions of the form Atom/Integer.
+    64 --- SpecList is already dynamic.
+    65 --- SpecList is already defined.
+
+Examples
+   
+Success:
+     [eclipse]: pred(a/1).
+     no.
+     [eclipse]: dynamic a/1.
+     yes.
+     [eclipse]: pred(a/1).
+     in eclipse: dynamic prolog local debugged stopped traceable
+     yes.
+     [eclipse]: a(X).
+     no (more) solution.
+Error:
+     dynamic X.                 (Error 4).
+     dynamic a.                 (Error 5).
+     dynamic a/1, a/1.          (Error 64). % succeeds
+     get_flag(p/0,type,user),
+     dynamic p/0.               (Error 65).
+
+
+
+
+
+See Also
+   is_dynamic / 1

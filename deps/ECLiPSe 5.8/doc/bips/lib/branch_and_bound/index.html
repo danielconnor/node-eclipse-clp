@@ -1,0 +1,66 @@
+<HTML><HEAD><TITLE>library(branch_and_bound)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(branch_and_bound)</H1>
+Generic branch-and-bound primitives
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="bb_cost-2.html"><STRONG>bb_cost(++Handle, -Cost)</STRONG></A></DT>
+<DD>Low-level primitive for building branch-and-bound-style search procedures</DD>
+<DT><A HREF="bb_finish-1.html"><STRONG>bb_finish(++Handle)</STRONG></A></DT>
+<DD>Low-level primitive for building branch-and-bound-style search procedures</DD>
+<DT><A HREF="bb_init-2.html"><STRONG>bb_init(++ExtremeCost, -Handle)</STRONG></A></DT>
+<DD>Low-level primitive for building branch-and-bound-style search procedures</DD>
+<DT><A HREF="bb_min-3.html"><STRONG>bb_min(+Goal, ?Cost, ?Options)</STRONG></A></DT>
+<DD>Find a minimal solution using the branch-and-bound method</DD>
+<DT><A HREF="bb_min-6.html"><STRONG>bb_min(+Goal, ?Cost, ?Template, ?Solution, ?Optimum, ?Options)</STRONG></A></DT>
+<DD>Find a minimal solution using the branch-and-bound method</DD>
+<DT><A HREF="bb_probe-7.html"><STRONG>bb_probe(++From, ++To, +Goal, ?Template, ?Cost, ++Handle, ++Module)</STRONG></A></DT>
+<DD>Low-level primitive for building branch-and-bound-style search procedures</DD>
+<DT><A HREF="bb_solution-2.html"><STRONG>bb_solution(++Handle, -Solution)</STRONG></A></DT>
+<DD>Low-level primitive for building branch-and-bound-style search procedures</DD>
+<DT><A HREF="minimize-2.html"><STRONG>minimize(+Goal, ?Cost)</STRONG></A></DT>
+<DD>Find a minimal solution using the branch-and-bound method</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Structures</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><STRONG>struct bb_options(strategy, from, to, delta, factor, timeout, probe_timeout, report_success, report_failure)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+
+	This is a solver-independent library implementing branch-and-bound
+	primitives. It can be used with any nondeterministic search routine
+	that instantiates a cost variable when a solution is found. The cost
+	variable can be an arbitrary numerical domain variable or even a
+	simple domain-less variable.
+	<P>
+	The main predicates are bb_min/3, bb_min/6 and, as a shorthand,
+	minimize/2.
+	<P>
+	Note on the treatment of bounded reals: The library allows the cost
+	to be instantiated to a number of type breal. This is useful e.g.
+	when using lib(ic) to solve problems with continuous variables.
+	When the variable domains have been narrowed sufficiently, the
+	problem variables (in particular the cost variable) should be
+	instantiated to a bounded real, e.g. using the following idiom:
+	<PRE>
+		X is breal_from_bounds(get_min(X),get_max(X))
+	</PRE>
+	Bounded reals contain some uncertainty about their true value. If
+	this uncertainty is too large, the branch-and-bound procedure may
+	not be able to compare the quality of two solutions. In this case,
+	a warning is issued and the search terminated prematurely.  The
+	problem can be solved by increasing the delta-parameter, or by
+	locating the cost value more precisely.
+	
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Author: </STRONG>Joachim Schimpf, Vassilis Liatsos, IC-Parc, Imperial College, London
+<LI><STRONG>Copyright &copy; </STRONG>Parc Technologies Ltd 1999
+<LI><STRONG>Date: </STRONG>$Date: 2005/01/14 17:42:59 $
+</UL>
+<HR>Generated from branch_and_bound.eci on Tue Jan 25 01:58:32 2005
+
+</BODY></HTML>

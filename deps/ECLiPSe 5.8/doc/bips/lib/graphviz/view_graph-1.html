@@ -1,0 +1,21 @@
+<HTML><HEAD><TITLE>view_graph(+Graph)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graphviz)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>view_graph(+Graph)</H1>
+Display a given graph in a window (using default options)
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>A graph structure
+</DD>
+</DL>
+<H2>Examples</H2>
+<PRE>
+    ?- lib(graph_algorithms), lib(graphviz).
+    Yes (1.17s cpu)
+
+    ?- make_random_graph(10,30,true,true,true,G), view_graph(G).
+    G = graph(...)
+    Yes (0.03s cpu)
+    </PRE>
+<H2>See Also</H2>
+<A HREF="../../lib/graphviz/view_graph-2.html">view_graph / 2</A>, <A HREF="../../lib/graph_algorithms/index.html">library(graph_algorithms)</A>
+</BODY></HTML>

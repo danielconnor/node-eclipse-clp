@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Declarative Suspension: Delay Clauses</TITLE>
+<META NAME="description" CONTENT="Declarative Suspension: Delay Clauses">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node111.html">
+<LINK REL="previous" HREF="node109.html">
+<LINK REL="up" HREF="node105.html">
+<LINK REL="next" HREF="node111.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3900"
+ HREF="node111.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3896"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3890"
+ HREF="node109.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3898"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3901"
+ HREF="node111.html">Explicit supension with suspend/3</A>
+<B> Up:</B> <A NAME="tex2html3897"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3891"
+ HREF="node109.html">Development System Support</A>
+ &nbsp <B>  <A NAME="tex2html3899"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3902"
+ HREF="node110.html#SECTION001750100000000000000">More Examples</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001750000000000000000">
+Declarative Suspension: Delay Clauses</A>
+</H1>
+
+<P>
+For delaying calls to user-defined Prolog predicates, ECLiPSe
+ provides several alternatives, the first being <I>delay clauses</I>.
+<A NAME="10254"></A>
+Delay clauses are a declarative means (they are in fact meta-clauses)
+to specify the conditions under which the predicate should delay.
+The semantics of delay clauses is thus cleaner than many alternative
+approaches to delay primitives.
+
+<P>
+A delay clause is very similar to a normal Prolog clause. It has the form<PRE>
+delay &lt;Head&gt; if &lt;Body&gt;.
+</PRE>
+A predicate may have one or more delay clauses.
+They have to be textually <B>before</B> and <B>consecutive</B>
+with the normal clauses of the predicate they belong to.
+The simplest example for a delay clause is one that checks if a variable
+is instantiated:<PRE>
+delay report_binding(X) if var(X).
+report_binding(X) :-
+        printf("Variable has been bound to %w\n", [X]).
+</PRE>
+
+<P>
+The operational semantics of the delay clauses is as follows:
+when a procedure with delay clauses is called, then the delay
+clauses are executed before executing the procedure itself.
+If one of the delay clauses succeeds, the call is suspended,
+otherwise they are all tried in sequence and,
+if all delay clauses fail, the procedure is executed as usual.
+
+<P>
+The mechanism of executing a delay clause is similar to normal Prolog
+clauses with two exceptions:
+
+<UL><LI>the unification of the goal with the delay clause head is not the usual
+Prolog unification, but rather unidirectional pattern matching
+(see also section <A HREF="node25.html#matching">5.5</A>).
+<A NAME="10267"></A>
+<A NAME="10268"></A>
+This means that the variables in the call cannot be bound
+by the matching, if such a binding would be necessary to
+perform the unification, it will fail instead.
+E.g. the head of the delay clause<PRE>
+delay p(a, X) if var(X).
+</PRE>
+does not match the goal <B>p(A, b)</B> but it matches the goal <B>p(a, b)</B>.
+
+<P>
+
+<LI>the delay clauses are deterministic, they leave no choice points.
+If one delay clause succeeds, the call is delayed and the following delay
+clauses are not executed.
+As soon as the call is resumed, all delay clauses that may succeed
+are re-executed.
+
+</UL>
+The reason for using pattern matching instead of unification
+is to avoid a possible mixing of meta-level control with the
+object level, similarly to [<A
+ HREF="node159.html#dincbas84">3</A>].
+
+<P>
+The form of the head of a delay clause is not restricted.
+For the body, the following conditions hold:
+
+<P>
+
+<UL><LI>the body subgoals must not bind any variable in the call and they
+must not delay themselves.
+The system does not verify these conditions currently.
+
+<P>
+
+<LI>it should contain at least one of the following subgoals:
+
+<UL><LI><A NAME="tex2html1393"
+ HREF="../bips/kernel/typetest/var-1.html">var/1</A><A NAME="10812"></A>
+
+<LI><A NAME="tex2html1395"
+ HREF="../bips/kernel/typetest/nonground-1.html">nonground/1</A><A NAME="10815"></A>
+
+<LI><B>nonground/2</B> (see <A NAME="tex2html1397"
+ HREF="../bips/kernel/typetest/nonground-3.html">nonground/3</A><A NAME="10818"></A>)
+
+<P>
+
+<LI><A NAME="tex2html1399"
+ HREF="../bips/sepia/termcomp/REE-2.html"><code>\</code>==/2</A><A NAME="10825"></A>
+
+<P>
+
+</UL>
+If this is not the case, then the predicate may delay without being linked
+to a variable, so it delays forever and cannot be woken again.
+Experience shows that the above four primitives suffice to express most
+usual conditions.
+
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION001750100000000000000">
+More Examples</A>
+</H3>
+
+<UL><LI>A predicate that checks if its argument is a proper list of integers.
+The delay conditions specify that the predicate should delay if the list
+is not terminated or if it contains variable elements.
+This makes sure that it will never generate list elements, but only
+acts as a test:<PRE>
+delay integer_list(L) if var(L).
+delay integer_list([X|_]) if var(X).
+integer_list([]).
+integer_list([X|T]) :- integer(X), integer_list(T).
+</PRE>
+
+<P>
+
+<LI>Delay if the first two arguments are identical and the third is a variable:<PRE>
+delay p(X, X, Y) if var(Y).
+</PRE>
+
+<P>
+
+<LI>Delay if the argument is a structure whose first subterm is not ground:<PRE>
+delay p(X) if compound(X), arg(1, X, Y), nonground(Y).
+</PRE>
+
+<P>
+
+<LI>Delay if the argument term contains 2 or more variables:<PRE>
+delay p(X) if nonground(2, X).
+</PRE>
+
+<P>
+
+<LI>The
+<A NAME="tex2html1401"
+ HREF="../bips/sepia/termcomp/REE-2.html"><code>\</code>==/2</A><A NAME="10834"></A>
+predicate as a delaying condition is useful mainly
+in predicates like X + Y = Z which need not be delayed if X == Z.
+Y can be directly bound to 0, provided that X is later bound to a number
+(or it is not bound at all)
+The condition <B>X <code>\</code>== Y</B> makes sense
+only if X or Y are nonground: a delay clause<PRE>
+delay p(X, Y) if X \== Y.
+</PRE>
+executed with the call ?- p(a, b) of course succeeds and the call delays
+forever, since no variable binding can wake it.
+
+</UL>
+
+<P>
+<B>CAUTION</B>: It may happen that the symbol <B>:-</B> is erroneously
+used instead of <B>if</B> in the delay clause. To indicate this error,
+the compiler complains about redefinition of the built-in predicate
+<B>delay/1</B>.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3900"
+ HREF="node111.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3896"
+ HREF="node105.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3890"
+ HREF="node109.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3898"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3901"
+ HREF="node111.html">Explicit supension with suspend/3</A>
+<B> Up:</B> <A NAME="tex2html3897"
+ HREF="node105.html">Advanced Control Features</A>
+<B> Previous:</B> <A NAME="tex2html3891"
+ HREF="node109.html">Development System Support</A>
+ &nbsp <B>  <A NAME="tex2html3899"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

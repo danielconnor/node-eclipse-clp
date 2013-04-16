@@ -1,0 +1,70 @@
+<HTML><HEAD><TITLE>recorded_list(+Key, ?List)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Recorded Database</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>recorded_list(+Key, ?List)</H1>
+Succeeds if the List is the list of all terms that are currently recorded
+in the indexed database under the key Key.
+
+
+<DL>
+<DT><EM>+Key</EM></DT>
+<DD>An atom or a compound term.
+</DD>
+<DT><EM>?List</EM></DT>
+<DD>A (possibly empty) list of Prolog terms.
+</DD>
+</DL>
+<H2>Description</H2>
+   Unifies List with a list of all the terms that are currently recorded
+   under the key Key.  While recorded/2 returns the terms one by one on
+   backtracking, recorded_list/2  gives them all at once.  The order of the
+   list corresponds to the order in which the terms would be delivered by
+   recorded/2.  recorded_list/2  could be defined as
+
+<P>
+<PRE>
+    recorded_list(Key, List) :-
+        findall(Term, recorded(Key, Term), List).
+</PRE>
+   In the case of compound terms, all keys of the same name and arity are
+   treated as equal.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails List does not unify with the list of recorded terms.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>Key is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>Key is neither an atom nor a compound term.
+<DT><EM>(5) type error </EM>
+<DD>List is neither an variable nor a list.
+</DL>
+<H2>Examples</H2>
+<PRE>
+   Success:
+   [eclipse]: erase_all(beer), recorded_list(beer,List).
+   List = []
+   yes.
+   [eclipse]: record(beer,paulaner), record(beer,lowenbrau),
+   recorda(beer,spaten), recorded_list(beer,List).
+   List = [spaten, paulaner, lowenbrau]
+   yes.
+   Fail:
+   erase_all(beer), recorded_list(beer,[paulaner]).
+   Error:
+   recorded_list(Beer,Value).                (Error 4)
+   recorded_list(1,Value).                   (Error 5)
+   recorded_list(beer,lowenbrau).            (Error 5)
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/record/record-2.html">record / 2</A>, <A HREF="../../kernel/record/recorded-2.html">recorded / 2</A>
+</BODY></HTML>

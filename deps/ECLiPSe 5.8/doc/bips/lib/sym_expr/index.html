@@ -1,0 +1,41 @@
+<HTML><HEAD><TITLE>library(sym_expr)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(sym_expr)</H1>
+Library for expressing the symmetries of a CSP
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="construct_group-8.html"><STRONG>construct_group(+Array, ++VarDimNames, ++ValueSpec, ++SymSpecs, ++GroupName, -MaxPoints, -ToPointPred, -FromPointPred)</STRONG></A></DT>
+<DD>Constructs a GAP group based on the provided symmetry specification.</DD>
+<DT><STRONG>generic_from_point(?, ?, ?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>generic_to_point(?, ?, ?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+<DT><STRONG>value_spec_to_range(?, ?, ?)</STRONG></DT>
+<DD>No description available</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+   This library provides a convenient way to express the symmetries of a
+   CSP, as described in:<P>
+
+   Warwick Harvey, Tom Kelsey and Karen Petrie.  "Symmetry Group Expression
+   for CSPs."  In Barbara Smith et al., editors, <EM>Proceedings of
+   SymCon'03: Third International Workshop on Symmetry in Constraint
+   Satisfaction Problems, a workshop of CP 2003</EM>, pages 86-96.
+   September, 2003.<P>
+
+   This is particularly useful for GAP-based symmetry-breaking libraries, as
+   it will construct an appropriate group in GAP and provide predicates for
+   mapping between CSP assignments and the points acted on by the GAP group.<P>
+
+   Please note that this library currently does not work on Windows machines
+   due to its dependence on the GAP interface library.<P>
+
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>evolving
+<LI><STRONG>Author: </STRONG>Warwick Harvey
+</UL>
+<H2>See Also</H2>
+<A HREF="../../lib/gap/index.html">library(gap)</A><HR>Generated from sym_expr.eci on Tue Jan 25 01:58:49 2005
+
+</BODY></HTML>

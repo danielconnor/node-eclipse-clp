@@ -1,0 +1,71 @@
+
+local store(++Name)
+
+   Create a named store object which can store indexed data across failures
+
+Arguments
+   Name                An atom, or an atom/integer structure
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+    	This creates a 'store' object which provides indexed access to
+	key-value pairs, and whose contents are unaffected by backtracking.
+
+	A store is a persistent (w.r.t. backtracking) hash table. It can
+	store arbitrary ECLiPSe terms under arbitrary ground keys.
+
+	Stores can be referred to either by handle or by name. Whenever
+	possible, handles should be used, because this naturally leads to
+	robust, reentrant code, and avoids the danger of memory leaks.
+	See store_create/1 for how to create stores with a handle.
+
+	Named stores are identified by a functor. This is usually simply
+	an atom, but in general it can be name/arity pair.
+
+	When named stores are used, the visibility of the store name is
+	local to the module where it was created. A named store never
+	disappears, therefore, in order to free the associated memory,
+	its contents should be erased when no longer needed.
+
+	Duplicate store declarations are silently ignored.
+    
+
+Resatisfiable
+   No
+
+Fail Conditions
+   None
+
+Exceptions
+     4 --- Name is uninstantiated
+     5 --- Name is neither an atom nor an atom/integer structure
+
+Examples
+   
+
+    % A store with the simple, atomic name 'phone_numbers'
+
+    :- local store(phone_numbers).
+
+    main1 :-
+	store_set(phone_numbers, name(peter,panther), data(1234,mobile)),
+	store_set(phone_numbers, name(tom,tiger), data(4567,home)),
+	stored_keys_and_values(phone_numbers, Contents),
+	writeln(Contents).
+
+
+    % A store identified by the functor foo/3
+
+    :- local store(foo/3).
+
+    main2 :-
+	store_set(foo(_,_,_), key_1, value_1),
+	store_set(foo(_,_,_), key_2, value_2),
+	stored_keys_and_values(foo(_,_,_), Contents),
+	writeln(Contents).
+    
+
+See Also
+   current_store / 1, store_create / 1, local / 1, store_set / 3, store_get / 3, store_delete / 2, store_contains / 2, stored_keys / 2, stored_keys_and_values / 2, store_erase / 1, store_count / 2

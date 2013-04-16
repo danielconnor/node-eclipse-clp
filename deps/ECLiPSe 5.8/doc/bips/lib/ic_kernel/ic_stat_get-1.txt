@@ -1,0 +1,35 @@
+
+ic_stat_get(-StatsList)
+
+   Returns the list of stats events description=value pairs
+
+Arguments
+   StatsList           The list of stats events description=value pairs
+
+Type
+   library(ic_kernel)
+
+Description
+
+   Returns the list of stats events description=value pairs.
+
+   IC records the following statistics by default.  Please note that since
+   these depend on the internals of IC, they are subject to change without
+   notice, and should be used as a guide only.
+
+	ic_lin_create
+	    Number of linear constraints set up.
+	ic_lin_prop
+	    Number of times a linear constraint is propagated.
+	ic_uni_prop/ic_bin_prop/ic_tern_prop
+	    Number of times a non-linear (unary/binary/ternary) operator is
+	    propagated.
+	ic_split
+	    Number of domain splits in locate/2,3,4.
+	ic_squash
+	    Number of squash attempts in squash/3 or locate/4.
+
+
+
+See Also
+   ic_stat / 1, ic_stat_get / 1, ic_event / 1

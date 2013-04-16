@@ -1,0 +1,15 @@
+
+is_solver_var(?Term)
+
+   Succeeds if Term is a set variable
+
+Arguments
+   Term                A term
+
+Type
+   library(fd_sets)
+
+Fail Conditions
+   Set is not a variable, or a non-set variable
+
+

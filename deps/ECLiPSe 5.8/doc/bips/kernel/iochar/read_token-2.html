@@ -1,0 +1,52 @@
+<HTML><HEAD><TITLE>read_token(?Token, ?Class)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Character I/O</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>read_token(?Token, ?Class)</H1>
+Succeeds if the next token from the current input stream is successfully
+read and unified with Token and its token class with Class.
+
+
+<DL>
+<DT><EM>?Token</EM></DT>
+<DD>Variable or constant.
+</DD>
+<DT><EM>?Class</EM></DT>
+<DD>Variable or atom.
+</DD>
+</DL>
+<H2>Description</H2>
+   This predicate is an interface to the Sepia tokenizer.  It can be used
+   to read terms which are not ended by a fullstop or even to build whole
+   new parsers.  The next token from the input stream is read and unified
+   with Token.  The token class of this token is unified with Class.
+
+<P>
+   read_token(Token, Class) is equivalent to read_token(input, Token,
+   Class).  See read_token/3 for details.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Token does not unify with the next token read from the input
+   stream or its class with Class.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Class does not unify with an atom.
+<DT><EM>(190) end of file reached </EM>
+<DD>End of file was encountered before reading any character.
+<DT><EM>(198) reading past the file end </EM>
+<DD>Trying to read even after the error 190 was raised.
+</DL>
+<H2>Examples</H2>
+<PRE>   See read_token/3 for examples.
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/syntax/get_chtab-2.html">get_chtab / 2</A>, <A HREF="../../kernel/syntax/set_chtab-2.html">set_chtab / 2</A>, <A HREF="../../kernel/iochar/read_token-3.html">read_token / 3</A>
+</BODY></HTML>

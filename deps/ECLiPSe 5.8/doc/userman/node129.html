@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Creating Communicating Processes</TITLE>
+<META NAME="description" CONTENT="Creating Communicating Processes">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="previous" HREF="node128.html">
+<LINK REL="up" HREF="node125.html">
+<LINK REL="next" HREF="node130.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html4184"
+ HREF="node130.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4180"
+ HREF="node125.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4176"
+ HREF="node128.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4182"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4185"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Up:</B> <A NAME="tex2html4181"
+ HREF="node125.html">Operating System Interface</A>
+<B> Previous:</B> <A NAME="tex2html4177"
+ HREF="node128.html">File System</A>
+ &nbsp <B>  <A NAME="tex2html4183"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html4186"
+ HREF="node129.html#SECTION002041000000000000000">Process creation</A>
+<LI><A NAME="tex2html4187"
+ HREF="node129.html#SECTION002042000000000000000">Process control</A>
+<LI><A NAME="tex2html4188"
+ HREF="node129.html#SECTION002043000000000000000">Interprocess Signals</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION002040000000000000000">
+Creating Communicating Processes</A>
+</H1>
+ECLiPSe provides all the necessary built-ins needed to create UNIX processes
+and establish communication between them.
+A ECLiPSe process can communicate with other processes via streams and by
+sending and receiving signals.
+
+<P>
+
+<H2><A NAME="SECTION002041000000000000000"></A>
+<A NAME="12223"></A>
+<A NAME="12224"></A>
+<A NAME="12225"></A>
+<A NAME="12226"></A>
+<BR>
+Process creation
+</H2>
+The built-ins of the <B>exec</B> group and <A NAME="tex2html1691"
+ HREF="../bips/kernel/opsys/sh-1.html">sh/1</A><A NAME="12398"></A>
+fork a new process and execute the command given as the first argument.
+Sorted by their versatility, there are:
+
+<UL><LI><B>sh(Command)</B>
+
+<LI><B>exec(Command, Streams)</B>
+
+<LI><B>exec(Command, Streams, ProcessId)</B>
+
+<LI><B>exec_group(Command, Streams, ProcessId)</B>
+
+</UL>
+<A NAME="12236"></A>
+With <A NAME="tex2html1694"
+ HREF="../bips/kernel/opsys/sh-1.html">sh/1</A><A NAME="12401"></A> (or its synonym <A NAME="tex2html1696"
+ HREF="../bips/kernel/opsys/system-1.html">system/1</A><A NAME="12404"></A>) it is possible to
+call and execute any UNIX command from withing ECLiPSe.
+However it is not possible to communicate with the process.
+Moreover, the ECLiPSe process just waits until the command has been executed.
+
+<P>
+The <B>exec</B> group makes it possible to set up communication links
+with the child process by specifying the <TT>Streams</TT> argument.
+It is a list of the form<PRE>
+[Stdin, Stdout, Stderr]
+</PRE>
+and specifies which ECLiPSe stream should be connected to the
+<I>stdin</I>, <I>stdout</I> or <I>stderr</I> of the child respectively.
+Unless <TT>null</TT> is specified, this will establish pipes to be
+created between the ECLiPSe process and the child.
+On Berkeley UNIX systems the streams can be specified as <I>sigio(Stream)</I>
+which will setup the pipe such that the signal <I>sigio</I> is issued
+every time new data appears on the pipe.
+Thus, by defining a suitable interrupt handler, it is possible to service this
+stream in a completely asynchronous way.
+
+<P>
+
+<H2><A NAME="SECTION002042000000000000000">
+Process control</A>
+</H2>
+The <A NAME="tex2html1698"
+ HREF="../bips/kernel/opsys/sh-1.html">sh/1</A><A NAME="12407"></A> and <A NAME="tex2html1700"
+ HREF="../bips/kernel/opsys/exec-2.html">exec/2</A><A NAME="12410"></A> built-ins both block the ECLiPSe process until
+the child has finished.
+For more sophisticated applications, the processes have to run in parallel
+and be synchronised explicitly.
+This can be achieved with <A NAME="tex2html1702"
+ HREF="../bips/kernel/opsys/exec-3.html">exec/3</A><A NAME="12413"></A> or <A NAME="tex2html1704"
+ HREF="../bips/kernel/opsys/exec_group-3.html">exec_group/3</A><A NAME="12416"></A>.
+These return immediately after having created the child process and
+unify its process identifier (<I>Pid</I>) with the their argument.
+The Pid can be used to 
+
+<UL><LI>send signals to the process, using the built-in <B>kill(Pid, Signal)</B>
+
+<LI>wait for the process to terminate and obtain its return status
+<B>wait(Pid, Status)</B>
+
+</UL>
+<A NAME="12272"></A>
+<A NAME="12273"></A>
+The difference between <A NAME="tex2html1708"
+ HREF="../bips/kernel/opsys/exec-3.html">exec/3</A><A NAME="12419"></A> and <A NAME="tex2html1710"
+ HREF="../bips/kernel/opsys/exec_group-3.html">exec_group/3</A><A NAME="12422"></A> is
+that the latter creates a
+new process group for the child, such that the child does not get the
+interrupt, hangup and kill signals that are sent to the parent.
+
+<P>
+The process identifier of the running ECLiPSe and of its parent process are
+available as the global flags <B>pid</B> and <B>ppid</B> respectively.
+<A NAME="12281"></A>
+<A NAME="12282"></A>
+<A NAME="12283"></A>
+They can be accessed using <A NAME="tex2html1715"
+ HREF="../bips/kernel/env/get_flag-2.html">get_flag/2</A><A NAME="12425"></A> or <A NAME="tex2html1717"
+ HREF="../bips/kernel/env/env-0.html">env/0</A><A NAME="12428"></A>.
+
+<P>
+Here is an example of how to connect the UNIX utility <B>bc</B> (the
+arbitrary-precision arithmetic language) to a ECLiPSe process.
+We first create the process with two pipes for the child's standard input
+and output.
+Then, by writing and reading these streams, the processes can communicate in
+a straightforward way. Note that it is usually necessary to flush the
+output after writing into a pipe:<PRE>
+[eclipse 1]: exec(bc, [in,out], P).
+
+P = 9759
+yes.
+[eclipse 2]: writeln(in, "12345678902321 * 2132"), flush(in).
+
+yes.
+[eclipse 3]: read_string(out, "\n", _, Result).
+
+Result = "26320987419748372"
+yes.
+</PRE>
+In this example the child process can be terminated by closing its standard
+input (in other cases it may be necessary to send a signal).
+The built-in <A NAME="tex2html1719"
+ HREF="../bips/kernel/opsys/wait-2.html">wait/2</A><A NAME="12431"></A> is then used to wait for the process to terminate
+and to obtain its exit status.
+Don't forget to close the ECLiPSe streams that were opend by <A NAME="tex2html1721"
+ HREF="../bips/kernel/opsys/exec-3.html">exec/3</A><A NAME="12434"></A>:<PRE>
+[eclipse 4]: close(in), wait(P,S).
+
+P = 9759
+S = 0     More? (;) 
+yes.
+[eclipse 5]: at_eof(out), close(out).
+
+yes.
+</PRE>
+
+<P>
+
+<H2><A NAME="SECTION002043000000000000000">
+Interprocess Signals</A>
+</H2>
+The UNIX (or the appropriate Windows) signals are all mapped to ECLiPSe interrupts.
+Their names and numbers may vary on different machines.
+Refer to the operating system documentation for details.
+
+<P>
+The way to deal with incoming signals is to define a Prolog or external
+predicate and declare it as the interrupt handler for this interrupt
+(using <A NAME="tex2html1723"
+ HREF="../bips/kernel/event/set_interrupt_handler-2.html">set_interrupt_handler/2</A><A NAME="12437"></A>).
+Interrupt handlers can be established for all signals except those that are
+not allowed to be caught by the process (like e.g. the <I>kill</I> signal 9).
+For a description of event handling in general see chapter <A HREF="node71.html#chapexcept">13</A>.
+
+<P>
+<A NAME="12309"></A>
+For explicitly sending signals to other processes <A NAME="tex2html1726"
+ HREF="../bips/kernel/opsys/kill-2.html">kill/2</A><A NAME="12440"></A> is provided,
+which is a direct interface to the UNIX system call <I>kill(2)</I>.
+Note that some signals can be set up to be raised automatically,
+e.g. <TT>sigio</TT> can be raised when data arrives on a pipe.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html4184"
+ HREF="node130.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html4180"
+ HREF="node125.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html4176"
+ HREF="node128.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html4182"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html4185"
+ HREF="node130.html">Interprocess Communication</A>
+<B> Up:</B> <A NAME="tex2html4181"
+ HREF="node125.html">Operating System Interface</A>
+<B> Previous:</B> <A NAME="tex2html4177"
+ HREF="node128.html">File System</A>
+ &nbsp <B>  <A NAME="tex2html4183"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

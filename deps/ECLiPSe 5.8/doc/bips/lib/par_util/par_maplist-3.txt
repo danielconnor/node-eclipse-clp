@@ -1,0 +1,18 @@
+
+par_maplist(+Pred, +In, ?Out)
+
+   Parallel version of maplist/3
+
+Type
+   library(par_util)
+
+Description
+Parallel version of maplist/3.  The semantics is not
+    exactly the same as maplist/3:  It does not work backwards and it
+    does not cope with aliasing between the In and the Out list, since
+    it is implemented on top of findall/3.  There will only be a
+    performance gain if the mapping predicate does enough computation
+    to make the overhead pay off.
+
+See Also
+   apply_macros : maplist / 3, lists : maplist / 3, applic : maplist / 3

@@ -1,0 +1,113 @@
+<HTML><HEAD><TITLE>instrument(+File, +ITemplates, +OptionList)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(instrument)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>instrument(+File, +ITemplates, +OptionList)</H1>
+Compile a file, inserting predicate instrumentation
+<DL>
+<DT><EM>File</EM></DT>
+<DD>Atom or string
+</DD>
+<DT><EM>ITemplates</EM></DT>
+<DD>itemplate, List of itemplate or PredSpec
+</DD>
+<DT><EM>OptionList</EM></DT>
+<DD>List of Name:Value pairs
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+   This is a variant of the ECLiPSe compiler that inserts user specified 
+   instrumentation predicates into the compiled code. 
+   This code can then be run, and the results analysed by printing them using 
+   <TT>instrument:module_result/0</TT> or <TT>instrument:file_result/1</TT>.
+   <P>
+   ITemplates can be specified as:
+   <DL><DT>
+   PredSpec of arity two
+   <DD>
+   If an arity two predicate specification is supplied, then this predicate 
+   is invoked in order to retrieve the template for the predicate being 
+   instrumented. Argument one is the predicate specification of the 
+   predicate undergoing instrumentation. Argument two is an output variable th
+   at is to be returned by this predicate as the template to use. The 
+   returned <TT>itemplate</TT> will be validated before instrumentation 
+   proceeds.
+   <DT>
+   <TT>itemplate</TT>
+   <DD>
+   A single template passed to <TT>instrument/2</TT> or <TT>instrument/3</TT> 
+   is adopted as the <B>global</B> template to be used for predicate 
+   instrumentation. If a template for the predicate currently being 
+   instrumented is not found in the template stores then if a global template 
+   exists, it is used.
+   <DT>
+   <TT>PredSpec = itemplate</TT>
+   <DD>
+   A template specification for instrumentation of a single predicate. If 
+   however, PredSpec is not actually a valid predicate specification but the 
+   atom <TT>iglobal</TT>, the template is adopted as the global template 
+   (see above).
+   <DT>
+   List of <TT>itemplate</TT>
+   <DD>
+   The list is of the form: 
+   <PRE>[itemplate{...} | PredSpec = itemplate{...} ... 
+   PredSpec = itemplate{...}]</PRE>
+   The <TT>itemplate</TT> at the head of the list is specifies the global 
+   template and is optional. The remaining elements of the list are 
+   <TT>itemplate</TT> specifying instrumentation for the PredSpec with which 
+   they are associated.
+   </DL><P>
+   In addition to supplying the global template, an exclude list of PredSpec 
+   for predicates that should not be instrumented by the global template can 
+   be specified: <PRE>itemplate{...} - predicate/1, 
+   my_module:my_predicate/8,...]</PRE>
+   <P>
+   OptionList may contain the following options:
+   <DL><DT>
+   <TT>erase_templates</TT>
+   <DD>
+   Specifying this option results in the removal of instrumentation templates 
+   in file local and/or global template stores. The 'Value' portion of the 
+   option can be specified as an atom representing a specific module, the 
+   atom <TT>all</TT> or the atom <TT>every_module</TT>.
+   <DT>
+   <TT>instrument_recursive</TT> (default:<TT>off</TT>)
+   <DD>
+   Specifying this option as <TT>on</TT> indicates that instrumentation 
+   should be applied within recursive predicates. With it <TT>off</TT> the 
+   net effect is that instrumentation is placed around the recursive 
+   call-graph (unless no applicable template exists). This prevents 
+   incorrect aggregation of accounting by instrumentation predicates. 
+   <DT>
+   <TT>file_local_templates</TT> (default:<TT>off</TT>)
+   <DD>
+   Specifying this option as <TT>on</TT> indicates that all templates in 
+   ITemplates should be stored locally to the file - they are not available 
+   for use in instrumenting other files (in other modules). The 
+   <TT>file_local</TT> option of the <TT>itemplate</TT> in ITemplates are 
+   overridden by this option.
+   <DT>
+   <TT>ignore_module_templates</TT> (default:<TT>off</TT>)
+   <DD>
+   Specifying this option as <TT>on</TT> results in the use of file local 
+   templates only during instrumentation. Templates are not sought from 
+   the global store.
+   <DT>
+   <TT>verbose</TT> (default:<TT>off</TT>)
+   <DD>
+   If set to <TT>on</TT>, the instrument preprocessor will print predicate 
+   names as they are processed (to log_output). If set to <TT>debug</TT>, 
+   the instrument preprocessor prints each instrumented and/or woven 
+   predicate definition (to log_output).
+   </DL>
+   <P>
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(4) instantiation fault </EM>
+<DD>ITemplates is not instantiated.
+<DT><EM>(5) type error </EM>
+<DD>ITemplates is not of the appropriate type.
+</DL>
+<H2>See Also</H2>
+<A HREF="../../lib/instrument/erase_all_templates-0.html">erase_all_templates / 0</A>, <A HREF="../../lib/instrument/file_result-1.html">file_result / 1</A>, <A HREF="../../lib/instrument/file_result-2.html">file_result / 2</A>, <A HREF="../../lib/instrument/file_callsites-3.html">file_callsites / 3</A>, <A HREF="../../lib/instrument/get_callsite_data-2.html">get_callsite_data / 2</A>, <A HREF="../../lib/instrument/instrument-3.html">instrument / 3</A>, <A HREF="../../lib/instrument/instrument_control-2.html">instrument_control / 2</A>, <A HREF="../../lib/instrument/index.html">library(instrument)</A>, <A HREF="../../lib/instrument/module_callsites-2.html">module_callsites / 2</A>, <A HREF="../../lib/instrument/module_result-0.html">module_result / 0</A>, <A HREF="../../lib/instrument/module_result-1.html">module_result / 1</A>, <A HREF="../../lib/instrument/set_callsite_data-2.html">set_callsite_data / 2</A>, <A HREF="../../lib/instrument/defined_modules-2.html">defined_modules / 2</A>
+</BODY></HTML>

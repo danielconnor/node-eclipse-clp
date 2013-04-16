@@ -1,0 +1,25 @@
+<HTML><HEAD><TITLE>graph_set_random_weights(+Graph, +Min, +Max)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">library(graph_algorithms)</A> | <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>graph_set_random_weights(+Graph, +Min, +Max)</H1>
+Unifies all the graph's edge data fields with random numbers
+<DL>
+<DT><EM>Graph</EM></DT>
+<DD>a graph structure
+</DD>
+<DT><EM>Min</EM></DT>
+<DD>an integer or float
+</DD>
+<DT><EM>Max</EM></DT>
+<DD>an integer or float
+</DD>
+</DL>
+<H2>Description</H2>
+<P>
+    The input Graph is assumed to be a graph with uninstantiated edge
+    data fields. These will be instantiated to random numbers between
+    Min and Max, using random/1 if Min and Max are integers, or using
+    frandom/1 if Min and Max are floats.
+    </P>
+<H2>See Also</H2>
+<A HREF="../../lib/graph_algorithms/make_random_graph-6.html">make_random_graph / 6</A>, <A HREF="../../kernel/arithmetic/random-1.html">random / 1</A>, <A HREF="../../kernel/arithmetic/frandom-1.html">frandom / 1</A>
+</BODY></HTML>

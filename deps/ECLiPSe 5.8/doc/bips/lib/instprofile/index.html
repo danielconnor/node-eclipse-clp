@@ -1,0 +1,136 @@
+<HTML><HEAD><TITLE>library(instprofile)</TITLE></HEAD><BODY>
+[ <A HREF="../index.html">The ECLiPSe Libraries</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]<H1>library(instprofile)</H1>
+Instrumentation / sampling based statistics profiler
+<H2>Predicates</H2>
+<BLOCKQUOTE>
+<DL>
+<DT><A HREF="aggregate_result-1.html"><STRONG>aggregate_result(+File)</STRONG></A></DT>
+<DD>Write the aggregated instrument profiling results to
+   a named file.</DD>
+<DT><A HREF="close_delta_file-0.html"><STRONG>close_delta_file</STRONG></A></DT>
+<DD>Close the instrumentation profiler's delta results file.</DD>
+<DT><A HREF="open_delta_file-1.html"><STRONG>open_delta_file(+DeltaFile)</STRONG></A></DT>
+<DD>Open the instrumentation profiler's delta results file.</DD>
+<DT><A HREF="reset-0.html"><STRONG>reset</STRONG></A></DT>
+<DD>Reset the profiling statistics for the calling context
+   module.</DD>
+<DT><A HREF="result-0.html"><STRONG>result</STRONG></A></DT>
+<DD>Pretty-print the instrument profiled source with
+   aggregated results.</DD>
+<DT><A HREF="statprofile-2.html"><STRONG>statprofile(+File, +Statistics)</STRONG></A></DT>
+<DD>Instrument a file with statistics profiling code.</DD>
+<DT><A HREF="statprofile-3.html"><STRONG>statprofile(+File, +Statistics, +OptionsList)</STRONG></A></DT>
+<DD>Instrument a file with statistics profiling code.</DD>
+<DT><A HREF="statsample-4.html"><STRONG>statsample(+ProfileName, +SamplePeriod, +Statistics, +File)</STRONG></A></DT>
+<DD>Create a statistics sampling profile.</DD>
+<DT><A HREF="statsample_control-2.html"><STRONG>statsample_control(+ProfileName, +State)</STRONG></A></DT>
+<DD>Enable / disable the sampling profiler for a named profile.</DD>
+</DL>
+</BLOCKQUOTE>
+<H2>Description</H2>
+<P>
+   The instprofile library provides two complimentary mechanisms for
+   the profiling of ECLiPSe code with the metrics provided by the
+   statistics/2 predicate:
+   <OL>
+   <LI>Instrumentation based, where metric measuring code is
+   inserted directly into the user program in order to accurately
+   determine how its constituent pieces of code perform. The
+   mechanism for the insertion of instrumentation code is based upon 
+   the facilities of the instrument library. As such, the statistic 
+   measurements may be inserted at the beginning and end of clause or block 
+   definitions, and around subgoals and/or predicate calls.  
+   <LI>Sample driven, where metric measuring code is executed at a user
+   defined interval as the user program runs. The sample based profiler is 
+   implemented using after events and is therefore less intrusive in its
+   effect on the performance of the executing code. 
+   </OL>
+   </P><P>
+   While the performance overhead of the sampling profiler is lower, it 
+   cannot be used to determine the exact cost of a piece of code for a 
+   particular statistic. It merely provides snapshots with respect to time 
+   not code location. The instrumentation based profiler does however
+   provide the means for the measurement of both the aggregated cost for 
+   all executions of a piece of code and also the cost for each individual 
+   execution.
+   </P><P>
+   The usage of the instrumentation based profiler is as follows:
+   <OL>
+   <LI>Load the instprofile library
+   <PRE>
+   ?- lib(instprofile).
+   </PRE>
+   <LI>Compile your program with instrumentation profiling:
+   <PRE>
+   ?- instprofile:statprofile(my_program, [global_stack_used,
+                              trail_stack_used]).
+   </PRE>
+   <LI>Run the query for which you wish to generate mode analysis data
+   <PRE>
+   ?- my_query(X,Y,Z).
+   </PRE>
+   <LI>Generate the results for the module into which the program
+       was compiled.
+   <PRE>
+   ?- instprofile:result@my_program_module.
+   </PRE>
+   </OL>
+   The usage of the sampling profiler is as follows:
+   <OL>
+   <LI>Load the instprofile library
+   <PRE>
+   ?- lib(instprofile).
+   </PRE>
+   <LI>Define a sampling profile
+   <PRE>
+   ?- instprofile:statsample(memory, 5, [global_stack_used,
+                             trail_stack_used], 'memory_sample.dat').
+   </PRE>
+   <LI>Prior to running the queries for which you wish to gather 
+   sampling data, enable the sampling profiler for the named profile
+   <PRE>
+   ?- instprofile:statsample_control(memory, on)
+   </PRE>
+   <LI>Run the query for which you wish to generate sampling data
+   <PRE>
+   ?- my_query(X,Y,Z).
+   </PRE>
+   <LI>Disable the sampling profiler for the named profile. The results
+   file specified in statsample/4 contains the sampling data.    
+   <PRE>
+   ?- instprofile:statsample_control(memory, off)
+   </PRE>
+   </OL>
+   </P><P>
+   Limitations to be resolved shortly: 
+   <OL>
+   <LI><P>
+   Results are currently produced per module, not for individual files
+   within a module (i.e. results must be retrieved for all files within 
+   a module).
+   </P>
+   <LI><P>When multiple statistics are specified, the order in which the
+   statistics will appear in the results (pretty-printed source and results
+   file) is displayed during the invocation of the statsample predicate,
+   not the result predicate.
+   </P>
+   <LI><P>Results are produced to a file or annotated on pretty-printed
+   source and these results to be viewed offline. Additional facilities 
+   are to be provided that allow for the real time visualisation of results.
+   </P>
+   <LI><P>The model that accounts for the cost of inserted instrumentation is 
+   fairly rudimentary (especially for the 'global_stack_used' statistic.
+   </P>
+   <LI>A future enhancement will enable the insertion of user defined metrics
+   not just those available via statistics/2.
+   </OL>
+   </P>
+<H2>About</H2><UL COMPACT>
+<LI><STRONG>Status: </STRONG>prototype
+<LI><STRONG>Author: </STRONG>Andrew Cheadle
+<LI><STRONG>Copyright &copy; </STRONG>Imperial College London and Parc Technologies Ltd
+<LI><STRONG>Date: </STRONG>$Date: 2004/11/17 14:06:53 $
+</UL>
+<HR>Generated from instprofile.eci on Tue Jan 25 01:58:51 2005
+
+</BODY></HTML>

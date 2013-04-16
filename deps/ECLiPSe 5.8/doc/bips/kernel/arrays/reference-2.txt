@@ -1,0 +1,72 @@
+
+local reference(+Name, ++Init)
+
+   Creates a named reference called Name with intial value Init.
+
+Arguments
+   +Name               An atom.
+   ++Init              A ground term
+
+Type
+   Non-logical Variables, Arrays, Bags, Shelves and Stores
+
+Description
+   This creates a named reference with the atomic name Name.  A named
+   reference can be used to hold a reference to a term in the same way
+   as a logical variable.  Unlike the non-logical variables, the value
+   of a reference is not a copy, but identical to the original term it
+   was set to.  This implies that the value behaves logically, i.e. 
+   it disappears on backtracking, bindings to the variables inside it
+   are undone on backtracking etc.  A typical example of it use is global
+   state that a set of predicates wants to share without having to
+   pass an argument pair through all the predicate invocations. 
+
+   Changing the value of a reference is similar to changing an argument
+   of a compound term using setarg/3.
+
+   The initial value of the reference is Init, which must be a ground term.
+
+   There are no arrays of references, but the same effect can be
+   achieved by storing a structure in a reference and using the
+   structure's arguments.  The arguments can then be accessed and
+   modified using arg/3 and setarg/3 respectively. 
+
+   Note: Declaring a reference twice is silently accepted, and the second
+   declaration is ignored.
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Exceptions
+     4 --- Name is not instantiated.
+     4 --- Init is not a ground term.
+     5 --- Name is not an atom.
+
+Examples
+   
+
+      [eclipse 1]: local reference(a,0).
+
+      yes.
+      [eclipse 2]: ( getval(a, Old), setval(a, 27), getval(a, New)
+		   ; getval(a, Then) ).
+      Old = 0
+      New = 27
+      Then = Then
+      Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+      Old = Old
+      New = New
+      Then = 0
+      Yes (0.00s cpu, solution 2)
+
+
+
+See Also
+   reference / 1, setval / 2, getval / 2, setarg / 3, arg / 3

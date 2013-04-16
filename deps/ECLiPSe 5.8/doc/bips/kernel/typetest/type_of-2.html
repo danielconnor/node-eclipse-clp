@@ -1,0 +1,67 @@
+<HTML><HEAD><TITLE>type_of(?Term, ?Type)</TITLE>
+</HEAD><BODY>[ <A HREF="index.html">Type Testing</A> | <A HREF="../index.html">The ECLiPSe Built-In Predicates</A> | <A HREF="../../index.html">Reference Manual</A> | <A HREF="../../fullindex.html">Alphabetic Index</A> ]
+<H1>type_of(?Term, ?Type)</H1>
+Succeeds if Type is the data type of the term Term.
+
+
+<DL>
+<DT><EM>?Term</EM></DT>
+<DD>Prolog term.
+</DD>
+<DT><EM>?Type</EM></DT>
+<DD>Atom or variable.
+</DD>
+</DL>
+<H2>Description</H2>
+   The type of the term Term is unified with Type.
+
+<P>
+   The types are atoms from the set: string, atom, var, integer, rational,
+   float, breal, compound, handle, db_reference, goal.
+
+<P>
+
+<H3>Fail Conditions</H3>
+   Fails if Type is not the data type of Term or else if Type is an atom
+   that is not in the above set.
+
+
+<H3>Resatisfiable</H3>
+   No.
+<H3>Exceptions</H3>
+<DL>
+<DT><EM>(5) type error </EM>
+<DD>Type is instantiated, but not to an atom.
+</DL>
+<H2>Examples</H2>
+<PRE>
+Success:
+      type_of(X,T).         (gives T=var).
+      type_of([1,2],T).     (gives T=compound).
+      type_of([],atom).
+      type_of(#,atom).
+      type_of($,atom).
+      type_of(*,atom).
+      type_of(/,atom).
+      type_of(\,atom).
+      type_of("a",string).
+      type_of(1,integer).
+      type_of(123456789012345,integer).
+      type_of(1_3,rational).
+      type_of(1.0,float).
+      type_of(0.99__1.01,breal).
+      type_of(a(b),compound).
+      record(k, a), recorded(k, _, R), type_of(R, db_reference).
+      make_suspension(true,S), type_of(S, goal).
+Fail:
+      type_of(2.0,integer).
+      type_of(2.0,float).
+Error:
+      type_of(2,"atom").  (Error 5).
+
+
+
+</PRE>
+<H2>See Also</H2>
+<A HREF="../../kernel/typetest/atom-1.html">atom / 1</A>, <A HREF="../../kernel/typetest/compound-1.html">compound / 1</A>, <A HREF="../../kernel/typetest/free-1.html">free / 1</A>, <A HREF="../../kernel/typetest/integer-1.html">integer / 1</A>, <A HREF="../../kernel/typetest/meta-1.html">meta / 1</A>, <A HREF="../../kernel/typetest/number-1.html">number / 1</A>, <A HREF="../../kernel/typetest/nonground-1.html">nonground / 1</A>, <A HREF="../../kernel/typetest/breal-1.html">breal / 1</A>, <A HREF="../../kernel/typetest/rational-1.html">rational / 1</A>, <A HREF="../../kernel/typetest/float-1.html">float / 1</A>, <A HREF="../../kernel/typetest/float-1.html">float / 1</A>, <A HREF="../../kernel/typetest/real-1.html">real / 1</A>, <A HREF="../../kernel/typetest/string-1.html">string / 1</A>, <A HREF="../../kernel/typetest/var-1.html">var / 1</A>
+</BODY></HTML>

@@ -1,0 +1,497 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.2 beta5 (July 28th, 1998)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Streams</TITLE>
+<META NAME="description" CONTENT="Streams">
+<META NAME="keywords" CONTENT="umsroot">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="umsroot.css">
+<LINK REL="next" HREF="node61.html">
+<LINK REL="previous" HREF="node59.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node61.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html3148"
+ HREF="node61.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3144"
+ HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3138"
+ HREF="node59.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3146"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3149"
+ HREF="node61.html">Communication via Streams</A>
+<B> Up:</B> <A NAME="tex2html3145"
+ HREF="node59.html">Input and Output</A>
+<B> Previous:</B> <A NAME="tex2html3139"
+ HREF="node59.html">Input and Output</A>
+ &nbsp <B>  <A NAME="tex2html3147"
+ HREF="node158.html">Index</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html3150"
+ HREF="node60.html#SECTION001011000000000000000">Predefined Streams</A>
+<LI><A NAME="tex2html3151"
+ HREF="node60.html#SECTION001012000000000000000">Stream Identifiers and Aliases</A>
+<LI><A NAME="tex2html3152"
+ HREF="node60.html#SECTION001013000000000000000">Opening New Streams</A>
+<LI><A NAME="tex2html3153"
+ HREF="node60.html#SECTION001014000000000000000">Closing Streams</A>
+<LI><A NAME="tex2html3154"
+ HREF="node60.html#SECTION001015000000000000000">Redirecting Streams</A>
+<LI><A NAME="tex2html3155"
+ HREF="node60.html#SECTION001016000000000000000">Finding Streams</A>
+<LI><A NAME="tex2html3156"
+ HREF="node60.html#SECTION001017000000000000000">Stream Properties</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION001010000000000000000"></A>
+<A NAME="5395"></A> 
+<A NAME="5396"></A>
+<BR>
+Streams
+</H1>
+Input and output in ECLiPSe is done via communication channels
+called <I>streams</I>.
+They are usually associated with either a file, a terminal, a socket,
+a pipe, or in-memory queues and buffers.
+<A NAME="5399"></A>
+<A NAME="5400"></A>
+<A NAME="5401"></A>
+The streams may be opened for input only (<I>read mode</I>), output only
+(<I>write mode</I>), or for both input and output (<I>update mode</I>).
+
+<P>
+
+<H2><A NAME="SECTION001011000000000000000">
+Predefined Streams</A>
+</H2>
+Every ECLiPSe session has 4 predefined system streams:
+<A NAME="streams"></A><DL>
+<DT><STRONG><B>stdin</B></STRONG>
+<DD>The standard input stream.
+<A NAME="5410"></A>
+
+<P>
+<DT><STRONG><B>stdout</B></STRONG>
+<DD>The standard output stream.
+<A NAME="5412"></A>
+
+<P>
+<DT><STRONG><B>stderr</B></STRONG>
+<DD>The standard error stream.
+<A NAME="5414"></A>
+
+<P>
+<DT><STRONG><B>null</B></STRONG>
+<DD><A NAME="5416"></A>
+A dummy stream, output to it is discarded, on input it always
+gives end of file.
+</DL>
+In a stand-alone ECLiPSe stdin, stdout and stderr are connected
+to the corresponding standard I/O descriptors of the process.
+In an embedded ECLiPSe, the meaning of stdin, stdout and
+stderr is determined by the ECLiPSe initialisation options.
+
+<P>
+Moreover, every ECLiPSe session defines the following symbolic stream
+names, which are used for certain categories of input/output:
+<DL>
+<DT><STRONG><B>input</B></STRONG>
+<DD>Used by the input predicates that do not have
+an explicit stream argument, e.g. <A NAME="tex2html722"
+ HREF="../bips/kernel/ioterm/read-1.html">read/1</A><A NAME="5862"></A>.
+<A NAME="5426"></A>
+<A NAME="5427"></A>
+This is by default the same as stdin, but can be redirected.
+
+<P>
+<DT><STRONG><B>output</B></STRONG>
+<DD>Used by the output predicates that do not have
+an explicit stream argument, e.g. <A NAME="tex2html726"
+ HREF="../bips/kernel/ioterm/write-1.html">write/1</A><A NAME="5865"></A>.
+<A NAME="5431"></A>
+<A NAME="5432"></A>
+This is by default the same as stdout, but can be redirected.
+
+<P>
+<DT><STRONG><B>error</B></STRONG>
+<DD>Output for error messages and all messages about exceptional states.
+<A NAME="5434"></A>
+This is by default the same as stderr, but can be redirected.
+
+<P>
+<DT><STRONG><B>warning_output</B></STRONG>
+<DD>Used by the system to output warning messages.
+<A NAME="5436"></A>
+This is by default the same as stdout, but can be redirected.
+
+<P>
+<DT><STRONG><B>log_output</B></STRONG>
+<DD>Used by the system to output log messages, e.g. messages about garbage
+collection activity.
+<A NAME="5438"></A>
+This is by default the same as stdout, but can be redirected.
+
+<P>
+<DT><STRONG><B>user</B></STRONG>
+<DD><A NAME="5440"></A>
+This identifier is provided for compatibility with Prolog
+systems and it is identical with <B>stdin</B> and <B>stdout</B>
+depending on the context where it is used.
+</DL>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="RIGHT">Symbolic Stream</TD>
+<TD ALIGN="LEFT">System Stream</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">input</TD>
+<TD ALIGN="LEFT">0 (stdin)</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">output</TD>
+<TD ALIGN="LEFT">1 (stdout)</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">warning_output</TD>
+<TD ALIGN="LEFT">1 (stdout)</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">log_output</TD>
+<TD ALIGN="LEFT">1 (stdout)</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">error</TD>
+<TD ALIGN="LEFT">2 (stderr)</TD>
+</TR>
+<TR><TD ALIGN="RIGHT">&nbsp;</TD>
+<TD ALIGN="LEFT">3 (null)</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+<DIV ALIGN="CENTER">Initial assignment of symbolic stream names
+
+</DIV>
+
+<P>
+
+<H2><A NAME="SECTION001012000000000000000">
+Stream Identifiers and Aliases</A>
+</H2>
+Every stream is identified by a small integer<A NAME="tex2html734"
+ HREF="footnode.html#foot5450"><SUP>10.1</SUP></A>, but it can have several symbolic names (aliases), which are atoms.
+Most of the built-in predicates that require a stream to be specified
+have a stream argument at the first position,
+e.g. <I>write(Stream, Term)</I>. This argument can be either the stream
+number or a symbolic stream name.
+
+<P>
+An alias name can be given to a stream either when it is created or
+explicitly by invoking
+<A NAME="tex2html735"
+ HREF="../bips/kernel/iostream/set_stream-2.html">set_stream/2</A><A NAME="5868"></A>:<PRE>
+set_stream(Alias, Stream)
+</PRE>
+To find the corresponding stream number, use
+<A NAME="tex2html737"
+ HREF="../bips/kernel/iostream/get_stream-2.html">get_stream/2</A><A NAME="5871"></A>:<PRE>
+get_stream(StreamOrAlias, StreamNr)
+</PRE>
+<A NAME="tex2html739"
+ HREF="../bips/kernel/iostream/get_stream-2.html">get_stream/2</A><A NAME="5874"></A> can also
+be used to check whether two stream names are aliases of each other.
+
+<P>
+
+<H2><A NAME="SECTION001013000000000000000"></A>
+<A NAME="openstream"></A>
+<BR>
+Opening New Streams
+</H2>
+
+<P>
+Streams provide a uniform interface to a variety of I/O devices and
+pseudo-devices. The following table gives an overview of how
+streams on the different devices are opened.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER">I/O device</TD>
+<TD ALIGN="LEFT">How to open</TD>
+</TR>
+<TR><TD ALIGN="CENTER">tty</TD>
+<TD ALIGN="LEFT">implicit (stdin,stdout,stderr) or
+			<A NAME="tex2html741"
+ HREF="../bips/kernel/iostream/open-3.html">open/3</A><A NAME="5877"></A> of a device file</TD>
+</TR>
+<TR><TD ALIGN="CENTER">file</TD>
+<TD ALIGN="LEFT"><A NAME="tex2html743"
+ HREF="../bips/kernel/iostream/open-3.html">open(FileName, Mode, Stream)</A><A NAME="5880"></A></TD>
+</TR>
+<TR><TD ALIGN="CENTER">string</TD>
+<TD ALIGN="LEFT"><A NAME="tex2html745"
+ HREF="../bips/kernel/iostream/open-3.html">open(string(String), Mode, Stream)</A><A NAME="5883"></A></TD>
+</TR>
+<TR><TD ALIGN="CENTER">queue</TD>
+<TD ALIGN="LEFT"><A NAME="tex2html747"
+ HREF="../bips/kernel/iostream/open-3.html">open(queue(String), Mode, Stream)</A><A NAME="5886"></A></TD>
+</TR>
+<TR><TD ALIGN="CENTER">pipe</TD>
+<TD ALIGN="LEFT"><A NAME="tex2html749"
+ HREF="../bips/kernel/opsys/exec-2.html">exec/2</A><A NAME="5889"></A>,
+
+<A NAME="tex2html751"
+ HREF="../bips/kernel/opsys/exec-3.html">exec/3</A><A NAME="5892"></A> and
+
+<A NAME="tex2html753"
+ HREF="../bips/kernel/opsys/exec_group-3.html">exec_group/3</A><A NAME="5895"></A></TD>
+</TR>
+<TR><TD ALIGN="CENTER">socket</TD>
+<TD ALIGN="LEFT"><A NAME="tex2html755"
+ HREF="../bips/kernel/iostream/socket-3.html">socket/3</A><A NAME="5898"></A> and
+
+<A NAME="tex2html757"
+ HREF="../bips/kernel/iostream/accept-3.html">accept/3</A><A NAME="5901"></A></TD>
+</TR>
+<TR><TD ALIGN="CENTER">null</TD>
+<TD ALIGN="LEFT">implicit (null stream)</TD>
+</TR>
+</TABLE>
+</DIV>
+<P>
+<DIV ALIGN="CENTER">How to open streams onto the different I/O devices
+
+</DIV>
+
+<P>
+Most streams are opened for input or output by means of the
+<A NAME="tex2html759"
+ HREF="../bips/kernel/iostream/open-3.html">open/3</A><A NAME="5904"></A>
+or
+<A NAME="tex2html761"
+ HREF="../bips/kernel/iostream/open-4.html">open/4</A><A NAME="5907"></A>
+predicate.
+The goals<PRE>
+open(SourceSink, Mode, Stream)
+open(SourceSink, Mode, Stream, Options)
+</PRE>
+open a communication channel with <I>SourceSink</I>.
+
+<P>
+If <I>SourceSink</I> is an atom or a string, a file is being opened
+and <I>SourceSink</I> takes
+the form of a file name in the host machine environment.
+ECLiPSe uses an operating
+system independent path name syntax, where the components are separated by
+forward slashes.
+The following forms are possible:
+
+<UL><LI>absolute path name, e.g. /usr/peter/prolog/file.pl
+
+<LI>relative to the current directory, e.g. prolog/file.pl
+
+<LI>relative to the own home directory, e.g. <code>~</code>/prolog/file.pl
+
+<LI>start with an environment variable, e.g. $HOME/prolog/file.pl
+
+<LI>relative to a user's home directory, e.g. <code>~</code>peter/prolog/file.pl
+	(UNIX only)
+
+<LI>specifying a drive name, e.g. //C/prolog/file.pl
+	(Windows only)
+
+</UL>
+Note that path names usually have to be quoted (in single or double quotes)
+because they contain non-alphanumeric characters.
+
+<P>
+If <I>SourceSink</I> is of the form <TT>string(InitString)</TT> a pseudo-file
+in memory is opened, see section <A HREF="node62.html#stringio">10.3.1</A>.
+
+<P>
+If <I>SourceSink</I> is of the form <TT>queue(InitString)</TT> a pseudo-pipe
+in memory is opened, see section <A HREF="node62.html#queueio">10.3.2</A>.
+
+<P>
+<I>Mode</I> must be one of the atoms <TT>read</TT>, <TT>write</TT>, <TT>append</TT> or
+<TT>update</TT>,
+which means that the stream is to be opened for input, output, output at the
+end of the existing stream, or both input and output, respectively.
+Opening a file in <TT>write</TT> mode will create it if it does not exist,
+and erase the previous contents if it does exist.
+Opening a file in <TT>append</TT> mode will keep the current contents
+of the file and start writing at its end.
+
+<P>
+<I>Stream</I> is a symbolic stream identifier or an uninstantiated variable.
+If it is uninstantiated, the system will bind it to an identifier (the stream
+number):<PRE>
+[eclipse 1]: open(new_file, write, Stream).
+Stream = 6
+yes.
+</PRE>
+If the stream argument is an atomic name, this name becomes an alias
+for the (hidden) stream number:<PRE>
+[eclipse 1]: open(new_file, write, new_stream).
+yes.
+</PRE>
+The stream identifier (symbolic or numeric) may then be used in predicates
+which have a named stream as one of their arguments. For example<PRE>
+open("foo", update, Stream), write(Stream, subject), close(Stream).
+</PRE>
+will write the atom
+<I>subject</I> to the file `foo' and close the stream subsequently.
+
+<P>
+It is recommended style <B>not</B> to use symbolic stream names in code that is
+meant to be reused. This is because the stream names are global,
+there is the possibility of name clashes, and the code will not be reentrant.
+It is cleaner to open streams with a variable for the stream identifier
+and pass the identifier as an argument wherever it is needed.
+
+<P>
+<A NAME="5536"></A>
+<B>Socket</B> streams are not opened with open/3, but with the special primitives
+<A NAME="tex2html764"
+ HREF="../bips/kernel/iostream/socket-3.html">socket/3</A><A NAME="5910"></A> and
+<A NAME="tex2html766"
+ HREF="../bips/kernel/iostream/accept-3.html">accept/3</A><A NAME="5913"></A>.
+More details are in chapter <A HREF="node130.html#sockets">21</A>.
+
+<P>
+<A NAME="5543"></A>
+
+<P>
+A further group of primitives which open streams implicitly is
+<A NAME="tex2html769"
+ HREF="../bips/kernel/opsys/exec-2.html">exec/2</A><A NAME="5916"></A>,
+<A NAME="tex2html771"
+ HREF="../bips/kernel/opsys/exec-3.html">exec/3</A><A NAME="5919"></A> and
+and <A NAME="tex2html773"
+ HREF="../bips/kernel/opsys/exec_group-3.html">exec_group/3</A><A NAME="5922"></A>.
+They open <B>pipes</B> which connect directly to the I/O channels of the
+executed process. See chapter <A HREF="node125.html#chapopsys">20</A> for details.
+
+<P>
+
+<H2><A NAME="SECTION001014000000000000000">
+Closing Streams</A>
+</H2>
+
+<P>
+The predicate<PRE>
+close(Stream)
+</PRE>
+is used to close an open stream.
+If a stream has several alias names, closing any of them will close
+the actual stream. All the other aliases should be closed as well
+(or redirected to streams that are still open),
+because otherwise they will continue
+to refer to the number of the already closed stream.
+
+<P>
+When an attempt is made to close a redirected system stream (e.g. output),
+the stream is closed, but the system stream is reset to its default setting.
+
+<P>
+
+<H2><A NAME="SECTION001015000000000000000">
+Redirecting Streams</A>
+</H2>
+
+<P>
+<A NAME="5558"></A>
+The <A NAME="tex2html776"
+ HREF="../bips/kernel/iostream/set_stream-2.html">set_stream/2</A><A NAME="5925"></A>
+primitive can be used to redirect an already existing symbolic stream
+to a new actual stream.
+This is particularly useful to redirect e.g. the default <B>output</B> stream<PRE>
+set_stream(output, MyStream)
+</PRE>
+so that all standard output is redirected to some other destination
+(e.g. an opened file instead of the terminal).
+Note that the stream modes (read/write) must be compatible.
+The redirection is terminated by calling<PRE>
+close(output)
+</PRE>
+which will reestablish the original meaning of the output stream.
+
+<P>
+
+<H2><A NAME="SECTION001016000000000000000">
+Finding Streams</A>
+</H2>
+The predicate<PRE>
+current_stream(?Stream)
+</PRE>
+<A NAME="5575"></A>
+can be used to backtrack over all the currently opened stream
+indentifiers (but not their aliases).
+
+<P>
+
+<H2><A NAME="SECTION001017000000000000000">
+Stream Properties</A>
+</H2>
+A stream's properties can be accessed using
+<A NAME="tex2html779"
+ HREF="../bips/kernel/iostream/get_stream_info-3.html">get_stream_info/3</A><A NAME="5928"></A><PRE>
+get_stream_info(+Stream, +Property, -Value)
+</PRE>
+e.g. its mode, line number, file name etc.
+Some stream properties can be modified using
+<A NAME="tex2html781"
+ HREF="../bips/kernel/iostream/set_stream_property-3.html">set_stream_property/3</A><A NAME="5931"></A><PRE>
+set_stream_property(+Stream, +Property, +Value)
+</PRE>
+e.g. the end-of-line sequence used, the flushing behaviour, the event-raising
+behaviour, the prompt etc.
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html3148"
+ HREF="node61.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html3144"
+ HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html3138"
+ HREF="node59.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A>  
+<A NAME="tex2html3146"
+ HREF="node158.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index_motif.gif"></A> 
+<BR>
+<B> Next:</B> <A NAME="tex2html3149"
+ HREF="node61.html">Communication via Streams</A>
+<B> Up:</B> <A NAME="tex2html3145"
+ HREF="node59.html">Input and Output</A>
+<B> Previous:</B> <A NAME="tex2html3139"
+ HREF="node59.html">Input and Output</A>
+ &nbsp <B>  <A NAME="tex2html3147"
+ HREF="node158.html">Index</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Warwick Harvey</I>
+<BR><I>2005-01-25</I>
+</ADDRESS>
+</BODY>
+</HTML>

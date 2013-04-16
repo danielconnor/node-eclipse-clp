@@ -1,0 +1,120 @@
+
+chr_trace
+
+   Activates the standard debugger and shows constraint handling.
+
+
+
+Arguments
+
+Type
+   library(chr)
+
+Description
+   In order to use the standard debugger, the debug_compile must have been
+   on (default) during compilation (chr to pl) and loading of the produced
+   ECLiPSe  code.  The query chr_trace.  activates the standard debugger
+   showing more information about the handling of constraints.  In the
+   standard debugger, user-defined constraints are treated as predicates
+   and the information about application of constraint handling rules is
+   displayed without stopping.  The additional information displayed is:
+
+
+  * add:  A new constraint is added to the constraint store.
+
+
+  * already_in:  A constraint to be added was already present.
+
+
+   The ports related to application of rules are:
+
+
+  * try_rule:  A rule is tried.
+
+
+  * delay_rule:  The last tried rule cannot fire because the guard did not
+    succeed.
+
+
+  * fire_rule:  The last tried rule fires.
+
+
+   The ports related to labeling are:
+  * try_label:  A label_with declaration is checked.
+
+
+  * delay_label:  The last label_with declaration delays because the guard
+    did not succeed.
+
+
+  * fire_label:  The last tried label_with declaration succeeds, so the
+    clauses of the associated constraint will be used for built-in
+    labeling.
+
+
+   When displayed, each constraint is labeled with a unique integer
+   identifier.  Each rule is labeled with its name as given in the chr
+   source using the @ operator.  If a rule does not have a name, it is
+   displayed together with a unique integer identifier.
+
+
+
+
+Resatisfiable
+      No.
+
+Fail Conditions
+      None.
+
+
+
+Examples
+      Success:
+[eclipse]: chr_trace.
+yes.
+Debugger switched on - creep mode
+[eclipse]: notrace.     % trace only constraints
+Debugger switched off
+yes.
+[eclipse]: minimum(X,Y,Z), maximum(X,Y,Z).
+% trace edited to show only firing rules
+
+ADD (1) minimum(X, Y, Z)
+TRY (1) minimum(_g218, _g220, _g222) with propagation
+RULE 'propagation' FIRED
+
+ ADD (2) leq(_g665, _g601)
+
+ ADD (3) leq(_g665, Var)
+
+ADD (4) maximum(_g601, Var, _g665)
+TRY (4) maximum(_g601, Var, _g665) with propagation
+RULE 'propagation' FIRED
+
+ ADD (5) leq(_g601, _g665)
+ TRY (5) leq(_g601, _g665) (2) leq(_g665, _g601) with antisymmetry
+ RULE 'antisymmetry' FIRED
+
+TRY (4) maximum(_g601, Var, _g601) with max_eq
+RULE 'max_eq' FIRED
+
+ ADD (6) leq(Var, _g601)
+ TRY (3) leq(_g601, Var) (6) leq(Var, _g601) with antisymmetry
+ RULE 'antisymmetry' FIRED
+
+TRY (1) minimum(_g601, _g601, _g601) with min_eq
+RULE 'min_eq' FIRED
+
+ ADD (7) leq(_g601, _g601)
+ TRY (7) leq(_g601, _g601) with reflexivity
+ RULE 'reflexivity' FIRED
+
+X = Y = Z = _g558
+yes.
+
+
+
+
+
+See Also
+   chr_opium / 0, chr_notrace / 0
