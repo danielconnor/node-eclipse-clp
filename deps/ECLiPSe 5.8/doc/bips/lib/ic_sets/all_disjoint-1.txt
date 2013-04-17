@@ -1,9 +1,0 @@
-
-all_disjoint(+Sets)
-
-   Sets is a list of integers sets which are all disjoint
-
-Type
-   library(ic_sets)
-
-

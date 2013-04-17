@@ -1,4 +1,0 @@
-lib(graph_algorithms)
-
-   Collection of graph algorithms
-

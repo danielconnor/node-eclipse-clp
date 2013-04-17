@@ -1,9 +1,0 @@
-
-add_suffix(+Suffix)
-
-   The Suffix string will be added at the beginning of the prolog_suffix list.
-
-Type
-   library(util)
-
-

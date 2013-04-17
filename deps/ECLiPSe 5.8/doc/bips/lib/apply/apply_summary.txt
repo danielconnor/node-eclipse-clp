@@ -1,4 +1,0 @@
-lib(apply)
-
-   The apply/2 higher-order predicate
-

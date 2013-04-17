@@ -1,4 +1,0 @@
-lib(branch_and_bound)
-
-   Generic branch-and-bound primitives
-

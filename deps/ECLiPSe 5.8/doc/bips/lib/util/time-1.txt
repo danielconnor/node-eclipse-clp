@@ -1,9 +1,0 @@
-
-time(Goal)
-
-   Call the goal Goal, measure its runtime (cputime) and print the result after success or failure
-
-Type
-   library(util)
-
-

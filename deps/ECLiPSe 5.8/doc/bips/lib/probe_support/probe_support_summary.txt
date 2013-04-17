@@ -1,4 +1,0 @@
-lib(probe_support)
-
-   Probe Support Library
-

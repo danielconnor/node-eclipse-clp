@@ -1,4 +1,0 @@
-lib(instrument)
-
-   Generic tool for code instrumentation
-

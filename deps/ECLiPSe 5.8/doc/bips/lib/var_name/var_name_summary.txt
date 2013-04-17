@@ -1,4 +1,0 @@
-lib(var_name)
-
-   Allows variables to be given stable and unique names.
-

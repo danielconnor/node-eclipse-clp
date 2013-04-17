@@ -1,9 +1,0 @@
-
-fromto(+From, +To, +Step, +Pred)
-
-   Call Pred with the numbers From..To in increments of Step
-
-Type
-   library(apply_macros)
-
-

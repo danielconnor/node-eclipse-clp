@@ -1,4 +1,0 @@
-lib(iso)
-
-   ISO Prolog compatibility library
-

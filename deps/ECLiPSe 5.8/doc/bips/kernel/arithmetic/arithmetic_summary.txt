@@ -1,4 +1,0 @@
-lib(arithmetic)
-
-   Built-ins for arithmetic computations
-

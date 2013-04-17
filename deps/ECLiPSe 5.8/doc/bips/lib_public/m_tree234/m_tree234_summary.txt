@@ -1,4 +1,0 @@
-lib(m_tree234)
-
-   A map (dictionary) implemented using 2-3-4 trees
-

@@ -1,4 +1,0 @@
-lib(termmanip)
-
-   Built-ins to convert, compose, decompose and modify terms
-

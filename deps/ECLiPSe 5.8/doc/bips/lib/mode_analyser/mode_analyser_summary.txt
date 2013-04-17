@@ -1,4 +1,0 @@
-lib(mode_analyser)
-
-   Instrumentation based mode analyser
-

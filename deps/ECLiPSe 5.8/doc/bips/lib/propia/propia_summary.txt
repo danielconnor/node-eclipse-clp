@@ -1,4 +1,0 @@
-lib(propia)
-
-   The Generalised Propagation Library
-

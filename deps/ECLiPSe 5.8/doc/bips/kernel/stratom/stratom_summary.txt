@@ -1,4 +1,0 @@
-lib(stratom)
-
-   Built-ins to create, convert and decompose strings and atoms
-

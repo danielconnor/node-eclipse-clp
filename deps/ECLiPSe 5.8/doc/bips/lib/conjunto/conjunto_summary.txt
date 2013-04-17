@@ -1,4 +1,0 @@
-lib(conjunto)
-
-   Finite Set Constraints Library - obsolescent, use library(fd_sets) instead
-

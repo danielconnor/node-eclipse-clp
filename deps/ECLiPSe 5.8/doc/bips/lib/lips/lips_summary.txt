@@ -1,4 +1,0 @@
-lib(lips)
-
-   Measure the system's speed using the naive reverse benchmark
-

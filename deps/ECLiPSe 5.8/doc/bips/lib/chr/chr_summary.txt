@@ -1,4 +1,0 @@
-lib(chr)
-
-   Constraint Handling Rules Library - obsolescent, use library(ech) instead
-

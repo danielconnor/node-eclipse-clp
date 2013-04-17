@@ -1,4 +1,0 @@
-lib(eplex)
-
-   Interface to external Simplex or MIP solvers
-

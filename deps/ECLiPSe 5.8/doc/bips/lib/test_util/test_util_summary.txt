@@ -1,4 +1,0 @@
-lib(test_util)
-
-   Utilities for automated program tests
-

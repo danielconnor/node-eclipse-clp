@@ -1,8 +1,0 @@
-lib(asm)
-
-       The asm library provide tools for assembling and disassembling the WAM
-    code representation of predicates to and from memory. It also allows
-    the formatted printing of the WAM code. This library is used by the
-    fcompile library to generate the object code, which is a form of the
-    WAM code that can be read back in and assembled into the predicates.
-

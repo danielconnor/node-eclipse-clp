@@ -1,9 +1,0 @@
-
-matrix(+NRow, +NCols, -Rows)
-
-   Create a matrix as a list of rows
-
-Type
-   library(matrix_util)
-
-

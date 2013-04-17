@@ -1,4 +1,0 @@
-lib(sym_expr)
-
-   Library for expressing the symmetries of a CSP
-

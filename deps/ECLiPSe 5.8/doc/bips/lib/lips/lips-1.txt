@@ -1,9 +1,0 @@
-
-lips(+Count)
-
-   Run the benchmark Count times and print the average speed
-
-Type
-   library(lips)
-
-

@@ -1,9 +1,0 @@
-
-mapstream(+Pred, ?ListIn, ?ListOut)
-
-   Like maplist/3, but delays if ListIn is not complete
-
-Type
-   library(apply_macros)
-
-

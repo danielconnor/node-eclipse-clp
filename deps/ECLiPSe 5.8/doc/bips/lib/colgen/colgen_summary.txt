@@ -1,4 +1,0 @@
-lib(colgen)
-
-   Column generation library
-

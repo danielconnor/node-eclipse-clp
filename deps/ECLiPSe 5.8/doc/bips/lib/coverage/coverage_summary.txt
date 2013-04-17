@@ -1,4 +1,0 @@
-lib(coverage)
-
-   Tool for obtaining code coverage information
-

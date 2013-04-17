@@ -1,4 +1,0 @@
-lib(pretty_print)
-
-   Pretty-printing of complex terms
-

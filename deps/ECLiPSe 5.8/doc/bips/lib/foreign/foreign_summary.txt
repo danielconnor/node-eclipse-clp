@@ -1,4 +1,0 @@
-lib(foreign)
-
-   Simple foreign interface like SICStus or Quintus
-

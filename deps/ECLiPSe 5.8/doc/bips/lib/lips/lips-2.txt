@@ -1,9 +1,0 @@
-
-lips(+Count,+Length)
-
-   Run the benchmark Count times with lists of length Length
-
-Type
-   library(lips)
-
-

@@ -1,4 +1,0 @@
-lib(util)
-
-   Various utility predicates for program development
-

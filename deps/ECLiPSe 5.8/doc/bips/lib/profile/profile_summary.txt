@@ -1,4 +1,0 @@
-lib(profile)
-
-   Profiling package for ECLiPSe programs
-

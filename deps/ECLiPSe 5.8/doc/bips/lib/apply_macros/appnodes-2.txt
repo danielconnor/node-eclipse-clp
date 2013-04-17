@@ -1,9 +1,0 @@
-
-appnodes(+Pred, +Term)
-
-   Call Pred on all Subterms of Term (depth-first and left-to-right order)
-
-Type
-   library(apply_macros)
-
-

@@ -1,4 +1,0 @@
-lib(bfs)
-
-   Best-first search library
-

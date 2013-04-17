@@ -1,4 +1,0 @@
-lib(par_util)
-
-   Parallel versions of various predicates
-

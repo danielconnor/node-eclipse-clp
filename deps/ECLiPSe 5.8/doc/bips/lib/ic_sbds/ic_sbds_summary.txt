@@ -1,4 +1,0 @@
-lib(ic_sbds)
-
-   Symmetry Breaking During Search (SBDS)
-

@@ -1,4 +1,0 @@
-lib(document)
-
-   Tools for generating documentation from ECLiPSe sources
-

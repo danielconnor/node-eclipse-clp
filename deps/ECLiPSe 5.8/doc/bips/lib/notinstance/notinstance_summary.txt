@@ -1,4 +1,0 @@
-lib(notinstance)
-
-   Constraints for structural equality and subsumption
-

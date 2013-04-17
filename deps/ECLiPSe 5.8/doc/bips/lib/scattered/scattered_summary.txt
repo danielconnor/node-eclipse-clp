@@ -1,4 +1,0 @@
-lib(scattered)
-
-   Allow a source file to contain non-consecutive clauses
-

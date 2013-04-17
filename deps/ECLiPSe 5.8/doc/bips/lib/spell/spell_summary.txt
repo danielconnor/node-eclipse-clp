@@ -1,4 +1,0 @@
-lib(spell)
-
-   Predicate name spelling correction
-

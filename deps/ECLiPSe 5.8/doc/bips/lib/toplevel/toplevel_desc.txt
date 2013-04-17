@@ -1,7 +1,0 @@
-lib(toplevel)
-
-
-	Note that this library is normally loaded automatically
-	by the ECLiPSe development environment.
-    
-

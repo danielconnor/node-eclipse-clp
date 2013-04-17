@@ -1,4 +1,0 @@
-lib(cprolog)
-
-   C-Prolog compatibility package
-

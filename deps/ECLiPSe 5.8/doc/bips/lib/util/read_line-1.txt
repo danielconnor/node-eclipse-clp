@@ -1,9 +1,0 @@
-
-read_line(-String)
-
-   Defined as read_string(input, end_of_line, _Length, String)
-
-Type
-   library(util)
-
-

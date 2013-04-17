@@ -1,4 +1,0 @@
-lib(remote_tools)
-
-   Allow the Tk development tools to be used remotely
-

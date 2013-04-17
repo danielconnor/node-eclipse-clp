@@ -1,7 +1,0 @@
-lib(cumulative)
-
-       This library implements the cumulative scheduling constraint for the
-    FD solver.  It provides weaker propagation than the two edge finder
-    libraries: edge_finder and edge_finder3.
-
-

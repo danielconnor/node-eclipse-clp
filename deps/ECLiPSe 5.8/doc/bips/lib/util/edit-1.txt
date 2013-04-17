@@ -1,9 +1,0 @@
-
-edit(+PredSpec)
-
-   Invoke an editor on the source of the specified predicate (UNIX only)
-
-Type
-   library(util)
-
-

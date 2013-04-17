@@ -1,6 +1,0 @@
-lib(probe_search)
-
-
-    A search routine which fixes resource bottlenecks by forcing tasks not to overlap.
-    
-

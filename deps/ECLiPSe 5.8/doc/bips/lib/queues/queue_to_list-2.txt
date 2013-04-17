@@ -1,9 +1,0 @@
-
-queue_to_list(Queue, List)
-
-   creates a new list with the same elements as Queue
-
-Type
-   library(queues)
-
-

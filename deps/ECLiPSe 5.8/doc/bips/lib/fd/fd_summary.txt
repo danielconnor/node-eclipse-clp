@@ -1,4 +1,0 @@
-lib(fd)
-
-   Finite domain library
-

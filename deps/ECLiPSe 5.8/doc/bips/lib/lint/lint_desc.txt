@@ -1,8 +1,0 @@
-lib(lint)
-
-
-    This library analyses an ECLiPSe source module or file and generates
-    warning messages for dubious programming constructs and violation
-    of naming conventions.
-    
-

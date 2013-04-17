@@ -1,9 +1,0 @@
-
-pretty_print(+Stream, +Term, +Max)
-
-   Print a term on the given stream, split it if its width exceeds Max
-
-Type
-   library(pretty_print)
-
-

@@ -1,4 +1,0 @@
-lib(vc_support)
-
-   Library to support implementation of visualisation clients
-

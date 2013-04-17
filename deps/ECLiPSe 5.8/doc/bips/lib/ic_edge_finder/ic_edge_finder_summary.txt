@@ -1,4 +1,0 @@
-lib(ic_edge_finder)
-
-   Quadratic edge-finder algorithm for disjunctive and cumulative constraints for IC
-

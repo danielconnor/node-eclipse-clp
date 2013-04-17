@@ -1,4 +1,0 @@
-lib(cumulative)
-
-   Cumulative scheduling constraint library for FD
-

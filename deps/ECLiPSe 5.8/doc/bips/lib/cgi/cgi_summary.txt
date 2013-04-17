@@ -1,4 +1,0 @@
-lib(cgi)
-
-   Some utilities for writing cgi scripts with ECLiPSe
-

@@ -1,4 +1,0 @@
-lib(time_log)
-
-   Module for logging and collating test times
-

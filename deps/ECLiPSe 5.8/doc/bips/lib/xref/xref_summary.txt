@@ -1,4 +1,0 @@
-lib(xref)
-
-   Cross-referencing tool
-

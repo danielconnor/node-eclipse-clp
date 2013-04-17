@@ -1,4 +1,0 @@
-lib(ic_symbolic)
-
-   Solver for constraints over ordered symbolic domains
-

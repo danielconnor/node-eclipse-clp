@@ -1,9 +1,0 @@
-
-stream(+Stream)
-
-   List all information about the specified I/O stream
-
-Type
-   library(util)
-
-

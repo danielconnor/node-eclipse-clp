@@ -1,7 +1,0 @@
-lib(ic_cumulative)
-
-       This library implements the cumulative scheduling constraint for the
-    IC solver.  It provides weaker propagation than the two edge finder
-    libraries: ic_edge_finder and ic_edge_finder3.
-
-

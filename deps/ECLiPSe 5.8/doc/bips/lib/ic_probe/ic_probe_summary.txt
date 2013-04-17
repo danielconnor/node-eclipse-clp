@@ -1,4 +1,0 @@
-lib(ic_probe)
-
-   Probing
-

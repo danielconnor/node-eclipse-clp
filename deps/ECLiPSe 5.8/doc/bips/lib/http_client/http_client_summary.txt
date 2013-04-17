@@ -1,4 +1,0 @@
-lib(http_client)
-
-   HTTP client library
-

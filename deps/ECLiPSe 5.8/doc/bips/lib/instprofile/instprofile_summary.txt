@@ -1,4 +1,0 @@
-lib(instprofile)
-
-   Instrumentation / sampling based statistics profiler
-

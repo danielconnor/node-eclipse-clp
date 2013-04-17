@@ -1,4 +1,0 @@
-lib(shadow_cons)
-
-   A library implementing shadow, or 'local', constraint stores
-

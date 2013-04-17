@@ -1,4 +1,0 @@
-lib(fd_sbds)
-
-   Symmetry Breaking During Search (SBDS)
-

@@ -1,4 +1,0 @@
-lib(obsolete)
-
-   Obsolete built-ins which should not be used in new code
-

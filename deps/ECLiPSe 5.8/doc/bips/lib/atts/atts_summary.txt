@@ -1,4 +1,0 @@
-lib(atts)
-
-   Variable attributes compatible with SICStus v3
-

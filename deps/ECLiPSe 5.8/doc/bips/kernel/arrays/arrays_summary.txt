@@ -1,4 +1,0 @@
-lib(arrays)
-
-   Built-ins to store data across backtracking
-

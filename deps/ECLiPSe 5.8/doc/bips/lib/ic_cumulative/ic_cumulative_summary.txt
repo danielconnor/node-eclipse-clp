@@ -1,4 +1,0 @@
-lib(ic_cumulative)
-
-   Cumulative scheduling constraint library for IC
-

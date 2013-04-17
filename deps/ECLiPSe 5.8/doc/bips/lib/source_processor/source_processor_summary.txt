@@ -1,4 +1,0 @@
-lib(source_processor)
-
-   Tools for processing ECLiPSe sources
-

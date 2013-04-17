@@ -1,4 +1,0 @@
-lib(http)
-
-   HTTP library
-

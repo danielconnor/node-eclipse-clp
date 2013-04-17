@@ -1,4 +1,0 @@
-lib(matrix_util)
-
-   Predicates to build matrices from lists
-

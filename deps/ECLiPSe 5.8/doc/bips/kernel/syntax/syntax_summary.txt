@@ -1,4 +1,0 @@
-lib(syntax)
-
-   Operators, structures, macros, character classes
-

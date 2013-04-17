@@ -1,9 +1,0 @@
-lib(tty_vc)
-
-This module implements a simple TTY visualisation client. A visualisation client (VC) is an entity which monitors viewables. See lib(viewable) for more information on viewables. This module is mainly designed to help evaluate the visualisation architecture.
-
-The three predicates start_tty_vc/1, start_tty_vc/2 and start_tty_vc/3, can be used to start the TTY VC with various options. The predicate stop_tty_vc/1 is used to stop the TTY VC.  
-
-While it is running, when new 2-d viewables are created, the TTY VC starts monitoring them. The TTY VC does not monitor viewables whose number of dimensions is not 2. It reacts to events relating to monitored viewables by outputting messages to stdout, including pretty-printing the viewable elements when updates occur. A forward (normally constraining) update to an element is signified by "++", and backtracking over this is signified by "--".   
-
-

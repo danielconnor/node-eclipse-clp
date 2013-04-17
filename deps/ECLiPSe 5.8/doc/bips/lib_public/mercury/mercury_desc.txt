@@ -1,8 +1,0 @@
-lib(mercury)
-
-	
-	This module provides (a few) Mercury compatibility predicates,
-	useful for when porting Mercury modules to ECLiPSe.
-	
-	
-

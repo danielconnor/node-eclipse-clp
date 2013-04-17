@@ -1,4 +1,0 @@
-lib(anti_unify)
-
-   Computes the most specific generalization of two terms
-

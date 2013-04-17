@@ -1,4 +1,0 @@
-lib(xml)
-
-   A bi-directional XML parser
-

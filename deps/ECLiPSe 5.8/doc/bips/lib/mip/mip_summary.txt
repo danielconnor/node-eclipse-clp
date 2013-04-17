@@ -1,4 +1,0 @@
-lib(mip)
-
-   An example implementing MIP-style branch-and-bound
-

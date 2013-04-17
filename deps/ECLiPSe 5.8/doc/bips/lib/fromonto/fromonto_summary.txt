@@ -1,4 +1,0 @@
-lib(fromonto)
-
-   Redirect input and output streams in a convenient way
-

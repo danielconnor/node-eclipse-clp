@@ -1,4 +1,0 @@
-lib(ech)
-
-   Extended constraint handling rules library
-

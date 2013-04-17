@@ -1,4 +1,0 @@
-lib(lint)
-
-   Heuristic program checker
-

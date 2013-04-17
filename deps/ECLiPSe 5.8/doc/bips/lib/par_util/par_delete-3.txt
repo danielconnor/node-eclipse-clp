@@ -1,9 +1,0 @@
-
-par_delete(?Element, ?List, ?Rest)
-
-   Parallel version of delete/3
-
-Type
-   library(par_util)
-
-

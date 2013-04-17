@@ -1,4 +1,0 @@
-lib(calendar)
-
-   Routines for calendar computations, based on modified julian dates (MJD).
-

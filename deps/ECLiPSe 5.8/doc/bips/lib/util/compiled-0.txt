@@ -1,9 +1,0 @@
-
-compiled
-
-   List all currently compiled files and indicate if they have been modified since they were compiled.
-
-Type
-   library(util)
-
-

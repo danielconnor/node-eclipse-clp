@@ -1,4 +1,0 @@
-lib(toplevel)
-
-   Interactive ECLiPSe toplevel interpreter
-
