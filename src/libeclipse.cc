@@ -101,18 +101,18 @@ Handle<Value> post_goal(const Arguments& args) {
 }
 
 
-void Init(Handle<Object> target) {
+void Init(Handle<Object> exports, Handle<Value> module) {
 
-  NODE_SET_METHOD(target, "init", init);
-  NODE_SET_METHOD(target, "cleanup", cleanup);
-  NODE_SET_METHOD(target, "resume", resume);
-  NODE_SET_METHOD(target, "post_goal", post_goal);
-  NODE_SET_METHOD(target, "term", term);
+  NODE_SET_METHOD(exports, "init", init);
+  NODE_SET_METHOD(exports, "cleanup", cleanup);
+  NODE_SET_METHOD(exports, "resume", resume);
+  NODE_SET_METHOD(exports, "post_goal", post_goal);
+  NODE_SET_METHOD(exports, "term", term);
 
-  Functor::Init(target);
-  Ref::Init(target);
-  Atom::Init(target);
-  Compound::Init(target);
+  Functor::Init(exports);
+  Ref::Init(exports);
+  Atom::Init(exports);
+  Compound::Init(exports);
 }
 
 

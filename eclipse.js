@@ -1,7 +1,6 @@
-process.env["PATH"] += __dirname + "deps/ECLiPSe 5.8/lib/i386_nt";
+process.env["PATH"] += ";" + require("path").join(__dirname, "deps/ECLiPSe 5.8/lib/i386_nt");
 
 var eclipse = require("./build/Release/libeclipse");
-
 
 var ec_status = {
   0: "EC_succeed",
